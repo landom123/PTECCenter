@@ -79,6 +79,7 @@
         jQuery('[id$=txtbegindate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
+            scrollInput: false,
             format:'d/m/yy'
         });
     </script>
@@ -87,6 +88,7 @@
         jQuery('[id$=txtenddate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
+            scrollInput: false,
             format:'d/m/yy'
         });
     </script>
