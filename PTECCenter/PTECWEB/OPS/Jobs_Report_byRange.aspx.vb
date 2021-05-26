@@ -1,0 +1,111 @@
+﻿Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.Shared
+Imports System.Globalization
+
+Public Class Jobs_Report_byRange
+    Inherits System.Web.UI.Page
+    Public menutable As DataTable
+    'Public followuptable As DataTable = CreateFollowup()
+    Dim usercode, username As String
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        'Session("username") = "PAB"
+        Dim objbranch As New Branch
+        Dim objjob As New jobs
+        objbranch.SetComboBranch(cboBranch, "")
+        objjob.SetCboJobStatusList(cboStatus)
+        username = Session("username")
+        usercode = Session("usercode")
+
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
+        Else
+            menutable = Session("menulist")
+        End If
+
+
+        If Not IsPostBack Then
+
+        End If
+
+
+        'txtCreateBy.Text = Session("jobtypeid")
+    End Sub
+
+    Private Sub ViewReport(begindate As String, enddate As String, branch As Double, status As Integer,
+                           jobowner As String, jobaction As String, jobtypeid As Integer)
+        Dim rpt As New ReportDocument()
+        Dim rptname As String = "\ops\reports\rpt_ops_report_byJobType.rpt"
+        Try
+            'Dim test As String = Server.MapPath(rptname)
+            rpt.Load(Server.MapPath(rptname))
+
+            rpt.SetDatabaseLogon(dbLogin, dbPassword, dbServer, dbOPS)
+            'rpt.Refresh()
+
+            For Each TAB As Table In rpt.Database.Tables
+                Dim logoninfo As TableLogOnInfo = TAB.LogOnInfo
+                logoninfo.ConnectionInfo.UserID = dbLogin
+                logoninfo.ConnectionInfo.Password = dbPassword
+                logoninfo.ConnectionInfo.ServerName = dbServer
+                logoninfo.ConnectionInfo.DatabaseName = dbOPS
+                TAB.ApplyLogOnInfo(logoninfo)
+            Next
+
+            'rpt.SetParameterValue("@jobcode", jobcode)
+            rpt.SetParameterValue("@begindate", begindate)
+            rpt.SetParameterValue("@enddate", enddate)
+            rpt.SetParameterValue("@status", status)
+            rpt.SetParameterValue("@jobowner", jobowner)
+            rpt.SetParameterValue("@jobaction", jobaction)
+            rpt.SetParameterValue("@jobtypeid", jobtypeid)
+            rpt.SetParameterValue("@branch", branch)
+
+            Session("rpt") = rpt
+            Response.Write("<script>")
+            Response.Write("window.open('../ReportViewer.aspx','_blank')")
+            Response.Write("</script>")
+
+
+            'Me.CrystalReportViewer1.ReportSource = Session("rpt")
+            'Me.CrystalReportViewer1.DataBind()
+        Catch ex As Exception
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+        End Try
+
+
+
+    End Sub
+
+    Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
+        Dim begindate, enddate, jobowner, jobaction As String
+        Dim status, jobtypeid, branch As Integer
+        Dim bdate, edate As DateTime
+
+
+        'begindate = Date.Parse(txtBeginDate.Text).Year.ToString("0000") &
+        '            Date.Parse(txtBeginDate.Text).Month.ToString("00") & Date.Parse(txtBeginDate.Text).Day.ToString("00")
+        'enddate = Date.Parse(txtEndDate.Text).Year.ToString("0000") &
+        '            Date.Parse(txtEndDate.Text).Month.ToString("00") & Date.Parse(txtEndDate.Text).Day.ToString("00")
+
+        'begindate = Date.Parse(txtBeginDate.Text).Year.ToString("0000") &
+        '            Date.Parse(txtBeginDate.Text).Month.ToString("00") & Date.Parse(txtBeginDate.Text).Day.ToString("00")
+        'enddate = Date.Parse(txtEndDate.Text).Year.ToString("0000") &
+        '            Date.Parse(txtEndDate.Text).Month.ToString("00") & Date.Parse(txtEndDate.Text).Day.ToString("00")
+        'bdate = Date.ParseExact(txtBeginDate.Text, "dd/MM/yyyy", New CultureInfo("en-US"))
+        'edate = Date.ParseExact(txtBeginDate.Text, "dd/MM/yyyy", New CultureInfo("en-US"))
+        begindate = Strings.Right(txtBeginDate.Text, 4) & Strings.Mid(txtBeginDate.Text, 4, 2) & Strings.Left(txtBeginDate.Text, 2)
+        enddate = Strings.Right(txtEndDate.Text, 4) & Strings.Mid(txtEndDate.Text, 4, 2) & Strings.Left(txtEndDate.Text, 2)
+
+        jobowner = ""
+        jobaction = ""
+        branch = cboBranch.SelectedItem.Value
+        status = cboStatus.SelectedItem.Value
+        jobtypeid = 0
+
+        ViewReport(begindate, enddate, branch, status, jobowner, jobaction, jobtypeid)
+    End Sub
+End Class
