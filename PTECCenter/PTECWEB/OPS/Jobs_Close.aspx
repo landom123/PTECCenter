@@ -332,6 +332,7 @@
         jQuery('[id$=txtBeginWarr]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
+            scrollInput: false,
             format: 'd/m/Y'
         });
     </script>
@@ -340,6 +341,7 @@
         jQuery('[id$=txtEndWarr]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
+            scrollInput: false,
             format: 'd/m/Y'
         });
     </script>
@@ -348,6 +350,7 @@
         jQuery('[id$=txtInvDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
+            scrollInput: false,
             format: 'd/m/Y'
         });
     </script>
@@ -356,6 +359,7 @@
         jQuery('[id$=txtCloseDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
+            scrollInput: false,
             format: 'd/m/Y'
         });
     </script>

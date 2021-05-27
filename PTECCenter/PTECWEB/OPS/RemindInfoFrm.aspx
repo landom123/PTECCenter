@@ -189,6 +189,7 @@
         jQuery('[id$=txtRemindDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
+            scrollInput: false,
             format:'d/m/Y'
         });
     </script>
