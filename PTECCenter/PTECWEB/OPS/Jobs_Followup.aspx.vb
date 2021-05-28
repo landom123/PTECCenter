@@ -45,7 +45,7 @@
 
                 dt.Columns.Add("statusid", GetType(Integer))
                 dt.Columns.Add("name", GetType(String))
-                dt.Rows.Add(10, "confirm")
+                dt.Rows.Add(11, "confirm")
                 cboStatus.DataSource = dt
                 cboStatus.DataValueField = ("statusid")
                 cboStatus.DataTextField = ("name")
@@ -133,7 +133,12 @@
 
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-
+        saveFollowup()
+    End Sub
+    Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        saveFollowup()
+    End Sub
+    Private Sub saveFollowup()
         Dim statusid As Integer = cboStatus.SelectedItem.Value
         Dim details As String = txtDetailFollow.Text
 
@@ -147,8 +152,6 @@
             Dim javaScript As String = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
         End Try
-
-
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
@@ -192,4 +195,5 @@
 
         Page.ClientScript.RegisterStartupScript(Me.GetType(), "alertscript", s, True)
     End Sub
+
 End Class

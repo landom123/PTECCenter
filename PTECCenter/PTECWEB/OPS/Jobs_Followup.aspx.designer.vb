@@ -237,4 +237,13 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnClose As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnConfirm control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
 End Class

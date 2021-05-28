@@ -19,6 +19,7 @@ Public Class frmJobs
         Dim objpolicy As New Policy
 
         If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
             Response.Redirect("~/login.aspx")
         End If
 
@@ -76,6 +77,9 @@ Public Class frmJobs
                 FindJobNo(txtJobno.Text)
 
             Else
+                If Not Session("branchid") Is Nothing Then
+                    cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid")))
+                End If
                 Session("status") = "new"
                 objStatus = "new"
                 txtCreateBy.Text = Session("username")
@@ -715,13 +719,13 @@ endprocess:
                 Dim javaScript As String = "alertWarning('Upload ได้เฉพาะ jpg png gif pdf');"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             Else
-                If System.IO.File.Exists("\\\\10.15.100.240\\test2\\tpd" & FileUpload1.FileName) Then
+                If System.IO.File.Exists("D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\" & FileUpload1.FileName) Then
                     Dim scriptKey As String = "alert"
                     Dim javaScript As String = "alertWarning('ชื่อไฟล์ซ้ำกันไม่ได้');"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 Else
                     lblattatch.Text = FileUpload1.FileName
-                    Dim savePath As String = "\\\\10.15.100.240\\test2\\tpd"
+                    Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
                     Dim fileName As String = FileUpload1.FileName
                     savePath += fileName
                     FileUpload1.SaveAs(savePath)

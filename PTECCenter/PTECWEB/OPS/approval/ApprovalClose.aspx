@@ -21,11 +21,12 @@
         }
 
         .image-upload-wrap {
-            background: #e6ebf4;
-            border: 2px dashed #92a7bf;
+            border-radius: 0.25rem;
+            background: #f0cccc;
+            border: 2px dashed #ff0000;
             text-align: center;
             font-size: 30px;
-            color: #90a0bc;
+            color: #ff0000;
             cursor: pointer;
             opacity: 0.5;
             height: 130px;
