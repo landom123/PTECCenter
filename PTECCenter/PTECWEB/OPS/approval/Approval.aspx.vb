@@ -447,7 +447,7 @@ endprocess:
         Dim fullfilename As String = String.Empty
         If (FileUpload1.HasFile) Then
             Dim Extension As String = System.IO.Path.GetExtension(FileUpload1.FileName)
-            Dim savePath As String = "D:\\PTECAttatch\\IMG\\"
+            Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
             Dim di As String = System.IO.Path.GetDirectoryName(FileUpload1.FileName)
             Dim oldpath As String = di + FileUpload1.FileName
 

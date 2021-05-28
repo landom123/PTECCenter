@@ -269,7 +269,7 @@
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">เอกสารแนบ</span>
-                                            <span class="input-group-text" style="width: 550px"><a href="<%=Page.ResolveUrl("attatch/" & detailtable.Rows(i).Item("attatch")) %>" target="_blank"><% =detailtable.Rows(i).Item("attatch") %></a></span>
+                                            <span class="input-group-text" style="width: 550px"><a href="<%=Page.ResolveUrl("http://vpnptec.dyndns.org:10280/OPS_แจ้งซ่อม/" & detailtable.Rows(i).Item("attatch")) %>" target="_blank"><% =detailtable.Rows(i).Item("attatch") %></a></span>
                                         </div>
                                     </div>
                                 </div>

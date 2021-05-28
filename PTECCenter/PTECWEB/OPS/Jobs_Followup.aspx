@@ -19,7 +19,10 @@
                 <div class="row">
                     <div class="col-12">
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-success" runat="server" Text=" back " />
-                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />&nbsp;
+                        <% If maintable.Rows(0).Item("owner") > 0 Then %>
+
+                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />
+                        <% End if %>
                     </div>
                 </div>
                 <p></p>
@@ -216,14 +219,17 @@
                                         <asp:Label ID="lblCreateDate" class="form-control" runat="server" Text=""></asp:Label>
                                     </td>
                                     <td>
-                                        <% If maintable.Rows(0).Item("owner") > 0 Or String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) Or String.Equals(Session("username"), maintable.Rows(0).Item("createby")) Then
-
-                                                If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                                                <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " />
-                                                <% End if %>
-
-                                        <asp:Button ID="btnClose" class="btn btn-sm  btn-danger" runat="server" Text="Close" />
+                                        <% If maintable.Rows(0).Item("owner") > 0 Or String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) Then %>
+                                        <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " />
                                         <% End if %>
+                                        <asp:Button ID="btnClose" class="btn btn-sm  btn-danger" runat="server" Text="Close" />
+                                        <% ElseIf String.Equals(Session("username"), maintable.Rows(0).Item("createby")) Then %>
+                                        <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                                        <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " />
+                                        <% End if %>
+                                        <% End if %>
+
                                     </td>
                                 </tr>
                             </tbody>

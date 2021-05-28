@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="fullurl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://vpnptec.dyndns.org:10280/</Value>
+      <Value Profile="(Default)">http://vpnptec.dyndns.org:10280/OPS_ขออนุมัติ/</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("http://vpnptec.dyndns.org:10280/")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("http://vpnptec.dyndns.org:10280/OPS_ขออนุมัติ/")>  _
         Public ReadOnly Property fullurl() As String
             Get
                 Return CType(Me("fullurl"),String)

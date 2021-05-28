@@ -422,11 +422,11 @@ Public Class jobs
         Return result
     End Function
     Private Sub SaveDetail(jobno As String, mytable As DataTable, username As String)
-
+        Dim jobdetailid As Integer
         With mytable
             For i = 0 To mytable.Rows.Count - 1
                 If .Rows(i).Item("jobdetailid") = 0 Then
-                    SaveDetailToTable(jobno,
+                    jobdetailid = SaveDetailToTable(jobno,
                                       .Rows(i).Item("jobtypeid"),
                                       .Rows(i).Item("assetid"),
                                       .Rows(i).Item("assetcode"),
@@ -438,19 +438,23 @@ Public Class jobs
                                     If(String.IsNullOrEmpty(.Rows(i).Item("requestdate")), DBNull.Value, .Rows(i).Item("requestdate")),
                                     .Rows(i).Item("details"),
                                     username)
+                    If Not .Rows(i).Item("attatch") Is Nothing Then
+                        SaveDetail_Attatch(jobdetailid, .Rows(i).Item("attatch"))
+                    End If
                 End If
             Next
         End With
         'Result = ds.Tables(0).Rows(0).Item("code")
 
     End Sub
-    Private Sub SaveDetailToTable(jobno As String, jobtypeid As Integer, assetid As Object, assetcode As String, quantity As Integer,
+    Private Function SaveDetailToTable(jobno As String, jobtypeid As Integer, assetid As Object, assetcode As String, quantity As Integer,
                                   unitid As Integer, cost As Double, supplierid As Double, policyid As Double,
-                                  duedate As Object, details As String, updateby As String)
-        'Dim ds As New DataSet
+                                  duedate As Object, details As String, updateby As String) As Integer
+        Dim result As Integer
+        Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
         Dim cmd As New SqlCommand
-        'Dim adp As New SqlDataAdapter
+        Dim adp As New SqlDataAdapter
 
         conn.Open()
         cmd.Connection = conn
@@ -469,6 +473,31 @@ Public Class jobs
         cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = duedate
         cmd.Parameters.Add("@details", SqlDbType.VarChar).Value = details
         cmd.Parameters.Add("@updateby", SqlDbType.VarChar).Value = updateby
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("JobDetailID")
+        conn.Close()
+        Return result
+
+    End Function
+
+    Private Sub SaveDetail_Attatch(jobdetailid As Integer, filename As String)
+        'Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        'Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "JobsDetails_Attatch_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.Int).Value = jobdetailid
+        cmd.Parameters.Add("@fileName", SqlDbType.VarChar).Value = filename
+
+
         cmd.ExecuteNonQuery()
         conn.Close()
 
