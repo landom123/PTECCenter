@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Jobs_Followup.aspx.vb" Inherits="PTECCENTER.JobsFollowup" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .input-group {
+            margin-bottom: 1rem;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
@@ -18,16 +23,16 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <asp:Button ID="btnBack" class="btn btn-sm  btn-success" runat="server" Text=" back " />
+                        <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
                         <% If maintable.Rows(0).Item("owner") > 0 Then %>
 
                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />
                         <% End if %>
                     </div>
                 </div>
-                <p></p>
-                <div class="row">
-                    <div class="col-4">
+
+                <div class="row" style="padding-top: 1rem;">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขที่เอกสาร</span>
@@ -38,7 +43,7 @@
                         </div>
 
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่แจ้ง</span>
@@ -46,7 +51,7 @@
                             <asp:TextBox class="form-control" ID="txtDocDate" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ผู้แจ้ง</span>
@@ -55,9 +60,9 @@
                         </div>
                     </div>
                 </div>
-                <p></p>
+
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
@@ -65,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ฝ่าย</span>
@@ -73,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">แผนก</span>
@@ -82,9 +87,9 @@
                         </div>
                     </div>
                 </div>
-                <p></p>
+
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทงาน</span>
@@ -92,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">รหัสทรัพย์สิน</span>
@@ -100,15 +105,15 @@
                             <asp:TextBox class="form-control" ID="txtAssetCode" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <asp:TextBox class="form-control" ID="txtAssetName" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
                 </div>
-                <br />
+
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-4">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จำนวน</span>
@@ -116,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-4">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">หน่วย</span>
@@ -124,7 +129,7 @@
                             <asp:TextBox class="form-control" ID="txtUnit" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทหมวดราคา</span>
@@ -135,9 +140,9 @@
                         </div>
                     </div>
                 </div>
-                <br />
+
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
@@ -148,11 +153,10 @@
                                 ErrorMessage="ตัวเลขเท่านั้น"
                                 ValidationExpression="\d+.\d+"
                                 ForeColor="Red">
-
                             </asp:RegularExpressionValidator>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Supplier</span>
@@ -162,17 +166,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
-                            <% If maintable.Rows(0).Item("owner") > 0 Then %>
+                            <% If maintable.Rows(0).Item("owner") > 0 And maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
                             <asp:Button ID="btnUpdate" class="btn btn-sm  btn-success" runat="server" Text="Update Cost and Supplier" />
                             <% End if %>
                         </div>
                     </div>
                 </div>
-                <br />
+
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">รายละเอียดงาน</span>
@@ -185,8 +189,8 @@
                 <div class="card-body">
                     <div class="table-responsive">
 
-                        <table class="table table-bordered" id="dataTable">
-                            <thead>
+                        <table class="table table-bordered " id="dataTable">
+                            <thead class="table-info">
                                 <tr>
                                     <th style="width: 200px;">สถานะ</th>
                                     <th style="width: 300px;">รายละเอียด</th>
@@ -219,7 +223,7 @@
                                         <asp:Label ID="lblCreateDate" class="form-control" runat="server" Text=""></asp:Label>
                                     </td>
                                     <td>
-                                        <% If maintable.Rows(0).Item("owner") > 0 Or String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) Then %>
+                                        <% If maintable.Rows(0).Item("owner") > 0 Then %>
                                         <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
                                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " />
                                         <% End if %>

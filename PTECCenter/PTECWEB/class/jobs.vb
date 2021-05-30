@@ -352,6 +352,32 @@ Public Class jobs
         Return result
     End Function
 
+    Public Function JobType_List_By_Depid(depid As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobtype_List_By_DepID"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
     Public Function SaveSupplierandUserAction(jobcode As String,
                          supplierid As Double, useractionid As Double, policy As Integer, usercode As String) As Boolean
         Dim result As Boolean = True
@@ -430,6 +456,8 @@ Public Class jobs
                                       .Rows(i).Item("jobtypeid"),
                                       .Rows(i).Item("assetid"),
                                       .Rows(i).Item("assetcode"),
+                                      .Rows(i).Item("brand"),
+                                      .Rows(i).Item("model"),
                                       .Rows(i).Item("quantity"),
                                     .Rows(i).Item("unitid"),
                                     .Rows(i).Item("cost"),
@@ -447,7 +475,8 @@ Public Class jobs
         'Result = ds.Tables(0).Rows(0).Item("code")
 
     End Sub
-    Private Function SaveDetailToTable(jobno As String, jobtypeid As Integer, assetid As Object, assetcode As String, quantity As Integer,
+    Private Function SaveDetailToTable(jobno As String, jobtypeid As Integer, assetid As Object, assetcode As String,
+                                       brand As String, model As String, quantity As Integer,
                                   unitid As Integer, cost As Double, supplierid As Double, policyid As Double,
                                   duedate As Object, details As String, updateby As String) As Integer
         Dim result As Integer
@@ -465,6 +494,8 @@ Public Class jobs
         cmd.Parameters.Add("@jobtypeid", SqlDbType.Int).Value = jobtypeid
         cmd.Parameters.Add("@assetid", SqlDbType.Int).Value = assetid
         cmd.Parameters.Add("@assetcode", SqlDbType.VarChar).Value = assetcode
+        cmd.Parameters.Add("@brand", SqlDbType.VarChar).Value = brand
+        cmd.Parameters.Add("@model", SqlDbType.VarChar).Value = model
         cmd.Parameters.Add("@quantity", SqlDbType.Int).Value = quantity
         cmd.Parameters.Add("@unitid", SqlDbType.Int).Value = unitid
         cmd.Parameters.Add("@cost", SqlDbType.Money).Value = cost
@@ -950,6 +981,25 @@ Public Class jobs
         adp.SelectCommand = cmd
         adp.Fill(ds)
         result = ds
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function GetAttatchName() As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Get_AttatchName"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("attatchname")
         conn.Close()
         Return result
     End Function

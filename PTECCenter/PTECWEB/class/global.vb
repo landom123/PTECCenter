@@ -81,6 +81,14 @@ Module global_module
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+    Public Sub SetCboJobTypeByDepID(obj As Object, depid As String)
+        Dim job As New jobs
+
+        obj.DataSource = job.JobType_List_By_Depid(depid)
+        obj.DataValueField = "jobtypeid"
+        obj.DataTextField = "name"
+        obj.DataBind()
+    End Sub
 
     Public Sub SetCboUnit(obj As Object)
         Dim unit As New units

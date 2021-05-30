@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class JobsClose
 
     '''<summary>
-    '''txtJobno control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtJobno As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''btnBack control.
     '''</summary>
     '''<remarks>
@@ -30,6 +21,15 @@ Partial Public Class JobsClose
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnBack As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''txtJobno control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtJobno As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''txtDocDate control.
@@ -149,15 +149,6 @@ Partial Public Class JobsClose
     Protected WithEvents txtSupplier As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''btnClose control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnClose As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''txtDetail control.
     '''</summary>
     '''<remarks>
@@ -257,6 +248,15 @@ Partial Public Class JobsClose
     Protected WithEvents cboCost As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''txtcboCost control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtcboCost As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtCostPrice control.
     '''</summary>
     '''<remarks>
@@ -282,4 +282,13 @@ Partial Public Class JobsClose
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnClose control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnClose As Global.System.Web.UI.WebControls.Button
 End Class

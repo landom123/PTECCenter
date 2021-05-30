@@ -140,6 +140,15 @@ Partial Public Class frmJobs
     Protected WithEvents TextBox1 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cboDepForJobType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboDepForJobType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cboJobType control.
     '''</summary>
     '''<remarks>
@@ -183,6 +192,24 @@ Partial Public Class frmJobs
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtAssetName As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtBrand control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBrand As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtModel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtModel As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''txtQuantity control.

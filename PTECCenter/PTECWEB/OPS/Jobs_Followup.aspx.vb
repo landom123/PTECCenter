@@ -179,6 +179,8 @@
 
         Try
             objjob.UpdateSupplierandCost(jobno, jobdetailid, jobCenter, supplierid, cost, usercode)
+
+            Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
         Catch ex As Exception
             Dim scriptKey As String = "UniqueKeyForThisScript"
             'Dim javaScript As String = "alert('" & ex.Message & "');"

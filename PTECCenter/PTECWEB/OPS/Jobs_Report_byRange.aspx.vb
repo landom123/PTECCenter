@@ -12,8 +12,6 @@ Public Class Jobs_Report_byRange
         'Session("username") = "PAB"
         Dim objbranch As New Branch
         Dim objjob As New jobs
-        objbranch.SetComboBranch(cboBranch, "")
-        objjob.SetCboJobStatusList(cboStatus)
         username = Session("username")
         usercode = Session("usercode")
 
@@ -26,7 +24,8 @@ Public Class Jobs_Report_byRange
 
 
         If Not IsPostBack Then
-
+            objbranch.SetComboBranch(cboBranch, "")
+            objjob.SetCboJobStatusList(cboStatus)
         End If
 
 

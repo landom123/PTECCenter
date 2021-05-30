@@ -36,8 +36,8 @@
                     <div class="col-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
-                            <span class="input-group-text">สถานะ</span>
-                              <asp:DropDownList class="form-control" ID="cboBranch" AutoPostBack="True" 
+                            <span class="input-group-text">สาขา</span>
+                              <asp:DropDownList class="form-control" ID="cboBranch" 
                                   runat="server" >
                               </asp:DropDownList>
                           </div>                          
@@ -46,8 +46,8 @@
                     <div class="col-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
-                            <span class="input-group-text">สาขา</span>
-                              <asp:DropDownList class="form-control" ID="cboStatus" AutoPostBack="True" 
+                            <span class="input-group-text">สถานะ</span>
+                              <asp:DropDownList class="form-control" ID="cboStatus"
                                   runat="server" >
                               </asp:DropDownList>
                           </div>                          
