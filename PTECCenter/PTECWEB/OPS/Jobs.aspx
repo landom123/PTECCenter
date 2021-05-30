@@ -371,7 +371,7 @@
                             <%-- begin free detail row--%>
                             <% If objStatus = "new" Or objStatus = "edit" Then %>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class=" col-md-auto">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">แจ้งไปยังฝ่าย</span>
