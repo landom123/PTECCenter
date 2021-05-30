@@ -17,8 +17,12 @@
                     <li class="breadcrumb-item">ปิดงาน (Close Job)
                     </li>
                 </ol>
-
                 <div class="row">
+                    <div class="col-12">
+                        <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 1rem;">
                     <div class="col-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
@@ -26,8 +30,6 @@
                             </div>
                             <asp:TextBox class="form-control" ID="txtJobno" runat="server" ReadOnly="true"></asp:TextBox>
                             <div class="input-group-append">
-                                <asp:Button ID="btnBack" class="btn btn-sm  btn-success" runat="server" Text=" back " />
-                                <br />
                             </div>
                         </div>
 
@@ -147,11 +149,7 @@
                         </div>
                     </div>
 
-                    <div class="col-4 justify-content-center">
-                        <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                        <asp:Button ID="btnClose" class="btn btn-sm btn-success justify-content-center" runat="server" Text="Confirm Close" />
-                        <% End if %>
-                    </div>
+
                 </div>
 
                 <br />
@@ -284,6 +282,13 @@
                                     <tr>
                                         <td>
                                             <asp:DropDownList ID="cboCost" class="form-control" runat="server" data-toggle="dropdown"></asp:DropDownList>
+                                            <!-- <div class="input-group sm-3 boxcost">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">ค่า</span>
+                                                </div>
+                                                <asp:TextBox class="form-control" ID="txtcboCost" runat="server" required></asp:TextBox>
+                                                <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
+                                            </div> -->
                                         </td>
                                         <td>
                                             <div class="input-group">
@@ -297,7 +302,7 @@
                                             <asp:TextBox ID="txtCostUnit" class="form-control text-right" runat="server" type="number" min="1"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " />
+                                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + "/>
                                         </td>
                                     </tr>
                                     <% End if %>
@@ -307,6 +312,20 @@
                     </div>
                 </div>
             </div>
+            <div class="row justify-content-center">
+                <div class="col-11">
+                    <hr />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                    <asp:Button ID="btnClose" class="btn btn-sm btn-success justify-content-center" runat="server" Text="Confirm Close" />
+                    <% End if %>
+                </div>
+            </div>
+            <br />
+
             <!-- end content-wrapper -->
 
 
@@ -369,6 +388,15 @@
                 liveSearch: true,
                 maxOptions: 1
             });
+            var cboCost = document.getElementById('<%= cboCost.ClientID%>').value
+            /*if (cboCost == '99999') {
+                alertWarning('กรอกไม่ครบถ้วน');
+                event.preventDefault();
+                event.stopPropagation();
+                $('.boxcost').show();
+            } else {
+                $('.boxcost').hide();
+            }*/
         });
         jQuery('[id$=cboCost]').on('show.bs.dropdown', function () {
             $('.table-responsive').css("overflow", "inherit");
@@ -377,6 +405,16 @@
         jQuery('[id$=cboCost]').on('hide.bs.dropdown', function () {
             $('.table-responsive').css("overflow", "auto");
         })
+
+        /*jQuery('[id$=cboCost]').on('change', function () {
+            if (this.value == '99999') {
+
+                $('.boxcost').show();
+            } else {
+                $('.boxcost').hide();
+
+            }
+        })*/
     </script>
 
     <script type="text/javascript">
@@ -446,6 +484,19 @@
                 '',
                 'warning'
             )
+        }
+    </script>
+    <script>
+        function validateDataCost() {
+
+            var txtcboCost = document.getElementById('<%= txtcboCost.ClientID%>').value
+            var cboCost = document.getElementById('<%= cboCost.ClientID%>').value
+            if (cboCost == '99999' && !txtcboCost) {
+                alertWarning('กรอกไม่ครบถ้วน');
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
         }
     </script>
 </asp:Content>

@@ -55,6 +55,7 @@ Public Class frmJobs
             ClearText()
             objbranch.SetComboBranch(cboBranch, usercode)
             objdep.SetCboDepartment(cboDepartment, 0)
+            objdep.SetCboDepartmentforjobtype(cboDepForJobType)
             objsec.SetCboSection(cboSection, 0)
             objsupplier.SetCboSupplier(cboSupplier)
             'objdep.SetCboDepartment(cboDepartment, 0)
@@ -79,6 +80,9 @@ Public Class frmJobs
             Else
                 If Not Session("branchid") Is Nothing Then
                     cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid")))
+                    If cboJobType.SelectedItem.Value = 1 Then
+                        FindPositionInPump(cboBranch.SelectedItem.Value)
+                    End If
                 End If
                 Session("status") = "new"
                 objStatus = "new"
@@ -211,6 +215,8 @@ Public Class frmJobs
         dt.Columns.Add("owner", GetType(Integer))
         dt.Columns.Add("followup_status", GetType(String))
         dt.Columns.Add("attatch", GetType(String))
+        dt.Columns.Add("brand", GetType(String))
+        dt.Columns.Add("model", GetType(String))
 
 
 
@@ -348,8 +354,8 @@ Public Class frmJobs
 
 endprocess:
         If result = False Then
-            Dim scriptKey As String = "alert"
-            Dim javaScript As String = "alert('" + msg + "');"
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('validatedata Fail')"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             'MsgBox(msg)
         End If
@@ -416,6 +422,12 @@ endprocess:
                 msg = "กรุณาเลือกตำแหน่งตู้"
                 GoTo endprocess
             End If
+        ElseIf cboJobType.SelectedItem.Value = 16 Then
+            If String.IsNullOrEmpty(txtAssetName.Text) And String.IsNullOrEmpty(txtbrand.Text) And String.IsNullOrEmpty(txtModel.Text) Then
+                result = False
+                msg = "กรุณาระบุรหัสทรัพสินทร์ หรือ ชื่อยี่ห้อ หรือ รุ่น"
+                GoTo endprocess
+            End If
         End If
         If Not cboPolicy.SelectedItem.Value = 0 Then
             If String.IsNullOrEmpty(txtDueDate.Text) Then
@@ -427,6 +439,11 @@ endprocess:
         If String.IsNullOrEmpty(txtJobDetail.Text) Then
             result = False
             msg = "กรุณาระบุรายละเอียด"
+            GoTo endprocess
+        End If
+        If cboBranch.SelectedItem.Value = "" Then
+            result = False
+            msg = "กรุณาเลือกสาขา"
             GoTo endprocess
         End If
 
@@ -451,7 +468,10 @@ endprocess:
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
-        ViewReport(txtJobno.Text)
+        Dim s As String = "window.open('../OPS/Jobs_Report_JobForm.aspx?jobcode=" & Request.QueryString("jobno").ToString() &
+    "&supplierid=0', '_blank');"
+
+        Page.ClientScript.RegisterStartupScript(Me.GetType(), "alertscript", s, True)
     End Sub
 
     Private Sub ViewReport(jobcode As String)
@@ -502,11 +522,19 @@ endprocess:
             mydataset = ass.Find(txtAssetCode.Text)
             If mydataset.Tables(0).Rows.Count > 0 Then
                 txtAssetName.Text = mydataset.Tables(0).Rows(0).Item("name")
+            Else
+                txtAssetCode.Text = ""
+                txtAssetName.Text = ""
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('ไม่มีรหัสทรัพสินนี้');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
         Catch ex As Exception
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            Dim javaScript As String = "alert('" & ex.Message & "');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Find fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
 
@@ -561,9 +589,9 @@ endprocess:
             SetMenu()
         Catch ex As Exception
             result = False
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            Dim javaScript As String = "alert('" & ex.Message & "');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('Confirm fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
         Return result
     End Function
@@ -580,9 +608,9 @@ endprocess:
                 AddDetails()
                 cleardetail()
             Catch ex As Exception
-                Dim scriptKey As String = "UniqueKeyForThisScript"
-                Dim javaScript As String = "alert('" & ex.Message & "');"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+                Dim scriptKey As String = "alert"
+                Dim javaScript As String = "alertWarning('AddDetail fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End Try
 
 
@@ -601,24 +629,7 @@ endprocess:
         txtAssetCode.Text = ""
         txtAssetName.Text = ""
     End Sub
-    Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
-        branchid = cboBranch.SelectedItem.Value
 
-        Dim objdep As New Department
-        objdep.SetCboDepartment(cboDepartment, branchid)
-
-        If cboJobType.SelectedItem.Value = 1 Then
-            FindPositionInPump(branchid)
-        End If
-    End Sub
-
-    Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
-        Dim depid As Integer
-        Dim objsection As New Section
-
-        depid = cboDepartment.SelectedItem.Value
-        objsection.SetCboSection(cboSection, depid)
-    End Sub
     Private Sub updatehead()
         Dim userid As Double
         Dim jobowner As Double
@@ -700,6 +711,8 @@ endprocess:
         row("owner") = 0
         row("followup_status") = ""
         row("attatch") = lblattatch.Text
+        row("brand") = txtBrand.Text
+        row("model") = txtModel.Text
 
         detailtable.Rows.Add(row)
         'detailtable.Rows.Add(0, cboJobType.SelectedItem.Value, cboJobType.SelectedItem.Text, txtAssetCode.Text, txtAssetName.Text,
@@ -724,31 +737,22 @@ endprocess:
                     Dim javaScript As String = "alertWarning('ชื่อไฟล์ซ้ำกันไม่ได้');"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 Else
-                    lblattatch.Text = FileUpload1.FileName
+                    Dim attatchName As New jobs
+                    Dim fileName As String
+                    fileName = attatchName.GetAttatchName()
                     Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
-                    Dim fileName As String = FileUpload1.FileName
+                    'Dim fileName As String = FileUpload1.FileName
                     savePath += fileName
+                    savePath += Extension
                     FileUpload1.SaveAs(savePath)
+                    fileName += Extension
+                    lblattatch.Text = fileName
                 End If
             End If
         End If
     End Sub
 
-    Private Sub cboJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobType.SelectedIndexChanged
-        Dim objpolicy As New Policy
 
-        jobtypeid = cboJobType.SelectedItem.Value
-        objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobtypeid)
-        If jobtypeid = 1 Then
-            If Not cboBranch.SelectedItem.Value = "" Then
-                FindPositionInPump(cboBranch.SelectedItem.Value)
-            Else
-                Dim scriptKey As String = "alert"
-                Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            End If
-        End If
-    End Sub
     Private Function FindPositionInPump(branchid As String) As Boolean
         Dim objjobs As New jobs
         Try
@@ -777,5 +781,43 @@ endprocess:
 
     Private Sub cboPolicy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboPolicy.SelectedIndexChanged
         setDueDate(cboPolicy.SelectedItem.Value)
+    End Sub
+
+    Private Sub cboDepForJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepForJobType.SelectedIndexChanged
+        cboJobType.SelectedIndex = -1
+        SetCboJobTypeByDepID(cboJobType, cboDepForJobType.SelectedItem.Value)
+    End Sub
+    Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
+        branchid = cboBranch.SelectedItem.Value
+
+        Dim objdep As New Department
+        objdep.SetCboDepartment(cboDepartment, branchid)
+
+        If cboJobType.SelectedItem.Value = 1 Then
+            FindPositionInPump(branchid)
+        End If
+    End Sub
+
+    Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
+        Dim depid As Integer
+        Dim objsection As New Section
+
+        depid = cboDepartment.SelectedItem.Value
+        objsection.SetCboSection(cboSection, depid)
+    End Sub
+    Private Sub cboJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobType.SelectedIndexChanged
+        Dim objpolicy As New Policy
+
+        jobtypeid = cboJobType.SelectedItem.Value
+        objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobtypeid)
+        If jobtypeid = 1 Then
+            If Not cboBranch.SelectedItem.Value = "" Then
+                FindPositionInPump(cboBranch.SelectedItem.Value)
+            Else
+                Dim scriptKey As String = "alert"
+                Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End If
+        End If
     End Sub
 End Class
