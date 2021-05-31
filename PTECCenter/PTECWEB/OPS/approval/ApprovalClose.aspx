@@ -375,7 +375,7 @@
             var status = document.getElementById('<%= txtStatus.ClientID%>');
             console.log(status.value)
 
-            if (status.value == "อนุมัติ" || status.value == "จัดส่งเอกสาร") {
+            if (status.value == "อนุมัติ" || status.value == "เอกสารครบถ้วน") {
                 if (img1.getAttribute('src') != "#") {
                     console.log("inif1")
 
