@@ -176,7 +176,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
-                                        <% if String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname")) Then%>
+                                        <% if String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname").ToString) Then%>
                                         <span class="input-group-text" style="width: 550px">ยังไม่บันทึก</span>
                                         <% Else %>
                                         <span class="input-group-text" style="width: 550px"><% =detailtable.Rows(i).Item("assetname") %></span>
@@ -195,7 +195,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetcode")) Then%>
+                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetcode").ToString) Then%>
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
@@ -205,7 +205,7 @@
                                     </div>
                                 </div>
                                 <% End if %>
-                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname")) Then%>
+                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname").ToString) Then%>
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
                                         <span class="input-group-text" style="width: 550px"><% =detailtable.Rows(i).Item("assetname") %></span>
@@ -213,9 +213,9 @@
                                 </div>
                                 <% End if %>
                             </div>
-                            <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("brand")) Or Not String.IsNullOrEmpty(detailtable.Rows(i).Item("model")) Then%>
+                            <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("brand").ToString) Or Not String.IsNullOrEmpty(detailtable.Rows(i).Item("model").ToString) Then%>
                             <div class="row">
-                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("brand")) Then%>
+                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("brand").ToString) Then%>
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
@@ -225,7 +225,7 @@
                                     </div>
                                 </div>
                                 <% End if %>
-                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("model")) Then%>
+                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("model").ToString) Then%>
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
@@ -248,7 +248,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetcode")) Then%>
+                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetcode").ToString) Then%>
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
@@ -258,7 +258,7 @@
                                     </div>
                                 </div>
                                 <% End if %>
-                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname")) Then%>
+                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname").ToString) Then%>
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
                                         <span class="input-group-text" style="width: 550px"><% =detailtable.Rows(i).Item("assetname") %></span>
