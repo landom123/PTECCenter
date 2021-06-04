@@ -12,43 +12,7 @@ Option Explicit On
 
 
 Partial Public Class Jobs_Report_byRange
-    
-    '''<summary>
-    '''txtBeginDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtBeginDate As Global.System.Web.UI.WebControls.TextBox
-    
-    '''<summary>
-    '''txtEndDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
-    
-    '''<summary>
-    '''cboBranch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
-    
-    '''<summary>
-    '''cboStatus control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboStatus As Global.System.Web.UI.WebControls.DropDownList
-    
+
     '''<summary>
     '''btnReport control.
     '''</summary>
@@ -57,4 +21,67 @@ Partial Public Class Jobs_Report_byRange
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnReport As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cboDep control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboDep As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboJobType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboJobType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboStatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboStatus As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboBranchGroup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboBranchGroup As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboBranch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtBeginDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBeginDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtEndDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
 End Class

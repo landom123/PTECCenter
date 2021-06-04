@@ -11,6 +11,7 @@ Public Class Jobs_Report_byRange
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'Session("username") = "PAB"
         Dim objbranch As New Branch
+        Dim objdep As New Department
         Dim objjob As New jobs
         username = Session("username")
         usercode = Session("usercode")
@@ -24,8 +25,11 @@ Public Class Jobs_Report_byRange
 
 
         If Not IsPostBack Then
-            objbranch.SetComboBranch(cboBranch, "")
+            objbranch.SetComboBranchGroup(cboBranchGroup)
+            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
             objjob.SetCboJobStatusList(cboStatus)
+            objdep.SetCboDepartmentforjobtype(cboDep)
+            SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
         End If
 
 
@@ -106,5 +110,17 @@ Public Class Jobs_Report_byRange
         jobtypeid = 0
 
         ViewReport(begindate, enddate, branch, status, jobowner, jobaction, jobtypeid)
+    End Sub
+
+    Private Sub cboDep_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDep.SelectedIndexChanged
+        cboJobType.SelectedIndex = -1
+        SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
+    End Sub
+
+    Private Sub cboBranchGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranchGroup.SelectedIndexChanged
+        Dim objbranch As New Branch
+
+        cboBranch.SelectedIndex = -1
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
     End Sub
 End Class
