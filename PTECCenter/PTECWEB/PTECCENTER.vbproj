@@ -1585,6 +1585,7 @@
     <Content Include="OPS\approval\ApprovalClose.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
+    <Content Include="OPS\FileUpload\FileUpload.aspx" />
     <Content Include="OPS\Jobs_Report_JobForm.aspx" />
     <Content Include="OPS\Master.aspx" />
     <Content Include="OPS\Master\WebForm2.aspx" />
@@ -3337,6 +3338,7 @@
     <Compile Include="class\global.vb" />
     <Compile Include="class\GlobalClass.vb" />
     <Compile Include="class\gsm.vb" />
+    <Compile Include="class\Attatch.vb" />
     <Compile Include="class\jobs.vb" />
     <Compile Include="class\menu.vb" />
     <Compile Include="class\Policy.vb" />
@@ -3374,6 +3376,13 @@
     </Compile>
     <Compile Include="OPS\approval\WebForm5.aspx.vb">
       <DependentUpon>WebForm5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\FileUpload\FileUpload.aspx.designer.vb">
+      <DependentUpon>FileUpload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\FileUpload\FileUpload.aspx.vb">
+      <DependentUpon>FileUpload.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Jobs_Report_JobForm.aspx.designer.vb">
