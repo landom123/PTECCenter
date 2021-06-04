@@ -31,7 +31,7 @@ Public Class FileUpload1
         If Not IsPostBack() Then
             detailtable = createdetailtable()
             txtUserName.Text = Session("username")
-            detailtable = attatch.Attatch_Find()
+            detailtable = attatch.Attatch_Find(Session("userid"))
             Session("detailtable") = detailtable
             BindData()
         Else
@@ -52,31 +52,37 @@ Public Class FileUpload1
         Dim attatch As New Attatch
         Dim fullfilename As String = String.Empty
         If (FileUpload1.HasFile) Then
+            Dim allow_send_pic() As String = {".tiff", ".pjp", ".jfif", ".gif", ".svg", ".bmp", ".png", ".jpeg", ".svgz", ".jpg", ".webp", ".ico", ".xbm", ".dib", ".tif", ".pjpeg", ".avif", ".pdf"}
             Dim Extension As String = System.IO.Path.GetExtension(FileUpload1.FileName)
             Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_Fileupload\\"
             Dim di As String = System.IO.Path.GetDirectoryName(FileUpload1.FileName)
             Dim oldpath As String = di + FileUpload1.FileName
-
             Try
-                Dim fileName As String
-                fileName = attatch.GetAttatchName()
-                savePath += fileName
-                savePath += Extension
-                FileUpload1.SaveAs(savePath)
-                fullfilename += fileName
-                fullfilename += Extension
+                If Array.IndexOf(allow_send_pic, Extension.ToLower()) = -1 Then
+                    Dim scriptKey As String = "alert"
+                    Dim javaScript As String = "alertWarning('Upload ได้เฉพาะ image,pdf');"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                Else
+                    Dim fileName As String
+                    fileName = attatch.GetAttatchName()
+                    savePath += fileName
+                    savePath += Extension
+                    FileUpload1.SaveAs(savePath)
+                    fullfilename += fileName
+                    fullfilename += Extension
 
-                attatch.Attatch_Save(fullfilename, Extension, txtDetail.Text.Trim(), savePath, Session("userid").ToString)
+                    attatch.Attatch_Save(fullfilename, Extension, txtDetail.Text.Trim(), savePath, Session("userid").ToString)
 
-                txtDetail.Text = ""
-                detailtable = attatch.Attatch_Find()
-                Session("detailtable") = detailtable
-                BindData()
-                'img1.Attributes.Add("src", a)
-                Dim scriptKey As String = "alert"
-                'Dim javaScript As String = "alert('" & ex.Message & "');"
-                Dim javaScript As String = "alertSuccess();"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                    txtDetail.Text = ""
+                    detailtable = attatch.Attatch_Find(Session("userid"))
+                    Session("detailtable") = detailtable
+                    BindData()
+                    'img1.Attributes.Add("src", a)
+                    Dim scriptKey As String = "alert"
+                    'Dim javaScript As String = "alert('" & ex.Message & "');"
+                    Dim javaScript As String = "alertSuccess();"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                End If
             Catch ex As Exception
                 Dim scriptKey As String = "alert"
                 'Dim javaScript As String = "alert('" & ex.Message & "');"

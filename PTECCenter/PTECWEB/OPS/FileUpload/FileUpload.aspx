@@ -113,7 +113,7 @@
                                             <div class="input-group justify-content-center">
                                                 <div class="image-upload-wrap justify-content-center">
                                                     <i>+</i>
-                                                    <asp:FileUpload ID="FileUpload1" class="file-upload-input" runat="server" onchange="readURL(this);" accept="image/*" text="เลือกไฟล์" />
+                                                    <asp:FileUpload ID="FileUpload1" class="file-upload-input" runat="server" onchange="readURL(this);" accept="image/*,.pdf" text="เลือกไฟล์" />
                                                 </div>
                                             </div>
                                             <div class="file-upload-content">
