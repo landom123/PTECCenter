@@ -43,7 +43,7 @@
                         <a href="approval.aspx" class="btn btn-sm btn-danger ">New</a>
                         &nbsp;
                         <% If Not Session("positionid") = "10" Then%>
-                        <!--<asp:Button ID="btnSearch" class="btn btn-sm  btn-primary" runat="server" Text="Search" />&nbsp; -->       
+                        <!--<asp:Button ID="btnSearch" class="btn btn-sm  btn-primary" runat="server" Text="Search" />&nbsp; -->
                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />&nbsp;
                         <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                          <% End If %>
@@ -192,8 +192,8 @@
 
 
         </div>
-        <!-- /.content-wrapper -->
-        <!-- end เนื้อหาเว็บ -->
+    <!-- /.content-wrapper -->
+    <!-- end เนื้อหาเว็บ -->
 
 
     </div>

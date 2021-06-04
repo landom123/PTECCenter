@@ -8,6 +8,18 @@ Public Class Branch
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+    Public Sub SetComboBranchByBranchGroupID(obj As Object, branchgroupid As String)
+        obj.DataSource = Me.Branch_List_By_BranchGroupID(branchgroupid)
+        obj.DataValueField = "branchid"
+        obj.DataTextField = "name"
+        obj.DataBind()
+    End Sub
+    Public Sub SetComboBranchGroup(obj As Object)
+        obj.datasource = Me.ListGroup()
+        obj.DataValueField = "branchgroupid"
+        obj.DataTextField = "branchgroupcode"
+        obj.DataBind()
+    End Sub
     Public Sub SetComboBranch(obj As Object, usercode As String)
         obj.datasource = Me.List(usercode)
         obj.DataValueField = "branchid"
@@ -20,6 +32,7 @@ Public Class Branch
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+
     Public Function PermissionRemove(usercode As String, branchid As String) As Boolean
         Dim result As Boolean
         'Credit_Balance_List_Createdate
@@ -89,6 +102,60 @@ Public Class Branch
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function ListGroup() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "BranchGroup_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Branch_List_By_BranchGroupID(branchgroupid As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Branch_List_By_BranchGroupID"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
