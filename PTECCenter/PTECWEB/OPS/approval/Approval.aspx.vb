@@ -438,8 +438,12 @@ endprocess:
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-        If Confirm(txtApprovalcode.Text, Session("usercode")) Then
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+        Dim confirmValue As String = Request.Form("confirm_value")
+        If confirmValue = "Yes" Then
+            If Confirm(txtApprovalcode.Text, Session("usercode")) Then
+                Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+            End If
+            confirmValue = "No"
         End If
     End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click

@@ -335,7 +335,7 @@
                                     </div>
                                     <% ElseIf Session("status") = "read" And (Session("userid").ToString() = detailtable.Rows(0).Item("createby")) Then%>
                                     <div class="card-footer text-center bg-white">
-                                        <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" />
+                                        <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                                         <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" />
                                         <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" />
                                         <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" />
@@ -775,4 +775,22 @@
 
         }, 1000);
     </script>
+    <script>
+    function Confirm() {
+
+            console.log("insave");
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("คุณต้องการจะบันทึกหรือไม่ ?")) {
+                confirm_value.value = "Yes";
+            }
+            else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+            return true;
+        }
+    </script>
+
 </asp:Content>
