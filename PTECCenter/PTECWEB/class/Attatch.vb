@@ -48,7 +48,7 @@ Public Class Attatch
 
     End Function
 
-    Public Function Attatch_Find() As DataTable
+    Public Function Attatch_Find(userid As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -61,6 +61,7 @@ Public Class Attatch
         cmd.CommandText = "Attatch_Find"
         cmd.CommandType = CommandType.StoredProcedure
 
+        cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
 
         adp.SelectCommand = cmd
         adp.Fill(ds)
