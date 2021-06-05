@@ -141,8 +141,8 @@ Public Class WebForm4
                 Dim javaScript As String = "alertWarning('upload file fail');"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End Try
-            Return fullfilename
         End If
+        Return fullfilename
     End Function
     Private Sub Approval_Close(fullfilenameimageafter As String, fullfilenameimagebill As String)
         Dim approval As New Approval
