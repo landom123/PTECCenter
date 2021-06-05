@@ -33,6 +33,7 @@ Public Class WebForm4
                 Try
                     approvaldataset = objapproval.Approval_Find(Request.QueryString("approvalcode"))
                     detailtable = approvaldataset.Tables(0)
+                    Session("detailtable") = detailtable
                     statusid = approvaldataset.Tables(0).Rows(0).Item("statusid")
                     If statusid = 4 Then
                         txtDetail.ReadOnly = True
@@ -61,6 +62,8 @@ Public Class WebForm4
             Else
                 flag = False
             End If
+        Else
+            detailtable = Session("detailtable")
         End If
     End Sub
     Private Sub chkuser(userid As Integer)
@@ -111,14 +114,33 @@ Public Class WebForm4
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Dim fullfilenameimageafter As String = String.Empty
         Dim fullfilenameimagebill As String = String.Empty
+        Dim approval As New Approval
         If chkAfter.Checked Then
             fullfilenameimageafter = fileupload(fileImgAfter)
+            Try
+                approval.Image_Save(fullfilenameimageafter, "Approval_AT", detailtable.Rows(0).Item("approvalid"), Session("usercode"))
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('upload file after fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
         End If
         If chkBill.Checked Then
             fullfilenameimagebill = fileupload(fileImgBill)
+            Try
+                approval.Image_Save(fullfilenameimagebill, "Approval_Bill", detailtable.Rows(0).Item("approvalid"), Session("usercode"))
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('upload file bill fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
         End If
-
         Approval_Close(fullfilenameimageafter, fullfilenameimagebill)
+endprocess:
     End Sub
     Private Function fileupload(file As FileUpload) As String
         Dim imgname As New Approval
@@ -151,12 +173,11 @@ Public Class WebForm4
         Try
             approvaltable = approval.Approval_Close(txtApprovalcode.Text.Trim(), txtDetail.Text.Trim(), txtCloseDate.Text.Trim(), Session("usercode"))
             approvalid = approvaltable.Rows(0).Item("approvalid")
-            If Not String.IsNullOrEmpty(fullfilenameimageafter) Then
-                approval.Image_Save(fullfilenameimageafter, "Approval_AT", approvalid, Session("usercode"))
-            End If
-            If Not String.IsNullOrEmpty(fullfilenameimagebill) Then
-                approval.Image_Save(fullfilenameimagebill, "Approval_Bill", approvalid, Session("usercode"))
-            End If
+            'If Not String.IsNullOrEmpty(fullfilenameimageafter) Then
+            '    approval.Image_Save(fullfilenameimageafter, "Approval_AT", approvalid, Session("usercode"))
+            'End If
+            'If Not String.IsNullOrEmpty(fullfilenameimagebill) Then
+            'End If
             Dim scriptKey As String = "alert"
             Dim javaScript As String = "alertSuccessUpload()"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
