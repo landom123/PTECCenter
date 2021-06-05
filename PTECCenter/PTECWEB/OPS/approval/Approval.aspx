@@ -517,6 +517,8 @@
             }
             if (status.value == "ปิดงาน") {
                 console.log("ปิดงาน")
+                console.log(img_after.getAttribute('src'))
+                console.log(img_bil.getAttribute('src'))
 
                 if (img_after.getAttribute('src') != "#") {
                     console.log("inif1")
@@ -786,7 +788,8 @@
                 confirm_value.value = "Yes";
             }
             else {
-                confirm_value.value = "No";
+                event.preventDefault();
+                event.stopPropagation();
             }
             document.forms[0].appendChild(confirm_value);
             return true;

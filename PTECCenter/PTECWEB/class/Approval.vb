@@ -399,7 +399,6 @@ Public Class Approval
     End Function
 
     Public Function Image_Save(filename As String, imagetype As String, approvalid As Integer, username As String)
-        Dim result As String
         'Credit_Balance_List_Createdate
         'Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)

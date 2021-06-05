@@ -125,7 +125,7 @@ Public Class WebForm4
         Dim fullfilename As String = String.Empty
         If (file.HasFile) Then
             Dim Extension As String = System.IO.Path.GetExtension(file.FileName)
-            Dim savePath As String = "D:\\PTECAttatch\\IMG\\"
+            Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
             Try
                 Dim fileName As String
                 fileName = imgname.GetImageName()
