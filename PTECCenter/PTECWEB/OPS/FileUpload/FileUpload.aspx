@@ -160,6 +160,11 @@
                                             <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("createby")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="date" ItemStyle-HorizontalAlign="center">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("createdate")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:TemplateField HeaderText="detail">
                                         <ItemTemplate >
                                             <asp:Label ID="lblstatus" Style="display: table; table-layout: fixed; width: 100%; word-wrap: break-word;" runat="server" Text='<%#Eval("attatchdetail")%>'></asp:Label>

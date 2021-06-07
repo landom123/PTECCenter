@@ -175,6 +175,7 @@ endprocess:
 
         Try
             approval.Confirm(approvalcode, usercode)
+            result = True
         Catch ex As Exception
             result = False
             Dim scriptKey As String = "alert"

@@ -105,6 +105,7 @@ Public Class FileUpload1
         dt.Columns.Add("attatchdetail", GetType(String))
         dt.Columns.Add("createby", GetType(String))
         dt.Columns.Add("attatchextension", GetType(String))
+        dt.Columns.Add("createdate", GetType(String))
 
         Return dt
     End Function
