@@ -174,15 +174,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname").ToString) Then%>
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
-                                        <% if String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname").ToString) Then%>
-                                        <span class="input-group-text" style="width: 550px">ยังไม่บันทึก</span>
-                                        <% Else %>
                                         <span class="input-group-text" style="width: 550px"><% =detailtable.Rows(i).Item("assetname") %></span>
-                                        <% End if %>
                                     </div>
                                 </div>
+                                <% End if %>
                             </div>
 
                             <% Else If detailtable.Rows(i).Item("jobtypeid") = 16 Then %>
@@ -402,7 +400,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <% Else %>
+                            <% End if %>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="input-group sm-3">
@@ -440,7 +438,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <% End if %>
                             <% End if %>
 
                             <div class="row">

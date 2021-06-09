@@ -41,13 +41,13 @@ Partial Public Class Jobs_Report_byRange
     Protected WithEvents cboJobType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cboStatus control.
+    '''cboStatusFollow control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboStatus As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cboBranchGroup control.

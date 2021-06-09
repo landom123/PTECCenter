@@ -159,9 +159,11 @@ Public Class JobsClose
             If objjob.JobCloseSave(jobno, jobdetailid, jobclosetypeid, beginwarr, endwarr,
                                    part, labor, travel, invoiceno, invoicedate, detail, closedate, usercode, jobclosecategoryid) Then
 
-                Response.Redirect("jobs_Close.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+                'Response.Redirect("jobs_Close.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
 
             End If
+            Response.Redirect("jobs_Close.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+
         Catch ex As Exception
             Dim scriptKey As String = "UniqueKeyForThisScript"
             'Dim javaScript As String = "alert('" & ex.Message & "');"

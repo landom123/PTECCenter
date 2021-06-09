@@ -26,8 +26,8 @@ Public Class Jobs_Report_byRange
 
         If Not IsPostBack Then
             objbranch.SetComboBranchGroup(cboBranchGroup)
-            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-            objjob.SetCboJobStatusList(cboStatus)
+            objbranch.SetComboBranch(cboBranch, "")
+            objjob.SetCboJobStatusList(cboStatusFollow)
             objdep.SetCboDepartmentforjobtype(cboDep)
             SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
         End If
@@ -84,32 +84,16 @@ Public Class Jobs_Report_byRange
     End Sub
 
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
-        Dim begindate, enddate, jobowner, jobaction As String
-        Dim status, jobtypeid, branch As Integer
-        Dim bdate, edate As DateTime
+        Dim s As String = "window.open('../OPS/Jobs_Report_JobReport.aspx?depid=" & cboDep.SelectedItem.Value &
+            "&jobtypeid=" & cboJobType.SelectedItem.Value &
+            "&statusFollow=" & cboStatusFollow.SelectedItem.Value &
+            "&branchgroupid=" & cboBranchGroup.SelectedItem.Value &
+            "&branchid=" & cboBranch.SelectedItem.Value &
+            "&startdate=" & txtBeginDate.Text &
+            "&enddate=" & txtEndDate.Text &
+            " ', '_blank');"
 
-
-        'begindate = Date.Parse(txtBeginDate.Text).Year.ToString("0000") &
-        '            Date.Parse(txtBeginDate.Text).Month.ToString("00") & Date.Parse(txtBeginDate.Text).Day.ToString("00")
-        'enddate = Date.Parse(txtEndDate.Text).Year.ToString("0000") &
-        '            Date.Parse(txtEndDate.Text).Month.ToString("00") & Date.Parse(txtEndDate.Text).Day.ToString("00")
-
-        'begindate = Date.Parse(txtBeginDate.Text).Year.ToString("0000") &
-        '            Date.Parse(txtBeginDate.Text).Month.ToString("00") & Date.Parse(txtBeginDate.Text).Day.ToString("00")
-        'enddate = Date.Parse(txtEndDate.Text).Year.ToString("0000") &
-        '            Date.Parse(txtEndDate.Text).Month.ToString("00") & Date.Parse(txtEndDate.Text).Day.ToString("00")
-        'bdate = Date.ParseExact(txtBeginDate.Text, "dd/MM/yyyy", New CultureInfo("en-US"))
-        'edate = Date.ParseExact(txtBeginDate.Text, "dd/MM/yyyy", New CultureInfo("en-US"))
-        begindate = Strings.Right(txtBeginDate.Text, 4) & Strings.Mid(txtBeginDate.Text, 4, 2) & Strings.Left(txtBeginDate.Text, 2)
-        enddate = Strings.Right(txtEndDate.Text, 4) & Strings.Mid(txtEndDate.Text, 4, 2) & Strings.Left(txtEndDate.Text, 2)
-
-        jobowner = ""
-        jobaction = ""
-        branch = cboBranch.SelectedItem.Value
-        status = cboStatus.SelectedItem.Value
-        jobtypeid = 0
-
-        ViewReport(begindate, enddate, branch, status, jobowner, jobaction, jobtypeid)
+        Page.ClientScript.RegisterStartupScript(Me.GetType(), "alertscript", s, True)
     End Sub
 
     Private Sub cboDep_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDep.SelectedIndexChanged

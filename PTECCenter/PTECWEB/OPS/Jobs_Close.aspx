@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Jobs_Close.aspx.vb" Inherits="PTECCENTER.JobsClose" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .input-group {
+            margin-bottom: 1rem;
+        }
+    </style>
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
 </asp:Content>
@@ -23,7 +28,7 @@
                     </div>
                 </div>
                 <div class="row" style="padding-top: 1rem;">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขที่เอกสาร</span>
@@ -34,7 +39,7 @@
                         </div>
 
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่แจ้ง</span>
@@ -42,7 +47,7 @@
                             <asp:TextBox class="form-control" ID="txtDocDate" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ผู้แจ้ง</span>
@@ -51,9 +56,9 @@
                         </div>
                     </div>
                 </div>
-                <p></p>
+
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
@@ -61,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ฝ่าย</span>
@@ -69,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">แผนก</span>
@@ -78,9 +83,9 @@
                         </div>
                     </div>
                 </div>
-                <p></p>
+
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทงาน</span>
@@ -88,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">รหัสทรัพย์สิน</span>
@@ -96,15 +101,15 @@
                             <asp:TextBox class="form-control" ID="txtAssetCode" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <asp:TextBox class="form-control" ID="txtAssetName" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
                 </div>
-                <br />
+
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จำนวน</span>
@@ -112,7 +117,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">หน่วย</span>
@@ -120,7 +125,7 @@
                             <asp:TextBox class="form-control" ID="txtUnit" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทหมวดราคา</span>
@@ -130,9 +135,9 @@
                         </div>
                     </div>
                 </div>
-                <br />
+
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
@@ -140,7 +145,7 @@
                             <asp:TextBox class="form-control" ID="txtCost" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Supplier</span>
@@ -152,7 +157,7 @@
 
                 </div>
 
-                <br />
+
                 <div class="row">
                     <div class="col-12">
                         <div class="input-group sm-3">
@@ -163,168 +168,174 @@
                         </div>
                     </div>
                 </div>
-                <br />
 
-                <div class="row">
-                    <div class="col-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ปิด</span>
-                                <asp:DropDownList class="form-control" ID="cboCloseType" runat="server">
-                                </asp:DropDownList>
+                <div class="card">
+                    <div class="card-header" style="background-color: lightslategray; color: white">
+                        สำหรับผู้ปฏิบัติงาน
+                    </div>
+                    <div id="jobdetail" class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">ปิด</span>
+                                        <asp:DropDownList class="form-control" ID="cboCloseType" runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">วันเริ่มต้นประกัน</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="txtBeginWarr" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">วันสิ้นสุดประกัน</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="txtEndWarr" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">ชนิดงาน</span>
+                                        <asp:DropDownList class="form-control" ID="cboCloseCategory" runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">วันเริ่มต้นประกัน</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtBeginWarr" runat="server"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">วันสิ้นสุดประกัน</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtEndWarr" runat="server"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ชนิดงาน</span>
-                                <asp:DropDownList class="form-control" ID="cboCloseCategory" runat="server">
-                                </asp:DropDownList>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Invoice No</span>
-                                <asp:TextBox class="form-control" ID="txtInvoiceNo" runat="server"></asp:TextBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">วันที่ Invoice</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtInvDate" runat="server"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">วันที่ปิดงาน</span>
-                                <asp:TextBox class="form-control" ID="txtCloseDate" runat="server"></asp:TextBox>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-12">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">หมายเหตุ</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtRemark" runat="server" TextMode="MultiLine"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-                <br />
-            </div>
-            <div class="row">
-                <div class="col-12">
 
-                    <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Invoice No</span>
+                                        <asp:TextBox class="form-control" ID="txtInvoiceNo" runat="server"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">วันที่ Invoice</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="txtInvDate" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">วันที่ปิดงาน</span>
+                                        <asp:TextBox class="form-control" ID="txtCloseDate" runat="server"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <table class="table table-bordered" id="dataTable">
-                                <thead class="table-warning">
-                                    <tr>
-                                        <th scope="col" class="text-center">Cost Name</th>
-                                        <th scope="col" class="text-center">Price</th>
-                                        <th scope="col" class="text-center">Unit</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% For i = 0 To costtable.Rows.Count %>
-                                    <% If i < costtable.Rows.Count Then%>
-                                    <tr>
-                                        <td><% =costtable.Rows(i).Item("jobscenterdtlname") %></td>
-                                        <td class="text-right"><% =costtable.Rows(i).Item("jobcostamount") %></td>
-                                        <td class="text-right"><% =costtable.Rows(i).Item("jobcostunit") %></td>
-                                        <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                                        <td>
-                                            <button runat="server" id="btnDelete" name="btnDelete" onclick="return confirmDelete(this);" type='button' class='close' aria-label='Close Close-danger'>
-                                                <span aria-hidden='true'>&times;</span>
-                                            </button>
-                                        </td>
-                                        <input type="hidden" name="iddelete" value="<% =costtable.Rows(i).Item("jobcostid") %>">
-                                        <% End if %>
-                                    </tr>
-                                    <% Else %>
-                                    <tr>
-                                        <th class="text-right">รวม</th>
-                                        <th class="text-right"><% =total %></th>
-                                    </tr>
-                                    <% End If %>
-                                    <% Next i %>
-                                    <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                                    <tr>
-                                        <td>
-                                            <asp:DropDownList ID="cboCost" class="form-control" runat="server" data-toggle="dropdown"></asp:DropDownList>
-                                            <!-- <div class="input-group sm-3 boxcost">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">หมายเหตุ</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="txtRemark" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered" id="dataTable">
+                                        <thead class="table-warning">
+                                            <tr>
+                                                <th scope="col" class="text-center">Cost Name</th>
+                                                <th scope="col" class="text-center">Price</th>
+                                                <th scope="col" class="text-center">Unit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% For i = 0 To costtable.Rows.Count %>
+                                            <% If i < costtable.Rows.Count Then%>
+                                            <tr>
+                                                <td><% =costtable.Rows(i).Item("jobscenterdtlname") %></td>
+                                                <td class="text-right"><% =costtable.Rows(i).Item("jobcostamount") %></td>
+                                                <td class="text-right"><% =costtable.Rows(i).Item("jobcostunit") %></td>
+                                                <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                                                <td>
+                                                    <button runat="server" id="btnDelete" name="btnDelete" onclick="return confirmDelete(this);" type='button' class='close' aria-label='Close Close-danger'>
+                                                        <span aria-hidden='true'>&times;</span>
+                                                    </button>
+                                                </td>
+                                                <input type="hidden" name="iddelete" value="<% =costtable.Rows(i).Item("jobcostid") %>">
+                                                <% End if %>
+                                            </tr>
+                                            <% Else %>
+                                            <tr>
+                                                <th class="text-right">รวม</th>
+                                                <th class="text-right"><% =total %></th>
+                                            </tr>
+                                            <% End If %>
+                                            <% Next i %>
+                                            <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                                            <tr>
+                                                <td>
+                                                    <asp:DropDownList ID="cboCost" class="form-control" runat="server" data-toggle="dropdown"></asp:DropDownList>
+                                                    <!-- <div class="input-group sm-3 boxcost">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">ค่า</span>
                                                 </div>
                                                 <asp:TextBox class="form-control" ID="txtcboCost" runat="server" required></asp:TextBox>
                                                 <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
                                             </div> -->
-                                        </td>
-                                        <td>
-                                            <div class="input-group">
-                                                <asp:TextBox ID="txtCostPrice" class="form-control text-right" runat="server" type="number" min="0"></asp:TextBox>
-                                                <div class="input-group-append">
-                                                    <span class='input-group-text'>THB</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtCostUnit" class="form-control text-right" runat="server" type="number" min="1"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + "/>
-                                        </td>
-                                    </tr>
-                                    <% End if %>
-                                </tbody>
-                            </table>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <asp:TextBox ID="txtCostPrice" class="form-control text-right" runat="server" type="number" min="0"></asp:TextBox>
+                                                        <div class="input-group-append">
+                                                            <span class='input-group-text'>THB</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtCostUnit" class="form-control text-right" runat="server" type="number" min="1"></asp:TextBox>
+                                                </td>
+                                                <td>
+                                                    <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " />
+                                                </td>
+                                            </tr>
+                                            <% End if %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <div class="col-11">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center">
+                            <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                            <asp:Button ID="btnClose" class="btn btn-sm btn-success justify-content-center" runat="server" Text="Confirm Close" AutoPostBack="true" />
+                            <% End if %>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-11">
-                    <hr />
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                    <asp:Button ID="btnClose" class="btn btn-sm btn-success justify-content-center" runat="server" Text="Confirm Close" />
-                    <% End if %>
-                </div>
-            </div>
-            <br />
 
             <!-- end content-wrapper -->
 

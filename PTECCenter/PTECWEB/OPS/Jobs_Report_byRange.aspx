@@ -46,11 +46,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-auto">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">สถานะงาน</span>
-                                <asp:DropDownList class="form-control" ID="cboStatus"
+                                <span class="input-group-text">สถานะงานย่อย</span>
+                                <asp:DropDownList class="form-control" ID="cboStatusFollow"
                                     runat="server">
                                 </asp:DropDownList>
                             </div>
@@ -78,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="row">
                     <div class="col-md-3">

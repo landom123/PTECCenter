@@ -416,14 +416,19 @@ endprocess:
         Dim result As Boolean = True
         Dim msg As String = ""
 
+        If cboBranch.SelectedItem.Value = "" Then
+            result = False
+            msg = "กรุณาเลือกสาขา"
+            GoTo endprocess
+        End If
         If cboJobType.SelectedItem.Value = 1 Then
-            If cboPosition.SelectedIndex < 0 Then
-                result = False
-                msg = "กรุณาเลือกตำแหน่งตู้"
-                GoTo endprocess
-            End If
+            'If cboPosition.SelectedIndex < 0 And String.IsNullOrEmpty(txtAssetName.Text) Then
+            'result = False
+            'msg = "กรุณาเลือกตำแหน่งตู้ หรือ กรอกรหัส FA.. ของตู้จ่าย"
+            'GoTo endprocess
+            'End If
         ElseIf cboJobType.SelectedItem.Value = 16 Then
-            If String.IsNullOrEmpty(txtAssetName.Text) And String.IsNullOrEmpty(txtbrand.Text) And String.IsNullOrEmpty(txtModel.Text) Then
+            If String.IsNullOrEmpty(txtAssetName.Text) And String.IsNullOrEmpty(txtBrand.Text) And String.IsNullOrEmpty(txtModel.Text) Then
                 result = False
                 msg = "กรุณาระบุรหัสทรัพสินทร์ หรือ ชื่อยี่ห้อ หรือ รุ่น"
                 GoTo endprocess
@@ -441,11 +446,7 @@ endprocess:
             msg = "กรุณาระบุรายละเอียด"
             GoTo endprocess
         End If
-        If cboBranch.SelectedItem.Value = "" Then
-            result = False
-            msg = "กรุณาเลือกสาขา"
-            GoTo endprocess
-        End If
+
 
 endprocess:
         If result = False Then
@@ -691,7 +692,7 @@ endprocess:
         row("jobno") = txtJobno.Text
         row("jobtypeid") = cboJobType.SelectedItem.Value
         row("jobtype") = cboJobType.SelectedItem.Text
-        If cboJobType.SelectedItem.Value = 1 Then
+        If cboPosition.SelectedIndex > -1 Then
             row("assetid") = cboPosition.SelectedItem.Value
             row("assetposition") = cboPosition.SelectedItem.Text
         End If
@@ -788,14 +789,17 @@ endprocess:
         SetCboJobTypeByDepID(cboJobType, cboDepForJobType.SelectedItem.Value)
     End Sub
     Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
-        branchid = cboBranch.SelectedItem.Value
+        If Not String.IsNullOrEmpty(cboBranch.SelectedItem.Value) Then
+            branchid = cboBranch.SelectedItem.Value
 
-        Dim objdep As New Department
-        objdep.SetCboDepartment(cboDepartment, branchid)
+            Dim objdep As New Department
+            objdep.SetCboDepartment(cboDepartment, branchid)
 
-        If cboJobType.SelectedItem.Value = 1 Then
-            FindPositionInPump(branchid)
+            If cboJobType.SelectedItem.Value = 1 Then
+                FindPositionInPump(branchid)
+            End If
         End If
+
     End Sub
 
     Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
