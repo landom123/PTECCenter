@@ -40,7 +40,7 @@
                     <div class="col-md-auto">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">ประเภทงาน</span>
+                                <span class="input-group-text">หัวข้องาน</span>
                                 <asp:DropDownList ID="cboJobType" class="form-control" runat="server" AutoPostBack="true">
                                 </asp:DropDownList>
                             </div>
