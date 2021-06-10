@@ -70,9 +70,14 @@ Public Class WebForm1
                     SetBtn(detailtable.Rows(0).Item("statusid"))
                     If (Session("userid") = am_id Or
                     Session("userid") = rm_id Or
-                    Session("userid") = dm_id) And
+                    Session("userid") = dm_id Or
+                    Session("secid").ToString = "2"
+                    ) And
                     (detailtable.Rows(0).Item("statusid") = 1) Then
-                        Session("status") = "write"
+                        If Not Session("secid").ToString = "2" Then
+                            Session("status") = "write"
+                        End If
+
                         PermissionOwner = chkPermissionApproval(Request.QueryString("approvalcode"))
                         deadline = PermissionOwner.Tables(0).Rows(0).Item("deadline").ToString
 
@@ -121,7 +126,7 @@ Public Class WebForm1
                             End If
                         Next row
 endprocess:
-                    End If
+                        End If
                 Catch ex As Exception
                     Dim scriptKey As String = "UniqueKeyForThisScript"
                     Dim javaScript As String = "alertWarning('Find Fail')"
