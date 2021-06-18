@@ -174,22 +174,19 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
-    Private Function Confirm(approvalcode As String, usercode As String) As Boolean
+    Private Sub Confirm(approvalcode As String, usercode As String)
         Dim approval As New Approval
-        Dim result As Boolean = True
 
         Try
             approval.Confirm(approvalcode, usercode)
-            result = True
+            Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
         Catch ex As Exception
-            result = False
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('Confirm fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
-        Return result
-    End Function
+    End Sub
     Private Function chkPermissionApproval(approvalcode As String) As DataSet
         Dim permissionApproval As New Approval
         Dim appPermission As New DataSet
@@ -446,9 +443,7 @@ endprocess:
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
         Dim confirmValue As String = Request.Form("confirm_value")
         If confirmValue = "Yes" Then
-            If Confirm(txtApprovalcode.Text, Session("usercode")) Then
-                Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
-            End If
+            Confirm(txtApprovalcode.Text, Session("usercode"))
             confirmValue = "No"
         End If
     End Sub

@@ -26,6 +26,85 @@ Public Class Users
         conn.Close()
         Return result
     End Function
+
+    Public Function Find(username As String, usercode As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "User_Details"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = username
+        cmd.Parameters.Add("@loginname", SqlDbType.VarChar).Value = usercode
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function AddUser(name As String, usercode As String, branchid As String, depid As String, secid As String, positionid As String, email As String, password As String) As String
+        Dim result As String
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "User_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = name
+        cmd.Parameters.Add("@loginname", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@department", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
+        cmd.Parameters.Add("@positionid", SqlDbType.VarChar).Value = positionid
+        cmd.Parameters.Add("@email", SqlDbType.VarChar).Value = email
+        cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = password
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("usercode")
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function resetPassword(usercode As String, pass As String)
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "User_ResetPassword"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@loginname", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@newpassword", SqlDbType.VarChar).Value = pass
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Function
     Public Function dashboard(usercode As String, monthly As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
