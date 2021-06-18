@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class UserManage
-    
+
     '''<summary>
     '''btnNew control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''btnSave control.
     '''</summary>
@@ -30,7 +30,16 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
-    
+
+    '''<summary>
+    '''btnUpdate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdate As Global.System.Web.UI.WebControls.Button
+
     '''<summary>
     '''btnResetPassword control.
     '''</summary>
@@ -39,7 +48,7 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnResetPassword As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''txtUsercode control.
     '''</summary>
@@ -48,7 +57,7 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtUsercode As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''txtUserName control.
     '''</summary>
@@ -57,7 +66,7 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtUserName As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''cboBranch control.
     '''</summary>
@@ -66,7 +75,7 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
-    
+
     '''<summary>
     '''cboDepart control.
     '''</summary>
@@ -75,7 +84,7 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboDepart As Global.System.Web.UI.WebControls.DropDownList
-    
+
     '''<summary>
     '''cboSection control.
     '''</summary>
@@ -84,7 +93,7 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
-    
+
     '''<summary>
     '''cboPosition control.
     '''</summary>
@@ -93,13 +102,13 @@ Partial Public Class UserManage
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboPosition As Global.System.Web.UI.WebControls.DropDownList
-    
+
     '''<summary>
-    '''TextBox3 control.
+    '''txtEmail control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents TextBox3 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtEmail As Global.System.Web.UI.WebControls.TextBox
 End Class

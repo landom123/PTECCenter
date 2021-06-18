@@ -125,6 +125,11 @@
     <script type="text/javascript">
         jQuery('[id$=txtBeginDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
+            onShow: function (ct) {
+                this.setOptions({
+                    maxDate: jQuery('[id$=txtEndDate]').val() ? jQuery('[id$=txtEndDate]').val() : false, formatDate: 'd.m.Y'
+                })
+            },
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'
@@ -134,6 +139,11 @@
     <script type="text/javascript">
         jQuery('[id$=txtEndDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
+            onShow: function (ct) {
+                this.setOptions({
+                    minDate: jQuery('[id$=txtBeginDate]').val() ? jQuery('[id$=txtBeginDate]').val() : false, formatDate: 'd.m.Y'
+                })
+            },
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'

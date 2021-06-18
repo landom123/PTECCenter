@@ -27,7 +27,7 @@ Public Class Jobs_Report_byRange
         If Not IsPostBack Then
             objbranch.SetComboBranchGroup(cboBranchGroup)
             objbranch.SetComboBranch(cboBranch, "")
-            objjob.SetCboJobStatusList(cboStatusFollow)
+            objjob.SetCboJobStatusListForReport(cboStatusFollow)
             objdep.SetCboDepartmentforjobtype(cboDep)
             SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
         End If
@@ -86,7 +86,7 @@ Public Class Jobs_Report_byRange
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
         Dim s As String = "window.open('../OPS/Jobs_Report_JobReport.aspx?depid=" & cboDep.SelectedItem.Value &
             "&jobtypeid=" & cboJobType.SelectedItem.Value &
-            "&statusFollow=" & cboStatusFollow.SelectedItem.Value &
+            "&statusFollow=" & cboStatusFollow.SelectedItem.Value.ToString() &
             "&branchgroupid=" & cboBranchGroup.SelectedItem.Value &
             "&branchid=" & cboBranch.SelectedItem.Value &
             "&startdate=" & txtBeginDate.Text &
