@@ -185,6 +185,15 @@ Partial Public Class JobsFollowup
     Protected WithEvents txtDetail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lastStatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lastStatus As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cboStatus control.
     '''</summary>
     '''<remarks>

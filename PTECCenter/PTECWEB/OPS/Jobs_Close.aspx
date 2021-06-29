@@ -242,7 +242,7 @@
                             <div class="col-12">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">หมายเหตุ</span>
+                                        <span class="input-group-text">รายละเอียดปิดงาน</span>
                                     </div>
                                     <asp:TextBox class="form-control" ID="txtRemark" runat="server" TextMode="MultiLine"></asp:TextBox>
                                 </div>
@@ -326,10 +326,10 @@
                             <hr />
                         </div>
                     </div>
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center" style="padding-bottom: 1rem;">
                         <div class="col-12 text-center">
                             <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                            <asp:Button ID="btnClose" class="btn btn-sm btn-success justify-content-center" runat="server" Text="Confirm Close" AutoPostBack="true" />
+                            <asp:Button ID="btnClose" class="btn btn-sm btn-danger justify-content-center" runat="server" Text="ปิดงาน" AutoPostBack="true" />
                             <% End if %>
                         </div>
                     </div>

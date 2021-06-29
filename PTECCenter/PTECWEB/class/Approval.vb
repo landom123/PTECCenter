@@ -425,8 +425,7 @@ Public Class Approval
         conn.Close()
 
     End Function
-    Public Function Confirm(approvalcode As String, usercode As String) As Boolean
-        Dim result As Boolean
+    Public Function Confirm(approvalcode As String, usercode As String)
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -446,7 +445,7 @@ Public Class Approval
         'adp.Fill(ds)
         'result = ds.Tables(0).Rows(0).Item("jobcode")
         conn.Close()
-        Return result
+        'Return result
     End Function
 
     Public Function ApprovalPermission(approvalcode As String) As DataSet

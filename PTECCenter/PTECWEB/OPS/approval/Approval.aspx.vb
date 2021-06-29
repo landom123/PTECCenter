@@ -179,13 +179,13 @@ endprocess:
 
         Try
             approval.Confirm(approvalcode, usercode)
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('Confirm fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
     Private Function chkPermissionApproval(approvalcode As String) As DataSet
         Dim permissionApproval As New Approval

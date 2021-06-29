@@ -206,7 +206,11 @@
                                     <td><% =followuptable.Rows(i).Item("details") %></td>
                                     <td><% =followuptable.Rows(i).Item("createby") %></td>
                                     <td><% =followuptable.Rows(i).Item("createdate") %></td>
-                                    <td></td>
+                                    <td>
+                                        <% If (i = 0) Then%>
+                                            <asp:Label ID="lastStatus" CssClass="text-danger" runat="server" Text="(สถานะล่าสุด)" />
+                                        <%  End If %>
+                                    </td>
                                 </tr>
                                 <% Next i %>
                                 <tr>
@@ -214,7 +218,7 @@
                                         <asp:DropDownList ID="cboStatus" class="form-control" runat="server"></asp:DropDownList>
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtDetailFollow" class="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                        <asp:TextBox ID="txtDetailFollow" class="form-control" runat="server" TextMode="MultiLine" required></asp:TextBox>
                                     </td>
                                     <td>
                                         <asp:Label ID="lblCreateBy" class="form-control" runat="server" Text=""></asp:Label>
@@ -225,12 +229,12 @@
                                     <td>
                                         <% If maintable.Rows(0).Item("owner") > 0 Then %>
                                         <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " />
+                                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " OnClientClick="validateData()" />
                                         <% End if %>
-                                        <asp:Button ID="btnClose" class="btn btn-sm  btn-danger" runat="server" Text="Close" />
+                                        <asp:Button ID="btnClose" class="btn btn-sm  btn-danger" runat="server" Text="ค่าใช้จ่าย" />
                                         <% ElseIf String.Equals(Session("username"), maintable.Rows(0).Item("createby")) Then %>
                                         <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                                        <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " />
+                                        <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" />
                                         <% End if %>
                                         <% End if %>
 
