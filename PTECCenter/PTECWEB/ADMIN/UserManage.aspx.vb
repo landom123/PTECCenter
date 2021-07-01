@@ -95,7 +95,7 @@
     Private Sub findUser(usercode As String)
         Dim users As New Users
         Try
-            maintable = users.Find("", usercode.Trim)
+            maintable = users.Find("", "", usercode.Trim)
             If maintable.Rows.Count > 0 Then
                 Session("maintable_usermanage") = maintable
                 showdata(maintable)

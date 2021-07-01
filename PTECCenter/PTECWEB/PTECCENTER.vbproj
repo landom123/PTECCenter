@@ -181,6 +181,7 @@
     <Content Include="ADMIN\Questionnair.aspx" />
     <Content Include="ADMIN\UserManage.aspx" />
     <Content Include="ADMIN\BranchPermission.aspx" />
+    <Content Include="ADMIN\menuPermission.aspx" />
     <Content Include="AFD\BudgetOilCost.aspx" />
     <Content Include="AFD\CreditBalance.aspx" />
     <Content Include="AFD\PayinByHOSReport.aspx" />
@@ -1545,6 +1546,7 @@
     <Content Include="charts.html" />
     <Content Include="css\sb-admin.css" />
     <Content Include="css\sb-admin.min.css" />
+    <Content Include="css\checkbox.css" />
     <Content Include="datetimepicker\build\jquery.datetimepicker.full.js" />
     <Content Include="datetimepicker\build\jquery.datetimepicker.full.min.js" />
     <Content Include="datetimepicker\build\jquery.datetimepicker.min.css" />
@@ -3292,6 +3294,13 @@
     <Compile Include="ADMIN\BranchPermission.aspx.vb">
       <DependentUpon>BranchPermission.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ADMIN\menuPermission.aspx.designer.vb">
+      <DependentUpon>menuPermission.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ADMIN\menuPermission.aspx.vb">
+      <DependentUpon>menuPermission.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="AFD\BudgetOilCost.aspx.designer.vb">
       <DependentUpon>BudgetOilCost.aspx</DependentUpon>
