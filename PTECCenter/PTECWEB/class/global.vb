@@ -113,6 +113,13 @@ Module global_module
         Return result
     End Function
 
+    Public Function LoadMenuAll() As DataSet
+        Dim menu As New menu
+        Dim result As DataSet
+        result = menu.menu_listAll()
+        Return result
+    End Function
+
 
 End Module
 

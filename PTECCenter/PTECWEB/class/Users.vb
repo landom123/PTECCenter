@@ -27,7 +27,7 @@ Public Class Users
         Return result
     End Function
 
-    Public Function Find(username As String, usercode As String) As DataTable
+    Public Function Find(userid As String, username As String, usercode As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -40,6 +40,7 @@ Public Class Users
         cmd.CommandText = "User_Details"
         cmd.CommandType = CommandType.StoredProcedure
 
+        cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
         cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = username
         cmd.Parameters.Add("@loginname", SqlDbType.VarChar).Value = usercode
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
