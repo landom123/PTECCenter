@@ -136,6 +136,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Web.DynamicData" />
@@ -144,6 +148,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -1582,9 +1592,131 @@
     <Content Include="DLL\D365Json.dll" />
     <Content Include="DLL\EDItoD365.dll" />
     <Content Include="DLL\RestSharp.dll" />
+    <Content Include="fileupload\dist\font\font-fileuploader.css" />
+    <Content Include="fileupload\dist\font\font-fileuploader.svg" />
+    <Content Include="fileupload\dist\jquery.fileuploader-theme-thumbnails.css" />
+    <Content Include="fileupload\dist\jquery.fileuploader.min.css" />
+    <Content Include="fileupload\dist\jquery.fileuploader.min.js" />
+    <Content Include="fileupload\dist\license-1IqqsvBj9M8QBgTnR2DW8bES.txt" />
+    <Content Include="fileupload\documentation.html" />
+    <Content Include="fileupload\examples\add-more\index.html" />
+    <Content Include="fileupload\examples\add-more\js\custom.js" />
+    <Content Include="fileupload\examples\add-more\php\form_upload.php" />
+    <Content Include="fileupload\examples\api\index.html" />
+    <Content Include="fileupload\examples\api\js\custom.js" />
+    <Content Include="fileupload\examples\asp.net\default\Default.aspx" />
+    <Content Include="fileupload\examples\asp.net\default\Default.aspx.cs" />
+    <Content Include="fileupload\examples\asp.net\default\js\custom.js" />
+    <Content Include="fileupload\examples\asp.net\upload\css\jquery.fileuploader-theme-dragdrop.css" />
+    <Content Include="fileupload\examples\asp.net\upload\js\custom.js" />
+    <Content Include="fileupload\examples\asp.net\upload\Upload.aspx" />
+    <Content Include="fileupload\examples\asp.net\upload\Upload.aspx.cs" />
+    <Content Include="fileupload\examples\avatar\css\jquery.fileuploader-theme-avatar.css" />
+    <Content Include="fileupload\examples\avatar\images\default-avatar.png" />
+    <Content Include="fileupload\examples\avatar\index.php" />
+    <Content Include="fileupload\examples\avatar\js\custom.js" />
+    <Content Include="fileupload\examples\avatar\php\ajax_remove_file.php" />
+    <Content Include="fileupload\examples\avatar\php\ajax_upload_file.php" />
+    <Content Include="fileupload\examples\boxafter\css\jquery.fileuploader-theme-boxafter.css" />
+    <Content Include="fileupload\examples\boxafter\index.html" />
+    <Content Include="fileupload\examples\boxafter\js\custom.js" />
+    <Content Include="fileupload\examples\boxafter\php\ajax_remove_file.php" />
+    <Content Include="fileupload\examples\boxafter\php\ajax_upload_file.php" />
+    <Content Include="fileupload\examples\default-upload\index.html" />
+    <Content Include="fileupload\examples\default-upload\js\custom.js" />
+    <Content Include="fileupload\examples\default-upload\php\ajax_remove_file.php" />
+    <Content Include="fileupload\examples\default-upload\php\ajax_upload_file.php" />
+    <Content Include="fileupload\examples\default\index.html" />
+    <Content Include="fileupload\examples\default\js\custom.js" />
+    <Content Include="fileupload\examples\default\php\form_upload.php" />
+    <Content Include="fileupload\examples\drag-drop-form\css\jquery.fileuploader-theme-dropin.css" />
+    <Content Include="fileupload\examples\drag-drop-form\index.html" />
+    <Content Include="fileupload\examples\drag-drop-form\js\custom.js" />
+    <Content Include="fileupload\examples\drag-drop-form\php\ajax_remove_file.php" />
+    <Content Include="fileupload\examples\drag-drop-form\php\form_upload.php" />
+    <Content Include="fileupload\examples\drag-drop\css\jquery.fileuploader-theme-dragdrop.css" />
+    <Content Include="fileupload\examples\drag-drop\index.html" />
+    <Content Include="fileupload\examples\drag-drop\js\custom.js" />
+    <Content Include="fileupload\examples\drag-drop\php\ajax_remove_file.php" />
+    <Content Include="fileupload\examples\drag-drop\php\ajax_upload_file.php" />
+    <Content Include="fileupload\examples\gallery\css\jquery.fileuploader-theme-gallery.css" />
+    <Content Include="fileupload\examples\gallery\gallery_table.sql" />
+    <Content Include="fileupload\examples\gallery\index.html" />
+    <Content Include="fileupload\examples\gallery\js\custom.js" />
+    <Content Include="fileupload\examples\gallery\php\ajax.php" />
+    <Content Include="fileupload\examples\image-editor\client-side\index.html" />
+    <Content Include="fileupload\examples\image-editor\client-side\js\custom.js" />
+    <Content Include="fileupload\examples\image-editor\client-side\php\ajax_remove_file.php" />
+    <Content Include="fileupload\examples\image-editor\client-side\php\ajax_upload_file.php" />
+    <Content Include="fileupload\examples\image-editor\default\index.html" />
+    <Content Include="fileupload\examples\image-editor\default\js\custom.js" />
+    <Content Include="fileupload\examples\image-editor\default\php\form_upload.php" />
+    <Content Include="fileupload\examples\image-editor\upload\index.html" />
+    <Content Include="fileupload\examples\image-editor\upload\js\custom.js" />
+    <Content Include="fileupload\examples\image-editor\upload\php\ajax_remove_file.php" />
+    <Content Include="fileupload\examples\image-editor\upload\php\ajax_resize_file.php" />
+    <Content Include="fileupload\examples\image-editor\upload\php\ajax_upload_file.php" />
+    <Content Include="fileupload\examples\nodejs\default\index.js" />
+    <Content Include="fileupload\examples\nodejs\default\public\js\custom.js" />
+    <Content Include="fileupload\examples\nodejs\default\views\index.html" />
+    <Content Include="fileupload\examples\nodejs\upload\index.js" />
+    <Content Include="fileupload\examples\nodejs\upload\public\js\custom.js" />
+    <Content Include="fileupload\examples\nodejs\upload\views\index.html" />
+    <Content Include="fileupload\examples\one-button\css\jquery.fileuploader-theme-onebutton.css" />
+    <Content Include="fileupload\examples\one-button\index.html" />
+    <Content Include="fileupload\examples\one-button\js\custom.js" />
+    <Content Include="fileupload\examples\one-button\php\form_upload.php" />
+    <Content Include="fileupload\examples\pdf\Download.txt" />
+    <Content Include="fileupload\examples\pdf\index.html" />
+    <Content Include="fileupload\examples\pdf\js\custom.js" />
+    <Content Include="fileupload\examples\pdf\php\form_upload.php" />
+    <Content Include="fileupload\examples\php-generated-input\index.php" />
+    <Content Include="fileupload\examples\php-generated-input\js\custom.js" />
+    <Content Include="fileupload\examples\php-generated-input\php\form_upload.php" />
+    <Content Include="fileupload\examples\php-generated-input\php\included_upload.php" />
+    <Content Include="fileupload\examples\preloaded-files\index.php" />
+    <Content Include="fileupload\examples\preloaded-files\js\custom.js" />
+    <Content Include="fileupload\examples\preloaded-files\php\form_upload.php" />
+    <Content Include="fileupload\examples\preloaded-files\uploads\stocksnap_4521.jpg" />
+    <Content Include="fileupload\examples\preloaded-files\uploads\thumbs\stocksnap_4521.jpg" />
+    <Content Include="fileupload\examples\sorter\default\index.html" />
+    <Content Include="fileupload\examples\sorter\default\js\custom.js" />
+    <Content Include="fileupload\examples\sorter\default\php\form_upload.php" />
+    <Content Include="fileupload\examples\sorter\upload\index.html" />
+    <Content Include="fileupload\examples\sorter\upload\js\custom.js" />
+    <Content Include="fileupload\examples\sorter\upload\php\ajax_remove_file.php" />
+    <Content Include="fileupload\examples\sorter\upload\php\ajax_sort_files.php" />
+    <Content Include="fileupload\examples\sorter\upload\php\ajax_upload_file.php" />
+    <Content Include="fileupload\examples\thirdparty\laravel\default\ExampleController.php" />
+    <Content Include="fileupload\examples\thirdparty\laravel\default\home.blade.php" />
+    <Content Include="fileupload\examples\thirdparty\laravel\default\js\custom.js" />
+    <Content Include="fileupload\examples\thirdparty\laravel\upload\ExampleController.php" />
+    <Content Include="fileupload\examples\thirdparty\laravel\upload\home.blade.php" />
+    <Content Include="fileupload\examples\thirdparty\laravel\upload\js\custom.js" />
+    <Content Include="fileupload\examples\thirdparty\react\index.html" />
+    <Content Include="fileupload\examples\thirdparty\react\js\custom.js" />
+    <Content Include="fileupload\examples\thirdparty\s3\php\index.php" />
+    <Content Include="fileupload\examples\thirdparty\s3\php\js\custom.js" />
+    <Content Include="fileupload\examples\thirdparty\s3\php\php\form_upload.php" />
+    <Content Include="fileupload\examples\thirdparty\s3\php\php\include.credentials.php" />
+    <Content Include="fileupload\examples\thirdparty\vuejs\index.html" />
+    <Content Include="fileupload\examples\thirdparty\vuejs\js\custom.js" />
+    <Content Include="fileupload\examples\thumbnails\css\jquery.fileuploader-theme-thumbnails.css" />
+    <Content Include="fileupload\examples\thumbnails\index.html" />
+    <Content Include="fileupload\examples\thumbnails\js\custom.js" />
+    <Content Include="fileupload\examples\thumbnails\php\form_upload.php" />
+    <Content Include="fileupload\examples\thumbnails\php\upload_file.php" />
+    <Content Include="fileupload\examples\thumbnails\php\upload_remove.php" />
+    <Content Include="fileupload\src\asp.net\FileUploader.cs" />
+    <Content Include="fileupload\src\jquery.fileuploader.js" />
+    <Content Include="fileupload\src\node\fileuploader.js" />
+    <Content Include="fileupload\src\php\class.fileuploader.php" />
+    <Content Include="fileupload\src\thirdparty\react\Fileuploader.js" />
+    <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
+    <Content Include="OPS\approval\ApprovalAttach.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
     <Content Include="OPS\FileUpload\FileUpload.aspx" />
@@ -3374,6 +3506,13 @@
       <DependentUpon>ApprovalClose.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="OPS\approval\ApprovalAttach.aspx.designer.vb">
+      <DependentUpon>ApprovalAttach.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\approval\ApprovalAttach.aspx.vb">
+      <DependentUpon>ApprovalAttach.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="OPS\approval\ApprovalMenuList.aspx.designer.vb">
       <DependentUpon>ApprovalMenuList.aspx</DependentUpon>
     </Compile>
@@ -3873,6 +4012,39 @@
     <None Include=".dockerignore">
       <DependentUpon>Dockerfile</DependentUpon>
     </None>
+    <Content Include="fileupload\dist\font\font-fileuploader.ttf" />
+    <Content Include="fileupload\dist\font\font-fileuploader.woff" />
+    <Content Include="fileupload\examples\add-more\uploads\.htaccess" />
+    <Content Include="fileupload\examples\asp.net\default\uploads\.DS_Store" />
+    <Content Include="fileupload\examples\asp.net\upload\uploads\.DS_Store" />
+    <Content Include="fileupload\examples\avatar\uploads\.htaccess" />
+    <Content Include="fileupload\examples\boxafter\uploads\.htaccess" />
+    <Content Include="fileupload\examples\default-upload\uploads\.htaccess" />
+    <Content Include="fileupload\examples\default\uploads\.htaccess" />
+    <Content Include="fileupload\examples\drag-drop-form\uploads\.htaccess" />
+    <Content Include="fileupload\examples\drag-drop\uploads\.htaccess" />
+    <Content Include="fileupload\examples\gallery\uploads\.htaccess" />
+    <Content Include="fileupload\examples\image-editor\client-side\uploads\.htaccess" />
+    <Content Include="fileupload\examples\image-editor\default\uploads\.htaccess" />
+    <Content Include="fileupload\examples\image-editor\upload\uploads\.htaccess" />
+    <Content Include="fileupload\examples\nodejs\default\package.json" />
+    <Content Include="fileupload\examples\nodejs\default\uploads\.DS_Store" />
+    <Content Include="fileupload\examples\nodejs\upload\package.json" />
+    <Content Include="fileupload\examples\nodejs\upload\public\uploads\.DS_Store" />
+    <Content Include="fileupload\examples\nodejs\upload\uploads\.DS_Store" />
+    <Content Include="fileupload\examples\one-button\uploads\.htaccess" />
+    <Content Include="fileupload\examples\pdf\assets\pdf.js\.htaccess" />
+    <Content Include="fileupload\examples\pdf\uploads\.htaccess" />
+    <Content Include="fileupload\examples\php-generated-input\uploads\.htaccess" />
+    <Content Include="fileupload\examples\sorter\default\uploads\.htaccess" />
+    <Content Include="fileupload\examples\sorter\upload\uploads\.htaccess" />
+    <Content Include="fileupload\examples\thirdparty\s3\php\uploads\.htaccess" />
+    <Content Include="fileupload\examples\thumbnails\uploads\.htaccess" />
+    <Content Include="fileupload\fileuploader-2.2.zip" />
+    <Content Include="fileupload\src\jquery.fileuploader.sass" />
+    <Content Include="fileupload\src\node\package.json" />
+    <Content Include="fileupload\src\thirdparty\s3\php\composer.json" />
+    <Content Include="fileupload\src\thirdparty\vuejs\Fileuploader.vue" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

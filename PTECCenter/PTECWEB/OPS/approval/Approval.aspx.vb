@@ -3,9 +3,14 @@
 Public Class WebForm1
     Inherits System.Web.UI.Page
 
+
     Dim am_id As String
     Dim rm_id As String
     Dim dm_id As String
+    Public Approval_BF As String = ""
+    Public Approval_AT As String = ""
+    Public Approval_Bill As String = ""
+    Public Approval_Doc As String = ""
     Public flag As Boolean = True
     Public approval As Boolean = False
     Public deadline As String
@@ -18,8 +23,6 @@ Public Class WebForm1
         Dim objbranch As New Branch
         Dim objapproval As New Approval
         Dim approvaldataset = New DataSet
-        Dim fileImgName As String = My.Settings.fullurl
-
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
             Response.Redirect("~/login.aspx")
@@ -46,21 +49,18 @@ Public Class WebForm1
                     CommentTable = approvaldataset.Tables(4)
                     Session("detailtable") = detailtable
                     If approvaldataset.Tables(1).Rows.Count > 0 Then
-                        fileImgName += approvaldataset.Tables(1).Rows(0).Item("imagename")
-                        img1.Attributes.Add("src", fileImgName)
+                        Approval_BF = convertToJSON(approvaldataset.Tables(1))
                     End If
                     If detailtable.Rows(0).Item("statusid") = 4 Then
                         If approvaldataset.Tables(2).Rows.Count > 0 Then
-                            Dim fileImgAfterName As String = My.Settings.fullurl
-                            fileImgAfterName += approvaldataset.Tables(2).Rows(0).Item("imagename")
-                            'bt_img1.Attributes.Add("href", fileImgAfterName)
-                            img2.Attributes.Add("src", fileImgAfterName)
+                            Approval_AT = convertToJSON(approvaldataset.Tables(2))
                         End If
                         If approvaldataset.Tables(3).Rows.Count > 0 Then
-                            Dim fileImgBillName As String = My.Settings.fullurl
-                            fileImgBillName += approvaldataset.Tables(3).Rows(0).Item("imagename")
-                            img3.Attributes.Add("src", fileImgBillName)
+                            Approval_Bill = convertToJSON(approvaldataset.Tables(3))
                         End If
+                    End If
+                    If approvaldataset.Tables(5).Rows.Count > 0 Then
+                        Approval_Doc = convertToJSON(approvaldataset.Tables(5))
                     End If
                     If Not Session("status") = "edit" Then
                         Session("status") = "read"
@@ -126,7 +126,7 @@ Public Class WebForm1
                             End If
                         Next row
 endprocess:
-                        End If
+                    End If
                 Catch ex As Exception
                     Dim scriptKey As String = "UniqueKeyForThisScript"
                     Dim javaScript As String = "alertWarning('Find Fail')"
@@ -142,15 +142,60 @@ endprocess:
             detailtable = Session("detailtable")
         End If
         SetMenu()
-
-
     End Sub
 
+    Public Function GetDownloadSize(ByVal URL As String) As Long
+        Dim r As Net.WebRequest = Net.WebRequest.Create(URL)
+        r.Method = Net.WebRequestMethods.Http.Head
+        Try
+            Using rsp = r.GetResponse()
+                Return rsp.ContentLength
+            End Using
+        Catch ex As Exception
+            Return 0
+        End Try
+    End Function
+
+    Private Function convertToJSON(dt As DataTable) As String
+        Dim filePath As String = My.Settings.fullurl
+        Dim serializer As New System.Web.Script.Serialization.JavaScriptSerializer()
+        Dim rows As New List(Of Dictionary(Of String, Object))()
+        Dim row As Dictionary(Of String, Object)
+        For Each dr As DataRow In dt.Rows
+            row = New Dictionary(Of String, Object)()
+            filePath = My.Settings.fullurl
+            For Each col As DataColumn In dt.Columns
+                filePath += dr(col)
+                Dim strArr() As String
+                Dim extension As String
+                Dim type As String
+                strArr = dr(col).Split(".")
+                extension = strArr(strArr.Length - 1).ToLower()
+                Select Case extension
+                    Case = "pdf"
+                        type = "application/" + extension
+                    Case Else
+                        type = "image/" + extension
+                End Select
+                row.Add("name", dr(col))
+                row.Add("size", "")
+                row.Add("type", type)
+                row.Add("file", filePath)
+            Next
+            rows.Add(row)
+        Next
+
+        Return serializer.Serialize(rows)
+    End Function
     Private Sub Approval_Save(fullfilename As String)
         Dim approval As New Approval
         Dim approvaltable As DataTable
         Dim approvalid As Integer
         Dim day As Integer
+        Dim filenameArr() As String
+        If Not String.IsNullOrEmpty(fullfilename) Then
+            filenameArr = fullfilename.Split(",")
+        End If
         If String.IsNullOrEmpty(txtDay.Text) Then
             day = 0
         Else
@@ -160,8 +205,12 @@ endprocess:
             approvaltable = approval.Approval_Save(cboApproval.SelectedItem.Value, txtName.Text.Trim(), txtDetail.Text.Trim(), txtPrice.Text.Trim(),
                                                   day, cboBranch.SelectedItem.Value, Session("usercode"))
             approvalid = approvaltable.Rows(0).Item("approvalid")
-            If Not String.IsNullOrEmpty(fullfilename) Then
-                approval.Image_Save(fullfilename, "Approval_BF", approvalid, Session("usercode"))
+            If filenameArr IsNot Nothing Then
+                For i = 0 To filenameArr.Length - 1
+                    If Not String.IsNullOrEmpty(filenameArr(i)) Then
+                        approval.Image_Save(filenameArr(i), "Approval_BF", approvalid, Session("usercode"))
+                    End If
+                Next i
             End If
             Session("status") = "read"
             Response.Redirect("../approval/approval.aspx?approvalcode=" & approvaltable.Rows(0).Item("code"))
@@ -249,6 +298,7 @@ endprocess:
                     txtStatus.BackColor = Color.MediumPurple
                 Case = "11"
                     txtStatus.BackColor = Color.Brown
+                    txtStatus.ForeColor = Color.White
             End Select
 
             txtName.Text = .Item("name_request").ToString
@@ -333,56 +383,67 @@ endprocess:
                 btnConfirm.Visible = False
                 btnCancel.Visible = True
                 btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
             Case = "2"  'อนุมัติ
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = True
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
             Case = "3"  'ไม่อนุมัติ
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
             Case = "4"  'ปิดงาน
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
             Case = "5"  'เลยกำหนด
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
-                btnClose.Visible = True
+                btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
             Case = "6"  'ยกเลิกการแจ้ง
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
             Case = "7"  'รอผู้แจ้งยืนยัน
                 btnConfirm.Visible = True
                 btnCancel.Visible = True
                 btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = True
-            Case = "8"  'รอประสานงานยืนยัน
+            Case = "8"  'รอประสานงานรับเรื่อง
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
-            Case = "9"  'กำลังจัดทำเอกสาร
+            Case = "9"  'ดำเนินการด้านเอกสาร
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
             Case = "10"  'เอกสารครบถ้วน
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
-                btnClose.Visible = True
+                btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
-            Case = "11"  'ส่งเอกสารให้ผู้เกี่ยวข้อง
+            Case = "11"  'รอแสกนเอกสาร
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
+                btnAddDoc.Visible = True
                 btnEdit.Visible = False
         End Select
     End Sub
@@ -448,31 +509,45 @@ endprocess:
         End If
     End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Dim imgname As New Approval
-        Dim fullfilename As String = String.Empty
-        If (FileUpload1.HasFile) Then
-            Dim Extension As String = System.IO.Path.GetExtension(FileUpload1.FileName)
-            Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
-            Dim di As String = System.IO.Path.GetDirectoryName(FileUpload1.FileName)
-            Dim oldpath As String = di + FileUpload1.FileName
+        If InStr(Request.ContentType, "multipart/form-data") Then
 
-            Try
-                Dim fileName As String
-                fileName = imgname.GetImageName()
-                savePath += fileName
-                savePath += Extension
-                FileUpload1.SaveAs(savePath)
-                fullfilename += fileName
-                fullfilename += Extension
-                'img1.Attributes.Add("src", a)
-            Catch ex As Exception
-                Dim scriptKey As String = "alert"
-                'Dim javaScript As String = "alert('" & ex.Message & "');"
-                Dim javaScript As String = "alertWarning('upload file fail');"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            End Try
+            Dim imgname As New Approval
+            Dim fullfilename As String = String.Empty
+            Dim Files As HttpFileCollection = Request.Files
+            Dim Keys() As String
+            Keys = Files.AllKeys
+            For i = 0 To Keys.GetUpperBound(0) - 1
+                Dim Extension As String = System.IO.Path.GetExtension(Files(i).FileName)
+                Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                Dim di As String = System.IO.Path.GetDirectoryName(Files(i).FileName)
+                'Dim oldpath As String = di + FileUpload1.FileName
+
+                Try
+                    Dim fileName As String
+                    fileName = imgname.GetImageName()
+                    savePath += fileName
+                    savePath += Extension
+                    Files(i).SaveAs(savePath)
+                    fullfilename += fileName
+                    fullfilename += Extension
+                    If Not i = Keys.GetUpperBound(0) - 1 Then
+                        fullfilename += ","
+                    End If
+                    'img1.Attributes.Add("src", a)
+                Catch ex As Exception
+                    Dim scriptKey As String = "alert"
+                    'Dim javaScript As String = "alert('" & ex.Message & "');"
+                    Dim javaScript As String = "alertWarning('upload file fail');"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+                End Try
+                'End Try
+            Next i
+
+
+            Approval_Save(fullfilename)
         End If
-        Approval_Save(fullfilename)
+
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
@@ -548,7 +623,6 @@ endprocess:
         Dim approval As New Approval
         Try
             approval.Approval_Save_Comment(Request.QueryString("approvalcode"), txtComment.Text.Trim(), Session("userid"))
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -556,15 +630,16 @@ endprocess:
             Dim javaScript As String = "alertWarning('SaveComment fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 
-    Private Sub btnSupportAllow_Click(sender As Object, e As EventArgs) Handles btnSupportAllow.Click
+
+    Private Sub btnSupportKnowlange_Click(sender As Object, e As EventArgs) Handles btnSupportKnowlange.Click
         Dim approval As New Approval
 
         Try
-            approval.Approval_Support_Allow(Request.QueryString("approvalcode"), Session("usercode"))
+            approval.Approval_Support_Knowledge(Request.QueryString("approvalcode"), Session("usercode"))
             Session("status") = "read"
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -572,37 +647,14 @@ endprocess:
             Dim javaScript As String = "alertWarning('SupportAllow fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 
-    Private Sub btnSupportFinished_Click(sender As Object, e As EventArgs) Handles btnSupportFinished.Click
-        Dim approval As New Approval
-
-        Try
-            approval.Approval_Support_Completed(Request.QueryString("approvalcode"), Session("usercode"))
-            Session("status") = "read"
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
-
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('SupportFinished fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+    Private Sub btnAddDoc_Click(sender As Object, e As EventArgs) Handles btnAddDoc.Click
+        Response.Redirect("../approval/ApprovalAttach.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 
-    Private Sub btnSupportForaward_Click(sender As Object, e As EventArgs) Handles btnSupportForaward.Click
-        Dim approval As New Approval
-
-        Try
-            approval.Approval_Support_Foraward(Request.QueryString("approvalcode"), Session("usercode"))
-            Session("status") = "read"
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
-
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('SupportForaward fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+    Private Sub btnSupportClose_Click(sender As Object, e As EventArgs) Handles btnSupportClose.Click
+        Response.Redirect("../approval/approvalClose.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 End Class

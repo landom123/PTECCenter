@@ -1,38 +1,26 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Approval.aspx.vb" Inherits="PTECCENTER.WebForm1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/font/font-fileuploader.css")%>" rel="stylesheet">
+
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader.min.css")%>" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader-theme-thumbnails.css")%>" rel="stylesheet">
     <style>
-        .image-upload-wrap {
-            border-radius: 0.25rem;
-            background: #f0cccc;
-            border: 2px dashed #ff0000;
-            text-align: center;
-            font-size: 30px;
-            color: #ff0000;
-            cursor: pointer;
-            opacity: 0.5;
-            height: 130px;
-            width: 130px;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        .file-upload-content
+        , .image-upload-wrap
+        , .fileuploader-theme-thumbnails .fileuploader-items .fileuploader-item .fileuploader-action + .fileuploader-action
+        , .fileuploader-popup .fileuploader-popup-footer .fileuploader-popup-tools li [data-action="remove"]
+        , .fileuploader-popup .fileuploader-popup-footer .fileuploader-popup-zoomer {
+            display: none;
         }
 
-            .image-upload-wrap i {
-                position: absolute;
-                font-style: normal;
-                top: 50%;
-                left: 50%;
-                -webkit-transform: translateX(-50%) translateY(-50%);
-                transform: translateX(-50%) translateY(-50%);
-            }
-
-        .file-upload-input {
-            cursor: pointer;
-            opacity: 0;
-            height: 100%;
-            width: 100%;
+        .fileuploader-theme-thumbnails .fileuploader-thumbnails-input-inner {
+            background: #f0cccc;
+            border: 2px dashed #ff0000;
+            color: #ff0000;
         }
 
         .btn-light {
@@ -44,34 +32,8 @@
                 background-color: #e9ecef;
             }
 
-        .file-upload-content {
-            display: none;
-            text-align: center;
-        }
 
-        .file-upload-image {
-            max-width: 100%;
-            max-height: 100%;
-            margin: auto;
-            padding: 20px;
-        }
 
-        .remove-image {
-            border: 0;
-            background: #fe7676;
-            border-radius: 50%;
-            box-shadow: -1px 1px 6px rgb(254 118 118 / 80%);
-            color: #fdfdfd;
-            text-shadow: 1px 1px 3px rgb(0 0 0 / 30%);
-        }
-
-        .image-title-wrap {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            z-index: 2;
-            height: 20px;
-        }
 
         .noContent {
             width: 200px;
@@ -95,7 +57,7 @@
                     <% If flag Then%>
 
                     <div class="row bg-white">
-                        <div class="col-lg-12">
+                        <div class="col-xl-12 mb-3" id="grid">
                             <div class="card shadow">
                                 <div class="card-header" style="background-color: navy; color: white">
                                     <div class="row justify-content-between">
@@ -118,7 +80,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="txtApprovalcode" runat="server" Text="Approval No." />
+                                                <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="txtApprovalcode" runat="server" Text="เลขที่ใบงาน" />
                                                 <asp:TextBox class="form-control" ID="txtApprovalcode" runat="server" ReadOnly="True"></asp:TextBox>
                                             </div>
                                         </div>
@@ -169,7 +131,7 @@
                                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing Then%>
                                     <% If detailtable.Rows(0).Item("statusid") = 4 Or detailtable.Rows(0).Item("working") Then%>
                                     <!-- status = ปิดงาน = 4 -->
-                                    <!-- working = true มีสถานะ 2 อนุมัติ,8 รอประสานงานยืนยัน,9 กำลังจัดทำเอกสาร,10 จัดส่งเอกสาร -->
+                                    <!-- working = true มีสถานะ 2 อนุมัติ,8 รอประสานงานรับเรื่อง,9 ดำเนินการด้านเอกสาร,10 จัดส่งเอกสาร -->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -185,9 +147,9 @@
                                         </div>
                                         <% If detailtable.Rows(0).Item("statusid") = 11 Or detailtable.Rows(0).Item("statusid") = 10 Or detailtable.Rows(0).Item("statusid") = 9 Or (detailtable.Rows(0).Item("statusid") = 4 And Not detailtable.Rows(0).Item("supportby").ToString() = "") Then%>
                                         <!-- status = ปิดงาน = 4 -->
-                                        <!-- status = ส่งเอกสารให้ผู้เกี่ยวข้อง = 11 -->
+                                        <!-- status = รอแสกนเอกสาร = 11 -->
                                         <!-- status = จัดส่งเอกสาร = 10 -->
-                                        <!-- status = กำลังจัดทำเอกสาร = 9 -->
+                                        <!-- status = ดำเนินการด้านเอกสาร = 9 -->
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <asp:Label ID="lbSupportby" CssClass="form-label" AssociatedControlID="txtSupportby" runat="server" Text="ประสานงานโดย" />
@@ -234,7 +196,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน" />
+                                                <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="ค่าใช้จ่าย" />
                                                 <asp:TextBox class="form-control" type="number" ID="txtPrice" runat="server" min="0" Text="0" required></asp:TextBox>
                                                 <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                                             </div>
@@ -247,23 +209,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row justify-content-md-center">
+                                    <div class="row justify-content-md-center file_Approval_BF">
                                         <div class="col-md-10">
-                                            <div class="input-group justify-content-center">
-                                                <div class="image-upload-wrap justify-content-center">
-                                                    <i>+</i>
-                                                    <asp:FileUpload ID="FileUpload1" class="file-upload-input" runat="server" onchange="readURL(this);" accept="image/*" text="เลือกไฟล์ --ยังไม่เสร็จ" />
-                                                </div>
-                                            </div>
-
-                                            <div class="file-upload-content">
-                                                <img class="file-upload-image" id="img1" src="#" alt="your image" runat="server" />
-                                                <div class="image-title-wrap">
-                                                    <button runat="server" id="btnDelete" name="btnDelete" onclick="removeUpload()" type='button' class='close' aria-label='Close Close-danger'>
-                                                        <span aria-hidden='true'>&times;</span>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            <input type="file" name="files" accept="image/*,.pdf" data-fileuploader-files='<%=Approval_BF%>'>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -298,35 +246,19 @@
                                     <% End If %>
                                     <% If detailtable.Rows(0).Item("statusid") = 4 Then%>
                                     <!-- status = ปิดงาน = 4 -->
-
-                                    <!-- รูปหลังทำ  -->
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="file-img-after">
-                                                <img class="file-upload-image file-upload-image-after" id="img2" src="#" alt="your image" runat="server" />
+                                    <div class="approval">
+                                        <!-- รายละเอียดปิดงาน  -->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <asp:Label ID="lbtxtCloseDetail" CssClass="form-label" AssociatedControlID="txtCloseDetail" runat="server" Text="รายละเอียดปิดงาน" />
+                                                    <asp:TextBox class="form-control text-danger font-weight-bold" ID="txtCloseDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" ReadOnly="True"></asp:TextBox>
+                                                    <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- รูปบิล  -->
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="file-img-bill">
-                                                <img class="file-upload-image file-upload-image-bill" id="img3" src="#" alt="your image" runat="server" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- รายละเอียดปิดงาน  -->
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <asp:Label ID="lbtxtCloseDetail" CssClass="form-label" AssociatedControlID="txtCloseDetail" runat="server" Text="รายละเอียดปิดงาน" />
-                                                <asp:TextBox class="form-control text-danger font-weight-bold" ID="txtCloseDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" ReadOnly="True"></asp:TextBox>
-                                                <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <% End If %>
                                     <% End If %>
                                     <% If Session("status") = "new" Then%>
@@ -338,6 +270,7 @@
                                         <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                                         <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" />
                                         <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" />
+                                        <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน" />
                                         <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" />
 
                                     </div>
@@ -359,15 +292,12 @@
                                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And Session("secid").ToString = "2" Then%>
                                     <% If detailtable.Rows(0).Item("statusid") = 8 Then%>
                                     <div class="card-footer text-center bg-white">
-                                        <asp:Button ID="btnSupportAllow" class="btn btn-warning" runat="server" Text="ดำเนินการจัดทำเอกสาร" />
+                                        <asp:Button ID="btnSupportKnowlange" class="btn btn-warning" runat="server" Text="รับเรื่อง" />
                                     </div>
                                     <% End If %>
-                                    <% If (detailtable.Rows(0).Item("statusid") = 9 Or detailtable.Rows(0).Item("statusid") = 11) And (Session("userid").ToString = detailtable.Rows(0).Item("supportid").ToString) Then%>
+                                    <% If (detailtable.Rows(0).Item("statusid") = 9) And (Session("userid").ToString = detailtable.Rows(0).Item("supportid").ToString) Then%>
                                     <div class="card-footer text-center bg-white">
-                                        <asp:Button ID="btnSupportFinished" class="btn btn-danger" runat="server" Text="เอกสารครบถ้วน" />
-                                        <% If detailtable.Rows(0).Item("statusid") = 9 Then%>
-                                        <asp:Button ID="btnSupportForaward" class="btn btn-warning" runat="server" Text="ส่งเอกสารให้ผู้เกี่ยวข้อง" />
-                                        <% End If %>
+                                        <asp:Button ID="btnSupportClose" class="btn btn-danger" runat="server" Text="ปิดงาน / กรอกรหัส" />
                                     </div>
                                     <% End If %>
                                     <% End If %>
@@ -377,12 +307,80 @@
 
                         </div>
                         <!-- end col-lg-12-->
+                        <% If not Session("status") = "new" Then%>
+                        <div class="col-xl-4 files_approval">
+                            <div class="row">
+                                <div class="col-xl-12 mb-3  file_Approval_Doc">
+                                    <div class="card shadow">
+                                        <div class="card-header" style="background-color: #475b6f; color: white">
+                                            <div class="row justify-content-between">
+                                                <div class="col text-left">
+                                                    แนบเอกสารให้ฝ่ายประสานงาน
+                                                    (ใบแจ้งหนี้ / ใบเสร็จ / อื่นๆ)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-md-center">
+                                                <div class="col-md-10">
+                                                    <input type="file" name="files" accept="image/*,.pdf" data-fileuploader-files='<%=Approval_Doc%>'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end card-->
+                                </div>
+
+                                <div class="col-xl-12 mb-3 file_Approval_AT ">
+
+                                    <div class="card shadow">
+                                        <div class="card-header" style="background-color: #ffc107; color: white">
+                                            <div class="row justify-content-between">
+                                                <div class="col text-left">
+                                                    รูปภาพหลังปฏิบัติงาน
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-md-center">
+                                                <div class="col-md-10">
+                                                    <input type="file" name="files" accept="image/*,.pdf" data-fileuploader-files='<%=Approval_AT%>'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end card-->
+                                </div>
+
+                                <div class="col-xl-12 mb-3 file_Approval_Bill">
+                                    <div class="card shadow">
+                                        <div class="card-header" style="background-color: deeppink; color: white">
+                                            <div class="row justify-content-between">
+                                                <div class="col text-left">
+                                                    รูปภาพใบเสร็จ
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-md-center">
+                                                <div class="col-md-10">
+                                                    <input type="file" name="files" accept="image/*,.pdf" data-fileuploader-files='<%=Approval_Bill%>'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end card-->
+                                </div>
+
+                            </div>
+                        </div>
+                        <% End If %>
                     </div>
                     <!-- end row-->
                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And CommentTable IsNot Nothing Then%>
                     <% If (Session("status") = "read" Or Session("status") = "write") And Not detailtable.Rows(0).Item("statusid").ToString() = 7 Then%>
                     <!-- statusid = 7 รอผู้แจ้งยืนยัน-->
-                    <div class="row bg-white" style="padding-top: 0.1rem;">
+                    <div class="row bg-white">
                         <div class="col-lg-12">
                             <div class="card shadow">
                                 <!--<div class="card-header">
@@ -476,9 +474,196 @@
 
 
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
+
     <script type="text/javascript">
 
         $(document).ready(function () {
+            //alert('t');
+            $('input[name="files"]').fileuploader({
+                example: ['pdf', 'image/*'],
+                fileMaxSize: 15,
+                limit: 3,
+                changeInput: ' ',
+                theme: 'thumbnails',
+                enableApi: true,
+                addMore: true,
+                thumbnails: {
+                    box: '<div class="fileuploader-items">' +
+                        '<ul class="fileuploader-items-list" style="text-align: center;">' +
+                        '<li class="fileuploader-thumbnails-input"><div class="fileuploader-thumbnails-input-inner"><i>+</i></div></li>' +
+                        '</ul>' +
+                        '</div>',
+                    item: '<li class="fileuploader-item">' +
+                        '<div class="fileuploader-item-inner">' +
+                        '<div class="type-holder">${extension}</div>' +
+                        '<div class="actions-holder">' +
+                        '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                        '</div>' +
+                        '<div class="thumbnail-holder">' +
+                        '${image}' +
+                        '<span class="fileuploader-action-popup"></span>' +
+                        '</div>' +
+                        '<div class="content-holder"><h5>${name}</h5><span>${size2}</span></div>' +
+                        '<div class="progress-holder">${progressBar}</div>' +
+                        '</div>' +
+                        '</li>',
+                    item2: '<li class="fileuploader-item">' +
+                        '<div class="fileuploader-item-inner">' +
+                        '<div class="type-holder">${extension}</div>' +
+                        '<div class="actions-holder">' +
+                        '<a href="${file}" class="fileuploader-action fileuploader-action-download" title="${captions.download}" download><i class="fileuploader-icon-download"></i></a>' +
+                        '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                        '</div>' +
+                        '<div class="thumbnail-holder">' +
+                        '${image}' +
+                        '<span class="fileuploader-action-popup"></span>' +
+                        '</div>' +
+                        '<div class="content-holder"><h5 title="${name}">${name}</h5><span>${size2}</span></div>' +
+                        '<div class="progress-holder">${progressBar}</div>' +
+                        '</div>' +
+                        '</li>',
+                    startImageRenderer: true,
+                    useObjectUrl: false,
+                    canvasImage: false,
+                    _selectors: {
+                        list: '.fileuploader-items-list',
+                        item: '.fileuploader-item',
+                        start: '.fileuploader-action-start',
+                        retry: '.fileuploader-action-retry',
+                        remove: '.fileuploader-action-remove'
+                    },
+                    onItemShow: function (item, listEl, parentEl, newInputEl, inputEl) {
+                        var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                            api = $.fileuploader.getInstance(inputEl.get(0));
+
+                        plusInput.insertAfter(item.html)[api.getOptions().limit && api.getChoosedFiles().length >= api.getOptions().limit ? 'hide' : 'show']();
+
+                        if (item.format == 'image') {
+                            item.html.find('.fileuploader-item-icon').hide();
+                        }
+                    },
+                    onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
+                        var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                            api = $.fileuploader.getInstance(inputEl.get(0));
+
+                        html.children().animate({ 'opacity': 0 }, 200, function () {
+                            html.remove();
+
+                            if (api.getOptions().limit && api.getChoosedFiles().length - 1 < api.getOptions().limit)
+                                plusInput.show();
+                        });
+                    }
+                },
+                dragDrop: {
+                    container: '.fileuploader-thumbnails-input'
+                },
+                afterRender: function (listEl, parentEl, newInputEl, inputEl) {
+                    var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                        api = $.fileuploader.getInstance(inputEl.get(0));
+                    /*alert(listEl);
+                    console.log(listEl.value);
+                    console.log($('#fileuploader-list-files').value);
+                    console.log($('#fileuploader-list-files').val.length);
+                    console.log("parentEl : " + parentEl);
+                    console.log(parentEl);
+                    console.log("newInputEl : " + newInputEl);
+                    console.log(newInputEl);
+                    console.log("input : " + inputEl);
+                    console.log(inputEl.length);*/
+
+                    plusInput.on('click', function () {
+                        api.open();
+                    });
+
+                    api.getOptions().dragDrop.container = plusInput;
+                }/*, upload: {
+                    url: 'approval.aspx?type=upload',
+                    data: null,
+                    type: 'POST',
+                    enctype: 'multipart/form-data',
+                    start: true,
+                    synchron: true,
+                    beforeSend: null,
+                    onSuccess: function (result, item) {
+                        console.log('res'+result);
+                        alert('yes');
+                        var data = {};
+
+
+                        try {
+                            data = JSON.parse(result);
+                        } catch (e) {
+                            data.hasWarnings = true;
+                        }
+
+                        // if success
+                        if (data.isSuccess && data.files[0]) {
+                            console.log('if success');
+                            item.name = data.files[0].name;
+                            item.html.find('.column-title > div:first-child').text(data.files[0].name).attr('title', data.files[0].name);
+                        }
+
+                        // if warnings
+                        if (data.hasWarnings) {
+                            console.log('if warnings');
+                            console.log('if warnings' + data.hasWarnings);
+                            for (var warning in data.warnings) {
+                                alert(data.warnings);
+                            }
+
+                            item.html.removeClass('upload-successful').addClass('upload-failed');
+                            // go out from success function by calling onError function
+                            // in this case we have a animation there
+                            // you can also response in PHP with 404
+                            return this.onError ? this.onError(item) : null;
+                        }
+
+                        item.html.find('.fileuploader-action-remove').addClass('fileuploader-action-success');
+                        setTimeout(function () {
+                            item.html.find('.progress-bar2').fadeOut(400);
+                        }, 400);
+                    },
+                    onError: function (item) {
+                        console.log(item);
+                        console.log(item.uploaded);
+                        if (!item.uploaded) {
+                            
+                            alert('error');
+
+                            var progressBar = item.html.find('.progress-bar2');
+
+                            if (progressBar.length) {
+                                progressBar.find('span').html(0 + "%");
+                                progressBar.find('.fileuploader-progressbar .bar').width(0 + "%");
+                                item.html.find('.progress-bar2').fadeOut(400);
+                            }
+
+                            item.upload.status != 'cancelled' && item.html.find('.fileuploader-action-retry').length == 0 ? item.html.find('.column-actions').prepend(
+                                '<button type="button" class="fileuploader-action fileuploader-action-retry" title="Retry"><i class="fileuploader-icon-retry"></i></button>'
+                                ) : null;
+                         }
+
+                    },
+                    onProgress: function (data, item) {
+                        alert('on progress');
+
+                        var progressBar = item.html.find('.progress-bar2');
+
+                        if (progressBar.length > 0) {
+                            progressBar.show();
+                            progressBar.find('span').html(data.percentage + "%");
+                            progressBar.find('.fileuploader-progressbar .bar').width(data.percentage + "%");
+                        }
+                    },
+                    onComplete: null,
+                }, onRemove: function (item) {
+                    alert('on remove');
+
+                    $.post('approval.aspx?type=remove', { file: item.name });
+                }*/
+            });
+
+
             $('.form-control').selectpicker({
                 liveSearch: true,
                 maxOptions: 1
@@ -491,14 +676,66 @@
                 var asd = '<%= ownerapproval.ToString %>'
 
                 document.getElementById("demo2").innerHTML = "(" + asd + ")";
-                console.log(asd)
             }
 
             var status = document.getElementById('<%= txtStatus.ClientID%>');
-            var elem = document.getElementById('<%= img1.ClientID%>');
-            var img_after = document.getElementById('<%= img2.ClientID%>');
-            var img_bil = document.getElementById('<%= img3.ClientID%>');
-            console.log(elem)
+            var grid = document.getElementById('grid'); //สำหรับแสดงผล
+
+
+            var Approval_BF = '<%= Approval_BF.ToString %>'
+            var Approval_AT = '<%= Approval_AT.ToString %>'
+            var Approval_Bill = '<%= Approval_Bill.ToString %>'
+            var Approval_Doc = '<%= Approval_Doc.ToString %>'
+            var status_session = "<%= Session("status")%>"
+
+            if (status_session != "new") {
+                if (!Approval_BF) {
+                    //ไม่มี
+                    $('.file_Approval_BF').hide();
+                } else {
+                    //มี
+                    $('.fileuploader-thumbnails-input').css('display', 'none');
+                }
+
+
+                if (!Approval_Doc && !Approval_AT && !Approval_Bill) {
+                    $('.files_approval').hide();
+                    grid.setAttribute("class", "col-xl-12 mb-3");
+                }
+                else {
+                    grid.setAttribute("class", "col-xl-8 mb-3");
+                    if (!Approval_AT) {
+                        //ไม่มี
+                        $('.file_Approval_AT').hide();
+                    } else {
+                        //มี
+                        $('.fileuploader-thumbnails-input').css('display', 'none');
+                    }
+                    if (!Approval_Bill) {
+                        //ไม่มี
+                        $('.file_Approval_Bill').hide();
+                    } else {
+                        //มี
+                        $('.fileuploader-thumbnails-input').css('display', 'none');
+                    }
+                    if (!Approval_Doc) {
+                        //ไม่มี
+                        $('.file_Approval_Doc').hide();
+                    } else {
+                        //มี
+                        $('.fileuploader-thumbnails-input').css('display', 'none');
+                    }
+                }
+
+
+
+                $('.content-holder').css('display', 'none');
+                $('.type-holder').css('display', 'none');
+                $('.actions-holder').css('display', 'none');
+
+            }
+
+            /*console.log(elem)
             if (approvalcode && elem.getAttribute('src') === "#") {
                 console.log(elem.getAttribute('src') === "#")
                 console.log(approvalcode)
@@ -539,7 +776,7 @@
 
                     $('.file-img-bill').hide();
                 }
-            }
+            }*/
             $('input').on('change', function () {
                 resizeImages(this.files[0], function (dataUrl) {
 
@@ -547,7 +784,7 @@
                     ////// 5 Upload to server as dataUrl
                     //uploadResizedImages(dataUrl);
 
-                    console.log(dataUrl.length)
+                    //console.log(dataUrl.length)
                 });
             });
 
@@ -634,7 +871,6 @@
             return canvas.toDataURL('image/jpeg', 0.5);
         }
         function removeUpload() {
-            document.getElementById('<%= FileUpload1.ClientID%>').value = "";
             $('.file-upload-input').replaceWith($('.file-upload-input').clone());
             $('.file-upload-content').hide();
             $('.image-upload-wrap').show();
@@ -735,8 +971,8 @@
     <script>
         function validateComment() {
             var txtcomment = document.getElementById('<%= txtComment.ClientID%>');
-            console.log(txtcomment.value)
-            console.log(txtcomment.checkValidity())
+            /*console.log(txtcomment.value)
+            console.log(txtcomment.checkValidity())*/
             if (txtcomment.checkValidity() === false) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -778,7 +1014,7 @@
         }, 1000);
     </script>
     <script>
-    function Confirm() {
+        function Confirm() {
 
             console.log("insave");
             var confirm_value = document.createElement("INPUT");

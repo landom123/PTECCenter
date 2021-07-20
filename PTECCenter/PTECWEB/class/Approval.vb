@@ -25,6 +25,13 @@ Public Class Approval
         obj.DataTextField = "statusname"
         obj.DataBind()
     End Sub
+
+    Public Sub SetCboApprovalStatusForOwner(obj As Object)
+        obj.DataSource = Me.ApprovalStatus_List_ForOwner()
+        obj.DataValueField = "statusid"
+        obj.DataTextField = "statusname"
+        obj.DataBind()
+    End Sub
     Public Function Approval_List() As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -111,6 +118,32 @@ Public Class Approval
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "ApprovalStatus_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function ApprovalStatus_List_ForOwner() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalStatus_List_ForOwner"
         cmd.CommandType = CommandType.StoredProcedure
 
         'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
@@ -482,6 +515,29 @@ Public Class Approval
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "Approval_Support_Allow"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Function
+
+    Public Function Approval_Support_Knowledge(approvalcode As String, username As String)
+        'Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_Support_Knowledge"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode

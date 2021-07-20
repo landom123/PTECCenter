@@ -42,16 +42,16 @@ Public Class WebForm4
                             Dim fileImgAfterName As String = My.Settings.fullurl
                             fileImgAfterName += approvaldataset.Tables(2).Rows(0).Item("imagename")
                             'bt_img1.Attributes.Add("href", fileImgAfterName)
-                            img1.Attributes.Add("src", fileImgAfterName)
+                            'img1.Attributes.Add("src", fileImgAfterName)
                         End If
                         If approvaldataset.Tables(3).Rows.Count > 0 Then
                             Dim fileImgBillName As String = My.Settings.fullurl
                             fileImgBillName += approvaldataset.Tables(3).Rows(0).Item("imagename")
-                            img2.Attributes.Add("src", fileImgBillName)
+                            'img2.Attributes.Add("src", fileImgBillName)
                         End If
                     End If
                     Session("status") = "read"
-                    chkuser(detailtable.Rows(0).Item("createby"))
+                    chkuser(detailtable.Rows(0).Item("createby").ToString, detailtable.Rows(0).Item("supportid").ToString)
                     showdata(detailtable)
                 Catch ex As Exception
                     Dim scriptKey As String = "alert"
@@ -66,8 +66,8 @@ Public Class WebForm4
             detailtable = Session("detailtable")
         End If
     End Sub
-    Private Sub chkuser(userid As Integer)
-        If Not userid = Session("userid") Then
+    Private Sub chkuser(userid As String, supportid As String)
+        If Not userid = Session("userid") And Not supportid = Session("userid") Then
             flag = False
         End If
     End Sub
@@ -96,6 +96,7 @@ Public Class WebForm4
                     txtStatus.BackColor = Color.MediumPurple
                 Case = "11"
                     txtStatus.BackColor = Color.Brown
+                    txtStatus.ForeColor = Color.White
             End Select
 
             'cboApproval.Attributes.Add("disabled", "True")
@@ -115,10 +116,20 @@ Public Class WebForm4
         Dim fullfilenameimageafter As String = String.Empty
         Dim fullfilenameimagebill As String = String.Empty
         Dim approval As New Approval
+        Dim Files As HttpFileCollection = Request.Files
+
         If chkAfter.Checked Then
-            fullfilenameimageafter = fileupload(fileImgAfter)
+            fullfilenameimageafter = fileupload("approval_af", Files)
+            Dim filenameArr_af() As String
+            If Not String.IsNullOrEmpty(fullfilenameimageafter) Then
+                filenameArr_af = fullfilenameimageafter.Split(",")
+            End If
             Try
-                approval.Image_Save(fullfilenameimageafter, "Approval_AT", detailtable.Rows(0).Item("approvalid"), Session("usercode"))
+                For i = 0 To filenameArr_af.Length - 1
+                    If Not String.IsNullOrEmpty(filenameArr_af(i)) Then 'สำหรับแก้บัค
+                        approval.Image_Save(filenameArr_af(i), "Approval_AT", detailtable.Rows(0).Item("approvalid"), Session("usercode"))
+                    End If
+                Next i
             Catch ex As Exception
                 Dim scriptKey As String = "alert"
                 'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -128,9 +139,17 @@ Public Class WebForm4
             End Try
         End If
         If chkBill.Checked Then
-            fullfilenameimagebill = fileupload(fileImgBill)
+            fullfilenameimagebill = fileupload("approval_bill", Files)
+            Dim filenameArr_bill() As String
+            If Not String.IsNullOrEmpty(fullfilenameimagebill) Then
+                filenameArr_bill = fullfilenameimagebill.Split(",")
+            End If
             Try
-                approval.Image_Save(fullfilenameimagebill, "Approval_Bill", detailtable.Rows(0).Item("approvalid"), Session("usercode"))
+                For i = 0 To filenameArr_bill.Length - 1
+                    If Not String.IsNullOrEmpty(filenameArr_bill(i)) Then 'สำหรับแก้บัค
+                        approval.Image_Save(filenameArr_bill(i), "Approval_Bill", detailtable.Rows(0).Item("approvalid"), Session("usercode"))
+                    End If
+                Next i
             Catch ex As Exception
                 Dim scriptKey As String = "alert"
                 'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -142,28 +161,42 @@ Public Class WebForm4
         Approval_Close(fullfilenameimageafter, fullfilenameimagebill)
 endprocess:
     End Sub
-    Private Function fileupload(file As FileUpload) As String
+    Private Function fileupload(key As String, Files As HttpFileCollection) As String
         Dim imgname As New Approval
         Dim fullfilename As String = String.Empty
-        If (file.HasFile) Then
-            Dim Extension As String = System.IO.Path.GetExtension(file.FileName)
-            Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
-            Try
-                Dim fileName As String
-                fileName = imgname.GetImageName()
-                savePath += fileName
-                savePath += Extension
-                file.SaveAs(savePath)
-                fullfilename += fileName
-                fullfilename += Extension
-                'img1.Attributes.Add("src", a)
-            Catch ex As Exception
-                Dim scriptKey As String = "alert"
-                'Dim javaScript As String = "alert('" & ex.Message & "');"
-                Dim javaScript As String = "alertWarning('upload file fail');"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            End Try
-        End If
+
+        Dim Keys() As String
+        Keys = Files.AllKeys
+        For i = 0 To Keys.GetUpperBound(0) - 1
+            If Not String.IsNullOrEmpty(Files(i).FileName) And key = Keys(i) Then
+                Dim Extension As String = System.IO.Path.GetExtension(Files(i).FileName)
+                Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                Dim di As String = System.IO.Path.GetDirectoryName(Files(i).FileName)
+                'Dim oldpath As String = di + FileUpload1.FileName
+
+                Try
+                    Dim fileName As String
+                    fileName = imgname.GetImageName()
+                    savePath += fileName
+                    savePath += Extension
+                    Files(i).SaveAs(savePath)
+                    fullfilename += fileName
+                    fullfilename += Extension
+                    If Not i = Keys.GetUpperBound(0) - 1 Then
+                        fullfilename += ","
+                    End If
+                    'img1.Attributes.Add("src", a)
+                Catch ex As Exception
+                    Dim scriptKey As String = "alert"
+                    'Dim javaScript As String = "alert('" & ex.Message & "');"
+                    Dim javaScript As String = "alertWarning('upload file fail');"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+                End Try
+            End If
+            'End Try
+        Next i
+
         Return fullfilename
     End Function
     Private Sub Approval_Close(fullfilenameimageafter As String, fullfilenameimagebill As String)

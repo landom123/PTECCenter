@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class WebForm4
+Partial Public Class approvalattach
 
     '''<summary>
     '''lbApprovalcode control.
@@ -140,110 +140,11 @@ Partial Public Class WebForm4
     Protected WithEvents txtOwnerApprovalDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lbCloseDate control.
+    '''btnUpload control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbCloseDate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbCloseDateMandatory control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbCloseDateMandatory As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtCloseDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtCloseDate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lbDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbDetail As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbDetailMandatory control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbDetailMandatory As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtDetail As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lbCodeGSM control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbCodeGSM As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbCodeGSMMandatory control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbCodeGSMMandatory As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtCodeGSM control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtCodeGSM As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''chkAfter control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkAfter As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''chkBill control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkBill As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''btnClose control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnClose As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnUpload As Global.System.Web.UI.WebControls.Button
 End Class

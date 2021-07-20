@@ -2,6 +2,7 @@
 
 Public Class WebForm3
     Inherits System.Web.UI.Page
+    Public criteria As DataTable = createCriteria()
     Public itemtable As DataTable = createdetailtable()
     Public menutable As DataTable
 
@@ -35,21 +36,23 @@ Public Class WebForm3
                     area.SetCboArea(cboArea, Session("userid"))
                     objbranch.SetComboBranchByAreaid(cboBranch, cboArea.SelectedItem.Value.ToString, Session("userid"), 0)
                 End If
-
-                searchapprovallist()
+                If Not Session("criteria") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria")
+                    BindCriteria(criteria)
+                    searchapprovallist()
+                Else
+                    searchapprovallist()
+                End If
             Else
-                Dim dt As New DataTable
 
-                dt.Columns.Add("statusid", GetType(Integer))
-                dt.Columns.Add("name", GetType(String))
-                dt.Rows.Add(0, "--- งานทั้งหมด ---")
-                dt.Rows.Add(1, "** กำลังดำเนินการ **")
-                cboWorking.DataSource = dt
-                cboWorking.DataValueField = ("statusid")
-                cboWorking.DataTextField = ("name")
-                cboWorking.DataBind()
+                approval.SetCboApprovalStatusForOwner(cboWorking)
+
+                If Not Session("cboWorking") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    cboWorking.SelectedValue = Session("cboWorking")
+                End If
                 itemtable = approval.ApprovalMenuList(Session("userid"), cboWorking.SelectedItem.Value)
             End If
+
             Session("approvallist") = itemtable
             BindData()
         Else
@@ -57,6 +60,21 @@ Public Class WebForm3
             BindData()
         End If
     End Sub
+
+    Private Sub BindCriteria(criteria As DataTable)
+        If criteria.Rows.Count > 0 Then
+            txtApprovalCode.Text = criteria.Rows(0).Item("txtApprovalCode")
+            txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
+            txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
+
+            cboApprovalCategory.SelectedValue = criteria.Rows(0).Item("cboApprovalCategory")
+            cboApproval.SelectedValue = criteria.Rows(0).Item("cboApproval")
+            cboStatus.SelectedValue = criteria.Rows(0).Item("cboStatus")
+            cboArea.SelectedValue = criteria.Rows(0).Item("cboArea")
+            cboBranch.SelectedValue = criteria.Rows(0).Item("cboBranch")
+        End If
+    End Sub
+
     Private Sub BindData()
         If itemtable.Rows.Count > 0 Then
             btnPrint.Enabled = True
@@ -66,6 +84,21 @@ Public Class WebForm3
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
     End Sub
+
+    Private Function createCriteria() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("txtApprovalCode", GetType(String))
+        dt.Columns.Add("cboApprovalCategory", GetType(String))
+        dt.Columns.Add("cboApproval", GetType(String))
+        dt.Columns.Add("cboStatus", GetType(String))
+        dt.Columns.Add("cboArea", GetType(String))
+        dt.Columns.Add("cboBranch", GetType(String))
+        dt.Columns.Add("txtStartDate", GetType(String))
+        dt.Columns.Add("txtEndDate", GetType(String))
+
+        Return dt
+    End Function
 
     Private Function createdetailtable() As DataTable
         Dim dt As New DataTable
@@ -106,11 +139,11 @@ Public Class WebForm3
                 e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
             ElseIf Data.Item("statusname") = "ปิดงาน" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Gray
-            ElseIf Data.Item("statusname") = "รอประสานงานยืนยัน" Then
+            ElseIf Data.Item("statusname") = "รอประสานงานรับเรื่อง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightCoral
-            ElseIf Data.Item("statusname") = "กำลังจัดทำเอกสาร" Then
+            ElseIf Data.Item("statusname") = "ดำเนินการด้านเอกสาร" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.OrangeRed
-            ElseIf Data.Item("statusname") = "ส่งเอกสารให้ผู้เกี่ยวข้อง" Then
+            ElseIf Data.Item("statusname") = "รอแสกนเอกสาร" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Brown
             ElseIf Data.Item("statusname") = "เอกสารครบถ้วน" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.MediumPurple
@@ -137,6 +170,8 @@ Public Class WebForm3
                                                         Session("userid"),
                                                         txtStartDate.Text,
                                                         txtEndDate.Text)
+
+            setCriteria()
             Session("approvallist") = itemtable
             BindData()
 
@@ -146,6 +181,20 @@ Public Class WebForm3
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
         End Try
     End Sub
+
+    Private Sub setCriteria()
+        criteria = createCriteria()
+        criteria.Rows.Add(txtApprovalCode.Text.ToString.Trim(),
+                          cboApprovalCategory.SelectedItem.Value,
+                          (cboApproval.SelectedItem.Value),
+                          (cboStatus.SelectedItem.Value),
+                          (cboArea.SelectedItem.Value),
+                          (cboBranch.SelectedItem.Value),
+                          txtStartDate.Text.ToString.Trim(),
+                          txtEndDate.Text.ToString.Trim())
+        Session("criteria") = criteria
+    End Sub
+
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
         txtApprovalCode.Text = ""
         txtStartDate.Text = ""
@@ -157,7 +206,11 @@ Public Class WebForm3
         cboApprovalCategory.SelectedIndex = -1
         cboApproval.SelectedIndex = -1
         itemtable.Rows.Clear()
+        criteria.Rows.Clear()
         Session("approvallist") = itemtable
+        Session("criteria") = criteria
+
+        searchapprovallist()
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
@@ -213,7 +266,7 @@ Public Class WebForm3
     End Sub
 
     Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
-
+        Session("cboWorking") = cboWorking.SelectedItem.Value
         Dim approval As New Approval
         itemtable = approval.ApprovalMenuList(Session("userid"), cboWorking.SelectedItem.Value)
         Session("approvallist") = itemtable

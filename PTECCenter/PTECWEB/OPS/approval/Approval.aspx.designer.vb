@@ -311,33 +311,6 @@ Partial Public Class WebForm1
     Protected WithEvents txtDay As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''FileUpload1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
-
-    '''<summary>
-    '''img1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents img1 As Global.System.Web.UI.HtmlControls.HtmlImage
-
-    '''<summary>
-    '''btnDelete control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnDelete As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
     '''lbDetail control.
     '''</summary>
     '''<remarks>
@@ -401,24 +374,6 @@ Partial Public Class WebForm1
     Protected WithEvents txtDisApproval As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''img2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents img2 As Global.System.Web.UI.HtmlControls.HtmlImage
-
-    '''<summary>
-    '''img3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents img3 As Global.System.Web.UI.HtmlControls.HtmlImage
-
-    '''<summary>
     '''lbtxtCloseDetail control.
     '''</summary>
     '''<remarks>
@@ -473,6 +428,15 @@ Partial Public Class WebForm1
     Protected WithEvents btnClose As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnAddDoc control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddDoc As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnEdit control.
     '''</summary>
     '''<remarks>
@@ -518,31 +482,22 @@ Partial Public Class WebForm1
     Protected WithEvents btnCancelEdit As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnSupportAllow control.
+    '''btnSupportKnowlange control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnSupportAllow As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnSupportKnowlange As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnSupportFinished control.
+    '''btnSupportClose control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnSupportFinished As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnSupportForaward control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnSupportForaward As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnSupportClose As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''txtComment control.

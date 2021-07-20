@@ -174,9 +174,9 @@
             }).then((result) => {
                 console.log(result.value);
                 if (result.isConfirmed) {
-                    var usercode = "<%= Session("usercode")%>";
+                    var usercode = document.getElementById('<%= txtUsercode.ClientID%>').value;
                     var params = "{'usercode': '" + usercode + "','pass': '" + result.value + "'}";
-                    console.log(params);
+                    //console.log(params);
                     $.ajax({
                         type: "POST",
                         url: "../admin/usermanage.aspx/resetPassword",
