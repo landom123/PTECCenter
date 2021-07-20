@@ -113,6 +113,7 @@
                                         class="table table-striped table-bordered"
                                         AutoGenerateColumns="false"
                                         EmptyDataText="No data available."
+                                        PageSize="20"
                                         AllowPaging="true"
                                         runat="server">
                                         <Columns>

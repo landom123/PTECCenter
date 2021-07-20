@@ -25,11 +25,12 @@
                 </div>
                           <div class="card-body">
                               <div class="table-responsive">
-                              <asp:GridView ID="gvRemind" 
-                                  class="table table-striped table-bordered" 
-                                  autogeneratecolumns="false"
-                                  emptydatatext="No data available." 
-                                  allowpaging="true"
+                              <asp:GridView ID="gvRemind"
+                                  class="table table-striped table-bordered"
+                                  AutoGenerateColumns="false"
+                                  EmptyDataText="No data available."
+                                  PageSize="20"
+                                  AllowPaging="true"
                                   runat="server">
                                       <Columns>
 	                                    <asp:TemplateField HeaderText="Code">
