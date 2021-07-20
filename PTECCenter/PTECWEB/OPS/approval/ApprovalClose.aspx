@@ -2,13 +2,45 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/font/font-fileuploader.css")%>" rel="stylesheet">
+
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader.min.css")%>" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader-theme-thumbnails.css")%>" rel="stylesheet">
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
 
     <style>
-        .card {
-            margin-bottom: 1rem;
+        .file-upload-content, .image-upload-wrap {
+            display: none;
         }
+
+        .fileuploader-theme-thumbnails .fileuploader-items .fileuploader-item .fileuploader-action + .fileuploader-action {
+            display: none;
+        }
+
+        .fileuploader-popup .fileuploader-popup-footer {
+            display: none;
+        }
+
+        .fileuploader-theme-thumbnails .fileuploader-thumbnails-input-inner {
+            background: #f0cccc;
+            border: 2px dashed #ff0000;
+            color: #ff0000;
+        }
+
+        .btn-light {
+            background-color: #fff;
+        }
+
+            .btn-light.disabled {
+                border: 1px solid #ced4da;
+                background-color: #e9ecef;
+            }
+
+
+
 
         .noContent {
             width: 200px;
@@ -18,68 +50,6 @@
             left: 50%;
             margin-top: -100px;
             margin-left: -100px;
-        }
-
-        .image-upload-wrap {
-            border-radius: 0.25rem;
-            background: #f0cccc;
-            border: 2px dashed #ff0000;
-            text-align: center;
-            font-size: 30px;
-            color: #ff0000;
-            cursor: pointer;
-            opacity: 0.5;
-            height: 130px;
-            width: 130px;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-            .image-upload-wrap i {
-                position: absolute;
-                font-style: normal;
-                top: 50%;
-                left: 50%;
-                -webkit-transform: translateX(-50%) translateY(-50%);
-                transform: translateX(-50%) translateY(-50%);
-            }
-
-        .file-upload-input {
-            cursor: pointer;
-            opacity: 0;
-            height: 100%;
-            width: 100%;
-        }
-
-        .file-upload-content {
-            display: none;
-            text-align: center;
-        }
-
-        .file-upload-image {
-            max-width: 100%;
-            max-height: 100%;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .remove-image {
-            border: 0;
-            background: #fe7676;
-            border-radius: 50%;
-            box-shadow: -1px 1px 6px rgb(254 118 118 / 80%);
-            color: #fdfdfd;
-            text-shadow: 1px 1px 3px rgb(0 0 0 / 30%);
-        }
-
-        .image-title-wrap {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            z-index: 2;
-            height: 20px;
         }
     </style>
 </asp:Content>
@@ -93,7 +63,7 @@
                     <% If flag Then%>
                     <% If Not Request.QueryString("approvalcode") Is Nothing Then%>
 
-                    <div class="row bg-white">
+                    <div class="row bg-white mb-3">
                         <div class="col-lg-12">
                             <div class="card shadow">
                                 <div class="card-header" style="background-color: navy; color: white">
@@ -132,7 +102,7 @@
                                         </div>
                                     </div>
                                     <% If detailtable IsNot Nothing Then%>
-                                    <% If detailtable.Rows(0).Item("statusid") = 4 Or detailtable.Rows(0).Item("statusid") = 2 Or detailtable.Rows(0).Item("statusid") = 10 Then%>
+                                    <% If detailtable.Rows(0).Item("statusid") = 4 Or detailtable.Rows(0).Item("statusid") = 2 Or detailtable.Rows(0).Item("statusid") = 9 Then%>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -169,7 +139,7 @@
                                             <div class="form-group">
                                                 <asp:Label ID="lbCloseDate" CssClass="form-label" AssociatedControlID="txtCloseDate" runat="server" Text="วันที่ปิดงาน" />
                                                 <asp:Label ID="lbCloseDateMandatory" CssClass="text-danger" AssociatedControlID="txtCloseDate" runat="server" Text="*" />
-                                                <asp:TextBox class="form-control text-danger font-weight-bold" ID="txtCloseDate" runat="server"  placeholder="--- คลิกเพื่อเลือก ---" required></asp:TextBox>
+                                                <asp:TextBox class="form-control text-danger font-weight-bold" ID="txtCloseDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" required></asp:TextBox>
                                                 <div class="invalid-feedback">กรุณาเลือกวัน</div>
                                             </div>
                                         </div>
@@ -185,7 +155,19 @@
                                         </div>
                                     </div>
                                     <% If detailtable IsNot Nothing Then%>
-                                    <% If detailtable.Rows(0).Item("statusid") = 2 Or detailtable.Rows(0).Item("statusid") = 10 Then%>
+                                    <% If detailtable.Rows(0).Item("statusid") = 9 Then%>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <asp:Label ID="lbCodeGSM" CssClass="form-label" AssociatedControlID="txtCodeGSM" runat="server" Text="รหัส GSM" />
+                                                <asp:Label ID="lbCodeGSMMandatory" CssClass="text-danger" AssociatedControlID="txtCodeGSM" runat="server" Text="*" />
+                                                <asp:TextBox class="form-control" ID="txtCodeGSM" runat="server" required></asp:TextBox>
+                                                <div class="invalid-feedback">กรุณากรอกรหัส GSM</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% End If %>
+                                    <% If detailtable.Rows(0).Item("statusid") = 2 Or detailtable.Rows(0).Item("statusid") = 9 Then%>
                                     <div class="row">
                                         <div class="col-md-auto">
                                             <div class="form-check">
@@ -204,7 +186,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <% End If %>
                                     <% End If %>
                                 </div>
@@ -217,35 +198,21 @@
                     <!-- end row-->
 
                     <div class="row bg-white">
-                        <div class="col-md-12 col-12">
-                            <div class="img-after">
-                                <div class="card shadow">
-                                    <div class="card-header" style="background-color: #ffc107; color: white">
-                                        <div class="row justify-content-between">
-                                            <div class="col text-left">
-                                                รูปภาพหลังปฏิบัติงาน
-                                            </div>
+                        <div class="col-md-12 col-12 mb-3 img-after" style="display:none;">
+                            <div class="card shadow">
+                                <div class="card-header" style="background-color: #ffc107; color: white">
+                                    <div class="row justify-content-between">
+                                        <div class="col text-left">
+                                            รูปภาพหลังปฏิบัติงาน
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <!-- end แถว1-->
-                                        <div class="row justify-content-md-center">
-                                            <div class="col-md-6 col-12">
-                                                <div class="input-group justify-content-center">
-                                                    <div class="image-upload-wrap justify-content-center wrap-img-after">
-                                                        <i>+</i>
-                                                        <asp:FileUpload ID="fileImgAfter" class="file-upload-input" runat="server" onchange="readURLafter(this);" accept="image/*" text="เลือกไฟล์ --ยังไม่เสร็จ" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="file-upload-content file-img-after">
-                                                    <img class="file-upload-image file-upload-image-after" id="img1" src="#" alt="your image" runat="server" />
-                                                    <div class="image-title-wrap">
-                                                        <button runat="server" id="Button1" name="btnDelete" onclick="removeUploadImgAfter()" type='button' class='close' aria-label='Close Close-danger'>
-                                                            <span aria-hidden='true'>&times;</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                </div>
+                                <div class="card-body">
+                                    <!-- end แถว1-->
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-md-6 col-12">
+                                            <div class="input-group justify-content-center file_af">
+                                                <input type="file" name="files" id="file_af" accept="image/*,.pdf">
                                             </div>
                                         </div>
                                     </div>
@@ -253,48 +220,32 @@
                                 <!-- end card-->
                             </div>
                         </div>
-                        <div class="col-md-12 col-12">
-                            <div class="img-bill">
-                                <div class="card shadow">
-                                    <div class="card-header" style="background-color: deeppink; color: white">
-                                        <div class="row justify-content-between">
-                                            <div class="col text-left">
-                                                รูปภาพใบเสร็จ
-                                            </div>
+                        <div class="col-md-12 col-12 mb-3 img-bill" style="display: none;">
+                            <div class="card shadow">
+                                <div class="card-header" style="background-color: deeppink; color: white">
+                                    <div class="row justify-content-between">
+                                        <div class="col text-left">
+                                            รูปภาพใบเสร็จ
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <!-- end แถว1-->
-                                        <div class="row justify-content-md-center">
-                                            <div class="col-md-6 col-12">
-                                                <div class="input-group justify-content-center">
-                                                    <div class="image-upload-wrap justify-content-center wrap-img-bill">
-                                                        <i>+</i>
-                                                        <asp:FileUpload ID="fileImgBill" class="file-upload-input" runat="server" onchange="readURLbill(this);" accept="image/*" text="เลือกไฟล์ --ยังไม่เสร็จ" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="file-upload-content file-img-bill">
-                                                    <img class="file-upload-image file-upload-image-bill" id="img2" src="#" alt="your image" runat="server" />
-                                                    <div class="image-title-wrap">
-                                                        <button runat="server" id="Button2" name="btnDelete" onclick="removeUploadImgBill()" type='button' class='close' aria-label='Close Close-danger'>
-                                                            <span aria-hidden='true'>&times;</span>
-                                                        </button>
-                                                    </div>
-
-                                                </div>
+                                </div>
+                                <div class="card-body">
+                                    <!-- end แถว1-->
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-md-6 col-12">
+                                            <div class="input-group justify-content-center file_bill file_bill">
+                                                <input type="file" name="files" id="file_bill" accept="image/*,.pdf">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- end card-->
                             </div>
-
                         </div>
                     </div>
                     <!-- end row-->
                     <% If detailtable IsNot Nothing Then%>
-                    <% If detailtable.Rows(0).Item("statusid") = 2 Or detailtable.Rows(0).Item("statusid") = 10 Then%>
+                    <% If detailtable.Rows(0).Item("statusid") = 2 Or detailtable.Rows(0).Item("statusid") = 9 Then%>
 
                     <div class="row bg-white">
                         <div class="col-12 text-center">
@@ -362,17 +313,189 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            $('input[name="files"]').fileuploader({
+                example: ['pdf', 'image/*'],
+                fileMaxSize: 30,
+                limit: 3,
+                changeInput: ' ',
+                theme: 'thumbnails',
+                enableApi: true,
+                addMore: true,
+                thumbnails: {
+                    box: '<div class="fileuploader-items">' +
+                        '<ul class="fileuploader-items-list" style="text-align: center;">' +
+                        '<li class="fileuploader-thumbnails-input"><div class="fileuploader-thumbnails-input-inner"><i>+</i></div></li>' +
+                        '</ul>' +
+                        '</div>',
+                    item: '<li class="fileuploader-item">' +
+                        '<div class="fileuploader-item-inner">' +
+                        '<div class="type-holder">${extension}</div>' +
+                        '<div class="actions-holder">' +
+                        '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                        '</div>' +
+                        '<div class="thumbnail-holder">' +
+                        '${image}' +
+                        '<span class="fileuploader-action-popup"></span>' +
+                        '</div>' +
+                        '<div class="content-holder"><h5>${name}</h5><span>${size2}</span></div>' +
+                        '<div class="progress-holder">${progressBar}</div>' +
+                        '</div>' +
+                        '</li>',
+                    item2: '<li class="fileuploader-item">' +
+                        '<div class="fileuploader-item-inner">' +
+                        '<div class="type-holder">${extension}</div>' +
+                        '<div class="actions-holder">' +
+                        '<a href="${file}" class="fileuploader-action fileuploader-action-download" title="${captions.download}" download><i class="fileuploader-icon-download"></i></a>' +
+                        '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                        '</div>' +
+                        '<div class="thumbnail-holder">' +
+                        '${image}' +
+                        '<span class="fileuploader-action-popup"></span>' +
+                        '</div>' +
+                        '<div class="content-holder"><h5 title="${name}">${name}</h5><span>${size2}</span></div>' +
+                        '<div class="progress-holder">${progressBar}</div>' +
+                        '</div>' +
+                        '</li>',
+                    startImageRenderer: true,
+                    useObjectUrl: false,
+                    canvasImage: false,
+                    _selectors: {
+                        list: '.fileuploader-items-list',
+                        item: '.fileuploader-item',
+                        start: '.fileuploader-action-start',
+                        retry: '.fileuploader-action-retry',
+                        remove: '.fileuploader-action-remove'
+                    },
+                    onItemShow: function (item, listEl, parentEl, newInputEl, inputEl) {
+                        var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                            api = $.fileuploader.getInstance(inputEl.get(0));
+
+                        plusInput.insertAfter(item.html)[api.getOptions().limit && api.getChoosedFiles().length >= api.getOptions().limit ? 'hide' : 'show']();
+
+                        if (item.format == 'image') {
+                            item.html.find('.fileuploader-item-icon').hide();
+                        }
+                    },
+                    onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
+                        var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                            api = $.fileuploader.getInstance(inputEl.get(0));
+
+                        html.children().animate({ 'opacity': 0 }, 200, function () {
+                            html.remove();
+
+                            if (api.getOptions().limit && api.getChoosedFiles().length - 1 < api.getOptions().limit)
+                                plusInput.show();
+                        });
+                    }
+                },
+                dragDrop: {
+                    container: '.fileuploader-thumbnails-input'
+                },
+                afterRender: function (listEl, parentEl, newInputEl, inputEl) {
+                    var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                        api = $.fileuploader.getInstance(inputEl.get(0));
+
+                    plusInput.on('click', function () {
+                        api.open();
+                    });
+
+                    api.getOptions().dragDrop.container = plusInput;
+                }/*, upload: {
+                    url: 'approval.aspx?type=upload',
+                    data: null,
+                    type: 'POST',
+                    enctype: 'multipart/form-data',
+                    start: true,
+                    synchron: true,
+                    beforeSend: null,
+                    onSuccess: function (result, item) {
+                        console.log('res'+result);
+                        alert('yes');
+                        var data = {};
+
+
+                        try {
+                            data = JSON.parse(result);
+                        } catch (e) {
+                            data.hasWarnings = true;
+                        }
+
+                        // if success
+                        if (data.isSuccess && data.files[0]) {
+                            console.log('if success');
+                            item.name = data.files[0].name;
+                            item.html.find('.column-title > div:first-child').text(data.files[0].name).attr('title', data.files[0].name);
+                        }
+
+                        // if warnings
+                        if (data.hasWarnings) {
+                            console.log('if warnings');
+                            console.log('if warnings' + data.hasWarnings);
+                            for (var warning in data.warnings) {
+                                alert(data.warnings);
+                            }
+
+                            item.html.removeClass('upload-successful').addClass('upload-failed');
+                            // go out from success function by calling onError function
+                            // in this case we have a animation there
+                            // you can also response in PHP with 404
+                            return this.onError ? this.onError(item) : null;
+                        }
+
+                        item.html.find('.fileuploader-action-remove').addClass('fileuploader-action-success');
+                        setTimeout(function () {
+                            item.html.find('.progress-bar2').fadeOut(400);
+                        }, 400);
+                    },
+                    onError: function (item) {
+                        console.log(item);
+                        console.log(item.uploaded);
+                        if (!item.uploaded) {
+                            
+                            alert('error');
+
+                            var progressBar = item.html.find('.progress-bar2');
+
+                            if (progressBar.length) {
+                                progressBar.find('span').html(0 + "%");
+                                progressBar.find('.fileuploader-progressbar .bar').width(0 + "%");
+                                item.html.find('.progress-bar2').fadeOut(400);
+                            }
+
+                            item.upload.status != 'cancelled' && item.html.find('.fileuploader-action-retry').length == 0 ? item.html.find('.column-actions').prepend(
+                                '<button type="button" class="fileuploader-action fileuploader-action-retry" title="Retry"><i class="fileuploader-icon-retry"></i></button>'
+                                ) : null;
+                         }
+
+                    },
+                    onProgress: function (data, item) {
+                        alert('on progress');
+
+                        var progressBar = item.html.find('.progress-bar2');
+
+                        if (progressBar.length > 0) {
+                            progressBar.show();
+                            progressBar.find('span').html(data.percentage + "%");
+                            progressBar.find('.fileuploader-progressbar .bar').width(data.percentage + "%");
+                        }
+                    },
+                    onComplete: null,
+                }, onRemove: function (item) {
+                    alert('on remove');
+
+                    $.post('approval.aspx?type=remove', { file: item.name });
+                }*/
+            });
+
             $('.form-control').selectpicker({
                 liveSearch: true,
                 maxOptions: 1
             });
-            const urlParams = new URLSearchParams(window.location.search);
+            /*const urlParams = new URLSearchParams(window.location.search);
             const approvalcode = urlParams.get('approvalcode');
             console.log(approvalcode);
 
-            var img1 = document.getElementById('<%= img1.ClientID%>');
-            var img2 = document.getElementById('<%= img2.ClientID%>');
-            var status = document.getElementById('<%= txtStatus.ClientID%>');
             console.log(status.value)
 
             if (status.value == "อนุมัติ" || status.value == "เอกสารครบถ้วน") {
@@ -416,62 +539,12 @@
                 } else {
                     $(".img-bill").hide();
                 }
-            }
-
+            }*/
+            console.log('---');
         });
 
     </script>
-    <script type="text/javascript">
-        function readURLafter(input) {
-            if (input.files && input.files[0]) {
 
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('.wrap-img-after').hide();
-
-                    $('.file-upload-image-after').attr('src', e.target.result);
-                    $('.file-img-after').show();
-
-                };
-
-                reader.readAsDataURL(input.files[0]);
-
-            } else {
-                removeUpload();
-            }
-        }
-        function readURLbill(input) {
-            if (input.files && input.files[0]) {
-
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('.wrap-img-bill').hide();
-
-                    $('.file-upload-image-bill').attr('src', e.target.result);
-                    $('.file-img-bill').show();
-
-                };
-
-                reader.readAsDataURL(input.files[0]);
-
-            } else {
-                removeUpload();
-            }
-        }
-        function removeUploadImgAfter() {
-            document.getElementById('<%= fileImgAfter.ClientID%>').value = "";
-            $(document.getElementById('<%= fileImgAfter.ClientID%>')).replaceWith($(document.getElementById('<%= fileImgAfter.ClientID%>')).clone());
-            $('.file-img-after').hide();
-            $('.wrap-img-after').show();
-        }
-        function removeUploadImgBill() {
-            document.getElementById('<%= fileImgBill.ClientID%>').value = "";
-            $(document.getElementById('<%= fileImgBill.ClientID%>')).replaceWith($(document.getElementById('<%= fileImgBill.ClientID%>')).clone());
-            $('.file-img-bill').hide();
-            $('.wrap-img-bill').show();
-        }
-
-    </script>
     <script type="text/javascript">
         function valueChangedImgAfter() {
             if ($('.chk-img-after').is(":checked"))
@@ -509,34 +582,50 @@
             else
                 return true;
         }
-
         function validateDataImg() {
             validateData();
 
-            var fileImgAfter = document.getElementById('<%= fileImgAfter.ClientID%>').value
-            var fileImgBill = document.getElementById('<%= fileImgBill.ClientID%>').value
-            var chkAfter = document.getElementById('<%= chkAfter.ClientID%>')
-            var chkBill = document.getElementById('<%= chkBill.ClientID%>')
-            if (!($('#<%= chkAfter.ClientID%>').prop("checked")) && !($('#<%= chkBill.ClientID%>').prop("checked"))) {
-                alertWarning('ต้องมีรูปอย่างใดอย่างนึง');
-                event.preventDefault();
-                event.stopPropagation();
-            }
+            const chkAfter = document.getElementById('<%= chkAfter.ClientID%>');
+            const chkBill = document.getElementById('<%= chkBill.ClientID%>');
             
+            const secid = "<%= Session("secid")%>"
+            if (secid != "2") {
+                //alert("in secid != 2")
+                if (!($('#<%= chkAfter.ClientID%>').prop("checked")) && !($('#<%= chkBill.ClientID%>').prop("checked"))) {
+                    alertWarning('ต้องมีรูปอย่างใดอย่างนึง');
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            } else {
+                const codeGSM = document.getElementById('<%= txtCodeGSM.ClientID%>').value;
+                if (!(codeGSM)) {
+                    alertWarning('กรุณาใส่รหัส GSM');
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            }
 
-            if (($('#<%= chkAfter.ClientID%>').prop("checked")) && !fileImgAfter) {
+            if (($('#<%= chkAfter.ClientID%>').prop("checked")) && $('.file_af input[type=file]').length == 1) {
                 alertWarning('ใส่รูปหลังปฏิบัติงาน');
                 event.preventDefault();
                 event.stopPropagation();
             }
-            if (($('#<%= chkBill.ClientID%>').prop("checked")) && !fileImgBill) {
+            if (($('#<%= chkBill.ClientID%>').prop("checked")) && $('.file_bill input[type=file]').length == 1) {
                 alertWarning('ใส่รูปใบเสร็จ');
                 event.preventDefault();
                 event.stopPropagation();
             }
+            //console.log('--1-');
 
-
+            reNameAttr($('.file_af input[type=file]'), 'approval_af')
+            reNameAttr($('.file_bill input[type=file]'), 'approval_bill')
         }
+        function reNameAttr(ele, newName) {
+            for (var i = 0; i < ele.length - 1; i++) {
+                ele.eq(i).attr('name', newName);
+            }
+        }
+
     </script>
     <script type="text/javascript">
         function alertSuccessUpload() {
@@ -544,7 +633,8 @@
                 title: 'อัปโหลดสำเร็จ',
                 icon: 'success',
                 confirmButtonColor: '#3085d6',
-                confirmButtonText: 'ยืนยัน'
+                confirmButtonText: 'ยืนยัน',
+                allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
                     console.log('1')
@@ -554,6 +644,23 @@
                     window.location.href = '../approval/approval.aspx?approvalcode=' + approvalcode;
                 }
             })
+        }
+    </script>
+    <script type="text/javascript">
+        function alertSuccess() {
+            Swal.fire(
+                'สำเร็จ',
+                '',
+                'success'
+            )
+        }
+
+        function alertWarning(massage) {
+            Swal.fire(
+                massage,
+                '',
+                'warning'
+            )
         }
     </script>
 
