@@ -327,6 +327,8 @@ endprocess:
             txtSupportby.Text = .Item("supportby").ToString
             txtSupportdate.Text = .Item("supportstartdate").ToString
             txtSupportFinished.Text = .Item("supportenddate").ToString
+            txtCodeGSM.Text = .Item("codegsm").ToString
+
 
         End With
     End Sub

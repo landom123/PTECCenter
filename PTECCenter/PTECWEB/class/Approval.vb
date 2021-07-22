@@ -239,7 +239,7 @@ Public Class Approval
         Return result
     End Function
 
-    Public Function Approval_Close(approvalcode As String, approvalclosemessage As String, closedate As Object, username As String) As DataTable
+    Public Function Approval_Close(approvalcode As String, approvalclosemessage As String, codegsm As String, closedate As Object, username As String) As DataTable
         Dim result As DataTable
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -253,6 +253,7 @@ Public Class Approval
 
         cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
         cmd.Parameters.Add("@approvalclosemessage", SqlDbType.VarChar).Value = approvalclosemessage
+        cmd.Parameters.Add("@codegsm", SqlDbType.VarChar).Value = codegsm
         cmd.Parameters.Add("@closedate", SqlDbType.DateTime).Value = closedate
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
 

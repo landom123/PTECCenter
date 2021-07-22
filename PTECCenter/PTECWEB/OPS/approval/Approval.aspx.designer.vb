@@ -248,6 +248,24 @@ Partial Public Class WebForm1
     Protected WithEvents txtCloseDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbCodeGSM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbCodeGSM As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtCodeGSM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCodeGSM As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lbcboBranch control.
     '''</summary>
     '''<remarks>
