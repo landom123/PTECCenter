@@ -181,6 +181,14 @@
                                                 <asp:TextBox class="form-control text-danger font-weight-bold" ID="txtCloseDate" runat="server" ReadOnly="true"></asp:TextBox>
                                             </div>
                                         </div>
+                                            <% If Not String.IsNullOrEmpty(detailtable.Rows(0).Item("codegsm").ToString) Then%>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <asp:Label ID="lbCodeGSM" CssClass="form-label" AssociatedControlID="txtCodeGSM" runat="server" Text="รหัส GSM" />
+                                                    <asp:TextBox class="form-control text-warning font-weight-bold" ID="txtCodeGSM" runat="server" ReadOnly="true"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                            <% End If %>
                                         <% End If %>
                                     </div>
                                     <% End If %>
