@@ -7,6 +7,13 @@ Public Class Approval
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+
+    Public Sub SetCboApprovalGroup(obj As Object)
+        obj.DataSource = Me.ApprovalGroup_List()
+        obj.DataValueField = "ApprovalGroupID"
+        obj.DataTextField = "GroupName"
+        obj.DataBind()
+    End Sub
     Public Sub SetCboApprovalCategory(obj As Object)
         obj.DataSource = Me.ApprovalCategory_List()
         obj.DataValueField = "ApprovalCategoryID"
@@ -15,6 +22,13 @@ Public Class Approval
     End Sub
     Public Sub SetCboApprovalByCategoryID(obj As Object, categoryid As Integer)
         obj.DataSource = Me.Approval_List_By_Category(categoryid)
+        obj.DataValueField = "ApprovalListID"
+        obj.DataTextField = "name"
+        obj.DataBind()
+    End Sub
+
+    Public Sub SetCboApprovalByGroupID(obj As Object, groupid As Integer)
+        obj.DataSource = Me.Approval_List_By_Groupid(groupid)
         obj.DataValueField = "ApprovalListID"
         obj.DataTextField = "name"
         obj.DataBind()
@@ -43,6 +57,31 @@ Public Class Approval
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "Approval_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+    Public Function ApprovalGroup_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalGroup_List"
         cmd.CommandType = CommandType.StoredProcedure
 
         'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
@@ -96,6 +135,32 @@ Public Class Approval
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@categoryid", SqlDbType.Int).Value = categoryid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Approval_List_By_GroupID(groupid As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_List_By_GroupID"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@groupid", SqlDbType.Int).Value = groupid
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
@@ -355,7 +420,7 @@ Public Class Approval
         Return result
     End Function
 
-    Public Function FindApprovalMenuList(approvalcode As String, branchid As String, categoryid As String, approvallistid As String, statusid As String,
+    Public Function FindApprovalMenuList(approvalcode As String, branchid As String, groupid As String, categoryid As String, approvallistid As String, statusid As String,
                                          areaid As String, userid As String, startdate As String, enddate As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -371,6 +436,7 @@ Public Class Approval
 
         cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
         cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@groupid", SqlDbType.VarChar).Value = groupid
         cmd.Parameters.Add("@categoryid", SqlDbType.VarChar).Value = categoryid
         cmd.Parameters.Add("@approvallistid", SqlDbType.VarChar).Value = approvallistid
         cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid

@@ -50,6 +50,15 @@ Partial Public Class WebForm3
     Protected WithEvents txtApprovalCode As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cboApprovalGroup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboApprovalGroup As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cboApprovalCategory control.
     '''</summary>
     '''<remarks>
@@ -111,6 +120,24 @@ Partial Public Class WebForm3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''note control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents note As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''note2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents note2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cboWorking control.

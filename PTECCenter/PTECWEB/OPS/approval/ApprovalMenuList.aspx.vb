@@ -25,17 +25,18 @@ Public Class WebForm3
 
         Session("status") = "read"
         If Not IsPostBack() Then
-
-            approval.SetCboApproval(cboApproval)
-            approval.SetCboApprovalCategory(cboApprovalCategory)
-            approval.SetCboApprovalStatus(cboStatus)
-            area.SetCboArea(cboArea)
-            objbranch.SetComboBranchByAreaid(cboBranch, cboArea.SelectedItem.Value.ToString, Session("userid"), 0)
             If Not Session("positionid") = "10" Then
                 If Session("positionid") = "9" Then
+                    'กรณีถ้าเป็น AM (เขต) ให้เห็นข้อมูลแค่ในพื้นที่ของตัวเอง fix
                     area.SetCboArea(cboArea, Session("userid"))
-                    objbranch.SetComboBranchByAreaid(cboBranch, cboArea.SelectedItem.Value.ToString, Session("userid"), 0)
+                Else
+                    area.SetCboArea(cboArea)
                 End If
+                approval.SetCboApproval(cboApproval)
+                approval.SetCboApprovalCategory(cboApprovalCategory)
+                approval.SetCboApprovalStatus(cboStatus)
+                approval.SetCboApprovalGroup(cboApprovalGroup)
+                objbranch.SetComboBranchByAreaid(cboBranch, cboArea.SelectedItem.Value.ToString, Session("userid"), 0)
                 If Not Session("criteria") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                     criteria = Session("criteria")
                     BindCriteria(criteria)
@@ -44,20 +45,21 @@ Public Class WebForm3
                     searchapprovallist()
                 End If
             Else
-
+                'กรณีถ้าเป็น ผจก. สาขา
                 approval.SetCboApprovalStatusForOwner(cboWorking)
-
                 If Not Session("cboWorking") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                     cboWorking.SelectedValue = Session("cboWorking")
                 End If
                 itemtable = approval.ApprovalMenuList(Session("userid"), cboWorking.SelectedItem.Value)
+                gvRemind.Columns(5).Visible = False
+                Session("approvallist") = itemtable
+                BindData()
             End If
 
-            Session("approvallist") = itemtable
-            BindData()
         Else
+
+            criteria = Session("criteria")
             itemtable = Session("approvallist")
-            BindData()
         End If
     End Sub
 
@@ -66,7 +68,7 @@ Public Class WebForm3
             txtApprovalCode.Text = criteria.Rows(0).Item("txtApprovalCode")
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
-
+            gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
             cboApprovalCategory.SelectedValue = criteria.Rows(0).Item("cboApprovalCategory")
             cboApproval.SelectedValue = criteria.Rows(0).Item("cboApproval")
             cboStatus.SelectedValue = criteria.Rows(0).Item("cboStatus")
@@ -76,10 +78,13 @@ Public Class WebForm3
     End Sub
 
     Private Sub BindData()
-        If itemtable.Rows.Count > 0 Then
-            btnPrint.Enabled = True
-        Else
-            btnPrint.Enabled = False
+        If Not Session("positionid") = "10" Then
+            If itemtable.Rows.Count > 0 Then
+                btnPrint.Enabled = True
+            Else
+                btnPrint.Enabled = False
+            End If
+            setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         End If
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
@@ -96,6 +101,7 @@ Public Class WebForm3
         dt.Columns.Add("cboBranch", GetType(String))
         dt.Columns.Add("txtStartDate", GetType(String))
         dt.Columns.Add("txtEndDate", GetType(String))
+        dt.Columns.Add("pageindex", GetType(Integer))
 
         Return dt
     End Function
@@ -109,6 +115,7 @@ Public Class WebForm3
         dt.Columns.Add("statusname", GetType(String))
         dt.Columns.Add("createby", GetType(String))
         dt.Columns.Add("createdate", GetType(String))
+        dt.Columns.Add("owner_permission", GetType(String))
         dt.Columns.Add("link", GetType(String))
 
         Return dt
@@ -120,7 +127,7 @@ Public Class WebForm3
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 5
+        Dim statusAt As Integer = 6
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -150,8 +157,6 @@ Public Class WebForm3
             End If
         End If
 
-
-
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
@@ -163,6 +168,7 @@ Public Class WebForm3
         Try
             itemtable = approval.FindApprovalMenuList(txtApprovalCode.Text,
                                                       cboBranch.SelectedItem.Value,
+                                                      cboApprovalGroup.SelectedItem.Value,
                                                       cboApprovalCategory.SelectedItem.Value,
                                                         cboApproval.SelectedItem.Value,
                                                         cboStatus.SelectedItem.Value,
@@ -171,19 +177,20 @@ Public Class WebForm3
                                                         txtStartDate.Text,
                                                         txtEndDate.Text)
 
-            setCriteria()
+
             Session("approvallist") = itemtable
             BindData()
 
         Catch ex As Exception
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            Dim javaScript As String = "alert('" & ex.Message & "');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('search fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
 
     Private Sub setCriteria()
-        criteria = createCriteria()
+        'criteria = createCriteria()
+        criteria.Rows.Clear()
         criteria.Rows.Add(txtApprovalCode.Text.ToString.Trim(),
                           cboApprovalCategory.SelectedItem.Value,
                           (cboApproval.SelectedItem.Value),
@@ -191,7 +198,8 @@ Public Class WebForm3
                           (cboArea.SelectedItem.Value),
                           (cboBranch.SelectedItem.Value),
                           txtStartDate.Text.ToString.Trim(),
-                          txtEndDate.Text.ToString.Trim())
+                          txtEndDate.Text.ToString.Trim(),
+                          gvRemind.PageIndex)
         Session("criteria") = criteria
     End Sub
 
@@ -203,6 +211,7 @@ Public Class WebForm3
         cboBranch.SelectedIndex = -1
         cboStatus.SelectedIndex = -1
         cboArea.SelectedIndex = -1
+        cboApprovalGroup.SelectedIndex = -1
         cboApprovalCategory.SelectedIndex = -1
         cboApproval.SelectedIndex = -1
         itemtable.Rows.Clear()
@@ -229,9 +238,7 @@ Public Class WebForm3
     End Sub
 
     Private Sub cboApprovalCategory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboApprovalCategory.SelectedIndexChanged
-        Dim approval As New Approval
-        cboApproval.SelectedIndex = -1
-        approval.SetCboApprovalByCategoryID(cboApproval, cboApprovalCategory.SelectedItem.Value)
+
         searchapprovallist()
     End Sub
 
@@ -265,6 +272,12 @@ Public Class WebForm3
         searchapprovallist()
     End Sub
 
+    Private Sub cboApprovalGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboApprovalGroup.SelectedIndexChanged
+        Dim approval As New Approval
+        cboApproval.SelectedIndex = -1
+        approval.SetCboApprovalByGroupID(cboApproval, cboApprovalGroup.SelectedItem.Value)
+        searchapprovallist()
+    End Sub
     Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
         Session("cboWorking") = cboWorking.SelectedItem.Value
         Dim approval As New Approval
@@ -273,4 +286,5 @@ Public Class WebForm3
         BindData()
 
     End Sub
+
 End Class
