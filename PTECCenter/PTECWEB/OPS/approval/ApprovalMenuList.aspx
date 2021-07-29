@@ -63,11 +63,21 @@
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
+                                <span class="input-group-text">หมวด</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboApprovalGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทงาน</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboApprovalCategory" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
@@ -76,8 +86,6 @@
                             <asp:DropDownList class="form-control" ID="cboApproval" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
@@ -94,6 +102,8 @@
                             <asp:DropDownList class="form-control" ID="cboArea" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
@@ -102,9 +112,6 @@
                             <asp:DropDownList class="form-control" ID="cboBranch" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -123,6 +130,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" style="padding-top: 1rem;">
+                    <div class="col-md-12">
+                        <asp:Label ID="note" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข 1 : 'หัวข้อ' จะเปลี่ยนไปตาม 'หมวด' ที่เลือก )" />
+                    </div>
+                    <div class="col-md-12">
+                        <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข 2 : 'สาขา' จะเปลี่ยนไปตาม 'พื้นที่' ที่เลือก )" />
+                    </div>
+                </div>  
                 <% else %>
                 <div class="row">
                     <div class="col-md-4">
@@ -145,7 +160,7 @@
                             AllowPaging="true"
                             runat="server">
                             <Columns>
-                                <asp:TemplateField HeaderText="รหัส" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="เลขที่ใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("approvalcode")%>'></asp:Label>
                                     </ItemTemplate>
@@ -170,6 +185,11 @@
                                         <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbOwnerpermission" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("statusname")%>'></asp:Label>
@@ -188,11 +208,11 @@
 
 
             </div>
-            <!-- /.container-fluid -->
+        <!-- /.container-fluid -->
 
 
 
-        </div>
+    </div>
     <!-- /.content-wrapper -->
     <!-- end เนื้อหาเว็บ -->
 
@@ -239,5 +259,22 @@
             });
         });
 
+    </script>
+    <script type="text/javascript">
+        function alertSuccess() {
+            Swal.fire(
+                'สำเร็จ',
+                '',
+                'success'
+            )
+        }
+
+        function alertWarning(massage) {
+            Swal.fire(
+                massage,
+                '',
+                'warning'
+            )
+        }
     </script>
 </asp:Content>
