@@ -29,6 +29,7 @@
                     Session("usercode") = usertable.Rows(0).Item("usercode")
                     Session("username") = usertable.Rows(0).Item("name")
                     Session("dep") = usertable.Rows(0).Item("dep")
+                    Session("depid") = usertable.Rows(0).Item("depid")
                     Session("branchid") = usertable.Rows(0).Item("branchid")
                     Session("secid") = usertable.Rows(0).Item("secid")
                     Session("positionid") = usertable.Rows(0).Item("PositionID")

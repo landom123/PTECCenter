@@ -74,7 +74,7 @@ Public Class jobs
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Jobs_List_byUser"
+        cmd.CommandText = "Jobs_List_byUser_Branch"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
@@ -87,6 +87,38 @@ Public Class jobs
 
         conn.Close()
 
+        Return result
+    End Function
+    Public Function JobList_For_Operator(jobcode As String, depid As String, jobtypeid As String, statusfollowid As String,
+                                         branchgroupid As String, branchid As String, startdate As String, enddate As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_List_byUser_Owner"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobcode
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@jobtypeid", SqlDbType.VarChar).Value = jobtypeid
+        cmd.Parameters.Add("@statusfollowid", SqlDbType.VarChar).Value = statusfollowid
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
         Return result
     End Function
     Public Function JobCloseSave(jobno As String, jobdetailid As Double, jobclosetypeid As Integer,

@@ -6,6 +6,7 @@ Public Class JobsClose
     Dim jobno As String
     Dim jobdetailid As Integer
     Dim jobcenterid As Integer
+    Dim followup_status As String = String.Empty
     Public total As String
     Public menutable As DataTable
     Public maintable As DataTable
@@ -21,10 +22,6 @@ Public Class JobsClose
         txtInvDate.Attributes.Add("readonly", "readonly")
         txtCloseDate.Attributes.Add("readonly", "readonly")
 
-        txtBeginWarr.Text = Now.ToString
-        txtEndWarr.Text = Now.ToString
-        txtInvDate.Text = Now.ToString
-        txtCloseDate.Text = Now.ToString
 
         username = Session("username")
         usercode = Session("usercode")
@@ -50,6 +47,13 @@ Public Class JobsClose
                 objjob.SetCboCloseCategory(cboCloseCategory)
                 FindJob(jobno, jobdetailid)
                 objjob.SetCboJobCenterDtlListByJobCenterID(cboCost, jobcenterid)
+
+                If Not followup_status = "ปิดงาน" Then
+                    txtBeginWarr.Text = Now.ToString
+                    txtEndWarr.Text = Now.ToString
+                    txtInvDate.Text = Now.ToString
+                    txtCloseDate.Text = Now.ToString
+                End If
             Catch ex As Exception
                 Dim scriptKey As String = "UniqueKeyForThisScript"
                 Dim javaScript As String = "alertWarning('fail')"
@@ -85,6 +89,7 @@ Public Class JobsClose
             total = String.Format("{0:n}",mydataset.Tables(3).Rows(0).Item("total"))
             showjobdata(mydataset)
 
+            followup_status = mydataset.Tables(0).Rows(0).Item("followup_status")
             jobcenterid = mydataset.Tables(0).Rows(0).Item("jobcenterid")
 
 
@@ -125,7 +130,16 @@ Public Class JobsClose
                 txtInvoiceNo.Text = .Item("invoiceno")
                 txtInvDate.Text = .Item("invoicedate")
                 txtCloseDate.Text = .Item("closedate")
-                txtDetail.Text = .Item("details")
+                txtRemark.Text = .Item("details")
+
+                cboCloseType.Attributes.Add("disabled", "True")
+                cboCloseCategory.Attributes.Add("disabled", "True")
+                txtBeginWarr.ReadOnly = True
+                txtEndWarr.ReadOnly = True
+                txtInvoiceNo.ReadOnly = True
+                txtInvDate.ReadOnly = True
+                txtCloseDate.ReadOnly = True
+                txtRemark.ReadOnly = True
             End With
         End If
     End Sub

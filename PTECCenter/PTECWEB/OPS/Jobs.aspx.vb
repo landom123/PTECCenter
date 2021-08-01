@@ -33,7 +33,7 @@ Public Class frmJobs
         Dim usercode As String
         usercode = Session("usercode")
 
-        chkuser(usercode)
+        'chkuser(usercode)
 
         If Session("menulist") Is Nothing Then
             menutable = LoadMenu(usercode)
@@ -348,14 +348,14 @@ Public Class frmJobs
         End If
         If detailtable.Rows.Count = 0 Then
             result = False
-            msg = "กรุณา ใส่รายละเอียดงาน ในการแจ้ง"
+            msg = "กรุณา เพิ่มรายละเอียดงาน ในการแจ้ง"
             GoTo endprocess
         End If
 
 endprocess:
         If result = False Then
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            Dim javaScript As String = "alertWarning('validatedata Fail')"
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             'MsgBox(msg)
         End If

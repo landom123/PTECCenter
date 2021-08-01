@@ -1720,6 +1720,7 @@
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
     <Content Include="OPS\FileUpload\FileUpload.aspx" />
+    <Content Include="OPS\JobsList_TEST.aspx" />
     <Content Include="OPS\Jobs_Report_JobReport.aspx" />
     <Content Include="OPS\Jobs_Report_JobForm.aspx" />
     <Content Include="OPS\Master.aspx" />
@@ -3532,6 +3533,13 @@
     </Compile>
     <Compile Include="OPS\FileUpload\FileUpload.aspx.vb">
       <DependentUpon>FileUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\JobsList_TEST.aspx.designer.vb">
+      <DependentUpon>JobsList_TEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\JobsList_TEST.aspx.vb">
+      <DependentUpon>JobsList_TEST.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Jobs_Report_JobReport.aspx.designer.vb">
