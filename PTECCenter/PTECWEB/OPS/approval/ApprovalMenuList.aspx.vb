@@ -6,6 +6,7 @@ Public Class WebForm3
     Public itemtable As DataTable = createdetailtable()
     Public menutable As DataTable
 
+    Public cntdt As Integer
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim approval As New Approval
         Dim area As New Area
@@ -86,6 +87,7 @@ Public Class WebForm3
             End If
             setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         End If
+        cntdt = itemtable.Rows.Count
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
     End Sub

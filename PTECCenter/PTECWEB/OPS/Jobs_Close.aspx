@@ -5,6 +5,12 @@
         .input-group {
             margin-bottom: 1rem;
         }
+        
+
+            .btn-light.disabled {
+                border: 1px solid #ced4da;
+                background-color: #e9ecef;
+            }
     </style>
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
