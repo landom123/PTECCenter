@@ -7,6 +7,7 @@ Partial Class WebForm5
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         SetReportParameters(Request.QueryString("approvalcode").ToString,
                             Request.QueryString("branchid").ToString,
+                            Request.QueryString("groupid").ToString,
                             Request.QueryString("categoryid").ToString,
                             Request.QueryString("approvallistid").ToString,
                             Request.QueryString("statusid").ToString,
@@ -16,7 +17,7 @@ Partial Class WebForm5
                             Request.QueryString("enddate").ToString)
 
     End Sub
-    Private Sub SetReportParameters(approvalcode As String, branchid As String, categoryid As String, approvallistid As String, statusid As String,
+    Private Sub SetReportParameters(approvalcode As String, branchid As String, groupid As String, categoryid As String, approvallistid As String, statusid As String,
                                          areaid As String, userid As String, startdate As String, enddate As String)
         'Set Processing Mode
         ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote
@@ -30,6 +31,7 @@ Partial Class WebForm5
         'pInfo = ReportViewer1.ServerReport.GetParameters()
         'if you have report parameters - add them here
         paramList.Add(New ReportParameter("categoryid", categoryid, True))
+        paramList.Add(New ReportParameter("groupid", groupid, True))
         paramList.Add(New ReportParameter("approvallistid", approvallistid, True))
         paramList.Add(New ReportParameter("statusid", statusid, True))
         paramList.Add(New ReportParameter("areaid", areaid, True))

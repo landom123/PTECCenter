@@ -170,7 +170,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cost">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("cost")%>'></asp:Label>
+                                        <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Status">
