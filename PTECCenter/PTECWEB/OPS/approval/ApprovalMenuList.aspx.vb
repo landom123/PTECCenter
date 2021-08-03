@@ -206,6 +206,9 @@ Public Class WebForm3
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        Dim approval As New Approval
+        Dim objbranch As New Branch
+
         txtApprovalCode.Text = ""
         txtStartDate.Text = ""
         txtEndDate.Text = ""
@@ -221,12 +224,17 @@ Public Class WebForm3
         Session("approvallist") = itemtable
         Session("criteria") = criteria
 
+
+        objbranch.SetComboBranchByAreaid(cboBranch, cboArea.SelectedItem.Value, Session("userid"), 0)
+        approval.SetCboApprovalByGroupID(cboApproval, cboApprovalGroup.SelectedItem.Value)
+
         searchapprovallist()
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
         Dim s As String = "window.open('../approval/WebForm5.aspx?approvalcode=" & txtApprovalCode.Text &
     "&branchid=" & cboBranch.SelectedItem.Value &
+    "&groupid=" & cboApprovalGroup.SelectedItem.Value &
     "&categoryid=" & cboApprovalCategory.SelectedItem.Value &
     "&approvallistid=" & cboApproval.SelectedItem.Value &
     "&statusid=" & cboStatus.SelectedItem.Value &

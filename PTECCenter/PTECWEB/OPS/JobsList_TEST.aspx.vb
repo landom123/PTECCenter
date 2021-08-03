@@ -256,6 +256,7 @@ Public Class JobsList_test
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        Dim objbranch As New Branch
         txtjobcode.Text = ""
         txtStartDate.Text = ""
         txtEndDate.Text = ""
@@ -270,6 +271,9 @@ Public Class JobsList_test
         Session("joblist") = itemtable
         Session("criteria_Job") = criteria
 
+        SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
+
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
         searchjobslist()
     End Sub
 End Class
