@@ -2,7 +2,7 @@
 Imports System.IO
 Imports System.Web.Configuration
 Public Class gsm
-
+    Public cnntimeout As Integer = WebConfigurationManager.AppSettings("cnn_timeout")
     Public Function Deduct_Sell_Approve_or_reject(id As Double, status As String, reason As String, user As String) As Boolean
         Dim result As Boolean = True
 
@@ -80,7 +80,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "GSM_Prepair_GSMtoD365"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -110,7 +110,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "GSM_save_gsm_paid"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -143,7 +143,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "GSM_save_gsm_sale_oil"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -178,7 +178,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "GSM_save_gsm_sale_other"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -216,7 +216,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "GSM_delete_gsc"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -248,7 +248,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "GSM_to_D365_Detail_forD365"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -278,7 +278,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "Calc_summary_GSM_to_D365_byDate"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -309,7 +309,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "GSM_Data_for_D365"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -340,7 +340,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "GSM_to_D365_Detail_byBranchDate"
         cmd.CommandType = CommandType.StoredProcedure
 
@@ -370,7 +370,7 @@ Public Class gsm
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
+        cmd.CommandTimeout = cnntimeout
         cmd.CommandText = "Send_GSM_to_Batch"
         cmd.CommandType = CommandType.StoredProcedure
 
