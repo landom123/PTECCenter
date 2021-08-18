@@ -203,6 +203,8 @@ endprocess:
         Dim approval As New Approval
         Dim approvaltable As DataTable
         Dim approvalid As Integer
+        Dim scriptKey As String
+        Dim javaScript As String
         Try
             approvaltable = approval.Approval_Close(txtApprovalcode.Text.Trim(), txtDetail.Text.Trim(), txtCodeGSM.Text.Trim(), txtCloseDate.Text.Trim(), Session("usercode"))
             approvalid = approvaltable.Rows(0).Item("approvalid")
@@ -211,14 +213,17 @@ endprocess:
             'End If
             'If Not String.IsNullOrEmpty(fullfilenameimagebill) Then
             'End If
-            Dim scriptKey As String = "alert"
-            Dim javaScript As String = "alertSuccessUpload()"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
         Catch ex As Exception
-            Dim scriptKey As String = "alert"
+            scriptKey = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('save fail');"
+            javaScript = "alertWarning('save fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
+        scriptKey = "alert"
+        javaScript = "alertSuccessUpload()"
+        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+endprocess:
     End Sub
 End Class

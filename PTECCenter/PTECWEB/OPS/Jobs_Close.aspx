@@ -265,9 +265,9 @@
                                     <table class="table table-bordered" id="dataTable">
                                         <thead class="table-warning">
                                             <tr>
-                                                <th scope="col" class="text-center">Cost Name</th>
-                                                <th scope="col" class="text-center">Price</th>
-                                                <th scope="col" class="text-center">Unit</th>
+                                                <th scope="col" class="text-center">รายการ</th>
+                                                <th scope="col" class="text-center">ราคา/หน่วย</th>
+                                                <th scope="col" class="text-center">หน่วย</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -290,6 +290,7 @@
                                             <tr>
                                                 <th class="text-right">รวม</th>
                                                 <th class="text-right"><% =total %></th>
+                                                <th class="text-right"></th>
                                             </tr>
                                             <% End If %>
                                             <% Next i %>

@@ -9,11 +9,7 @@
     <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader.min.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader-theme-thumbnails.css")%>" rel="stylesheet">
     <style>
-        .file-upload-content
-        , .image-upload-wrap
-        , .fileuploader-theme-thumbnails .fileuploader-items .fileuploader-item .fileuploader-action + .fileuploader-action
-        , .fileuploader-popup .fileuploader-popup-footer .fileuploader-popup-tools li [data-action="remove"]
-        , .fileuploader-popup .fileuploader-popup-footer .fileuploader-popup-zoomer {
+        .file-upload-content, .image-upload-wrap, .fileuploader-theme-thumbnails .fileuploader-items .fileuploader-item .fileuploader-action + .fileuploader-action, .fileuploader-popup .fileuploader-popup-footer .fileuploader-popup-tools li [data-action="remove"], .fileuploader-popup .fileuploader-popup-footer .fileuploader-popup-zoomer {
             display: none;
         }
 
@@ -44,6 +40,39 @@
             margin-top: -100px;
             margin-left: -100px;
         }
+
+        .statusGSM {
+            margin-top: 6.5px;
+            margin-right: -11px;
+            width: 15px !important;
+            height: 15px !important;
+            background: #FEBC2F; /*เขียว:#00FF27 เหลือง:#FEBC2F แดง:#ee443b*/
+
+            border-radius: 50%;
+            margin-bottom: 0.15rem !important;
+        }
+
+        .statusGSMName {
+            padding-left: 5px;
+            padding-right: 20px;
+            font-size:12px;
+            text-align: left !important;
+            align-self: center !important;
+        }
+        @media screen and (max-width: 768px){
+        
+       
+            .statusGSM {
+                margin:auto auto;
+            }
+            .statusGSMName {
+                display:none;
+                /*padding-left: 15px;
+                padding-right: 15px;
+                text-align: center !important;*/
+            }
+        }
+
     </style>
 
 </asp:Content>
@@ -68,7 +97,21 @@
                                             <div id="demo2" style="color: navy; font-size: 10px;"></div>
                                             <div id="demo" style="color: navy; font-size: 10px;"></div>
                                         </div>
-                                        <div class="col text-right align-self-center">
+                                        <% If Request.QueryString("approvalcode") IsNot Nothing And detailtable IsNot Nothing Then%>
+                                        <% If detailtable.Rows(0).Item("category") = "หักยอดขาย" Then%>
+                                        <div class="col-auto align-self-center checkGSM">
+                                            <div class="row">
+                                                <div class="col-md">
+                                                    <div class="statusGSM" id="stGSM"></div>
+                                                </div>
+                                                <div class="col-md-auto statusGSMName">
+                                                    <span id="statusGSMName"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% End If %>
+                                        <% End If %>
+                                        <div class="col-auto text-right align-self-center">
                                             <a href="ApprovalMenuList.aspx" class="btn btn-sm btn-danger ">
                                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                                         </div>
@@ -181,14 +224,14 @@
                                                 <asp:TextBox class="form-control text-danger font-weight-bold" ID="txtCloseDate" runat="server" ReadOnly="true"></asp:TextBox>
                                             </div>
                                         </div>
-                                            <% If Not String.IsNullOrEmpty(detailtable.Rows(0).Item("codegsm").ToString) Then%>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <asp:Label ID="lbCodeGSM" CssClass="form-label" AssociatedControlID="txtCodeGSM" runat="server" Text="รหัส GSM" />
-                                                    <asp:TextBox class="form-control text-warning font-weight-bold" ID="txtCodeGSM" runat="server" ReadOnly="true"></asp:TextBox>
-                                                </div>
+                                        <% If Not String.IsNullOrEmpty(detailtable.Rows(0).Item("codegsm").ToString) Then%>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <asp:Label ID="lbCodeGSM" CssClass="form-label" AssociatedControlID="txtCodeGSM" runat="server" Text="รหัส GSM" />
+                                                <asp:TextBox class="form-control text-warning font-weight-bold" ID="txtCodeGSM" runat="server" ReadOnly="true"></asp:TextBox>
                                             </div>
-                                            <% End If %>
+                                        </div>
+                                        <% End If %>
                                         <% End If %>
                                     </div>
                                     <% End If %>
@@ -1037,6 +1080,18 @@
             }
             document.forms[0].appendChild(confirm_value);
             return true;
+        }
+        function changeColorstatusGSM(sendGSM) {
+            if (sendGSM.toLowerCase() === 'true') {
+                $(".statusGSM").css("background-color", "#00FF27");
+                $(".statusGSM").css("box-shadow", "rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 0px 5px");
+                $("#statusGSMName").text("sent to GSM");
+                
+            } else {
+                $(".statusGSM").css("background-color", "#ee443b"); 
+                $(".statusGSM").css("box-shadow", "rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #8f0000 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 0px 5px");
+                $("#statusGSMName").text("Not find in GSM");
+            }
         }
     </script>
 

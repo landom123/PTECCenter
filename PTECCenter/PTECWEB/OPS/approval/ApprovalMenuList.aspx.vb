@@ -14,6 +14,11 @@ Public Class WebForm3
         Dim usercode As String
         usercode = Session("usercode")
 
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
+
         txtStartDate.Attributes.Add("readonly", "readonly")
         txtEndDate.Attributes.Add("readonly", "readonly")
 

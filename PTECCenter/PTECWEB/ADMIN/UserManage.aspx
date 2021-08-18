@@ -59,7 +59,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
                             </div>
-                            <asp:DropDownList class="custom-select" ID="cboBranch" runat="server" required></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" required></asp:DropDownList>
                             <div class="invalid-feedback">กรุณาเลือกสาขา</div>
                         </div>
                     </div>
@@ -71,19 +71,19 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ฝ่าย</span>
                             </div>
-                            <asp:DropDownList class="custom-select" ID="cboDepart" runat="server" ></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboDepart" runat="server" ></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend"><span class="input-group-text">แผนก</span></div>
-                            <asp:DropDownList class="custom-select" ID="cboSection" runat="server"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboSection" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend"><span class="input-group-text">ตำแหน่ง</span></div>
-                            <asp:DropDownList class="custom-select" ID="cboPosition" runat="server"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboPosition" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                 </div>
@@ -101,14 +101,6 @@
 
             </div>
             <!-- /.container-fluid -->
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2019</span>
-                    </div>
-                </div>
-            </footer>
         </div>
         <!-- end content-wrapper -->
 
@@ -121,6 +113,19 @@
     
 
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
+
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.form-control').selectpicker({
+                liveSearch: true,
+                maxOptions: 1
+            });
+        });
+
+    </script>
     <script>
         $(".toggle-password").click(function () {
 

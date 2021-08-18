@@ -261,7 +261,9 @@ endprocess:
             Not Session("userid") = am_id And
             Not Session("userid") = rm_id And
             Not Session("userid") = dm_id And
-            Not Session("secid").ToString = "2" Then
+            Not Session("secid").ToString = "2" And
+            Not Session("depid").ToString = "2" And
+            Not Session("depid").ToString = "4" Then
                 flag = False
             End If
         Catch ex As Exception
@@ -329,6 +331,12 @@ endprocess:
             txtSupportFinished.Text = .Item("supportenddate").ToString
             txtCodeGSM.Text = .Item("codegsm").ToString
 
+            If (.Item("category").ToString = "หักยอดขาย") Then
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "changeColorstatusGSM('" & .Item("statusGSM") & "');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End If
 
         End With
     End Sub
