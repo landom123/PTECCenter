@@ -1,0 +1,15 @@
+﻿@page {
+    size:A4;
+    margin:0;
+}
+
+@media print {
+    .print {
+        visibility: visible;
+    }
+    .print {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
