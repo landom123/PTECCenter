@@ -1554,6 +1554,7 @@
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap3.html" />
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap4.html" />
     <Content Include="charts.html" />
+    <Content Include="css\print.css" />
     <Content Include="css\sb-admin.css" />
     <Content Include="css\sb-admin.min.css" />
     <Content Include="css\checkbox.css" />
@@ -1714,6 +1715,7 @@
     <Content Include="fileupload\src\thirdparty\react\Fileuploader.js" />
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
+    <Content Include="js\Sortable.js" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
     <Content Include="OPS\approval\ApprovalAttach.aspx" />
@@ -1725,6 +1727,9 @@
     <Content Include="OPS\Jobs_Report_JobForm.aspx" />
     <Content Include="OPS\Master.aspx" />
     <Content Include="OPS\Master\WebForm2.aspx" />
+    <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
+    <Content Include="OPS\Non-PO\Payment\Payment.aspx" />
+    <Content Include="OPS\Non-PO\NonPO.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
     <Content Include="ROD\OilPriceFormula.aspx" />
     <Content Include="ROD\UpdateSmileSheetID.aspx" />
@@ -3570,6 +3575,27 @@
       <DependentUpon>WebForm2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="OPS\Non-PO\Payment\defaultPayment.aspx.designer.vb">
+      <DependentUpon>defaultPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Payment\defaultPayment.aspx.vb">
+      <DependentUpon>defaultPayment.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Payment\Payment.aspx.designer.vb">
+      <DependentUpon>Payment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Payment\Payment.aspx.vb">
+      <DependentUpon>Payment.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\NonPO.aspx.designer.vb">
+      <DependentUpon>NonPO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\NonPO.aspx.vb">
+      <DependentUpon>NonPO.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="ROD\OilPriceFormulaUpdate.aspx.designer.vb">
       <DependentUpon>OilPriceFormulaUpdate.aspx</DependentUpon>
     </Compile>
@@ -4236,6 +4262,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="OPS\Attatch\" />
+    <Folder Include="OPS\Non-PO\Advance\" />
+    <Folder Include="OPS\Non-PO\PettyCash\" />
     <Folder Include="temp\" />
   </ItemGroup>
   <ItemGroup>

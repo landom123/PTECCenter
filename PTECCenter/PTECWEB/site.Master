@@ -32,7 +32,11 @@
     <!-- Custom styles for this template-->
     <link href="<%=Page.ResolveUrl("~/css/sb-admin.css")%>" rel="stylesheet">
     <%--  <link href="../css/sb-admin.css" rel="stylesheet">--%>
-
+    <style>
+        * {
+            font-family:Arial;
+        }
+    </style>
     <script type="text/javascript">
         function msgalert(msg) {
             var confirmation = window.confirm(msg);
