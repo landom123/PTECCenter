@@ -298,6 +298,36 @@ Public Class gsm
         conn.Close()
         Return result
     End Function
+    Public Function NEWGSM_to_D365_byDate(branch As String, closedate As String) As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_gsm").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandTimeout = cnntimeout
+        cmd.CommandText = "NEWGSM_to_D365_byDate"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branch", SqlDbType.VarChar).Value = branch
+        cmd.Parameters.Add("@date", SqlDbType.VarChar).Value = closedate
+
+
+        'Try
+        '    cmd.ExecuteNonQuery()
+        'Catch ex As Exception
+        '    Throw ex
+        'End Try
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
 
     Public Function GSM_Data_for_D365(branch As String, closedate As String) As DataSet
         Dim result As DataSet
@@ -326,6 +356,99 @@ Public Class gsm
         adp.SelectCommand = cmd
         adp.Fill(ds)
         result = ds
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function NEWGSM_to_D365_Detail_byBranchDate(branch As String, closedate As String) As DataSet
+        Dim result As DataSet
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_gsm").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandTimeout = cnntimeout
+        cmd.CommandText = "NEWGSM_to_D365_Detail_byBranchDate"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branch", SqlDbType.VarChar).Value = branch
+        cmd.Parameters.Add("@date", SqlDbType.VarChar).Value = closedate
+        'GSM_Data_for_D365
+
+        'Try
+        '    cmd.ExecuteNonQuery()
+        'Catch ex As Exception
+        '    Throw ex
+        'End Try
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+
+
+    Public Function NEWGSM_Payment_forD365(branch As String, closedate As String) As Boolean
+        Dim result As Boolean
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_gsm").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandTimeout = cnntimeout
+        cmd.CommandText = "NEWGSM_Payment_forD365"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branchid", SqlDbType.Int).Value = Integer.Parse(branch)
+        cmd.Parameters.Add("@date", SqlDbType.VarChar).Value = closedate
+        'GSM_Data_for_D365
+
+        'Try
+        cmd.ExecuteNonQuery()
+        'Catch ex As Exception
+        '    Throw ex
+        'End Try
+
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds
+        conn.Close()
+        Return result
+    End Function
+    Public Function NEWGSM_Sale_forD365(branch As String, closedate As String) As Boolean
+        Dim result As Boolean
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_gsm").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandTimeout = cnntimeout
+        cmd.CommandText = "NEWGSM_Sale_forD365"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branchid", SqlDbType.Int).Value = Integer.Parse(branch)
+        cmd.Parameters.Add("@date", SqlDbType.VarChar).Value = closedate
+        'GSM_Data_for_D365
+
+        'Try
+        cmd.ExecuteNonQuery()
+        'Catch ex As Exception
+        '    Throw ex
+        'End Try
+
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds
         conn.Close()
         Return result
     End Function

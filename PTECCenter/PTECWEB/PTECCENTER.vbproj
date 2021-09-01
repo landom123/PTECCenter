@@ -1744,6 +1744,8 @@
     <Content Include="SDD\ESSOEDI\EssoLoadConfirm.aspx" />
     <Content Include="SSD\gsmsavetobatch.aspx" />
     <Content Include="SSD\gsmapprovededuct.aspx" />
+    <Content Include="SSD\newgsm_viewdetail.aspx" />
+    <Content Include="SSD\newgsmtod365.aspx" />
     <Content Include="SSD\gsmtod365_back.aspx">
       <BrowseToURL>~/SSD/gsmtod365_back.aspx</BrowseToURL>
     </Content>
@@ -3692,6 +3694,20 @@
     </Compile>
     <Compile Include="SSD\gsmapprovededuct.aspx.vb">
       <DependentUpon>gsmapprovededuct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\newgsm_viewdetail.aspx.designer.vb">
+      <DependentUpon>newgsm_viewdetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_viewdetail.aspx.vb">
+      <DependentUpon>newgsm_viewdetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\newgsmtod365.aspx.designer.vb">
+      <DependentUpon>newgsmtod365.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsmtod365.aspx.vb">
+      <DependentUpon>newgsmtod365.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SSD\gsmtod365_back.aspx.designer.vb">

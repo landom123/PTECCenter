@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" 
-    MasterPageFile="~/site.Master" CodeBehind="gsmtod365.aspx.vb" Inherits="PTECCENTER.gsmtod365" %>
+    MasterPageFile="~/site.Master" CodeBehind="newgsmtod365.aspx.vb" Inherits="PTECCENTER.newgsmtod365" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
@@ -15,7 +15,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
-                           <i class="fa fa-tasks" aria-hidden="true"></i> GSM to D365
+                           <i class="fa fa-tasks" aria-hidden="true"></i> NEW GSM to D365
                   </li>
                 </ol>
                 <p>
