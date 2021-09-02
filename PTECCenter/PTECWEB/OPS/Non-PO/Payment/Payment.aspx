@@ -81,9 +81,9 @@
             cursor: move;
         }
 
-        .draggable.dragging {
-            opacity: .5;
-        }
+            .draggable.dragging {
+                opacity: .5;
+            }
 
         .addAttach {
             display: none;
@@ -148,7 +148,7 @@
                                     <td colspan="6" style="width: 240px !important;">
                                         <div class="type" style="height: 120px;">
 
-                                            <asp:DropDownList class="form-control " ID="cboBranch" runat="server" required></asp:DropDownList>
+                                            <asp:DropDownList class="form-control " ID="cboBrancha" runat="server" required></asp:DropDownList>
                                         </div>
                                     </td>
                                 </tr>
@@ -159,10 +159,10 @@
                                         <div class="row">
 
                                             <div class="col-1">
-                                                <asp:Label ID="Label2" CssClass="form-label" AssociatedControlID="sda" runat="server" Text="ผู้เบิก" />
+                                                <asp:Label ID="Label2" CssClass="form-label" AssociatedControlID="cboName" runat="server" Text="ผู้เบิก" />
                                             </div>
                                             <div class="col-11">
-                                                <asp:TextBox class="form-control" ID="TextBox1" runat="server"></asp:TextBox>
+                                                <asp:DropDownList class="form-control " ID="cboName" runat="server" required></asp:DropDownList>
                                             </div>
                                         </div>
                                     </td>
@@ -170,10 +170,11 @@
                                         <div class="row">
 
                                             <div class="col-3">
-                                                <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="sda" runat="server" Text="สาขา" />
+                                                <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="สาขา" />
                                             </div>
                                             <div class="col-9">
-                                                <asp:DropDownList class="form-control " ID="DropDownList1" runat="server" required></asp:DropDownList>
+                                                <asp:DropDownList class="form-control" ID="cboBranch" runat="server">
+                                                </asp:DropDownList>
                                             </div>
                                         </div>
                                     </td>
@@ -184,7 +185,7 @@
                                                 <asp:Label ID="Label6" CssClass="form-label" AssociatedControlID="sda" runat="server" Text="เลขที่" />
                                             </div>
                                             <div class="col-9">
-                                                <asp:TextBox class="form-control" ID="TextBox3" runat="server"></asp:TextBox>
+                                                <asp:TextBox class="form-control" ID="sda" runat="server"></asp:TextBox>
                                             </div>
                                         </div>
                                     </td>
@@ -193,20 +194,23 @@
                                     <td colspan="6" style="width: 240px !important;">
                                         <div class="row">
                                             <div class="col-3">
-                                                <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="sda" runat="server" Text="แผนก" />
+                                                <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="cboSection" runat="server" Text="แผนก" />
                                             </div>
                                             <div class="col-9">
-                                                <asp:DropDownList class="form-control " ID="sda" runat="server" required></asp:DropDownList>
+                                                <asp:DropDownList class="form-control" ID="cboSection" runat="server">
+                                                </asp:DropDownList>
                                             </div>
                                         </div>
                                     </td>
                                     <td colspan="6" style="width: 240px !important;">
                                         <div class="row">
                                             <div class="col-3">
-                                                <asp:Label ID="Label3" CssClass="form-label" AssociatedControlID="sda" runat="server" Text="ฝ่าย" />
+                                                <asp:Label ID="Label3" CssClass="form-label" AssociatedControlID="cboDepartment" runat="server" Text="ฝ่าย" />
                                             </div>
                                             <div class="col-9">
-                                                <asp:DropDownList class="form-control " ID="DropDownList2" runat="server" required></asp:DropDownList>
+                                                <asp:DropDownList class="form-control" ID="cboDepartment" AutoPostBack="True"
+                                                    runat="server">
+                                                </asp:DropDownList>
                                             </div>
                                         </div>
                                     </td>
@@ -237,10 +241,10 @@
                                     <td colspan="18" style="width: 720px !important;">
                                         <div class="row">
                                             <div class="col-1">
-                                                <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="sda" runat="server" Text="ผู้รับเงิน" />
+                                                <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="ผู้รับเงิน" />
                                             </div>
                                             <div class="col-11">
-                                                <asp:TextBox class="form-control" ID="TextBox2" runat="server"></asp:TextBox>
+                                                <asp:DropDownList class="form-control " ID="cboVendor" runat="server" required></asp:DropDownList>
                                             </div>
                                         </div>
 
@@ -316,7 +320,7 @@
 
                                     <tr class="draggable detail" draggable="true">
                                         <td colspan="2" style="width: 80px !important;">
-                                            <div class="commit text-warning" style="position: absolute; transform: translateX(-150px); transition: .2s;"><span>(ยังไม่ได้บันทึก)</span></div>
+                                            <div class="commit text-warning" style="position: absolute; transform: translateX(-150px); transition: .2s;"></div>
                                             1
                                         </td>
                                         <td colspan="10" style="width: 400px !important;">1</td>
@@ -324,11 +328,10 @@
                                         <td colspan="2" style="width: 80px !important;">1</td>
                                         <td colspan="2" style="width: 80px !important;">1</td>
                                         <td colspan="2" style="width: 80px !important;">1</td>
-                                        <td colspan="4" style="width: 160px !important; display: inline-flex;">
-                                            1
+                                        <td colspan="4" style="width: 160px !important; display: inline-flex;">1
                                             <a onclick='newwin();' class="addAttach text-primary" style="cursor: pointer; position: absolute; transform: translateX(155px); transition: .2s;">
                                                 <i class="fas fa-link"></i><span>แนบเอกสาร</span></a>
-                                            <a onclick='newwin();' class="attach " >
+                                            <a onclick='newwin();' class="attach ">
                                                 <i class="fas fa-link"></i><span>ดูเอกสาร</span></a>
                                         </td>
                                     </tr>

@@ -29,7 +29,9 @@
             }
 
 
-
+        .checkGSM {
+        display:none;
+        }
 
         .noContent {
             width: 200px;
@@ -98,7 +100,7 @@
                                             <div id="demo" style="color: navy; font-size: 10px;"></div>
                                         </div>
                                         <% If Request.QueryString("approvalcode") IsNot Nothing And detailtable IsNot Nothing Then%>
-                                        <% If detailtable.Rows(0).Item("category") = "หักยอดขาย" Then%>
+                                        <% If detailtable.Rows(0).Item("category").ToString = "หักยอดขาย" Then%>
                                         <div class="col-auto align-self-center checkGSM">
                                             <div class="row">
                                                 <div class="col-md">
@@ -316,7 +318,7 @@
                                     <div class="card-footer text-center bg-white">
                                         <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" />
                                     </div>
-                                    <% ElseIf Session("status") = "read" And (Session("userid").ToString() = detailtable.Rows(0).Item("createby")) Then%>
+                                    <% ElseIf Session("status") = "read" And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
                                     <div class="card-footer text-center bg-white">
                                         <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                                         <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" />
@@ -325,7 +327,7 @@
                                         <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" />
 
                                     </div>
-                                    <% ElseIf Session("status") = "write" And detailtable.Rows(0).Item("statusid").ToString() = 1 Then%>
+                                    <% ElseIf Session("status") = "write" And detailtable.Rows(0).Item("statusid") = 1 Then%>
                                     <div class="card-footer text-center bg-white">
                                         <% If approval Then%>
                                         <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
@@ -429,7 +431,7 @@
                     </div>
                     <!-- end row-->
                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And CommentTable IsNot Nothing Then%>
-                    <% If (Session("status") = "read" Or Session("status") = "write") And Not detailtable.Rows(0).Item("statusid").ToString() = 7 Then%>
+                    <% If (Session("status") = "read" Or Session("status") = "write") And Not detailtable.Rows(0).Item("statusid") = 7 Then%>
                     <!-- statusid = 7 รอผู้แจ้งยืนยัน-->
                     <div class="row bg-white">
                         <div class="col-lg-12">
@@ -468,7 +470,7 @@
                                         <hr style="height: 2px; border-width: 0; color: gray; background-color: gray" />
                                         <% Next i %>
 
-                                        <%if detailtable.Rows(0).Item("statusid").ToString() = 1 Then%>
+                                        <%if detailtable.Rows(0).Item("statusid") = 1 Then%>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
