@@ -64,6 +64,22 @@ Public Class jobs
 
     End Sub
 
+    Public Sub SetCboJobCenterDtlListByJobCenterID_GroupByJobCenterid(cboCost As DropDownList, jobcenterid As String)
+
+        Dim dtcost As DataTable = JobCenterDtl_List(jobcenterid)
+        cboCost.Items.Clear()
+        For i As Integer = 0 To dtcost.Rows.Count - 1
+            Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("JobsCenterDtlName"), dtcost.Rows(i).Item("JobsCenterDtlID"))
+            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("CostName").ToString) Then
+                item.Attributes("data-category") = dtcost.Rows(i).Item("CostName").ToString
+            End If
+
+            cboCost.Items.Add(item)
+
+        Next
+
+    End Sub
+
     Public Function JobList(usercode As String, status As Integer) As DataTable
         Dim result As DataTable
 

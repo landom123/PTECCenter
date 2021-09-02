@@ -46,7 +46,7 @@ Public Class JobsClose
                 objjob.SetCboCloseType(cboCloseType)
                 objjob.SetCboCloseCategory(cboCloseCategory)
                 FindJob(jobno, jobdetailid)
-                objjob.SetCboJobCenterDtlListByJobCenterID(cboCost, jobcenterid)
+                objjob.SetCboJobCenterDtlListByJobCenterID_GroupByJobCenterid(cboCost, jobcenterid)
 
                 If Not followup_status = "ปิดงาน" Then
                     txtBeginWarr.Text = Now.ToString

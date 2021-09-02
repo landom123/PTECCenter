@@ -50,13 +50,13 @@ Partial Public Class PaymentPage
     Protected WithEvents btnPrint As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''cboBranch control.
+    '''cboBrancha control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboBrancha As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Label2 control.
@@ -68,13 +68,13 @@ Partial Public Class PaymentPage
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''TextBox1 control.
+    '''cboName control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents TextBox1 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboName As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Label1 control.
@@ -86,13 +86,13 @@ Partial Public Class PaymentPage
     Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''DropDownList1 control.
+    '''cboBranch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents DropDownList1 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Label6 control.
@@ -104,13 +104,13 @@ Partial Public Class PaymentPage
     Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''TextBox3 control.
+    '''sda control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents TextBox3 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents sda As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lbApprovalcode control.
@@ -122,13 +122,13 @@ Partial Public Class PaymentPage
     Protected WithEvents lbApprovalcode As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''sda control.
+    '''cboSection control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents sda As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Label3 control.
@@ -140,13 +140,13 @@ Partial Public Class PaymentPage
     Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''DropDownList2 control.
+    '''cboDepartment control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents DropDownList2 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboDepartment As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Label4 control.
@@ -194,13 +194,13 @@ Partial Public Class PaymentPage
     Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''TextBox2 control.
+    '''cboVendor control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents TextBox2 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboVendor As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''txtDuedate control.

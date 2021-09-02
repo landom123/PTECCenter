@@ -402,6 +402,13 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
+            var groups = {};
+            $("select option[data-category]").each(function () {
+                groups[$.trim($(this).attr("data-category"))] = true;
+            });
+            $.each(groups, function (c) {
+                $("select option[data-category='" + c + "']").wrapAll('<optgroup label="' + c + '">');
+            });
             $('.form-control').selectpicker({
                 liveSearch: true,
                 maxOptions: 1
