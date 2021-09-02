@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="JobsList_TEST.aspx.vb" Inherits="PTECCENTER.JobsList_test" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="JobsLists.aspx.vb" Inherits="PTECCENTER.JobsList_test" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -134,7 +134,7 @@
                 </div>
                 <% End If %>
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="font-size:0.9rem">
                         <asp:GridView ID="gvRemind"
                             class="table table-striped table-bordered"
                             AutoGenerateColumns="false"
@@ -166,6 +166,16 @@
                                 <asp:TemplateField HeaderText="Detail">
                                     <ItemTemplate>
                                         <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("details")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Last Update">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("lastupdate")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Update Detail">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("detailFollow")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cost">

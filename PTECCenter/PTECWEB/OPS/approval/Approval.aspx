@@ -30,7 +30,7 @@
 
 
         .checkGSM {
-        display:none;
+            /*display: none;*/
         }
 
         .noContent {
@@ -49,7 +49,6 @@
             width: 15px !important;
             height: 15px !important;
             background: #FEBC2F; /*เขียว:#00FF27 เหลือง:#FEBC2F แดง:#ee443b*/
-
             border-radius: 50%;
             margin-bottom: 0.15rem !important;
         }
@@ -57,24 +56,25 @@
         .statusGSMName {
             padding-left: 5px;
             padding-right: 20px;
-            font-size:12px;
+            font-size: 12px;
             text-align: left !important;
             align-self: center !important;
         }
-        @media screen and (max-width: 768px){
-        
-       
+
+        @media screen and (max-width: 768px) {
+
+
             .statusGSM {
-                margin:auto auto;
+                margin: auto auto;
             }
+
             .statusGSMName {
-                display:none;
+                display: none;
                 /*padding-left: 15px;
                 padding-right: 15px;
                 text-align: center !important;*/
             }
         }
-
     </style>
 
 </asp:Content>
@@ -1088,9 +1088,9 @@
                 $(".statusGSM").css("background-color", "#00FF27");
                 $(".statusGSM").css("box-shadow", "rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 0px 5px");
                 $("#statusGSMName").text("sent to GSM");
-                
+
             } else {
-                $(".statusGSM").css("background-color", "#ee443b"); 
+                $(".statusGSM").css("background-color", "#ee443b");
                 $(".statusGSM").css("box-shadow", "rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #8f0000 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 0px 5px");
                 $("#statusGSMName").text("Not find in GSM");
             }

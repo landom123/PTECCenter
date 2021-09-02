@@ -133,11 +133,34 @@
 
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        saveFollowup()
+        If ValidateUpdate() Then
+            saveFollowup()
+        End If
     End Sub
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-        saveFollowup()
+        If ValidateUpdate() Then
+            saveFollowup()
+        End If
     End Sub
+    Private Function ValidateUpdate() As Boolean
+        Dim result As Boolean = True
+        Dim msg As String = ""
+
+        If cboStatus.SelectedItem.Value = 0 Then
+            result = False
+            msg = "กรุณาเลือกสถานะ"
+            GoTo endprocess
+        End If
+
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End If
+
+        Return result
+    End Function
     Private Sub saveFollowup()
         Dim statusid As Integer = cboStatus.SelectedItem.Value
         Dim details As String = txtDetailFollow.Text
