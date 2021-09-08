@@ -403,6 +403,8 @@ Public Class EDI
 
         Return result
     End Function
+
+
     Public Function ListInvoice(InvoiceDate As String, billtype As String) As DataTable
 
         Dim result As DataTable
@@ -1405,4 +1407,213 @@ Public Class EDI
         '----------------------------------------
         writer.WriteEndElement()
     End Sub
+
+
+    Public Sub SetCboSaleOrder(obj As Object)
+        Dim edi As New EDI
+
+        obj.DataSource = edi.Supply_SaleOrder_List()
+        obj.DataValueField = "saleorder"
+        obj.DataTextField = "saleorder"
+        obj.DataBind()
+
+    End Sub
+    Public Function Supply_SaleOrder_List() As DataTable
+
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Supply_SaleOrder_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+
+        Return result
+    End Function
+    Public Sub SetCboExpense(obj As Object)
+        Dim edi As New EDI
+
+        obj.DataSource = edi.Supply_Expense_List()
+        obj.DataValueField = "exid"
+        obj.DataTextField = "ExpenseName"
+        obj.DataBind()
+
+    End Sub
+
+    Public Function Supply_Expense_List() As DataTable
+
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Supply_Expense_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+
+        Return result
+    End Function
+
+
+    Public Function Supply_SaveHead(docno As String, supplierid As Integer, usercode As String, status As Integer) As String
+
+        ' Dim result As String
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Supply_Expense_Save_Head"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@supplierid", SqlDbType.Int).Value = supplierid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@status", SqlDbType.Int).Value = status
+
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            docno = ds.Tables(0).Rows(0).Item("docno")
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+
+        Return docno
+    End Function
+
+    Public Function Supply_SaveDetail(docno As String, saleorder As String, expense As String, amount As Double) As Boolean
+
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Supply_Expense_Save_Detail"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@saleorder", SqlDbType.Int).Value = saleorder
+        cmd.Parameters.Add("@expense", SqlDbType.VarChar).Value = expense
+        cmd.Parameters.Add("@amount", SqlDbType.Int).Value = amount
+
+
+        Try
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Supply_Expense_Clear_Detail_beforeSave(docno As String) As Boolean
+
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Supply_Expense_Clear_Detail_beforeSave"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+
+        Try
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+
+        Return result
+    End Function
+
+
+    Public Function Supply_Expense_Find(docno As String) As DataSet
+
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Supply_Expense_Find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+
+        Return result
+    End Function
 End Class

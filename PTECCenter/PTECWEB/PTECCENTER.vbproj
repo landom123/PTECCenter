@@ -1742,6 +1742,7 @@
     <Content Include="SDD\ESSOEDI\EssoInvoicetoD365.aspx" />
     <Content Include="SDD\ESSOEDI\EssoSaveToBatch.aspx" />
     <Content Include="SDD\ESSOEDI\EssoLoadConfirm.aspx" />
+    <Content Include="SDD\SupplyExpense.aspx" />
     <Content Include="SSD\gsmsavetobatch.aspx" />
     <Content Include="SSD\gsmapprovededuct.aspx" />
     <Content Include="SSD\newgsm_viewdetail.aspx" />
@@ -3680,6 +3681,13 @@
     </Compile>
     <Compile Include="SDD\ESSOEDI\EssoLoadConfirm.aspx.vb">
       <DependentUpon>EssoLoadConfirm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\SupplyExpense.aspx.designer.vb">
+      <DependentUpon>SupplyExpense.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\SupplyExpense.aspx.vb">
+      <DependentUpon>SupplyExpense.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SSD\gsmsavetobatch.aspx.designer.vb">
