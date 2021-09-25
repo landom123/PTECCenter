@@ -3485,6 +3485,7 @@
     <Compile Include="class\assets.vb" />
     <Compile Include="class\Branch.vb" />
     <Compile Include="class\budget.vb" />
+    <Compile Include="class\rv.vb" />
     <Compile Include="class\Department.vb" />
     <Compile Include="class\EDI.vb" />
     <Compile Include="class\global.vb" />
@@ -4393,7 +4394,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62757</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62757/</IISUrl>
+          <IISUrl>http://localhost:51234/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -50,20 +50,11 @@ Partial Public Class RVtoHQ
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''gvData2 control.
+    '''gvData control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents gvData2 As Global.System.Web.UI.WebControls.GridView
-
-    '''<summary>
-    '''gvdata control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gvdata As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents gvData As Global.System.Web.UI.WebControls.GridView
 End Class

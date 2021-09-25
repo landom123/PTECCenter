@@ -10,6 +10,7 @@ Public Class RVtoHQ
     Public usercode, username
     Public _cultureEnInfo As New Globalization.CultureInfo("en-US")
     Public tempname As String
+    Public filename As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
 
@@ -17,7 +18,7 @@ Public Class RVtoHQ
         username = Session("username")
 
         'Dim objsupplier As New Supplier
-
+        filename = Session("filename")
         If IsPostBack() Then
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
@@ -44,16 +45,19 @@ Public Class RVtoHQ
     Private Function creatervtable() As DataTable
 
         Dim dt As New DataTable
-
+        dt.Columns.Add("id", GetType(Integer))
         dt.Columns.Add("voucher", GetType(String))
         dt.Columns.Add("transdate", GetType(String))
         dt.Columns.Add("account", GetType(String))
         dt.Columns.Add("branch", GetType(String))
         dt.Columns.Add("amount", GetType(Double))
-
+        dt.Columns("id").AutoIncrement = True
+        dt.Columns("Id").AutoIncrementSeed = 1
         Return dt
     End Function
     Private Sub Import_To_Grid(ByVal FilePath As String, ByVal Extension As String)
+        filename = FilePath
+        Session(filename) = filename
         rvtable = creatervtable()
         Using stream As FileStream = File.Open(FilePath, FileMode.Open, FileAccess.Read)
             Dim excelReader As IExcelDataReader
@@ -74,14 +78,17 @@ Public Class RVtoHQ
 
             'rvtb = dtview.ToTable(True, "Column25", "Column23", "Column2", "Column14", "Column5")
 
-            Dim dr As DataRow = rvtable.NewRow
+            Dim dr As DataRow
+            Dim branch() As String
 
             For Each r As DataRow In ds.Tables("ImportD365-Payment").Rows
                 If r.Item("column25") <> "VOUCHER" Then
+                    dr = rvtable.NewRow()
                     dr("voucher") = r.Item("column25")
-                    dr("transdate") = r.Item("column223")
+                    dr("transdate") = r.Item("column23")
                     dr("account") = r.Item("column2")
-                    dr("branch") = r.Item("column14")
+                    branch = Strings.Split(r.Item("column14"), "-")
+                    dr("branch") = branch(3)
                     dr("amount") = r.Item("column5")
                     rvtable.Rows.Add(dr)
                 End If
@@ -89,8 +96,8 @@ Public Class RVtoHQ
 
 
             Session("rv") = rvtable
-            gvdata.DataSource = rvtable
-            gvdata.DataBind()
+            gvData.DataSource = rvtable
+            gvData.DataBind()
 
         End Using
         'getexcelinterop(FilePath)
@@ -98,37 +105,29 @@ Public Class RVtoHQ
     End Sub
 
 
+    Private Function SaveData() As Boolean
+
+        Dim result As Boolean = True
+
+        Dim scriptKey As String
+        Dim javaScript As String
 
 
-    Private Sub SaveData(branch As String, closedate As String)
+        Dim objrv As New rv
+        Try
+            For Each row As DataRow In rvtable.Rows
+                objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("branch"), row("amount"), usercode)
+            Next row
+        Catch ex As Exception
+            result = False
+            scriptKey = "alert"
+            javaScript = "alertWarning('" & ex.Message & "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
 
-        'Dim objgsm As New gsm
-        'Dim mydataset As DataSet
-        ''clear gsm_sale_other,gsm_sale_oil,gsm_paid
-        'Dim result As Boolean = objgsm.GSM_delete_gsc(branch, closedate)
-        'mydataset = objgsm.getGSCbyBranchDate(branch, closedate)
-        ''insert ลง
+        Return result
 
-        '' gsm_sale_oil--table(0)
-        'For Each row As DataRow In mydataset.Tables(0).Rows
-        '    objgsm.GSM_save_gsm_sale_oil(row("br_code"), row("closedate"), row("grade_title"), row("volume"), row("new_price"))
-        'Next row
-        '' gsm_sale_other--table(1)
-        'For Each row As DataRow In mydataset.Tables(1).Rows
-        '    objgsm.GSM_save_gsm_sale_other(row("br_code"), row("closedate"), row("doccode"), row("ar_number"), row("customer_name"),
-        '            row("product"), row("volume"), row("amount"), row("duedate"))
-        'Next row
-        '' gsm_paid--table(2)
-        'For Each row As DataRow In mydataset.Tables(2).Rows
-        '    objgsm.GSM_save_gsm_paid(row("br_code"), row("closedate"), row("td_description"), row("amount"))
-        'Next row
-
-        ''นำข้อมูลลง ivzs GSM_Prepair_GSMtoD365
-        'objgsm.GSM_Prepair_GSMtoD365(branch, closedate)
-
-
-        'ClientScript.RegisterStartupScript(Me.GetType(), "alert", "alert('Save Complete');", True)
-    End Sub
+    End Function
 
     Private Sub btnOpen_Click(sender As Object, e As EventArgs) Handles btnOpen.Click
         Dim filename As String
@@ -150,5 +149,15 @@ Public Class RVtoHQ
         gvData.DataSource = Session("rv")
         gvData.PageIndex = e.NewPageIndex
         gvData.DataBind()
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If SaveData() = True Then
+
+            Dim ScriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('บันทึกเรียบร้อย');"
+            ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+        End If
+
     End Sub
 End Class
