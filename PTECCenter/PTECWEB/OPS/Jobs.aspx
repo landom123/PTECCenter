@@ -8,6 +8,7 @@
     </style>
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
+    <script src="https://cdn.tiny.cloud/1/eivog24cbgm1fhi4pm2cg4pw1lp478mhyjjtxnzml4fi51pa/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -518,6 +519,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รายละเอียดงาน</span>
                                         </div>
+                                        <%--eivog24cbgm1fhi4pm2cg4pw1lp478mhyjjtxnzml4fi51pa--%>
                                         <asp:TextBox class="form-control" ID="txtJobDetail" runat="server" TextMode="MultiLine" required></asp:TextBox>
                                         <div class="invalid-feedback">* กรุณาใส่รายละเอียดงาน</div>
                                     </div>
@@ -604,5 +606,17 @@
         }
     </script>
 
+
+    <%-- script text editor --%>
+<%--  <script type="text/javascript">
+      tinymce.init({
+          selector: 'textarea',
+          plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+          toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
+          toolbar_mode: 'floating',
+          tinycomments_mode: 'embedded',
+          tinycomments_author: 'Author name',
+      });
+  </script>--%>
 
 </asp:Content>
