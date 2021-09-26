@@ -1,6 +1,6 @@
 ﻿Public Class index
     Inherits System.Web.UI.Page
-    Dim penddingpastmonth, penddinginmonth, jobnotconfirm, jobnew As Integer
+    Dim penddingpastmonth, pendding, jobnotconfirm, jobnew As Integer
     Public menutable As DataTable
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -37,12 +37,12 @@
         Dim year As String = Now.Year.ToString("0000")
         Try
             mytable = user.dashboard(usercode, year)
-            penddinginmonth = mytable.Rows(0).Item("penddinginmonth")
+            pendding = mytable.Rows(0).Item("pendding")
             penddingpastmonth = mytable.Rows(0).Item("penddingpastmonth")
             jobnotconfirm = mytable.Rows(0).Item("jobnotconfirm")
             jobnew = mytable.Rows(0).Item("jobnew")
 
-            Session("penddinginmonth") = penddinginmonth
+            Session("pendding") = pendding
             Session("penddingpastmonth") = penddingpastmonth
             Session("jobnotconfirm") = jobnotconfirm
             Session("jobnew") = jobnew

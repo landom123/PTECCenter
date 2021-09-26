@@ -29,7 +29,7 @@
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-comments"></i>
                 </div>
-                <div class="mr-5"><% =Session("penddingpastmonth") %> - OPS ค้างจากเดือนก่อน</div>
+                <div class="mr-5">OPS ค้างจากเดือนก่อน จำนวน <% =Session("pendding") %> รายการ</div>
               </div>
               <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
@@ -45,7 +45,7 @@
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-list"></i>
                 </div>
-                <div class="mr-5"><% =Session("penddinginmonth") %> - OPS รอคุณดำเนินการ</div>
+      <%--          <div class="mr-5"><% =Session("pendding") %> - OPS รอคุณดำเนินการ</div>--%>
               </div>
               <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
@@ -61,7 +61,7 @@
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-shopping-cart"></i>
                 </div>
-                <div class="mr-5"><% =Session("jobnotconfirm") %> - OPS ที่ยังไม่รับรองรายการ</div>
+              <%--  <div class="mr-5"><% =Session("jobnotconfirm") %> - OPS ที่ยังไม่รับรองรายการ</div>--%>
               </div>
               <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
@@ -77,7 +77,7 @@
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-life-ring"></i>
                 </div>
-                <div class="mr-5"><% =Session("jobnew") %> - OPS ที่เปิดในเดือน</div>
+           <%--     <div class="mr-5"><% =Session("jobnew") %> - OPS ที่เปิดในเดือน</div>--%>
               </div>
               <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
