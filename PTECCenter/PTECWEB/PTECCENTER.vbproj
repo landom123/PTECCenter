@@ -1743,6 +1743,7 @@
     <Content Include="SDD\ESSOEDI\EssoSaveToBatch.aspx" />
     <Content Include="SDD\ESSOEDI\EssoLoadConfirm.aspx" />
     <Content Include="SDD\SupplyExpense.aspx" />
+    <Content Include="SSD\DeducttoNEWGSM.aspx" />
     <Content Include="SSD\RVtoHQ.aspx" />
     <Content Include="SSD\gsmsavetobatch.aspx" />
     <Content Include="SSD\gsmapprovededuct.aspx" />
@@ -3690,6 +3691,13 @@
     </Compile>
     <Compile Include="SDD\SupplyExpense.aspx.vb">
       <DependentUpon>SupplyExpense.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\DeducttoNEWGSM.aspx.designer.vb">
+      <DependentUpon>DeducttoNEWGSM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\DeducttoNEWGSM.aspx.vb">
+      <DependentUpon>DeducttoNEWGSM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SSD\RVtoHQ.aspx.designer.vb">

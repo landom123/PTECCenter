@@ -3,6 +3,41 @@ Imports System.IO
 Imports System.Web.Configuration
 Public Class gsm
     Public cnntimeout As Integer = WebConfigurationManager.AppSettings("cnn_timeout")
+
+    Public Function Deduct_Save(branch As Double, detail As String, amount As Double, dateuse As DateTime, usercode As String) As Boolean
+        Dim result As Boolean = True
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_gsm").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandTimeout = 600
+        cmd.CommandText = "Deduct_Sell_Approve_or_reject"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branch", SqlDbType.Int).Value = branch
+        cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = detail
+        cmd.Parameters.Add("@amount", SqlDbType.Float).Value = amount
+        cmd.Parameters.Add("@dateuse", SqlDbType.DateTime).Value = dateuse
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+
+        Try
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw ex
+            result = False
+        End Try
+
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
     Public Function Deduct_Sell_Approve_or_reject(id As Double, status As String, reason As String, user As String) As Boolean
         Dim result As Boolean = True
 
