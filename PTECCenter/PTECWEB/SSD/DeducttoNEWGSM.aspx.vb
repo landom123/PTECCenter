@@ -83,11 +83,11 @@ Public Class DeducttoNEWGSM
             For Each r As DataRow In ds.Tables(0).Rows
 
                 dr = rvtable.NewRow()
-                    dr("branch") = r.Item("column0")
-                    dr("detail") = r.Item("column1")
-                    dr("amount") = r.Item("column2")
-                    dr("date") = r.Item("column3")
-                    rvtable.Rows.Add(dr)
+                dr("branch") = r.Item("column0")
+                dr("detail") = r.Item("column1")
+                dr("amount") = r.Item("column2")
+                dr("date") = r.Item("column3")
+                rvtable.Rows.Add(dr)
 
             Next
 
@@ -100,7 +100,6 @@ Public Class DeducttoNEWGSM
         'getexcelinterop(FilePath)
 
     End Sub
-
 
     Private Function SaveData() As Boolean
 
