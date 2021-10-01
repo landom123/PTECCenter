@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="JobsLists.aspx.vb" Inherits="PTECCENTER.JobsList_test" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="AdvanceMenuList.aspx.vb" Inherits="PTECCENTER.AdvanceMenuList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -26,7 +26,7 @@
 
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: deeppink; color: white">
-                    <li class="breadcrumb-item">รายการ Jobs
+                    <li class="breadcrumb-item">รายการ Advance
                     </li>
                 </ol>
 
@@ -43,61 +43,27 @@
                 <% If Not Session("positionid") = "10" Then%>
 
                 <div class="row">
+                    <div class="col-auto" style="margin-left: auto;">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server" onchange="valueChanged()">
+                        <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
+                    </div>
+                    <div class="col-auto">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server" onchange="HOvalueChanged(this)">
+                        <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtjobcode" runat="server" placeholder="21XXXXXXX" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtAdvRQ" runat="server" placeholder="21XXXXXXX" AutoPostBack="true"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ฝ่าย</span>
-                            </div>
-                            <asp:DropDownList ID="cboDep" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">หัวข้องาน</span>
-                            </div>
-                            <asp:DropDownList ID="cboJobType" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สถานะงานย่อย</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ประเภทสาขา</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สาขา</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
+                            <div class="input-group-prepend"> 
                                 <span class="input-group-text">ตั้งแต่วันที่</span>
                             </div>
                             <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="true"></asp:TextBox>
@@ -112,13 +78,55 @@
 
                         </div>
                     </div>
-                </div>
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-12">
-                        <asp:Label ID="note" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข 1 : รายการใน 'หัวข้องาน' จะเปลี่ยนไปตาม 'ฝ่าย' ที่เลือก )" />
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">สถานะงานย่อย</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="true"></asp:DropDownList>
+                        </div>
                     </div>
-                    <div class="col-md-12">
-                        <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข 2 : รายการใน 'สาขา' จะเปลี่ยนไปตาม 'ประเภทสาขา' ที่เลือก )" />
+                    <div class="col-md-4 HO">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ฝ่าย</span>
+                            </div>
+                            <asp:DropDownList ID="cboDepartment" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4 HO">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">แผนก</span>
+                            </div>
+                            <asp:DropDownList ID="cboSection" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4 CO">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ประเภทสาขา</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4 CO">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">สาขา</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="row" style="padding-top: 1rem;">
+                    <div class="col-md-12 HO">
+                        <asp:Label ID="note" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'แผนก' จะเปลี่ยนไปตาม 'ฝ่าย' ที่เลือก )" />
+                    </div>
+                    <div class="col-md-12 CO">
+                        <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'สาขา' จะเปลี่ยนไปตาม 'ประเภทสาขา' ที่เลือก )" />
                     </div>
                 </div>
                 <% else %>
@@ -143,54 +151,39 @@
                             AllowPaging="true"
                             runat="server">
                             <Columns>
-                                <asp:TemplateField HeaderText="Code">
+                                <asp:TemplateField HeaderText="Code" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("jobcode")%>'></asp:Label>
+                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("AdvanceRequest_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Branch">
+                                <asp:TemplateField HeaderText="Branch" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("branch")%>'></asp:Label>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Createname")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Date" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Date">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("jobdate")%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("detail")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Type">
+                                <asp:TemplateField HeaderText="Type" ItemStyle-HorizontalAlign="Right">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("jobtype")%>'></asp:Label>
+                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#String.Format("{0:n4}", Eval("amount"))%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Detail">
+                                <asp:TemplateField HeaderText="Type" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("details")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Last Update">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("lastupdate")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Update Detail">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("detailFollow")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Cost">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Status">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("status")%>'></asp:Label>
+                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("status")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
-                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text=""><img src="../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -252,12 +245,13 @@
     </script>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
             $('.form-control').selectpicker({
+                noneSelectedText: '-',
                 liveSearch: true,
                 maxOptions: 1
             });
+            checkCOorHO();
         });
 
     </script>
@@ -277,6 +271,40 @@
                 'warning'
             )
         }
+        function checkCOorHO() {
+            if ($("#" + "<%= chkHO.ClientID.ToString %>").is(":checked")) {
+                $(".HO").show();
+                $(".CO").hide();
+            } else if ($("#" + "<%= chkCO.ClientID.ToString %>").is(":checked")){
+                $(".CO").show();
+                $(".HO").hide();
+            } else {
+                $(".CO").hide();
+                $(".HO").hide();
+
+            }
+
+        }
+
+        $("input:checkbox").on('click', function () {
+            // in the handler, 'this' refers to the box clicked on
+            console.log(this);
+            var $box = $(this);
+            if ($box.is(":checked")) {
+                // the name of the box is retrieved using the .attr() method
+                // as it is assumed and expected to be immutable
+                var group = "input:checkbox";
+                // the checked state of the group/box on the other hand will change
+                // and the current value is retrieved using .prop() method
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+
+            } else {
+                $box.prop("checked", false);
+            }
+
+            checkCOorHO();
+        });
     </script>
 
 </asp:Content>

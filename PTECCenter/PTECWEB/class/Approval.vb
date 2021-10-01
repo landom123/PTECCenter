@@ -251,6 +251,29 @@ Public Class Approval
         Return result
     End Function
 
+    Public Function Save_Comment_By_Code(codeRef As String, message As String, userid As Integer)
+        'Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Save_Comment_By_Code"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@codeRef", SqlDbType.VarChar).Value = codeRef
+        cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = message
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Function
     Public Function Approval_Save_Comment(approvalcode As String, message As String, userid As Integer)
         'Dim result As String
         Dim ds As New DataSet
@@ -572,8 +595,8 @@ Public Class Approval
         conn.Close()
         Return result
     End Function
-    Public Function Approval_Support_Allow(approvalcode As String, username As String)
-        'Dim result As String
+    Public Function Approval_Support_Allow(approvalcode As String, cost As Double, username As String) As String
+        Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
         Dim cmd As New SqlCommand
@@ -585,14 +608,15 @@ Public Class Approval
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
+        cmd.Parameters.Add("@cost", SqlDbType.Money).Value = cost
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
 
-        cmd.ExecuteNonQuery()
-        'adp.SelectCommand = cmd
-        'adp.Fill(ds)
-        'result = ds.Tables(0).Rows(0).Item("code")
+        'cmd.ExecuteNonQuery()
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        Result = ds.Tables(0).Rows(0).Item("code")
         conn.Close()
-        'Return result
+        Return Result
     End Function
 
     Public Function Approval_Support_Knowledge(approvalcode As String, username As String)

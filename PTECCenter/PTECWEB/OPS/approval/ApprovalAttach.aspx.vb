@@ -131,17 +131,18 @@ Public Class approvalattach
                     'End Try
                 End If
             Next i
+            Dim code As String
             Try
-                approval.Approval_Support_Allow(Request.QueryString("approvalcode"), Session("usercode"))
+                code = approval.Approval_Support_Allow(Request.QueryString("approvalcode"), txtCost.Text, Session("usercode"))
             Catch ex As Exception
                 scriptKey = "alert"
                 'Dim javaScript As String = "alert('" & ex.Message & "');"
-                javaScript = "alertWarning('upload file fail');"
+                javaScript = "alertWarning('Approval Allow fail');"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 GoTo endprocess
             End Try
             scriptKey = "alert"
-            javaScript = "alertSuccessUpload()"
+            javaScript = "alertSuccessUpload('" & code & "')"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
 endprocess:
         End If

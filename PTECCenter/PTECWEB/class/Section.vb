@@ -35,4 +35,12 @@ Public Class Section
 
 
     End Sub
+    Public Sub SetCboSection_seccode(obj As Object, depid As Integer)
+        obj.DataSource = Me.List(depid)
+        obj.DataValueField = "secid"
+        obj.DataTextField = "seccode"
+        obj.DataBind()
+
+
+    End Sub
 End Class

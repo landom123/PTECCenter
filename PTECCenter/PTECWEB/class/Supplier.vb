@@ -1,6 +1,13 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Web.Configuration
 Public Class Supplier
+
+    Public Sub SetCboVendor(obj As Object, username As String)
+        obj.DataSource = Me.vendor_list(username)
+        obj.DataValueField = "Vendor_Code_only"
+        obj.DataTextField = "Vendor_name_code"
+        obj.DataBind()
+    End Sub
     Public Sub SetCboVendorByName(cboVendor As DropDownList, username As String)
 
         Dim dt As DataTable = vendor_list(username)

@@ -4,6 +4,10 @@
 }
 
 @media print {
+    .notPrint, .navbar-nav {
+        display: none;
+    }
+
     .print {
         visibility: visible;
     }

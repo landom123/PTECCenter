@@ -1727,6 +1727,10 @@
     <Content Include="OPS\Jobs_Report_JobForm.aspx" />
     <Content Include="OPS\Master.aspx" />
     <Content Include="OPS\Master\WebForm2.aspx" />
+    <Content Include="OPS\Non-PO\Advance\AdvanceRequest.aspx" />
+    <Content Include="OPS\Non-PO\Advance\ClearAdvance.aspx" />
+    <Content Include="OPS\Non-PO\Advance\AdvanceMenuList.aspx" />
+    <Content Include="OPS\Non-PO\js\NonPO.js" />
     <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
     <Content Include="OPS\Non-PO\Payment\Payment.aspx" />
     <Content Include="OPS\Non-PO\NonPO.aspx" />
@@ -1758,7 +1762,7 @@
     <Content Include="OPS\Jobs.aspx" />
     <Content Include="OPS\JobsCancel.aspx" />
     <Content Include="OPS\JobsDetail_delete.aspx" />
-    <Content Include="OPS\JobsList.aspx" />
+    <Content Include="OPS\JobsList_NotUse.aspx" />
     <Content Include="OPS\JobsUpdate.aspx" />
     <Content Include="OPS\Jobs_Report_byRange.aspx" />
     <Content Include="OPS\Jobs_Close.aspx" />
@@ -3478,6 +3482,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="class\Account.vb" />
+    <Compile Include="class\NonPO.vb" />
     <Compile Include="class\Approval.vb" />
     <Compile Include="class\Area.vb" />
     <Compile Include="class\assets.vb" />
@@ -3575,6 +3580,27 @@
     </Compile>
     <Compile Include="OPS\Master\WebForm2.aspx.vb">
       <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Advance\AdvanceRequest.aspx.designer.vb">
+      <DependentUpon>AdvanceRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Advance\AdvanceRequest.aspx.vb">
+      <DependentUpon>AdvanceRequest.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Advance\ClearAdvance.aspx.designer.vb">
+      <DependentUpon>ClearAdvance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Advance\ClearAdvance.aspx.vb">
+      <DependentUpon>ClearAdvance.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Advance\AdvanceMenuList.aspx.designer.vb">
+      <DependentUpon>AdvanceMenuList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Advance\AdvanceMenuList.aspx.vb">
+      <DependentUpon>AdvanceMenuList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\Payment\defaultPayment.aspx.designer.vb">
@@ -3780,11 +3806,11 @@
       <DependentUpon>JobsDetail_delete.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OPS\JobsList.aspx.designer.vb">
-      <DependentUpon>JobsList.aspx</DependentUpon>
+    <Compile Include="OPS\JobsList_NotUse.aspx.designer.vb">
+      <DependentUpon>JobsList_NotUse.aspx</DependentUpon>
     </Compile>
-    <Compile Include="OPS\JobsList.aspx.vb">
-      <DependentUpon>JobsList.aspx</DependentUpon>
+    <Compile Include="OPS\JobsList_NotUse.aspx.vb">
+      <DependentUpon>JobsList_NotUse.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\JobsUpdate.aspx.designer.vb">
@@ -4278,7 +4304,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="OPS\Attatch\" />
-    <Folder Include="OPS\Non-PO\Advance\" />
+    <Folder Include="OPS\Non-PO\css\" />
     <Folder Include="OPS\Non-PO\PettyCash\" />
     <Folder Include="temp\" />
   </ItemGroup>
