@@ -7,6 +7,7 @@ Public Class JobsClose
     Dim jobdetailid As Integer
     Dim jobcenterid As Integer
     Dim followup_status As String = String.Empty
+    Public chkPAYMENT As Boolean = False
     Public total As String
     Public menutable As DataTable
     Public maintable As DataTable
@@ -86,7 +87,8 @@ Public Class JobsClose
             mydataset = job.FindClose(jobno, jobdetailid, usercode)
             maintable = mydataset.Tables(0)
             costtable = mydataset.Tables(2)
-            total = String.Format("{0:n}",mydataset.Tables(3).Rows(0).Item("total"))
+            total = String.Format("{0:n}", mydataset.Tables(3).Rows(0).Item("total"))
+            chkPAYMENT = mydataset.Tables(4).Rows(0).Item("chkPayment")
             showjobdata(mydataset)
 
             followup_status = mydataset.Tables(0).Rows(0).Item("followup_status")

@@ -268,6 +268,11 @@
                                                 <th scope="col" class="text-center">รายการ</th>
                                                 <th scope="col" class="text-center">ราคา/หน่วย</th>
                                                 <th scope="col" class="text-center">หน่วย</th>
+                                                <% If Not chkPAYMENT Then%>
+                                                <th scope="col" class="text-center"><a id="generatedPayment" class="btn-sm" style="color: red; font-size: 2rem; font-weight: bold;">
+                                                    <i class="fas fa-file-invoice-dollar"></i>
+                                                </a></th>
+                                                <% End If %>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -336,7 +341,7 @@
                     <div class="row justify-content-center" style="padding-bottom: 1rem;">
                         <div class="col-12 text-center">
                             <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                            <asp:Button ID="btnClose" class="btn btn-sm btn-danger justify-content-center" runat="server" Text="ปิดงาน" AutoPostBack="true" />
+                            <asp:Button ID="btnClose" class="btn btn-sm btn-danger justify-content-center" runat="server" Text="ปิดงาน" AutoPostBack="true" />&nbsp;
                             <% End if %>
                         </div>
                     </div>
@@ -413,7 +418,6 @@
                 liveSearch: true,
                 maxOptions: 1
             });
-            var cboCost = document.getElementById('<%= cboCost.ClientID%>').value
             /*if (cboCost == '99999') {
                 alertWarning('กรอกไม่ครบถ้วน');
                 event.preventDefault();
@@ -422,6 +426,11 @@
             } else {
                 $('.boxcost').hide();
             }*/
+            const urlParams = new URLSearchParams(window.location.search);
+            let jobno = urlParams.get('jobno');
+            let jobdetailid = urlParams.get('jobdetailid');
+            var a = document.getElementById('generatedPayment'); 
+            a.href = "../OPS/Non-PO/Payment/Payment.aspx?f=JOB&code_ref=" + jobno + "&code_ref_dtl=" + jobdetailid 
         });
         jQuery('[id$=cboCost]').on('show.bs.dropdown', function () {
             $('.table-responsive').css("overflow", "inherit");

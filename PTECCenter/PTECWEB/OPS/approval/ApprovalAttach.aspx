@@ -137,7 +137,16 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <asp:Label ID="lbCodeGSM" CssClass="form-label" AssociatedControlID="txtCost" runat="server" Text="ค่าใช้จ่ายที่ใช้จริง" />
+                                            <asp:Label ID="lbCodeGSMMandatory" CssClass="text-danger" AssociatedControlID="txtCost" runat="server" Text="* (กรณีไม่มีค่าใช้จ่ายใส่ 0)" />
+                                            <asp:TextBox class="form-control" ID="txtCost" runat="server" type="number" min="0"  required></asp:TextBox>
+                                            <div class="invalid-feedback">กรุณาใส่ค่าใช้จ่ายตามบิล</div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card-footer text-center bg-white">
                                     <asp:Button ID="btnUpload" class="btn btn-primary" runat="server" OnClientClick="validateDataImg()" Text="Upload" AutoPostBack="true" />
                                 </div>
@@ -363,7 +372,11 @@
         function validateDataImg() {
             validateData();
 
-            if ($('input[type=file]').length == 1) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const approvalcode = urlParams.get('approvalcode');
+            console.log(approvalcode.length);
+
+            if ($('input[type=file]').length == 1 && approvalcode.length == 12) {
                 alertWarning('กรุณาแนบเอกสาร');
                 event.preventDefault();
                 event.stopPropagation();
@@ -386,7 +399,7 @@
         }
     </script>
     <script type="text/javascript">
-        function alertSuccessUpload() {
+        function alertSuccessUpload(code) {
             Swal.fire({
                 title: 'อัปโหลดสำเร็จ',
                 icon: 'success',
@@ -395,11 +408,7 @@
                 allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log('1')
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const approvalcode = urlParams.get('approvalcode');
-                    console.log(approvalcode);
-                    window.location.href = '../approval/approval.aspx?approvalcode=' + approvalcode;
+                    window.location.href = '../approval/approval.aspx?approvalcode=' + code;
                 }
             })
         }

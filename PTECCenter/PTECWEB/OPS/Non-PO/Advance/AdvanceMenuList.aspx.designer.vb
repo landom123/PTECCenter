@@ -11,167 +11,176 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class approvalattach
+Partial Public Class AdvanceMenuList
 
     '''<summary>
-    '''lbApprovalcode control.
+    '''btnNew control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbApprovalcode As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''txtApprovalcode control.
+    '''btnSearch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtApprovalcode As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnSearch As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''lbStatus control.
+    '''btnClear control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbStatus As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''txtStatus control.
+    '''chkCO control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtStatus As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents chkCO As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
 
     '''<summary>
-    '''lbcboApproval control.
+    '''lbchkCO control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbcboApproval As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbchkCO As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtApproval control.
+    '''chkHO control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtApproval As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents chkHO As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
 
     '''<summary>
-    '''lbCreateBy control.
+    '''lbchkHO control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbCreateBy As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbchkHO As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtCreateBy control.
+    '''txtAdvRQ control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCreateBy As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtAdvRQ As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lbtxtOwnerApprovalName control.
+    '''txtStartDate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbtxtOwnerApprovalName As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txtStartDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtOwnerApprovalName control.
+    '''txtEndDate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtOwnerApprovalName As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lbDocDate control.
+    '''cboStatusFollow control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbDocDate As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''txtDocDate control.
+    '''cboDepartment control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtDocDate As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboDepartment As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lbOwnerApprovalDate control.
+    '''cboSection control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbOwnerApprovalDate As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''txtOwnerApprovalDate control.
+    '''cboBranchGroup control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtOwnerApprovalDate As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboBranchGroup As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lbCodeGSM control.
+    '''cboBranch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbCodeGSM As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lbCodeGSMMandatory control.
+    '''note control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbCodeGSMMandatory As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents note As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtCost control.
+    '''note2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCost As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents note2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''btnUpload control.
+    '''cboWorking control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnUpload As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents cboWorking As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''gvRemind control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvRemind As Global.System.Web.UI.WebControls.GridView
 End Class
