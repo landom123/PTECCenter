@@ -15,7 +15,7 @@ Public Class gsm
         conn.Open()
         cmd.Connection = conn
         cmd.CommandTimeout = 600
-        cmd.CommandText = "Deduct_Sell_Approve_or_reject"
+        cmd.CommandText = "Deduct_Save"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@branch", SqlDbType.Int).Value = branch

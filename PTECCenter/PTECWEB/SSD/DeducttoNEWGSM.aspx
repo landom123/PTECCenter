@@ -15,7 +15,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
-                           <i class="fa fa-tasks" aria-hidden="true"></i>RV to HQ
+                           <i class="fa fa-tasks" aria-hidden="true"></i>Import หักยอดขาย
                   </li>
                 </ol>
                 <p>
@@ -30,7 +30,7 @@
                     <div class="col-6">
                         <div class="input-group md4">
                           &nbsp;<asp:Button ID="btnOpen" class="btn btn-sm  btn-primary" runat="server" Text="Open" />&nbsp;
-                          &nbsp;<asp:Button ID="btnSave" class="btn btn-sm  btn-primary" runat="server" Text="Save to HQ" />&nbsp;                          
+                          &nbsp;<asp:Button ID="btnSave" class="btn btn-sm  btn-primary" runat="server" Text="Save to NEW GSM" />&nbsp;                          
                         </div>
                     </div>
                 </div>

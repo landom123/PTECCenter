@@ -11,6 +11,39 @@ Public Class EDI
     Public ShipPath As String = WebConfigurationManager.AppSettings("ShipPath")
 
 
+    Public Function EDI_Other_TTCost_Save_D365(ByRef invoicedate As String, duedate As String) As String
+
+        Dim result As String = ""
+        Dim dt As New DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_datacenter").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "EDI_Other_TTCost_Save_D365"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@invoicedate", SqlDbType.VarChar).Value = invoicedate
+        cmd.Parameters.Add("@duedate", SqlDbType.VarChar).Value = duedate
+
+
+        cmd.ExecuteNonQuery()
+        'Try
+        '    adp.SelectCommand = cmd
+        '    adp.Fill(ds)
+        '    dt = ds.Tables(0)
+        'Catch ex As Exception
+        '    Throw ex
+        'End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
     Public Function SaveTTForD365AndGetJson(invoiceno As String, duedate As String,
                                             cost As Double, branch As String, usercode As String) As String
 
@@ -272,6 +305,37 @@ Public Class EDI
         Return result
     End Function
 
+    Public Function Supply_OtherTT_List_forD365(docdate As String) As DataTable
+
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Supply_OtherTT_List_forD365"
+
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@date", SqlDbType.VarChar).Value = docdate
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+
+        Return result
+    End Function
+
     Public Function EDI_CnDnAdjust_forExcel(begindate As String, enddate As String) As DataSet
         Dim result As DataSet
 
@@ -403,7 +467,39 @@ Public Class EDI
 
         Return result
     End Function
+    Public Function EDI_Other_TTCOST_Data_for_D365(begindate As String, enddate As String) As DataSet
+        Dim result As DataSet
 
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_datacenter").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "EDI_Other_TTCOST_Data_for_D365"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@begindate", SqlDbType.VarChar).Value = begindate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+
+
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+
+
+        Return result
+    End Function
 
     Public Function ListInvoice(InvoiceDate As String, billtype As String) As DataTable
 

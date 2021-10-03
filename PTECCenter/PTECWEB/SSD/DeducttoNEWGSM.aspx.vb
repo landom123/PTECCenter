@@ -27,7 +27,7 @@ Public Class DeducttoNEWGSM
                 menutable = Session("menulist")
             End If
 
-
+            rvtable = Session("rv")
         Else
 
 
