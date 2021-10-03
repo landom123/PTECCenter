@@ -71,6 +71,7 @@ Public Class jobs
         For i As Integer = 0 To dtcost.Rows.Count - 1
             Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("JobsCenterDtlName"), dtcost.Rows(i).Item("JobsCenterDtlID"))
             If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("CostName").ToString) Then
+                item.Attributes("data-tokens") = dtcost.Rows(i).Item("CostName").ToString
                 item.Attributes("data-category") = dtcost.Rows(i).Item("CostName").ToString
             End If
 
@@ -1086,4 +1087,29 @@ Public Class jobs
         Return result
     End Function
 
+    Public Function setNonPODtl_by_coderef(from As String, coderef As String, coderefdtl As String, user As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "set_NonPODtl_by_coderef"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@from", SqlDbType.VarChar).Value = from
+        cmd.Parameters.Add("@coderef", SqlDbType.VarChar).Value = coderef
+        cmd.Parameters.Add("@coderefdtl", SqlDbType.VarChar).Value = coderefdtl
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
 End Class
