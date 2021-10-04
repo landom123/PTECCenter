@@ -344,11 +344,11 @@
                                     <% End If %>
                                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And Session("secid").ToString = "2" Then%>
                                     <% If detailtable.Rows(0).Item("statusid") = 8 Then%>
-                                    <div class="card-footer text-center bg-white">
+                                    <div class="card-footer text-center bg-white" style="display:none;">
                                         <asp:Button ID="btnSupportKnowlange" class="btn btn-warning" runat="server" Text="รับเรื่อง" />
                                     </div>
                                     <% End If %>
-                                    <% If (detailtable.Rows(0).Item("statusid") = 9) And (Session("userid").ToString = detailtable.Rows(0).Item("supportid").ToString) Then%>
+                                    <% If (detailtable.Rows(0).Item("statusid") = 9) And Session("secid").ToString = "2" Then%>
                                     <div class="card-footer text-center bg-white">
                                         <asp:Button ID="btnSupportClose" class="btn btn-danger" runat="server" Text="ปิดงาน / กรอกรหัส" />
                                     </div>

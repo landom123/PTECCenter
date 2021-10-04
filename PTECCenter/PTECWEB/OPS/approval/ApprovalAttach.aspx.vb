@@ -133,7 +133,7 @@ Public Class approvalattach
             Next i
             Dim code As String
             Try
-                code = approval.Approval_Support_Allow(Request.QueryString("approvalcode"), txtCost.Text, Session("usercode"))
+                code = approval.Approval_Support_Allow(Request.QueryString("approvalcode"), String.Format("{0:n4}", txtCost.Text), Session("usercode"))
             Catch ex As Exception
                 scriptKey = "alert"
                 'Dim javaScript As String = "alert('" & ex.Message & "');"

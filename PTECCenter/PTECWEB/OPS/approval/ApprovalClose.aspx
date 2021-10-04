@@ -156,12 +156,12 @@
                                     </div>
                                     <% If detailtable IsNot Nothing Then%>
                                     <% If detailtable.Rows(0).Item("statusid") = 9 Then%>
-                                    <div class="row">
+                                    <div class="row" style="display:none;">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <asp:Label ID="lbCodeGSM" CssClass="form-label" AssociatedControlID="txtCodeGSM" runat="server" Text="รหัส GSM" />
                                                 <asp:Label ID="lbCodeGSMMandatory" CssClass="text-danger" AssociatedControlID="txtCodeGSM" runat="server" Text="*" />
-                                                <asp:TextBox class="form-control" ID="txtCodeGSM" runat="server" required></asp:TextBox>
+                                                <asp:TextBox class="form-control" ID="txtCodeGSM" runat="server" ></asp:TextBox>
                                                 <div class="invalid-feedback">กรุณากรอกรหัส GSM</div>
                                             </div>
                                         </div>
@@ -598,11 +598,11 @@
                 }
             } else {
                 const codeGSM = document.getElementById('<%= txtCodeGSM.ClientID%>').value;
-                if (!(codeGSM)) {
+                /*if (!(codeGSM)) {
                     alertWarning('กรุณาใส่รหัส GSM');
                     event.preventDefault();
                     event.stopPropagation();
-                }
+                }*/
             }
 
             if (($('#<%= chkAfter.ClientID%>').prop("checked")) && $('.file_af input[type=file]').length == 1) {
