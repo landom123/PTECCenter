@@ -206,7 +206,7 @@ endprocess:
         Dim scriptKey As String
         Dim javaScript As String
         Try
-            approvaltable = approval.Approval_Close(txtApprovalcode.Text.Trim(), txtDetail.Text.Trim(), txtCodeGSM.Text.Trim(), txtCloseDate.Text.Trim(), Session("usercode"))
+            approvaltable = approval.Approval_Close(txtApprovalcode.Text.Trim(), txtDetail.Text.Trim(), "", txtCloseDate.Text.Trim(), Session("usercode"))
             approvalid = approvaltable.Rows(0).Item("approvalid")
             'If Not String.IsNullOrEmpty(fullfilenameimageafter) Then
             '    approval.Image_Save(fullfilenameimageafter, "Approval_AT", approvalid, Session("usercode"))
