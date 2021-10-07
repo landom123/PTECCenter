@@ -88,7 +88,8 @@ Public Class JobsClose
             maintable = mydataset.Tables(0)
             costtable = mydataset.Tables(2)
             total = String.Format("{0:n}", mydataset.Tables(3).Rows(0).Item("total"))
-            chkPAYMENT = mydataset.Tables(4).Rows(0).Item("chkPayment")
+
+            'chkPAYMENT = mydataset.Tables(4).Rows(0).Item("chkPayment")
             showjobdata(mydataset)
 
             followup_status = mydataset.Tables(0).Rows(0).Item("followup_status")

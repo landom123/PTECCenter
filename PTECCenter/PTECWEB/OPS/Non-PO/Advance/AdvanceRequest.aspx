@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body attatchItems">
-                                    <% If Not Request.QueryString("ADVRQC") Is Nothing Then%>
+                                    <% If Not Request.QueryString("ADV") Is Nothing Then%>
                                     <div class="row form-group">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbNonPOcode" CssClass="form-label" AssociatedControlID="txtNonPOcode" runat="server" Text="เลขที่ใบงาน" />

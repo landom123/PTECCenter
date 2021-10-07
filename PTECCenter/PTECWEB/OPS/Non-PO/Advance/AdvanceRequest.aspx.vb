@@ -34,9 +34,9 @@ Public Class AdvanceRequest
             detailtable = createtableDetail()
 
 
-            If Not Request.QueryString("ADVRQC") Is Nothing Then
+            If Not Request.QueryString("ADV") Is Nothing Then
                 Try
-                    nonpods = objNonPO.NonPO_AdvanceRQ_Find(Request.QueryString("ADVRQC"))
+                    nonpods = objNonPO.NonPO_AdvanceRQ_Find(Request.QueryString("ADV"))
                     detailtable = nonpods.Tables(0)
                     Session("detailtable") = detailtable
 
@@ -237,23 +237,23 @@ Public Class AdvanceRequest
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Advance/AdvanceRequest.aspx?ADVRQC=" & dt.Rows(0).Item("code"))
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & dt.Rows(0).Item("code"))
 endprocess:
     End Sub
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
         Session("status") = "edit"
-        Response.Redirect("../Advance/AdvanceRequest.aspx?ADVRQC=" & Request.QueryString("ADVRQC"))
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
     End Sub
 
     Private Sub btnCancelEdit_Click(sender As Object, e As EventArgs) Handles btnCancelEdit.Click
         Session("status") = "read"
-        Response.Redirect("../Advance/AdvanceRequest.aspx?ADVRQC=" & Request.QueryString("ADVRQC"))
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
     End Sub
 
     Private Sub btnSaveEdit_Click(sender As Object, e As EventArgs) Handles btnSaveEdit.Click
         Dim objnonpo As New NonPO
         Try
-            objnonpo.NonPO_AdvanceRequest_Edit(Request.QueryString("ADVRQC").ToString, txtamount.Text.Trim(), txtdetail.Text.Trim(), Session("userid"))
+            objnonpo.NonPO_AdvanceRequest_Edit(Request.QueryString("ADV").ToString, txtamount.Text.Trim(), txtdetail.Text.Trim(), Session("userid"))
             Session("status") = "read"
 
         Catch ex As Exception
@@ -263,7 +263,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Advance/AdvanceRequest.aspx?ADVRQC=" & Request.QueryString("ADVRQC"))
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
 
 endprocess:
     End Sub
@@ -272,7 +272,7 @@ endprocess:
         Dim objnonpo As New NonPO
 
         Try
-            objnonpo.NonPO_AdvanceRequest_Confirm(Request.QueryString("ADVRQC").Trim, Session("usercode"))
+            objnonpo.NonPO_AdvanceRequest_Confirm(Request.QueryString("ADV").Trim, Session("usercode"))
             Session("status") = "read"
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -281,7 +281,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Advance/AdvanceRequest.aspx?ADVRQC=" & Request.QueryString("ADVRQC"))
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
 
 endprocess:
     End Sub
@@ -290,7 +290,7 @@ endprocess:
         Dim objnonpo As New NonPO
 
         Try
-            objnonpo.NonPO_AdvanceRequest_Cancel(Request.QueryString("ADVRQC").Trim, Session("usercode"))
+            objnonpo.NonPO_AdvanceRequest_Cancel(Request.QueryString("ADV").Trim, Session("usercode"))
             Session("status") = "read"
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -299,13 +299,13 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Advance/AdvanceRequest.aspx?ADVRQC=" & Request.QueryString("ADVRQC"))
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
 
 endprocess:
     End Sub
 
     Private Sub btnClearAdvance_Click(sender As Object, e As EventArgs) Handles btnClearAdvance.Click
-        Response.Redirect("../Advance/ClearAdvance.aspx?f=ADVRQ&code_ref=" & Request.QueryString("ADVRQC"))
+        Response.Redirect("../Advance/ClearAdvance.aspx?f=ADV&code_ref=" & Request.QueryString("ADV"))
 
     End Sub
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
@@ -347,8 +347,8 @@ endprocess:
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
-            Dim javaScript As String = "alertWarning('search joblist fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Dim javaScript As String = "alertWarning('search advlist fail');"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
     Private Sub BindData()

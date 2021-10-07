@@ -108,10 +108,10 @@
             justify-content: center;
             align-items: center;
         }*/
-        .detail td ,th {
-        font-size:.75rem;
-         overflow: hidden; 
-         text-overflow: ellipsis;
+        .detail td, th {
+            font-size: .75rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .editComment, .deleteComment {
@@ -155,8 +155,7 @@
                     <div class="row">
                         <div class="col">
 
-                            <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
-                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" />
+                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" AutoPostBack="True" runat="server" Text="Save" />
                             &nbsp;              
                             <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" />
                             &nbsp;   
@@ -191,9 +190,17 @@
                         </div>
                     </div>
                     <div class="row mb-3">
+                        <div class="col-2 text-right">
+                            <asp:Label ID="lbtxtremark" CssClass="form-label" AssociatedControlID="txtremark" runat="server" Text="รายละเอียด" />
+                        </div>
+                        <div class="col-7">
+                            <asp:TextBox class="form-control font-weight-bold" ID="txtremark" runat="server" ReadOnly="True"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="nonpounsaved">
                             <% For i = 0 To detailtable.Rows.Count - 1 %>
-                            <% if detailtable.Rows(i).Item("advancedetailid") = 0 Then%>
+                            <% if detailtable.Rows(i).Item("nonpodtl_id") = 0 Then%>
                             <asp:TextBox class="btn btn-warning" ID="TextBox2" runat="server" ReadOnly="true">ยังไม่บันทึก</asp:TextBox>
                             <% GoTo endprocess %>
                             <% End If %>
@@ -254,7 +261,7 @@
                                         <div class="row">
 
                                             <div class="col-2">
-                                                <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="สาขา" />
+                                                <asp:Label ID="lbcboBranch" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="สาขา" />
                                             </div>
                                             <div class="col-10">
                                                 <asp:DropDownList class="form-control" ID="cboBranch" runat="server">
@@ -266,10 +273,10 @@
                                         <div class="row">
 
                                             <div class="col-3">
-                                                <asp:Label ID="Label6" CssClass="form-label" AssociatedControlID="sda" runat="server" Text="เลขที่" />
+                                                <asp:Label ID="lbtxtadvno" CssClass="form-label" AssociatedControlID="txtadvno" runat="server" Text="เลขที่" />
                                             </div>
                                             <div class="col-9">
-                                                <asp:TextBox class="form-control" ID="sda" runat="server" ReadOnly="True"></asp:TextBox>
+                                                <asp:TextBox class="form-control" ID="txtadvno" runat="server" ReadOnly="True"></asp:TextBox>
                                             </div>
                                         </div>
                                     </td>
@@ -336,8 +343,11 @@
                                 <tbody class="shortArea">
 
                                     <% For i = 0 To detailtable.Rows.Count - 1 %>
-                                    <tr class="draggable detail" draggable="true" name="<%= detailtable.Rows(i).Item("row").ToString() %>" ondblclick="editDetail(this);">
-                                        <td colspan="2" style="width: 80px !important;height:22px;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
+                                    <tr class="draggable detail" draggable="true" name="<%= detailtable.Rows(i).Item("row").ToString() %>" ondblclick="btnEditDetailClick('<%= detailtable.Rows(i).Item("row").ToString() %>','<%= detailtable.Rows(i).Item("nonpodtl_id").ToString() %>','<%= detailtable.Rows(i).Item("accountcodeid").ToString() %>'
+                                                                                        ,'<%= detailtable.Rows(i).Item("depid").ToString() %>','<%= detailtable.Rows(i).Item("buid").ToString() %>'
+                                                                                        ,'<%= detailtable.Rows(i).Item("ppid").ToString() %>','<%= detailtable.Rows(i).Item("cost").ToString() %>'
+                                                                                        ,'<%= detailtable.Rows(i).Item("detail").ToString() %>','<%= detailtable.Rows(i).Item("vendorcode").ToString() %>');">
+                                        <td colspan="2" style="width: 80px !important; height: 22px;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
                                         <td colspan="10" style="width: 400px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
                                         <td colspan="2" style="width: 80px !important;" title="<%= detailtable.Rows(i).Item("depname").ToString() %>"><%= detailtable.Rows(i).Item("depname").ToString() %></td>
                                         <td colspan="2" style="width: 80px !important;" title="<%= detailtable.Rows(i).Item("buname").ToString() %>"><%= detailtable.Rows(i).Item("buname").ToString() %></td>
@@ -347,15 +357,15 @@
                                         <td colspan="2" style="width: 80px !important;" title="<%= detailtable.Rows(i).Item("vendorname").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>
                                         <td class="deletedetail notprint" style="position: absolute; border: 0px solid #000;">
                                             <div>
-                                                <button runat="server" id="btnDelete" name="btnDelete" onclick="return confirmDeletedetail(this);" type='button' class='close notPrint' aria-label='Close Close-danger'>
-                                                    <span aria-hidden='true'>&times;</span>
-                                                </button>
+                                                <a onclick="confirmDeletedetail('<%= detailtable.Rows(i).Item("nonpodtl_id").ToString() %>','<%= detailtable.Rows(i).Item("row").ToString() %>')" class="btn btn-sm p-0 notPrint">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
                                     <% Next i %>
                                 </tbody>
-                                <tr class="text-center notPrint ">
+                                <tr class="text-center notPrint " runat="server" id="FromAddDetail">
                                     <td colspan="24" style="width: 960px !important;">
                                         <button type="button" class="btn btn-sm  btn-outline-info w-100" id="btnFromAddDetail" runat="server" data-toggle="modal" data-target="#exampleModal" data-whatever="new">เพิ่มรายการ</button>
                                     </td>
@@ -387,18 +397,14 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td colspan="4" style="width: 160px !important;" id="payBack"></td>
-                                    </tr>
-                                    <tr style="display: none;">
-                                        <td colspan="20" style="width: 800px !important;">
+                                        <td colspan="4" style="width: 160px !important;" id="payBack">
                                             <div class="row">
-                                                <div class="col-11" style="margin-left: auto;">
-                                                    <input class="form-check-input chk-img-after" type="checkbox" id="chkpayOwner" name="pay[1][]" runat="server">
-                                                    <asp:Label ID="lbchkpayOwner" CssClass="form-check-label" AssociatedControlID="chkpayOwner" runat="server" Text="คืนเงินพนักงาน" />
+                                                <div class="col">
+                                                        <asp:TextBox class="form-control" type="number" ID="txtamountpayBack" runat="server" min="0" Text="0"></asp:TextBox>
+                                                        <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td colspan="4" style="width: 160px !important;" id="payOwner"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="20" style="width: 800px !important;">
@@ -409,7 +415,14 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td colspan="4" style="width: 160px !important;" id="deduct_sell"></td>
+                                        <td colspan="4" style="width: 160px !important;" id="deduct_sell">
+                                            <div class="row">
+                                                <div class="col">
+                                                        <asp:TextBox class="form-control" type="number" ID="txtamountdedusctsell" runat="server" min="0" Text="0"></asp:TextBox>
+                                                        <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="6" style="width: 240px !important; border-bottom-width: 0px;">
@@ -448,7 +461,7 @@
 
                     <div class="row">
 
-                        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable IsNot Nothing Then%>
+                        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
                         <% if Session("status") = "write" And maintable.Rows(0).Item("statusid") = 1 Then%>
                         <div class="text-center bg-white">
                             <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
@@ -559,8 +572,8 @@
         </div>
     </div>
     <div class="row btn-operator justify-content-center notPrint">
-        <% If Not Request.QueryString("NonpoCode") Is Nothing And detailtable IsNot Nothing And Session("secid").ToString = "2" Then%>
-        <% If detailtable.Rows(0).Item("statusid") = 7 Then%>
+        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And Session("secid").ToString = "2" Then%>
+        <% If maintable.Rows(0).Item("statusid") = 7 Then%>
         <!-- 7 = รอบช.ตรวจ-->
         <button class="btn btn-sm " style="color: #39cd5b; font-size: 3rem; position: fixed; bottom: 9rem; right: 1rem;" id="btnPass" runat="server" title="Pass">
             <i class="fas fa-check-circle shadow" style="border-radius: 100%;"></i>
@@ -571,7 +584,7 @@
         <button class="btn btn-sm " style="color: #dc3545; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnReject" runat="server" title="Reject">
             <i class="fas fa-times-circle" style="border-radius: 100%;"></i>
         </button>
-        <% ElseIf detailtable.Rows(0).Item("statusid") = 8 Then %>
+        <% ElseIf maintable.Rows(0).Item("statusid") = 8 Then %>
         <!-- 8 = รอเอกสารตัวจริง-->
         <button class="btn btn-sm " style="color: #dc3545; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnWDoc" runat="server" title="waiting for documents">
             <i class="fas fa-times-circle" style="border-radius: 100%;"></i>
@@ -590,9 +603,11 @@
                 </div>
                 <div class="modal-body">
                     <!--  ##############  Detail ############### -->
-
+                    <input type="hidden" class="form-control" id="row" value="0" runat="server">
+                    <input type="hidden" class="form-control" id="nextrow" value="0" runat="server">
+                    <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
                     <div class="form-group">
-                        <asp:Label ID="lbcboBranch" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="รหัสบัญชี" />
+                        <asp:Label ID="lbcboAccountCode" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="รหัสบัญชี" />
                         <asp:DropDownList class="form-control" ID="cboAccountCode" runat="server" onchange="setdetail(this);"></asp:DropDownList>
                     </div>
                     <div class="form-group">
@@ -609,7 +624,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน" />
-                        <asp:TextBox class="form-control" type="number" ID="txtPrice" runat="server" min="0" Text="0"></asp:TextBox>
+                        <asp:TextBox class="form-control" type="number" ID="txtPrice" runat="server" Text="0"></asp:TextBox>
                         <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
                     <div class="form-group">
@@ -620,7 +635,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
-                        <asp:DropDownList class="form-control" ID="cboVendor" runat="server" ></asp:DropDownList>
+                        <asp:DropDownList class="form-control" ID="cboVendor" runat="server"></asp:DropDownList>
                     </div>
 
 
@@ -685,6 +700,7 @@
 
             $('.form-control').selectpicker('refresh');
 
+           
 
             /*$(".listCommentAndAttatch").click(function () {
                 $(".card_attatch").toggle();
@@ -763,9 +779,9 @@
                     let msg = '<a href="' + url + '" target="_blank">' + description + '</a>'
 
                     const urlParams = new URLSearchParams(window.location.search);
-                    const paymentcode = urlParams.get('paymentcode');
-                    var userid = <% =Session("userid") %>;
-                    var params = "{'userid': '" + userid + "','url': '" + url + "','description': '" + description + "','paymentcode': '" + paymentcode + "'}";
+                    const nonpocode = urlParams.get('NonpoCode');
+                    var user = "<% =Session("usercode").ToString %>";
+                    var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
                     $.ajax({
                         type: "POST",
                         url: "../Advance/ClearAdvance.aspx/addAttach",
@@ -778,6 +794,8 @@
 
                             /*alertSuccessToast();*/
                             if (msg.d == 'success') {
+
+                                /*__doPostBack('AttachTable', '')*/
                                 $('.attatchItems').append(
                                     '<div class="row">' +
                                     '<div class="col">' +
@@ -801,46 +819,145 @@
             })
 
         }
+
+        function confirmDeletedetail(nonpodtlid, row) {
+            Swal.fire({
+                title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    var user = "<% =Session("usercode").ToString %>";
+                    var params = "{'nonpodtlid': '" + nonpodtlid + "','rows': '" + row + "','user': '" + user + "'}";
+                    $.ajax({
+                        type: "POST",
+                        url: "../Advance/ClearAdvance.aspx/deleteDetail",
+                        async: true,
+                        data: params,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            if (msg.d == 'success') {
+                                swal.fire({
+                                    title: "Deleted!",
+                                    text: "",
+                                    icon: "success"
+                                }).then(function () {
+                                    __doPostBack('detailtable', '')
+                                });
+                            } else {
+                                alertWarning('fail')
+                            }
+                        },
+                        error: function () {
+                            alertWarning('fail ee')
+                        }
+                    });
+                }
+            })
+
+            return false;
+        }
         function setdetail(Acc) {
 
             const myArr = Acc.options[Acc.selectedIndex].textContent.split(" - ");
             console.log(myArr[myArr.length - 1]);
 
-            $("#<%= txtDetail.ClientID%>").text(myArr[myArr.length - 1]);
+            $("#<%= txtDetail.ClientID%>").val(myArr[myArr.length - 1]);
 
         }
-        
-        
+
+
 
         function selectElement(id, valueToSelect) {
             let element = document.getElementById(id);
             element.value = valueToSelect;
         }
-        function editDetail(row) {
-            console.log(row);
-            console.log(row[0]);
-            $(row).each(function (i) {
-                $("td", this).each(function (j) {
-                    console.log("".concat("row: ", i, ", col: ", j, ", value: ", $(this).text()));
-                });
-            });
-            const Accountcode = <%= cboAccountCode.ClientID%>;
-            const depid = <%= cboDep.ClientID%>;
-            const buid = <%= cboBU.ClientID%>;
-            const ppid = <%= cboPP.ClientID%>
+        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, cost, detail, vendorcode) {
+            /*console.log(advancedetailid);
+            console.log(accountcodeid);
+            console.log(depid);
+            console.log(buid);
+            console.log(ppid);
+            console.log(cost);
+            console.log(detail);
+            console.log(vendorcode);*/
 
-                $('#exampleModal').modal('show');
-            selectElement(Accountcode, row.value)
-            selectElement(depid, row.value)
-            selectElement(buid, row.value)
-            selectElement(ppid, row.value)
+            const Accountcode = '<%= cboAccountCode.ClientID%>';
+            const dep = '<%= cboDep.ClientID%>';
+            const bu = '<%= cboBU.ClientID%>';
+            const pp = '<%= cboPP.ClientID%>';
+            const vendor = '<%= cboVendor.ClientID%>';
+            $('#exampleModal').modal('show');
 
-            $("#<%= txtPrice.ClientID%>").textContent = row.value
-            $("#<%= txtDetail.ClientID%>").textContent = row.value
+            selectElement(Accountcode, accountcodeid);
+            selectElement(dep, depid);
+            selectElement(bu, buid);
+            selectElement(pp, ppid);
+            selectElement(vendor, vendorcode);
 
+            $('#<%= row.ClientID%>').val(row);
+            $('#<%= hiddenAdvancedetailid.ClientID%>').val(advancedetailid);
+            $('#<%= txtPrice.ClientID%>').val(cost);
+            $('#<%= txtDetail.ClientID%>').val(detail);
+
+            $('.form-control').selectpicker('refresh');
             /*__doPostBack('setFromDetail', $(row).attr('name'));
             */
 
+        }
+        $("#<%= btnAddDetail.ClientID%>").click(function () {
+            alert("The paragraph was clicked.");
+            const row = $('#<%= row.ClientID%>').val();
+            alert(row);
+            var user = "<% =Session("usercode").ToString %>";
+            var params = "{'nonpodtlid': '" + nonpodtlid + "','rows': '" + row + "','user': '" + user + "'}";
+            $.ajax({
+                type: "POST",
+                url: "../Advance/ClearAdvance.aspx/deleteDetail",
+                async: true,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d == 'success') {
+                        swal.fire({
+                            title: "Deleted!",
+                            text: "",
+                            icon: "success"
+                        }).then(function () {
+                            __doPostBack('detailtable', '')
+                        });
+                    } else {
+                        alertWarning('fail')
+                    }
+                },
+                error: function () {
+                    alertWarning('fail ee')
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function alertSuccess() {
+            Swal.fire(
+                'สำเร็จ',
+                '',
+                'success'
+            )
+        }
+
+        function alertWarning(massage) {
+            Swal.fire(
+                massage,
+                '',
+                'warning'
+            )
         }
     </script>
 </asp:Content>

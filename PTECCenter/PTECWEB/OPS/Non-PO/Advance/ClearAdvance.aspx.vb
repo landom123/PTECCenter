@@ -10,10 +10,11 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objNonpo As New NonPO
         Dim objbranch As New Branch
-        Dim approval As New Approval
         Dim objdep As New Department
         Dim objsec As New Section
         Dim objsupplier As New Supplier
+
+        Dim nonpoDs = New DataSet
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -39,21 +40,16 @@
             CommentTable = createtablecomment()
             AttachTable = createtableAttach()
 
-            Session("detailtable_clearadvance") = detailtable
-            Session("maintable_clearadvance") = maintable
-            Session("comment_clearadvance") = CommentTable
-            Session("attatch_clearadvance") = AttachTable
-            Session("status") = "new"
 
 
-            'insert comment
+            'insert test comment
             With CommentTable
                 .Rows.Add(0, "test", "ธนพล", Now(), "ธนพล", Now(), "ADV201000001")
                 .Rows.Add(1, "test1", "ธนพล", Now(), "ธนพล", Now(), "ADV201000001")
                 .Rows.Add(2, "test23", "ทศกัน", Now(), "ทศกัน", Now(), "ADV201000001")
             End With
 
-            'insert AttachTable
+            'insert test AttachTable
             With AttachTable
                 .Rows.Add(0, "test", "http://google.com/", "tttt")
                 .Rows.Add(1, "test1", "http://google.com/", "ADV201000001")
@@ -63,8 +59,6 @@
             objbranch.SetComboBranch(cboBranch, Session("usercode"))
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
-            'objsupplier.SetCboVendorByName(cboName, "")
-            'objsupplier.SetCboVendorByName(cboVendor, "")
             SetCboUsers(cboOwner)
             setmain()
 
@@ -87,7 +81,20 @@
             cboBU.DataBind()
 
             If Not Request.QueryString("NonpoCode") Is Nothing Then
+                nonpoDs = objNonpo.NonPO_Find(Request.QueryString("NonpoCode"))
+                '-- table 0 = Head
+                '-- table 1 = main
+                '-- table 2 = detail
+                '-- table 3 = attach
+                '-- table 4 = comment
 
+                head = nonpoDs.Tables(0)
+                maintable = nonpoDs.Tables(1)
+                detailtable = nonpoDs.Tables(2)
+                AttachTable = nonpoDs.Tables(3)
+                'CommentTable = nonpoDs.Tables(4)
+
+                Session("detailtable") = detailtable
                 If Not Session("status_clearadvance") = "edit" Then
                     Session("status_clearadvance") = "read"
                 End If
@@ -96,12 +103,7 @@
             ElseIf Not Request.QueryString("f") Is Nothing Then
                 Dim objjob As New jobs
                 Dim ds As New DataSet
-                If Not Request.QueryString("code_ref") Is Nothing And Not Request.QueryString("code_ref_dtl") Is Nothing Then
-                    Session("status_clearadvance") = "new"
-                    Dim pbjjob As New jobs
-
-
-                ElseIf Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
+                If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
                     Session("status_clearadvance") = "new"
                     codeRef.Text = Request.QueryString("code_ref").ToString
                     ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", Session("usercode").ToString)
@@ -112,30 +114,20 @@
                 Session("status_clearadvance") = "new"
 
             End If
+
+
+
+            Session("detailtable_clearadvance") = detailtable
+            Session("maintable_clearadvance") = maintable
+            Session("comment_clearadvance") = CommentTable
+            Session("attatch_clearadvance") = AttachTable
         Else
 
             detailtable = Session("detailtable_clearadvance")
             maintable = Session("maintable_clearadvance")
             AttachTable = Session("attatch_clearadvance")
             CommentTable = Session("comment_clearadvance")
-            Dim eventTarget As String
-            Dim eventArgument As String
 
-            If Me.Request("__EVENTTARGET") Is Nothing Then
-                eventTarget = String.Empty
-            Else
-                eventTarget = Me.Request("__EVENTTARGET")
-            End If
-            If Me.Request("__EVENTARGUMENT") Is Nothing Then
-                eventArgument = String.Empty
-            Else
-                eventArgument = Me.Request("__EVENTARGUMENT")
-            End If
-            If eventTarget = "setFromDetail" Then
-                Dim row As String = eventArgument
-                setdetail_by_row(row)
-                ' Call your VB method here...
-            End If
         End If
         SetMenu()
     End Sub
@@ -145,23 +137,12 @@
 
             codeRef.Text = .Rows(0).Item("coderef").ToString
             amount.Text = String.Format("{0:n4}", .Rows(0).Item("amount"))
+            txtremark.Text = .Rows(0).Item("remark").ToString
+
         End With
 
     End Sub
-    Private Sub setdetail_by_row(row As Integer)
-        Dim dr() As System.Data.DataRow
-        dr = detailtable.Select("row='" & row & "'")
-        If dr.Length > 0 Then
-            cboAccountCode.SelectedIndex = cboAccountCode.Items.IndexOf(cboAccountCode.Items.FindByValue(dr(0)("accountcodeid").ToString()))
-            cboDep.SelectedIndex = cboDep.Items.IndexOf(cboDep.Items.FindByValue(dr(0)("depid").ToString()))
-            cboBU.SelectedIndex = cboBU.Items.IndexOf(cboBU.Items.FindByValue(dr(0)("buid").ToString()))
-            cboPP.SelectedIndex = cboPP.Items.IndexOf(cboPP.Items.FindByValue(dr(0)("ppid").ToString()))
 
-            txtPrice.Text = dr(0)("cost").ToString()
-            txtDetail.Text = dr(0)("detail").ToString()
-        End If
-
-    End Sub
     Private Sub setmain()
 
         Dim objsec As New Section
@@ -184,6 +165,8 @@
         Select Case Session("status_clearadvance")
             Case = "new"
                 btnFromAddDetail.Visible = True
+                FromAddDetail.Visible = True
+
 
                 btnExport.Visible = True
                 btnPrint.Visible = True
@@ -192,6 +175,7 @@
                 card_attatch.Visible = True
             Case = "read"
                 btnFromAddDetail.Visible = False
+                FromAddDetail.Visible = False
 
                 btnExport.Visible = True
                 btnPrint.Visible = True
@@ -200,6 +184,7 @@
                 card_attatch.Visible = True
             Case = "write"
                 btnFromAddDetail.Visible = False
+                FromAddDetail.Visible = False
 
                 btnExport.Visible = False
                 btnPrint.Visible = True
@@ -208,6 +193,7 @@
                 card_attatch.Visible = True
             Case = "edit"
                 btnFromAddDetail.Visible = True
+                FromAddDetail.Visible = True
 
                 btnExport.Visible = True
                 btnPrint.Visible = True
@@ -245,14 +231,56 @@
         dt.Columns.Add("frm", GetType(String))
         dt.Columns.Add("coderef", GetType(String))
         dt.Columns.Add("amount", GetType(String))
+        dt.Columns.Add("remark", GetType(String))
 
         Return dt
     End Function
+    Private Function createmaintable() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("nonpoid", GetType(Double)) 'new =0
+        dt.Columns.Add("nonpocode", GetType(String))
+        dt.Columns.Add("coderef", GetType(String))
+        dt.Columns.Add("limit", GetType(Double))
+        dt.Columns.Add("statusid", GetType(Integer)) 'new=0
+        dt.Columns.Add("statusname", GetType(String))
+        dt.Columns.Add("detail", GetType(String))
+
+        dt.Columns.Add("branchid", GetType(String))
+        dt.Columns.Add("depid", GetType(String))
+        dt.Columns.Add("secid", GetType(String))
+
+        dt.Columns.Add("chkpayback", GetType(Integer))
+        dt.Columns.Add("chkdeductsell", GetType(Integer))
+        dt.Columns.Add("payback_amount", GetType(Double))
+        dt.Columns.Add("deductsell_amount", GetType(Double))
+
+        dt.Columns.Add("vendorcode", GetType(String))
+
+        dt.Columns.Add("withdraw_by", GetType(String))
+        dt.Columns.Add("withdraw_date", GetType(String))
+        dt.Columns.Add("service_by", GetType(String))
+        dt.Columns.Add("service_date", GetType(String))
+        dt.Columns.Add("verify_by", GetType(String))
+        dt.Columns.Add("verify_date", GetType(String))
+        dt.Columns.Add("approval_by", GetType(String))
+        dt.Columns.Add("approval_date", GetType(String))
+        '---------------------------------------
+        dt.Columns.Add("updateby", GetType(String))
+        dt.Columns.Add("updatedate", GetType(String))
+        dt.Columns.Add("createby", GetType(String))
+        dt.Columns.Add("createdate", GetType(String))
+        dt.Columns.Add("updateby_name", GetType(String))
+        dt.Columns.Add("createby_name", GetType(String))
+
+        Return dt
+    End Function
+
     Private Function createdetailtable() As DataTable
         Dim dt As New DataTable
 
         dt.Columns.Add("row", GetType(Integer))
-        dt.Columns.Add("advancedetailid", GetType(Double))
+        dt.Columns.Add("nonpodtl_id", GetType(Integer))
         dt.Columns.Add("accountcodeid", GetType(Integer))
         dt.Columns.Add("accountcode", GetType(String))
         dt.Columns.Add("depid", GetType(Integer))
@@ -268,35 +296,6 @@
 
         Return dt
     End Function
-    Private Function createmaintable() As DataTable
-        Dim dt As New DataTable
-
-        dt.Columns.Add("advid", GetType(Double)) 'new =0
-        dt.Columns.Add("advno", GetType(String))
-        dt.Columns.Add("statusid", GetType(Integer)) 'new=0
-        dt.Columns.Add("statusname", GetType(String)) 'new=new
-
-        dt.Columns.Add("branchid", GetType(Double))
-        dt.Columns.Add("depid", GetType(Double))
-        dt.Columns.Add("secid", GetType(Double))
-
-        dt.Columns.Add("Withdraw_by", GetType(String))
-        dt.Columns.Add("Withdraw_date", GetType(String))
-        dt.Columns.Add("Service_by", GetType(String))
-        dt.Columns.Add("Service_date", GetType(String))
-        dt.Columns.Add("Verify_by", GetType(String))
-        dt.Columns.Add("Verify_date", GetType(String))
-        dt.Columns.Add("Approval_by", GetType(String))
-        dt.Columns.Add("Approval_date", GetType(String))
-        '---------------------------------------
-        dt.Columns.Add("updateby", GetType(String))
-        dt.Columns.Add("updatedate", GetType(String))
-        dt.Columns.Add("createby", GetType(String))
-        dt.Columns.Add("createdate", GetType(String))
-
-        Return dt
-    End Function
-
     Private Function createtablecomment() As DataTable
         Dim dt As New DataTable
 
@@ -319,6 +318,42 @@
         dt.Columns.Add("show", GetType(String))
 
         Return dt
+    End Function
+
+    Private Function validatedata() As Boolean
+        Dim result As Boolean = True
+        Dim msg As String = ""
+        Dim cost As Double
+        Try
+            cost = Convert.ToDouble(detailtable.Compute("SUM(cost)", String.Empty))
+        Catch ex As Exception
+            cost = 0
+        End Try
+        If cost <= 0 Then
+            result = False
+            msg = "กรุณาใส่รายการ"
+            GoTo endprocess
+        End If
+        If txtamountpayBack.Text < 0 Then
+            result = False
+            msg = "กรุณาใส่จำนวนเต็ม"
+            GoTo endprocess
+        End If
+        If txtamountdedusctsell.Text < 0 Then
+            result = False
+            msg = "กรุณาใส่จำนวนเต็ม"
+            GoTo endprocess
+        End If
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            'MsgBox(msg)
+        End If
+
+
+        Return result
     End Function
     Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
         cboSection.SelectedIndex = -1
@@ -346,7 +381,11 @@ endprocess:
     End Sub
     Private Sub btnAddDetail_Click(sender As Object, e As EventArgs) Handles btnAddDetail.Click
         Try
-            AddDetails()
+            If row.Value = 0 Then
+                AddDetails()
+            Else
+                updateDetails(detailtable.Rows.IndexOf(detailtable.Select("row='" & row.Value & "'")(0)))
+            End If
             cleardetail()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -354,7 +393,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
-    Private Sub AddDetails()
+    Public Sub AddDetails()
 
         Dim cost As Double
         Try
@@ -366,7 +405,7 @@ endprocess:
         Dim row As DataRow
         row = detailtable.NewRow()
         row("row") = detailtable.Rows.Count + 1
-        row("advancedetailid") = 0
+        row("nonpodtl_id") = hiddenAdvancedetailid.Value 'df 0
         row("accountcodeid") = cboAccountCode.SelectedItem.Value
         row("accountcode") = cboAccountCode.SelectedItem.Text
         row("depid") = cboDep.SelectedItem.Value
@@ -390,48 +429,49 @@ endprocess:
         Session("detailtable_clearadvance") = detailtable
 
     End Sub
+    Private Sub updateDetails(indexrow As Integer)
+        Dim cost As Double
+        Try
+            cost = Double.Parse(txtPrice.Text)
+        Catch ex As Exception
+            cost = 0
+        End Try
+
+        'update detail
+        With detailtable.Rows(indexrow)
+            .Item("row") = row.Value 'df 0
+            .Item("nonpodtl_id") = hiddenAdvancedetailid.Value 'df 0
+            .Item("accountcodeid") = cboAccountCode.SelectedItem.Value
+            .Item("accountcode") = cboAccountCode.SelectedItem.Text
+            .Item("depid") = cboDep.SelectedItem.Value
+            .Item("depname") = cboDep.SelectedItem.Text
+            .Item("buid") = cboBU.SelectedItem.Value
+            .Item("buname") = cboBU.SelectedItem.Text
+            .Item("ppid") = cboPP.SelectedItem.Value
+            .Item("ppname") = cboPP.SelectedItem.Text
+
+            .Item("cost") = cost
+            .Item("detail") = txtDetail.Text
+            .Item("vendorname") = cboVendor.SelectedItem.Text
+            .Item("vendorcode") = cboVendor.SelectedItem.Value
+        End With
+
+    End Sub
 
     Private Sub cleardetail()
+        row.Value = 0
+        nextrow.Value = 0
+        hiddenAdvancedetailid.Value = 0
+
         cboAccountCode.SelectedIndex = -1
         cboDep.SelectedIndex = -1
         cboBU.SelectedIndex = -1
         cboPP.SelectedIndex = -1
+        cboVendor.SelectedIndex = -1
 
         txtPrice.Text = "0"
         txtDetail.Text = ""
     End Sub
-    <System.Web.Services.WebMethod>
-    Public Shared Function addAttach(ByVal userid As Integer, ByVal url As String, ByVal description As String, ByVal paymentcode As String)
-
-        Try
-            'AttachTable.Rows.Add(9, "test", url, description)
-
-        Catch ex As Exception
-            Return "fail"
-        End Try
-        Return "success"
-
-    End Function
-
-    <System.Web.Services.WebMethod>
-    Public Shared Function editDetail(ByVal rows As Integer)
-
-        Try
-            'AttachTable.Rows.Add(9, "test", url, description)
-            Dim serializer As New System.Web.Script.Serialization.JavaScriptSerializer()
-            Dim row As Dictionary(Of String, Object)
-            For Each dr As DataRow In detailtable.Select("row='" & rows & "'")
-                row = New Dictionary(Of String, Object)()
-                For Each col As DataColumn In detailtable.Columns
-                    row.Add(col.ColumnName, dr(col))
-                Next
-            Next
-            Return serializer.Serialize(row)
-        Catch ex As Exception
-            Return "fail"
-        End Try
-
-    End Function
 
     Private Sub cboAccountCode_PreRender(sender As Object, e As EventArgs) Handles cboAccountCode.PreRender
         Dim objNonpo As New NonPO
@@ -450,5 +490,137 @@ endprocess:
         objsupplier.SetCboVendor(cboVendor, "")
 
         cboVendor.Text = yy
+    End Sub
+
+    Private Sub ClearAdvance_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        Dim cost As Double
+        Try
+            cost = Convert.ToDouble(detailtable.Compute("SUM(cost)", String.Empty))
+        Catch ex As Exception
+            cost = 0
+        End Try
+        total = String.Format("{0:n4}", cost)
+    End Sub
+    <System.Web.Services.WebMethod>
+    Public Shared Function addAttach(ByVal user As String, ByVal url As String, ByVal description As String, ByVal nonpocode As String)
+        Dim objNonpo As New NonPO
+        Try
+            Dim id As String
+            id = objNonpo.NonPO_Attatch_Save(nonpocode, url, description, user)
+        Catch ex As Exception
+            Return "fail"
+        End Try
+        Return "success"
+
+    End Function
+
+    <System.Web.Services.WebMethod>
+    Public Function AddOreditDetail(ByVal row As Integer)
+        Try
+            If row = 0 Then
+                AddDetails()
+            Else
+                updateDetails(detailtable.Rows.IndexOf(detailtable.Select("row='" & row & "'")(0)))
+            End If
+            cleardetail()
+
+        Catch ex As Exception
+            Return "fail"
+            GoTo endprocess
+        End Try
+        Return "success"
+endprocess:
+
+    End Function
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function deleteDetail(ByVal nonpodtlid As Integer, ByVal rows As Integer, user As String)
+
+        Try
+            If nonpodtlid = 0 Then
+                detailtable.Rows.Remove(detailtable.Select("row='" & rows & "'")(0))
+            Else
+
+                Dim objNonpo As New NonPO
+                objNonpo.deleteDetailbyNonpodtlid(nonpodtlid, user)
+                detailtable.Rows.Remove(detailtable.Select("nonpodtl_id='" & nonpodtlid & "'")(0))
+            End If
+
+        Catch ex As Exception
+            Return "fail"
+
+            GoTo endprocess
+        End Try
+        Return "success"
+endprocess:
+    End Function
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If validatedata() Then
+            'If Session("status") = "new" Then
+            If maintable.Rows.Count = 0 Then
+                updatehead()
+            End If
+            Save()
+            'Else
+            '    SaveEdit()
+            'End If
+        End If
+    End Sub
+
+    Private Sub Save()
+        Dim objNonpo As New NonPO
+        Dim advno As String = ""
+
+        advno = txtadvno.Text
+        Try
+            advno = objNonpo.SaveAdvance(advno, maintable, detailtable, Session("usercode"))
+            txtadvno.Text = advno
+            Session("status_clearadvance") = "edit"
+
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('save fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/ClearAdvance.aspx?NonpoCode=" & advno)
+endprocess:
+    End Sub
+
+    Private Sub updatehead()
+        Dim userid As Double
+        Dim userowner As Double
+
+        userid = Session("userid")
+
+        If cboOwner.SelectedItem.Value = 0 Then
+            userowner = userid
+        Else
+            userowner = cboOwner.SelectedItem.Value
+        End If
+        If maintable.Rows.Count > 0 Then
+            'update
+            With maintable.Rows(0)
+                .Item("advno") = txtadvno.Text
+            End With
+        Else
+            'insert
+            With maintable
+                .Rows.Add(0, "", codeRef.Text.Trim(), 0, 0, "", "",
+                          cboBranch.SelectedItem.Value, cboDepartment.SelectedItem.Value, cboSection.SelectedItem.Value,
+                          chkpayBack.Checked, chkdeductSell.Checked,
+                          txtamountpayBack.Text.Trim(), txtamountdedusctsell.Text.Trim,
+                          "",
+                          userowner, Date.Now.ToString, "", "", "", "", "", "",
+                          userowner, Date.Now.ToString, userowner, Date.Now.ToString, userowner, userowner)
+
+            End With
+
+        End If
+        Session("maintable_clearadvance") = maintable
     End Sub
 End Class
