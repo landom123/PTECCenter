@@ -122,7 +122,8 @@ Public Class Price
         'Return result
     End Function
     Public Function Oil_Day_Price_Save(name As String, lastprice As Double, adjust As Double, price As Double,
-                                       usercode As String, effectivedate As String, effectivetime As String) As Boolean
+                                       usercode As String, effectivedate As String,
+                                       effectivetime As String, shiftno As Integer) As Boolean
         Dim result As Boolean = True
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -142,6 +143,7 @@ Public Class Price
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
         cmd.Parameters.Add("@effectivedate", SqlDbType.VarChar).Value = effectivedate
         cmd.Parameters.Add("@effectivetime", SqlDbType.VarChar).Value = effectivetime
+        cmd.Parameters.Add("@shiftno", SqlDbType.Int).Value = shiftno
 
         '       	@productcode varchar(20),
         '@lastprice real,

@@ -64,6 +64,12 @@
                                     <AlternatingRowStyle BackColor="#CCCCFF" />
 
                                       <Columns>
+	                                    <asp:TemplateField HeaderText="กะที่มีผล">
+                                            <itemstyle Width="100px" />
+		                                    <ItemTemplate>
+			                                    <asp:Label id="lblshiftno" runat="server" Text='<%#Eval("shiftno")%>'></asp:Label>
+		                                    </ItemTemplate>
+	                                    </asp:TemplateField>
 	                                    <asp:TemplateField HeaderText="Code">
                                             <itemstyle Width="100px" />
 		                                    <ItemTemplate>

@@ -28,6 +28,7 @@
             cboShift.Items.Add("1")
             cboShift.Items.Add("2")
             cboShift.Items.Add("3")
+            cboShift.Items.Add("4")
             cboShift.SelectedIndex = 0
 
 
@@ -49,7 +50,7 @@
 
     Private Function createpricetable() As DataTable
         Dim dt As New DataTable
-
+        dt.Columns.Add("shiftno", GetType(Integer))
         dt.Columns.Add("product_name", GetType(String))
         dt.Columns.Add("product_code", GetType(String))
         dt.Columns.Add("mainpriceid", GetType(Double))
@@ -116,6 +117,7 @@
         '    test = gvData.Rows(i).FindControl("txtadjust")
         '    lbltest.Text = test.Text
         'Next
+        Dim shiftno As Integer = Integer.Parse(cboShift.SelectedItem.Text)
         Dim objprice As New Price
         For Each item As GridViewRow In gvData.Rows
             err = 0
@@ -154,7 +156,7 @@
                 'save data
 
 
-                result = objprice.Oil_Day_Price_Save(lblname.Text, price, adjust, actual, usercode, effectivedate, effectivetime)
+                result = objprice.Oil_Day_Price_Save(lblname.Text, price, adjust, actual, usercode, effectivedate, effectivetime, shiftno)
 
             End If
         Next
