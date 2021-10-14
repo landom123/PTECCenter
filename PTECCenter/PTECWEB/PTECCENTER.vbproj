@@ -1750,6 +1750,7 @@
     <Content Include="SDD\SupplyExpense.aspx" />
     <Content Include="SDD\OthersTTCosttoD365.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
+    <Content Include="SSD\newgsm_billingnote.aspx" />
     <Content Include="SSD\RVtoHQ.aspx" />
     <Content Include="SSD\gsmsavetobatch.aspx" />
     <Content Include="SSD\gsmapprovededuct.aspx" />
@@ -3742,6 +3743,13 @@
       <DependentUpon>DeducttoNEWGSM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SSD\newgsm_billingnote.aspx.designer.vb">
+      <DependentUpon>newgsm_billingnote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote.aspx.vb">
+      <DependentUpon>newgsm_billingnote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SSD\RVtoHQ.aspx.designer.vb">
       <DependentUpon>RVtoHQ.aspx</DependentUpon>
     </Compile>
@@ -4444,7 +4452,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62757</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62517/</IISUrl>
+          <IISUrl>http://localhost:12345/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
