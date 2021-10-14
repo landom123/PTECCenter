@@ -104,13 +104,22 @@ Partial Public Class ClearAdvance
     Protected WithEvents txtremark As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''TextBox2 control.
+    '''txtUnsave control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents TextBox2 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtUnsave As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''statusnonpo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents statusnonpo As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Label2 control.
@@ -545,11 +554,11 @@ Partial Public Class ClearAdvance
     Protected WithEvents cboVendor As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''btnAddDetail control.
+    '''txtVendor control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnAddDetail As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents txtVendor As Global.System.Web.UI.WebControls.TextBox
 End Class
