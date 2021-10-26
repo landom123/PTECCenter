@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class newgsm_billingnote_01_cover
+Partial Public Class newgsm_billingnote01_cover
 
     '''<summary>
     '''form1 control.

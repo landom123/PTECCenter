@@ -1757,6 +1757,7 @@
     <Content Include="SDD\SupplyExpense.aspx" />
     <Content Include="SDD\OthersTTCosttoD365.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
+    <Content Include="SSD\newgsm_billingnote01_cover.aspx" />
     <Content Include="SSD\newgsm_billingnote03_detail.aspx" />
     <Content Include="SSD\newgsm_billingnote03_cover.aspx" />
     <Content Include="SSD\newgsm_billingnote02_detail.aspx" />
@@ -1764,7 +1765,6 @@
     <Content Include="SSD\newgsm_billingnote01_detail.aspx">
       <BrowseToURL>~/SSD/newgsm_billingnote01_detail.aspx</BrowseToURL>
     </Content>
-    <Content Include="SSD\newgsm_billingnote01_cover.aspx" />
     <Content Include="SSD\newgsm_billingnote.aspx" />
     <Content Include="SSD\RVtoHQ.aspx" />
     <Content Include="SSD\gsmsavetobatch.aspx" />
@@ -3758,6 +3758,13 @@
       <DependentUpon>DeducttoNEWGSM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SSD\newgsm_billingnote01_cover.aspx.designer.vb">
+      <DependentUpon>newgsm_billingnote01_cover.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote01_cover.aspx.vb">
+      <DependentUpon>newgsm_billingnote01_cover.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SSD\newgsm_billingnote03_detail.aspx.designer.vb">
       <DependentUpon>newgsm_billingnote03_detail.aspx</DependentUpon>
     </Compile>
@@ -3791,13 +3798,6 @@
     </Compile>
     <Compile Include="SSD\newgsm_billingnote01_detail.aspx.vb">
       <DependentUpon>newgsm_billingnote01_detail.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SSD\newgsm_billingnote01_cover.aspx.designer.vb">
-      <DependentUpon>newgsm_billingnote01_cover.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SSD\newgsm_billingnote01_cover.aspx.vb">
-      <DependentUpon>newgsm_billingnote01_cover.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SSD\newgsm_billingnote.aspx.designer.vb">

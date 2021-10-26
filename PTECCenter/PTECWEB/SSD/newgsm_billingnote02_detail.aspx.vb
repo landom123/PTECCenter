@@ -20,7 +20,7 @@ Partial Class newgsm_billingnote02_detail
         ReportViewer1.ServerReport.ReportServerUrl =
            New Uri("http://ptecdba:8081/ReportServer")
         ReportViewer1.ServerReport.ReportPath =
-           "/GSM/Billingnote"
+           "/GSM/Billingnote02_detail"
         Dim paramList As New Generic.List(Of ReportParameter)
         'Dim pInfo As ReportParameterInfoCollection
         'pInfo = ReportViewer1.ServerReport.GetParameters()

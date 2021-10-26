@@ -68,51 +68,51 @@ Partial Class WebForm5
             New MyReportServerCredentials()
     End Sub
 End Class
-<Serializable()>
-Public NotInheritable Class MyReportServerCredentials
-    Implements IReportServerCredentials
-    Public userName As String = ConfigurationManager.AppSettings("rvUser")
-    Public password As String = ConfigurationManager.AppSettings("rvPassword")
-    Public domain As String = ConfigurationManager.AppSettings("rvDomain")
-    Public ReadOnly Property ImpersonationUser() As WindowsIdentity _
-            Implements IReportServerCredentials.ImpersonationUser
-        Get
-            'Use the default windows user.  Credentials will be
-            'provided by the NetworkCredentials property.
-            Return Nothing
-        End Get
-    End Property
-    Public ReadOnly Property NetworkCredentials() As ICredentials _
-            Implements IReportServerCredentials.NetworkCredentials
-        Get
-            'Read the user information from the web.config file. 
-            'By reading the information on demand instead of storing
-            'it, the credentials will not be stored in session,
-            'reducing the vulnerable surface area to the web.config
-            'file, which can be secured with an ACL.
-            If (String.IsNullOrEmpty(userName)) Then
-                Throw New Exception("Missing user name from web.config file")
-            End If
-            If (String.IsNullOrEmpty(password)) Then
-                Throw New Exception("Missing password from web.config file")
-            End If
-            If (String.IsNullOrEmpty(domain)) Then
-                Throw New Exception("Missing domain from web.config file")
-            End If
-            Return New NetworkCredential(userName, password, domain)
-        End Get
-    End Property
-    Public Function GetFormsCredentials(ByRef authCookie As Cookie,
-                                        ByRef userName As String,
-                                        ByRef password As String,
-                                        ByRef authority As String) _
-                                        As Boolean _
-            Implements IReportServerCredentials.GetFormsCredentials
-        authCookie = Nothing
-        userName = Nothing
-        password = Nothing
-        authority = Nothing
-        'Not using form credentials
-        Return False
-    End Function
-End Class
+'<Serializable()>
+'Public NotInheritable Class MyReportServerCredentials
+'    Implements IReportServerCredentials
+'    Public userName As String = ConfigurationManager.AppSettings("rvUser")
+'    Public password As String = ConfigurationManager.AppSettings("rvPassword")
+'    Public domain As String = ConfigurationManager.AppSettings("rvDomain")
+'    Public ReadOnly Property ImpersonationUser() As WindowsIdentity _
+'            Implements IReportServerCredentials.ImpersonationUser
+'        Get
+'            'Use the default windows user.  Credentials will be
+'            'provided by the NetworkCredentials property.
+'            Return Nothing
+'        End Get
+'    End Property
+'    Public ReadOnly Property NetworkCredentials() As ICredentials _
+'            Implements IReportServerCredentials.NetworkCredentials
+'        Get
+'            'Read the user information from the web.config file. 
+'            'By reading the information on demand instead of storing
+'            'it, the credentials will not be stored in session,
+'            'reducing the vulnerable surface area to the web.config
+'            'file, which can be secured with an ACL.
+'            If (String.IsNullOrEmpty(userName)) Then
+'                Throw New Exception("Missing user name from web.config file")
+'            End If
+'            If (String.IsNullOrEmpty(password)) Then
+'                Throw New Exception("Missing password from web.config file")
+'            End If
+'            If (String.IsNullOrEmpty(domain)) Then
+'                Throw New Exception("Missing domain from web.config file")
+'            End If
+'            Return New NetworkCredential(userName, password, domain)
+'        End Get
+'    End Property
+'    Public Function GetFormsCredentials(ByRef authCookie As Cookie,
+'                                        ByRef userName As String,
+'                                        ByRef password As String,
+'                                        ByRef authority As String) _
+'                                        As Boolean _
+'            Implements IReportServerCredentials.GetFormsCredentials
+'        authCookie = Nothing
+'        userName = Nothing
+'        password = Nothing
+'        authority = Nothing
+'        'Not using form credentials
+'        Return False
+'    End Function
+'End Class
