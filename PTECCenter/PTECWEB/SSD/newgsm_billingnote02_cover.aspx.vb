@@ -2,7 +2,7 @@
 Imports System.IO
 Imports System.Security.Principal
 Imports Microsoft.Reporting.WebForms
-Partial Class newgsm_billingnote
+Partial Class newgsm_billingnote02_cover
     Inherits System.Web.UI.Page
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'http://localhost:62517/

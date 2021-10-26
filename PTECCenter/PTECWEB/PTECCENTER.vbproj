@@ -1554,10 +1554,13 @@
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap3.html" />
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap4.html" />
     <Content Include="charts.html" />
+    <Content Include="css\animate.css" />
+    <Content Include="css\bootstrap.min.css" />
     <Content Include="css\print.css" />
     <Content Include="css\sb-admin.css" />
     <Content Include="css\sb-admin.min.css" />
     <Content Include="css\checkbox.css" />
+    <Content Include="css\style.css" />
     <Content Include="datetimepicker\build\jquery.datetimepicker.full.js" />
     <Content Include="datetimepicker\build\jquery.datetimepicker.full.min.js" />
     <Content Include="datetimepicker\build\jquery.datetimepicker.min.css" />
@@ -1715,6 +1718,10 @@
     <Content Include="fileupload\src\thirdparty\react\Fileuploader.js" />
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\main.js" />
+    <Content Include="js\popper.js" />
     <Content Include="js\Sortable.js" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
@@ -1750,6 +1757,14 @@
     <Content Include="SDD\SupplyExpense.aspx" />
     <Content Include="SDD\OthersTTCosttoD365.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
+    <Content Include="SSD\newgsm_billingnote03_detail.aspx" />
+    <Content Include="SSD\newgsm_billingnote03_cover.aspx" />
+    <Content Include="SSD\newgsm_billingnote02_detail.aspx" />
+    <Content Include="SSD\newgsm_billingnote02_cover.aspx" />
+    <Content Include="SSD\newgsm_billingnote01_detail.aspx">
+      <BrowseToURL>~/SSD/newgsm_billingnote01_detail.aspx</BrowseToURL>
+    </Content>
+    <Content Include="SSD\newgsm_billingnote01_cover.aspx" />
     <Content Include="SSD\newgsm_billingnote.aspx" />
     <Content Include="SSD\RVtoHQ.aspx" />
     <Content Include="SSD\gsmsavetobatch.aspx" />
@@ -3743,6 +3758,48 @@
       <DependentUpon>DeducttoNEWGSM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SSD\newgsm_billingnote03_detail.aspx.designer.vb">
+      <DependentUpon>newgsm_billingnote03_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote03_detail.aspx.vb">
+      <DependentUpon>newgsm_billingnote03_detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote03_cover.aspx.designer.vb">
+      <DependentUpon>newgsm_billingnote03_cover.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote03_cover.aspx.vb">
+      <DependentUpon>newgsm_billingnote03_cover.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote02_detail.aspx.designer.vb">
+      <DependentUpon>newgsm_billingnote02_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote02_detail.aspx.vb">
+      <DependentUpon>newgsm_billingnote02_detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote02_cover.aspx.designer.vb">
+      <DependentUpon>newgsm_billingnote02_cover.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote02_cover.aspx.vb">
+      <DependentUpon>newgsm_billingnote02_cover.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote01_detail.aspx.designer.vb">
+      <DependentUpon>newgsm_billingnote01_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote01_detail.aspx.vb">
+      <DependentUpon>newgsm_billingnote01_detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote01_cover.aspx.designer.vb">
+      <DependentUpon>newgsm_billingnote01_cover.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\newgsm_billingnote01_cover.aspx.vb">
+      <DependentUpon>newgsm_billingnote01_cover.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SSD\newgsm_billingnote.aspx.designer.vb">
       <DependentUpon>newgsm_billingnote.aspx</DependentUpon>
     </Compile>
@@ -4352,6 +4409,7 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ACS\" />
     <Folder Include="OPS\Attatch\" />
     <Folder Include="OPS\Non-PO\css\" />
     <Folder Include="OPS\Non-PO\PettyCash\" />
