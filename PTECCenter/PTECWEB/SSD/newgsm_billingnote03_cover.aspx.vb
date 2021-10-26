@@ -44,7 +44,7 @@ Partial Class newgsm_billingnote03_cover
         Response.Buffer = True
         Response.Clear()
         Response.ContentType = mimeType
-        Response.AddHeader("content-disposition", "attachment; filename=BillingNote." + extension)
+        Response.AddHeader("content-disposition", "attachment; filename=BillingNote_cover." + extension)
         Response.BinaryWrite(returnValue)
         Response.Flush()
         Response.End()
