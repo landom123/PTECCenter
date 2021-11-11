@@ -1,0 +1,30 @@
+﻿/*####################### CSS FROM CARD-COMMENT ########################*/
+.editComment, .deleteComment {
+    cursor: pointer;
+    padding: 0px;
+    font-size: .75rem;
+    display: none;
+    border-radius: 100%;
+}
+
+.comment-detail:hover .editComment, .comment-detail:hover .deleteComment {
+    display: inline-block;
+}
+
+.comment-detail {
+    max-width: 100%;
+    background-color: #f0f2f5;
+    padding: 10px;
+    border-radius: 10px;
+    display: table;
+    word-break: break-word;
+}
+
+.detailComment:focus {
+    background-color: yellow;
+}
+
+.card_comment .btn:disabled {
+    cursor: not-allowed;
+}
+/*####################### CSS FROM CARD-COMMENT ########################*/
