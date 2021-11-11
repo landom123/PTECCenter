@@ -379,6 +379,11 @@
                                                     <input type="file" name="files" accept="image/*,.pdf" data-fileuploader-files='<%=Approval_Doc%>'>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted">
+                                                    แนบเอกสารเมื่อ : <%=Approval_DocDate%>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- end card-->
