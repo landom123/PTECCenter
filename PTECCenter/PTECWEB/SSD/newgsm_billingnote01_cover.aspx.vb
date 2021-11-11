@@ -2,7 +2,7 @@
 Imports System.IO
 Imports System.Security.Principal
 Imports Microsoft.Reporting.WebForms
-Partial Class newgsm_billingnote
+Partial Class newgsm_billingnote01_cover
     Inherits System.Web.UI.Page
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'http://localhost:62517/
@@ -10,6 +10,8 @@ Partial Class newgsm_billingnote
         idh = Request.QueryString("idh")
         'idh = 31
         SetReportParameters(idh)
+        'Response.Redirect("newgsm_billingnote02_detail.aspx?idh=" & idh)
+        'SetReportParameters2(idh)
 
 
     End Sub
@@ -20,7 +22,7 @@ Partial Class newgsm_billingnote
         ReportViewer1.ServerReport.ReportServerUrl =
            New Uri("http://ptecdba:8081/ReportServer")
         ReportViewer1.ServerReport.ReportPath =
-           "/GSM/Billingnote"
+           "/GSM/Billingnote01_cover"
         Dim paramList As New Generic.List(Of ReportParameter)
         'Dim pInfo As ReportParameterInfoCollection
         'pInfo = ReportViewer1.ServerReport.GetParameters()
@@ -43,11 +45,12 @@ Partial Class newgsm_billingnote
         Response.Buffer = True
         Response.Clear()
         Response.ContentType = mimeType
-        Response.AddHeader("content-disposition", "attachment; filename=BillingNote." + extension)
+        Response.AddHeader("content-disposition", "attachment; filename=BillingNote_Cover." + extension)
         Response.BinaryWrite(returnValue)
         Response.Flush()
         Response.End()
     End Sub
+
     Protected Sub Page_Init(ByVal sender As Object,
                             ByVal e As System.EventArgs) _
                             Handles Me.Init
