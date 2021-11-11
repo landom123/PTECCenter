@@ -86,6 +86,78 @@ Partial Public Class AdvanceRequest
     Protected WithEvents txtDocDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbApprovalby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbApprovalby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtApprovalby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtApprovalby As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbApprovalDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbApprovalDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtApprovalDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtApprovalDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbtxtSupportby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbtxtSupportby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSupportby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSupportby As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbtxtSupportdate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbtxtSupportdate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSupportdate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSupportdate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lbtxtamount control.
     '''</summary>
     '''<remarks>
@@ -111,6 +183,24 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtamount As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbbalance control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbbalance As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtbalance control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtbalance As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lbtxtdetail control.
@@ -147,6 +237,24 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnSaveEdit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSaveEdit As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnCancelEdit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCancelEdit As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''btnConfirm control.
@@ -221,22 +329,22 @@ Partial Public Class AdvanceRequest
     Protected WithEvents btnDisApproval As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
-    '''btnSaveEdit control.
+    '''btnVerify control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnSaveEdit As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnVerify As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnCancelEdit control.
+    '''Button2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnCancelEdit As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents Button2 As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''gvRemind control.
@@ -246,4 +354,49 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gvRemind As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''card_attatch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents card_attatch As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''btnAddAttatch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddAttatch As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''card_comment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents card_comment As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''txtComment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtComment As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnSaveComment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSaveComment As Global.System.Web.UI.WebControls.Button
 End Class

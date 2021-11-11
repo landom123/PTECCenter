@@ -1,10 +1,9 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Web.Configuration
 Public Class Supplier
-
     Public Sub SetCboVendor(obj As Object, username As String)
         obj.DataSource = Me.vendor_list(username)
-        obj.DataValueField = "Vendor_Code_only"
+        obj.DataValueField = "name"
         obj.DataTextField = "Vendor_name_code"
         obj.DataBind()
     End Sub
@@ -14,7 +13,7 @@ Public Class Supplier
         cboVendor.Items.Clear()
 
         For i As Integer = 0 To dt.Rows.Count - 1
-            Dim item As ListItem = New ListItem(dt.Rows(i).Item("name").ToString, dt.Rows(i).Item("VendorID").ToString)
+            Dim item As ListItem = New ListItem(dt.Rows(i).Item("name").ToString, dt.Rows(i).Item("name").ToString)
             If Not String.IsNullOrEmpty(dt.Rows(i).Item("Vendor_Code").ToString) Then
                 item.Attributes("data-subtext") = dt.Rows(i).Item("Vendor_Code").ToString
             End If

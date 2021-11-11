@@ -51,8 +51,10 @@ Public Class AdvanceMenuList
                 If Not Session("cboWorking_job") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                     cboWorking.SelectedValue = Session("cboWorking_job")
                 End If
+
+                Dim objNonPO As New NonPO
                 Try
-                    itemtable = objjob.JobList(usercode, cboWorking.SelectedItem.Value)
+                    itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
                 Catch ex As Exception
                     Dim scriptKey As String = "alert"
                     Dim javaScript As String = "alertWarning('search fail');"
@@ -200,7 +202,7 @@ Public Class AdvanceMenuList
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 5
+        Dim statusAt As Integer = 6
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
