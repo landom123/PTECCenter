@@ -186,6 +186,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="ACS\test03.aspx" />
+    <Content Include="ACS\test02.aspx" />
+    <Content Include="ACS\test01.aspx" />
     <Content Include="ADMIN\branchpermissionremove.aspx" />
     <Content Include="ADMIN\branchpermissionadd.aspx" />
     <Content Include="ADMIN\Questionnair.aspx" />
@@ -3425,26 +3428,47 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACS\test03.aspx.designer.vb">
+      <DependentUpon>test03.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\test03.aspx.vb">
+      <DependentUpon>test03.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ACS\test02.aspx.designer.vb">
+      <DependentUpon>test02.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\test02.aspx.vb">
+      <DependentUpon>test02.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ACS\test01.aspx.designer.vb">
+      <DependentUpon>test01.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\test01.aspx.vb">
+      <DependentUpon>test01.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ADMIN\branchpermissionremove.aspx.designer.vb">
       <DependentUpon>branchpermissionremove.aspx</DependentUpon>
     </Compile>
     <Compile Include="ADMIN\branchpermissionremove.aspx.vb">
       <DependentUpon>branchpermissionremove.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ADMIN\branchpermissionadd.aspx.designer.vb">
       <DependentUpon>branchpermissionadd.aspx</DependentUpon>
     </Compile>
     <Compile Include="ADMIN\branchpermissionadd.aspx.vb">
       <DependentUpon>branchpermissionadd.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ADMIN\Questionnair.aspx.designer.vb">
       <DependentUpon>Questionnair.aspx</DependentUpon>
     </Compile>
     <Compile Include="ADMIN\Questionnair.aspx.vb">
       <DependentUpon>Questionnair.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ADMIN\UserManage.aspx.designer.vb">
       <DependentUpon>UserManage.aspx</DependentUpon>
@@ -3465,7 +3489,7 @@
     </Compile>
     <Compile Include="ADMIN\menuPermission.aspx.vb">
       <DependentUpon>menuPermission.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AFD\BudgetOilCost.aspx.designer.vb">
       <DependentUpon>BudgetOilCost.aspx</DependentUpon>
@@ -3503,6 +3527,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="class\Account.vb" />
+    <Compile Include="class\ACS.vb" />
     <Compile Include="class\NonPO.vb" />
     <Compile Include="class\Approval.vb" />
     <Compile Include="class\Area.vb" />
@@ -3609,14 +3634,14 @@
     </Compile>
     <Compile Include="OPS\Non-PO\Advance\AdvanceRequest.aspx.vb">
       <DependentUpon>AdvanceRequest.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\Advance\ClearAdvance.aspx.designer.vb">
       <DependentUpon>ClearAdvance.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPS\Non-PO\Advance\ClearAdvance.aspx.vb">
       <DependentUpon>ClearAdvance.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\Advance\AdvanceMenuList.aspx.designer.vb">
       <DependentUpon>AdvanceMenuList.aspx</DependentUpon>
@@ -3630,21 +3655,21 @@
     </Compile>
     <Compile Include="OPS\Non-PO\Payment\defaultPayment.aspx.vb">
       <DependentUpon>defaultPayment.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\Payment\Payment.aspx.designer.vb">
       <DependentUpon>Payment.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPS\Non-PO\Payment\Payment.aspx.vb">
       <DependentUpon>Payment.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\NonPO.aspx.designer.vb">
       <DependentUpon>NonPO.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPS\Non-PO\NonPO.aspx.vb">
       <DependentUpon>NonPO.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ROD\OilPriceFormulaUpdate.aspx.designer.vb">
       <DependentUpon>OilPriceFormulaUpdate.aspx</DependentUpon>
@@ -3952,7 +3977,7 @@
     </Compile>
     <Compile Include="OPS\RemindUpdateDue.aspx.vb">
       <DependentUpon>RemindUpdateDue.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\RemindInfoFrm.aspx.designer.vb">
       <DependentUpon>RemindInfoFrm.aspx</DependentUpon>
@@ -4015,7 +4040,7 @@
     </Compile>
     <Compile Include="default.aspx.vb">
       <DependentUpon>default.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -4049,7 +4074,7 @@
     </Compile>
     <Compile Include="test.aspx.vb">
       <DependentUpon>test.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="testgit.vb" />
   </ItemGroup>
@@ -4409,7 +4434,6 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ACS\" />
     <Folder Include="OPS\Attatch\" />
     <Folder Include="OPS\Non-PO\css\" />
     <Folder Include="OPS\Non-PO\PettyCash\" />
