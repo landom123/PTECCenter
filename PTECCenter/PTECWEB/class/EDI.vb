@@ -45,7 +45,8 @@ Public Class EDI
         Return result
     End Function
     Public Function SaveTTForD365AndGetJson(invoiceno As String, duedate As String,
-                                            cost As Double, branch As String, usercode As String) As String
+                                            cost As Double, branch As String, usercode As String,
+                                            vendor As String, carno As String, terminal As String) As String
 
         Dim result As String = ""
         Dim dt As New DataTable
@@ -65,6 +66,9 @@ Public Class EDI
         cmd.Parameters.Add("@ttcost", SqlDbType.Money).Value = cost
         cmd.Parameters.Add("@branch", SqlDbType.VarChar).Value = branch
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
+        cmd.Parameters.Add("@carno", SqlDbType.VarChar).Value = carno
+        cmd.Parameters.Add("@terminal", SqlDbType.VarChar).Value = terminal
 
         cmd.ExecuteNonQuery()
         'Try

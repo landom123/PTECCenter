@@ -107,7 +107,7 @@ Public Class TTCostToD365
         Dim javaScript As String
         Dim cost As Double
         Dim branch As Label
-        Dim invoiceno As Label
+        Dim invoiceno, vendor, carno, terminal As Label
         Dim invoicedate, duedate As String
         invoicedate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
         duedate = txtDueDate.Text.Substring(6, 4) & txtDueDate.Text.Substring(3, 2) & txtDueDate.Text.Substring(0, 2)
@@ -120,11 +120,13 @@ Public Class TTCostToD365
             lbl = DirectCast(row.FindControl("lblamount"), Label)
             cost = Double.Parse(lbl.Text)
             branch = CType(row.FindControl("lblshipto"), Label)
-
+            vendor = CType(row.FindControl("lblsupplier"), Label)
+            carno = CType(row.FindControl("lbltruck"), Label)
+            terminal = CType(row.FindControl("lblterminal"), Label)
 
             Try
                 '2. save data and get json
-                objedi.SaveTTForD365AndGetJson(invoiceno.Text, duedate, cost, branch.Text, usercode)
+                objedi.SaveTTForD365AndGetJson(invoiceno.Text, duedate, cost, branch.Text, usercode, vendor.Text, carno.Text, terminal.Text)
 
                 'javaScript = "<script type='text/javascript'>msgalert('บันทึกเรียบร้อย');</script>"
                 'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
