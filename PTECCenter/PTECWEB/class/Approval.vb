@@ -251,7 +251,7 @@ Public Class Approval
         Return result
     End Function
 
-    Public Function Save_Comment_By_Code(codeRef As String, message As String, userid As Integer)
+    Public Sub Save_Comment_By_Code(codeRef As String, message As String, userid As Integer)
         'Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -273,8 +273,54 @@ Public Class Approval
         'result = ds.Tables(0).Rows(0).Item("code")
         conn.Close()
         'Return result
-    End Function
-    Public Function Approval_Save_Comment(approvalcode As String, message As String, userid As Integer)
+    End Sub
+    Public Sub Update_Comment_By_commentid(commentid As Integer, message As String, userid As Integer)
+        'Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Update_Comment_By_commentid"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@commentid", SqlDbType.VarChar).Value = commentid
+        cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = message
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub Delete_Comment_By_commentid(commentid As Integer, userid As Integer)
+        'Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Delete_Comment_By_commentid"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@commentid", SqlDbType.VarChar).Value = commentid
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Sub
+    Public Sub Approval_Save_Comment(approvalcode As String, message As String, userid As Integer)
         'Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -296,7 +342,7 @@ Public Class Approval
         'result = ds.Tables(0).Rows(0).Item("code")
         conn.Close()
         'Return result
-    End Function
+    End Sub
     Public Function Approval_Edit(approvalcode As String, approvallistid As Integer, name As String, detail As String, price As Double,
                                    branchid As Integer, day As Integer, userid As String) As Boolean
         Dim result As Boolean

@@ -6,6 +6,27 @@ Public Class AdvanceRequest
     Public cntdt As Integer
     Public sumitem As Double
 
+    Public PermissionOwner As DataSet '= createtable()
+    Public Shared AttachTable As DataTable '= createtable()
+    Public CommentTable As DataTable '= createtable()
+
+    Public verify As Boolean = False
+    Public approval As Boolean = False
+    Public flag As Boolean = True
+
+    Public allOwner As String
+    Public at As String
+    Public approver As String
+    Public verifier As String
+
+
+    Dim md_code As String
+    Dim fm_code As String
+    Dim dm_code As String
+    Dim sm_code As String
+    Dim am_code As String
+
+    Dim account_code As String = "SPP"
 
     Public itemtable As DataTable
     Public detailtable As DataTable '= createtable()
@@ -32,21 +53,101 @@ Public Class AdvanceRequest
 
         If Not IsPostBack() Then
             detailtable = createtableDetail()
+            AttachTable = createtableAttach()
+            CommentTable = createtablecomment()
 
 
             If Not Request.QueryString("ADV") Is Nothing Then
+
                 Try
                     nonpods = objNonPO.NonPO_AdvanceRQ_Find(Request.QueryString("ADV"))
                     detailtable = nonpods.Tables(0)
-                    Session("detailtable") = detailtable
+                    AttachTable = nonpods.Tables(1)
+                    CommentTable = nonpods.Tables(2)
+
 
 
                     If Not Session("status") = "edit" Then
                         Session("status") = "read"
                     End If
+
+                    chkuser(detailtable.Rows(0).Item("createby"))
+
+                    If (Session("usercode") = md_code Or
+                    Session("usercode") = fm_code Or
+                    Session("usercode") = dm_code Or
+                    Session("usercode") = sm_code Or
+                    Session("usercode") = am_code) And
+                    (detailtable.Rows(0).Item("statusrqid") = 2) Then
+                        Session("status") = "write"
+                        'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
+                        'Dim SearchForThis As String = "DEF"
+                        'Dim FirstCharacter As Integer = SearchWithinThis.IndexOf(SearchForThis)
+                        PermissionOwner = chkPermissionNonPO(Request.QueryString("ADV"))
+                        'deadline = PermissionOwner.Tables(0).Rows(0).Item("deadline").ToString
+
+                        'For Each rows As DataRow In PermissionOwner.Tables(0).Rows
+                        '    If rows("OwnerStatus") Then
+                        '        ownerapproval += rows("sendto").ToString + ","
+                        '    End If
+                        'Next rows
+                        'If ownerapproval.Length > 0 Then
+                        '    ownerapproval = ownerapproval.Remove(ownerapproval.Length - 1, 1) 'ใช้ในหน้า html
+                        'End If
+                        If PermissionOwner.Tables(0).Rows.Count > 0 Then
+                            at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
+                            approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(0).Item("approver").ToString
+                            verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
+                        End If
+
+
+
+
+                        For Each row As DataRow In PermissionOwner.Tables(0).Rows
+                            If row("approver").ToString.IndexOf("MD") > -1 Then
+                                If (md_code.IndexOf(Session("usercode")) > -1) Then
+                                    approval = True
+                                    GoTo endprocess
+                                End If
+                            End If
+
+                            If row("approver").ToString.IndexOf("FM") > -1 Then
+                                If (fm_code.IndexOf(Session("usercode")) > -1) Then
+                                    approval = True
+                                    GoTo endprocess
+                                End If
+                            End If
+
+                            If row("approver").ToString.IndexOf("DM") > -1 Then
+                                If (dm_code.IndexOf(Session("usercode")) > -1) Then
+                                    approval = True
+                                    GoTo endprocess
+                                End If
+                            End If
+
+                            If row("approver").ToString.IndexOf("SM") > -1 Then
+                                If (sm_code.IndexOf(Session("usercode")) > -1) Then
+                                    approval = True
+                                    GoTo endprocess
+                                End If
+                            End If
+
+                            If row("approver").ToString.IndexOf("AM") > -1 Then
+                                If (am_code.IndexOf(Session("usercode")) > -1) Then
+                                    approval = True
+                                    GoTo endprocess
+                                End If
+                            End If
+
+                        Next row
+endprocess:
+                    ElseIf (account_code.IndexOf(Session("usercode").ToString) > -1) And (detailtable.Rows(0).Item("statusrqid") = 3) Then
+                        Session("status") = "account"
+                        verify = True
+                    End If
+
                     showdata(detailtable)
-                    'chkuser(detailtable.Rows(0).Item("createby"))
-                    SetBtn(detailtable.Rows(0).Item("statusrqid"))
+                    SetBtn(detailtable.Rows(0).Item("statusrqid"), detailtable.Rows(0).Item("createby"))
                 Catch ex As Exception
                     Dim scriptKey As String = "UniqueKeyForThisScript"
                     Dim javaScript As String = "alertWarning('Find Fail')"
@@ -55,12 +156,82 @@ Public Class AdvanceRequest
             Else
                 Session("status") = "new"
             End If
+
+            Session("detailtable_advancerq") = detailtable
+            Session("comment_advancerq") = CommentTable
+            Session("attatch_advancerq") = AttachTable
         Else
-            detailtable = Session("detailtable")
+            detailtable = Session("detailtable_advancerq")
+            AttachTable = Session("attatch_advancerq")
+            CommentTable = Session("comment_advancerq")
         End If
 
         SetMenu()
     End Sub
+
+    Private Function createtablecomment() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("commentid", GetType(Integer))
+        dt.Columns.Add("commentdetail", GetType(String))
+        dt.Columns.Add("updateby", GetType(String))
+        dt.Columns.Add("updatedate", GetType(String))
+        dt.Columns.Add("createby", GetType(String))
+        dt.Columns.Add("createdate", GetType(String))
+        dt.Columns.Add("coderef", GetType(String))
+
+        Return dt
+    End Function
+    Private Function createtableAttach() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("id", GetType(Integer))
+        dt.Columns.Add("imagename", GetType(String))
+        dt.Columns.Add("url", GetType(String))
+        dt.Columns.Add("show", GetType(String))
+        dt.Columns.Add("checked", GetType(Integer))
+
+        Return dt
+    End Function
+    Private Sub chkuser(userid As Integer)
+        Dim objuser As New Users
+        Dim NonPOPermissionTable As New DataTable
+        Try
+            searchjobslist(userid)
+            NonPOPermissionTable = objuser.NonPOPermissionRead(userid)
+            md_code = NonPOPermissionTable.Rows(0).Item("md_code")
+            fm_code = NonPOPermissionTable.Rows(0).Item("fm_code")
+            dm_code = NonPOPermissionTable.Rows(0).Item("dm_code")
+            sm_code = NonPOPermissionTable.Rows(0).Item("sm_code")
+            am_code = NonPOPermissionTable.Rows(0).Item("am_code")
+            'chkuser_sub(md_code, userid)
+            'chkuser_sub(fm_code, userid)
+            'chkuser_sub(dm_code, userid)
+            'chkuser_sub(sm_code, userid)
+            'chkuser_sub(am_code, userid)
+            allOwner = "[ md : " + md_code + "],[ fm : " + fm_code + "],[ dm : " + dm_code + "],[ sm : " + sm_code + "],[ am : " + am_code + "]"
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('approval_permission fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
+    End Sub
+
+    Private Function chkPermissionNonPO(nonpocode As String) As DataSet
+        Dim objnonpo As New NonPO
+        Dim npoPermission As New DataSet
+        Try
+            npoPermission = objnonpo.NonPOPermission(nonpocode)
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('NonPO_PermisstionOwner fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+        Return npoPermission
+    End Function
     Private Function createtableDetail() As DataTable
         Dim dt As New DataTable
 
@@ -81,8 +252,11 @@ Public Class AdvanceRequest
         dt.Columns.Add("createby", GetType(Integer))
         dt.Columns.Add("createdate", GetType(String))
 
+        dt.Columns.Add("ownerid", GetType(Integer))
+
         dt.Columns.Add("updateby_name", GetType(String))
         dt.Columns.Add("createby_name", GetType(String))
+        dt.Columns.Add("ownerby_name", GetType(String))
 
         Return dt
     End Function
@@ -103,7 +277,7 @@ Public Class AdvanceRequest
         Return dt
     End Function
 
-    Private Sub SetBtn(statusid As String)
+    Private Sub SetBtn(statusid As String, createby As Integer)
         'in advance use statusrqid 1,2,3,6,11,12
         Select Case statusid
             Case = "1" 'รอยืนยัน
@@ -114,6 +288,13 @@ Public Class AdvanceRequest
                 btnAddDoc.Visible = False
                 btnEdit.Visible = True
                 btnClearAdvance.Visible = False
+
+                If createby = Session("userid") Then
+                    btnAddAttatch.Visible = True
+                Else
+                    btnAddAttatch.Visible = False
+                End If
+
             Case = "2" 'รออนุมัติ
                 txtStatusRq.BackColor = Color.LightYellow
                 btnConfirm.Visible = False
@@ -122,6 +303,8 @@ Public Class AdvanceRequest
                 btnAddDoc.Visible = False
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
+
+                btnAddAttatch.Visible = False
 
             Case = "3" 'รอการเงินตรวจสอบ
                 txtStatusRq.BackColor = Color.LightCoral
@@ -132,6 +315,11 @@ Public Class AdvanceRequest
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
 
+                If account_code.IndexOf(Session("usercode").ToString) > -1 Then
+                    btnAddAttatch.Visible = True
+                Else
+                    btnAddAttatch.Visible = False
+                End If
             Case = "6" 'ไม่ผ่านการอนุมัติ
                 txtStatusRq.BackColor = Color.IndianRed
                 btnConfirm.Visible = False
@@ -140,6 +328,8 @@ Public Class AdvanceRequest
                 btnAddDoc.Visible = False
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
+
+                btnAddAttatch.Visible = False
 
             Case = "11" 'รอเคลียร์ค้างชำระ
                 txtStatusRq.BackColor = Color.Brown
@@ -151,6 +341,8 @@ Public Class AdvanceRequest
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = True
 
+                btnAddAttatch.Visible = False
+
             Case = "12" 'ชำระเงินเสร็จสิ้น
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
@@ -159,6 +351,9 @@ Public Class AdvanceRequest
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
                 txtStatusRq.BackColor = Color.GreenYellow
+
+                btnAddAttatch.Visible = False
+
             Case = "14" 'ยกเลิก
                 btnConfirm.Visible = False
                 btnCancel.Visible = False
@@ -167,6 +362,9 @@ Public Class AdvanceRequest
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
                 txtStatusRq.BackColor = Color.LightGray
+
+                btnAddAttatch.Visible = False
+
         End Select
     End Sub
 
@@ -176,17 +374,23 @@ Public Class AdvanceRequest
             txtNonPOcode.Text = .Item("advancerequestcode").ToString
             txtStatusRq.Text = .Item("statusrqname").ToString
 
-
+            txtbalance.Text = String.Format("{0:n2}", .Item("balance"))
 
             txtCreateBy.Text = .Item("createby_name").ToString
             txtDocDate.Text = .Item("createdate").ToString
+            'txtOwnerby.Text = .Item("ownerby_name").ToString
 
+            txtApprovalby.Text = .Item("approvalrqby").ToString
+            txtApprovalDate.Text = .Item("approvalrqdate").ToString
+
+            txtSupportby.Text = .Item("verifyrqby").ToString
+            txtSupportdate.Text = .Item("verifyrqdate").ToString
             If Session("status") = "edit" Then
                 txtamount.Attributes.Add("type", "number")
                 txtamount.Text = .Item("amount")
             Else
                 txtamount.Attributes.Remove("type")
-                txtamount.Text = String.Format("{0:n4}", .Item("amount"))
+                txtamount.Text = String.Format("{0:n2}", .Item("amount"))
             End If
 
             txtdetail.Text = .Item("detail").ToString
@@ -201,24 +405,59 @@ Public Class AdvanceRequest
                 lbMandatorydetail.Visible = True
                 txtamount.ReadOnly = False
                 txtdetail.ReadOnly = False
+
+
+                'กล่อง comment & attatch file
+                card_comment.Visible = False
+                card_attatch.Visible = False
+
             Case = "read"
                 lbMandatoryamount.Visible = False
                 lbMandatorydetail.Visible = False
                 txtamount.ReadOnly = True
                 txtdetail.ReadOnly = True
-                searchjobslist()
+                'searchjobslist()
+
+
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+
             Case = "write"
                 lbMandatoryamount.Visible = False
                 lbMandatorydetail.Visible = False
                 txtamount.ReadOnly = True
                 txtdetail.ReadOnly = True
-                searchjobslist()
+                'searchjobslist()
+
+
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+
             Case = "edit"
                 lbMandatoryamount.Visible = True
                 lbMandatorydetail.Visible = True
                 txtamount.ReadOnly = False
                 txtdetail.ReadOnly = False
-                searchjobslist()
+                'searchjobslist()
+
+
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+
+            Case = "account"
+                lbMandatoryamount.Visible = True
+                lbMandatorydetail.Visible = True
+                txtamount.ReadOnly = False
+                txtdetail.ReadOnly = False
+                'searchjobslist()
+
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+
 
         End Select
     End Sub
@@ -309,7 +548,7 @@ endprocess:
 
     End Sub
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 5
+        Dim statusAt As Integer = 6
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -335,12 +574,12 @@ endprocess:
         End If
     End Sub
 
-    Private Sub searchjobslist()
+    Private Sub searchjobslist(userid As Integer)
 
         Dim objNonPO As New NonPO
         Dim detailtable As New DataTable
         Try
-            itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, 11)
+            itemtable = objNonPO.AdvanceRQList_For_Owner(userid, 11)
 
             Session("joblist") = itemtable
             BindData()
@@ -357,5 +596,57 @@ endprocess:
         sumitem = Convert.ToDouble(itemtable.Compute("SUM(amount)", String.Empty))
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
+    End Sub
+
+    Private Sub btnApproval_Click(sender As Object, e As EventArgs) Handles btnApproval.Click
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_AdvanceRequest_Allow(Request.QueryString("ADV"), Session("usercode"))
+            Session("status") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Approval fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+endprocess:
+    End Sub
+
+    Private Sub btnVerify_Click(sender As Object, e As EventArgs) Handles btnVerify.Click
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_AdvanceRequest_Verify(Request.QueryString("ADV"), Session("usercode"))
+            Session("status") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('verify fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+endprocess:
+    End Sub
+    Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
+        Dim approval As New Approval
+        Try
+            approval.Save_Comment_By_Code(Request.QueryString("ADV"), txtComment.Text.Trim(), Session("userid"))
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('SaveComment fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+
+endprocess:
     End Sub
 End Class

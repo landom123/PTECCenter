@@ -11,6 +11,7 @@ Public Class WebForm1
     Public Approval_AT As String = ""
     Public Approval_Bill As String = ""
     Public Approval_Doc As String = ""
+    Public Approval_DocDate As String = ""
     Public flag As Boolean = True
     Public approval As Boolean = False
     Public deadline As String
@@ -61,6 +62,7 @@ Public Class WebForm1
                     End If
                     If approvaldataset.Tables(5).Rows.Count > 0 Then
                         Approval_Doc = convertToJSON(approvaldataset.Tables(5))
+                        Approval_DocDate = detailtable.Rows(0).Item("attatchdate").ToString
                     End If
                     If Not Session("status") = "edit" Then
                         Session("status") = "read"
@@ -571,7 +573,6 @@ endprocess:
         Try
             approvalcode = approval.Approval_Allow(txtApprovalcode.Text.Trim(), Session("usercode"))
             Session("status") = "read"
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & approvalcode)
 
 
         Catch ex As Exception
@@ -579,7 +580,10 @@ endprocess:
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('save fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & approvalcode)
+endprocess:
     End Sub
 
     <System.Web.Services.WebMethod>

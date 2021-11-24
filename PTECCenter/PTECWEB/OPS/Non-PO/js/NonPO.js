@@ -76,6 +76,40 @@ function CheckNumber(Number) {
 }
 
 
+/*  ################## Attach #################  */
+function chkAttach(elem, userid) {
+    //console.log(s)
+    //console.log(s.id)
+    //console.log(s.checked)
+
+    event.preventDefault();
+    var params = "{'attatchid': '" + elem.id + "','chked': '" + elem.checked + "','userid': '" + userid + "'}";
+    $.ajax({
+        type: "POST",
+        url: "../Advance/ClearAdvance.aspx/changeChecked",
+        async: true,
+        data: params,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            //console.log(msg)
+            //console.log(msg.d['menuid'])
+            var obj = JSON.parse(msg.d);
+            console.log(obj)
+            console.log(obj[0]['attid'])
+            for (let i = 0; i < obj.length; i++) {
+                (obj[i]['checked']) ? $('.attatchItems #' + obj[i]['attid']).prop('checked', true) : $('.attatchItems #' + obj[i]['attid']).prop('checked', false);
+            }
+        },
+        error: function () {
+            alertWarning('fail')
+        }
+    });
+
+}
+
+/*  ################## END Attach #################  */
+
 
 
 /*  ################## comment #################  */
@@ -140,7 +174,7 @@ function btnEditCommentClick(commentID) {
 
 }
 
-function confirmDelete(commentID) {
+function confirmDelete(commentID, userid) {
 
     Swal.fire({
         title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',
@@ -153,16 +187,20 @@ function confirmDelete(commentID) {
         allowOutsideClick: false
     }).then((result) => {
         if (result.isConfirmed) {
-            var params = "{'commentID': '" + commentID + "'}";
+            var params = "{'commentid': '" + commentID + "','userid': '" + userid + "'}";
             $.ajax({
                 type: "POST",
-                url: "../OPS/Master.aspx/asaaa",
+                url: "../Advance/ClearAdvance.aspx/deleteComment",
                 async: true,
                 data: params,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
-                    window.location.href = location.href;
+                    if (msg.d == 'success') {
+                        window.location.href = location.href;
+                    } else {
+                        alertWarning('Delete fail');
+                    }
                 },
                 error: function () {
                     alertWarning('Delete Comment fail');
@@ -176,19 +214,19 @@ function confirmDelete(commentID) {
 
 /*  ################## end comment #################  */
 
-$(".print input:checkbox").on('click', function () {
-    // in the handler, 'this' refers to the box clicked on
-    console.log(this);
-    var $box = $(this);
-    if ($box.is(":checked")) {
-        // the name of the box is retrieved using the .attr() method
-        // as it is assumed and expected to be immutable
-        var group = "input:checkbox";
-        // the checked state of the group/box on the other hand will change
-        // and the current value is retrieved using .prop() method
-        $(group).prop("checked", false);
-        $box.prop("checked", true);
-    } else {
-        $box.prop("checked", false);
-    }
-});
+//$(".print input:checkbox").on('click', function () {
+//    // in the handler, 'this' refers to the box clicked on
+//    console.log(this);
+//    var $box = $(this);
+//    if ($box.is(":checked")) {
+//        // the name of the box is retrieved using the .attr() method
+//        // as it is assumed and expected to be immutable
+//        var group = "input:checkbox";
+//        // the checked state of the group/box on the other hand will change
+//        // and the current value is retrieved using .prop() method
+//        $(group).prop("checked", false);
+//        $box.prop("checked", true);
+//    } else {
+//        $box.prop("checked", false);
+//    }
+//});

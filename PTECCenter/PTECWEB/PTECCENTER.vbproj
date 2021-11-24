@@ -1557,6 +1557,7 @@
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap3.html" />
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap4.html" />
     <Content Include="charts.html" />
+    <Content Include="css\card_comment.css" />
     <Content Include="css\animate.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\print.css" />
@@ -1740,10 +1741,14 @@
     <Content Include="OPS\Non-PO\Advance\AdvanceRequest.aspx" />
     <Content Include="OPS\Non-PO\Advance\ClearAdvance.aspx" />
     <Content Include="OPS\Non-PO\Advance\AdvanceMenuList.aspx" />
+    <Content Include="OPS\Non-PO\Advance\ClearAdvanceMenuList2.aspx" />
+    <Content Include="OPS\Non-PO\MenuList.aspx" />
     <Content Include="OPS\Non-PO\js\NonPO.js" />
+    <Content Include="OPS\Non-PO\Payment\Payment2.aspx" />
     <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
     <Content Include="OPS\Non-PO\Payment\Payment.aspx" />
     <Content Include="OPS\Non-PO\NonPO.aspx" />
+    <Content Include="Preloader.gif" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
     <Content Include="ROD\OilPriceFormula.aspx" />
     <Content Include="ROD\UpdateSmileSheetID.aspx" />
@@ -3649,6 +3654,27 @@
     <Compile Include="OPS\Non-PO\Advance\AdvanceMenuList.aspx.vb">
       <DependentUpon>AdvanceMenuList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Advance\ClearAdvanceMenuList2.aspx.designer.vb">
+      <DependentUpon>ClearAdvanceMenuList2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Advance\ClearAdvanceMenuList2.aspx.vb">
+      <DependentUpon>ClearAdvanceMenuList2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\MenuList.aspx.designer.vb">
+      <DependentUpon>MenuList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\MenuList.aspx.vb">
+      <DependentUpon>MenuList.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Payment\Payment2.aspx.designer.vb">
+      <DependentUpon>Payment2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\Payment\Payment2.aspx.vb">
+      <DependentUpon>Payment2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\Payment\defaultPayment.aspx.designer.vb">
       <DependentUpon>defaultPayment.aspx</DependentUpon>
