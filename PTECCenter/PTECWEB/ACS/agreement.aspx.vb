@@ -3,7 +3,7 @@
 Imports System.IO
 
 Imports ClosedXML.Excel
-Public Class test01
+Public Class agreement
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public editable As DataTable = create()
@@ -79,41 +79,11 @@ Public Class test01
     End Function
 
 
-    Private Sub BindData()
+    Public Sub BindData()
         'gvData.DataSource = editable
         'gvData.DataBind()
     End Sub
 
-    Protected Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
 
-        Dim objagree As New Agree
-        Dim mydataset As DataSet
-        'InvoiceDate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
-        'editable = objedi.ListInvoice(InvoiceDate, "ZF2")
-        'Session("ediinv") = editable
-        'BindData()
-        Dim volume As Integer = Integer.Parse(txtVolume.Text)
-        mydataset = objagree.Ag_Payment_Table_Calcuate(Double.Parse(txtagreeno.Text), volume)
-        GridView1.DataSource = mydataset.Tables(0)
-        GridView1.DataBind()
-        GridView2.DataSource = mydataset.Tables(1)
-        GridView2.DataBind()
-        GridView3.DataSource = mydataset.Tables(2)
-        GridView3.DataBind()
-    End Sub
-
-    'Private Sub gvData_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvData.PageIndexChanging
-    'gvData.PageIndex = e.NewPageIndex
-    'BindData()
-    'End Sub
-
-    'Private Sub gvData_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvData.RowDataBound
-    '    '*** chk ***'
-    '    Dim chk As CheckBox = CType(e.Row.FindControl("chk"), CheckBox)
-    '    If Not IsNothing(chk) Then
-    '        chk.Checked = e.Row.DataItem("chk")
-    '    End If
-
-    'End Sub
 
 End Class

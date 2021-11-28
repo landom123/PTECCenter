@@ -186,9 +186,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="ACS\testag.aspx" />
+    <Content Include="ACS\agreement.aspx" />
     <Content Include="ACS\test03.aspx" />
     <Content Include="ACS\test02.aspx" />
-    <Content Include="ACS\test01.aspx" />
     <Content Include="ADMIN\branchpermissionremove.aspx" />
     <Content Include="ADMIN\branchpermissionadd.aspx" />
     <Content Include="ADMIN\Questionnair.aspx" />
@@ -3433,6 +3434,20 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACS\testag.aspx.designer.vb">
+      <DependentUpon>testag.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\testag.aspx.vb">
+      <DependentUpon>testag.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="ACS\agreement.aspx.designer.vb">
+      <DependentUpon>agreement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\agreement.aspx.vb">
+      <DependentUpon>agreement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ACS\test03.aspx.designer.vb">
       <DependentUpon>test03.aspx</DependentUpon>
     </Compile>
@@ -3445,13 +3460,6 @@
     </Compile>
     <Compile Include="ACS\test02.aspx.vb">
       <DependentUpon>test02.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ACS\test01.aspx.designer.vb">
-      <DependentUpon>test01.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ACS\test01.aspx.vb">
-      <DependentUpon>test01.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ADMIN\branchpermissionremove.aspx.designer.vb">

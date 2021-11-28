@@ -44,6 +44,7 @@ Public Class EDI
 
         Return result
     End Function
+
     Public Function SaveTTForD365AndGetJson(invoiceno As String, duedate As String,
                                             cost As Double, branch As String, usercode As String,
                                             vendor As String, carno As String, terminal As String) As String
@@ -84,7 +85,40 @@ Public Class EDI
 
         Return result
     End Function
+    Public Function EDI_TTCost_SaveV2(invoicedate As String, duedate As String,
+                                            usercode As String) As String
 
+        Dim result As String = ""
+        Dim dt As New DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_datacenter").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "EDI_TTCost_SaveV2"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@invoicedate", SqlDbType.VarChar).Value = invoicedate
+        cmd.Parameters.Add("@duedate", SqlDbType.VarChar).Value = duedate
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'Try
+        '    adp.SelectCommand = cmd
+        '    adp.Fill(ds)
+        '    dt = ds.Tables(0)
+        'Catch ex As Exception
+        '    Throw ex
+        'End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
     Public Function SaveCnDnAdjustCostForD365AndGetJson(invoiceno As String, usercode As String) As String
 
         Dim result As String = ""

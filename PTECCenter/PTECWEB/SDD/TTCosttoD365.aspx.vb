@@ -112,32 +112,39 @@ Public Class TTCostToD365
         invoicedate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
         duedate = txtDueDate.Text.Substring(6, 4) & txtDueDate.Text.Substring(3, 2) & txtDueDate.Text.Substring(0, 2)
         Dim lbl As Label
-        For i = 0 To gvData.Rows.Count - 1
-            Dim row As GridViewRow = gvData.Rows(i)
-            'Dim id As String = row.Cells(0).Text
-            'Dim chkSelect As CheckBox = DirectCast(row.FindControl("chk"), CheckBox)
-            invoiceno = CType(row.FindControl("lblinvoiceno"), Label)
-            lbl = DirectCast(row.FindControl("lblamount"), Label)
-            cost = Double.Parse(lbl.Text)
-            branch = CType(row.FindControl("lblshipto"), Label)
-            vendor = CType(row.FindControl("lblsupplier"), Label)
-            carno = CType(row.FindControl("lbltruck"), Label)
-            terminal = CType(row.FindControl("lblterminal"), Label)
+        'For i = 0 To gvData.Rows.Count - 1
+        '    Dim row As GridViewRow = gvData.Rows(i)
+        '    'Dim id As String = row.Cells(0).Text
+        '    'Dim chkSelect As CheckBox = DirectCast(row.FindControl("chk"), CheckBox)
+        '    invoiceno = CType(row.FindControl("lblinvoiceno"), Label)
+        '    lbl = DirectCast(row.FindControl("lblamount"), Label)
+        '    cost = Double.Parse(lbl.Text)
+        '    branch = CType(row.FindControl("lblshipto"), Label)
+        '    vendor = CType(row.FindControl("lblsupplier"), Label)
+        '    carno = CType(row.FindControl("lbltruck"), Label)
+        '    terminal = CType(row.FindControl("lblterminal"), Label)
 
-            Try
-                '2. save data and get json
-                objedi.SaveTTForD365AndGetJson(invoiceno.Text, duedate, cost, branch.Text, usercode, vendor.Text, carno.Text, terminal.Text)
+        '    Try
+        '        '2. save data and get json
+        '        objedi.SaveTTForD365AndGetJson(invoiceno.Text, duedate, cost, branch.Text, usercode, vendor.Text, carno.Text, terminal.Text)
 
-                'javaScript = "<script type='text/javascript'>msgalert('บันทึกเรียบร้อย');</script>"
-                'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
-            Catch ex As Exception
-                chkerror = True
-                javaScript = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+        '        'javaScript = "<script type='text/javascript'>msgalert('บันทึกเรียบร้อย');</script>"
+        '        'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+        '    Catch ex As Exception
+        '        chkerror = True
+        '        javaScript = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
+        '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
 
-            End Try
+        '    End Try
 
-        Next
+        'Next
+        Try
+            objedi.EDI_TTCost_SaveV2(invoicedate, duedate, usercode)
+        Catch ex As Exception
+            chkerror = True
+            javaScript = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+        End Try
         If chkerror = False Then
             mydataset = objedi.EDI_TTCOST_Data_for_D365(invoicedate, invoicedate)
             ExportToExcel(mydataset, "TT", invoicedate)
