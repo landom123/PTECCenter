@@ -185,6 +185,24 @@ Partial Public Class AdvanceRequest
     Protected WithEvents txtamount As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbamountmore control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbamountmore As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtamountmore control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtamountmore As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lbbalance control.
     '''</summary>
     '''<remarks>
@@ -311,6 +329,15 @@ Partial Public Class AdvanceRequest
     Protected WithEvents btnClearAdvance As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnAdvanceMore control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAdvanceMore As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''btnApproval control.
     '''</summary>
     '''<remarks>
@@ -399,4 +426,31 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSaveComment As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lbPrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbPrice As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtPrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPrice As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnAddamount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddamount As Global.System.Web.UI.WebControls.Button
 End Class

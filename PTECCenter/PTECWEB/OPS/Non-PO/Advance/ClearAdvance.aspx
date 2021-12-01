@@ -151,6 +151,11 @@
                             &nbsp;   
                             <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                             &nbsp;   
+                            <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
+                            <% if (maintable.Rows(0).Item("statusid") = 1) Or (maintable.Rows(0).Item("statusid") = 4) Then%>
+                            <span class="text-red font-weight-bold text-danger">*** (กรุณากด confirm เพื่อยืนยัน) ***</span>
+                            <% End If %>
+                            <% End If %>
                         </div>
 
                         <div class="col-auto text-right align-self-center">
@@ -161,11 +166,12 @@
                             <button id="btnPrint" class="btn btn-sm  btn-warning" style="color: #495057;" onclick="window.print();" title="Print" runat="server">
                                 <i class="fas fa-print"></i>
                             </button>
+                            <a href="ClearAdvanceMenuList2.aspx" class="btn btn-sm btn-danger " >
+                                <i class="fa fa-tasks" aria-hidden="true"></i></a>
                         </div>
 
                     </div>
                     <hr />
-
                     <div class="row mb-3">
                         <div class="col-2 text-right">
                             <asp:Label ID="lbcodeRef" CssClass="form-label" AssociatedControlID="codeRef" runat="server" Text="codeRef" />
@@ -205,6 +211,9 @@
                         </div>
                         <div class="row">
                             <%=verifier %>
+                        </div>
+                        <div class="row">
+                            <%=now_action %>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -349,17 +358,30 @@
                                 </tr>
                                 <tr>
                                     <th class="text-center" rowspan="2" colspan="2" style="width: 80px !important;">รหัสบัญชี</th>
-                                    <th class="text-center" rowspan="2" colspan="8" style="width: 320px !important;">รายละเอียด</th>
-                                    <th class="text-center" rowspan="2" colspan="5" style="width: 200px !important;">Vendor</th>
-                                    <th class="text-center" colspan="4" style="width: 160px !important;">Dimension</th>
+                                    <th class="text-center" rowspan="2" colspan="7" style="width: 280px !important;">รายละเอียด</th>
+                                    <th class="text-center" rowspan="2" colspan="4" style="width: 160px !important;">Vendor</th>
+                                    <th class="text-center" colspan="6" style="width: 180px !important;">Dimension</th>
                                     <th class="text-center" rowspan="2" colspan="3" style="width: 120px !important;">จำนวนเงิน</th>
-                                    <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important;">%Vat</th>
+                                    <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important;">
+                                        <div class="row">
+                                            <div class="col">
+                                                %Vat
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-check-input chk-img-after" style="margin-left: -0.8rem;" type="checkbox" id="chkVat" runat="server">
+                                                <asp:Label ID="Label6" CssClass="form-check-label" AssociatedControlID="chkVat" runat="server" Text="รอ" />
+                                            </div>
+                                        </div>
+                                    </th>
                                     <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important;">%Tax</th>
 
                                 </tr>
                                 <tr>
                                     <th class="text-center" colspan="2" style="width: 80px !important;">BU.</th>
                                     <th class="text-center" colspan="2" style="width: 80px !important;">PP.</th>
+                                    <th class="text-center" colspan="2" style="width: 80px !important;">PJ.</th>
 
                                 </tr>
                                 <!--  ############## Detail ############### -->
@@ -368,16 +390,18 @@
                                     <% For i = 0 To detailtable.Rows.Count - 1 %>
                                     <tr class="draggable detail" <%--draggable="true"--%> data-status="<%= detailtable.Rows(i).Item("status").ToString() %>" name="<%= detailtable.Rows(i).Item("row").ToString() %>" ondblclick="btnEditDetailClick('<%= detailtable.Rows(i).Item("row").ToString() %>','<%= detailtable.Rows(i).Item("nonpodtl_id").ToString() %>','<%= detailtable.Rows(i).Item("accountcodeid").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("depid").ToString() %>','<%= detailtable.Rows(i).Item("buid").ToString() %>'
-                                                                                        ,'<%= detailtable.Rows(i).Item("ppid").ToString() %>','<%= detailtable.Rows(i).Item("cost").ToString() %>'
+                                                                                        ,'<%= detailtable.Rows(i).Item("ppid").ToString() %>','<%= detailtable.Rows(i).Item("pjid").ToString() %>','<%= detailtable.Rows(i).Item("cost").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("vat_per").ToString() %>','<%= detailtable.Rows(i).Item("tax_per").ToString() %>'
-                                                                                        ,'<%= detailtable.Rows(i).Item("detail").ToString() %>','<%= detailtable.Rows(i).Item("vendorcode").ToString() %>');">
+                                                                                        ,'<%= detailtable.Rows(i).Item("detail").ToString() %>','<%= detailtable.Rows(i).Item("vendorcode").ToString() %>'
+                                                                                        ,'<%= detailtable.Rows(i).Item("invoice").ToString() %>','<%= detailtable.Rows(i).Item("taxid").ToString() %>','<%= detailtable.Rows(i).Item("invoicedate").ToString() %>');">
                                         <%--<tr class="draggable detail" name="<%= detailtable.Rows(i).Item("row").ToString() %>">--%>
                                         <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
-                                        <td colspan="8" style="width: 320px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
+                                        <td colspan="7" style="width: 280px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
                                         <%--<td colspan="2" style="width: 80px !important;" title="<%= detailtable.Rows(i).Item("depname").ToString() %>"><%= detailtable.Rows(i).Item("depname").ToString() %></td>--%>
-                                        <td colspan="5" style="width: 200px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>
+                                        <td colspan="4" style="width: 160px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("buname").ToString() %>"><%= detailtable.Rows(i).Item("buname").ToString() %></td>
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("ppname").ToString() %>"><%= detailtable.Rows(i).Item("ppname").ToString() %></td>
+                                       <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("pjname").ToString() %>"><%= detailtable.Rows(i).Item("pjname").ToString() %></td>
                                         <td colspan="3" style="width: 120px !important; text-align: right;" title="<%= detailtable.Rows(i).Item("cost").ToString() %>"><%= if((detailtable.Rows(i).Item("cost").ToString()) = "0", "", String.Format("{0:n2}", detailtable.Rows(i).Item("cost"))) %>
                                         </td>
                                         <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("vat_per").ToString() %>"><%= detailtable.Rows(i).Item("vat_per").ToString() %></td>
@@ -403,21 +427,8 @@
                                 <tfoot>
                                     <!--  total -->
                                     <tr>
-                                        <td colspan="2" style="width: 80px !important; text-align: right; border-right-width: 0px;">
-                                            <h5>รวม
-                                            </h5>
-                                        </td>
-                                        <td colspan="14" style="width: 560px !important; text-align: center; border-left-width: 0px; border-right-width: 0px;">
-                                            <h5>
-                                                <p id="id01"></p>
-                                            </h5>
-                                        </td>
-                                        <td colspan="4" style="width: 160px !important; border-left-width: 0px;">บาท</td>
-                                        <td colspan="4" style="width: 160px !important; text-align: center;" id="total"><%=total %></td>
-                                    </tr>
-                                    <!--  end total -->
                                     <tr>
-                                        <td colspan="20" style="width: 800px !important;">
+                                        <td colspan="9" style="width: 360px !important;">
                                             <div class="row">
                                                 <div class="col-11" style="margin-left: auto;">
                                                     <input class="form-check-input chk-img-after" type="checkbox" id="chkpayBack" name="pay[1][]" runat="server">
@@ -433,9 +444,14 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td colspan="7" style="width: 280px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px;">
+                                            <h6>รวม
+                                            </h6>
+                                        </td>
+                                        <td colspan="4" style="width: 160px !important; text-align: right;" id="total_amount"><%= total_cost %></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="20" style="width: 800px !important;">
+                                        <td colspan="9" style="width: 360px !important;">
                                             <div class="row">
                                                 <div class="col-11" style="margin-left: auto;">
                                                     <input class="form-check-input chk-img-after" type="checkbox" id="chkdeductSell" name="pay[1][]" runat="server">
@@ -451,6 +467,45 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td colspan="7" style="width: 280px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px;">
+                                            <h6>ภาษีหัก ณ ที่จ่าย (tax)
+                                            </h6>
+                                        </td>
+                                        <td colspan="4" style="width: 160px !important; text-align: right;" id="total_tax"><%= total_tax %></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="20" style="width: 800px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px;">
+                                            <h6>ภาษีมูลค่าเพิ่ม (vat)
+                                            </h6>
+                                        </td>
+                                        <td colspan="4" style="width: 160px !important; text-align: right;" id="total_vat"><%= total_vat %></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="width: 80px !important; text-align: right; border-right-width: 0px; border-top-width: 0px;">
+                                            <h5></h5>
+                                        </td>
+                                        <td colspan="14" style="width: 560px !important; text-align: center; border-left-width: 0px; border-top-width: 0px; border-right-width: 0px;">
+                                            <h5>
+                                                <p id="id01"></p>
+                                            </h5>
+                                        </td>
+                                        <td colspan="4" style="width: 160px !important; text-align: right; border-left-width: 0px; border-top-width: 0px; padding-right: 5px;">
+                                            <b>
+                                            <h6>รวมทั้งสิ้น</h6>
+                                            </b>
+                                        </td>
+                                        <td colspan="4" style="width: 160px !important; text-align: right;" id="total"><%= total %></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="20" style="width: 800px !important; text-align: right; padding-right: 5px; border-top-width: 0px;">
+                                            <h6>รวมยอดขอเคลียร์ทั้งหมด</h6>
+                                        </td>
+                                        <td colspan="4" style="width: 160px !important; text-align: right;" id="total_clear"><%= total_clear %></td>
+                                    </tr>
+                                    <!--  end total -->
+                                    <tr>
+                                        <td colspan="24" style="width: 900px !important; height: 22px; text-align: center; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px;"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="6" style="width: 240px !important; border-bottom-width: 0px;">
@@ -511,7 +566,7 @@
                             <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
                             <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
                             <% End If %>
-                            <% If verify And maintable.Rows(0).Item("statusid") = 15 Then%>
+                            <% If verify And maintable.Rows(0).Item("statusid") = 2 Then%>
                             <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" />
                             <% End If %>
                             <% If ((verify Or approval)) Then%>
@@ -645,7 +700,7 @@
         </button>
         <% ElseIf maintable.Rows(0).Item("statusid") = 8 Then %>
         <!-- 8 = รอเอกสารตัวจริง-->
-        <button class="btn btn-sm " style="color: #ffc107; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnWDoc" runat="server" title="waiting for documents">
+        <button class="btn btn-sm " style="color: #ffc107; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnWDoc" runat="server" title="ยืนยันรับเอกสาร">
             <i class="fas fa-check-circle shadow" style="border-radius: 100%;"></i>
         </button>
         <% End If %>
@@ -691,6 +746,10 @@
                         <asp:Label ID="lbPP" CssClass="form-label" AssociatedControlID="cboPP" runat="server" Text="Purpose" />
                         <asp:DropDownList class="form-control" ID="cboPP" runat="server"></asp:DropDownList>
                     </div>
+                     <div class="form-group">
+                        <asp:Label ID="lbPJ" CssClass="form-label" AssociatedControlID="cboPJ" runat="server" Text="Project" />
+                        <asp:DropDownList class="form-control" ID="cboPJ" runat="server"></asp:DropDownList>
+                    </div>
                     <div class="form-group">
                         <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน (ก่อน VAT)" />
                         <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0"></asp:TextBox>
@@ -732,6 +791,20 @@
                     </div>
 
                     <!--  ############## End Detail ############### -->
+                    <hr />
+                    <h3>Invoice</h3>
+                    <div class="form-group">
+                        <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
+                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
+                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
+                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server"></asp:TextBox>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
@@ -751,6 +824,12 @@
     <script type="text/javascript">
 
         jQuery('[id$=txtDuedate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+        jQuery('[id$=txtinvoicedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
             scrollInput: false,
@@ -847,10 +926,15 @@
             return true;
         }
         function checkUnSave() {
-            if (cntdetail == 1) {
-                $(".nonpounsaved").show();
-            } else {
-                $(".nonpounsaved").hide();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const nonpocode = urlParams.get('NonpoCode');
+            if (nonpocode) {
+                if (cntdetail == 1) {
+                    $(".nonpounsaved").show();
+                } else {
+                    $(".nonpounsaved").hide();
+                }
             }
         }
         <%--function checkStatusNonpo() {
@@ -1095,12 +1179,16 @@
             $('#<%= cboDep.ClientID%>').val(0);
             $('#<%= cboBU.ClientID%>').val(0);
             $('#<%= cboPP.ClientID%>').val(0);
+            $('#<%= cboPJ.ClientID%>').val(0);
             $('#<%= txtPrice.ClientID%>').val('');
             $('#<%= txtVat.ClientID%>').val('7');
             $('#<%= txtTax.ClientID%>').val('');
             $('#<%= txtDetail.ClientID%>').val('');
             $('#<%= cboVendor.ClientID%>').val('');
             $('#<%= txtVendor.ClientID%>').val('');
+            $('#<%= txtinvoiceno.ClientID%>').val('');
+            $('#<%= txttaxid.ClientID%>').val('');
+            $('#<%= txtinvoicedate.ClientID%>').val('');
 
             $('.form-control').selectpicker('refresh');
         }
@@ -1110,7 +1198,7 @@
             let element = document.getElementById(id);
             element.value = valueToSelect;
         }
-        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, cost, vat, tax, detail, vendorcode) {
+        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate) {
             console.log(advancedetailid);
             console.log(accountcodeid);
             console.log(depid);
@@ -1124,6 +1212,7 @@
             const dep = '<%= cboDep.ClientID%>';
             const bu = '<%= cboBU.ClientID%>';
             const pp = '<%= cboPP.ClientID%>';
+            const pj = '<%= cboPJ.ClientID%>';
             const vendor = '<%= cboVendor.ClientID%>';
             $('#exampleModal').modal('show');
 
@@ -1131,6 +1220,7 @@
             selectElement(dep, depid);
             selectElement(bu, buid);
             selectElement(pp, ppid);
+            selectElement(pj, pjid);
             selectElement(vendor, vendorcode);
           <%--  $('#<%= cboVendor.ClientID%>').filter(function () {
                 //may want to use $.trim in here
@@ -1149,6 +1239,10 @@
             $('#<%= txtVat.ClientID%>').val(vat);
             $('#<%= txtTax.ClientID%>').val(tax);
             $('#<%= txtDetail.ClientID%>').val(detail);
+
+            $('#<%= txtinvoiceno.ClientID%>').val(invoice);
+            $('#<%= txttaxid.ClientID%>').val(taxid);
+            $('#<%= txtinvoicedate.ClientID%>').val(invoicedate);
             $('.form-control').selectpicker('refresh');
             /*__doPostBack('setFromDetail', $(row).attr('name'));
     */
@@ -1178,7 +1272,7 @@
 
         }
         function invalidtotal() {
-            alertWarning('ไม่สามารถบันทึกยอดเกินที่กำหนดได้')
+            alertWarning('ไม่สามารถบันทึก เกินยอด')
             //event.preventDefault();
             //event.stopPropagation();
             //$('.DetailArea tr').each(function (index, tr) {
@@ -1241,6 +1335,10 @@
             cntdetail = 1; //show unsave
             checkUnSave(); //show unsave
         });
+        $('#<%= chkVat.ClientID%>').on('change', function () {
+            cntdetail = 1; //show unsave
+            checkUnSave(); //show unsave
+        });
         $("#btnAddDetail").click(function () {
             //alert("The paragraph was clicked.");
             let row = $('#<%= row.ClientID%>').val();
@@ -1253,15 +1351,21 @@
             const buname = $("#<%= cboBU.ClientID%> option:selected").text();
             const ppid = $('#<%= cboPP.ClientID%>').val();
             const ppname = $("#<%= cboPP.ClientID%> option:selected").text();
+            const pjid = $('#<%= cboPJ.ClientID%>').val();
+            const pjname = $("#<%= cboPJ.ClientID%> option:selected").text();
             const cost = $('#<%= txtPrice.ClientID%>').val();
             const vat = $('#<%= txtVat.ClientID%>').val();
             const tax = $('#<%= txtTax.ClientID%>').val();
             const detail = $('#<%= txtDetail.ClientID%>').val();
             const vendorname = $("#<%= cboVendor.ClientID%> option:selected").text();
             const vendorcode = $('#<%= txtVendor.ClientID%>').val();
+
+            const invoice = $('#<%= txtinvoiceno.ClientID%>').val();
+            const taxid = $('#<%= txttaxid.ClientID%>').val();
+            const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
             const status = $(".DetailArea tr[name='" + row + "']").attr("data-status")
 
-            alert('cost' + cost);
+            //alert('cost' + cost);
 
             if (cost != 0 && accountcodeid == 0) {
                 alertWarning('กรุณาเลือกรหัสบัญชี');
@@ -1273,11 +1377,12 @@
             //var params = "{'row': '" + row + "'}";
             var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
                 "','accountcode': '" + accountcode + "','depid': '" + depid + "','depname': '" + depname +
-                "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname +
+                "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + pjname +
                 "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
-                "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode + "'}";
+                "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
+                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "'}";
 
-            alert(params);
+            //alert(params);
 
             $.ajax({
                 type: "POST",
@@ -1295,17 +1400,19 @@
                             row = msg.d
 
                             $('.DetailArea').append(
-                                '<tr class="draggable detail notPrint" style="background-color: #d8d8d8;" data-status="new"  name="' + row + '" ondblclick=\'btnEditDetailClick("' + row + '","' + nonpodtl_id + '","' + accountcodeid + '","' + depid + '","' + buid + '","' + ppid + '","' + cost + '","' + vat + '","' + tax + '","' + detail + '","' + vendorcode + '");\' > ' +
+                                '<tr class="draggable detail notPrint" style="background-color: #d8d8d8;" data-status="new"  name="' + row + '" ondblclick=\'btnEditDetailClick("' + row + '","' + nonpodtl_id + '","' + accountcodeid + '","' + depid + '","' + buid + '","' + ppid + '","' + pjid + '","' + cost + '","' + vat + '","' + tax + '","' + detail + '","' + vendorcode + '","' + invoice + '","' + taxid + '","' + invoicedate + '");\' > ' +
                                 //'<tr class="draggable detail" draggable="true" name="' + row + '">' +
                                 '<td colspan="2" style="width: 80px !important; height: 22px;" title="' + accountcode + '">' + (accountcodeid == '0' ? '' : accountcodeid) +
                                 '</td>' +
-                                '<td colspan="8" style="width: 320px !important;" title="' + detail + '"><span>' + detail + '</span>' +
+                                '<td colspan="7" style="width: 280px !important;" title="' + detail + '"><span>' + detail + '</span>' +
                                 '</td>' +
-                                '<td colspan="5" style="width: 200px !important;" title="' + vendorname + '">' + vendorcode +
+                                '<td colspan="4" style="width: 160px !important;" title="' + vendorname + '">' + vendorcode +
                                 '</td>' +
                                 '<td colspan="2" style="width: 80px !important;" title="' + buname + '">' + buname +
                                 '</td>' +
                                 '<td colspan="2" style="width: 80px !important;" title="' + ppname + '">' + ppname +
+                                '</td>' +
+                                '<td colspan="2" style="width: 80px !important;" title="' + pjname + '">' + pjname +
                                 '</td>' +
                                 '<td colspan="3" style="width: 120px !important;" title="' + cost + '">' + (cost == '0' ? '' : cost) +
                                 '</td>' +
@@ -1329,13 +1436,15 @@
                             $(".DetailArea tr[name='" + row + "']").html(
                                 '<td colspan="2" style="width: 80px !important; height: 22px;" title="' + accountcode + '">' + (accountcodeid == '0' ? '' : accountcodeid) +
                                 '</td>' +
-                                '<td colspan="8" style="width: 320px !important;" title="' + detail + '"><span>' + detail + '</span>' +
+                                '<td colspan="7" style="width: 280px !important;" title="' + detail + '"><span>' + detail + '</span>' +
                                 '</td>' +
-                                '<td colspan="5" style="width: 200px !important;" title="' + vendorname + '">' + vendorcode +
+                                '<td colspan="4" style="width: 160px !important;" title="' + vendorname + '">' + vendorcode +
                                 '</td>' +
                                 '<td colspan="2" style="width: 80px !important;" title="' + buname + '">' + buname +
                                 '</td>' +
                                 '<td colspan="2" style="width: 80px !important;" title="' + ppname + '">' + ppname +
+                                '</td>' +
+                                '<td colspan="2" style="width: 80px !important;" title="' + pjname + '">' + pjname +
                                 '</td>' +
                                 '<td colspan="3" style="width: 120px !important;" title="' + cost + '">' + (cost == '0' ? '' : cost) +
                                 '</td>' +
@@ -1352,7 +1461,7 @@
                                 '</td>'
                             );
 
-                            $(".DetailArea tr[name='" + row + "']").attr("ondblclick", 'btnEditDetailClick("' + row + '", "' + nonpodtl_id + '", "' + accountcodeid + '", "' + depid + '", "' + buid + '", "' + ppid + '", "' + cost + '","' + vat + '","' + tax + '", "' + detail + '", "' + vendorcode + '");');
+                            $(".DetailArea tr[name='" + row + "']").attr("ondblclick", 'btnEditDetailClick("' + row + '", "' + nonpodtl_id + '", "' + accountcodeid + '", "' + depid + '", "' + buid + '", "' + ppid + '", "' + pjid + '", "' + cost + '","' + vat + '","' + tax + '", "' + detail + '", "' + vendorcode + '","' + invoice + '","' + taxid + '","' + invoicedate + '");');
                             if ($(".DetailArea tr[name='" + row + "']").attr("data-status") == "read") {
                                 $(".DetailArea tr[name='" + row + "']").attr("data-status", "edit");
                                 $(".DetailArea tr[name='" + row + "']").css("background-color", "#d8d8d8");
@@ -1364,10 +1473,10 @@
                         checkUnSave(); //show unsave
 
                         $('#exampleModal').modal('hide')
-                        alert('yes');
+                        //alert('yes');
                         clearfromadddetail();
                     } else {
-                        alertWarning('fail')
+                        alertWarning('res fail')
                     }
                 },
                 error: function (msg) {
