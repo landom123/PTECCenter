@@ -26,7 +26,7 @@ Public Class AdvanceRequest
     Dim sm_code As String
     Dim am_code As String
 
-    Dim account_code As String = "SPP"
+    Public account_code As String = "SPP"
 
     Public itemtable As DataTable
     Public detailtable As DataTable '= createtable()
@@ -73,6 +73,23 @@ Public Class AdvanceRequest
 
                     chkuser(detailtable.Rows(0).Item("createby"))
 
+                    account_code = objNonPO.NonPOPermisstionAccount(Request.QueryString("ADV"))
+
+                    If (account_code.IndexOf(Session("usercode").ToString) > -1) And
+                    (detailtable.Rows(0).Item("statusrqid") = 3) Then
+                        Session("status") = "account"
+                        verify = True
+
+                    End If
+
+                    If (detailtable.Rows(0).Item("statusrqid") = 2) Then
+                        PermissionOwner = chkPermissionNonPO(Request.QueryString("ADV"))
+
+                        at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
+                        approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(0).Item("approver").ToString
+                        verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
+                    End If
+
                     If (Session("usercode") = md_code Or
                     Session("usercode") = fm_code Or
                     Session("usercode") = dm_code Or
@@ -83,24 +100,6 @@ Public Class AdvanceRequest
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
                         'Dim SearchForThis As String = "DEF"
                         'Dim FirstCharacter As Integer = SearchWithinThis.IndexOf(SearchForThis)
-                        PermissionOwner = chkPermissionNonPO(Request.QueryString("ADV"))
-                        'deadline = PermissionOwner.Tables(0).Rows(0).Item("deadline").ToString
-
-                        'For Each rows As DataRow In PermissionOwner.Tables(0).Rows
-                        '    If rows("OwnerStatus") Then
-                        '        ownerapproval += rows("sendto").ToString + ","
-                        '    End If
-                        'Next rows
-                        'If ownerapproval.Length > 0 Then
-                        '    ownerapproval = ownerapproval.Remove(ownerapproval.Length - 1, 1) 'ใช้ในหน้า html
-                        'End If
-                        If PermissionOwner.Tables(0).Rows.Count > 0 Then
-                            at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
-                            approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(0).Item("approver").ToString
-                            verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
-                        End If
-
-
 
 
                         For Each row As DataRow In PermissionOwner.Tables(0).Rows
@@ -141,9 +140,9 @@ Public Class AdvanceRequest
 
                         Next row
 endprocess:
-                    ElseIf (account_code.IndexOf(Session("usercode").ToString) > -1) And (detailtable.Rows(0).Item("statusrqid") = 3) Then
-                        Session("status") = "account"
-                        verify = True
+                        'ElseIf (account_code.IndexOf(Session("usercode").ToString) > -1) And (detailtable.Rows(0).Item("statusrqid") = 3) Then
+                        '    Session("status") = "account"
+                        '    verify = True
                     End If
 
                     showdata(detailtable)
@@ -164,6 +163,9 @@ endprocess:
             detailtable = Session("detailtable_advancerq")
             AttachTable = Session("attatch_advancerq")
             CommentTable = Session("comment_advancerq")
+
+
+            'showdata(detailtable)
         End If
 
         SetMenu()
@@ -237,6 +239,7 @@ endprocess:
 
         dt.Columns.Add("advancerequestcode", GetType(String))
         dt.Columns.Add("amount", GetType(Double))
+        dt.Columns.Add("amount_more", GetType(Double))
         dt.Columns.Add("statusrqid", GetType(Integer))
         dt.Columns.Add("statusrqname", GetType(String))
 
@@ -288,6 +291,7 @@ endprocess:
                 btnAddDoc.Visible = False
                 btnEdit.Visible = True
                 btnClearAdvance.Visible = False
+                btnAdvanceMore.Visible = False
 
                 If createby = Session("userid") Then
                     btnAddAttatch.Visible = True
@@ -303,6 +307,7 @@ endprocess:
                 btnAddDoc.Visible = False
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
+                btnAdvanceMore.Visible = False
 
                 btnAddAttatch.Visible = False
 
@@ -314,6 +319,7 @@ endprocess:
                 btnAddDoc.Visible = False
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
+                btnAdvanceMore.Visible = False
 
                 If account_code.IndexOf(Session("usercode").ToString) > -1 Then
                     btnAddAttatch.Visible = True
@@ -328,6 +334,7 @@ endprocess:
                 btnAddDoc.Visible = False
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
+                btnAdvanceMore.Visible = False
 
                 btnAddAttatch.Visible = False
 
@@ -340,6 +347,7 @@ endprocess:
                 btnAddDoc.Visible = False
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = True
+                btnAdvanceMore.Visible = True
 
                 btnAddAttatch.Visible = False
 
@@ -351,6 +359,7 @@ endprocess:
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
                 txtStatusRq.BackColor = Color.GreenYellow
+                btnAdvanceMore.Visible = False
 
                 btnAddAttatch.Visible = False
 
@@ -362,6 +371,7 @@ endprocess:
                 btnEdit.Visible = False
                 btnClearAdvance.Visible = False
                 txtStatusRq.BackColor = Color.LightGray
+                btnAdvanceMore.Visible = False
 
                 btnAddAttatch.Visible = False
 
@@ -392,7 +402,7 @@ endprocess:
                 txtamount.Attributes.Remove("type")
                 txtamount.Text = String.Format("{0:n2}", .Item("amount"))
             End If
-
+            txtamountmore.Text = String.Format("{0:n2}", .Item("amount_more"))
             txtdetail.Text = .Item("detail").ToString
 
         End With
@@ -647,6 +657,29 @@ endprocess:
         End Try
         Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
 
+endprocess:
+    End Sub
+
+    Private Sub btnAddamount_Click(sender As Object, e As EventArgs) Handles btnAddamount.Click
+        Dim objNonPO As New NonPO
+
+        Dim more As Double
+        Try
+            more = Double.Parse(txtPrice.Text)
+        Catch ex As Exception
+            more = 0
+        End Try
+        Try
+            objNonPO.NonPO_AdvanceRequest_More(Request.QueryString("ADV"), more, Session("usercode"))
+            Session("status") = "read"
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('AdvanceRequest_More fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
 endprocess:
     End Sub
 End Class

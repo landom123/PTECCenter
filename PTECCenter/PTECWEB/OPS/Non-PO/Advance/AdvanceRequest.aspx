@@ -20,8 +20,6 @@
         .HO, .CO {
             display: none;
         }
-
-
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -141,17 +139,50 @@
                                     <div class="row form-group">
 
                                         <div class="col-lg-2 col-form-label">
-                                            <asp:Label ID="lbtxtamount" CssClass="form-label" AssociatedControlID="txtamount" runat="server" Text="จำนวนเงิน" />
+                                            <asp:Label ID="lbtxtamount" CssClass="form-label" AssociatedControlID="txtamount" runat="server" Text="ยอดขอเบิก" />
                                             <asp:Label ID="lbMandatoryamount" CssClass="text-danger " AssociatedControlID="txtamount" runat="server" Text="*" />
                                         </div>
                                         <div class="col-lg-10">
-                                            <asp:TextBox class="form-control" ID="txtamount" runat="server" type="number" min="0" step="any" required></asp:TextBox>
-                                            <div class="invalid-feedback">กรุณาใส่จำนวนเงิน</div>
+                                            <div class="input-group sm-">
+
+                                                <asp:TextBox class="form-control" ID="txtamount" runat="server" type="number" min="0" step="any" required></asp:TextBox>
+                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
+                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../OPS/jobs.aspx?jobno=','ระบุเลขที่ OPS')">Export</button>
+                                                </div>
+                                                <% End If %>
+                                                <% End If %>
+                                                <div class="invalid-feedback">กรุณาใส่จำนวนเงิน</div>
+                                            </div>
                                         </div>
                                     </div>
                                     <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                    <div class="row form-group">
 
+                                    <% If Not String.IsNullOrEmpty(detailtable.Rows(0).Item("amount_more")) Then%>
+                                    <div class="row form-group">
+                                        <div class="col-lg-2 col-form-label">
+                                            <asp:Label ID="lbamountmore" CssClass="form-label" AssociatedControlID="txtamountmore" runat="server" Text="เบิกเพิ่มเติม" />
+                                        </div>
+                                        <div class="col-lg-10">
+
+                                            <div class="input-group sm-">
+                                                <asp:TextBox class="form-control" ID="txtamountmore" runat="server" ReadOnly="true"></asp:TextBox>
+                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
+                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../OPS/jobs.aspx?jobno=','ระบุเลขที่ OPS')">Export</button>
+                                                </div>
+                                                <% End If %>
+                                                <% End If %>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <% End If %>
+
+                                    <div class="row form-group">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbbalance" CssClass="form-label" AssociatedControlID="txtbalance" runat="server" Text="ยอดคงค้างชำระ" />
                                         </div>
@@ -185,6 +216,9 @@
                                     <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน" />
                                     <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" />
                                     <asp:Button ID="btnClearAdvance" class="btn btn-warning" runat="server" Text="เคลียร์ค่าใช้จ่าย" />
+                                    <button type="button" class="btn btn-secondary" id="btnAdvanceMore" runat="server" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false" data-whatever="new">ขอเบิกเพิ่มเติม</button>
+
+
                                     <% End If %>
                                     <% If Not Request.QueryString("ADV") Is Nothing And detailtable.Rows.Count > 0 Then%>
                                     <% If Session("status") = "write" And approval And detailtable.Rows(0).Item("statusrqid") = 2 Then%>
@@ -265,9 +299,26 @@
                                 </div>
 
                                 <% If cntdt > 0 Then%>
-                                <span class="text-red font-weight-bold text-danger">*** (รายการที่เบิกเงินแล้ว แต่ยังไม่เคลียร์ยอดค้างชำระ) ***</span>
-                                <h4>ทั้งหมด <% =cntdt%> รายการ </h4>
-                                <h4>ยอดรวมค้างชำระ <b><% =String.Format("{0:n4}", sumitem)%></b> บาท</h4>
+                                <div class="row">
+                                    <div class="col text-left align-self-center">
+                                        <span class="text-red font-weight-bold text-danger">*** (รายการที่เบิกเงินแล้ว แต่ยังไม่เคลียร์ยอดค้างชำระ) ***</span>
+                                    </div>
+                                    <div class="col-auto text-right align-self-center">
+                                        <%--<a href="ClearAdvanceMenuList2.aspx">ดูรายการที่เคยขอเคีลย์ทั้งหมด</a>--%>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h4>ทั้งหมด <% =cntdt%> รายการ </h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+
+                                        <h4>ยอดรวมค้างชำระ <b><% =String.Format("{0:n4}", sumitem)%></b> บาท</h4>
+                                    </div>
+                                </div>
+
                                 <% End If %>
                             </div>
 
@@ -378,6 +429,32 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ขอเบิกเพิ่มเติม</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--  ##############  Detail ############### -->
+
+                    <div class="form-group">
+                        <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงินที่ขอเบิก" />
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0"></asp:TextBox>
+                        <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
+                    </div>
+                    <!--  ############## End Detail ############### -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btnAddamount" class="btn btn-primary" runat="server" Text="Save" />
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
@@ -386,20 +463,20 @@
     <script src="<%=Page.ResolveUrl("../js/NonPO.js")%>"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            
+
 
             <% If Not AttachTable Is Nothing Then %>
                 <% For i = 0 To AttachTable.Rows.Count - 1 %>
                     <% If AttachTable.Rows(i).Item("checked") = 1 Then %>
-             $('.attatchItems #<%=AttachTable.Rows(i).Item("id")%>').prop('checked', true);
+            $('.attatchItems #<%=AttachTable.Rows(i).Item("id")%>').prop('checked', true);
                     <% Else %>
             $('.attatchItems #<%=AttachTable.Rows(i).Item("id")%>').prop('checked', false);
                     <% End If %>
                 <% Next i %>
              <% End if %>
 
-             
-         });
+
+        });
         function stoppedTyping() {
             if (document.getElementById('<%= txtComment.ClientID%>').value.length > 0) {
                 document.getElementById('<%= btnSaveComment.ClientID%>').disabled = false;
@@ -504,6 +581,61 @@
                 '',
                 'warning'
             )
+        }
+        function disApproval() {
+
+           <%-- /*alert(GridView);*/
+            var approvalcode = document.getElementById('<%= txtApprovalcode.ClientID%>').value
+            var usercode = "<%= Session("usercode")%>";
+
+            Swal.fire({
+                input: 'textarea',
+                inputLabel: 'ไม่อนุมัติเนื่องจาก',
+                inputPlaceholder: 'ใส่ข้อความ . . .',
+                inputAttributes: {
+                    'aria-label': 'ใส่ข้อความ.'
+                },
+                preConfirm: () => {
+                    if (!document.getElementById('swal2-input').value) {
+                        // Handle return value 
+                        Swal.showValidationMessage('First input missing')
+                    }
+                },
+                showCancelButton: true
+            }).then((result) => {
+                console.log(result.value);
+                if (result.isConfirmed) {
+                    var params = "{'approvalcode': '" + approvalcode + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
+                    console.log(params);
+                    $.ajax({
+                        type: "POST",
+                        url: "../approval/approval.aspx/disApprovalByCode",
+                        async: true,
+                        data: params,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            console.log(msg.d)
+                            if (msg.d) {
+                                swal.fire({
+                                    title: "success!",
+                                    text: "",
+                                    icon: "success"
+                                }).then(function () {
+                                    window.location.href = location.href;
+                                });
+                            } else {
+                                alertWarning('fail')
+                            }
+                        },
+                        error: function () {
+                            alertWarning('fail')
+                        }
+                    });
+                }
+            })
+
+            return false;--%>
         }
     </script>
 </asp:Content>
