@@ -55,4 +55,19 @@
         BindData()
     End Sub
 
+    <System.Web.Services.WebMethod>
+    Public Shared Function dup(ByVal nonpocode As String, ByVal usercode As String, ByVal note As String)
+        Dim objnonpo As New NonPO
+        Try
+            objnonpo.NonPO_Payment_Duplicate(nonpocode, usercode, note)
+
+        Catch ex As Exception
+            Return "fail"
+
+            GoTo endprocess
+        End Try
+        Return "success"
+endprocess:
+    End Function
+
 End Class

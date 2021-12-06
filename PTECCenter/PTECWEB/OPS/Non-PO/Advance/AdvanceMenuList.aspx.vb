@@ -243,7 +243,7 @@ Public Class AdvanceMenuList
     Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
         Session("cboWorking_job") = cboWorking.SelectedItem.Value
         Dim objjob As New jobs
-        itemtable = objjob.JobList(Session("usercode"), cboWorking.SelectedItem.Value)
+        'itemtable = objjob.JobList(Session("usercode"), cboWorking.SelectedItem.Value)
         Session("joblist") = itemtable
         BindData()
 

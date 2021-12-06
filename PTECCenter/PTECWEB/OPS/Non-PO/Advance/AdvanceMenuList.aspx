@@ -26,7 +26,7 @@
 
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: deeppink; color: white">
-                    <li class="breadcrumb-item">รายการ Advance
+                    <li class="breadcrumb-item">รายการขอเบิก Advance
                     </li>
                 </ol>
 
@@ -44,11 +44,11 @@
 
                 <div class="row">
                     <div class="col-auto" style="margin-left: auto;">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server" onchange="valueChanged()">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server" >
                         <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
                     </div>
                     <div class="col-auto">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server" onchange="HOvalueChanged(this)">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server" >
                         <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
                     </div>
                 </div>
