@@ -50,6 +50,24 @@ Partial Public Class agreement
     Protected WithEvents btnCancel As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnChange control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnChange As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnApprove control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnApprove As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''txtprojectnoFind control.
     '''</summary>
     '''<remarks>
@@ -104,13 +122,13 @@ Partial Public Class agreement
     Protected WithEvents txtProjectDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtProjectManager control.
+    '''cboPrjManager control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtProjectManager As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboPrjManager As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''txtBranchCode control.
@@ -122,13 +140,13 @@ Partial Public Class agreement
     Protected WithEvents txtBranchCode As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtProjectStatus control.
+    '''cboPrjStatus control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtProjectStatus As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboPrjStatus As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''txtAgreeNo control.
@@ -149,22 +167,13 @@ Partial Public Class agreement
     Protected WithEvents txtAgreeDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''btnDel control.
+    '''gvClient control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnDel As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''btnClientInfo control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnClientInfo As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents gvClient As Global.System.Web.UI.WebControls.GridView
 
     '''<summary>
     '''cboClient control.

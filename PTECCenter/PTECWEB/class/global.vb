@@ -96,6 +96,18 @@ Module global_module
         End Try
     End Sub
 
+
+    Public Sub SetCboProjectStatus(obj As Object)
+        Dim ag As New Agree
+
+        obj.DataSource = ag.Ag_Status_list
+        obj.DataValueField = "agstatusid"
+        obj.DataTextField = "agstatus"
+        obj.DataBind()
+
+
+    End Sub
+
     Public Sub SetCboAssetGroup(obj As Object)
         Dim assets As New Assets
 

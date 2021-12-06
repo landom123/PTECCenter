@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="ACS\titlename.aspx" />
     <Content Include="ACS\testag.aspx" />
     <Content Include="ACS\agreement.aspx" />
     <Content Include="ACS\test03.aspx" />
@@ -3434,6 +3435,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACS\titlename.aspx.designer.vb">
+      <DependentUpon>titlename.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\titlename.aspx.vb">
+      <DependentUpon>titlename.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ACS\testag.aspx.designer.vb">
       <DependentUpon>testag.aspx</DependentUpon>
     </Compile>
