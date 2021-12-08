@@ -7,6 +7,7 @@ Public Class agreement
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public mainClient As DataTable = createClient()
+    Public mainAssets As DataTable = createClient()
     Public editable As DataTable = create()
     Public usercode, username As String
     Public agreeid As Double = 0
@@ -21,8 +22,16 @@ Public Class agreement
         'txtCloseDate.Attributes.Add("readonly", "readonly")
 
         'Dim objsupplier As New Supplier
+        If Session("mainclient") IsNot Nothing Then
+            mainClient = Session("mainclient")
+        End If
+        If Session("mainassets") IsNot Nothing Then
+            mainAssets = Session("mainassets")
+        End If
+        gvClientBindData()
 
-        If IsPostBack() Then
+
+            If IsPostBack() Then
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
                 Session("menulist") = menutable
@@ -36,7 +45,6 @@ Public Class agreement
             SetCboUsers(cboPrjManager)
             SetCboProjectStatus(cboPrjStatus)
             SetCboClient(cboClient)
-            gvClientBindData()
 
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
@@ -97,6 +105,28 @@ Public Class agreement
         End If
     End Sub
 
+
+    Public Sub btnAddAssets()
+        Dim clientid As Double
+        Dim clienttable As DataTable
+        clientid = cboClient.SelectedItem.Value
+        clienttable = FindClientInfo(clientid)
+        If clienttable IsNot Nothing Then
+            AddAssets()
+            'gvAssetsBindData()
+        End If
+    End Sub
+
+    Private Sub AddAssets()
+        Dim newrow As DataRow = mainassets.NewRow
+        newrow("clientid") = 0
+        newrow("clientno") = ""
+        newrow("client") = ""
+        newrow("clientaddress") = ""
+        mainAssets.Rows.Add(newrow)
+
+        Session("mainassets") = mainAssets
+    End Sub
     Private Sub AddClient(clienttable As DataTable)
         Dim newrow As DataRow = mainClient.NewRow
         newrow("clientid") = clienttable.Rows(0).Item("clientid")

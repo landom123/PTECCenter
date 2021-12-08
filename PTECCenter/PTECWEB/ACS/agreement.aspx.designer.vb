@@ -192,4 +192,256 @@ Partial Public Class agreement
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnAdddetail As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''lblAsssetsID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblAsssetsID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboAssetsType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboAssetsType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtAssetsDocNo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtAssetsDocNo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtLandNo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtLandNo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtSurveyNo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSurveyNo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox2 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox3 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox4 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox5 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox6 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox7 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox8 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''LinkButton2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkButton2 As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''DropDownList1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DropDownList1 As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''Textbox9 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox9 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox10 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox11 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox11 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox12 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox12 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox13 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox13 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox14 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox14 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox15 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox15 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox16 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox17 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox17 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox18 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Textbox19 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Textbox19 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''LinkButton3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkButton3 As Global.System.Web.UI.WebControls.LinkButton
 End Class

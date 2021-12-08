@@ -65,19 +65,19 @@
   <div class="tab-content">  
     <div id="info" class="tab-pane fade show active" style="background-color:ghostwhite">  
       <div class="row">
-        <div class="col-4">
+        <div class="col-md-4">
             เลขที่โครงการ
             <div class="input-group sm-3">
                 <asp:TextBox class="form-control" ID="txtProjectNo" runat="server"></asp:TextBox>    
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
             วันที่เริ่มโครงการ
             <div class="input-group sm-3">
                 <asp:TextBox class="form-control" ID="txtProjectDate" runat="server"></asp:TextBox>    
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
             ผจก.โครงการ
             <div class="input-group sm-3">
                 <asp:DropDownList ID="cboPrjManager" class="form-control" runat="server" AutoPostBack="true">
@@ -86,13 +86,13 @@
         </div>
      </div>
       <div class="row">
-        <div class="col-4">
+        <div class="col-md-4">
             รหัสสาขา
             <div class="input-group sm-3">
                 <asp:TextBox class="form-control" ID="txtBranchCode" placeholder="BRxxx" runat="server"></asp:TextBox>    
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
             สถานะโครงการ
             <div class="input-group sm-3">
                 <asp:DropDownList ID="cboPrjStatus" class="form-control" runat="server" AutoPostBack="true">
@@ -101,13 +101,13 @@
         </div>
      </div><p></p>
       <div class="row">
-        <div class="col-4">
+        <div class="col-md-4">
             เลขที่สัญญา
             <div class="input-group sm-3">
                 <asp:TextBox class="form-control" ID="txtAgreeNo" runat="server"></asp:TextBox>    
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
             วันที่ทำสัญญา
             <div class="input-group sm-3">
                 <asp:TextBox class="form-control" ID="txtAgreeDate" runat="server"></asp:TextBox>    
@@ -130,14 +130,13 @@
                                     <AlternatingRowStyle BackColor="#CCCCFF" />
 
                                       <Columns>
-	                                    <asp:TemplateField>
+	                                    <asp:TemplateField HeaderText="ลำดับ" >
 		                                    <ItemTemplate>
-			                                    <asp:textbox id="txtNo" runat="server" Text='<%#Eval("no")%>'></asp:textbox>
+			                                    <asp:textbox id="txtNo" style="width:50px" runat="server" Text='<%#Eval("no")%>' ></asp:textbox>
 		                                    </ItemTemplate>
-                                            <HeaderTemplate>ลำดับ</HeaderTemplate>
 	                                    </asp:TemplateField>
 	                                    <asp:TemplateField HeaderText="รหัส">
-		                                    <ItemTemplate>
+		                                    <ItemTemplate >
 			                                    <asp:Label id="lblClientNo" runat="server" Text='<%#Eval("clientno")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
@@ -164,18 +163,230 @@
                                         <div align="center">No records found.</div>
                                     </EmptyDataTemplate>
                               </asp:GridView>
-                              <asp:DropDownList ID="cboClient" class="form-control" runat="server"></asp:DropDownList> 
-                                  <asp:LinkButton runat="server" ID="btnAdddetail" Text="<i class='fas fa-plus-circle' style='color:green;font-size:20px'></i> " 
-                                                        ValidationGroup="edt" OnClick="btnAddClient" ToolTip="เพิ่ม" />
+                          <div class="row">
+                            <div class="col-md-8">
+                                <div class="input-group sm-">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">เลือกคู่สัญญา</span>
+                                    </div>
+                                    <asp:DropDownList ID="cboClient" class="form-control" runat="server"></asp:DropDownList> 
+                                </div>                              
                             </div>
-
-
+                              <div class="col-md-4">
+                                <asp:LinkButton runat="server" ID="btnAdddetail" Text="<i class='fas fa-plus-circle' style='color:green;font-size:20px'></i> " 
+                                ValidationGroup="edt" OnClick="btnAddClient" ToolTip="เพิ่ม" />
+                              </div>
+                          </div>
+                     </div>
                 </div>
 
     </div>  
-    <div id="assets" class="tab-pane fade" style="background-color:ghostwhite">  
+      <%----=====end tab agree info=======--%>
+
+    <div id="assets" class="tab-pane fade" style="background-color:azure">  
       <p>บันทึกข้อมูลที่ดิน สิ่งปลูกสร้าง ที่ทำสัญญาเช่า หรือร่วมธุรกิจ</p>  
-    </div>  
+        <div class="table-responsive">
+            <% For i = 0 To mainAssets.Rows.Count - 1 %>
+          <div class="row">
+            <div class="col-md-4">
+                ID
+                <div class="input-group sm-3">
+                    <asp:Label class="form-control" ID="lblAsssetsID" runat="server"></asp:Label>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                ประเภทเอกสาร
+                <div class="input-group sm-3">
+                    <asp:DropDownList class="form-control" ID="cboAssetsType" runat="server"></asp:DropDownList>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                เลขเอกสาร
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="txtAssetsDocNo" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+         </div>
+          <div class="row">
+            <div class="col-md-4">
+                เลขที่ที่ดิน
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="txtLandNo" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                เลขที่หน้าสำรวจ
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="txtSurveyNo" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+
+         </div>
+          <div class="row">
+            <div class="col-md-4">
+                ตำบล
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox1" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                อำเภอ
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox2" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+            <div class="col-md-4">
+                จังหวัด
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox3" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+
+         </div>
+          <div class="row">
+            <div class="col-md-4">
+                ทั้งแปลง/แบ่งเช่า
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox4" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                ไร่
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox5" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+            <div class="col-md-4">
+                งาน
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox6" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+
+         </div>
+          <div class="row">
+            <div class="col-md-4">
+                ตารางวา
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox7" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                พิกัด GPS
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox8" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+            <div class="col-md-4">
+                    <p>&nbsp</p>         
+                    <asp:LinkButton runat="server" ID="LinkButton2" Text="<i class='fas fa-minus-circle' style='color:red;font-size:20px'></i> " 
+                    ValidationGroup="edt" OnClick="btnAddClient" ToolTip="ลบ" />                           
+            </div>
+         </div>
+        <hr width=100% size=3 color=770088>
+        <% next i %>
+
+
+          <div class="row">
+            <div class="col-md-4">
+                ID
+                <div class="input-group sm-3">
+                    <asp:Label class="form-control" ID="Label1" runat="server"></asp:Label>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                ประเภทเอกสาร
+                <div class="input-group sm-3">
+                    <asp:DropDownList class="form-control" ID="DropDownList1" runat="server"></asp:DropDownList>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                เลขเอกสาร
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox9" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+         </div>
+          <div class="row">
+            <div class="col-md-4">
+                เลขที่ที่ดิน
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox10" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                เลขที่หน้าสำรวจ
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox11" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+
+         </div>
+          <div class="row">
+            <div class="col-md-4">
+                ตำบล
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox12" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                อำเภอ
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox13" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+            <div class="col-md-4">
+                จังหวัด
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox14" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+
+         </div>
+          <div class="row">
+            <div class="col-md-4">
+                ทั้งแปลง/แบ่งเช่า
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox15" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                ไร่
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox16" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+            <div class="col-md-4">
+                งาน
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox17" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+
+         </div>
+          <div class="row">
+            <div class="col-md-4">
+                ตารางวา
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox18" runat="server"></asp:Textbox>    
+                </div>
+            </div>
+            <div class="col-md-4">
+                พิกัด GPS
+                <div class="input-group sm-3">
+                    <asp:Textbox class="form-control" ID="Textbox19" runat="server"></asp:Textbox>  
+                </div>
+            </div>
+            <div class="col-md-4">
+                    <p>&nbsp</p>
+                    <asp:LinkButton runat="server" ID="LinkButton3" Text="<i class='fas fa-plus-circle' style='color:green;font-size:20px'></i> " 
+                    ValidationGroup="edt" OnClick="btnAddAssets" ToolTip="เพิ่ม" />                                      
+            </div>
+         </div>
+        </div>
+      </div>
+      <%----=====end tab ที่ดิน=======--%>
+
     <div id="payment" class="tab-pane fade" style="background-color:ghostwhite">  
       <p>บันทึกข้อมูลการจ่ายค่าเช่า การจ่ายผลตอลแทน ค่าใช้จ่ายอื่น ๆ</p>  
     </div>  
