@@ -26,7 +26,7 @@ Public Class AdvanceRequest
     Dim sm_code As String
     Dim am_code As String
 
-    Public account_code As String = "SPP"
+    Public account_code As String = ""
 
     Public itemtable As DataTable
     Public detailtable As DataTable '= createtable()
@@ -50,6 +50,8 @@ Public Class AdvanceRequest
         Else
             menutable = Session("menulist")
         End If
+
+        txtDuedate.Attributes.Add("readonly", "readonly")
 
         If Not IsPostBack() Then
             detailtable = createtableDetail()
@@ -75,14 +77,19 @@ Public Class AdvanceRequest
 
                     account_code = objNonPO.NonPOPermisstionAccount(Request.QueryString("ADV"))
 
-                    If (account_code.IndexOf(Session("usercode").ToString) > -1) And
-                    (detailtable.Rows(0).Item("statusrqid") = 3) Then
-                        Session("status") = "account"
-                        verify = True
+                    If (account_code.IndexOf(Session("usercode").ToString) > -1) Then
+                        If (detailtable.Rows(0).Item("statusrqid") = 7) Then
+                            Session("status") = "account"
+                            verify = True
 
+                        ElseIf (detailtable.Rows(0).Item("statusrqid") = 3) Then
+                            Session("status") = "account"
+                            verify = True
+
+                        End If
                     End If
 
-                    If (detailtable.Rows(0).Item("statusrqid") = 2) Then
+            If (detailtable.Rows(0).Item("statusrqid") = 2) Then
                         PermissionOwner = chkPermissionNonPO(Request.QueryString("ADV"))
 
                         at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
@@ -249,6 +256,10 @@ endprocess:
         dt.Columns.Add("approvalrqdate", GetType(String))
         dt.Columns.Add("verifyrqby", GetType(String))
         dt.Columns.Add("verifyrqdate", GetType(String))
+        dt.Columns.Add("accountverifyrqby", GetType(String))
+        dt.Columns.Add("accountverifyrqdate", GetType(String))
+
+        dt.Columns.Add("duedate", GetType(String))
 
         dt.Columns.Add("updateby", GetType(Integer))
         dt.Columns.Add("updatedate", GetType(String))
@@ -337,7 +348,21 @@ endprocess:
                 btnAdvanceMore.Visible = False
 
                 btnAddAttatch.Visible = False
+            Case = "7" 'รอบัญชีตรวจสอบ
+                txtStatusRq.BackColor = Color.LightSalmon
+                btnConfirm.Visible = False
+                btnCancel.Visible = False
+                btnClose.Visible = False
+                btnAddDoc.Visible = False
+                btnEdit.Visible = False
+                btnClearAdvance.Visible = False
+                btnAdvanceMore.Visible = False
 
+                If account_code.IndexOf(Session("usercode").ToString) > -1 Then
+                    btnAddAttatch.Visible = True
+                Else
+                    btnAddAttatch.Visible = False
+                End If
             Case = "11" 'รอเคลียร์ค้างชำระ
                 txtStatusRq.BackColor = Color.Brown
                 txtStatusRq.ForeColor = Color.White
@@ -393,8 +418,13 @@ endprocess:
             txtApprovalby.Text = .Item("approvalrqby").ToString
             txtApprovalDate.Text = .Item("approvalrqdate").ToString
 
+            txtAccountby.Text = .Item("accountverifyrqby").ToString
+            txtAccountdate.Text = .Item("accountverifyrqdate").ToString
+
             txtSupportby.Text = .Item("verifyrqby").ToString
             txtSupportdate.Text = .Item("verifyrqdate").ToString
+
+            txtDuedate.Text = .Item("duedate").ToString
             If Session("status") = "edit" Then
                 txtamount.Attributes.Add("type", "number")
                 txtamount.Text = .Item("amount")
@@ -460,8 +490,8 @@ endprocess:
             Case = "account"
                 lbMandatoryamount.Visible = True
                 lbMandatorydetail.Visible = True
-                txtamount.ReadOnly = False
-                txtdetail.ReadOnly = False
+                txtamount.ReadOnly = True
+                txtdetail.ReadOnly = True
                 'searchjobslist()
 
                 'กล่อง comment & attatch file
@@ -578,8 +608,12 @@ endprocess:
                 e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
             ElseIf Data.Item("status") = "รอการเงินตรวจสอบ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightCoral
+            ElseIf Data.Item("status") = "รอบัญชีตรวจสอบ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightSalmon
             ElseIf Data.Item("status") = "รอเคลียร์ค้างชำระ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Brown
+                e.Row.Cells.Item(statusAt).ForeColor = Color.White
+
             End If
         End If
     End Sub
@@ -676,6 +710,49 @@ endprocess:
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('AdvanceRequest_More fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+endprocess:
+    End Sub
+
+    Private Sub btnAccountVerify_Click(sender As Object, e As EventArgs) Handles btnAccountVerify.Click
+        Dim objnonpo As New NonPO
+        'If detailtable.Rows(0).Item("statusrqid") = 7 And String.IsNullOrEmpty(detailtable.Rows(0).Item("duedate").ToString) Then
+        '    Dim scriptKey As String = "alert"
+        '    'Dim javaScript As String = "alert('" & ex.Message & "');"
+        '    Dim javaScript As String = "alertWarning('กรุณากำหนด Due Date');"
+        '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        '    GoTo endprocess
+        'End If
+
+        Try
+            objnonpo.NonPO_AdvanceRequest_Account_Verify(Request.QueryString("ADV"), Session("usercode"))
+            Session("status") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('verify fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+endprocess:
+    End Sub
+
+    Private Sub btnUpdateDuedate_Click(sender As Object, e As EventArgs) Handles btnUpdateDuedate.Click
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_AdvanceRequest_SetDueDate(Request.QueryString("ADV"), txtDuedate.Text.Trim(), Session("usercode"))
+            Session("status") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('set Duedate fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try

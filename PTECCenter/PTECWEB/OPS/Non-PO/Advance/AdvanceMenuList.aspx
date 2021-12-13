@@ -32,15 +32,16 @@
 
                 <div class="row">
                     <div class="col-12">
+
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
-                        <% If Not Session("positionid") = "10" Then%>
-                        <!--<asp:Button ID="btnSearch" class="btn btn-sm  btn-primary" runat="server" Text="Search" />&nbsp; -->
+                        <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="Search" />&nbsp;
                         <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                          <% End If %>
                     </div>
                 </div>
 
-                <% If Not Session("positionid") = "10" Then%>
+                <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
 
                 <div class="row">
                     <div class="col-auto" style="margin-left: auto;">
@@ -58,23 +59,23 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtAdvRQ" runat="server" placeholder="21XXXXXXX" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtAdvRQ" runat="server" placeholder="21XXXXXXX"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-group-prepend"> 
-                                <span class="input-group-text">ตั้งแต่วันที่</span>
+                                <span class="input-group-text">ตั้งแต่ (วันที่เบิก)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">จนถึง</span>
+                                <span class="input-group-text">จนถึง (วันที่เบิก)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
 
                         </div>
                     </div>
@@ -83,7 +84,23 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะงานย่อย</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" ></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ตั้งแต่ (DueDate)</span>
+                            </div>
+                            <asp:TextBox class="form-control" ID="txtStartDueDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">จนถึง (DueDate)</span>
+                            </div>
+                            <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4 HO">
@@ -99,7 +116,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">แผนก</span>
                             </div>
-                            <asp:DropDownList ID="cboSection" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            <asp:DropDownList ID="cboSection" class="form-control" runat="server" ></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4 CO">
@@ -115,7 +132,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" ></asp:DropDownList>
                         </div>
                     </div>
                     
@@ -156,7 +173,12 @@
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("AdvanceRequest_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ขอโดย" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="วันที่เบิก" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ขอเบิกโดย" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Createname")%>'></asp:Label>
                                     </ItemTemplate>
@@ -166,9 +188,9 @@
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>--%>
-                                <asp:TemplateField HeaderText="วันที่ขอ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("duedate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="รายละเอียด">
@@ -252,6 +274,30 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
+
+        jQuery('[id$=txtStartDueDate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            onShow: function (ct) {
+                this.setOptions({
+                    maxDate: jQuery('[id$=txtEndDueDate]').val() ? jQuery('[id$=txtEndDueDate]').val() : false, formatDate: 'd.m.Y'
+                })
+            },
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+
+        jQuery('[id$=txtEndDueDate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08
+            onShow: function (ct) {
+                this.setOptions({
+                    minDate: jQuery('[id$=txtStartDueDate]').val() ? jQuery('[id$=txtStartDueDate]').val() : false, formatDate: 'd.m.Y'
+                })
+            },
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
     </script>
 
     <script type="text/javascript">
@@ -314,6 +360,11 @@
             }
 
             checkCOorHO();
+        });
+        $('.noEnterSubmit').keypress(function (e) {
+            if (e.which == 13) return false;
+            //or...
+            if (e.which == 13) e.preventDefault();
         });
     </script>
 
