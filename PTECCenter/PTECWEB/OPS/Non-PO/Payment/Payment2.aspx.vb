@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Web.Script.Serialization
 Imports ClosedXML.Excel
 Public Class Payment
     Inherits System.Web.UI.Page
@@ -32,7 +33,7 @@ Public Class Payment
     Dim sm_code As String
     Dim am_code As String
 
-    Public account_code As String = "SPP"
+    Public account_code As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objNonpo As New NonPO
         Dim objbranch As New Branch
@@ -257,6 +258,13 @@ endprocess:
                 statusid = 0
                 createby = 0
             End Try
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "deletedetail" Then
+                Dim argument As String = Request("__EVENTARGUMENT")
+                Dim jss As New JavaScriptSerializer
+                Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(argument)
+                deleteDetail(json("nonpodtlid"), json("rows"), json("user"))
+            End If
         End If
         SetBtn(statusid, createby)
         'SetMenu()
@@ -1321,7 +1329,7 @@ endprocess:
     End Function
 
     <System.Web.Services.WebMethod>
-    Public Function updateComment(ByVal userid As Integer, ByVal msg As String, commentid As Integer)
+    Public Shared Function updateComment(ByVal userid As Integer, ByVal msg As String, commentid As Integer)
         Dim approval As New Approval
         Try
             approval.Update_Comment_By_commentid(commentid, msg, userid)
@@ -1334,7 +1342,7 @@ endprocess:
 endprocess:
     End Function
     <System.Web.Services.WebMethod>
-    Public Function deleteComment(ByVal commentid As Integer, userid As Integer)
+    Public Shared Function deleteComment(ByVal commentid As Integer, userid As Integer)
         Dim approval As New Approval
         Try
             approval.Delete_Comment_By_commentid(commentid, userid)
@@ -1348,7 +1356,7 @@ endprocess:
     End Function
 
     <System.Web.Services.WebMethod>
-    Public Function changeChecked(ByVal attatchid As Integer, ByVal chked As Boolean, ByVal userid As Integer)
+    Public Shared Function changeChecked(ByVal attatchid As Integer, ByVal chked As Boolean, ByVal userid As Integer)
 
         Dim objnonpo As New NonPO
         Dim dt As DataTable
@@ -1685,6 +1693,109 @@ endprocess:
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('export fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
+        Dim res As String = Request.Form("confirm_value")
+        Dim jss As New JavaScriptSerializer
+        Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
+
+        Dim rows As Integer = json("rows")
+        Dim status As String = json("status")
+        Dim nonpodtl_id As Integer = json("nonpodtl_id")
+        Dim accountcodeid As Integer = json("accountcodeid")
+        Dim accountcode As String = json("accountcode")
+        Dim depid As Integer = json("depid")
+        Dim depname As String = json("depname")
+        Dim buid As Integer = json("buid")
+        Dim buname As String = json("buname")
+        Dim ppid As Integer = json("ppid")
+        Dim ppname As String = json("ppname")
+        Dim pjid As Integer = json("pjid")
+        Dim pjname As String = json("pjname")
+        Dim cost As Double = json("cost")
+        Dim vat As Integer = json("vat")
+        Dim tax As Integer = json("tax")
+        Dim detail As String = json("detail")
+        Dim vendorname As String = json("vendorname")
+        Dim vendorcode As String = json("vendorcode")
+        Dim invoice As String = json("invoice")
+        Dim taxid As String = json("taxid")
+        Dim invoicedate As String = json("invoicedate")
+
+
+
+        Dim cntrow As Integer = detailtable.Rows.Count + 1
+        Try
+            If status = "undefined" Then
+                Dim row As DataRow
+                row = detailtable.NewRow()
+                row("row") = cntrow
+                row("status") = "new"
+                row("nonpodtl_id") = nonpodtl_id
+                row("accountcodeid") = accountcodeid
+                row("accountcode") = accountcode
+                row("depid") = depid
+                row("depname") = depname
+                row("buid") = buid
+                row("buname") = buname
+                row("ppid") = ppid
+                row("ppname") = ppname
+                row("pjid") = pjid
+                row("pjname") = pjname
+
+                row("cost") = cost
+                row("vat_per") = vat
+                row("tax_per") = tax
+                row("vat") = cost * vat / 100
+                row("tax") = cost * tax / 100
+                row("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
+                row("detail") = detail
+                row("vendorname") = vendorname
+                row("vendorcode") = vendorcode
+                row("invoice") = invoice
+                row("taxid") = taxid
+                row("invoicedate") = invoicedate
+
+
+                detailtable.Rows.Add(row)
+            Else
+                With detailtable.Rows(detailtable.Rows.IndexOf(detailtable.Select("row='" & rows & "'")(0)))
+                    .Item("row") = rows
+                    .Item("status") = "edit"
+                    .Item("nonpodtl_id") = nonpodtl_id
+                    .Item("accountcodeid") = accountcodeid
+                    .Item("accountcode") = accountcode
+                    .Item("depid") = depid
+                    .Item("depname") = depname
+                    .Item("buid") = buid
+                    .Item("buname") = buname
+                    .Item("ppid") = ppid
+                    .Item("ppname") = ppname
+                    .Item("pjid") = pjid
+                    .Item("pjname") = pjname
+
+                    .Item("cost") = cost
+                    .Item("vat_per") = vat
+                    .Item("tax_per") = tax
+                    .Item("vat") = cost * vat / 100
+                    .Item("tax") = cost * tax / 100
+                    .Item("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
+                    .Item("detail") = detail
+                    .Item("vendorname") = vendorname
+                    .Item("vendorcode") = vendorcode
+                    .Item("invoice") = invoice
+                    .Item("taxid") = taxid
+                    .Item("invoicedate") = invoicedate
+                End With
+            End If
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('adddetail fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
