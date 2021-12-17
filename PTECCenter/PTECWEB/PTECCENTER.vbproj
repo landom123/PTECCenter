@@ -186,6 +186,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="ACS\client_list.aspx" />
+    <Content Include="ACS\clientinfo.aspx" />
     <Content Include="ACS\titlename.aspx" />
     <Content Include="ACS\testag.aspx" />
     <Content Include="ACS\agreement.aspx" />
@@ -1766,6 +1768,7 @@
     <Content Include="SDD\SupplyExpense.aspx" />
     <Content Include="SDD\OthersTTCosttoD365.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
+    <Content Include="SSD\Rpt_Customer_bal.aspx" />
     <Content Include="SSD\newgsm_billingnote01_cover.aspx" />
     <Content Include="SSD\newgsm_billingnote03_detail.aspx" />
     <Content Include="SSD\newgsm_billingnote03_cover.aspx" />
@@ -3434,6 +3437,20 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACS\client_list.aspx.designer.vb">
+      <DependentUpon>client_list.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\client_list.aspx.vb">
+      <DependentUpon>client_list.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ACS\clientinfo.aspx.designer.vb">
+      <DependentUpon>clientinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\clientinfo.aspx.vb">
+      <DependentUpon>clientinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ACS\titlename.aspx.designer.vb">
       <DependentUpon>titlename.aspx</DependentUpon>
     </Compile>
@@ -3815,6 +3832,13 @@
     </Compile>
     <Compile Include="SSD\DeducttoNEWGSM.aspx.vb">
       <DependentUpon>DeducttoNEWGSM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\Rpt_Customer_bal.aspx.designer.vb">
+      <DependentUpon>Rpt_Customer_bal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\Rpt_Customer_bal.aspx.vb">
+      <DependentUpon>Rpt_Customer_bal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SSD\newgsm_billingnote01_cover.aspx.designer.vb">
