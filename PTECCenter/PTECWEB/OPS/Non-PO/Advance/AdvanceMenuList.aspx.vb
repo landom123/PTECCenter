@@ -8,15 +8,22 @@ Public Class AdvanceMenuList
 
     Public cntdt As Integer
 
+    Public operator_code As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim approval As New Approval
         Dim objbranch As New Branch
         Dim objdep As New Department
+        Dim objNonpo As New NonPO
         Dim objsec As New Section
         Dim objjob As New jobs
         Dim usercode As String
         usercode = Session("usercode")
 
+
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
 
         If Session("menulist") Is Nothing Then
             menutable = LoadMenu(usercode)
@@ -25,10 +32,15 @@ Public Class AdvanceMenuList
             menutable = Session("menulist")
         End If
 
+        txtStartDate.Attributes.Add("readonly", "readonly")
+        txtEndDate.Attributes.Add("readonly", "readonly")
 
+        txtStartDueDate.Attributes.Add("readonly", "readonly")
+        txtEndDueDate.Attributes.Add("readonly", "readonly")
+        operator_code = objNonpo.NonPOPermisstionOperator("CLADV")
         If Not IsPostBack() Then
 
-            If Not Session("positionid") = "10" Then
+            If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
                 objjob.SetCboJobStatusListForReport(cboStatusFollow)
                 objbranch.SetComboBranchGroup(cboBranchGroup)
@@ -46,15 +58,13 @@ Public Class AdvanceMenuList
                     searchjobslist()
                 End If
             Else
-                'กรณีถ้าเป็น ผจก. สาขา
                 approval.SetCboApprovalStatusForOwner(cboWorking)
-                If Not Session("cboWorking_job") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                    cboWorking.SelectedValue = Session("cboWorking_job")
-                End If
+                'If Not Session("cboWorking_job") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                '    cboWorking.SelectedValue = Session("cboWorking_job")
+                'End If
 
-                Dim objNonPO As New NonPO
                 Try
-                    itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
+                    itemtable = objNonpo.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
                 Catch ex As Exception
                     Dim scriptKey As String = "alert"
                     Dim javaScript As String = "alertWarning('search fail');"
@@ -71,7 +81,7 @@ Public Class AdvanceMenuList
         End If
     End Sub
     Private Sub BindData()
-        If Not Session("positionid") = "10" Then
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
             setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         End If
         cntdt = itemtable.Rows.Count
@@ -85,6 +95,8 @@ Public Class AdvanceMenuList
                             txtStartDate.Text.Trim(),
                             txtEndDate.Text.Trim(),
                             cboStatusFollow.SelectedItem.Value.ToString,
+                            txtStartDueDate.Text.Trim(),
+                            txtEndDueDate.Text.Trim(),
                             cboDepartment.SelectedItem.Value.ToString,
                             cboSection.SelectedItem.Value.ToString,
                             cboBranchGroup.SelectedItem.Value.ToString,
@@ -120,6 +132,8 @@ Public Class AdvanceMenuList
         dt.Columns.Add("txtStartDate", GetType(String))
         dt.Columns.Add("txtEndDate", GetType(String))
         dt.Columns.Add("cboStatusFollow", GetType(String))
+        dt.Columns.Add("txtStartDueDate", GetType(String))
+        dt.Columns.Add("txtEndDueDate", GetType(String))
         dt.Columns.Add("cboDep", GetType(String))
         dt.Columns.Add("cboSec", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
@@ -134,6 +148,10 @@ Public Class AdvanceMenuList
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
+
+
+            txtStartDueDate.Text = criteria.Rows(0).Item("txtStartDueDate")
+            txtEndDueDate.Text = criteria.Rows(0).Item("txtEndDueDate")
 
             cboStatusFollow.SelectedValue = criteria.Rows(0).Item("cboStatusFollow")
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
@@ -165,6 +183,8 @@ Public Class AdvanceMenuList
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
                                                       cboStatusFollow.SelectedItem.Value.ToString,
+                                                        txtStartDueDate.Text.Trim(),
+                                                        txtEndDueDate.Text.Trim(),
                                                       "",
                                                       "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
@@ -174,6 +194,8 @@ Public Class AdvanceMenuList
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
                                                       cboStatusFollow.SelectedItem.Value.ToString,
+                                                        txtStartDueDate.Text.Trim(),
+                                                        txtEndDueDate.Text.Trim(),
                                                         cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
                                                       "",
@@ -183,6 +205,8 @@ Public Class AdvanceMenuList
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
                                                       cboStatusFollow.SelectedItem.Value.ToString,
+                                                        txtStartDueDate.Text.Trim(),
+                                                        txtEndDueDate.Text.Trim(),
                                                         "",
                                                       "",
                                                       "",
@@ -202,7 +226,7 @@ Public Class AdvanceMenuList
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 6
+        Dim statusAt As Integer = 7
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -222,8 +246,15 @@ Public Class AdvanceMenuList
                 e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
             ElseIf Data.Item("status") = "รอการเงินตรวจสอบ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightCoral
+            ElseIf Data.Item("status") = "รอบัญชีตรวจสอบ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightSalmon
             ElseIf Data.Item("status") = "รอเคลียร์ค้างชำระ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Brown
+                e.Row.Cells.Item(statusAt).ForeColor = Color.White
+            ElseIf Data.Item("status") = "ขอเอกสารเพิ่มเติม" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.MediumPurple
+            ElseIf Data.Item("status") = "ได้รับเอกสารตัวจริง" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Gray
             End If
         End If
     End Sub
@@ -237,36 +268,26 @@ Public Class AdvanceMenuList
 
         cboBranch.SelectedIndex = -1
         objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-        searchjobslist()
+        'searchjobslist()
     End Sub
 
     Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
         Session("cboWorking_job") = cboWorking.SelectedItem.Value
-        Dim objjob As New jobs
-        'itemtable = objjob.JobList(Session("usercode"), cboWorking.SelectedItem.Value)
-        Session("joblist") = itemtable
+
+        Dim objNonpo As New NonPO
+
+        Try
+            'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
+            itemtable = objNonpo.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
+            Session("joblist") = itemtable
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('search fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
         BindData()
 
-    End Sub
-
-    Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
-        searchjobslist()
-    End Sub
-
-    Private Sub cboStatusFollow_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboStatusFollow.SelectedIndexChanged
-        searchjobslist()
-    End Sub
-
-    Private Sub txtAdvRQ_TextChanged(sender As Object, e As EventArgs) Handles txtAdvRQ.TextChanged
-        searchjobslist()
-    End Sub
-
-    Private Sub txtStartDate_TextChanged(sender As Object, e As EventArgs) Handles txtStartDate.TextChanged
-        searchjobslist()
-    End Sub
-
-    Private Sub txtEndDate_TextChanged(sender As Object, e As EventArgs) Handles txtEndDate.TextChanged
-        searchjobslist()
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
@@ -274,6 +295,9 @@ Public Class AdvanceMenuList
         txtAdvRQ.Text = ""
         txtStartDate.Text = ""
         txtEndDate.Text = ""
+
+        txtStartDueDate.Text = ""
+        txtEndDueDate.Text = ""
 
         cboDepartment.SelectedIndex = -1
         cboSection.SelectedIndex = -1
@@ -296,7 +320,7 @@ Public Class AdvanceMenuList
         depid = cboDepartment.SelectedItem.Value
         objsection.SetCboSection_seccode(cboSection, depid)
         objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-        searchjobslist()
+        'searchjobslist()
     End Sub
 
     Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
@@ -306,11 +330,11 @@ Public Class AdvanceMenuList
 
         depid = cboDepartment.SelectedItem.Value
         objsection.SetCboSection_seccode(cboSection, depid)
-        searchjobslist()
+        'searchjobslist()
 
     End Sub
 
-    Private Sub cboSection_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboSection.SelectedIndexChanged
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         searchjobslist()
     End Sub
 End Class

@@ -104,15 +104,6 @@ Partial Public Class AdvanceRequest
     Protected WithEvents txtApprovalby As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lbApprovalDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbApprovalDate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''txtApprovalDate control.
     '''</summary>
     '''<remarks>
@@ -120,6 +111,33 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtApprovalDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbAccountby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbAccountby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtAccountby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtAccountby As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtAccountdate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtAccountdate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lbtxtSupportby control.
@@ -140,15 +158,6 @@ Partial Public Class AdvanceRequest
     Protected WithEvents txtSupportby As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lbtxtSupportdate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbtxtSupportdate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''txtSupportdate control.
     '''</summary>
     '''<remarks>
@@ -156,6 +165,33 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtSupportdate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbDuedate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDuedate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnUpdateDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateDuedate As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''lbtxtamount control.
@@ -354,6 +390,24 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnDisApproval As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''btnAccountVerify control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAccountVerify As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Button3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Button3 As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''btnVerify control.

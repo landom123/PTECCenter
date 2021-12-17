@@ -1,4 +1,4 @@
-﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="site.Master.vb" Inherits="PTECCENTER.site" %>
+﻿<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="site.Master.vb" Inherits="PTECCENTER.site" %>
 
 <%@ Register TagPrefix="CR" Namespace="CrystalDecisions.Web" %>
 <%@ Register Assembly="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692FBEA5521E1304" Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
@@ -65,7 +65,8 @@
             </div>
         </nav>
 
-
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+        </asp:ScriptManager>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
 
@@ -110,7 +111,6 @@
 
 <!-- Page level plugin JavaScript-->
 <script type="text/javascript">
-
     function validateData() {
         var form = $("#form1")[0];
         if (form.checkValidity() === false) {

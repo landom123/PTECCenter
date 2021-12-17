@@ -1,4 +1,6 @@
-﻿Public Class ClearAdvanceMenuList2
+﻿Imports System.Drawing
+
+Public Class ClearAdvanceMenuList2
     Inherits System.Web.UI.Page
 
     Public criteria As DataTable = createCriteria()
@@ -6,8 +8,11 @@
     Public itemtable As DataTable
 
     Public cntdt As Integer
+
+    Public operator_code As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim approval As New Approval
+        Dim objNonpo As New NonPO
         Dim objbranch As New Branch
         Dim objdep As New Department
         Dim objsec As New Section
@@ -33,8 +38,10 @@
         txtStartDate.Attributes.Add("readonly", "readonly")
         txtEndDate.Attributes.Add("readonly", "readonly")
 
+        operator_code = objNonpo.NonPOPermisstionOperator("CLADV")
         If Not IsPostBack() Then
-            If Not Session("positionid") = "10" Then
+
+            If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
                 objjob.SetCboJobStatusListForReport(cboStatusFollow)
                 objbranch.SetComboBranchGroup(cboBranchGroup)
@@ -52,16 +59,14 @@
                     searchjobslist()
                 End If
             Else
-                'กรณีถ้าเป็น ผจก. สาขา
                 approval.SetCboApprovalStatusForOwner(cboWorking)
-                If Not Session("cboWorking_clearadv") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                    cboWorking.SelectedValue = Session("cboWorking_clearadv")
-                End If
+                'If Not Session("cboWorking_clearadv") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                '    cboWorking.SelectedValue = Session("cboWorking_clearadv")
+                'End If
 
-                Dim objNonPO As New NonPO
                 Try
                     'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-                    itemtable = objNonPO.ClearAdvanceList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+                    itemtable = objNonpo.ClearAdvanceList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
                 Catch ex As Exception
                     Dim scriptKey As String = "alert"
                     Dim javaScript As String = "alertWarning('search fail');"
@@ -246,4 +251,56 @@
         objsection.SetCboSection_seccode(cboSection, depid)
     End Sub
 
+    Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
+        Dim statusAt As Integer = 5
+        Dim Data As DataRowView
+        Data = e.Row.DataItem
+        If Data Is Nothing Then
+            Return
+        End If
+
+        If (e.Row.RowType = DataControlRowType.DataRow) Then
+            If Data.Item("statusnonpo") = "รอยืนยัน" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightBlue
+            ElseIf Data.Item("statusnonpo") = "ยกเลิก" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightGray
+            ElseIf Data.Item("statusnonpo") = "รอตรวจสอบ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightGoldenrodYellow
+            ElseIf Data.Item("statusnonpo") = "รออนุมัติ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightYellow
+            ElseIf Data.Item("statusnonpo") = "ชำระเงินเสร็จสิ้น" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.GreenYellow
+            ElseIf Data.Item("statusnonpo") = "ไม่ผ่านการอนุมัติ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
+            ElseIf Data.Item("statusnonpo") = "รอการเงินตรวจสอบ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightCoral
+            ElseIf Data.Item("statusnonpo") = "รอบัญชีตรวจสอบ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightSalmon
+            ElseIf Data.Item("statusnonpo") = "รอเคลียร์ค้างชำระ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Brown
+                e.Row.Cells.Item(statusAt).ForeColor = Color.White
+            ElseIf Data.Item("statusnonpo") = "ขอเอกสารเพิ่มเติม" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.MediumPurple
+            ElseIf Data.Item("statusnonpo") = "ได้รับเอกสารตัวจริง" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Gray
+            End If
+        End If
+    End Sub
+
+    Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
+
+        Dim objNonpo As New NonPO
+
+        Try
+            'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
+            itemtable = objNonpo.ClearAdvanceList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+            Session("advlist") = itemtable
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('search fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+        BindData()
+    End Sub
 End Class

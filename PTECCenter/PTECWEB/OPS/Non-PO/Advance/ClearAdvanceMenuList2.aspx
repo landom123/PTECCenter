@@ -20,16 +20,15 @@
 
                 <div class="row">
                     <div class="col-12 mb-3">
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-primary" runat="server" Text="Search" />&nbsp;
-                        
-                        
-                        <% If Not Session("positionid") = "10" Then%>
+                        <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="Search" />&nbsp;
                             <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                         <% End If %>
                     </div>
                 </div>
 
-                <% If Not Session("positionid") = "10" Then%>
+                <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
 
                 <div class="row">
                     <div class="col-auto mb-3" style="margin-left: auto;">
@@ -47,7 +46,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtclearadv" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -55,7 +54,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code_ref</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -186,6 +185,8 @@
                             </Columns>
                         </asp:GridView>
                     </div>
+                    <h4>ทั้งหมด <% =cntdt%> รายการ</h4>
+
                 </div>
 
             </div>
@@ -282,6 +283,11 @@
             }
 
         }
+        $('.noEnterSubmit').keypress(function (e) {
+            if (e.which == 13) return false;
+            //or...
+            if (e.which == 13) e.preventDefault();
+        });
     </script>
 
 </asp:Content>

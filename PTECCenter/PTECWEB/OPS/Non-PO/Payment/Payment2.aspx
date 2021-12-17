@@ -446,7 +446,7 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <th class="text-center" rowspan="2" colspan="2" style="width: 80px !important;">%Tax</th>
+                                    <th class="text-center" rowspan="2" colspan="2" style="width: 80px !important;">%WHT</th>
 
                                 </tr>
                                 <tr>
@@ -517,17 +517,17 @@
                                     </tr>
                                     <tr>
                                         <td colspan="18" style="width: 720px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px; border-left-width: 0px;">
-                                            <h6>ภาษีหัก ณ ที่จ่าย (tax)
-                                            </h6>
-                                        </td>
-                                        <td colspan="6" style="width: 240px !important; text-align: right; padding-right: 5px;" id="total_tax"><%= total_tax %></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="18" style="width: 720px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px; border-left-width: 0px;">
-                                            <h6>ภาษีมูลค่าเพิ่ม (vat)
+                                            <h6>VAT
                                             </h6>
                                         </td>
                                         <td colspan="6" style="width: 240px !important; text-align: right; padding-right: 5px;" id="total_vat"><%= total_vat %></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="18" style="width: 720px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px; border-left-width: 0px;">
+                                            <h6>หัก WHT
+                                            </h6>
+                                        </td>
+                                        <td colspan="6" style="width: 240px !important; text-align: right; padding-right: 5px;" id="total_tax">-<%= total_tax %></td>
                                     </tr>
                                     <tr>
                                         
@@ -546,30 +546,30 @@
 
                                     <tr>
                                         <td colspan="6" style="width: 240px !important; border-bottom-width: 0px;">
-                                            <h5>ผู้เบิก</h5>
+                                            <h6>ผู้เบิก</h6>
                                         </td>
                                         <td colspan="6" style="width: 240px !important; border-bottom-width: 0px;">
-                                            <h5>ผู้รับสินค้า/บริการ</h5>
+                                            <h6>ผู้รับสินค้า/บริการ</h6>
                                         </td>
                                         <td colspan="6" style="width: 240px !important; border-bottom-width: 0px;">
-                                            <h5>ผู้ตรวจ</h5>
+                                            <h6>ผู้ตรวจ</h6>
                                         </td>
                                         <td colspan="6" style="width: 240px !important; border-bottom-width: 0px;">
-                                            <h5>ผู้อนุมัติ</h5>
+                                            <h6>ผู้อนุมัติ</h6>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="6" style="width: 240px !important; border-top-width: 0px; border-bottom-width: 0px; text-align: center;">
-                                            <h5><b><% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%> <%=maintable.Rows(0).Item("withdraw_by") %><% End If %></b></h5>
+                                            <h6><b><% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%> <%=maintable.Rows(0).Item("withdraw_by") %><% End If %></b></h6>
                                         </td>
                                         <td colspan="6" style="width: 240px !important; border-top-width: 0px; border-bottom-width: 0px; text-align: center;">
-                                            <h5><b><% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%> <%=maintable.Rows(0).Item("service_by") %><% End If %></b></h5>
+                                            <h6><b><% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%> <%=maintable.Rows(0).Item("service_by") %><% End If %></b></h6>
                                         </td>
                                         <td colspan="6" style="width: 240px !important; border-top-width: 0px; border-bottom-width: 0px; text-align: center;">
-                                            <h5><b><% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%> <%=maintable.Rows(0).Item("verify_by") %><% End If %></b></h5>
+                                            <h6><b><% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%> <%=maintable.Rows(0).Item("verify_by") %><% End If %></b></h6>
                                         </td>
                                         <td colspan="6" style="width: 240px !important; border-top-width: 0px; border-bottom-width: 0px; text-align: center;">
-                                            <h5><b><% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%> <%=maintable.Rows(0).Item("approval_by") %><% End If %></b></h5>
+                                            <h6><b><% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%> <%=maintable.Rows(0).Item("approval_by") %><% End If %></b></h6>
                                         </td>
                                     </tr>
                                     <tr>
@@ -806,7 +806,7 @@
                         </div>
                         <div class="form-group ">
                             <div class="col">
-                                <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="TAX (%)" />
+                                <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="WHT (%)" />
                             </div>
                             <div class="col">
                                 <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0"></asp:TextBox>
@@ -848,7 +848,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" />
+
                 </div>
             </div>
         </div>
@@ -876,7 +878,7 @@
 
         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
         <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
-                        (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
+                            (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
                 jQuery('[id$=txtDuedate]').datetimepicker({
                     startDate: '+1971/05/01',//or 1986/12/08'
                     timepicker: false,
@@ -884,6 +886,13 @@
                     format: 'd/m/Y'
                 });
         <% End If %>
+        <% else If Session("status_payment").ToString = "new" %>
+                jQuery('[id$=txtDuedate]').datetimepicker({
+                    startDate: '+1971/05/01',//or 1986/12/08'
+                    timepicker: false,
+                    scrollInput: false,
+                    format: 'd/m/Y'
+                });
         <% End If %>
 
     </script>
@@ -1185,32 +1194,34 @@ alert('else nonpo')
 
                     var user = "<% =Session("usercode").ToString %>";
                     var params = "{'nonpodtlid': '" + nonpodtlid + "','rows': '" + row + "','user': '" + user + "'}";
-                    $.ajax({
-                        type: "POST",
-                        url: "../Payment/Payment2.aspx/deleteDetail",
-                        async: true,
-                        data: params,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (msg) {
-                            if (msg.d == 'success') {
-                                swal.fire({
-                                    title: "Deleted!",
-                                    text: "",
-                                    icon: "success",
-                                    allowOutsideClick: false
-                                }).then(function () {
-                                    __doPostBack('detailtable', '');
 
-                                });
-                            } else {
-                                alertWarning('fail')
-                            }
-                        },
-                        error: function () {
-                            alertWarning('fail ee')
-                        }
-                    });
+                    __doPostBack('deletedetail', params);
+                    //$.ajax({
+                    //    type: "POST",
+                    //    url: "../Payment/Payment2.aspx/deleteDetail",
+                    //    async: true,
+                    //    data: params,
+                    //    contentType: "application/json; charset=utf-8",
+                    //    dataType: "json",
+                    //    success: function (msg) {
+                    //        if (msg.d == 'success') {
+                    //            swal.fire({
+                    //                title: "Deleted!",
+                    //                text: "",
+                    //                icon: "success",
+                    //                allowOutsideClick: false
+                    //            }).then(function () {
+                    //                __doPostBack('detailtable', '');
+
+                    //            });
+                    //        } else {
+                    //            alertWarning('fail')
+                    //        }
+                    //    },
+                    //    error: function () {
+                    //        alertWarning('fail ee')
+                    //    }
+                    //});
                 }
             })
 
@@ -1341,7 +1352,59 @@ alert('else nonpo')
         function disbtndelete() {
             $(".deletedetail").hide();
         }
+        function postBack_addDetail() {
+            let row = $('#<%= row.ClientID%>').val();
+            const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
+            const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
+            const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
+            const depid = $('#<%= cboDep.ClientID%>').val();
+            const depname = $("#<%= cboDep.ClientID%> option:selected").text();
+            const buid = $('#<%= cboBU.ClientID%>').val();
+            const buname = $("#<%= cboBU.ClientID%> option:selected").text();
+            const ppid = $('#<%= cboPP.ClientID%>').val();
+            const ppname = $("#<%= cboPP.ClientID%> option:selected").text();
+            const pjid = $('#<%= cboPJ.ClientID%>').val();
+            const pjname = $("#<%= cboPJ.ClientID%> option:selected").text();
+            const cost = $('#<%= txtPrice.ClientID%>').val();
+            const vat = $('#<%= txtVat.ClientID%>').val();
+            const tax = $('#<%= txtTax.ClientID%>').val();
+            const detail = $('#<%= txtDetail.ClientID%>').val();
+            const invoice = $('#<%= txtinvoiceno.ClientID%>').val();
+            const taxid = $('#<%= txttaxid.ClientID%>').val();
+            const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
 
+            const vendorname = '';
+            const vendorcode = '';
+            const status = $(".DetailArea tr[name='" + row + "']").attr("data-status")
+
+            //alert('cost' + cost);
+
+            if (cost != 0 && accountcodeid == 0) {
+                alertWarning('กรุณาเลือกรหัสบัญชี');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+            //alert(row);
+            //var params = "{'row': '" + row + "'}";
+            var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
+                "','accountcode': '" + accountcode + "','depid': '" + depid + "','depname': '" + depname +
+                "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + ppname +
+                "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
+                "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
+                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "'}";
+
+            //alert(params);
+            //PageMethods.addoreditdetail(params);
+
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            confirm_value.value = params;
+            document.forms[0].appendChild(confirm_value);
+            return true;
+
+        }
         //function chkAttach(elem,userid) {
         //    //console.log(s)
         //    //console.log(s.id)
@@ -1435,6 +1498,7 @@ alert('else nonpo')
 
             //alert(params);
             //PageMethods.addoreditdetail(params);
+
             $.ajax({
                 type: "POST",
                 url: "../Payment/Payment2.aspx/addoreditdetail",

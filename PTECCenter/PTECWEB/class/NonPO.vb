@@ -458,7 +458,7 @@ Public Class NonPO
         Return result
     End Function
 
-    Public Function AdvanceRQList_For_Operator(advrqcode As String, startdate As String, enddate As String, statusfollowid As String,
+    Public Function AdvanceRQList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
                                           depid As String, secid As String, branchgroupid As String, branchid As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -473,14 +473,16 @@ Public Class NonPO
         cmd.CommandType = CommandType.StoredProcedure
 
 
-        'cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobcode
-        'cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
-        'cmd.Parameters.Add("@jobtypeid", SqlDbType.VarChar).Value = jobtypeid
-        'cmd.Parameters.Add("@statusfollowid", SqlDbType.VarChar).Value = statusfollowid
-        'cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
-        'cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
-        'cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
-        'cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
+        cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
 
 
 
@@ -522,7 +524,8 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
-    Public Function ClearAdvanceList_For_Operator(advrqcode As String, coderef As String, startdate As String, enddate As String, statusfollowid As String,
+
+    Public Function ClearAdvanceList_For_Operator(nonpocode As String, coderef As String, startdate As String, enddate As String, statusid As String,
                                           depid As String, secid As String, branchgroupid As String, branchid As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -537,14 +540,16 @@ Public Class NonPO
         cmd.CommandType = CommandType.StoredProcedure
 
 
-        'cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobcode
-        'cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
-        'cmd.Parameters.Add("@jobtypeid", SqlDbType.VarChar).Value = jobtypeid
-        'cmd.Parameters.Add("@statusfollowid", SqlDbType.VarChar).Value = statusfollowid
-        'cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
-        'cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
-        'cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
-        'cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@coderef", SqlDbType.VarChar).Value = coderef
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+
 
 
 
@@ -580,7 +585,33 @@ Public Class NonPO
         Return result
     End Function
 
-    Public Function PaymentList_For_Operator() As DataTable
+    Public Function PaymentList_For_Owner(userid As Integer, working As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_PaymentList_For_Owner"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function PaymentList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
+                                          depid As String, secid As String, branchgroupid As String, branchid As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -594,14 +625,16 @@ Public Class NonPO
         cmd.CommandType = CommandType.StoredProcedure
 
 
-        'cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobcode
-        'cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
-        'cmd.Parameters.Add("@jobtypeid", SqlDbType.VarChar).Value = jobtypeid
-        'cmd.Parameters.Add("@statusfollowid", SqlDbType.VarChar).Value = statusfollowid
-        'cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
-        'cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
-        'cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
-        'cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
+        cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
 
 
 
@@ -811,6 +844,28 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
+    Public Function NonPOPermisstionOperator(cat As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_PermisstionOperator"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@category_nonpo", SqlDbType.VarChar).Value = cat
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("acc")
+        conn.Close()
+        Return result
+
+    End Function
     Public Function NonPOPermisstionAccount(nonpocode As String) As String
         Dim result As String
         Dim ds As New DataSet
@@ -855,7 +910,51 @@ Public Class NonPO
         conn.Close()
         'Return result
     End Sub
+    Public Sub NonPO_AdvanceRequest_SetDueDate(nonpocode As String, duedate As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
 
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_AdvanceRequest_SetDueDate"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(duedate), DBNull.Value, DateTime.Parse(duedate))
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+    Public Sub NonPO_AdvanceRequest_Account_Verify(nonpocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_AdvanceRequest_Account_Verify"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
     Public Sub NonPO_AdvanceRequest_Verify(nonpocode As String, usercode As String)
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
