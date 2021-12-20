@@ -880,7 +880,6 @@ Public Class NonPO
 
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
 
-
         adp.SelectCommand = cmd
         adp.Fill(ds)
         result = ds.Tables(0).Rows(0).Item("acc")
@@ -1160,7 +1159,7 @@ Public Class NonPO
         Return result
     End Function
 
-    Public Function Nonpo_Export(nonpo As String) As DataTable
+    Public Function Nonpo_Export(nonpo As String, groupvat As Boolean, groupvendor As Boolean) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -1174,6 +1173,33 @@ Public Class NonPO
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpo
+        cmd.Parameters.Add("@groupvat", SqlDbType.Bit).Value = groupvat
+        cmd.Parameters.Add("@groupvendor", SqlDbType.Bit).Value = groupvendor
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Nonpo_Export_ADV(nonpo As String, groupvat As Boolean, groupvendor As Boolean) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_ExportToD365_ADV"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpo
+        cmd.Parameters.Add("@groupvat", SqlDbType.Bit).Value = groupvat
+        cmd.Parameters.Add("@groupvendor", SqlDbType.Bit).Value = groupvendor
 
 
         adp.SelectCommand = cmd

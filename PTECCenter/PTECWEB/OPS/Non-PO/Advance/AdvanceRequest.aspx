@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="AdvanceRequest.aspx.vb" Inherits="PTECCENTER.AdvanceRequest" %>
+﻿<%@ Page Title="AdvanceRequest" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="AdvanceRequest.aspx.vb" Inherits="PTECCENTER.AdvanceRequest" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 

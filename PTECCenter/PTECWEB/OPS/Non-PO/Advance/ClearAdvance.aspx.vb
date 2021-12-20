@@ -120,12 +120,12 @@ Public Class ClearAdvance
                 End If
                 Try
                     findNonPO()
+                    account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
 
                     statusid = maintable.Rows(0).Item("statusid")
                     createby = maintable.Rows(0).Item("createby")
                     chkuser(createby)
 
-                    account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
                     If (account_code.IndexOf(Session("usercode").ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 7) Then
                         Session("status_clearadvance") = "account"
@@ -254,6 +254,11 @@ endprocess:
             Session("comment_clearadvance") = CommentTable
             Session("attatch_clearadvance") = AttachTable
         Else
+            If Not String.IsNullOrEmpty(Request.QueryString("NonpoCode")) Then
+                account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
+            End If
+            'account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
+
             head = Session("head_clearadvance")
             detailtable = Session("detailtable_clearadvance")
             maintable = Session("maintable_clearadvance")
@@ -1226,7 +1231,7 @@ endprocess:
         'total = Format(cost, "0.00")
     End Sub
     <System.Web.Services.WebMethod>
-    Public Function addAttach(ByVal user As String, ByVal url As String, ByVal description As String, ByVal nonpocode As String)
+    Public Shared Function addAttach(ByVal user As String, ByVal url As String, ByVal description As String, ByVal nonpocode As String)
         Dim objNonpo As New NonPO
         Try
             Dim id As String
@@ -1714,7 +1719,11 @@ endprocess:
 
             Dim filename As String = usercode & "_" & closedate & "_" & nonpocode & "_" & Date.Now.ToString
             Dim encode As String
-
+            If (maintable.Rows(0).Item("statusid") = 7) Then
+                encode = "(preview)"
+            Else
+                encode = "(final)"
+            End If
             Dim byt As Byte() = System.Text.Encoding.UTF8.GetBytes(filename)
             encode = Convert.ToBase64String(byt)
 
@@ -1737,21 +1746,21 @@ endprocess:
         End Using
     End Sub
 
-    Private Sub btnExport_ServerClick(sender As Object, e As EventArgs) Handles btnExport.ServerClick
-        Dim createdate As String
-        createdate = txtCreateDate.Text.Substring(6, 4) & txtCreateDate.Text.Substring(3, 2) & txtCreateDate.Text.Substring(0, 2)
-        Dim objnonpo As New NonPO
-        Try
-            Dim dt As DataTable
-            dt = objnonpo.Nonpo_Export(Request.QueryString("NonpoCode"))
-            ExportToExcel(dt, Session("usercode"), createdate, Request.QueryString("NonpoCode"))
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('Verify fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
-    End Sub
+    'Private Sub btnExport_ServerClick(sender As Object, e As EventArgs) Handles btnExport.ServerClick
+    '    Dim createdate As String
+    '    createdate = txtCreateDate.Text.Substring(6, 4) & txtCreateDate.Text.Substring(3, 2) & txtCreateDate.Text.Substring(0, 2)
+    '    Dim objnonpo As New NonPO
+    '    Try
+    '        Dim dt As DataTable
+    '        dt = objnonpo.Nonpo_Export_ADV(Request.QueryString("NonpoCode"))
+    '        ExportToExcel(dt, Session("usercode"), createdate, Request.QueryString("NonpoCode"))
+    '    Catch ex As Exception
+    '        Dim scriptKey As String = "alert"
+    '        'Dim javaScript As String = "alert('" & ex.Message & "');"
+    '        Dim javaScript As String = "alertWarning('Verify fail');"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '    End Try
+    'End Sub
 
     Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
         Dim res As String = Request.Form("confirm_value")
@@ -1805,9 +1814,9 @@ endprocess:
                 row("cost") = cost
                 row("vat_per") = vat
                 row("tax_per") = tax
-                row("vat") = cost * vat / 100
-                row("tax") = cost * tax / 100
-                row("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
+                row("vat") = FormatNumber(cost * vat / 100, 2)
+                row("tax") = FormatNumber(cost * tax / 100, 2)
+                row("cost_total") = FormatNumber((cost + cost * vat / 100) - cost * tax / 100, 2)
                 row("detail") = detail
                 row("vendorname") = vendorname
                 row("vendorcode") = vendorcode
@@ -1835,9 +1844,9 @@ endprocess:
                     .Item("cost") = cost
                     .Item("vat_per") = vat
                     .Item("tax_per") = tax
-                    .Item("vat") = cost * vat / 100
-                    .Item("tax") = cost * tax / 100
-                    .Item("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
+                    .Item("vat") = FormatNumber(cost * vat / 100, 2)
+                    .Item("tax") = FormatNumber(cost * tax / 100, 2)
+                    .Item("cost_total") = FormatNumber((cost + cost * vat / 100) - cost * tax / 100, 2)
                     .Item("detail") = detail
                     .Item("vendorname") = vendorname
                     .Item("vendorcode") = vendorcode
@@ -1847,10 +1856,27 @@ endprocess:
                 End With
             End If
 
+            Session("detailtable_clearadvance") = detailtable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('adddetail fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnDowload_Click(sender As Object, e As EventArgs) Handles btnDowload.Click
+        Dim createdate As String
+        createdate = txtCreateDate.Text.Substring(6, 4) & txtCreateDate.Text.Substring(3, 2) & txtCreateDate.Text.Substring(0, 2)
+        Dim objnonpo As New NonPO
+        Try
+            Dim dt As DataTable
+            dt = objnonpo.Nonpo_Export_ADV(Request.QueryString("NonpoCode"), chkGroupVAT.Checked, chkGroupVendor.Checked)
+            ExportToExcel(dt, Session("usercode"), createdate, Request.QueryString("NonpoCode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('export fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub

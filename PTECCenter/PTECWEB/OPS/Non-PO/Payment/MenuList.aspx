@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="MenuList.aspx.vb" Inherits="PTECCENTER.MenuList" %>
+﻿<%@ Page Title="PaymentMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="MenuList.aspx.vb" Inherits="PTECCENTER.MenuList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
