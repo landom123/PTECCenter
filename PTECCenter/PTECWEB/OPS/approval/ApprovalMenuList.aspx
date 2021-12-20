@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ApprovalMenuList.aspx.vb" Inherits="PTECCENTER.WebForm3" %>
+﻿<%@ Page Title="ApprovalMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ApprovalMenuList.aspx.vb" Inherits="PTECCENTER.WebForm3" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 

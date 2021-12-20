@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ClearAdvance.aspx.vb" Inherits="PTECCENTER.ClearAdvance" %>
+﻿<%@ Page Title="ClearAdvance" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ClearAdvance.aspx.vb" Inherits="PTECCENTER.ClearAdvance" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -159,9 +159,11 @@
                         </div>
 
                         <div class="col-auto text-right align-self-center">
-                            <button id="btnExport" class="btn btn-sm  btn-info" style="color: #495057;" title="Export" runat="server">
+                            <%--<button id="btnExport" class="btn btn-sm  btn-info" style="color: #495057;" title="Export" runat="server">
                                 <i class="fas fa-file-download"></i>
-                            </button>
+                            </button>--%>
+                            <button type="button" class="btn btn-sm  btn-info noEnterSubmit" style="color: #495057;" title="Export" id="btnExport" runat="server" data-toggle="modal" data-target="#modalExport" data-backdrop="static" data-keyboard="false" data-whatever="new"><i class="fas fa-file-download"></i></button>
+
                             &nbsp;
                             <button id="btnPrint" class="btn btn-sm  btn-warning" style="color: #495057;" onclick="window.print();" title="Print" runat="server">
                                 <i class="fas fa-print"></i>
@@ -404,8 +406,8 @@
                                        <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("pjname").ToString() %>"><%= detailtable.Rows(i).Item("pjname").ToString() %></td>
                                         <td colspan="3" style="width: 120px !important; text-align: right;" title="<%= detailtable.Rows(i).Item("cost").ToString() %>"><%= if((detailtable.Rows(i).Item("cost").ToString()) = "0", "", String.Format("{0:n2}", detailtable.Rows(i).Item("cost"))) %>
                                         </td>
-                                        <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("vat_per").ToString() %>"><%= detailtable.Rows(i).Item("vat_per").ToString() %></td>
-                                        <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("tax_per").ToString() %>"><%= detailtable.Rows(i).Item("tax_per").ToString() %></td>
+                                        <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100, 2) %>"><%= detailtable.Rows(i).Item("vat_per").ToString() %></td>
+                                        <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100, 2) %>"><%= detailtable.Rows(i).Item("tax_per").ToString() %></td>
 
                                         <td class="deletedetail notprint" style="position: absolute; border: 0px solid #000;">
                                             <div>
@@ -814,7 +816,34 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_report" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel_report">ลายละเอียดรายงาน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group pl-5">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkGroupVAT" runat="server">
+                        <asp:Label ID="Label8" CssClass="form-check-label" AssociatedControlID="chkGroupVAT" runat="server" Text="รวบ VAT" />
+                    </div>
+                    <div class="form-group pl-5">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkGroupVendor" runat="server">
+                        <asp:Label ID="Label10" CssClass="form-check-label" AssociatedControlID="chkGroupVendor" runat="server" Text="รวบ Vendor" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
 
+                    <asp:Button ID="btnDowload" class="btn btn-primary" runat="server" Text="Dowload" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
@@ -1103,7 +1132,7 @@
                                 );
                                 alertSuccessToast('บันทึกเรียบร้อย' + description);
                             } else {
-                                alertWarning('Add URL fail');
+                                alertWarning('Add URL faila');
                             }
 
                         },
