@@ -62,7 +62,12 @@
                                         <div class="col text-left align-self-center">
                                             ขอเบิก Advance
                                         </div>
+
                                         <div class="col-auto text-right align-self-center">
+                                            <button id="btnPrint" class="btn btn-sm  btn-warning" style="color: #495057;" onclick="PrintElem('#content-wrapper')" title="Print" runat="server">
+                                                <i class="fas fa-print"></i>
+                                            </button>
+                                            &nbsp;
                                             <a href="AdvanceMenuList.aspx" class="btn btn-sm btn-danger ">
                                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                                         </div>
@@ -698,6 +703,30 @@
             })
 
             return false;--%>
+        }
+        function PrintElem(elem) {
+            event.preventDefault();
+            event.stopPropagation();
+            Popup($('<div/>').append($(elem).clone()).html());
+        }
+
+        function Popup(data) {
+            var mywindow = window.open('', 'my div', 'height=400,width=600');
+            mywindow.document.write('<html><head><title></title>');
+
+            mywindow.document.write('<link rel="stylesheet" href="<%=Page.ResolveUrl("~/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css")%>" rel="stylesheet" type="text/css">');
+            mywindow.document.write(' <link href="<%=Page.ResolveUrl("~/vendor/fontawesome-free/css/all.min.css")%>" rel="stylesheet" type="text/css">');
+            mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/sb-admin.css")%>" rel="stylesheet">');
+            mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">');
+            
+            mywindow.document.write('</head><body >');
+            mywindow.document.write(data);
+            mywindow.document.write('</body></html>');
+
+            mywindow.print();
+            //  mywindow.close();
+
+            return true;
         }
     </script>
 </asp:Content>
