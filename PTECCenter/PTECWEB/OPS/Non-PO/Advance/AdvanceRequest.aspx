@@ -1,4 +1,4 @@
-﻿<%@ Page Title="AdvanceRequest" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="AdvanceRequest.aspx.vb" Inherits="PTECCENTER.AdvanceRequest" %>
+﻿<%@ Page Title="AdvanceRequest" Language="vb" AutoEventWireup="true" MasterPageFile="~/site.Master" CodeBehind="AdvanceRequest.aspx.vb" Inherits="PTECCENTER.AdvanceRequest" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -190,13 +190,6 @@
                                             <div class="input-group">
 
                                                 <asp:TextBox class="form-control" ID="txtamount" runat="server" type="number" min="0" step="any" required></asp:TextBox>
-                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
-                                                <div class="input-group-append">
-                                                    <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../OPS/jobs.aspx?jobno=','ระบุเลขที่ OPS')">Export</button>
-                                                </div>
-                                                <% End If %>
-                                                <% End If %>
                                                 <div class="invalid-feedback">กรุณาใส่จำนวนเงิน</div>
                                             </div>
                                         </div>
@@ -212,13 +205,6 @@
 
                                             <div class="input-group">
                                                 <asp:TextBox class="form-control" ID="txtamountmore" runat="server" ReadOnly="true"></asp:TextBox>
-                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
-                                                <div class="input-group-append">
-                                                    <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../OPS/jobs.aspx?jobno=','ระบุเลขที่ OPS')">Export</button>
-                                                </div>
-                                                <% End If %>
-                                                <% End If %>
                                             </div>
 
                                         </div>

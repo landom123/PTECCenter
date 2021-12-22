@@ -679,9 +679,17 @@ endprocess:
     End Sub
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
         Dim approval As New Approval
+        Dim objNonPO As New NonPO
+        Dim nonpods = New DataSet
         Try
             approval.Save_Comment_By_Code(Request.QueryString("ADV"), txtComment.Text.Trim(), Session("userid"))
 
+
+            nonpods = objNonPO.NonPO_AdvanceRQ_Find(Request.QueryString("ADV"))
+            CommentTable = nonpods.Tables(2)
+
+            Session("comment_advancerq") = CommentTable
+            txtComment.Text = ""
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -689,7 +697,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+        'Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
 
 endprocess:
     End Sub

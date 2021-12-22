@@ -475,7 +475,6 @@
                                         <hr style="height: 2px; border-width: 0; color: gray; background-color: gray" />
                                         <% Next i %>
 
-                                        <%if detailtable.Rows(0).Item("statusid") = 1 Then%>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -487,7 +486,6 @@
                                         <div class="row justify-content-center">
                                             <asp:Button ID="btnSaveComment" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
                                         </div>
-                                        <% End If %>
                                     </div>
                                     <%-- end item--%>
                                 </div>

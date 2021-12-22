@@ -1351,7 +1351,7 @@ endprocess:
     End Function
 
     <System.Web.Services.WebMethod>
-    Public Function updateComment(ByVal userid As Integer, ByVal msg As String, commentid As Integer)
+    Public Shared Function updateComment(ByVal userid As Integer, ByVal msg As String, commentid As Integer)
         Dim approval As New Approval
         Try
             approval.Update_Comment_By_commentid(commentid, msg, userid)
@@ -1364,7 +1364,7 @@ endprocess:
 endprocess:
     End Function
     <System.Web.Services.WebMethod>
-    Public Function deleteComment(ByVal commentid As Integer, userid As Integer)
+    Public Shared Function deleteComment(ByVal commentid As Integer, userid As Integer)
         Dim approval As New Approval
         Try
             approval.Delete_Comment_By_commentid(commentid, userid)
@@ -1378,7 +1378,7 @@ endprocess:
     End Function
 
     <System.Web.Services.WebMethod>
-    Public Function changeChecked(ByVal attatchid As Integer, ByVal chked As Boolean, ByVal userid As Integer)
+    Public Shared Function changeChecked(ByVal attatchid As Integer, ByVal chked As Boolean, ByVal userid As Integer)
 
         Dim objnonpo As New NonPO
         Dim dt As DataTable
