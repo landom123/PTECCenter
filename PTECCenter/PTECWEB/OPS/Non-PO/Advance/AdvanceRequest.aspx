@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="AdvanceRequest.aspx.vb" Inherits="PTECCENTER.AdvanceRequest" %>
+﻿<%@ Page Title="AdvanceRequest" Language="vb" AutoEventWireup="true" MasterPageFile="~/site.Master" CodeBehind="AdvanceRequest.aspx.vb" Inherits="PTECCENTER.AdvanceRequest" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -62,7 +62,12 @@
                                         <div class="col text-left align-self-center">
                                             ขอเบิก Advance
                                         </div>
+
                                         <div class="col-auto text-right align-self-center">
+                                            <button id="btnPrint" class="btn btn-sm  btn-warning" style="color: #495057;" onclick="PrintElem('#content-wrapper')" title="Print" runat="server">
+                                                <i class="fas fa-print"></i>
+                                            </button>
+                                            &nbsp;
                                             <a href="AdvanceMenuList.aspx" class="btn btn-sm btn-danger ">
                                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                                         </div>
@@ -190,13 +195,6 @@
                                             <div class="input-group">
 
                                                 <asp:TextBox class="form-control" ID="txtamount" runat="server" type="number" min="0" step="any" required></asp:TextBox>
-                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
-                                                <div class="input-group-append">
-                                                    <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../OPS/jobs.aspx?jobno=','ระบุเลขที่ OPS')">Export</button>
-                                                </div>
-                                                <% End If %>
-                                                <% End If %>
                                                 <div class="invalid-feedback">กรุณาใส่จำนวนเงิน</div>
                                             </div>
                                         </div>
@@ -212,13 +210,6 @@
 
                                             <div class="input-group">
                                                 <asp:TextBox class="form-control" ID="txtamountmore" runat="server" ReadOnly="true"></asp:TextBox>
-                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
-                                                <div class="input-group-append">
-                                                    <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../OPS/jobs.aspx?jobno=','ระบุเลขที่ OPS')">Export</button>
-                                                </div>
-                                                <% End If %>
-                                                <% End If %>
                                             </div>
 
                                         </div>
@@ -712,6 +703,30 @@
             })
 
             return false;--%>
+        }
+        function PrintElem(elem) {
+            event.preventDefault();
+            event.stopPropagation();
+            Popup($('<div/>').append($(elem).clone()).html());
+        }
+
+        function Popup(data) {
+            var mywindow = window.open('', 'my div', 'height=400,width=600');
+            mywindow.document.write('<html><head><title></title>');
+
+            mywindow.document.write('<link rel="stylesheet" href="<%=Page.ResolveUrl("~/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css")%>" rel="stylesheet" type="text/css">');
+            mywindow.document.write(' <link href="<%=Page.ResolveUrl("~/vendor/fontawesome-free/css/all.min.css")%>" rel="stylesheet" type="text/css">');
+            mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/sb-admin.css")%>" rel="stylesheet">');
+            mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">');
+            
+            mywindow.document.write('</head><body >');
+            mywindow.document.write(data);
+            mywindow.document.write('</body></html>');
+
+            mywindow.print();
+            //  mywindow.close();
+
+            return true;
         }
     </script>
 </asp:Content>

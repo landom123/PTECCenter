@@ -1,4 +1,6 @@
 ﻿Imports System.Drawing
+Imports System.IO
+Imports ClosedXML.Excel
 
 Public Class JobsList_test
     Inherits System.Web.UI.Page
@@ -213,7 +215,7 @@ Public Class JobsList_test
     Private Sub cboDep_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDep.SelectedIndexChanged
         cboJobType.SelectedIndex = -1
         SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
-        searchjobslist()
+        'searchjobslist()
     End Sub
 
     Private Sub cboBranchGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranchGroup.SelectedIndexChanged
@@ -221,7 +223,7 @@ Public Class JobsList_test
 
         cboBranch.SelectedIndex = -1
         objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-        searchjobslist()
+        'searchjobslist()
     End Sub
 
     Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
@@ -233,29 +235,29 @@ Public Class JobsList_test
 
     End Sub
 
-    Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
-        searchjobslist()
-    End Sub
+    'Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
+    '    searchjobslist()
+    'End Sub
 
-    Private Sub cboJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobType.SelectedIndexChanged
-        searchjobslist()
-    End Sub
+    'Private Sub cboJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobType.SelectedIndexChanged
+    '    searchjobslist()
+    'End Sub
 
-    Private Sub cboStatusFollow_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboStatusFollow.SelectedIndexChanged
-        searchjobslist()
-    End Sub
+    'Private Sub cboStatusFollow_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboStatusFollow.SelectedIndexChanged
+    '    searchjobslist()
+    'End Sub
 
-    Private Sub txtjobcode_TextChanged(sender As Object, e As EventArgs) Handles txtjobcode.TextChanged
-        searchjobslist()
-    End Sub
+    'Private Sub txtjobcode_TextChanged(sender As Object, e As EventArgs) Handles txtjobcode.TextChanged
+    '    searchjobslist()
+    'End Sub
 
-    Private Sub txtStartDate_TextChanged(sender As Object, e As EventArgs) Handles txtStartDate.TextChanged
-        searchjobslist()
-    End Sub
+    'Private Sub txtStartDate_TextChanged(sender As Object, e As EventArgs) Handles txtStartDate.TextChanged
+    '    searchjobslist()
+    'End Sub
 
-    Private Sub txtEndDate_TextChanged(sender As Object, e As EventArgs) Handles txtEndDate.TextChanged
-        searchjobslist()
-    End Sub
+    'Private Sub txtEndDate_TextChanged(sender As Object, e As EventArgs) Handles txtEndDate.TextChanged
+    '    searchjobslist()
+    'End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
         Dim objbranch As New Branch
@@ -276,6 +278,61 @@ Public Class JobsList_test
         SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
 
         objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+
+        BindData()
+        'searchjobslist()
+    End Sub
+
+    Private Sub btnExport_ServerClick(sender As Object, e As EventArgs) Handles btnExport.ServerClick
+        Dim createdate As String
+        createdate = Date.Now
+        Dim objnonpo As New NonPO
+        Try
+            ExportToExcel(itemtable, Session("usercode"), createdate, Request.QueryString("NonpoCode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('export fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String, nonpocode As String)
+
+        Using wb As New XLWorkbook()
+            wb.Worksheets.Add(mydatatable, "General_journal")
+            'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
+
+            Dim filename As String = usercode & "_" & closedate & "_" & nonpocode & "_" & Date.Now.ToString
+            Dim encode As String
+            'If (maintable.Rows(0).Item("statusid") = 7) Then
+            '    encode = "(preview)"
+            'Else
+            '    encode = "(final)"
+            'End If
+            Dim byt As Byte() = System.Text.Encoding.UTF8.GetBytes(filename)
+            encode = Convert.ToBase64String(byt)
+
+            'Dim decode As String
+            'Dim b As Byte() = Convert.FromBase64String(encode)
+            'decode = System.Text.Encoding.UTF8.GetString(b)
+
+            Response.Clear()
+            Response.Buffer = True
+            Response.Charset = ""
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            Response.AddHeader("content-disposition", "attachment;filename=" & encode & ".xlsx")
+            Using MyMemoryStream As New MemoryStream()
+                wb.SaveAs(MyMemoryStream)
+                MyMemoryStream.WriteTo(Response.OutputStream)
+                Response.Flush()
+                Response.End()
+            End Using
+
+        End Using
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         searchjobslist()
     End Sub
 End Class

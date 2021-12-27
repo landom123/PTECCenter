@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ClearAdvanceMenuList2.aspx.vb" Inherits="PTECCENTER.ClearAdvanceMenuList2" %>
+﻿<%@ Page Title="ClearAdvanceMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ClearAdvanceMenuList2.aspx.vb" Inherits="PTECCENTER.ClearAdvanceMenuList2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 

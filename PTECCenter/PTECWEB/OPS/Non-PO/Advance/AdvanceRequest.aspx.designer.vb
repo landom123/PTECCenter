@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class AdvanceRequest
 
     '''<summary>
+    '''btnPrint control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnPrint As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''lbNonPOcode control.
     '''</summary>
     '''<remarks>
