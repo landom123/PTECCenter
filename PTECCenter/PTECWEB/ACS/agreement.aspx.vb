@@ -7,7 +7,7 @@ Public Class agreement
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public mainClient As DataTable = createClient()
-    Public mainAssets As DataTable = createClient()
+    Public mainAssets As DataTable = createAsset()
     Public mainOneTime As DataTable = createOnetime()
     Public mainFix As DataTable = createFix()
     Public mainFlexible As DataTable = createClient()
@@ -42,8 +42,8 @@ Public Class agreement
         End If
         gvClientBindData()
         gvOneTimeBindData
-        gvFixBindData
-        gvFlexibleBindData
+        gvFixBindData()
+        gvFlexibleBindData()
 
 
         If IsPostBack() Then
@@ -65,6 +65,7 @@ Public Class agreement
             SetCboClient(cboClient)
             SetCboOneTimePayment(cboOneTimePaymentType)
             SetCboOneTimePayment(cboFixPaymentType)
+            SetCboAssetType(cboAssetType)
 
             cboFixRecurring.Items.Add("เดือน")
             cboFixRecurring.Items.Add("ปี")
@@ -82,6 +83,15 @@ Public Class agreement
             End If
         End If
 
+    End Sub
+
+    Private Sub SetCboAssetType(obj As Object)
+        Dim asset As New AgAssets
+
+        obj.DataSource = asset.AssetsType_Cbo
+        obj.DataValueField = "assetstypeid"
+        obj.DataTextField = "assetstype"
+        obj.DataBind()
     End Sub
     Private Sub SetCboClient(obj As Object)
         Dim ag As New AgreeClient
@@ -118,6 +128,23 @@ Public Class agreement
 
         Return dt
     End Function
+    Private Function createAsset() As DataTable
+        Dim dt As New DataTable
+        dt.Columns.Add("assetsno", GetType(String))
+        dt.Columns.Add("assettype", GetType(String))
+        dt.Columns.Add("landno", GetType(String))
+        dt.Columns.Add("surveyno", GetType(String))
+        dt.Columns.Add("subdistrict", GetType(String))
+        dt.Columns.Add("district", GetType(String))
+        dt.Columns.Add("province", GetType(String))
+        dt.Columns.Add("renttype", GetType(String))
+        dt.Columns.Add("rai", GetType(String))
+        dt.Columns.Add("ngan", GetType(String))
+        dt.Columns.Add("wa", GetType(String))
+        dt.Columns.Add("gps", GetType(String))
+
+        Return dt
+    End Function
     Private Function create() As DataTable
         Dim dt As New DataTable
 
@@ -134,6 +161,7 @@ Public Class agreement
     Private Function createFix() As DataTable
         Dim dt As New DataTable
         dt.Columns.Add("fixid", GetType(Double))
+        dt.Columns.Add("assetsno", GetType(String))
         dt.Columns.Add("paymenttype", GetType(String))
         dt.Columns.Add("recurring", GetType(String))
         dt.Columns.Add("frequency", GetType(String))
@@ -224,6 +252,7 @@ Public Class agreement
         Dim newrow As DataRow = mainFix.NewRow
         Try
             newrow("fixid") = 0
+            newrow("assetsno") = cboassetsno.SelectedItem.Text
             newrow("paymenttype") = cboFixPaymentType.SelectedItem.Text
             newrow("recurring") = cboFixRecurring.SelectedItem.Text
             newrow("frequency") = txtFrequency.Text
@@ -245,11 +274,19 @@ Public Class agreement
 
     End Sub
     Private Sub AddAssets()
-        Dim newrow As DataRow = mainassets.NewRow
-        newrow("clientid") = 0
-        newrow("clientno") = ""
-        newrow("client") = ""
-        newrow("clientaddress") = ""
+        Dim newrow As DataRow = mainAssets.NewRow
+        newrow("assetsno") = txtAssetDocNo.Text
+        newrow("assettype") = cboAgreeType.Text
+        newrow("landno") = txtLandno.Text
+        newrow("surveyno") = txtSurveyNo.Text
+        newrow("subdistrict") = txtSubDistrict.Text
+        newrow("district") = txtDistrict.Text
+        newrow("province") = txtProvince.Text
+        newrow("renttype") = ""
+        newrow("rai") = txtRai.Text
+        newrow("ngan") = txtNgan.Text
+        newrow("wa") = txtWa.Text
+        newrow("gps") = txtGPS.Text
         mainAssets.Rows.Add(newrow)
 
         Session("mainassets") = mainAssets
@@ -267,21 +304,35 @@ Public Class agreement
     End Sub
 
     Private Sub AddClient(clienttable As DataTable)
-        Dim newrow As DataRow = mainClient.NewRow
-        Try
-            newrow("clientid") = clienttable.Rows(0).Item("clientid")
-            newrow("clientno") = clienttable.Rows(0).Item("clientno")
-            newrow("client") = clienttable.Rows(0).Item("client")
-            newrow("clientaddress") = clienttable.Rows(0).Item("address")
-            mainClient.Rows.Add(newrow)
+        Dim err As String
+        Dim scriptKey As String
+        Dim javaScript As String
+        Dim dr() As System.Data.DataRow
 
-            Session("mainclient") = mainClient
-        Catch ex As Exception
-            Dim err As String = ex.Message.ToString.Replace("'", "")
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            Dim javaScript As String = "alertWarning('" & err & "')"
+        dr = mainClient.Select("clientno='" & clienttable.Rows(0).Item("clientno") & "'")
+        If dr.Length > 0 Then
+            err = "ข้อมูลซ้ำ"
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = "alertWarning('" & err & "')"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+        Else
+            Dim newrow As DataRow = mainClient.NewRow
+            Try
+                newrow("no") = mainClient.Rows.Count + 1
+                newrow("clientid") = clienttable.Rows(0).Item("clientid")
+                newrow("clientno") = clienttable.Rows(0).Item("clientno")
+                newrow("client") = clienttable.Rows(0).Item("client")
+                newrow("clientaddress") = clienttable.Rows(0).Item("address")
+                mainClient.Rows.Add(newrow)
+
+                Session("mainclient") = mainClient
+            Catch ex As Exception
+                err = ex.Message.ToString.Replace("'", "")
+                scriptKey = "UniqueKeyForThisScript"
+                javaScript = "alertWarning('" & err & "')"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End Try
+        End If
 
     End Sub
     Private Function FindClientInfo(clientid As Double) As DataTable
@@ -291,7 +342,10 @@ Public Class agreement
         Try
             result = client.Client_Get_Info(clientid)
         Catch ex As Exception
-
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
 
         Return result
@@ -300,7 +354,10 @@ Public Class agreement
         gvClient.datasource = mainClient
         gvClient.databind
     End Sub
-
+    Public Sub gvAssetsBindData()
+        'gvassets.DataSource = mainFix
+        'gvFix.DataBind()
+    End Sub
     Public Sub gvOneTimeBindData()
         gvOneTime.DataSource = mainOneTime
         gvOneTime.DataBind()
@@ -313,9 +370,159 @@ Public Class agreement
         gvFlexible.DataSource = mainFlexible
         gvFlexible.DataBind()
     End Sub
+    Protected Sub gvClient_RowCommand(sender As Object, e As GridViewCommandEventArgs)
+        Dim ag As New Agree
+
+        Dim rowIndex As Integer
+        Dim row As GridViewRow
+        Dim projectno As String = txtProjectNo.Text
+        Dim clientno As String
+
+        If e.CommandName = "RemoveAgClient" Then
+            ''Determine the RowIndex of the Row whose Button was clicked.
+            rowIndex = Convert.ToInt32(e.CommandArgument)
+            row = gvClient.Rows(rowIndex)
+
+            clientno = Double.Parse(TryCast(row.FindControl("lblClientNo"), Label).Text)
+
+            Try
+                ag.removeClient(projectno, clientno, usercode)
+            Catch ex As Exception
+                Dim err As String
+                Dim scriptKey As String
+                Dim javaScript As String
+                err = ex.Message.ToString.Replace("'", "")
+                ScriptKey = "UniqueKeyForThisScript"
+                javaScript = "alertWarning('" & err & "')"
+                ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+            End Try
+
+        End If
+
+    End Sub
+    Public Sub removeAgreeClient()
+
+    End Sub
     Public Sub BindData()
         'gvData.DataSource = editable
         'gvData.DataBind()
     End Sub
 
+    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+        Clear()
+    End Sub
+    Private Sub Clear()
+
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim projectno, branch, agreetype As String
+        Dim result As String = ""
+        Dim ag As New Agree
+        Dim projectdate, agreedate, agreeactivedate As DateTime
+
+        Dim err As String
+        Dim scriptKey As String
+        Dim javaScript As String
+
+        projectno = txtProjectNo.Text
+        If validateData() Then
+            branch = txtBranchCode.Text
+            agreetype = cboAgreeType.SelectedItem.Text
+            agreeno = txtAgreeNo.Text
+            Try
+                projectdate = Date.Parse(txtProjectDate.Text)
+            Catch ex As Exception
+                projectdate = Date.Now
+                txtProjectDate.Text = Date.Now.ToString
+            End Try
+            Try
+                agreedate = Date.Parse(txtAgreeDate.Text)
+                txtAgreeDate.Text = Date.Now.ToString
+            Catch ex As Exception
+                agreedate = Date.Now
+            End Try
+            Try
+                agreeactivedate = Date.Parse(txtAgreeAcitveDate.Text)
+            Catch ex As Exception
+                agreeactivedate = Date.Now
+                txtAgreeAcitveDate.Text = Date.Now.ToString
+            End Try
+
+            Try
+                result = ag.saveAgree(projectno, projectdate, branch, agreetype, agreeno, agreedate, agreeactivedate, usercode)
+                If result <> "error" Then
+                    txtProjectNo.Text = result
+                    ag.saveClient(txtProjectNo.Text, mainClient, usercode)
+                    ag.saveAssets()
+                    ag.saveOnetime()
+                    ag.saveRecurringFix()
+                    ag.saveRecurringFlexible()
+                    ag.saveFinance()
+                    ag.saveOther()
+                    err = "บันทึกเรียบร้อย"
+                    scriptKey = "UniqueKeyForThisScript"
+                    javaScript = "alertSuccess('" & err & "')"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                End If
+            Catch ex As Exception
+                err = ex.Message.ToString.Replace("'", "")
+                scriptKey = "UniqueKeyForThisScript"
+                javaScript = "alertWarning('" & err & "')"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End Try
+
+        End If
+    End Sub
+    Private Function validateData() As Boolean
+        Dim result As Boolean = True
+
+
+        Return result
+    End Function
+
+    Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
+        Dim mydataset As DataSet
+        Dim err As String
+        Dim scriptKey As String
+        Dim javaScript As String
+
+        Dim projectno As String = txtprojectnoFind.Text
+        Dim agreeno As String = txtagreenoFind.Text
+
+        If String.IsNullOrEmpty(projectno) = True And String.IsNullOrEmpty(agreeno) = True Then
+            err = "กรุณาระบุเลขที่โครงการ หรือเลขที่สัญญา"
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = "alertWarning('" & err & "')"
+            ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+        Else
+            Dim ag As New Agree
+            mydataset = ag.FindProject(projectno, agreeno)
+            If mydataset IsNot Nothing Then
+                ShowData(mydataset)
+            End If
+        End If
+    End Sub
+    Private Sub ShowData(mydataset As DataSet)
+        With mydataset.Tables(0).Rows(0)
+            txtProjectNo.Text = .Item("projectno")
+            txtProjectDate.Text = .Item("projectdate")
+            txtBranchCode.Text = .Item("branch")
+            txtAgreeNo.Text = .Item("agno")
+            cboAgreeType.SelectedIndex = cboAgreeType.Items.IndexOf(cboAgreeType.Items.FindByText(.Item("agtype")))
+            txtAgreeDate.Text = .Item("agdate")
+            txtAgreeAcitveDate.Text = .Item("agactivedate")
+            'approveby
+            'approvedate
+            'createby
+            'createdate
+            'updateby
+            'updatedate
+        End With
+
+        mainClient = mydataset.Tables(1)
+        Session("mainclient") = mainClient
+        gvClientBindData()
+
+    End Sub
 End Class

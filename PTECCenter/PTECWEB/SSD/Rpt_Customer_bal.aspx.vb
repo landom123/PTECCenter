@@ -11,11 +11,13 @@ Partial Class Rpt_Customer_bal
         asdate = Request.QueryString("asdate")
         branch = Request.QueryString("branch")
         'idh = 31
+        'asdate = "20211111"
+        'branch = "003"
         SetReportParameters(asdate, branch)
 
 
     End Sub
-    Private Sub SetReportParameters(asdate As String, branch As Date)
+    Private Sub SetReportParameters(asdate As String, branch As String)
         'Set Processing Mode
         ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote
         ' Set report server and report path
@@ -46,7 +48,7 @@ Partial Class Rpt_Customer_bal
         Response.Buffer = True
         Response.Clear()
         Response.ContentType = mimeType
-        Response.AddHeader("content-disposition", "attachment; filename=BillingNote." + extension)
+        Response.AddHeader("content-disposition", "attachment; filename=ArBal" & "_" & branch & "_" & asdate & "." + extension)
         Response.BinaryWrite(returnValue)
         Response.Flush()
         Response.End()

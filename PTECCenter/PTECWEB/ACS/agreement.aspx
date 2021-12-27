@@ -31,7 +31,7 @@
                 <span class="input-group-text">เลขที่โครงการ</span>
                 </div>
                 <asp:TextBox class="form-control" ID="txtprojectnoFind" placeholder="PJxxxx" runat="server"></asp:TextBox>    
-                &nbsp;<asp:Button ID="btnFind" class="btn btn-sm  btn-primary" runat="server" Text="Find" />
+
             </div>
         </div>
         <div class="col-4">
@@ -40,7 +40,7 @@
                 <span class="input-group-text">เลขที่สัญญา</span>
                 </div>
                 <asp:TextBox class="form-control" ID="txtagreenoFind" placeholder="AGxxxx" runat="server"></asp:TextBox>    
-                &nbsp;<asp:Button ID="Button1" class="btn btn-sm  btn-primary" runat="server" Text="Find" />
+                &nbsp;<asp:Button ID="btnFind" class="btn btn-sm  btn-primary" runat="server" Text="Find" />
             </div>            
         </div>
     </div>
@@ -134,6 +134,7 @@
                                     AutoGenerateColumns="false" 
                                     ShowHeaderWhenEmpty="true"
                                     emptydatatext="No data available." 
+                                    OnRowCommand="gvClient_RowCommand"
                                     runat="server" CssClass="table table-striped">
                                     <HeaderStyle BackColor="#507CD1" Font-Bold="false" Font-size="Smaller" ForeColor="White" />
                                     <AlternatingRowStyle BackColor="#CCCCFF" />
@@ -161,8 +162,9 @@
 	                                    </asp:TemplateField>	         
 	                                    <asp:TemplateField HeaderText="">
 		                                    <ItemTemplate>
-                                                <asp:LinkButton runat="server" ID="btnDel" Text="<i class='fas fa-minus-circle' style='color:red;font-size:20px'></i> " 
-                                                        ValidationGroup="edt" OnClick="BindData"  ToolTip="ลบ"/>
+                                                <asp:Button ID="btnRemoveAgClient" class="btn btn-sm  btn-warning" runat="server" 
+                                                        Text="del " 
+                                                        CommandName="RemoveAgClient" CommandArgument="<%# Container.DataItemIndex %>"/> 
                                                 <asp:LinkButton runat="server" ID="btnClientInfo" Text="<i class='fas fa-id-card' style='color:blue;font-size:20px'></i> " 
                                                         ValidationGroup="edt" OnClick="BindData"  ToolTip="รายละเอียด"/>			                                    
 		                                    </ItemTemplate>
@@ -533,6 +535,11 @@
 			                            <asp:Label id="lblFixid" style="width:50px" runat="server" Text='<%#Eval("fixid")%>' ></asp:Label>
 		                            </ItemTemplate>
 	                            </asp:TemplateField>
+	                            <asp:TemplateField HeaderText="เลขที่ที่ดิน" >
+		                            <ItemTemplate>
+			                            <asp:Label id="lblAssetsNo" style="width:50px" runat="server" Text='<%#Eval("assetsno")%>' ></asp:Label>
+		                            </ItemTemplate>
+	                            </asp:TemplateField>
 	                            <asp:TemplateField HeaderText="ค่าใช้จ่าย">
 		                            <ItemTemplate >
 			                            <asp:Label id="lblFixpaymenttype" runat="server" Text='<%#Eval("paymenttype")%>'></asp:Label>
@@ -618,15 +625,21 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-4">
+                                เลขที่ที่ดิน
+                                <div class="input-group sm-3">
+                                    <asp:dropdownlist class="form-control" ID="cboAssetsNo" runat="server"></asp:dropdownlist>    
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4">
                                 จำนวนเงิน
                                 <div class="input-group sm-3">
                                     <asp:Textbox class="form-control" ID="txtFixAmount" runat="server"></asp:Textbox>    
-                                    &nbsp;&nbsp;<asp:LinkButton runat="server" ID="LinkButton1" Text="<i class='fas fa-plus-circle' style='color:green;font-size:20px'></i> " 
+                                    &nbsp;&nbsp;<asp:LinkButton runat="server" ID="LinkButton2" Text="<i class='fas fa-plus-circle' style='color:green;font-size:20px'></i> " 
                                             ValidationGroup="edt" OnClick="AddFix"  ToolTip="เพิ่ม"/>	
                                 </div>
 
                             </div>
-
                         </div>
                 </div>
             <hr style="height: 2px; border-width: 0; color: gray; background-color: gray" />

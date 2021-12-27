@@ -77,15 +77,6 @@ Partial Public Class agreement
     Protected WithEvents txtprojectnoFind As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''btnFind control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''txtagreenoFind control.
     '''</summary>
     '''<remarks>
@@ -95,13 +86,13 @@ Partial Public Class agreement
     Protected WithEvents txtagreenoFind As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Button1 control.
+    '''btnFind control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''txtProjectNo control.
@@ -563,6 +554,15 @@ Partial Public Class agreement
     Protected WithEvents txtFixDueDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cboAssetsNo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboAssetsNo As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''txtFixAmount control.
     '''</summary>
     '''<remarks>
@@ -572,13 +572,13 @@ Partial Public Class agreement
     Protected WithEvents txtFixAmount As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''LinkButton1 control.
+    '''LinkButton2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents LinkButton1 As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents LinkButton2 As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''gvFlexible control.
