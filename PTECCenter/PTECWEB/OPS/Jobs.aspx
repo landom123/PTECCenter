@@ -38,7 +38,12 @@
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" />
                         &nbsp;   
                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />&nbsp;
-                        <button <% If Session("status") = "new" Or Session("status") = "cancel" Then %> disabled <% End if %> type="button" class="btn btn-sm  btn-danger" onclick="chkCancel('../ops/jobsCancel.aspx?jobno=<% =Session("jobno") %>')">Cancel</button>
+                        <button <% If Session("status") = "new" Or Session("status") = "cancel" Then %> disabled <% End if %> type="button" class="btn btn-sm  btn-danger" onclick="chkCancel('../ops/jobsCancel.aspx?jobno=<% =Session("jobno") %>')">Cancel</button>&nbsp;
+                        <% If Not Request.QueryString("jobno") Is Nothing And maintable.Rows.Count > 0 Then%>
+                        <% if (maintable.Rows(0).Item("statusname") = "แจ้งงาน") Then%>
+                        <span class="text-red font-weight-bold text-danger">*** (กรุณากด confirm เพื่อยืนยัน) ***</span>
+                        <% End If %>
+                        <% End If %>
                     </div>
                 </div>
 
@@ -571,6 +576,12 @@
                     minDate: 0
                 })
             },
+            scrollInput: false,
+            format: 'd/m/Y H:i'
+        });
+        jQuery('[id$=txtDocDate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08
+            timepicker: true,
             scrollInput: false,
             format: 'd/m/Y H:i'
         });

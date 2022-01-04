@@ -23,7 +23,7 @@ Public Class frmJobs
             Response.Redirect("~/login.aspx")
         End If
 
-        txtDocDate.Text = Now
+        'txtDocDate.Text = Now
         txtDocDate.Attributes.Add("readonly", "readonly")
         'Session("username") = "PAB"
 
