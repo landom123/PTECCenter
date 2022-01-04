@@ -1735,6 +1735,7 @@
     <Content Include="OPS\approval\ApprovalClose.aspx" />
     <Content Include="OPS\approval\ApprovalAttach.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
+    <Content Include="OPS\approval\approvalHO.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
     <Content Include="OPS\FileUpload\FileUpload.aspx" />
     <Content Include="OPS\JobsLists.aspx" />
@@ -3616,6 +3617,13 @@
     </Compile>
     <Compile Include="OPS\approval\ApprovalMenuList.aspx.vb">
       <DependentUpon>ApprovalMenuList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\approval\approvalHO.aspx.designer.vb">
+      <DependentUpon>approvalHO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\approval\approvalHO.aspx.vb">
+      <DependentUpon>approvalHO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\approval\WebForm5.aspx.designer.vb">
