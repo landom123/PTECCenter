@@ -29,6 +29,15 @@
                           &nbsp;<asp:Button ID="btnFind" class="btn btn-sm  btn-primary" runat="server" Text="Find" />&nbsp;                          
                         </div>
                     </div>
+                    <div class="col-4">
+                        <div class="input-group sm-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">ราคาน้ำมัน Diesel B10 </span>
+                          </div>
+                          <asp:Label class="form-control" ID="lblPrice" runat="server"></asp:Label>
+                          
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-4">

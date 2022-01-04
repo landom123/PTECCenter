@@ -77,7 +77,6 @@ Public Class TTCostToD365
         Return dt
     End Function
 
-
     Private Sub BindData()
         gvData.DataSource = editable
         gvData.DataBind()
@@ -88,11 +87,19 @@ Public Class TTCostToD365
         Dim objedi As New EDI
 
         InvoiceDate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
+        lblPrice.Text = OilPrice(InvoiceDate)
         editable = objedi.ListInvoiceTTCost(InvoiceDate)
         Session("TT") = editable
         BindData()
     End Sub
+    Private Function OilPrice(invoicedate As String) As String
+        Dim result As String = ""
+        Dim objedi As New EDI
 
+        result = objedi.GetOilPrice(invoicedate)
+
+        Return result
+    End Function
     Private Sub gvData_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvData.PageIndexChanging
         gvData.PageIndex = e.NewPageIndex
         BindData()

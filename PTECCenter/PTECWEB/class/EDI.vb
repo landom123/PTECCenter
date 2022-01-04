@@ -11,6 +11,40 @@ Public Class EDI
     Public ShipPath As String = WebConfigurationManager.AppSettings("ShipPath")
 
 
+    Public Function GetOilPrice(invoicedate As String) As String
+
+        Dim result As String = ""
+        Dim dt As New DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_datacenter").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "EDI_GetOilPrice"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@invoicedate", SqlDbType.VarChar).Value = invoicedate
+        'cmd.Parameters.Add("@duedate", SqlDbType.VarChar).Value = DueDate
+
+
+        'cmd.ExecuteNonQuery()
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            dt = ds.Tables(0)
+            result = dt.Rows(0).Item("price")
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
     Public Function EDI_Other_TTCost_Save_D365(ByRef invoicedate As String, duedate As String) As String
 
         Dim result As String = ""

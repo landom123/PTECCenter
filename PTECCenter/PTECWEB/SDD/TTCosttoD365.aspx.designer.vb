@@ -32,6 +32,15 @@ Partial Public Class TTCostToD365
     Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''lblPrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblPrice As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''txtDueDate control.
     '''</summary>
     '''<remarks>
