@@ -64,10 +64,14 @@
                                         </div>
 
                                         <div class="col-auto text-right align-self-center">
+
+                                            <% If Not Request.QueryString("ADV") Is Nothing Then%>
                                             <button id="btnPrint" class="btn btn-sm  btn-warning" style="color: #495057;" onclick="PrintElem('#content-wrapper')" title="Print" runat="server">
                                                 <i class="fas fa-print"></i>
                                             </button>
                                             &nbsp;
+                                            
+                                            <% End If %>
                                             <a href="AdvanceMenuList.aspx" class="btn btn-sm btn-danger ">
                                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                                         </div>
@@ -175,7 +179,7 @@
                                             <div class="input-group sm-">
                                                 <asp:TextBox class="form-control  font-weight-bold font-weight-bold" ID="txtDuedate" runat="server"></asp:TextBox>
                                                 <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
+                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3 Then %>
                                                 <div class="input-group-append">
                                                     <asp:Button ID="btnUpdateDuedate" class="btn btn-sm btn-primary" runat="server" Text="Update" />
                                                 </div>
@@ -509,7 +513,7 @@
     <script src="<%=Page.ResolveUrl("../js/NonPO.js")%>"></script>
     <script type="text/javascript">
         <% If Not Request.QueryString("ADV") Is Nothing Then%>
-        <% If account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
+        <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3 Then %>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,

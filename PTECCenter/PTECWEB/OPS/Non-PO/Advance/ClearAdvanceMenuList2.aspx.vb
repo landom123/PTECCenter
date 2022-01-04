@@ -233,6 +233,8 @@ Public Class ClearAdvanceMenuList2
         depid = cboDepartment.SelectedItem.Value
         objsection.SetCboSection_seccode(cboSection, depid)
         objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+
+        BindData()
     End Sub
 
     Private Sub cboBranchGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranchGroup.SelectedIndexChanged

@@ -18,6 +18,11 @@ Public Class JobsList_test
         Dim usercode As String
         usercode = Session("usercode")
 
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
+
 
         If Session("menulist") Is Nothing Then
             menutable = LoadMenu(usercode)

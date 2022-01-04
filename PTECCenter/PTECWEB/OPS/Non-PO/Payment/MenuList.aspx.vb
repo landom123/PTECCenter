@@ -219,6 +219,9 @@ Public Class MenuList
         depid = cboDepartment.SelectedItem.Value
         objsection.SetCboSection_seccode(cboSection, depid)
         objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+
+
+        BindData()
     End Sub
     Private Sub BindData()
         cntdt = itemtable.Rows.Count

@@ -321,6 +321,8 @@ Public Class AdvanceMenuList
         objsection.SetCboSection_seccode(cboSection, depid)
         objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
         'searchjobslist()
+
+        BindData()
     End Sub
 
     Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged

@@ -110,41 +110,42 @@ Public Class AdvanceRequest
 
 
                         For Each row As DataRow In PermissionOwner.Tables(0).Rows
-                            If row("approver").ToString.IndexOf("MD") > -1 Then
-                                If (md_code.IndexOf(Session("usercode")) > -1) Then
-                                    approval = True
-                                    GoTo endprocess
+                            If row("status").ToString = "allowner" Then
+                                If row("approver").ToString.IndexOf("MD") > -1 Then
+                                    If (md_code.IndexOf(Session("usercode")) > -1) Then
+                                        approval = True
+                                        GoTo endprocess
+                                    End If
+                                End If
+
+                                If row("approver").ToString.IndexOf("FM") > -1 Then
+                                    If (fm_code.IndexOf(Session("usercode")) > -1) Then
+                                        approval = True
+                                        GoTo endprocess
+                                    End If
+                                End If
+
+                                If row("approver").ToString.IndexOf("DM") > -1 Then
+                                    If (dm_code.IndexOf(Session("usercode")) > -1) Then
+                                        approval = True
+                                        GoTo endprocess
+                                    End If
+                                End If
+
+                                If row("approver").ToString.IndexOf("SM") > -1 Then
+                                    If (sm_code.IndexOf(Session("usercode")) > -1) Then
+                                        approval = True
+                                        GoTo endprocess
+                                    End If
+                                End If
+
+                                If row("approver").ToString.IndexOf("AM") > -1 Then
+                                    If (am_code.IndexOf(Session("usercode")) > -1) Then
+                                        approval = True
+                                        GoTo endprocess
+                                    End If
                                 End If
                             End If
-
-                            If row("approver").ToString.IndexOf("FM") > -1 Then
-                                If (fm_code.IndexOf(Session("usercode")) > -1) Then
-                                    approval = True
-                                    GoTo endprocess
-                                End If
-                            End If
-
-                            If row("approver").ToString.IndexOf("DM") > -1 Then
-                                If (dm_code.IndexOf(Session("usercode")) > -1) Then
-                                    approval = True
-                                    GoTo endprocess
-                                End If
-                            End If
-
-                            If row("approver").ToString.IndexOf("SM") > -1 Then
-                                If (sm_code.IndexOf(Session("usercode")) > -1) Then
-                                    approval = True
-                                    GoTo endprocess
-                                End If
-                            End If
-
-                            If row("approver").ToString.IndexOf("AM") > -1 Then
-                                If (am_code.IndexOf(Session("usercode")) > -1) Then
-                                    approval = True
-                                    GoTo endprocess
-                                End If
-                            End If
-
                         Next row
 endprocess:
                         'ElseIf (account_code.IndexOf(Session("usercode").ToString) > -1) And (detailtable.Rows(0).Item("statusrqid") = 3) Then
