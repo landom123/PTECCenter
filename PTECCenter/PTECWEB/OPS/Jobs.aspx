@@ -360,7 +360,7 @@
                                         Followup</button>&nbsp;
                                     <span class="btn btn-sm  btn-danger">สถานะงาน : <% =detailtable.Rows(i).Item("followup_status") %></span>
                                     <% End if %>
-                                    <% If objStatus = "edit" And owner = 1 Then %>
+                                    <% If objStatus = "edit" And owner = 1 And detailtable.Rows(i).Item("followup_status") = "" Then %>
                                     <button type="button" class="btn btn-sm  btn-danger"
                                         onclick="chkDel('../OPS/jobsdetail_delete.aspx?jobno=<% =detailtable.Rows(i).Item("jobno") %>&jobdetailid=<% =detailtable.Rows(i).Item("jobdetailid") %>')">
                                         Delete</button>
