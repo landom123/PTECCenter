@@ -193,8 +193,6 @@
     <Content Include="ACS\agreement.aspx" />
     <Content Include="ACS\test03.aspx" />
     <Content Include="ACS\test02.aspx" />
-    <Content Include="ADMIN\branchpermissionremove.aspx" />
-    <Content Include="ADMIN\branchpermissionadd.aspx" />
     <Content Include="ADMIN\Questionnair.aspx" />
     <Content Include="ADMIN\UserManage.aspx" />
     <Content Include="ADMIN\BranchPermission.aspx" />
@@ -3486,20 +3484,6 @@
     </Compile>
     <Compile Include="ACS\test02.aspx.vb">
       <DependentUpon>test02.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ADMIN\branchpermissionremove.aspx.designer.vb">
-      <DependentUpon>branchpermissionremove.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ADMIN\branchpermissionremove.aspx.vb">
-      <DependentUpon>branchpermissionremove.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ADMIN\branchpermissionadd.aspx.designer.vb">
-      <DependentUpon>branchpermissionadd.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ADMIN\branchpermissionadd.aspx.vb">
-      <DependentUpon>branchpermissionadd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ADMIN\Questionnair.aspx.designer.vb">
