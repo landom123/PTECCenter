@@ -629,6 +629,7 @@ endprocess:
         txtQuantity.Text = "1"
         txtAssetCode.Text = ""
         txtAssetName.Text = ""
+        lblattatch.Text = ""
     End Sub
 
     Private Sub updatehead()
