@@ -12,6 +12,7 @@
         username = Session("username")
         dep = Session("dep")
 
+        Dim objsupplier As New Supplier
         Dim objjob As New jobs
 
 
@@ -37,6 +38,8 @@
 
         If Not IsPostBack() Then
 
+            objsupplier.SetCboSupplier(cboSupplier)
+            objjob.SetCboJobCenterList(cboJobCenter)
             objjob.SetCboCloseType(cboCloseType)
             objjob.SetCboCloseCategory(cboCloseCategory)
             objjob.SetCboJobCenterDtlListByJobCenterID_GroupByJobCenterid(cboCost, "")
@@ -224,5 +227,39 @@
         Response.Redirect("JobsManageCost.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
 
 endprocess:
+    End Sub
+
+    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+        'update cost and supplier
+
+        Dim supplierid As Double = cboSupplier.SelectedItem.Value
+        Dim jobCenter As Integer = cboJobCenter.SelectedItem.Value
+        Dim cost As Double
+
+        Try
+            cost = Double.Parse(txtCost.Text)
+        Catch
+            cost = 0
+        End Try
+
+        Dim objjob As New jobs
+
+        Try
+
+            jobno = Request.QueryString("jobno")
+            jobdetailid = cboJobdtlId.SelectedItem.Value
+            objjob.UpdateSupplierandCost(jobno, jobdetailid, jobCenter, supplierid, cost, Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+
+        End Try
+
+        Response.Redirect("JobsManageCost.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+
     End Sub
 End Class
