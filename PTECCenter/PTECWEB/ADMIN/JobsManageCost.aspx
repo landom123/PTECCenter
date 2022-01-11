@@ -199,6 +199,67 @@
                     </div>
                 </div>
 
+
+
+
+                <div class="card  mb-3">
+                    <div class="card-header" style="background-color: lightslategray; color: white">
+                        สำหรับผู้ปฏิบัติงาน
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="TextBox1" runat="server"></asp:TextBox>
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
+                                        ControlToValidate="txtCost" runat="server"
+                                        ErrorMessage="ตัวเลขเท่านั้น"
+                                        ValidationExpression="\d+.\d+"
+                                        ForeColor="Red">
+                                    </asp:RegularExpressionValidator>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Supplier</span>
+                                        <asp:DropDownList class="form-control" ID="cboSupplier"
+                                            runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">ประเภทหมวดราคา</span>
+                                        <asp:DropDownList class="form-control" ID="cboJobCenter"
+                                            runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-11">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="padding-bottom: 1rem;">
+                        <div class="col-12 text-center">
+                            <asp:Button ID="btnUpdate" class="btn btn-sm  btn-success" runat="server" Text="Update Cost and Supplier" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
                 <div class="card  mb-3">
                     <div class="card-header" style="background-color: lightslategray; color: white">
                         สำหรับผู้ปฏิบัติงาน
