@@ -193,6 +193,7 @@
     <Content Include="ACS\agreement.aspx" />
     <Content Include="ACS\test03.aspx" />
     <Content Include="ACS\test02.aspx" />
+    <Content Include="ADMIN\JobsManageCost.aspx" />
     <Content Include="ADMIN\Questionnair.aspx" />
     <Content Include="ADMIN\JobsManageStatus.aspx" />
     <Content Include="ADMIN\UserManage.aspx" />
@@ -3485,6 +3486,13 @@
     </Compile>
     <Compile Include="ACS\test02.aspx.vb">
       <DependentUpon>test02.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ADMIN\JobsManageCost.aspx.designer.vb">
+      <DependentUpon>JobsManageCost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ADMIN\JobsManageCost.aspx.vb">
+      <DependentUpon>JobsManageCost.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ADMIN\Questionnair.aspx.designer.vb">

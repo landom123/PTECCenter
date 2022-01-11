@@ -28,13 +28,6 @@
         If Not IsPostBack() Then
 
             objjob.SetCboJobStatusmainList(cboStatus)
-            'objdepart.SetCboDepartment(cboDepart, 0)
-            'objsection.SetCboSection(cboSection, 0)
-            'objposition.SetCboPosition(cboPosition)
-            'If Session("maintable_usermanage") IsNot Nothing Then
-            '    showdata(Session("maintable_usermanage"))
-            'End If
-
             If Not Request.QueryString("jobno") Is Nothing Then
                 Session("managestatus") = "edit"
                 FindJobNo(Request.QueryString("jobno"))
@@ -76,10 +69,8 @@
             'itemtable = mydataset.Tables(1)
             'Session("itemtable") = itemtable
 
-            If maintable.Rows.Count > 0 Then
-                showdata(maintable)
-                Session("maintable") = mydataset.Tables(0)
-            End If
+            showdata(maintable)
+            Session("maintable") = mydataset.Tables(0)
         Catch ex As Exception
             Dim scriptKey As String = "UniqueKeyForThisScript"
             Dim javaScript As String = "alertWarning('Find Fail')"
