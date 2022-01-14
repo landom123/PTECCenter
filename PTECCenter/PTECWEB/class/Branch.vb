@@ -33,13 +33,13 @@ Public Class Branch
         obj.DataBind()
     End Sub
 
-    Public Function PermissionRemove(usercode As String, branchid As String) As Boolean
-        Dim result As Boolean
+    Public Function PermissionRemove(usercode As String, branchid As String) As DataTable
+        Dim result As DataTable
         'Credit_Balance_List_Createdate
-        'Dim ds As New DataSet
+        Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
         Dim cmd As New SqlCommand
-        'Dim adp As New SqlDataAdapter
+        Dim adp As New SqlDataAdapter
 
         conn.Open()
         cmd.Connection = conn
@@ -53,21 +53,21 @@ Public Class Branch
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
 
 
-        'adp.SelectCommand = cmd
-        'adp.Fill(ds)
-        result = cmd.ExecuteNonQuery
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
         conn.Close()
 
         Return result
     End Function
 
-    Public Function PermissionAdd(usercode As String, branchid As String) As Boolean
-        Dim result As Boolean
+    Public Function PermissionAdd(usercode As String, branchid As String) As DataTable
+        Dim result As DataTable
         'Credit_Balance_List_Createdate
-        'Dim ds As New DataSet
+        Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
         Dim cmd As New SqlCommand
-        'Dim adp As New SqlDataAdapter
+        Dim adp As New SqlDataAdapter
 
         conn.Open()
         cmd.Connection = conn
@@ -81,9 +81,9 @@ Public Class Branch
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
 
 
-        'adp.SelectCommand = cmd
-        'adp.Fill(ds)
-        result = cmd.ExecuteNonQuery
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
         conn.Close()
 
         Return result
@@ -159,6 +159,27 @@ Public Class Branch
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function BranchListAll() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Branch_ListAll"
+        cmd.CommandType = CommandType.StoredProcedure
 
 
         adp.SelectCommand = cmd

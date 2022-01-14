@@ -140,11 +140,9 @@ Public Class frmJobs
             'itemtable = mydataset.Tables(1)
             'Session("itemtable") = itemtable
 
-            If maintable.Rows.Count > 0 Then
-                showdata(maintable)
-                Session("maintable") = mydataset.Tables(0)
-                Session("detailtable") = mydataset.Tables(1)
-            End If
+            showdata(maintable)
+            Session("maintable") = mydataset.Tables(0)
+            Session("detailtable") = mydataset.Tables(1)
         Catch ex As Exception
             Dim scriptKey As String = "UniqueKeyForThisScript"
             Dim javaScript As String = "alertWarning('Find Fail')"
@@ -629,6 +627,7 @@ endprocess:
         txtQuantity.Text = "1"
         txtAssetCode.Text = ""
         txtAssetName.Text = ""
+        lblattatch.Text = ""
     End Sub
 
     Private Sub updatehead()

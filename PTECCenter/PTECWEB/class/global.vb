@@ -184,6 +184,13 @@ Module global_module
         Return result
     End Function
 
+    Public Function LoadBranchAll() As DataTable
+        Dim branch As New Branch
+        Dim result As DataTable
+        result = branch.BranchListAll()
+        Return result
+    End Function
+
 
 End Module
 

@@ -27,6 +27,14 @@ Public Class jobs
         obj.DataBind()
 
     End Sub
+
+    Public Sub SetCboJobStatusmainList(obj As Object)
+        obj.DataSource = Me.JobStatusmain_List()
+        obj.DataValueField = "statusid"
+        obj.DataTextField = "name"
+        obj.DataBind()
+
+    End Sub
     Public Sub SetCboJobStatusList(obj As Object)
         obj.DataSource = Me.JobStatus_List()
         obj.DataValueField = "statusid"
@@ -45,6 +53,15 @@ Public Class jobs
     Public Sub SetCboJobCloseTypeList(obj As Object)
         obj.DataSource = Me.JobCloseType_List()
         obj.DataValueField = "jobclosetypeid"
+        obj.DataTextField = "name"
+        obj.DataBind()
+
+    End Sub
+
+
+    Public Sub SetCboJobDtlList(obj As Object, jobno As String)
+        obj.DataSource = Me.JobdtlList(jobno)
+        obj.DataValueField = "jobdetailid"
         obj.DataTextField = "name"
         obj.DataBind()
 
@@ -106,6 +123,34 @@ Public Class jobs
 
         Return result
     End Function
+
+    Public Function JobdtlList(jobcode As String) As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Jobdtl_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobcode
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        'cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+
+
     Public Function JobList_For_Operator(jobcode As String, depid As String, jobtypeid As String, statusfollowid As String,
                                          branchgroupid As String, branchid As String, startdate As String, enddate As String) As DataTable
         Dim result As DataTable
@@ -150,6 +195,42 @@ Public Class jobs
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "Jobs_Close_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobno", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@jobclosetypeid", SqlDbType.Int).Value = jobclosetypeid
+        cmd.Parameters.Add("@beginwarr", SqlDbType.DateTime).Value = Date.Parse(beginwarr)
+        cmd.Parameters.Add("@endwarr", SqlDbType.DateTime).Value = Date.Parse(endwarr)
+        'cmd.Parameters.Add("@partamt", SqlDbType.Money).Value = partamt
+        'cmd.Parameters.Add("@laboramt", SqlDbType.Money).Value = laboramt
+        'cmd.Parameters.Add("@travelamt", SqlDbType.Money).Value = travelamt
+        cmd.Parameters.Add("@invoiceno", SqlDbType.VarChar).Value = InvoiceNo
+        cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = Date.Parse(Invoicedate)
+        cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = detail
+        cmd.Parameters.Add("@closedate", SqlDbType.DateTime).Value = Date.Parse(closedate)
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@jobclosecategoryid", SqlDbType.BigInt).Value = jobclosecategoryid
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function JobCloseEdit(jobno As String, jobdetailid As Double, jobclosetypeid As Integer,
+                                 beginwarr As String, endwarr As String, partamt As Double, laboramt As Double, travelamt As Double,
+                                 InvoiceNo As String,
+                                 Invoicedate As String, detail As String, closedate As String, usercode As String, jobclosecategoryid As Double) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Close_Edit"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@jobno", SqlDbType.VarChar).Value = jobno
@@ -234,6 +315,32 @@ Public Class jobs
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "Jobclosecategory_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function JobStatusmain_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Status_List"
         cmd.CommandType = CommandType.StoredProcedure
 
         'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
@@ -492,6 +599,26 @@ Public Class jobs
         conn.Close()
         Return result
     End Function
+
+    Public Sub setStatus(jobno As String, statusid As Integer)
+        'Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        'Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Set_Status"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobno", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@statusid", SqlDbType.Int).Value = statusid
+
+
+        cmd.ExecuteNonQuery()
+        conn.Close()
+
+    End Sub
     Public Function Save(jobno As String, headtable As DataTable, detailtable As DataTable, username As String) As String
         Dim result As String
 

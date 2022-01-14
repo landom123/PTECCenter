@@ -5,7 +5,7 @@ Imports ClosedXML.Excel
 Public Class JobsList_test
     Inherits System.Web.UI.Page
     Public itemtable As DataTable = createdetailtable()
-    Public criteria As DataTable = createCriteria()
+    Public criteria As DataTable '= createCriteria()
     Public menutable As DataTable
 
     Public cntdt As Integer
@@ -51,9 +51,10 @@ Public Class JobsList_test
                 If Not Session("criteria_Job") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                     criteria = Session("criteria_Job")
                     BindCriteria(criteria)
-                    searchjobslist()
+                    'searchjobslist()
                 Else
-                    searchjobslist()
+
+                    'searchjobslist()
                 End If
             Else
                 'กรณีถ้าเป็น ผจก. สาขา
@@ -87,7 +88,7 @@ Public Class JobsList_test
         gvRemind.DataBind()
     End Sub
     Private Sub setCriteria()
-        'criteria = createCriteria()
+        criteria = createCriteria()
         criteria.Rows.Clear()
         criteria.Rows.Add(txtjobcode.Text.Trim(),
                             cboDep.SelectedItem.Value,
