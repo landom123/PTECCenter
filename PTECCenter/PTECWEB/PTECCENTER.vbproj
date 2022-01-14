@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="ACS\agreementtest.aspx" />
     <Content Include="ACS\client_list.aspx" />
     <Content Include="ACS\clientinfo.aspx" />
     <Content Include="ACS\titlename.aspx" />
@@ -200,8 +201,6 @@
     <Content Include="ADMIN\BranchPermission.aspx" />
     <Content Include="ADMIN\menuPermission.aspx" />
     <Content Include="AFD\BudgetOilCost.aspx" />
-    <Content Include="AFD\CreditBalance.aspx" />
-    <Content Include="AFD\PayinByHOSReport.aspx" />
     <Content Include="AFD\BudgetControl.aspx" />
     <Content Include="aspnet_client\system_web\2_0_50727\crystalreportviewers13\ActiveXControls\PrintControl.cab" />
     <Content Include="aspnet_client\system_web\2_0_50727\crystalreportviewers13\ActiveXControls\PrintControl_res_cs.cab" />
@@ -3439,6 +3438,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACS\agreementtest.aspx.designer.vb">
+      <DependentUpon>agreementtest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ACS\agreementtest.aspx.vb">
+      <DependentUpon>agreementtest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ACS\client_list.aspx.designer.vb">
       <DependentUpon>client_list.aspx</DependentUpon>
     </Compile>
@@ -3535,20 +3541,6 @@
     </Compile>
     <Compile Include="AFD\BudgetOilCost.aspx.vb">
       <DependentUpon>BudgetOilCost.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AFD\CreditBalance.aspx.designer.vb">
-      <DependentUpon>CreditBalance.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AFD\CreditBalance.aspx.vb">
-      <DependentUpon>CreditBalance.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AFD\PayinByHOSReport.aspx.designer.vb">
-      <DependentUpon>PayinByHOSReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AFD\PayinByHOSReport.aspx.vb">
-      <DependentUpon>PayinByHOSReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AFD\BudgetControl.aspx.designer.vb">

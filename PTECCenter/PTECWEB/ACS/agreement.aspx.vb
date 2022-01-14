@@ -481,28 +481,28 @@ Public Class agreement
         Return result
     End Function
 
-    Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
-        Dim mydataset As DataSet
-        Dim err As String
-        Dim scriptKey As String
-        Dim javaScript As String
+    'Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
+    '    Dim mydataset As DataSet
+    '    Dim err As String
+    '    Dim scriptKey As String
+    '    Dim javaScript As String
 
-        Dim projectno As String = txtprojectnoFind.Text
-        Dim agreeno As String = txtagreenoFind.Text
+    '    Dim projectno As String = txtprojectnoFind.Text
+    '    'Dim agreeno As String = txtagreenoFind.Text
 
-        If String.IsNullOrEmpty(projectno) = True And String.IsNullOrEmpty(agreeno) = True Then
-            err = "กรุณาระบุเลขที่โครงการ หรือเลขที่สัญญา"
-            scriptKey = "UniqueKeyForThisScript"
-            javaScript = "alertWarning('" & err & "')"
-            ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
-        Else
-            Dim ag As New Agree
-            mydataset = ag.FindProject(projectno, agreeno)
-            If mydataset IsNot Nothing Then
-                ShowData(mydataset)
-            End If
-        End If
-    End Sub
+    '    If String.IsNullOrEmpty(projectno) = True And String.IsNullOrEmpty(agreeno) = True Then
+    '        err = "กรุณาระบุเลขที่โครงการ หรือเลขที่สัญญา"
+    '        scriptKey = "UniqueKeyForThisScript"
+    '        javaScript = "alertWarning('" & err & "')"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+    '    Else
+    '        Dim ag As New Agree
+    '        mydataset = ag.FindProject(projectno, agreeno)
+    '        If mydataset IsNot Nothing Then
+    '            ShowData(mydataset)
+    '        End If
+    '    End If
+    'End Sub
     Private Sub ShowData(mydataset As DataSet)
         With mydataset.Tables(0).Rows(0)
             txtProjectNo.Text = .Item("projectno")
