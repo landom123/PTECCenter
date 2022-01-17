@@ -236,15 +236,15 @@ Public Class jobs
         cmd.Parameters.Add("@jobno", SqlDbType.VarChar).Value = jobno
         cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
         cmd.Parameters.Add("@jobclosetypeid", SqlDbType.Int).Value = jobclosetypeid
-        cmd.Parameters.Add("@beginwarr", SqlDbType.DateTime).Value = Date.Parse(beginwarr)
-        cmd.Parameters.Add("@endwarr", SqlDbType.DateTime).Value = Date.Parse(endwarr)
+        cmd.Parameters.Add("@beginwarr", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(beginwarr), DBNull.Value, Date.Parse(beginwarr))
+        cmd.Parameters.Add("@endwarr", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(endwarr), DBNull.Value, Date.Parse(endwarr))
         'cmd.Parameters.Add("@partamt", SqlDbType.Money).Value = partamt
         'cmd.Parameters.Add("@laboramt", SqlDbType.Money).Value = laboramt
         'cmd.Parameters.Add("@travelamt", SqlDbType.Money).Value = travelamt
         cmd.Parameters.Add("@invoiceno", SqlDbType.VarChar).Value = InvoiceNo
-        cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = Date.Parse(Invoicedate)
+        cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(Invoicedate), DBNull.Value, Date.Parse(Invoicedate))
         cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = detail
-        cmd.Parameters.Add("@closedate", SqlDbType.DateTime).Value = Date.Parse(closedate)
+        cmd.Parameters.Add("@closedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(closedate), DBNull.Value, Date.Parse(closedate))
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
         cmd.Parameters.Add("@jobclosecategoryid", SqlDbType.BigInt).Value = jobclosecategoryid
 
