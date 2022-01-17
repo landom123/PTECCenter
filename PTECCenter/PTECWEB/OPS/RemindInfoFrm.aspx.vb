@@ -14,6 +14,12 @@ Public Class FrmRemindInfo
         usercode = Session("usercode")
         Dim remindid As String = Request.QueryString("remindid")
         'txtRemindDate.ReadOnly = True
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
+        Else
+            menutable = Session("menulist")
+        End If
 
         If Not IsPostBack() Then
             setCboRepeat()
@@ -22,6 +28,7 @@ Public Class FrmRemindInfo
             SetCboBranch()
 
             If remindid = 0 Then
+                txtRemindID.Text = 0
                 objStatus = "เพิ่มการแจ้งเตือน"
                 btnSaveAs.Enabled = False
             Else
@@ -32,14 +39,6 @@ Public Class FrmRemindInfo
                 Session("itemtable") = itemtable
                 ShowData()
             End If
-
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
-
 
         Else
             itemtable = Session("itemtable")
@@ -125,5 +124,75 @@ Public Class FrmRemindInfo
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         'Dim a As String = txtRemindDate.Text
+        Dim remindid As Double, branchid As Double,
+            reminddetail As String, emailmessage As String,
+            email As String, warningday As Integer, warningdayofweek As Integer,
+            reminddate As DateTime, periodno As Integer, periodtype As Integer,
+            usercode As String, active As Integer
+
+        Dim remind As New Remind
+        remindid = txtRemindID.Text
+        branchid = cboBranch.SelectedItem.Value
+        reminddetail = txtRemindDetail.Text
+        emailmessage = txtEmailMessage.Text
+        email = txtEmail.Text
+        Try
+            warningday = Integer.Parse(txtWarningDay.Text)
+        Catch ex As Exception
+            warningday = 90 'ถ้า error default 90 วัน
+        End Try
+        warningdayofweek = cboRepeat.SelectedIndex + 1
+        reminddate = DateTime.Parse(txtRemindDate.Text)
+        Try
+            periodno = Integer.Parse(txtPeriod.Text)
+        Catch ex As Exception
+            periodno = 1 'ถ้า error default 1
+        End Try
+        periodtype = cboPeriodType.SelectedIndex + 1
+        usercode = Session("usercode")
+        active = cboActived.SelectedIndex + 1
+        remindid = remind.Remind_Info_Save(remindid, branchid, reminddetail, emailmessage,
+                    email, warningday, warningdayofweek, reminddate, periodno, periodtype, usercode, active)
+
+        txtRemindID.Text = remindid
+
+    End Sub
+
+    Private Sub btnSaveAs_Click(sender As Object, e As EventArgs) Handles btnSaveAs.Click
+        'Dim a As String = txtRemindDate.Text
+        Dim remindid As Double, branchid As Double,
+            reminddetail As String, emailmessage As String,
+            email As String, warningday As Integer, warningdayofweek As Integer,
+            reminddate As DateTime, periodno As Integer, periodtype As Integer,
+            usercode As String, active As Integer
+
+        Dim remind As New Remind
+        remindid = 0
+        branchid = cboBranch.SelectedItem.Value
+        reminddetail = txtRemindDetail.Text & " copy "
+        emailmessage = txtEmailMessage.Text & " copy "
+
+        txtRemindDetail.Text = reminddetail
+        txtEmailMessage.Text = emailmessage
+        email = txtEmail.Text
+        Try
+            warningday = Integer.Parse(txtWarningDay.Text)
+        Catch ex As Exception
+            warningday = 90 'ถ้า error default 90 วัน
+        End Try
+        warningdayofweek = cboRepeat.SelectedIndex + 1
+        reminddate = DateTime.Parse(txtRemindDate.Text)
+        Try
+            periodno = Integer.Parse(txtPeriod.Text)
+        Catch ex As Exception
+            periodno = 1 'ถ้า error default 1
+        End Try
+        periodtype = cboPeriodType.SelectedIndex + 1
+        usercode = Session("usercode")
+        active = cboActived.SelectedIndex + 1
+        remindid = remind.Remind_Info_Save(remindid, branchid, reminddetail, emailmessage,
+                    email, warningday, warningdayofweek, reminddate, periodno, periodtype, usercode, active)
+
+        txtRemindID.Text = remindid
     End Sub
 End Class

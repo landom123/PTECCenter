@@ -38,10 +38,10 @@
     </div>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="pills-info-tab" data-toggle="pill" href="#info" role="tab" aria-controls="pills-info" aria-selected="<% If Session("pages") = "project" Then  %>true<% else %>false<%End if %>">ข้อมูลโครงการ</a>
+        <a class="nav-link <% If Session("pages") = "info" Then  %>active <% End if %>" id="pills-info-tab" data-toggle="pill" href="#info" role="tab" aria-controls="pills-info" aria-selected="<% If Session("pages") = "project" Then  %>true<% else %>false<%End if %>">ข้อมูลโครงการ</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="pills-assets-tab" data-toggle="pill" href="#assets" role="tab" aria-controls="pills-assets" aria-selected="<% If Session("pages") = "assets" Then  %>true<% else %>false<%End if %>">ข้อมูลที่ดิน</a>
+        <a class="nav-link <% If Session("pages") = "agree" Then  %>active <% End if %>" id="pills-assets-tab" data-toggle="pill" href="#assets" role="tab" aria-controls="pills-assets" aria-selected="<% If Session("pages") = "assets" Then  %>true<% else %>false<%End if %>">ข้อมูลที่ดิน</a>
       </li>
       <li class="nav-item">
         <a class="nav-link " id="pills-agree-tab" data-toggle="pill" href="#agree" role="tab" aria-controls="pills-agree" aria-selected="<% If Session("pages") = "agree" Then  %>true<% else %>false<%End if %>">ข้อมูลสัญญา</a>
@@ -78,7 +78,6 @@
             </div>
         </div>
      </div>
-
 
                 <div class="card-body">
                               <div class="table-responsive">
@@ -154,7 +153,7 @@
     <div id="agree" class="tab-pane fade <% If Session("pages") = "agree" Then  %>show active <% End if %>" style="background-color:ghostwhite">  
         <ul class="nav nav-pills mb-3" id="agree-tab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link" id="agree-ag-tab" data-toggle="pill" href="#ag" role="tab" aria-controls="pills-ag" aria-selected="<% If Session("pages") = "ag" Then  %>true<% else %>false<%End if %>">ข้อมูลสัญญา</a>
+            <a class="nav-link active" id="agree-ag-tab" data-toggle="pill" href="#ag" role="tab" aria-controls="pills-ag" aria-selected="<% If Session("pages") = "ag" Then  %>true<% else %>false<%End if %>">ข้อมูลสัญญา</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="agree-payment-tab" data-toggle="pill" href="#payment" role="tab" aria-controls="pills-payment" aria-selected="<% If Session("pages") = "payment" Then  %>true<% else %>false<%End if %>">ข้อมูลค่าเช่า/ผลตอบแทน</a>
@@ -167,7 +166,7 @@
           </li>
         </ul>
         <div class="tab-content">  
-            <div id="ag" class="tab-pane fade" style="background-color:ghostwhite">  
+            <div id="ag" class="tab-pane fade <% If Session("pages2") = "ag" Then  %>show active <% End if %>" style="background-color:ghostwhite"> 
               <p>บันทึกข้อมูลสัญญา</p>  
               <div class="row">
                 <div class="col-md-4">
@@ -200,7 +199,7 @@
              </div>
             </div>  
               <%----=====end tab สัญญา=======--%>
-            <div id="payment" class="tab-pane fade " style="background-color:ghostwhite">  
+            <div id="payment" class="tab-pane fade <% If Session("pages2") = "payment" Then  %>show active <% End if %>" style="background-color:ghostwhite"> 
               <p>บันทึกข้อมูลการจ่ายค่าเช่า การจ่ายผลตอลแทน ค่าใช้จ่ายอื่น ๆ</p>  
                 <div class="card-body">
                     ค่าใช้จ่ายแบบครั้งเดียว
@@ -485,18 +484,18 @@
 
             </div>  
               <%----=====end tab เงื่อนไขผลตอบแทน=======--%>
-            <div id="finance" class="tab-pane fade <% If Session("pages") = "finance" Then  %>show active <% End if %>" style="background-color:ghostwhite">  
+            <div id="finance" class="tab-pane fade <% If Session("pages2") = "finance" Then  %>show active <% End if %>" style="background-color:ghostwhite">  
               <p>บันทึกข้อมูลทางการเงิน สำหรับโอน หรือชำระค่าเช่า ผลตอบแทน</p>  
             </div>  
               <%----=====end tab ข้อมูลการจ่ายเงิน=======--%>
-            <div id="remark" class="tab-pane fade <% If Session("pages") = "remark" Then  %>show active <% End if %>" style="background-color:ghostwhite">  
+            <div id="remark" class="tab-pane fade <% If Session("pages2") = "remark" Then  %>show active <% End if %>" style="background-color:ghostwhite">  
               <p>บันทึกข้อมูลข้อความแนบท้ายสัญญา</p>  
             </div>  
               <%----=====end tab หมายเหตุแนบท้ายสัญญา=======--%>
         </div>
     </div>  
       <%----=====end tab agree =======--%>
-        <div id="assets" class="tab-pane fade" style="background-color:white">  
+        <div id="assets" class="tab-pane fade<% If Session("pages") = "assets" Then  %>show active <% End if %>" style="background-color:ghostwhite">  
           <p>บันทึกข้อมูลที่ดิน สิ่งปลูกสร้าง ที่ทำสัญญาเช่า หรือร่วมธุรกิจ</p>  
 
                        <div class="table-responsive">

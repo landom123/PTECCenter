@@ -58,7 +58,8 @@ Public Class agreement
             'gsmtable = Session("gsmtable")
             'BindData()
         Else
-            Session("pages") = "agree"
+            Session("pages") = "info"
+            Session("pages2") = "ag"
             'SetCboUsers(cboPrjManager)
             'SetCboProjectStatus(cboPrjStatus)
             SetCboAgreeType(cboAgreeType)
@@ -203,7 +204,7 @@ Public Class agreement
             AddClient(clienttable)
             gvClientBindData()
         End If
-        Session("pages") = "agree"
+        Session("pages") = "info"
     End Sub
 
 
@@ -237,7 +238,9 @@ Public Class agreement
             mainOneTime.Rows.Add(newrow)
 
             Session("onetime") = mainOneTime
-            Session("pages") = "payment"
+            Session("pages") = "agree"
+            Session("pages2") = "payment"
+
             gvOneTimeBindData()
         Catch ex As Exception
             Dim err As String = ex.Message.ToString.Replace("'", "")
@@ -263,7 +266,8 @@ Public Class agreement
             mainFix.Rows.Add(newrow)
 
             Session("fix") = mainFix
-            Session("pages") = "payment"
+            Session("pages") = "agree"
+            Session("pages2") = "payment"
             gvFixBindData()
         Catch ex As Exception
             Dim err As String = ex.Message.ToString.Replace("'", "")
@@ -525,4 +529,5 @@ Public Class agreement
         gvClientBindData()
 
     End Sub
+
 End Class
