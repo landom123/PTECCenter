@@ -124,15 +124,15 @@ Public Class JobsClose
 
             With mydataset.Tables(1).Rows(0)
                 cboCloseType.SelectedIndex = cboCloseType.Items.IndexOf(cboCloseType.Items.FindByValue(.Item("jobclosetypeid")))
-                txtBeginWarr.Text = .Item("beginwarr")
-                txtEndWarr.Text = .Item("endwarr")
+                txtBeginWarr.Text = .Item("beginwarr").ToString
+                txtEndWarr.Text = .Item("endwarr").ToString
                 cboCloseCategory.SelectedIndex = cboCloseCategory.Items.IndexOf(cboCloseCategory.Items.FindByValue(.Item("jobclosecategoryid")))
                 'txtLaborAmt.Text = .Item("laboramt")
                 'txtPartAmt.Text = .Item("partamt")
                 'txtTravelAmt.Text = .Item("travelamt")
                 txtInvoiceNo.Text = .Item("invoiceno")
-                txtInvDate.Text = .Item("invoicedate")
-                txtCloseDate.Text = .Item("closedate")
+                txtInvDate.Text = .Item("invoicedate").ToString
+                txtCloseDate.Text = .Item("closedate").ToString
                 txtRemark.Text = .Item("details")
 
                 cboCloseType.Attributes.Add("disabled", "True")

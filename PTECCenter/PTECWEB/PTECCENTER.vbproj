@@ -1753,6 +1753,7 @@
     <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
     <Content Include="OPS\Non-PO\Payment\Payment.aspx" />
     <Content Include="OPS\Non-PO\NonPO.aspx" />
+    <Content Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
     <Content Include="ROD\OilPriceFormula.aspx" />
@@ -3738,6 +3739,13 @@
       <DependentUpon>NonPO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.designer.vb">
+      <DependentUpon>PettyCashHO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.vb">
+      <DependentUpon>PettyCashHO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ROD\OilPriceFormulaUpdate.aspx.designer.vb">
       <DependentUpon>OilPriceFormulaUpdate.aspx</DependentUpon>
     </Compile>
@@ -4510,7 +4518,6 @@
   <ItemGroup>
     <Folder Include="OPS\Attatch\" />
     <Folder Include="OPS\Non-PO\css\" />
-    <Folder Include="OPS\Non-PO\PettyCash\" />
     <Folder Include="temp\" />
   </ItemGroup>
   <ItemGroup>

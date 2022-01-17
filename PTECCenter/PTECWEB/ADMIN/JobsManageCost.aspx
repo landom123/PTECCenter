@@ -474,11 +474,11 @@
      <script type="text/javascript">
         jQuery('[id$=txtCloseDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
-            timepicker: false,
+            timepicker: true,
             scrollInput: false,
-            format: 'd/m/Y'
+            format: 'd/m/Y H:i'
         });
-    </script>
+     </script>
     <script type="text/javascript">
 
         $(document).ready(function () {

@@ -65,6 +65,48 @@ Public Class NonPO
 
         Return result
     End Function
+
+    Public Function SavePettyCashHO(pchono As String, headtable As DataTable, detailtable As DataTable, username As String) As String
+        Dim result As String
+
+        'Credit_Balance_List_Createdate
+
+        pchono = SaveHeadPCHO(headtable, username)
+        result = pchono
+        'SaveDetailAdv(pchono, detailtable, username)
+
+
+        Return result
+    End Function
+
+    Private Function SaveHeadPCHO(mytable As DataTable, username As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_PettyCashHO_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        With mytable.Rows(0)
+            cmd.Parameters.Add("@pchono", SqlDbType.VarChar).Value = .Item("nonpocode")
+            cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = .Item("detail")
+            cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = .Item("branchid")
+            cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = .Item("depid")
+            cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = .Item("secid")
+            cmd.Parameters.Add("@vat_wait", SqlDbType.Bit).Value = .Item("vat_wait")
+            cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+        End With
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+    End Function
     Private Function SaveHeadAdv(mytable As DataTable, username As String) As String
         Dim result As String
         Dim ds As New DataSet
