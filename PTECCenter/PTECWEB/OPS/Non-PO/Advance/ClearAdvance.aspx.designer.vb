@@ -41,6 +41,15 @@ Partial Public Class ClearAdvance
     Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnCancel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCancel As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnExport control.
     '''</summary>
     '''<remarks>
@@ -471,6 +480,15 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lbcboAccountCode As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbcboAccountCodeMandatory control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboAccountCodeMandatory As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cboAccountCode control.

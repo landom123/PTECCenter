@@ -152,6 +152,8 @@
                             &nbsp;   
                             <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                             &nbsp;   
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" />
+                            &nbsp;   
                             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
                             <% if (maintable.Rows(0).Item("statusid") = 1) Or (maintable.Rows(0).Item("statusid") = 4) Then%>
                             <span class="text-red font-weight-bold text-danger">*** (กรุณากด confirm เพื่อยืนยัน) ***</span>
@@ -175,16 +177,16 @@
 
                     </div>
                     <hr />
-
-                    <div class="row mb-3">
-                        <div class="col-2 text-right">
-                            <asp:Label ID="lbcodeRef" CssClass="form-label" AssociatedControlID="codeRef" runat="server" Text="codeRef" />
+                    <div class="ref d-none">
+                        <div class="row mb-3">
+                            <div class="col-2 text-right">
+                                <asp:Label ID="lbcodeRef" CssClass="form-label" AssociatedControlID="codeRef" runat="server" Text="codeRef" />
+                            </div>
+                            <div class="col-7">
+                                <asp:TextBox class="form-control font-weight-bold" ID="codeRef" runat="server" ReadOnly="True"></asp:TextBox>
+                            </div>
                         </div>
-                        <div class="col-7">
-                            <asp:TextBox class="form-control font-weight-bold" ID="codeRef" runat="server" ReadOnly="True"></asp:TextBox>
-                        </div>
-                    </div>
-                    <%--<div class="row mb-3">
+                        <%--<div class="row mb-3">
                         <div class="col-2 text-right">
                             <asp:Label ID="lbamount" CssClass="form-label" AssociatedControlID="amount" runat="server" Text="ยอดค้างชำระ" />
                         </div>
@@ -192,12 +194,13 @@
                             <asp:TextBox class="form-control font-weight-bold text-danger " ID="amount" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>--%>
-                    <div class="row mb-3">
-                        <div class="col-2 text-right">
-                            <asp:Label ID="lbtxtremark" CssClass="form-label" AssociatedControlID="txtremark" runat="server" Text="รายละเอียด" />
-                        </div>
-                        <div class="col-7">
-                            <asp:TextBox class="form-control font-weight-bold" ID="txtremark" runat="server" ReadOnly="True"></asp:TextBox>
+                        <div class="row mb-3">
+                            <div class="col-2 text-right">
+                                <asp:Label ID="lbtxtremark" CssClass="form-label" AssociatedControlID="txtremark" runat="server" Text="รายละเอียด" />
+                            </div>
+                            <div class="col-7">
+                                <asp:TextBox class="form-control font-weight-bold" ID="txtremark" runat="server" ReadOnly="True"></asp:TextBox>
+                            </div>
                         </div>
                     </div>
                     <div class="foram">
@@ -218,6 +221,9 @@
                         </div>
                         <div class="row">
                             <%=now_action %>
+                        </div>
+                        <div class="row">
+                            บช. ที่ดูแล : <%=account_code %>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -764,6 +770,7 @@
                     <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
                     <div class="form-group">
                         <asp:Label ID="lbcboAccountCode" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="รหัสบัญชี" />
+                        <asp:Label ID="lbcboAccountCodeMandatory" CssClass="text-danger" AssociatedControlID="cboAccountCode" runat="server" Text="*" />
                         <asp:DropDownList class="form-control" ID="cboAccountCode" runat="server" onchange="setdetail(this);"></asp:DropDownList>
                     </div>
                     <div class="form-group">
@@ -847,7 +854,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                     </div>
                     <div class="gropnobill d-none">
                         <hr />
@@ -908,25 +915,32 @@
         //    scrollInput: false,
         //    format: 'd/m/Y'
         //});
+
+
+        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
+        <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
+                    (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
+        jQuery('[id$=txtDuedate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
         jQuery('[id$=txtinvoicedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'
         });
-
-        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-        <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
-                        (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
+        <% End If %>
+        <% else If Session("status_payment").ToString = "new" Then %>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'
         });
-        <% End If %>
-        <% else If Session("status_payment").ToString = "new"Then %>
-        jQuery('[id$=txtDuedate]').datetimepicker({
+        jQuery('[id$=txtinvoicedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
             scrollInput: false,
@@ -934,7 +948,7 @@
         });
         <% End If %>
 
-    </script>
+        </script>
 
     <script>
         var cntdetail =<% =chkunsave%>;
@@ -1409,7 +1423,6 @@ alert('else nonpo')
             const vendorname = '';
             const vendorcode = '';
             const status = $(".DetailArea tr[name='" + row + "']").attr("data-status")
-
             //alert('cost' + cost);
 
             if (cost != 0 && accountcodeid == 0) {
@@ -1418,11 +1431,17 @@ alert('else nonpo')
                 event.stopPropagation();
                 return 0;
             }
+            if (vat != 0 && (!invoice || !taxid || !invoicedate)) {
+                alertWarning('กรุณากรอกข้อมูล invoice ให้ครบถ้วน');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
             //alert(row);
             //var params = "{'row': '" + row + "'}";
             var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
                 "','accountcode': '" + accountcode + "','depid': '" + depid + "','depname': '" + depname +
-                "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + ppname +
+                "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + pjname +
                 "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
                 "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
                 "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "','nobill': '" + nobill + "'}";
@@ -1524,7 +1543,7 @@ alert('else nonpo')
             //var params = "{'row': '" + row + "'}";
             var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
                 "','accountcode': '" + accountcode + "','depid': '" + depid + "','depname': '" + depname +
-                "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + ppname +
+                "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + pjname +
                 "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
                 "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
                 "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "'}";
@@ -1633,6 +1652,7 @@ alert('else nonpo')
             $('.modal-footer #btnAddDetail').show();
             $('.modal-body input,.modal-body textarea').removeAttr("readonly");
             $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
+            $('#<% =txtinvoicedate.ClientID%>').attr('readonly', true);
 
             $('.form-control').selectpicker('refresh');
 

@@ -62,6 +62,7 @@ Public Class Payment2
         End If
 
         txtDuedate.Attributes.Add("readonly", "readonly")
+        txtinvoicedate.Attributes.Add("readonly", "readonly")
 
         If Not IsPostBack() Then
             head = createHeadtable()
@@ -545,7 +546,7 @@ endprocess:
                 btnSave.Enabled = True
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
-
+                btnCancel.Enabled = False
 
                 btnExport.Visible = False
                 btnPrint.Visible = False
@@ -568,6 +569,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = True
                     btnConfirm.Enabled = True
+                    btnCancel.Enabled = True
 
                     Session("status_payment") = "edit"
 
@@ -580,6 +582,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     Session("status_payment") = "read"
 
@@ -611,7 +614,11 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
-
+                If createby = Session("userid") Then
+                    btnCancel.Enabled = True
+                Else
+                    btnCancel.Enabled = False
+                End If
 
                 btnExport.Visible = False
                 btnPrint.Visible = True
@@ -638,6 +645,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = True
+                    btnCancel.Enabled = True
 
                     btnAddAttatch.Visible = True
 
@@ -645,6 +653,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnAddAttatch.Visible = False
 
@@ -675,10 +684,12 @@ endprocess:
                 'btnSave.Enabled = False
                 'btnUpdate.Enabled = False
                 'btnConfirm.Enabled = False
+                'btnCancel.Enabled = False
             Case = "6" '6 : ไม่ผ่าน
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -714,6 +725,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = True
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnFromAddDetail.Visible = True
                     FromAddDetail.Visible = True
@@ -724,6 +736,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnFromAddDetail.Visible = False
                     FromAddDetail.Visible = False
@@ -747,6 +760,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -777,6 +791,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -807,6 +822,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -833,6 +849,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -1222,7 +1239,7 @@ endprocess:
         End Try
         total_cost = String.Format("{0:n2}", totalcost)
         total_vat = String.Format("{0:n2}", vat)
-        total_tax = String.Format("{0:n2}", Math.Truncate(tax))
+        total_tax = String.Format("({0:n2})", Math.Truncate(tax))
         total = String.Format("{0:n2}", cost)
         'total = Format(cost, "0.00")
     End Sub
@@ -1800,6 +1817,7 @@ endprocess:
             End If
 
             Session("detailtable_payment") = detailtable
+            checkunsave()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1822,5 +1840,23 @@ endprocess:
             Dim javaScript As String = "alertWarning('export fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+    End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_Cancel(Request.QueryString("NonpoCode"), Session("usercode"))
+            Session("status_payment") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('cancel fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+endprocess:
     End Sub
 End Class
