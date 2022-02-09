@@ -115,9 +115,9 @@ Public Class PettyCashHO
 
             If Not Request.QueryString("NonpoCode") Is Nothing Then
                 Session("detailtable_pettycashHO") = detailtable
-                If Not Session("status_pettycashHO") = "edit" Then
-                    Session("status_pettycashHO") = "read"
-                End If
+                'If Not Session("status_pettycashHO") = "edit" Then
+                Session("status_pettycashHO") = "read"
+                'End If
                 Try
                     findNonPO()
                     account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
@@ -570,6 +570,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = True
                 FromAddDetail.Visible = True
+                btnAddDetails.Visible = True
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = False
@@ -591,6 +592,7 @@ endprocess:
 
                     btnFromAddDetail.Visible = True
                     FromAddDetail.Visible = True
+                    btnAddDetails.Visible = True
                 Else
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
@@ -602,6 +604,7 @@ endprocess:
 
                     btnFromAddDetail.Visible = False
                     FromAddDetail.Visible = False
+                    btnAddDetails.Visible = False
 
 
                     Dim scriptKey As String = "UniqueKeyForThisScript"
@@ -633,6 +636,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -672,6 +676,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -699,6 +704,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -727,6 +733,7 @@ endprocess:
 
                     btnFromAddDetail.Visible = True
                     FromAddDetail.Visible = True
+                    btnAddDetails.Visible = True
 
                     btnAddAttatch.Visible = True
                 Else
@@ -736,6 +743,7 @@ endprocess:
 
                     btnFromAddDetail.Visible = False
                     FromAddDetail.Visible = False
+                    btnAddDetails.Visible = False
 
                     btnAddAttatch.Visible = False
 
@@ -767,6 +775,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -796,6 +805,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -821,6 +831,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -846,6 +857,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -944,6 +956,7 @@ endprocess:
         dt.Columns.Add("invoice", GetType(String))
         dt.Columns.Add("taxid", GetType(String))
         dt.Columns.Add("invoicedate", GetType(String))
+        dt.Columns.Add("nobill", GetType(Boolean))
 
         Return dt
     End Function
@@ -1417,14 +1430,6 @@ endprocess:
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 GoTo endprocess
             End If
-        Else
-            If cost > head.Rows(0).Item("amount") Then
-                Dim scriptKey As String = "alert"
-                'Dim javaScript As String = "alert('" & ex.Message & "');"
-                Dim javaScript As String = "invalidtotal();"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                GoTo endprocess
-            End If
         End If
         saveorupdate()
 endprocess:
@@ -1732,6 +1737,7 @@ endprocess:
         Dim invoice As String = json("invoice")
         Dim taxid As String = json("taxid")
         Dim invoicedate As String = json("invoicedate")
+        Dim nobill As Boolean = json("nobill")
 
 
 
@@ -1766,6 +1772,7 @@ endprocess:
                 row("invoice") = invoice
                 row("taxid") = taxid
                 row("invoicedate") = invoicedate
+                row("nobill") = nobill
 
                 detailtable.Rows.Add(row)
             Else
@@ -1796,6 +1803,7 @@ endprocess:
                     .Item("invoice") = invoice
                     .Item("taxid") = taxid
                     .Item("invoicedate") = invoicedate
+                    .Item("nobill") = nobill
                 End With
             End If
 

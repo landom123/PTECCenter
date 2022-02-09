@@ -1750,8 +1750,8 @@
     <Content Include="OPS\Non-PO\Payment\MenuList.aspx" />
     <Content Include="OPS\Non-PO\Payment\Payment2.aspx" />
     <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
-    <Content Include="OPS\Non-PO\Payment\Payment.aspx" />
     <Content Include="OPS\Non-PO\NonPO.aspx" />
+    <Content Include="OPS\Non-PO\PettyCash\PettyCashCO.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
@@ -3717,18 +3717,18 @@
       <DependentUpon>defaultPayment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OPS\Non-PO\Payment\Payment.aspx.designer.vb">
-      <DependentUpon>Payment.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Non-PO\Payment\Payment.aspx.vb">
-      <DependentUpon>Payment.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="OPS\Non-PO\NonPO.aspx.designer.vb">
       <DependentUpon>NonPO.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPS\Non-PO\NonPO.aspx.vb">
       <DependentUpon>NonPO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO.aspx.designer.vb">
+      <DependentUpon>PettyCashCO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO.aspx.vb">
+      <DependentUpon>PettyCashCO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.designer.vb">

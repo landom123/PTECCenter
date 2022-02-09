@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Web.Script.Serialization
 Imports ClosedXML.Excel
-Public Class Payment
+Public Class Payment2
     Inherits System.Web.UI.Page
     Public AttachTable As DataTable '= createtable()
     Public CommentTable As DataTable '= createtable()
@@ -102,9 +102,9 @@ Public Class Payment
 
             If Not Request.QueryString("NonpoCode") Is Nothing Then
                 Session("detailtable_payment") = detailtable
-                If Not Session("status_payment") = "edit" Then
-                    Session("status_payment") = "read"
-                End If
+                'If Not Session("status_payment") = "edit" Then
+                Session("status_payment") = "read"
+                ' End If
                 Try
                     findNonPO()
 
@@ -553,6 +553,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = True
                 FromAddDetail.Visible = True
+                btnAddDetails.Visible = True
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = False
@@ -573,6 +574,7 @@ endprocess:
                     'ช่อง ปุ่ม เพิ่มรายการ
 
                     btnFromAddDetail.Visible = True
+                    btnAddDetails.Visible = True
                     FromAddDetail.Visible = True
                 Else
                     btnSave.Enabled = False
@@ -585,6 +587,7 @@ endprocess:
 
                     btnFromAddDetail.Visible = False
                     FromAddDetail.Visible = False
+                    btnAddDetails.Visible = False
 
 
                     Dim scriptKey As String = "UniqueKeyForThisScript"
@@ -615,6 +618,7 @@ endprocess:
 
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
+                btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
 
                 'ปุ่ม & status 
@@ -653,6 +657,7 @@ endprocess:
 
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
+                btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
 
                 'ปุ่ม & status 
@@ -681,6 +686,7 @@ endprocess:
 
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
+                btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
 
                 'ปุ่ม & status 
@@ -711,6 +717,7 @@ endprocess:
 
                     btnFromAddDetail.Visible = True
                     FromAddDetail.Visible = True
+                    btnAddDetails.Visible = True
 
                     btnAddAttatch.Visible = True
                 Else
@@ -720,6 +727,7 @@ endprocess:
 
                     btnFromAddDetail.Visible = False
                     FromAddDetail.Visible = False
+                    btnAddDetails.Visible = False
 
                     btnAddAttatch.Visible = False
 
@@ -751,6 +759,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -780,6 +789,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -805,6 +815,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -830,6 +841,7 @@ endprocess:
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
                 FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -930,6 +942,7 @@ endprocess:
         dt.Columns.Add("invoice", GetType(String))
         dt.Columns.Add("taxid", GetType(String))
         dt.Columns.Add("invoicedate", GetType(String))
+        dt.Columns.Add("nobill", GetType(Boolean))
 
         Return dt
     End Function
@@ -1715,6 +1728,7 @@ endprocess:
         Dim invoice As String = json("invoice")
         Dim taxid As String = json("taxid")
         Dim invoicedate As String = json("invoicedate")
+        Dim nobill As Boolean = json("nobill")
 
 
 
@@ -1749,6 +1763,7 @@ endprocess:
                 row("invoice") = invoice
                 row("taxid") = taxid
                 row("invoicedate") = invoicedate
+                row("nobill") = nobill
 
 
                 detailtable.Rows.Add(row)
@@ -1780,6 +1795,7 @@ endprocess:
                     .Item("invoice") = invoice
                     .Item("taxid") = taxid
                     .Item("invoicedate") = invoicedate
+                    .Item("nobill") = nobill
                 End With
             End If
 

@@ -73,7 +73,7 @@ Public Class NonPO
 
         pchono = SaveHeadPCHO(headtable, username)
         result = pchono
-        'SaveDetailAdv(pchono, detailtable, username)
+        SaveDetailPCHO(pchono, detailtable, username)
 
 
         Return result
@@ -107,6 +107,37 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
+
+    Private Sub SaveDetailPCHO(pchono As String, mytable As DataTable, username As String)
+        Dim nonpocode As String
+        With mytable
+            For i = 0 To mytable.Rows.Count - 1
+                If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
+                    nonpocode = SaveDetailToTable(pchono,
+                                      .Rows(i).Item("row"),
+                                      .Rows(i).Item("nonpodtl_id"),
+                                      .Rows(i).Item("detail").ToString,
+                                      .Rows(i).Item("accountcodeid").ToString,
+                                      .Rows(i).Item("depid"),
+                                      .Rows(i).Item("buid"),
+                                      .Rows(i).Item("ppid"),
+                                      .Rows(i).Item("pjid"),
+                                      "",
+                                    .Rows(i).Item("cost"),
+                                    .Rows(i).Item("vat_per"),
+                                    .Rows(i).Item("tax_per"),
+                                    .Rows(i).Item("vendorcode").ToString,
+                                    .Rows(i).Item("invoice").ToString,
+                                    .Rows(i).Item("taxid").ToString,
+                                    .Rows(i).Item("invoicedate"),
+                                    .Rows(i).Item("nobill"),
+                                    username)
+                End If
+            Next
+        End With
+        'Result = ds.Tables(0).Rows(0).Item("code")
+
+    End Sub
     Private Function SaveHeadAdv(mytable As DataTable, username As String) As String
         Dim result As String
         Dim ds As New DataSet
@@ -161,6 +192,7 @@ Public Class NonPO
                                     .Rows(i).Item("invoice").ToString,
                                     .Rows(i).Item("taxid").ToString,
                                     .Rows(i).Item("invoicedate"),
+                                    .Rows(i).Item("nobill"),
                                     username)
                 End If
             Next
@@ -221,6 +253,7 @@ Public Class NonPO
                                     .Rows(i).Item("invoice").ToString,
                                     .Rows(i).Item("taxid").ToString,
                                     .Rows(i).Item("invoicedate"),
+                                    .Rows(i).Item("nobill"),
                                     username)
                 End If
             Next
@@ -231,7 +264,7 @@ Public Class NonPO
     Private Function SaveDetailToTable(nonpocode As String, Row As Integer, nonpodtl_id As Integer, detail As String, accountcode As String,
                                        dep As Integer, bu As Integer, pp As Integer, pj As Integer,
                                   docdate As String, amount As Double, vat As Integer, tax As Integer, vendor As String,
-                                       invoice As String, taxid As String, invoicedate As String, user As String) As String
+                                       invoice As String, taxid As String, invoicedate As String, nobill As Boolean, user As String) As String
         Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -260,7 +293,7 @@ Public Class NonPO
         cmd.Parameters.Add("@invoice", SqlDbType.VarChar).Value = invoice
         cmd.Parameters.Add("@taxid", SqlDbType.VarChar).Value = taxid
         cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(invoicedate), DBNull.Value, DateTime.Parse(invoicedate))
-
+        cmd.Parameters.Add("@nobill", SqlDbType.Bit).Value = nobill
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
 
 
@@ -848,7 +881,7 @@ Public Class NonPO
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "NonPO_Advance_Confirm"
+        cmd.CommandText = "NonPO_Confirm"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
@@ -1140,7 +1173,7 @@ Public Class NonPO
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "NonPO_AccountEdit"
+        cmd.CommandText = "NonPO_AccountRequestDocument"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode

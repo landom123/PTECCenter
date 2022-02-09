@@ -617,6 +617,24 @@ Partial Public Class PettyCashHO
     Protected WithEvents txtinvoicedate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''chkNoBill control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkNoBill As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
+
+    '''<summary>
+    '''lbchkNoBill control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbchkNoBill As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''btnAddDetails control.
     '''</summary>
     '''<remarks>

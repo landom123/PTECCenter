@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class ClearAdvance
+Partial Public Class PettyCashCO
 
     '''<summary>
     '''btnSave control.
@@ -57,60 +57,6 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnPrint As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''lbcodeRef control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbcodeRef As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''codeRef control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents codeRef As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lbamount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbamount As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''amount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents amount As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lbtxtremark control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbtxtremark As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtremark control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtremark As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''txtUnsave control.
@@ -239,6 +185,24 @@ Partial Public Class ClearAdvance
     Protected WithEvents txtCreateDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbnote control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbnote As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtremark control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtremark As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''chkVat control.
     '''</summary>
     '''<remarks>
@@ -273,60 +237,6 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnFromAddDetail As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''chkpayBack control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkpayBack As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''lbchkpayBack control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbchkpayBack As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtamountpayBack control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtamountpayBack As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''chkdeductSell control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkdeductSell As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''lbchkdeductSell control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbchkdeductSell As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtamountdedusctsell control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtamountdedusctsell As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''btnApproval control.
@@ -705,24 +615,6 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtinvoicedate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''chkNoBill control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkNoBill As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''lbchkNoBill control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbchkNoBill As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''btnAddDetails control.
