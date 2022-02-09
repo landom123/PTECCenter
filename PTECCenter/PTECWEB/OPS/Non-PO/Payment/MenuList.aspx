@@ -194,11 +194,17 @@
                                         <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Status" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusNonPO")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
                                         <button id="btnRun" onclick="dup('<%# String.Format("{0}", Eval("NonPO_Code")) %>','<%= Session("usercode") %>');" class="btn btn-mini text-info" title="คัดลอก">

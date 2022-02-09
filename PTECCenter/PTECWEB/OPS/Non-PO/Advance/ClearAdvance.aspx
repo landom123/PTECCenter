@@ -168,7 +168,7 @@
                             <button id="btnPrint" class="btn btn-sm  btn-warning" style="color: #495057;" onclick="event.preventDefault();event.stopPropagation();window.print();" title="Print" runat="server">
                                 <i class="fas fa-print"></i>
                             </button>
-                            <a href="ClearAdvanceMenuList2.aspx" class="btn btn-sm btn-danger " >
+                            <a href="ClearAdvanceMenuList2.aspx" class="btn btn-sm btn-danger ">
                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                         </div>
 
@@ -377,7 +377,7 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important;">%WHT</th>
+                                    <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important; text-overflow: unset; padding-left: 0px;">%WHT</th>
 
                                 </tr>
                                 <tr>
@@ -395,7 +395,8 @@
                                                                                         ,'<%= detailtable.Rows(i).Item("ppid").ToString() %>','<%= detailtable.Rows(i).Item("pjid").ToString() %>','<%= detailtable.Rows(i).Item("cost").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("vat_per").ToString() %>','<%= detailtable.Rows(i).Item("tax_per").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("detail").ToString() %>','<%= detailtable.Rows(i).Item("vendorcode").ToString() %>'
-                                                                                        ,'<%= detailtable.Rows(i).Item("invoice").ToString() %>','<%= detailtable.Rows(i).Item("taxid").ToString() %>','<%= detailtable.Rows(i).Item("invoicedate").ToString() %>');">
+                                                                                        ,'<%= detailtable.Rows(i).Item("invoice").ToString() %>','<%= detailtable.Rows(i).Item("taxid").ToString() %>','<%= detailtable.Rows(i).Item("invoicedate").ToString() %>'
+                                                                                        ,'<%= detailtable.Rows(i).Item("nobill").ToString() %>');">
                                         <%--<tr class="draggable detail" name="<%= detailtable.Rows(i).Item("row").ToString() %>">--%>
                                         <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
                                         <td colspan="7" style="width: 280px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
@@ -403,7 +404,7 @@
                                         <td colspan="4" style="width: 160px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("buname").ToString() %>"><%= detailtable.Rows(i).Item("buname").ToString() %></td>
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("ppname").ToString() %>"><%= detailtable.Rows(i).Item("ppname").ToString() %></td>
-                                       <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("pjname").ToString() %>"><%= detailtable.Rows(i).Item("pjname").ToString() %></td>
+                                        <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("pjname").ToString() %>"><%= detailtable.Rows(i).Item("pjname").ToString() %></td>
                                         <td colspan="3" style="width: 120px !important; text-align: right;" title="<%= detailtable.Rows(i).Item("cost").ToString() %>"><%= if((detailtable.Rows(i).Item("cost").ToString()) = "0", "", String.Format("{0:n2}", detailtable.Rows(i).Item("cost"))) %>
                                         </td>
                                         <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100, 2) %>"><%= detailtable.Rows(i).Item("vat_per").ToString() %></td>
@@ -493,7 +494,7 @@
                                         </td>
                                         <td colspan="4" style="width: 160px !important; text-align: right; border-left-width: 0px; border-top-width: 0px; padding-right: 5px;">
                                             <b>
-                                            <h6>รวมทั้งสิ้น</h6>
+                                                <h6>รวมทั้งสิ้น</h6>
                                             </b>
                                         </td>
                                         <td colspan="4" style="width: 160px !important; text-align: right;" id="total"><%= total %></td>
@@ -663,7 +664,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <asp:TextBox class="form-control bg-white" ID="txtComment" runat="server" Style="cursor: auto;" Rows="2" Columns="50" TextMode="MultiLine"  onkeyup="stoppedTyping();" placeholder="Comment . ." value=""></asp:TextBox>
+                                                    <asp:TextBox class="form-control bg-white" ID="txtComment" runat="server" Style="cursor: auto;" Rows="2" Columns="50" TextMode="MultiLine" onkeyup="stoppedTyping();" placeholder="Comment . ." value=""></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -748,7 +749,7 @@
                         <asp:Label ID="lbPP" CssClass="form-label" AssociatedControlID="cboPP" runat="server" Text="Purpose" />
                         <asp:DropDownList class="form-control" ID="cboPP" runat="server"></asp:DropDownList>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <asp:Label ID="lbPJ" CssClass="form-label" AssociatedControlID="cboPJ" runat="server" Text="Project" />
                         <asp:DropDownList class="form-control" ID="cboPJ" runat="server"></asp:DropDownList>
                     </div>
@@ -806,6 +807,13 @@
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="gropnobill d-none">
+                        <hr />
+                        <div class="form-group pl-4">
+                            <input class="form-check-input chk-img-after" type="checkbox" id="chkNoBill" runat="server">
+                            <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล" />
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -911,13 +919,13 @@
             /*stoppedTyping();*/
             checkUnSave();
             /*
-            const urlParams = new URLSearchParams(window.location.search);
-            const nonpocode = urlParams.get('NonpoCode');
-            if (nonpocode) {
-            checkStatusNonpo();
-            } else {
-            alert('else nonpo')
-            }*/
+        const urlParams = new URLSearchParams(window.location.search);
+        const nonpocode = urlParams.get('NonpoCode');
+        if (nonpocode) {
+        checkStatusNonpo();
+        } else {
+        alert('else nonpo')
+        }*/
 
             <% If Not AttachTable Is Nothing Then %>
                 <% For i = 0 To AttachTable.Rows.Count - 1 %>
@@ -930,7 +938,7 @@
             <% End if %>
 
             $('.DetailArea tr').each(function (index, tr) {
-                    console.log(index);
+                console.log(index);
                 console.log($(this).attr("data-status"));
                 if ($(this).attr("data-status") == "new" || $(this).attr("data-status") == "edit") {
                     $(this).css("background-color", "#d8d8d8");
@@ -1222,7 +1230,7 @@
             $('#<%= txtinvoiceno.ClientID%>').val('');
             $('#<%= txttaxid.ClientID%>').val('');
             $('#<%= txtinvoicedate.ClientID%>').val('');
-
+            $('#<%= chkNoBill.ClientID%>').prop('checked', false);
             $('.form-control').selectpicker('refresh');
         }
 
@@ -1231,7 +1239,7 @@
             let element = document.getElementById(id);
             element.value = valueToSelect;
         }
-        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate) {
+        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate, NoBill) {
             console.log(advancedetailid);
             console.log(accountcodeid);
             console.log(depid);
@@ -1276,15 +1284,16 @@
             $('#<%= txtinvoiceno.ClientID%>').val(invoice);
             $('#<%= txttaxid.ClientID%>').val(taxid);
             $('#<%= txtinvoicedate.ClientID%>').val(invoicedate);
+            $('#<%= chkNoBill.ClientID%>').prop('checked', NoBill.toLowerCase() == "true" ? true : false);
             $('.form-control').selectpicker('refresh');
             /*__doPostBack('setFromDetail', $(row).attr('name'));
-    */
+*/
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
             <% If (Not Session("status_clearadvance") = "new" And Not Session("status_clearadvance") = "edit" And Not Session("status_clearadvance") = "account") Then%>
             $('.modal-footer #btnAddDetail').hide();
             $('.modal-body input,.modal-body textarea').attr('readonly', true);
-            $('.modal-body select,.modal-body button').attr('disabled', true);
+            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').attr('disabled', true);
             <% End If %>
             <% End If %>
 
@@ -1345,6 +1354,7 @@
             const invoice = $('#<%= txtinvoiceno.ClientID%>').val();
             const taxid = $('#<%= txttaxid.ClientID%>').val();
             const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
+            const nobill = $('#<%= chkNoBill.ClientID%>').is(":checked");
             const status = $(".DetailArea tr[name='" + row + "']").attr("data-status")
 
             //alert('cost' + cost);
@@ -1362,7 +1372,7 @@
                 "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + pjname +
                 "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
                 "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
-                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "'}";
+                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "','nobill': '" + nobill + "'}";
 
             //alert(params);
             //PageMethods.addoreditdetail(params);
@@ -1574,7 +1584,7 @@
         $('#<% =btnFromAddDetail.ClientID%>').click(function () {
             $('.modal-footer #btnAddDetail').show();
             $('.modal-body input,.modal-body textarea').removeAttr("readonly");
-            $('.modal-body select,.modal-body button').removeAttr("disabled");
+            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
 
             $('.form-control').selectpicker('refresh');
 

@@ -176,7 +176,7 @@
                     <hr />
                     <div class="foram">
                         <div class="row">
-                            <%=Session("status_clearadvance") %>
+                            <%=Session("status_pettycashHO") %>
                         </div>
                         <div class="row">
                             <%=allOwner %>
@@ -359,7 +359,7 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important;">%WHT</th>
+                                    <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important; text-overflow: unset;padding-left: 0px;">%WHT</th>
 
                                 </tr>
                                 <tr>
@@ -377,7 +377,8 @@
                                                                                         ,'<%= detailtable.Rows(i).Item("ppid").ToString() %>','<%= detailtable.Rows(i).Item("pjid").ToString() %>','<%= detailtable.Rows(i).Item("cost").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("vat_per").ToString() %>','<%= detailtable.Rows(i).Item("tax_per").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("detail").ToString() %>','<%= detailtable.Rows(i).Item("vendorcode").ToString() %>'
-                                                                                        ,'<%= detailtable.Rows(i).Item("invoice").ToString() %>','<%= detailtable.Rows(i).Item("taxid").ToString() %>','<%= detailtable.Rows(i).Item("invoicedate").ToString() %>');">
+                                                                                        ,'<%= detailtable.Rows(i).Item("invoice").ToString() %>','<%= detailtable.Rows(i).Item("taxid").ToString() %>','<%= detailtable.Rows(i).Item("invoicedate").ToString() %>'
+                                                                                        ,'<%= detailtable.Rows(i).Item("nobill").ToString() %>');">
                                         <%--<tr class="draggable detail" name="<%= detailtable.Rows(i).Item("row").ToString() %>">--%>
                                         <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
                                         <td colspan="7" style="width: 280px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
@@ -545,7 +546,7 @@
                     <div class="row">
 
                         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-                        <% if Session("status_clearadvance") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
+                        <% if Session("status_pettycashHO") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
                         <div class="text-center m-auto">
                             <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
                             <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
@@ -788,6 +789,13 @@
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="gropnobill d-none">
+                        <hr />
+                        <div class="form-group pl-4">
+                            <input class="form-check-input chk-img-after" type="checkbox" id="chkNoBill" runat="server">
+                            <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล" />
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1204,6 +1212,7 @@
             $('#<%= txtinvoiceno.ClientID%>').val('');
             $('#<%= txttaxid.ClientID%>').val('');
             $('#<%= txtinvoicedate.ClientID%>').val('');
+            $('#<%= chkNoBill.ClientID%>').prop('checked', false);
 
             $('.form-control').selectpicker('refresh');
         }
@@ -1213,7 +1222,7 @@
             let element = document.getElementById(id);
             element.value = valueToSelect;
         }
-        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate) {
+        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate, NoBill) {
             console.log(advancedetailid);
             console.log(accountcodeid);
             console.log(depid);
@@ -1258,15 +1267,16 @@
             $('#<%= txtinvoiceno.ClientID%>').val(invoice);
             $('#<%= txttaxid.ClientID%>').val(taxid);
             $('#<%= txtinvoicedate.ClientID%>').val(invoicedate);
+            $('#<%= chkNoBill.ClientID%>').prop('checked', NoBill.toLowerCase() == "true" ? true : false);
             $('.form-control').selectpicker('refresh');
             /*__doPostBack('setFromDetail', $(row).attr('name'));
     */
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-            <% If (Not Session("status_clearadvance") = "new" And Not Session("status_clearadvance") = "edit" And Not Session("status_clearadvance") = "account") Then%>
+            <% If (Not Session("status_pettycashHO") = "new" And Not Session("status_pettycashHO") = "edit" And Not Session("status_pettycashHO") = "account") Then%>
             $('.modal-footer #btnAddDetail').hide();
             $('.modal-body input,.modal-body textarea').attr('readonly', true);
-            $('.modal-body select,.modal-body button').attr('disabled', true);
+            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').attr('disabled', true);
             <% End If %>
             <% End If %>
 
@@ -1327,6 +1337,7 @@
             const invoice = $('#<%= txtinvoiceno.ClientID%>').val();
             const taxid = $('#<%= txttaxid.ClientID%>').val();
             const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
+            const nobill = $('#<%= chkNoBill.ClientID%>').is(":checked");
             const status = $(".DetailArea tr[name='" + row + "']").attr("data-status")
 
             //alert('cost' + cost);
@@ -1344,7 +1355,7 @@
                 "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + pjname +
                 "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
                 "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
-                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "'}";
+                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "','nobill': '" + nobill + "'}";
 
             //alert(params);
             //PageMethods.addoreditdetail(params);
@@ -1556,7 +1567,8 @@
         $('#<% =btnFromAddDetail.ClientID%>').click(function () {
             $('.modal-footer #btnAddDetail').show();
             $('.modal-body input,.modal-body textarea').removeAttr("readonly");
-            $('.modal-body select,.modal-body button').removeAttr("disabled");
+            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
+            
 
             $('.form-control').selectpicker('refresh');
 
