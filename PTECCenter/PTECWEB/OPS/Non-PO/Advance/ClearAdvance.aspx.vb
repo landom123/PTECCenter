@@ -35,7 +35,7 @@ Public Class ClearAdvance
     Dim sm_code As String
     Dim am_code As String
 
-    Dim account_code As String = "SPP"
+    Public account_code As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objNonpo As New NonPO
         Dim objbranch As New Branch
@@ -63,6 +63,7 @@ Public Class ClearAdvance
             menutable = Session("menulist")
         End If
 
+        txtinvoicedate.Attributes.Add("readonly", "readonly")
 
         If Not IsPostBack() Then
             head = createHeadtable()
@@ -553,6 +554,7 @@ endprocess:
                 btnSave.Enabled = True
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -576,6 +578,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = True
                     btnConfirm.Enabled = True
+                    btnCancel.Enabled = True
 
                     Session("status_clearadvance") = "edit"
 
@@ -588,6 +591,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     Session("status_clearadvance") = "read"
 
@@ -619,6 +623,11 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                If createby = Session("userid") Then
+                    btnCancel.Enabled = True
+                Else
+                    btnCancel.Enabled = False
+                End If
 
 
                 btnExport.Visible = False
@@ -646,6 +655,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = True
+                    btnCancel.Enabled = True
 
 
                     btnAddAttatch.Visible = True
@@ -654,6 +664,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnAddAttatch.Visible = False
 
@@ -683,10 +694,12 @@ endprocess:
                 'btnSave.Enabled = False
                 'btnUpdate.Enabled = False
                 'btnConfirm.Enabled = False
+                'btnCancel.Enabled = False
             Case = "6" '6 : ไม่ผ่าน
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -721,6 +734,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = True
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnFromAddDetail.Visible = True
                     FromAddDetail.Visible = True
@@ -731,6 +745,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnFromAddDetail.Visible = False
                     FromAddDetail.Visible = False
@@ -754,6 +769,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -784,6 +800,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -814,6 +831,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -840,6 +858,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -1238,7 +1257,7 @@ endprocess:
         End Try
         total_cost = String.Format("{0:n2}", totalcost)
         total_vat = String.Format("{0:n2}", vat)
-        total_tax = String.Format("{0:n2}", tax)
+        total_tax = String.Format("({0:n2})", tax)
         total = String.Format("{0:n2}", cost)
         total_clear = String.Format("{0:n2}", cost + amountpayBack)
         'total = Format(cost, "0.00")
@@ -1873,6 +1892,8 @@ endprocess:
             End If
 
             Session("detailtable_clearadvance") = detailtable
+
+            checkunsave()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1895,5 +1916,23 @@ endprocess:
             Dim javaScript As String = "alertWarning('export fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+    End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_Cancel(Request.QueryString("NonpoCode"), Session("usercode"))
+            Session("status_clearadvance") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Verify fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/ClearAdvance.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+endprocess:
     End Sub
 End Class

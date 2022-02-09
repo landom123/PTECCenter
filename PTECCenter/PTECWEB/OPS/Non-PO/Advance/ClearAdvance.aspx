@@ -151,6 +151,8 @@
                             &nbsp;   
                             <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                             &nbsp;   
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" />
+                            &nbsp;   
                             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
                             <% if (maintable.Rows(0).Item("statusid") = 1) Or (maintable.Rows(0).Item("statusid") = 4) Then%>
                             <span class="text-red font-weight-bold text-danger">*** (กรุณากด confirm เพื่อยืนยัน) ***</span>
@@ -216,6 +218,9 @@
                         </div>
                         <div class="row">
                             <%=now_action %>
+                        </div>
+                        <div class="row">
+                            บช. ที่ดูแล : <%=account_code %>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -725,6 +730,7 @@
                     <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
                     <div class="form-group">
                         <asp:Label ID="lbcboAccountCode" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="รหัสบัญชี" />
+                        <asp:Label ID="lbcboAccountCodeMandatory" CssClass="text-danger" AssociatedControlID="cboAccountCode" runat="server" Text="*" />
                         <asp:DropDownList class="form-control" ID="cboAccountCode" runat="server" onchange="setdetail(this);"></asp:DropDownList>
                     </div>
                     <div class="form-group">
@@ -806,7 +812,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                     </div>
                     <div class="gropnobill d-none">
                         <hr />
@@ -861,6 +867,11 @@
 
     <script type="text/javascript">
 
+
+
+        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
+        <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
+                      (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -873,6 +884,22 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
+        <% End If %>
+        <% else If Session("status_clearadvance").ToString = "new" Then %>
+        jQuery('[id$=txtDuedate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+        jQuery('[id$=txtinvoicedate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+        <% End If %>
+
 
     </script>
 
@@ -919,13 +946,13 @@
             /*stoppedTyping();*/
             checkUnSave();
             /*
-        const urlParams = new URLSearchParams(window.location.search);
-        const nonpocode = urlParams.get('NonpoCode');
-        if (nonpocode) {
-        checkStatusNonpo();
-        } else {
-        alert('else nonpo')
-        }*/
+    const urlParams = new URLSearchParams(window.location.search);
+    const nonpocode = urlParams.get('NonpoCode');
+    if (nonpocode) {
+    checkStatusNonpo();
+    } else {
+    alert('else nonpo')
+    }*/
 
             <% If Not AttachTable Is Nothing Then %>
                 <% For i = 0 To AttachTable.Rows.Count - 1 %>
@@ -1365,6 +1392,12 @@
                 event.stopPropagation();
                 return 0;
             }
+            if (vat != 0 && (!invoice || !taxid || !invoicedate)) {
+                alertWarning('กรุณากรอกข้อมูล invoice ให้ครบถ้วน');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
             //alert(row);
             //var params = "{'row': '" + row + "'}";
             var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
@@ -1465,6 +1498,12 @@
 
             if (cost != 0 && accountcodeid == 0) {
                 alertWarning('กรุณาเลือกรหัสบัญชี');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+            if (vat != 0 && (!invoice || !taxid || !invoicedate)) {
+                alertWarning('กรุณากรอกข้อมูล invoice ให้ครบถ้วน');
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
@@ -1585,7 +1624,7 @@
             $('.modal-footer #btnAddDetail').show();
             $('.modal-body input,.modal-body textarea').removeAttr("readonly");
             $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
-
+            $('#<% =txtinvoicedate.ClientID%>').attr('readonly', true);
             $('.form-control').selectpicker('refresh');
 
             clearfromadddetail();

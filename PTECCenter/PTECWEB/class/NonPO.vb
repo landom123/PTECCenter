@@ -1142,6 +1142,28 @@ Public Class NonPO
         'Return result
     End Sub
 
+    Public Sub NonPO_Cancel(nonpocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_Cancel"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
     Public Sub NonPO_Complete(nonpocode As String, usercode As String)
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
