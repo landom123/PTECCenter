@@ -46,6 +46,8 @@ Public Class ClearAdvance
         Dim nonpoDs = New DataSet
         Dim statusid As Integer = 0
         Dim createby As Integer = 0
+        Dim ownerid As Integer = 0
+
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -91,8 +93,8 @@ Public Class ClearAdvance
             objbranch.SetComboBranch(cboBranch, Session("usercode"))
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            SetCboUsers(cboCreateby)
             SetCboUsers(cboOwner)
-            setmaindefault()
 
             objdep.SetCboDepartmentBybranch(cboDep, 0)
             objNonpo.SetCboPurpose(cboPP)
@@ -101,6 +103,7 @@ Public Class ClearAdvance
             objsupplier.SetCboVendorByName(cboVendor, "")
             objNonpo.SetCboBu(cboBU)
             objNonpo.SetCboPj(cboPJ)
+
 
             'Dim dt As New DataTable
 
@@ -121,11 +124,14 @@ Public Class ClearAdvance
                     'End If
                     Try
                     findNonPO()
+                    setmaindefault()
+
                     account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
 
                     statusid = maintable.Rows(0).Item("statusid")
                     createby = maintable.Rows(0).Item("createby")
-                    chkuser(createby)
+                    ownerid = maintable.Rows(0).Item("ownerid")
+                    chkuser(ownerid)
 
                     If (account_code.IndexOf(Session("usercode").ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 7) Then
@@ -138,7 +144,7 @@ Public Class ClearAdvance
 
                         at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
                         approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(0).Item("approver").ToString
-                        'verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
+                        verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
                         now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString + PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
                     End If
 
@@ -242,9 +248,12 @@ endprocess:
                     ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", Session("usercode").ToString)
                     head = ds.Tables(0)
                     sethead(head)
+                    setmaindefault()
+
                 End If
             Else
                 Session("status_clearadvance") = "new"
+                setmaindefault()
 
             End If
 
@@ -350,6 +359,7 @@ endprocess:
             codeRef.Text = .Rows(0).Item("coderef").ToString
             amount.Text = String.Format("{0:n2}", .Rows(0).Item("amount"))
             txtremark.Text = .Rows(0).Item("remark").ToString
+            cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Rows(0).Item("ownerid")))
 
         End With
 
@@ -359,7 +369,7 @@ endprocess:
 
         Dim objsec As New Section
 
-        cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(Session("userid").ToString))
+        cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid").ToString))
         cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid").ToString))
         cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
         objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
@@ -367,10 +377,11 @@ endprocess:
 
         txtCreateDate.Text = Now()
 
-        cboOwner.Attributes.Add("disabled", "True")
+        cboCreateby.Attributes.Add("disabled", "True")
         cboSection.Attributes.Add("disabled", "True")
         cboDepartment.Attributes.Add("disabled", "True")
         cboBranch.Attributes.Add("disabled", "True")
+        cboOwner.Attributes.Add("disabled", "True")
 
 
     End Sub
@@ -407,12 +418,14 @@ endprocess:
             statusnonpo.Text = .Rows(0).Item("statusname").ToString
 
 
-            cboOwner.Attributes.Remove("disabled")
+            cboCreateby.Attributes.Remove("disabled")
             cboSection.Attributes.Remove("disabled")
             cboDepartment.Attributes.Remove("disabled")
             cboBranch.Attributes.Remove("disabled")
+            cboOwner.Attributes.Remove("disabled")
 
-            cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Rows(0).Item("createby").ToString))
+            cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(.Rows(0).Item("createby").ToString))
+            cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Rows(0).Item("ownerid")))
             cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(.Rows(0).Item("branchid").ToString))
             cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(.Rows(0).Item("depid").ToString))
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
@@ -424,10 +437,11 @@ endprocess:
             txtadvno.ToolTip = .Rows(0).Item("nonpocode").ToString
 
 
-            cboOwner.Attributes.Add("disabled", "True")
+            cboCreateby.Attributes.Add("disabled", "True")
             cboSection.Attributes.Add("disabled", "True")
             cboDepartment.Attributes.Add("disabled", "True")
             cboBranch.Attributes.Add("disabled", "True")
+            cboOwner.Attributes.Add("disabled", "True")
 
 
 
@@ -891,6 +905,8 @@ endprocess:
         dt.Columns.Add("coderef", GetType(String))
         dt.Columns.Add("amount", GetType(String))
         dt.Columns.Add("remark", GetType(String))
+        dt.Columns.Add("ownerid", GetType(Integer))
+
 
         Return dt
     End Function
@@ -918,6 +934,7 @@ endprocess:
         dt.Columns.Add("totalforcheck", GetType(String))
 
         dt.Columns.Add("vat_wait", GetType(Integer))
+        dt.Columns.Add("ownerid", GetType(Integer))
 
         dt.Columns.Add("withdraw_by", GetType(String))
         dt.Columns.Add("withdraw_date", GetType(String))
@@ -1275,90 +1292,90 @@ endprocess:
 
     End Function
 
-    <System.Web.Services.WebMethod>
-    Public Function addoreditdetail(ByVal rows As Integer, ByVal status As String, ByVal nonpodtl_id As Integer, ByVal accountcodeid As Integer,
-                                           ByVal accountcode As String, ByVal depid As Integer, ByVal depname As String,
-                                           ByVal buid As Integer, ByVal buname As String, ByVal ppid As Integer, ByVal ppname As String, ByVal pjid As Integer, ByVal pjname As String,
-                                           ByVal cost As Double, ByVal vat As Integer, ByVal tax As Integer, ByVal detail As String,
-                                           ByVal vendorname As String, ByVal vendorcode As String,
-                                           ByVal invoice As String, ByVal taxid As String, ByVal invoicedate As String)
-        Dim cntrow As Integer = detailtable.Rows.Count + 1
-        Try
-            If status = "undefined" Then
-                Dim row As DataRow
-                row = detailtable.NewRow()
-                row("row") = cntrow
-                row("status") = "new"
-                row("nonpodtl_id") = nonpodtl_id
-                row("accountcodeid") = accountcodeid
-                row("accountcode") = accountcode
-                row("depid") = depid
-                row("depname") = depname
-                row("buid") = buid
-                row("buname") = buname
-                row("ppid") = ppid
-                row("ppname") = ppname
-                row("pjid") = pjid
-                row("pjname") = pjname
+    '    <System.Web.Services.WebMethod>
+    '    Public Function addoreditdetail(ByVal rows As Integer, ByVal status As String, ByVal nonpodtl_id As Integer, ByVal accountcodeid As Integer,
+    '                                           ByVal accountcode As String, ByVal depid As Integer, ByVal depname As String,
+    '                                           ByVal buid As Integer, ByVal buname As String, ByVal ppid As Integer, ByVal ppname As String, ByVal pjid As Integer, ByVal pjname As String,
+    '                                           ByVal cost As Double, ByVal vat As Integer, ByVal tax As Integer, ByVal detail As String,
+    '                                           ByVal vendorname As String, ByVal vendorcode As String,
+    '                                           ByVal invoice As String, ByVal taxid As String, ByVal invoicedate As String)
+    '        Dim cntrow As Integer = detailtable.Rows.Count + 1
+    '        Try
+    '            If status = "undefined" Then
+    '                Dim row As DataRow
+    '                row = detailtable.NewRow()
+    '                row("row") = cntrow
+    '                row("status") = "new"
+    '                row("nonpodtl_id") = nonpodtl_id
+    '                row("accountcodeid") = accountcodeid
+    '                row("accountcode") = accountcode
+    '                row("depid") = depid
+    '                row("depname") = depname
+    '                row("buid") = buid
+    '                row("buname") = buname
+    '                row("ppid") = ppid
+    '                row("ppname") = ppname
+    '                row("pjid") = pjid
+    '                row("pjname") = pjname
 
-                row("cost") = cost
-                row("vat_per") = vat
-                row("tax_per") = tax
-                row("vat") = cost * vat / 100
-                row("tax") = cost * tax / 100
-                row("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
-                row("detail") = detail
-                row("vendorname") = vendorname
-                row("vendorcode") = vendorcode
-                row("invoice") = invoice
-                row("taxid") = taxid
-                row("invoicedate") = invoicedate
+    '                row("cost") = cost
+    '                row("vat_per") = vat
+    '                row("tax_per") = tax
+    '                row("vat") = cost * vat / 100
+    '                row("tax") = cost * tax / 100
+    '                row("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
+    '                row("detail") = detail
+    '                row("vendorname") = vendorname
+    '                row("vendorcode") = vendorcode
+    '                row("invoice") = invoice
+    '                row("taxid") = taxid
+    '                row("invoicedate") = invoicedate
 
-                detailtable.Rows.Add(row)
-            Else
-                With detailtable.Rows(detailtable.Rows.IndexOf(detailtable.Select("row='" & rows & "'")(0)))
-                    .Item("row") = rows
-                    .Item("status") = "edit"
-                    .Item("nonpodtl_id") = nonpodtl_id
-                    .Item("accountcodeid") = accountcodeid
-                    .Item("accountcode") = accountcode
-                    .Item("depid") = depid
-                    .Item("depname") = depname
-                    .Item("buid") = buid
-                    .Item("buname") = buname
-                    .Item("ppid") = ppid
-                    .Item("ppname") = ppname
-                    .Item("pjid") = pjid
-                    .Item("pjname") = pjname
+    '                detailtable.Rows.Add(row)
+    '            Else
+    '                With detailtable.Rows(detailtable.Rows.IndexOf(detailtable.Select("row='" & rows & "'")(0)))
+    '                    .Item("row") = rows
+    '                    .Item("status") = "edit"
+    '                    .Item("nonpodtl_id") = nonpodtl_id
+    '                    .Item("accountcodeid") = accountcodeid
+    '                    .Item("accountcode") = accountcode
+    '                    .Item("depid") = depid
+    '                    .Item("depname") = depname
+    '                    .Item("buid") = buid
+    '                    .Item("buname") = buname
+    '                    .Item("ppid") = ppid
+    '                    .Item("ppname") = ppname
+    '                    .Item("pjid") = pjid
+    '                    .Item("pjname") = pjname
 
-                    .Item("cost") = cost
-                    .Item("vat_per") = vat
-                    .Item("tax_per") = tax
-                    .Item("vat") = cost * vat / 100
-                    .Item("tax") = cost * tax / 100
-                    .Item("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
-                    .Item("detail") = detail
-                    .Item("vendorname") = vendorname
-                    .Item("vendorcode") = vendorcode
-                    .Item("invoice") = invoice
-                    .Item("taxid") = taxid
-                    .Item("invoicedate") = invoicedate
-                End With
-            End If
+    '                    .Item("cost") = cost
+    '                    .Item("vat_per") = vat
+    '                    .Item("tax_per") = tax
+    '                    .Item("vat") = cost * vat / 100
+    '                    .Item("tax") = cost * tax / 100
+    '                    .Item("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
+    '                    .Item("detail") = detail
+    '                    .Item("vendorname") = vendorname
+    '                    .Item("vendorcode") = vendorcode
+    '                    .Item("invoice") = invoice
+    '                    .Item("taxid") = taxid
+    '                    .Item("invoicedate") = invoicedate
+    '                End With
+    '            End If
 
-        Catch ex As Exception
-            Return "fail"
-            GoTo endprocess
-        End Try
-        If rows = 0 Then
-            Return cntrow
-        Else
-            Return rows
-        End If
+    '        Catch ex As Exception
+    '            Return "fail"
+    '            GoTo endprocess
+    '        End Try
+    '        If rows = 0 Then
+    '            Return cntrow
+    '        Else
+    '            Return rows
+    '        End If
 
-endprocess:
+    'endprocess:
 
-    End Function
+    '    End Function
 
     <System.Web.Services.WebMethod>
     Public Function deleteDetail(ByVal nonpodtlid As Integer, ByVal rows As Integer, user As String)
@@ -1536,10 +1553,10 @@ endprocess:
 
         userid = Session("userid")
 
-        If cboOwner.SelectedItem.Value = 0 Then
+        If cboCreateby.SelectedItem.Value = 0 Then
             userowner = userid
         Else
-            userowner = cboOwner.SelectedItem.Value
+            userowner = cboCreateby.SelectedItem.Value
         End If
         If maintable.Rows.Count > 0 Then
             Dim amountpayBack As Double
@@ -1583,7 +1600,7 @@ endprocess:
                           cboBranch.SelectedItem.Value, cboDepartment.SelectedItem.Value, cboSection.SelectedItem.Value,
                           chkpayBack.Checked, chkdeductSell.Checked,
                           amountpayBack, amountdedusctsell,
-                          "", "", chkVat.Checked,
+                          "", "", chkVat.Checked, cboOwner.SelectedItem.Value,
                           userowner, Date.Now.ToString, "", "", "", "", "", "",
                           userowner, Date.Now.ToString, userowner, Date.Now.ToString, userowner, userowner)
 

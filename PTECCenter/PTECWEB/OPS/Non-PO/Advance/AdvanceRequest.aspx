@@ -23,6 +23,10 @@
         .HO, .CO {
             display: none;
         }
+        .dropdown .disabled{
+            background-color: #e9ecef;
+            opacity: 1;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -49,6 +53,9 @@
                         
                         <div class="row">
                             <%=verifier %>
+                        </div>
+                        <div class="row">
+                            <%=now_action %>
                         </div>
                         <div class="row">
                             บช. ที่ดูแล : <%=account_code %>
@@ -95,6 +102,8 @@
                                             <asp:TextBox class="form-control" ID="txtStatusRq" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
+                                    <% End If %>
+
                                     <div class="row form-group">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbCreateBy" CssClass="form-label" AssociatedControlID="txtCreateBy" runat="server" Text="ผู้ขอเบิก" />
@@ -103,14 +112,15 @@
                                             <asp:TextBox class="form-control" ID="txtCreateBy" runat="server" ReadOnly="True"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <%--<div class="row form-group">
+                                    <div class="row form-group">
                                         <div class="col-lg-2 col-form-label">
-                                            <asp:Label ID="lbtxtOwnerby" CssClass="form-label" AssociatedControlID="txtOwnerby" runat="server" Text="เจ้าของงาน" />
+                                            <asp:Label ID="lbcboOwner" CssClass="form-label" AssociatedControlID="cboOwner" runat="server" Text="ผู้รับเงิน" />
                                         </div>
                                         <div class="col-lg-10">
-                                            <asp:TextBox class="form-control" ID="txtOwnerby" runat="server" ReadOnly="True"></asp:TextBox>
+                                            <asp:DropDownList class="form-control" ID="cboOwner" runat="server" readonly="true"></asp:DropDownList>
                                         </div>
-                                    </div>--%>
+                                    </div>
+                                    <% If Not Request.QueryString("ADV") Is Nothing Then%>
                                     <div class="row form-group">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbDocDate" CssClass="form-label" AssociatedControlID="txtDocDate" runat="server" Text="วันที่เบิก" />
@@ -170,25 +180,8 @@
                                         </div>
                                         
                                     </div>--%>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2 col-form-label">
-                                            <asp:Label ID="lbDuedate" CssClass="form-label font-weight-bold" AssociatedControlID="txtDuedate" runat="server" Text="Due Date" />
-                                        </div>
-                                        <div class="col-lg-10">
-
-                                            <div class="input-group sm-">
-                                                <asp:TextBox class="form-control  font-weight-bold font-weight-bold" ID="txtDuedate" runat="server"></asp:TextBox>
-                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3 Then %>
-                                                <div class="input-group-append">
-                                                    <asp:Button ID="btnUpdateDuedate" class="btn btn-sm btn-primary" runat="server" Text="Update" />
-                                                </div>
-                                                <% End If %>
-                                                <% End If %>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <% End If %>
+
                                     <div class="row form-group">
 
                                         <div class="col-lg-2 col-form-label">
@@ -233,6 +226,24 @@
                                     <% End If %>
                                     <div class="row form-group">
                                         <div class="col-lg-2 col-form-label">
+                                            <asp:Label ID="lbDuedate" CssClass="form-label font-weight-bold" AssociatedControlID="txtDuedate" runat="server" Text="Due Date" />
+                                        </div>
+                                        <div class="col-lg-10">
+
+                                            <div class="input-group sm-">
+                                                <asp:TextBox class="form-control  font-weight-bold font-weight-bold" ID="txtDuedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
+                                                 <% If Not Request.QueryString("ADV") Is Nothing Then%>
+                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3  Then %>
+                                                <div class="input-group-append">
+                                                    <asp:Button ID="btnUpdateDuedate" class="btn btn-sm btn-primary" runat="server" Text="Update" />
+                                                </div>
+                                                <% End If %>
+                                                <% End If %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbtxtdetail" CssClass="form-label" AssociatedControlID="txtdetail" runat="server" Text="วัตถุประสงค์" />
                                             <asp:Label ID="lbMandatorydetail" CssClass="text-danger " AssociatedControlID="txtdetail" runat="server" Text="*" />
                                         </div>
@@ -248,7 +259,7 @@
                                     <% ElseIf Session("status") = "edit" Then%>
                                     <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
                                     <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
-                                    <% ElseIf (Session("userid").ToString() = detailtable.Rows(0).Item("ownerid").ToString()) Then%>
+                                    <% ElseIf (Session("userid").ToString() = detailtable.Rows(0).Item("CreateBy").ToString()) Then%>
                                     <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                                     <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" />
                                     <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" />
@@ -513,7 +524,7 @@
     <script src="<%=Page.ResolveUrl("../js/NonPO.js")%>"></script>
     <script type="text/javascript">
         <% If Not Request.QueryString("ADV") Is Nothing Then%>
-        <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3 Then %>
+        <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3 Or Session("status") = "edit" Then %>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -521,9 +532,22 @@
             format: 'd/m/Y'
         });
         <% End If %>
+        <% else If Session("status") = "new" Then %>
+        jQuery('[id$=txtDuedate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
         <% End If %>
         $(document).ready(function () {
 
+            $(document).ready(function () {
+                $('.form-control').selectpicker({
+                    liveSearch: true,
+                    maxOptions: 1
+                });
+            });
 
             <% If Not AttachTable Is Nothing Then %>
                 <% For i = 0 To AttachTable.Rows.Count - 1 %>

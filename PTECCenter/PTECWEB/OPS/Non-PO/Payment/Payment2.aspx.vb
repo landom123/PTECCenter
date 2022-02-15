@@ -1509,6 +1509,7 @@ endprocess:
                 .Item("payby") = payby
                 .Item("vendorcode") = cboVendor.SelectedItem.Value
                 .Item("DueDate") = txtDuedate.Text.Trim()
+                .Item("detail") = txtNote.Text.Trim()
                 .Item("vat_wait") = If(chkVat.Checked, 1, 0)
             End With
         Else
