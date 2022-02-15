@@ -711,6 +711,24 @@ endprocess:
         Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
 endprocess:
     End Sub
+
+    Private Sub btnDisApproval_Click(sender As Object, e As EventArgs) Handles btnDisApproval.Click
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_AdvanceRequest_NotAllow(Request.QueryString("ADV"), Session("usercode"))
+            Session("status") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('NotAllow fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+endprocess:
+    End Sub
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
         Dim approval As New Approval
         Dim objNonPO As New NonPO

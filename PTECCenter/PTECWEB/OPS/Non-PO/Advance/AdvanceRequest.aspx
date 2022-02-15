@@ -273,27 +273,21 @@
 
                                     <% End If %>
                                     <% If Not Request.QueryString("ADV") Is Nothing And detailtable.Rows.Count > 0 Then%>
-                                    <% If Session("status") = "write" And approval And detailtable.Rows(0).Item("statusrqid") = 2 Then%>
-                                    <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
+                                    <% If verify Or approval Then%>
+                                        <% If Session("status") = "write" And approval And detailtable.Rows(0).Item("statusrqid") = 2 Then%>
+                                        <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
+                                        <% End If %>
+                                        <% If verify And detailtable.Rows(0).Item("statusrqid") = 7 Then%>
+                                        <asp:Button ID="btnAccountVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันการตรวจสอบ" />
+                                        <% End If %>
+                                        <% If verify And detailtable.Rows(0).Item("statusrqid") = 3 Then%>
+                                        <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันทำจ่าย" />
+                                        <% End If %>
 
-                                    <button runat="server" id="btnDisApproval" name="btnEdit" onclick="return disApproval();" class="btn btn-danger">
-                                        ไม่อนุมัติ
-                                    </button>
-                                    <% End If %>
-                                    <% If verify And detailtable.Rows(0).Item("statusrqid") = 7 Then%>
-                                    <asp:Button ID="btnAccountVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันการตรวจสอบ" />
+                                    <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" />
 
-                                    <button runat="server" id="Button3" name="btnEdit" onclick="return disApproval();" class="btn btn-danger">
-                                        ไม่อนุมัติ
-                                    </button>
                                     <% End If %>
-                                    <% If verify And detailtable.Rows(0).Item("statusrqid") = 3 Then%>
-                                    <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันทำจ่าย" />
 
-                                    <button runat="server" id="Button2" name="btnEdit" onclick="return disApproval();" class="btn btn-danger">
-                                        ไม่อนุมัติ
-                                    </button>
-                                    <% End If %>
                                     <% End If %>
                                 </div>
 

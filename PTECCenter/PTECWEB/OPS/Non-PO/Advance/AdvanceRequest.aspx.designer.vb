@@ -410,15 +410,6 @@ Partial Public Class AdvanceRequest
     Protected WithEvents btnApproval As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnDisApproval control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnDisApproval As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
     '''btnAccountVerify control.
     '''</summary>
     '''<remarks>
@@ -426,15 +417,6 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnAccountVerify As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''Button3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Button3 As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''btnVerify control.
@@ -446,13 +428,13 @@ Partial Public Class AdvanceRequest
     Protected WithEvents btnVerify As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Button2 control.
+    '''btnDisApproval control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button2 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents btnDisApproval As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''gvRemind control.
