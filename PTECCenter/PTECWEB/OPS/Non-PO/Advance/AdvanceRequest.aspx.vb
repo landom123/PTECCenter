@@ -18,7 +18,7 @@ Public Class AdvanceRequest
     Public at As String
     Public approver As String
     Public verifier As String
-
+    Public now_action As String
 
     Dim md_code As String
     Dim fm_code As String
@@ -58,6 +58,7 @@ Public Class AdvanceRequest
             AttachTable = createtableAttach()
             CommentTable = createtablecomment()
 
+            SetCboUsers(cboOwner)
 
             If Not Request.QueryString("ADV") Is Nothing Then
 
@@ -73,7 +74,7 @@ Public Class AdvanceRequest
                         Session("status") = "read"
                     End If
 
-                    chkuser(detailtable.Rows(0).Item("createby"))
+                    chkuser(detailtable.Rows(0).Item("ownerid"))
 
                     account_code = objNonPO.NonPOPermisstionAccount(Request.QueryString("ADV"))
 
@@ -89,12 +90,13 @@ Public Class AdvanceRequest
                         End If
                     End If
 
-            If (detailtable.Rows(0).Item("statusrqid") = 2) Then
+                    If (detailtable.Rows(0).Item("statusrqid") = 2) Then
                         PermissionOwner = chkPermissionNonPO(Request.QueryString("ADV"))
 
                         at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
                         approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(0).Item("approver").ToString
                         verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
+                        now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString + PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
                     End If
 
                     If (Session("usercode") = md_code Or
@@ -162,6 +164,8 @@ endprocess:
                 End Try
             Else
                 Session("status") = "new"
+                txtCreateBy.Text = Session("username")
+                cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(Session("userid")))
             End If
 
             Session("detailtable_advancerq") = detailtable
@@ -307,6 +311,7 @@ endprocess:
 
                 If createby = Session("userid") Then
                     btnAddAttatch.Visible = True
+                    'Session("status") = "edit"
                 Else
                     btnAddAttatch.Visible = False
                 End If
@@ -415,6 +420,7 @@ endprocess:
             txtCreateBy.Text = .Item("createby_name").ToString
             txtDocDate.Text = .Item("createdate").ToString
             'txtOwnerby.Text = .Item("ownerby_name").ToString
+            cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Item("ownerid")))
 
             txtApprovalby.Text = .Item("approvalrqby").ToString
             txtApprovalDate.Text = .Item("approvalrqdate").ToString
@@ -447,6 +453,8 @@ endprocess:
                 txtamount.ReadOnly = False
                 txtdetail.ReadOnly = False
 
+                cboOwner.Attributes.Remove("disabled")
+
 
                 'กล่อง comment & attatch file
                 card_comment.Visible = False
@@ -458,6 +466,8 @@ endprocess:
                 txtamount.ReadOnly = True
                 txtdetail.ReadOnly = True
                 'searchjobslist()
+
+                cboOwner.Attributes.Add("disabled", "True")
 
 
                 'กล่อง comment & attatch file
@@ -471,6 +481,8 @@ endprocess:
                 txtdetail.ReadOnly = True
                 'searchjobslist()
 
+                cboOwner.Attributes.Add("disabled", "True")
+
 
                 'กล่อง comment & attatch file
                 card_comment.Visible = True
@@ -483,6 +495,7 @@ endprocess:
                 txtdetail.ReadOnly = False
                 'searchjobslist()
 
+                cboOwner.Attributes.Remove("disabled")
 
                 'กล่อง comment & attatch file
                 card_comment.Visible = True
@@ -494,6 +507,8 @@ endprocess:
                 txtamount.ReadOnly = True
                 txtdetail.ReadOnly = True
                 'searchjobslist()
+
+                cboOwner.Attributes.Add("disabled", "True")
 
                 'กล่อง comment & attatch file
                 card_comment.Visible = True
@@ -507,8 +522,18 @@ endprocess:
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim objNonPO As New NonPO
         Dim dt As DataTable
+
+        Dim userid As Double
+        Dim jobowner As Double
+
+        userid = Session("userid")
+        If cboOwner.SelectedItem.Value = 0 Then
+            jobowner = userid
+        Else
+            jobowner = cboOwner.SelectedItem.Value
+        End If
         Try
-            dt = objNonPO.NonPO_AdvanceRequest_Save(txtamount.Text.Trim(), txtdetail.Text.Trim(), Session("usercode"))
+            dt = objNonPO.NonPO_AdvanceRequest_Save(txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("usercode"), jobowner)
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -526,14 +551,22 @@ endprocess:
     End Sub
 
     Private Sub btnCancelEdit_Click(sender As Object, e As EventArgs) Handles btnCancelEdit.Click
-        Session("status") = "read"
         Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
     End Sub
 
     Private Sub btnSaveEdit_Click(sender As Object, e As EventArgs) Handles btnSaveEdit.Click
         Dim objnonpo As New NonPO
+        Dim userid As Double
+        Dim jobowner As Double
+
+        userid = Session("userid")
+        If cboOwner.SelectedItem.Value = 0 Then
+            jobowner = userid
+        Else
+            jobowner = cboOwner.SelectedItem.Value
+        End If
         Try
-            objnonpo.NonPO_AdvanceRequest_Edit(Request.QueryString("ADV").ToString, txtamount.Text.Trim(), txtdetail.Text.Trim(), Session("userid"))
+            objnonpo.NonPO_AdvanceRequest_Edit(Request.QueryString("ADV").ToString, txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("userid"), jobowner)
             Session("status") = "read"
 
         Catch ex As Exception
@@ -605,7 +638,7 @@ endprocess:
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightYellow
             ElseIf Data.Item("status") = "ชำระเงินเสร็จสิ้น" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.GreenYellow
-            ElseIf Data.Item("status") = "ไม่ผ่านการอนุมัติ" Then
+            ElseIf Data.Item("status") = "ไม่ผ่าน" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
             ElseIf Data.Item("status") = "รอการเงินตรวจสอบ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightCoral
@@ -768,4 +801,22 @@ endprocess:
         Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
 endprocess:
     End Sub
+
+    '    Private Sub txtDuedate_TextChanged(sender As Object, e As EventArgs) Handles txtDuedate.TextChanged
+    '        Dim objnonpo As New NonPO
+
+    '        Try
+    '            objnonpo.NonPO_AdvanceRequest_SetDueDate(Request.QueryString("ADV"), txtDuedate.Text.Trim(), Session("usercode"))
+    '            Session("status") = "read"
+
+    '        Catch ex As Exception
+    '            Dim scriptKey As String = "alert"
+    '            'Dim javaScript As String = "alert('" & ex.Message & "');"
+    '            Dim javaScript As String = "alertWarning('set Duedate fail');"
+    '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '            GoTo endprocess
+    '        End Try
+    '        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+    'endprocess:
+    '    End Sub
 End Class

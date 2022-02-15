@@ -77,6 +77,24 @@ Partial Public Class AdvanceRequest
     Protected WithEvents txtCreateBy As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbcboOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboOwner As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lbDocDate control.
     '''</summary>
     '''<remarks>
@@ -176,33 +194,6 @@ Partial Public Class AdvanceRequest
     Protected WithEvents txtSupportdate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lbDuedate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbDuedate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtDuedate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtDuedate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''btnUpdateDuedate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnUpdateDuedate As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''lbtxtamount control.
     '''</summary>
     '''<remarks>
@@ -264,6 +255,33 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtbalance As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbDuedate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDuedate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnUpdateDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateDuedate As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''lbtxtdetail control.

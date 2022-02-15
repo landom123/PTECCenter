@@ -161,6 +161,7 @@ Public Class NonPO
             cmd.Parameters.Add("@deductsell_amount", SqlDbType.Money).Value = .Item("deductsell_amount")
             cmd.Parameters.Add("@vat_wait", SqlDbType.Bit).Value = .Item("vat_wait")
             cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+            cmd.Parameters.Add("@ownerid", SqlDbType.Int).Value = .Item("ownerid")
         End With
 
 
@@ -340,7 +341,7 @@ Public Class NonPO
         Return result
     End Function
 
-    Public Function NonPO_AdvanceRequest_Save(amount As Double, detail As String, username As String) As DataTable
+    Public Function NonPO_AdvanceRequest_Save(amount As Double, detail As String, duedate As String, username As String, advownerid As Integer) As DataTable
         Dim result As DataTable
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -354,7 +355,9 @@ Public Class NonPO
 
         cmd.Parameters.Add("@amount", SqlDbType.Money).Value = amount
         cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = detail
+        cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(duedate), DBNull.Value, DateTime.Parse(duedate))
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+        cmd.Parameters.Add("@advownerid", SqlDbType.Int).Value = advownerid
 
 
         adp.SelectCommand = cmd
@@ -364,7 +367,7 @@ Public Class NonPO
         Return result
     End Function
 
-    Public Function NonPO_AdvanceRequest_Edit(nonpocode As String, amount As Double, detail As String, userid As Integer) As Boolean
+    Public Function NonPO_AdvanceRequest_Edit(nonpocode As String, amount As Double, detail As String, duedate As String, userid As Integer, advownerid As Integer) As Boolean
         Dim result As Boolean
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -380,7 +383,9 @@ Public Class NonPO
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
         cmd.Parameters.Add("@limit", SqlDbType.Money).Value = amount
         cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = detail
+        cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(duedate), DBNull.Value, DateTime.Parse(duedate))
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        cmd.Parameters.Add("@advownerid", SqlDbType.Int).Value = advownerid
 
 
         cmd.ExecuteNonQuery()

@@ -75,6 +75,18 @@ function CheckNumber(Number) {
     return Number
 }
 
+function calCostTotal(cost, vat, tax) {
+    return (cost + (cost * (vat / 100))) - (cost * (tax / 100));
+}
+
+
+function calTax(cost, tax) {
+    return cost * (tax / 100);
+}
+
+function calVat(cost, vat) {
+    return cost * (vat / 100);
+}
 
 /*  ################## Attach #################  */
 function chkAttach(elem, userid) {

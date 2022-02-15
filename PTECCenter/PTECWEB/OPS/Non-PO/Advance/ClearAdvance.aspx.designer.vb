@@ -149,13 +149,13 @@ Partial Public Class ClearAdvance
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboOwner control.
+    '''cboCreateby control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboCreateby As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''lbcboBranch control.
@@ -246,6 +246,24 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtCreateDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbcboOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboOwner As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''chkVat control.

@@ -37,7 +37,7 @@ Public Class AdvanceMenuList
 
         txtStartDueDate.Attributes.Add("readonly", "readonly")
         txtEndDueDate.Attributes.Add("readonly", "readonly")
-        operator_code = objNonpo.NonPOPermisstionOperator("CLADV")
+        operator_code = objNonpo.NonPOPermisstionOperator("ADV")
         If Not IsPostBack() Then
 
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then

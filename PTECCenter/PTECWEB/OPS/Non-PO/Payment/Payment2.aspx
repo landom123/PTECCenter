@@ -801,7 +801,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน (ก่อน VAT)" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onchange="calculate();"></asp:TextBox>
                         <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
                     <div class="row">
@@ -812,7 +812,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
                             </div>
                             <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                         </div>
@@ -821,7 +821,7 @@
                                 <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="WHT (%)" />
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
                                 <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                             </div>
                         </div>
@@ -840,10 +840,14 @@
                         <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
                     </div>
-
+                    <div class="showCost d-none">
+                        <p class="text-muted" id="p_vat"></p>
+                        <p class="text-muted" id="p_tax"></p>
+                        <p class="text-muted" id="p_cost"></p>
+                    </div>
                     <!--  ############## End Detail ############### -->
                     <hr />
-                    <h3>Invoice</h3>
+                    <h3>ใบแจ้งหนี้ / ใบส่งของ / ใบกำกับ</h3>
                     <div class="form-group">
                         <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server"></asp:TextBox>
@@ -919,7 +923,7 @@
 
         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
         <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
-                    (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
+  (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -948,7 +952,7 @@
         });
         <% End If %>
 
-        </script>
+    </script>
 
     <script>
         var cntdetail =<% =chkunsave%>;
@@ -986,6 +990,9 @@
 
 
 
+            $('#exampleModal').on('shown.bs.modal', function (e) {
+                calculate();
+            });
             /*$(".listCommentAndAttatch").click(function () {
                 $(".card_attatch").toggle();
                 $(".card_comment").toggle();
@@ -1049,6 +1056,56 @@ alert('else nonpo')
                 }
             }
         }
+        function calculate() {
+
+            //console.log("############ calculate");
+
+            let cost = CheckNumber(document.getElementById("<%= txtPrice.ClientID%>").value);
+            let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            const p_cost = document.getElementById("p_cost");
+            const p_tax = document.getElementById("p_tax");
+            const p_vat = document.getElementById("p_vat");
+
+
+            cost = parseFloat(cost);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+
+            //console.log(cost);
+            //console.log(vat);
+            //console.log(tax);
+
+            const c_CostTotal = calCostTotal(cost, vat, tax).toFixed(2);
+            const c_Vat = calVat(cost, vat).toFixed(2);
+            const c_Tax = calTax(cost, tax).toFixed(2);
+
+            //console.log(calCostTotal(cost, vat, tax).toFixed(2));
+            //console.log(calVat(cost, vat).toFixed(2));
+            //console.log(calTax(cost, tax).toFixed(2));
+
+            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+                p_cost.innerHTML = "รวมทั้งสิ้น : " + c_CostTotal + " บาท";
+            } else {
+                p_cost.innerHTML = "";
+            }
+
+            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+                p_vat.innerHTML = "Vat : " + c_Vat + " บาท";
+            } else {
+                p_vat.innerHTML = "";
+            }
+
+            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+                p_tax.innerHTML = "Tax : (" + c_Tax + ") บาท";
+            } else {
+                p_tax.innerHTML = "";
+            }
+
+        }
+
+
         <%--function checkStatusNonpo() {
              <% if maintable.Rows.Count > 0 Then%>
             const statusid = '<% =maintable.Rows(0).Item("statusid").ToString %>';
@@ -1061,9 +1118,9 @@ alert('else nonpo')
         }--%>
         function stoppedTyping() {
             if (document.getElementById('<%= txtComment.ClientID%>').value.length > 0) {
-                document.getElementById('<%= btnSaveComment.ClientID%>').disabled = false;
-            } else {
-                document.getElementById('<%= btnSaveComment.ClientID%>').disabled = true;
+                    document.getElementById('<%= btnSaveComment.ClientID%>').disabled = false;
+                } else {
+                    document.getElementById('<%= btnSaveComment.ClientID%>').disabled = true;
 
             }
         }
@@ -1187,47 +1244,47 @@ alert('else nonpo')
                     const urlParams = new URLSearchParams(window.location.search);
                     const nonpocode = urlParams.get('NonpoCode');
                     var user = "<% =Session("usercode").ToString %>";
-                    var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
-                    $.ajax({
-                        type: "POST",
-                        url: "../Payment/Payment2.aspx/addAttach",
-                        async: true,
-                        data: params,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (msg) {
+                        var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
+                        $.ajax({
+                            type: "POST",
+                            url: "../Payment/Payment2.aspx/addAttach",
+                            async: true,
+                            data: params,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
 
 
-                            /*alertSuccessToast();*/
-                            if (msg.d == 'success') {
-                                if (!description) {
-                                    description = 'Link';
+                                /*alertSuccessToast();*/
+                                if (msg.d == 'success') {
+                                    if (!description) {
+                                        description = 'Link';
+                                    }
+                                    /*__doPostBack('AttachTable', '')*/
+                                    $('.attatchItems').append(
+                                        '<div class="row">' +
+                                        '<div class="col">' +
+                                        '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
+                                        '<span>' + description + '</span></a>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                    alertSuccessToast('บันทึกเรียบร้อย' + description);
+                                } else {
+                                    alertWarning('Add URL fail');
                                 }
-                                /*__doPostBack('AttachTable', '')*/
-                                $('.attatchItems').append(
-                                    '<div class="row">' +
-                                    '<div class="col">' +
-                                    '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
-                                    '<span>' + description + '</span></a>' +
-                                    '</div>' +
-                                    '</div>'
-                                );
-                                alertSuccessToast('บันทึกเรียบร้อย' + description);
-                            } else {
-                                alertWarning('Add URL fail');
+
+                            },
+                            error: function (msg) {
+                                console.log(msg);
+
+                                alertWarning('Add URL faila');
+
                             }
+                        });
 
-                        },
-                        error: function (msg) {
-                            console.log(msg);
-
-                            alertWarning('Add URL faila');
-
-                        }
-                    });
-
-                }
-            })
+                    }
+                })
 
         }
 
@@ -1246,37 +1303,37 @@ alert('else nonpo')
                 if (result.isConfirmed) {
 
                     var user = "<% =Session("usercode").ToString %>";
-                    var params = "{'nonpodtlid': '" + nonpodtlid + "','rows': '" + row + "','user': '" + user + "'}";
+                        var params = "{'nonpodtlid': '" + nonpodtlid + "','rows': '" + row + "','user': '" + user + "'}";
 
-                    __doPostBack('deletedetail', params);
-                    //$.ajax({
-                    //    type: "POST",
-                    //    url: "../Payment/Payment2.aspx/deleteDetail",
-                    //    async: true,
-                    //    data: params,
-                    //    contentType: "application/json; charset=utf-8",
-                    //    dataType: "json",
-                    //    success: function (msg) {
-                    //        if (msg.d == 'success') {
-                    //            swal.fire({
-                    //                title: "Deleted!",
-                    //                text: "",
-                    //                icon: "success",
-                    //                allowOutsideClick: false
-                    //            }).then(function () {
-                    //                __doPostBack('detailtable', '');
+                        __doPostBack('deletedetail', params);
+                        //$.ajax({
+                        //    type: "POST",
+                        //    url: "../Payment/Payment2.aspx/deleteDetail",
+                        //    async: true,
+                        //    data: params,
+                        //    contentType: "application/json; charset=utf-8",
+                        //    dataType: "json",
+                        //    success: function (msg) {
+                        //        if (msg.d == 'success') {
+                        //            swal.fire({
+                        //                title: "Deleted!",
+                        //                text: "",
+                        //                icon: "success",
+                        //                allowOutsideClick: false
+                        //            }).then(function () {
+                        //                __doPostBack('detailtable', '');
 
-                    //            });
-                    //        } else {
-                    //            alertWarning('fail')
-                    //        }
-                    //    },
-                    //    error: function () {
-                    //        alertWarning('fail ee')
-                    //    }
-                    //});
-                }
-            })
+                        //            });
+                        //        } else {
+                        //            alertWarning('fail')
+                        //        }
+                        //    },
+                        //    error: function () {
+                        //        alertWarning('fail ee')
+                        //    }
+                        //});
+                    }
+                })
 
             return false;
         }
@@ -1291,20 +1348,20 @@ alert('else nonpo')
         function clearfromadddetail() {
 
             $('#<%= row.ClientID%>').val(0);
-            $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
-            $('#<%= cboAccountCode.ClientID%>').val(0);
-            $('#<%= cboDep.ClientID%>').val(0);
-            $('#<%= cboBU.ClientID%>').val(0);
-            $('#<%= cboPP.ClientID%>').val(0);
-            $('#<%= cboPJ.ClientID%>').val(0);
-            $('#<%= txtPrice.ClientID%>').val('');
-            $('#<%= txtVat.ClientID%>').val('7');
-            $('#<%= txtTax.ClientID%>').val('');
-            $('#<%= txtDetail.ClientID%>').val('');
-            $('#<%= txtinvoiceno.ClientID%>').val('');
-            $('#<%= txttaxid.ClientID%>').val('');
-            $('#<%= txtinvoicedate.ClientID%>').val('');
-            $('#<%= chkNoBill.ClientID%>').prop('checked', false);
+                $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
+                $('#<%= cboAccountCode.ClientID%>').val(0);
+                $('#<%= cboDep.ClientID%>').val(0);
+                $('#<%= cboBU.ClientID%>').val(0);
+                $('#<%= cboPP.ClientID%>').val(0);
+                $('#<%= cboPJ.ClientID%>').val(0);
+                $('#<%= txtPrice.ClientID%>').val('');
+                $('#<%= txtVat.ClientID%>').val('7');
+                $('#<%= txtTax.ClientID%>').val('');
+                $('#<%= txtDetail.ClientID%>').val('');
+                $('#<%= txtinvoiceno.ClientID%>').val('');
+                $('#<%= txttaxid.ClientID%>').val('');
+                $('#<%= txtinvoicedate.ClientID%>').val('');
+                $('#<%= chkNoBill.ClientID%>').prop('checked', false);
             <%--$('#<%= cboVendor.ClientID%>').val('');
             $('#<%= txtVendor.ClientID%>').val('');--%>
 
@@ -1328,18 +1385,18 @@ alert('else nonpo')
             //console.log(vendorcode);
 
             const Accountcode = '<%= cboAccountCode.ClientID%>';
-            const dep = '<%= cboDep.ClientID%>';
-            const bu = '<%= cboBU.ClientID%>';
-            const pp = '<%= cboPP.ClientID%>';
-            const pj = '<%= cboPJ.ClientID%>';
+                const dep = '<%= cboDep.ClientID%>';
+                const bu = '<%= cboBU.ClientID%>';
+                const pp = '<%= cboPP.ClientID%>';
+                const pj = '<%= cboPJ.ClientID%>';
             <%--const vendor = '<%= cboVendor.ClientID%>';--%>
-            $('#exampleModal').modal('show');
+                $('#exampleModal').modal('show');
 
-            selectElement(Accountcode, accountcodeid);
-            selectElement(dep, depid);
-            selectElement(bu, buid);
-            selectElement(pp, ppid);
-            selectElement(pj, pjid);
+                selectElement(Accountcode, accountcodeid);
+                selectElement(dep, depid);
+                selectElement(bu, buid);
+                selectElement(pp, ppid);
+                selectElement(pj, pjid);
             //selectElement(vendor, vendorcode);
           <%--  $('#<%= cboVendor.ClientID%>').filter(function () {
                 //may want to use $.trim in here
@@ -1351,27 +1408,27 @@ alert('else nonpo')
             console.log(value);
             vendor.value = value; --%>
 
-            $('#<%= row.ClientID%>').val(row);
-            $('#<%= hiddenAdvancedetailid.ClientID%>').val(advancedetailid);
+                $('#<%= row.ClientID%>').val(row);
+                $('#<%= hiddenAdvancedetailid.ClientID%>').val(advancedetailid);
            <%-- $('#<%= txtVendor.ClientID%>').val(vendorcode);--%>
-            $('#<%= txtPrice.ClientID%>').val(cost);
-            $('#<%= txtVat.ClientID%>').val(vat);
-            $('#<%= txtTax.ClientID%>').val(tax);
-            $('#<%= txtDetail.ClientID%>').val(detail);
+                $('#<%= txtPrice.ClientID%>').val(cost);
+                $('#<%= txtVat.ClientID%>').val(vat);
+                $('#<%= txtTax.ClientID%>').val(tax);
+                $('#<%= txtDetail.ClientID%>').val(detail);
 
-            $('#<%= txtinvoiceno.ClientID%>').val(invoice);
-            $('#<%= txttaxid.ClientID%>').val(taxid);
-            $('#<%= txtinvoicedate.ClientID%>').val(invoicedate);
-            $('#<%= chkNoBill.ClientID%>').prop('checked', NoBill.toLowerCase() == "true" ? true : false);
-            $('.form-control').selectpicker('refresh');
+                $('#<%= txtinvoiceno.ClientID%>').val(invoice);
+                $('#<%= txttaxid.ClientID%>').val(taxid);
+                $('#<%= txtinvoicedate.ClientID%>').val(invoicedate);
+                $('#<%= chkNoBill.ClientID%>').prop('checked', NoBill.toLowerCase() == "true" ? true : false);
+                $('.form-control').selectpicker('refresh');
             /*__doPostBack('setFromDetail', $(row).attr('name'));
 */
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
             <% If (Not Session("status_payment") = "new" And Not Session("status_payment") = "edit" And Not Session("status_payment") = "account") Then%>
-            $('.modal-footer #btnAddDetail').hide();
-            $('.modal-body input,.modal-body textarea').attr('readonly', true);
-            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').attr('disabled', true);
+                $('.modal-footer #btnAddDetail').hide();
+                $('.modal-body input,.modal-body textarea').attr('readonly', true);
+                $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').attr('disabled', true);
             <% End If %>
             <% End If %>
 
@@ -1400,25 +1457,25 @@ alert('else nonpo')
         }
         function postBack_addDetail() {
             let row = $('#<%= row.ClientID%>').val();
-            const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
-            const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
-            const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
-            const depid = $('#<%= cboDep.ClientID%>').val();
-            const depname = $("#<%= cboDep.ClientID%> option:selected").text();
-            const buid = $('#<%= cboBU.ClientID%>').val();
-            const buname = $("#<%= cboBU.ClientID%> option:selected").text();
-            const ppid = $('#<%= cboPP.ClientID%>').val();
-            const ppname = $("#<%= cboPP.ClientID%> option:selected").text();
-            const pjid = $('#<%= cboPJ.ClientID%>').val();
-            const pjname = $("#<%= cboPJ.ClientID%> option:selected").text();
-            const cost = $('#<%= txtPrice.ClientID%>').val();
-            const vat = $('#<%= txtVat.ClientID%>').val();
-            const tax = $('#<%= txtTax.ClientID%>').val();
-            const detail = $('#<%= txtDetail.ClientID%>').val();
-            const invoice = $('#<%= txtinvoiceno.ClientID%>').val();
-            const taxid = $('#<%= txttaxid.ClientID%>').val();
-            const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
-            const nobill = $('#<%= chkNoBill.ClientID%>').is(":checked");
+                const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
+                const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
+                const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
+                const depid = $('#<%= cboDep.ClientID%>').val();
+                const depname = $("#<%= cboDep.ClientID%> option:selected").text();
+                const buid = $('#<%= cboBU.ClientID%>').val();
+                const buname = $("#<%= cboBU.ClientID%> option:selected").text();
+                const ppid = $('#<%= cboPP.ClientID%>').val();
+                const ppname = $("#<%= cboPP.ClientID%> option:selected").text();
+                const pjid = $('#<%= cboPJ.ClientID%>').val();
+                const pjname = $("#<%= cboPJ.ClientID%> option:selected").text();
+                const cost = $('#<%= txtPrice.ClientID%>').val();
+                const vat = $('#<%= txtVat.ClientID%>').val();
+                const tax = $('#<%= txtTax.ClientID%>').val();
+                const detail = $('#<%= txtDetail.ClientID%>').val();
+                const invoice = $('#<%= txtinvoiceno.ClientID%>').val();
+                const taxid = $('#<%= txttaxid.ClientID%>').val();
+                const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
+                const nobill = $('#<%= chkNoBill.ClientID%>').is(":checked");
 
             const vendorname = '';
             const vendorcode = '';
@@ -1508,157 +1565,157 @@ alert('else nonpo')
         $("#btnAddDetail").click(function () {
             //alert("The paragraph was clicked.");
             let row = $('#<%= row.ClientID%>').val();
-            const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
-            const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
-            const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
-            const depid = $('#<%= cboDep.ClientID%>').val();
-            const depname = $("#<%= cboDep.ClientID%> option:selected").text();
-            const buid = $('#<%= cboBU.ClientID%>').val();
-            const buname = $("#<%= cboBU.ClientID%> option:selected").text();
-            const ppid = $('#<%= cboPP.ClientID%>').val();
-            const ppname = $("#<%= cboPP.ClientID%> option:selected").text();
-            const pjid = $('#<%= cboPJ.ClientID%>').val();
-            const pjname = $("#<%= cboPJ.ClientID%> option:selected").text();
-            const cost = $('#<%= txtPrice.ClientID%>').val();
-            const vat = $('#<%= txtVat.ClientID%>').val();
-            const tax = $('#<%= txtTax.ClientID%>').val();
-            const detail = $('#<%= txtDetail.ClientID%>').val();
-            const invoice = $('#<%= txtinvoiceno.ClientID%>').val();
-            const taxid = $('#<%= txttaxid.ClientID%>').val();
-            const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
+                const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
+                const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
+                const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
+                const depid = $('#<%= cboDep.ClientID%>').val();
+                const depname = $("#<%= cboDep.ClientID%> option:selected").text();
+                const buid = $('#<%= cboBU.ClientID%>').val();
+                const buname = $("#<%= cboBU.ClientID%> option:selected").text();
+                const ppid = $('#<%= cboPP.ClientID%>').val();
+                const ppname = $("#<%= cboPP.ClientID%> option:selected").text();
+                const pjid = $('#<%= cboPJ.ClientID%>').val();
+                const pjname = $("#<%= cboPJ.ClientID%> option:selected").text();
+                const cost = $('#<%= txtPrice.ClientID%>').val();
+                const vat = $('#<%= txtVat.ClientID%>').val();
+                const tax = $('#<%= txtTax.ClientID%>').val();
+                const detail = $('#<%= txtDetail.ClientID%>').val();
+                const invoice = $('#<%= txtinvoiceno.ClientID%>').val();
+                const taxid = $('#<%= txttaxid.ClientID%>').val();
+                const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
 
-            const vendorname = '';
-            const vendorcode = '';
-            const status = $(".DetailArea tr[name='" + row + "']").attr("data-status")
+                const vendorname = '';
+                const vendorcode = '';
+                const status = $(".DetailArea tr[name='" + row + "']").attr("data-status")
 
-            //alert('cost' + cost);
+                //alert('cost' + cost);
 
-            if (cost != 0 && accountcodeid == 0) {
-                alertWarning('กรุณาเลือกรหัสบัญชี');
-                event.preventDefault();
-                event.stopPropagation();
-                return 0;
-            }
-            //alert(row);
-            //var params = "{'row': '" + row + "'}";
-            var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
-                "','accountcode': '" + accountcode + "','depid': '" + depid + "','depname': '" + depname +
-                "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + pjname +
-                "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
-                "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
-                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "'}";
-
-            //alert(params);
-            //PageMethods.addoreditdetail(params);
-
-            $.ajax({
-                type: "POST",
-                url: "../Payment/Payment2.aspx/addoreditdetail",
-                async: true,
-                data: params,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    console.log(msg);
-                    if (msg.d && msg.d != "fail") {
-                        console.log("row" + row);
-                        console.log("msg.d" + msg.d);
-                        if (row != msg.d) {
-                            row = msg.d
-
-                            $('.DetailArea').append(
-                                '<tr class="draggable detail notPrint" style="background-color: #d8d8d8;" data-status="new"  name="' + row + '" ondblclick=\'btnEditDetailClick("' + row + '","' + nonpodtl_id + '","' + accountcodeid + '","' + depid + '","' + buid + '","' + ppid + '","' + pjid + '","' + cost + '","' + vat + '","' + tax + '","' + detail + '","' + invoice + '","' + taxid + '","' + invoicedate + '");\' > ' +
-                                //'<tr class="draggable detail" draggable="true" name="' + row + '">' +
-                                '<td colspan="2" style="width: 80px !important; height: 22px;" title="' + accountcode + '">' + (accountcodeid == '0' ? '' : accountcodeid) +
-                                '</td>' +
-                                '<td colspan="8" style="width: 360px !important;" title="' + detail + '"><span>' + detail + '</span>' +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + buname + '">' + buname +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + ppname + '">' + ppname +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + pjname + '">' + pjname +
-                                '</td>' +
-                                '<td colspan="4" style="width: 160px !important;" title="' + cost + '">' + (cost == '0' ? '' : cost) +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + vat + '">' + vat +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + tax + '">' + tax +
-                                '</td>' +
-                                '<td class="deletedetail notPrint" style="position: absolute; border: 0px solid #000;">' +
-                                '<div>' +
-                                '<a onclick="confirmDeletedetail(' + nonpodtl_id + ',' + row + ');" class="btn btn-sm p-0 notPrint">' +
-                                ' <i class="fas fa-times"></i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</td>' +
-                                '</tr>'
-
-
-                            );
-                            cntdetail = 1; //show unsave
-                        } else {
-                            $(".DetailArea tr[name='" + row + "']").html(
-                                '<td colspan="2" style="width: 80px !important; height: 22px;" title="' + accountcode + '">' + (accountcodeid == '0' ? '' : accountcodeid) +
-                                '</td>' +
-                                '<td colspan="8" style="width: 360px !important;" title="' + detail + '"><span>' + detail + '</span>' +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + buname + '">' + buname +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + ppname + '">' + ppname +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + pjname + '">' + pjname +
-                                '</td>' +
-                                '<td colspan="4" style="width: 160px !important;" title="' + cost + '">' + (cost == '0' ? '' : cost) +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + vat + '">' + vat +
-                                '</td>' +
-                                '<td colspan="2" style="width: 80px !important;" title="' + tax + '">' + tax +
-                                '</td>' +
-                                '<td class="deletedetail notPrint" style="position: absolute; border: 0px solid #000;">' +
-                                '<div>' +
-                                '<a onclick="confirmDeletedetail(' + nonpodtl_id + ',' + row + ');" class="btn btn-sm p-0 notPrint">' +
-                                ' <i class="fas fa-times"></i>' +
-                                '</a>' +
-                                '</div>' +
-                                '</td>'
-                            );
-
-                            $(".DetailArea tr[name='" + row + "']").attr("ondblclick", 'btnEditDetailClick("' + row + '", "' + nonpodtl_id + '", "' + accountcodeid + '", "' + depid + '", "' + buid + '", "' + ppid + '", "' + pjid + '", "' + cost + '","' + vat + '","' + tax + '", "' + detail + '","' + invoice + '","' + taxid + '","' + invoicedate + '");');
-                            if ($(".DetailArea tr[name='" + row + "']").attr("data-status") == "read") {
-                                $(".DetailArea tr[name='" + row + "']").attr("data-status", "edit");
-                                $(".DetailArea tr[name='" + row + "']").css("background-color", "#d8d8d8");
-                            }
-                            //alert($(".DetailArea tr[name='" + row + "']").attr("data-status"));
-                            cntdetail = 1; //show unsave
-                        }
-
-                        checkUnSave(); //show unsave
-
-                        $('#exampleModal').modal('hide')
-                        //alert('yes');
-                        clearfromadddetail();
-                    } else {
-                        alertWarning('res fail')
-                    }
-                },
-                error: function (msg) {
-                    console.log(msg);
-                    alertWarning(msg);
+                if (cost != 0 && accountcodeid == 0) {
+                    alertWarning('กรุณาเลือกรหัสบัญชี');
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return 0;
                 }
+                //alert(row);
+                //var params = "{'row': '" + row + "'}";
+                var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
+                    "','accountcode': '" + accountcode + "','depid': '" + depid + "','depname': '" + depname +
+                    "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + pjname +
+                    "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
+                    "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
+                    "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "'}";
+
+                //alert(params);
+                //PageMethods.addoreditdetail(params);
+
+                $.ajax({
+                    type: "POST",
+                    url: "../Payment/Payment2.aspx/addoreditdetail",
+                    async: true,
+                    data: params,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        console.log(msg);
+                        if (msg.d && msg.d != "fail") {
+                            console.log("row" + row);
+                            console.log("msg.d" + msg.d);
+                            if (row != msg.d) {
+                                row = msg.d
+
+                                $('.DetailArea').append(
+                                    '<tr class="draggable detail notPrint" style="background-color: #d8d8d8;" data-status="new"  name="' + row + '" ondblclick=\'btnEditDetailClick("' + row + '","' + nonpodtl_id + '","' + accountcodeid + '","' + depid + '","' + buid + '","' + ppid + '","' + pjid + '","' + cost + '","' + vat + '","' + tax + '","' + detail + '","' + invoice + '","' + taxid + '","' + invoicedate + '");\' > ' +
+                                    //'<tr class="draggable detail" draggable="true" name="' + row + '">' +
+                                    '<td colspan="2" style="width: 80px !important; height: 22px;" title="' + accountcode + '">' + (accountcodeid == '0' ? '' : accountcodeid) +
+                                    '</td>' +
+                                    '<td colspan="8" style="width: 360px !important;" title="' + detail + '"><span>' + detail + '</span>' +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + buname + '">' + buname +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + ppname + '">' + ppname +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + pjname + '">' + pjname +
+                                    '</td>' +
+                                    '<td colspan="4" style="width: 160px !important;" title="' + cost + '">' + (cost == '0' ? '' : cost) +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + vat + '">' + vat +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + tax + '">' + tax +
+                                    '</td>' +
+                                    '<td class="deletedetail notPrint" style="position: absolute; border: 0px solid #000;">' +
+                                    '<div>' +
+                                    '<a onclick="confirmDeletedetail(' + nonpodtl_id + ',' + row + ');" class="btn btn-sm p-0 notPrint">' +
+                                    ' <i class="fas fa-times"></i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</td>' +
+                                    '</tr>'
+
+
+                                );
+                                cntdetail = 1; //show unsave
+                            } else {
+                                $(".DetailArea tr[name='" + row + "']").html(
+                                    '<td colspan="2" style="width: 80px !important; height: 22px;" title="' + accountcode + '">' + (accountcodeid == '0' ? '' : accountcodeid) +
+                                    '</td>' +
+                                    '<td colspan="8" style="width: 360px !important;" title="' + detail + '"><span>' + detail + '</span>' +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + buname + '">' + buname +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + ppname + '">' + ppname +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + pjname + '">' + pjname +
+                                    '</td>' +
+                                    '<td colspan="4" style="width: 160px !important;" title="' + cost + '">' + (cost == '0' ? '' : cost) +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + vat + '">' + vat +
+                                    '</td>' +
+                                    '<td colspan="2" style="width: 80px !important;" title="' + tax + '">' + tax +
+                                    '</td>' +
+                                    '<td class="deletedetail notPrint" style="position: absolute; border: 0px solid #000;">' +
+                                    '<div>' +
+                                    '<a onclick="confirmDeletedetail(' + nonpodtl_id + ',' + row + ');" class="btn btn-sm p-0 notPrint">' +
+                                    ' <i class="fas fa-times"></i>' +
+                                    '</a>' +
+                                    '</div>' +
+                                    '</td>'
+                                );
+
+                                $(".DetailArea tr[name='" + row + "']").attr("ondblclick", 'btnEditDetailClick("' + row + '", "' + nonpodtl_id + '", "' + accountcodeid + '", "' + depid + '", "' + buid + '", "' + ppid + '", "' + pjid + '", "' + cost + '","' + vat + '","' + tax + '", "' + detail + '","' + invoice + '","' + taxid + '","' + invoicedate + '");');
+                                if ($(".DetailArea tr[name='" + row + "']").attr("data-status") == "read") {
+                                    $(".DetailArea tr[name='" + row + "']").attr("data-status", "edit");
+                                    $(".DetailArea tr[name='" + row + "']").css("background-color", "#d8d8d8");
+                                }
+                                //alert($(".DetailArea tr[name='" + row + "']").attr("data-status"));
+                                cntdetail = 1; //show unsave
+                            }
+
+                            checkUnSave(); //show unsave
+
+                            $('#exampleModal').modal('hide')
+                            //alert('yes');
+                            clearfromadddetail();
+                        } else {
+                            alertWarning('res fail')
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                        alertWarning(msg);
+                    }
+                });
             });
-        });
         $('#<% =btnFromAddDetail.ClientID%>').click(function () {
             $('.modal-footer #btnAddDetail').show();
             $('.modal-body input,.modal-body textarea').removeAttr("readonly");
             $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
             $('#<% =txtinvoicedate.ClientID%>').attr('readonly', true);
 
-            $('.form-control').selectpicker('refresh');
+                $('.form-control').selectpicker('refresh');
 
-            clearfromadddetail();
+                clearfromadddetail();
 
-        });
+            });
         $('.noEnterSubmit').keypress(function (e) {
             if (e.which == 13) return false;
             //or...

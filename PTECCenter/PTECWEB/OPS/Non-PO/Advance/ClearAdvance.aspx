@@ -287,11 +287,11 @@
                                         <div class="row">
 
                                             <div class="col-1">
-                                                <asp:Label ID="Label2" CssClass="form-label" AssociatedControlID="cboOwner" runat="server" Text="ผู้เบิก" />
+                                                <asp:Label ID="Label2" CssClass="form-label" AssociatedControlID="cboCreateby" runat="server" Text="ผู้เบิก" />
                                             </div>
                                             <div class="col-11">
 
-                                                <asp:DropDownList class="form-control" ID="cboOwner" runat="server" readonly="true"></asp:DropDownList>
+                                                <asp:DropDownList class="form-control" ID="cboCreateby" runat="server" readonly="true"></asp:DropDownList>
                                             </div>
                                         </div>
                                     </td>
@@ -355,7 +355,18 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td colspan="24" style="width: 960px !important; height: 50px;">
+                                        <div class="row">
+                                            <div class="col-1">
+                                                <asp:Label ID="lbcboOwner" CssClass="form-label" AssociatedControlID="cboOwner" runat="server" Text="ผู้รับเงิน" />
+                                            </div>
+                                            <div class="col-11">
+                                                <asp:DropDownList class="form-control" ID="cboOwner" runat="server" readonly="true"></asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td colspan="24" style="width: 960px !important; height: 50px;">
                                         <div class="row">
@@ -434,7 +445,6 @@
                                 <!--  ############## End Detail ############### -->
                                 <tfoot>
                                     <!--  total -->
-                                    <tr>
                                     <tr>
                                         <td colspan="9" style="width: 360px !important;">
                                             <div class="row">
@@ -761,7 +771,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน (ก่อน VAT)" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onchange="calculate();"></asp:TextBox>
                         <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
                     <div class="row">
@@ -770,7 +780,7 @@
                                 <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT (%)" />
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
                             </div>
                             <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                         </div>
@@ -779,7 +789,7 @@
                                 <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="WHT (%)" />
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
                                 <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                             </div>
                         </div>
@@ -798,10 +808,15 @@
                         <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
                     </div>
+                    <div class="showCost d-none">
+                        <p class="text-muted" id="p_vat"></p>
+                        <p class="text-muted" id="p_tax"></p>
+                        <p class="text-muted" id="p_cost"></p>
+                    </div>
 
                     <!--  ############## End Detail ############### -->
                     <hr />
-                    <h3>Invoice</h3>
+                    <h3>ใบแจ้งหนี้ / ใบส่งของ / ใบกำกับ</h3>
                     <div class="form-group">
                         <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server"></asp:TextBox>
@@ -938,7 +953,9 @@
             $('.form-control').selectpicker('refresh');
 
 
-
+            $('#exampleModal').on('shown.bs.modal', function (e) {
+                calculate();
+            });
             /*$(".listCommentAndAttatch").click(function () {
                 $(".card_attatch").toggle();
                 $(".card_comment").toggle();
@@ -1002,6 +1019,62 @@
                 }
             }
         }
+        
+
+        function calculate() {
+
+            //console.log("############ calculate");
+            
+            const cost = CheckNumber(document.getElementById("<%= txtPrice.ClientID%>").value);
+            const vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            const tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            const p_cost = document.getElementById("p_cost");
+            const p_tax = document.getElementById("p_tax");
+            const p_vat = document.getElementById("p_vat");
+
+
+            cost = parseFloat(cost);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+
+            //console.log(cost);
+            //console.log(vat);
+            //console.log(tax);
+
+            //console.log(calCostTotal(cost, vat, tax).toFixed(2));
+            //console.log(calVat(cost, vat).toFixed(2));
+            //console.log(calTax(cost, tax).toFixed(2));
+
+            const c_CostTotal = calCostTotal(cost, vat, tax).toFixed(2);
+            const c_Vat = calVat(cost, vat).toFixed(2);
+            const c_Tax = calTax(cost, tax).toFixed(2);
+
+            //console.log(calCostTotal(cost, vat, tax).toFixed(2));
+            //console.log(calVat(cost, vat).toFixed(2));
+            //console.log(calTax(cost, tax).toFixed(2));
+
+            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+                p_cost.innerHTML = "รวมทั้งสิ้น : " + c_CostTotal + " บาท";
+            } else {
+                p_cost.innerHTML = "";
+            }
+
+            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+                p_vat.innerHTML = "Vat : " + c_Vat + " บาท";
+            } else {
+                p_vat.innerHTML = "";
+            }
+
+            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+                p_tax.innerHTML = "Tax : (" + c_Tax + ") บาท";
+            } else {
+                p_tax.innerHTML = "";
+            }
+
+        }
+
+
         <%--function checkStatusNonpo() {
              <% if maintable.Rows.Count > 0 Then%>
             const statusid = '<% =maintable.Rows(0).Item("statusid").ToString %>';
