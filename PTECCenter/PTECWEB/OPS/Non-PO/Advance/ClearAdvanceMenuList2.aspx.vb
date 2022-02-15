@@ -43,7 +43,8 @@ Public Class ClearAdvanceMenuList2
 
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
-                objjob.SetCboJobStatusListForReport(cboStatusFollow)
+
+                objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "CLADV")
                 objbranch.SetComboBranchGroup(cboBranchGroup)
                 objbranch.SetComboBranch(cboBranch, "")
                 objdep.SetCboDepartmentBybranch(cboDepartment, 0)

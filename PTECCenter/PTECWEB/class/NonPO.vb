@@ -25,6 +25,14 @@ Public Class NonPO
 
     End Sub
 
+    Public Sub SetCboStatusbyNonpocategory(obj As Object, category As String)
+        obj.DataSource = Me.NonPO_Status_List(category)
+        obj.DataValueField = "statusid"
+        obj.DataTextField = "statusname"
+        obj.DataBind()
+
+    End Sub
+
     Public Sub SetCboAccountCode(cboAccountCode As DropDownList, userid As Integer)
 
         Dim dtcost As DataTable = AccountCode_List(userid)
@@ -1309,6 +1317,33 @@ Public Class NonPO
         result = ds.Tables(0)
         conn.Close()
 
+        Return result
+    End Function
+
+
+    Public Function NonPO_Status_List(nonpocategory As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_Status_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocategory", SqlDbType.VarChar).Value = nonpocategory
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
         Return result
     End Function
 End Class
