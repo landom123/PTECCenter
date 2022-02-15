@@ -16,7 +16,7 @@ Public Class MenuList
         Dim objbranch As New Branch
         Dim objdep As New Department
         Dim objsec As New Section
-        Dim objjob As New jobs
+        'Dim objjob As New jobs
         Dim usercode As String
         usercode = Session("usercode")
 
@@ -46,7 +46,7 @@ Public Class MenuList
         If Not IsPostBack() Then
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
-                objjob.SetCboJobStatusListForReport(cboStatusFollow)
+                objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "PAY")
                 objbranch.SetComboBranchGroup(cboBranchGroup)
                 objbranch.SetComboBranch(cboBranch, "")
                 objdep.SetCboDepartmentBybranch(cboDepartment, 0)

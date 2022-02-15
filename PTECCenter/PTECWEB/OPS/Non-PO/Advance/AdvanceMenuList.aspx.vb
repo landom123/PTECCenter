@@ -15,7 +15,7 @@ Public Class AdvanceMenuList
         Dim objdep As New Department
         Dim objNonpo As New NonPO
         Dim objsec As New Section
-        Dim objjob As New jobs
+        'Dim objjob As New jobs
         Dim usercode As String
         usercode = Session("usercode")
 
@@ -42,7 +42,8 @@ Public Class AdvanceMenuList
 
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
-                objjob.SetCboJobStatusListForReport(cboStatusFollow)
+                'objjob.SetCboJobStatusListForReport(cboStatusFollow)
+                objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "ADV")
                 objbranch.SetComboBranchGroup(cboBranchGroup)
                 objbranch.SetComboBranch(cboBranch, "")
                 objdep.SetCboDepartmentBybranch(cboDepartment, 0)
