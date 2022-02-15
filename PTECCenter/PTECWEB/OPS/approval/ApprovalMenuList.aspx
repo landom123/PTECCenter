@@ -61,7 +61,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtApprovalCode" runat="server" placeholder="APP21XXXXXXX" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtApprovalCode" runat="server" placeholder="APP21XXXXXXX" AutoPostBack="true" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">

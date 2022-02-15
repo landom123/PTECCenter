@@ -413,7 +413,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รหัสทรัพย์สิน</span>
                                         </div>
-                                        <asp:TextBox class="form-control" ID="txtAssetCode" runat="server" placeholder="FA_CO ..."></asp:TextBox>
+                                        <asp:TextBox class="form-control" ID="txtAssetCode" runat="server" placeholder="FA_CO ..." autocomplete="off"></asp:TextBox>
                                         <div class="input-group-append">
                                             <asp:Button ID="btnFind" class="btn btn-sm  btn-secondary" runat="server" Text="Find" />
                                         </div>
@@ -432,7 +432,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ชื่อยี่ห้อ</span>
                                         </div>
-                                        <asp:TextBox class="form-control" ID="txtBrand" runat="server" placeholder="ตัวอย่าง ( DELL , Brother ) ..."></asp:TextBox>
+                                        <asp:TextBox class="form-control" ID="txtBrand" runat="server" placeholder="ตัวอย่าง ( DELL , Brother ) ..." autocomplete="off"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -440,7 +440,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รุ่น</span>
                                         </div>
-                                        <asp:TextBox class="form-control" ID="txtModel" runat="server" placeholder="ตัวอย่าง ( Latitude 3510 , DCP-7060D ) ..."></asp:TextBox>
+                                        <asp:TextBox class="form-control" ID="txtModel" runat="server" placeholder="ตัวอย่าง ( Latitude 3510 , DCP-7060D ) ..." autocomplete="off"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -525,7 +525,7 @@
                                             <span class="input-group-text">รายละเอียดงาน</span>
                                         </div>
                                         <%--eivog24cbgm1fhi4pm2cg4pw1lp478mhyjjtxnzml4fi51pa--%>
-                                        <asp:TextBox class="form-control" ID="txtJobDetail" runat="server" TextMode="MultiLine" required></asp:TextBox>
+                                        <asp:TextBox class="form-control" ID="txtJobDetail" runat="server" TextMode="MultiLine" required autocomplete="off"></asp:TextBox>
                                         <div class="invalid-feedback">* กรุณาใส่รายละเอียดงาน</div>
                                     </div>
                                 </div>

@@ -50,7 +50,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtjobcode" runat="server" placeholder="21XXXXXXX"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtjobcode" runat="server" placeholder="21XXXXXXX" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
