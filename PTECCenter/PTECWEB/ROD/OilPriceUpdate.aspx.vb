@@ -29,6 +29,10 @@
             cboShift.Items.Add("2")
             cboShift.Items.Add("3")
             cboShift.Items.Add("4")
+            cboShift.Items.Add("5")
+            cboShift.Items.Add("6")
+            cboShift.Items.Add("7")
+            cboShift.Items.Add("8")
             cboShift.SelectedIndex = 0
 
 
