@@ -183,11 +183,11 @@
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Createname")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <%--<asp:TemplateField HeaderText="Ownerby" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
                                     </ItemTemplate>
-                                </asp:TemplateField>--%>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("duedate")%>'></asp:Label>

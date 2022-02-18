@@ -312,14 +312,19 @@
                                                     <asp:Label ID="lblcode" runat="server" Text='<%#Eval("AdvanceRequest_Code")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="วันที่ขอ" ItemStyle-HorizontalAlign="center">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="ขอโดย" ItemStyle-HorizontalAlign="center">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Createname")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="วันที่ขอ" ItemStyle-HorizontalAlign="center">
+                                            <asp:TemplateField HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                                    <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="รายละเอียด">

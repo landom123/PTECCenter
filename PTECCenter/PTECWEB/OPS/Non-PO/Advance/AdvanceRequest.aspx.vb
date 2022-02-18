@@ -657,7 +657,7 @@ endprocess:
         Dim objNonPO As New NonPO
         Dim detailtable As New DataTable
         Try
-            itemtable = objNonPO.AdvanceRQList_For_Owner(userid, 11)
+            itemtable = objNonPO.AdvanceRQList_For_Owner(userid, 999)
 
             Session("joblist") = itemtable
             BindData()
