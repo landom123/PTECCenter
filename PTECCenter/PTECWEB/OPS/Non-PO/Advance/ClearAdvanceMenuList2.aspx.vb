@@ -156,7 +156,8 @@ Public Class ClearAdvanceMenuList2
                                                       "",
                                                       "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString)
+                                                        cboBranch.SelectedItem.Value.ToString,
+                                                        "CO")
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
                                                                 txtcoderef.Text.Trim(),
@@ -166,7 +167,8 @@ Public Class ClearAdvanceMenuList2
                                                         cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
                                                       "",
-                                                      "")
+                                                      "",
+                                                    "HO")
             Else
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
                                                                 txtcoderef.Text.Trim(),
@@ -176,7 +178,8 @@ Public Class ClearAdvanceMenuList2
                                                         "",
                                                       "",
                                                       "",
-                                                      "")
+                                                      "",
+                                                        "")
             End If
 
 
@@ -255,7 +258,7 @@ Public Class ClearAdvanceMenuList2
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 5
+        Dim statusAt As Integer = 7
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -286,6 +289,8 @@ Public Class ClearAdvanceMenuList2
                 e.Row.Cells.Item(statusAt).BackColor = Color.MediumPurple
             ElseIf Data.Item("statusnonpo") = "ได้รับเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Gray
+            ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
             End If
         End If
     End Sub
