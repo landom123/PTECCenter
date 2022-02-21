@@ -176,6 +176,7 @@ endprocess:
             AttachTable = Session("attatch_advancerq")
             CommentTable = Session("comment_advancerq")
 
+            itemtable = Session("joblist")
 
             'showdata(detailtable)
         End If
@@ -621,6 +622,11 @@ endprocess:
         Response.Redirect("../Advance/ClearAdvance.aspx?f=ADV&code_ref=" & Request.QueryString("ADV"))
 
     End Sub
+
+    Private Sub gvRemind_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvRemind.PageIndexChanging
+        gvRemind.PageIndex = e.NewPageIndex
+        BindData()
+    End Sub
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
         Dim statusAt As Integer = 6
         Dim Data As DataRowView
@@ -634,11 +640,13 @@ endprocess:
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightBlue
             ElseIf Data.Item("status") = "ยกเลิก" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightGray
+            ElseIf Data.Item("status") = "รอตรวจสอบ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightGoldenrodYellow
             ElseIf Data.Item("status") = "รออนุมัติ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightYellow
             ElseIf Data.Item("status") = "ชำระเงินเสร็จสิ้น" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.GreenYellow
-            ElseIf Data.Item("status") = "ไม่ผ่าน" Then
+            ElseIf Data.Item("status") = "ไม่ผ่านการอนุมัติ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
             ElseIf Data.Item("status") = "รอการเงินตรวจสอบ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightCoral
@@ -647,6 +655,12 @@ endprocess:
             ElseIf Data.Item("status") = "รอเคลียร์ค้างชำระ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Brown
                 e.Row.Cells.Item(statusAt).ForeColor = Color.White
+            ElseIf Data.Item("status") = "ขอเอกสารเพิ่มเติม" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.MediumPurple
+            ElseIf Data.Item("status") = "ได้รับเอกสารตัวจริง" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Gray
+            ElseIf Data.Item("status") = "รอเอกสารตัวจริง" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
 
             End If
         End If

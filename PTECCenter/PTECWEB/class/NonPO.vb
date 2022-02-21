@@ -614,7 +614,7 @@ Public Class NonPO
     End Function
 
     Public Function ClearAdvanceList_For_Operator(nonpocode As String, coderef As String, startdate As String, enddate As String, statusid As String,
-                                          depid As String, secid As String, branchgroupid As String, branchid As String) As DataTable
+                                          depid As String, secid As String, branchgroupid As String, branchid As String, category As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -637,6 +637,7 @@ Public Class NonPO
         cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
         cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
         cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
 
 
 

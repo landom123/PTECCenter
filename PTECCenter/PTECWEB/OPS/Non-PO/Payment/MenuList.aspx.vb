@@ -285,6 +285,8 @@ endprocess:
                 e.Row.Cells.Item(statusAt).BackColor = Color.MediumPurple
             ElseIf Data.Item("statusnonpo") = "ได้รับเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Gray
+            ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
 
             End If
         End If

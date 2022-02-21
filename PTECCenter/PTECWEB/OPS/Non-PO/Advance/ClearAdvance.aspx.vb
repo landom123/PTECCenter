@@ -246,9 +246,18 @@ endprocess:
                     Session("status_clearadvance") = "new"
                     codeRef.Text = Request.QueryString("code_ref").ToString
                     ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", Session("usercode").ToString)
-                    head = ds.Tables(0)
-                    sethead(head)
                     setmaindefault()
+                    If (ds.Tables.Count > 0) Then
+                        If (ds.Tables(0).Rows.Count > 0) Then
+                            head = ds.Tables(0)
+                            sethead(head)
+                        End If
+                    End If
+                    If (ds.Tables.Count > 1) Then
+                        If (ds.Tables(1).Rows.Count > 0) Then
+                            detailtable = ds.Tables(1)
+                        End If
+                    End If
 
                 End If
             Else
