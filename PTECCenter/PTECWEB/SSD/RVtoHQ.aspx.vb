@@ -116,7 +116,10 @@ Public Class RVtoHQ
         Dim objrv As New rv
         Try
             For Each row As DataRow In rvtable.Rows
-                objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("branch"), row("amount"), usercode)
+                'objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("branch"), row("amount"), usercode)
+                ' by Pison 20220222 ปรับให้ส่ง voucher แทนที่สาขา เนื่องจาก hq นำสาขาไปไว้ที่ description
+                ' ในรายงานให้ดูที่ description ว่ามี RVP ให้นำมาออกรายงานการรับชำระ
+                objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("voucher"), row("amount"), usercode)
             Next row
         Catch ex As Exception
             result = False
