@@ -193,6 +193,8 @@
         End If
 
     End Sub
+
+
     Private Sub Confirm()
         Dim scriptKey As String = "alert"
         Dim javaScript As String
@@ -356,5 +358,9 @@ endprocess:
 
     Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
         FindData(txtDocNo.Text)
+    End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Cancel()
     End Sub
 End Class

@@ -30,13 +30,6 @@
     </div>
     <p></p>
     <div class="row">
-<%--        <asp:Button ID="btnorder" class="btn btn-sm  btn-success" runat="server" Text="test get order" />
-        <asp:Button ID="btnship" class="btn btn-sm  btn-success" runat="server" Text="test get ship" />
-        <asp:Button ID="btnConfirm" class="btn btn-sm  btn-success" runat="server" Text="test get confirm" />
-        <asp:Button ID="btnInvoice" class="btn btn-sm  btn-success" runat="server" Text="test get invoice" />--%>
-    </div>
-
-    <div class="row">
         <div class="col-12">
             <asp:GridView ID="GridView1" runat="server" ></asp:GridView><Br />
             <asp:GridView ID="GridView2" runat="server" ></asp:GridView>

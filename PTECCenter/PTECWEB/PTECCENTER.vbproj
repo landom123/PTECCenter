@@ -90,6 +90,9 @@
     <Reference Include="D365Json">
       <HintPath>DLL\D365Json.dll</HintPath>
     </Reference>
+    <Reference Include="dBASE.NET, Version=1.2.0.0, Culture=neutral, PublicKeyToken=d6e3bc908c40324d, processorArchitecture=MSIL">
+      <HintPath>..\packages\dBASE.NET.1.2.1\lib\net45\dBASE.NET.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
@@ -129,6 +132,10 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.4.3.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.4.3\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="Renci.SshNet">
       <HintPath>..\..\..\esso edi\web service for receive data from esso\PTECWS\Bin\Renci.SshNet.dll</HintPath>
     </Reference>
@@ -1560,6 +1567,7 @@
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap3.html" />
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap4.html" />
     <Content Include="charts.html" />
+    <Content Include="CJ\CJImprotDBF.aspx" />
     <Content Include="css\card_comment.css" />
     <Content Include="css\animate.css" />
     <Content Include="css\bootstrap.min.css" />
@@ -3556,6 +3564,13 @@
     </Compile>
     <Compile Include="ADMIN\ChangePassword.aspx.vb">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CJ\CJImprotDBF.aspx.designer.vb">
+      <DependentUpon>CJImprotDBF.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CJ\CJImprotDBF.aspx.vb">
+      <DependentUpon>CJImprotDBF.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="class\Account.vb" />

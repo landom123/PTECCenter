@@ -20,8 +20,8 @@
         If Not IsPostBack() Then
             SetCboBranch()
         Else
-            'itemtable = Session("remindtable")
-            'BindData()
+            itemtable = Session("remindtable")
+            BindData()
         End If
     End Sub
     Private Sub BindData()

@@ -154,6 +154,23 @@
 				<% end if 
 			end if %>
 
+			<% if menutable.rows(i).item("parent_id") = 9 then 
+				if menutable.rows(i).item("parent") = 1 %>
+					<% if i>0 then %> </div></li> <!--ปิด tag menu ก่อนหน้า -->  <% end if %>
+				  <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  <i class="fas fa-fw fa-folder"></i>
+					  <span><% =menutable.rows(i).item("menu_name") %></span>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+				<% else %>			
+					<% if menutable.rows(i).item("menu_name")="-" then %>
+						<div class="dropdown-divider"></div>
+					<% else %>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><% =menutable.rows(i).item("menu_name") %></a></div>
+					<% end if %>
+				<% end if 
+			end if %>
 	  <%
 		 next i
 	  %>
