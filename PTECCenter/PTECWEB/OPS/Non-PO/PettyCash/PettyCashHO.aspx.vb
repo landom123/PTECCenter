@@ -953,7 +953,7 @@ endprocess:
         dt.Columns.Add("row", GetType(Integer))
         dt.Columns.Add("status", GetType(String))
         dt.Columns.Add("nonpodtl_id", GetType(Integer))
-        dt.Columns.Add("accountcodeid", GetType(Integer))
+        dt.Columns.Add("accountcodeid", GetType(String))
         dt.Columns.Add("accountcode", GetType(String))
         dt.Columns.Add("depid", GetType(Integer))
         dt.Columns.Add("depname", GetType(String))
@@ -1734,31 +1734,31 @@ endprocess:
         Dim jss As New JavaScriptSerializer
         Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
 
-        Dim rows As Integer = json("rows")
-        Dim status As String = json("status")
-        Dim nonpodtl_id As Integer = json("nonpodtl_id")
-        Dim accountcodeid As Integer = json("accountcodeid")
-        Dim accountcode As String = json("accountcode")
-        Dim depid As Integer = json("depid")
-        Dim depname As String = json("depname")
-        Dim buid As Integer = json("buid")
-        Dim buname As String = json("buname")
-        Dim ppid As Integer = json("ppid")
-        Dim ppname As String = json("ppname")
-        Dim pjid As Integer = json("pjid")
-        Dim pjname As String = json("pjname")
-        Dim cost As Double = json("cost")
-        Dim vat As Integer = json("vat")
-        Dim tax As Integer = json("tax")
-        Dim detail As String = json("detail")
-        Dim vendorname As String = json("vendorname")
-        Dim vendorcode As String = json("vendorcode")
-        Dim invoice As String = json("invoice")
-        Dim taxid As String = json("taxid")
-        Dim invoicedate As String = json("invoicedate")
-        Dim nobill As Boolean = json("nobill")
+        Dim rows As Integer = json("rows").Trim
+        Dim status As String = json("status").Trim
+        Dim nonpodtl_id As Integer = json("nonpodtl_id").Trim
+        Dim accountcodeid As String = json("accountcodeid").Trim
+        Dim accountcode As String = json("accountcode").Trim
+        Dim depid As Integer = json("depid").Trim
+        Dim depname As String = json("depname").Trim
+        Dim buid As Integer = json("buid").Trim
+        Dim buname As String = json("buname").Trim
+        Dim ppid As Integer = json("ppid").Trim
+        Dim ppname As String = json("ppname").Trim
+        Dim pjid As Integer = json("pjid").Trim
+        Dim pjname As String = json("pjname").Trim
+        Dim cost As Double = json("cost").Trim
+        Dim vat As Integer = json("vat").Trim
+        Dim tax As Integer = json("tax").Trim
+        Dim detail As String = json("detail").Trim
+        Dim vendorname As String = json("vendorname").Trim
+        Dim vendorcode As String = json("vendorcode").Trim
+        Dim invoice As String = json("invoice").Trim
+        Dim taxid As String = json("taxid").Trim
+        Dim invoicedate As String = json("invoicedate").Trim
+        Dim nobill As Boolean = json("nobill").Trim
 
-
+        invoice = invoice.Replace(" ", "")
 
         Dim cntrow As Integer = detailtable.Rows.Count + 1
         Try

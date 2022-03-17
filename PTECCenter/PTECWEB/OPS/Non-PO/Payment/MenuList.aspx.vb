@@ -1,4 +1,6 @@
 ﻿Imports System.Drawing
+Imports System.IO
+Imports ClosedXML.Excel
 
 Public Class MenuList
     Inherits System.Web.UI.Page
@@ -16,6 +18,7 @@ Public Class MenuList
         Dim objbranch As New Branch
         Dim objdep As New Department
         Dim objsec As New Section
+        Dim objsupplier As New Supplier
         'Dim objjob As New jobs
         Dim usercode As String
         usercode = Session("usercode")
@@ -49,6 +52,7 @@ Public Class MenuList
                 objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "PAY")
                 objbranch.SetComboBranchGroup(cboBranchGroup)
                 objbranch.SetComboBranch(cboBranch, "")
+                objsupplier.SetCboVendorByName(cboVendor, "")
                 objdep.SetCboDepartmentBybranch(cboDepartment, 0)
                 objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
                 chkHO.Checked = True
@@ -154,7 +158,8 @@ Public Class MenuList
                                                       "",
                                                       "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString)
+                                                        cboBranch.SelectedItem.Value.ToString,
+                                                        cboVendor.SelectedItem.Value)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.PaymentList_For_Operator(txtclearadv.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
@@ -165,7 +170,8 @@ Public Class MenuList
                                                         cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
                                                       "",
-                                                      "")
+                                                      "",
+                                                        cboVendor.SelectedItem.Value)
             Else
                 itemtable = objNonPO.PaymentList_For_Operator(txtclearadv.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
@@ -176,7 +182,8 @@ Public Class MenuList
                                                         "",
                                                       "",
                                                       "",
-                                                      "")
+                                                      "",
+                                                        cboVendor.SelectedItem.Value)
             End If
 
 
@@ -203,6 +210,7 @@ Public Class MenuList
         cboStatusFollow.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
+        cboVendor.SelectedIndex = -1
         If itemtable IsNot Nothing Then
             itemtable.Rows.Clear()
         End If
@@ -254,7 +262,7 @@ endprocess:
     End Function
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 7
+        Dim statusAt As Integer = 8
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -287,6 +295,8 @@ endprocess:
                 e.Row.Cells.Item(statusAt).BackColor = Color.Gray
             ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
+            ElseIf Data.Item("statusnonpo") = "การเงินได้รับเอกสาร" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Gray
 
             End If
         End If
@@ -324,5 +334,54 @@ endprocess:
         objsection.SetCboSection_seccode(cboSection, depid)
         'searchjobslist()
 
+    End Sub
+
+    Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String)
+
+        Using wb As New XLWorkbook()
+            wb.Worksheets.Add(mydatatable, "General_journal")
+            'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
+
+            Dim filename As String = usercode & "_" & closedate & "_" & Date.Now.ToString
+            Dim encode As String
+            'If (maintable.Rows(0).Item("statusid") = 7) Then
+            '    encode = "(preview)"
+            'Else
+            '    encode = "(final)"
+            'End If
+            Dim byt As Byte() = System.Text.Encoding.UTF8.GetBytes(filename)
+            encode = Convert.ToBase64String(byt)
+
+            'Dim decode As String
+            'Dim b As Byte() = Convert.FromBase64String(encode)
+            'decode = System.Text.Encoding.UTF8.GetString(b)
+
+            Response.Clear()
+            Response.Buffer = True
+            Response.Charset = ""
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            Response.AddHeader("content-disposition", "attachment;filename=" & encode & ".xlsx")
+            Using MyMemoryStream As New MemoryStream()
+                wb.SaveAs(MyMemoryStream)
+                MyMemoryStream.WriteTo(Response.OutputStream)
+                Response.Flush()
+                Response.End()
+            End Using
+
+        End Using
+    End Sub
+
+    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
+        Dim createdate As String
+        createdate = Date.Now
+        Dim objnonpo As New NonPO
+        Try
+            ExportToExcel(itemtable, Session("usercode"), createdate)
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('export fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
     End Sub
 End Class

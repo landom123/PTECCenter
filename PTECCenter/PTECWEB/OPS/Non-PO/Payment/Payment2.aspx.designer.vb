@@ -536,6 +536,15 @@ Partial Public Class Payment2
     Protected WithEvents btnWDoc As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''btnFNS_Rec_Doc control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnFNS_Rec_Doc As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''row control.
     '''</summary>
     '''<remarks>
@@ -734,24 +743,6 @@ Partial Public Class Payment2
     Protected WithEvents cboDep As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lbinvoiceno control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbinvoiceno As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtinvoiceno control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtinvoiceno As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''lbtaxid control.
     '''</summary>
     '''<remarks>
@@ -768,6 +759,24 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txttaxid As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbinvoiceno control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbinvoiceno As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtinvoiceno control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtinvoiceno As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lbinvoicedate control.

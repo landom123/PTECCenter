@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Web.Script.Serialization
 Imports ClosedXML.Excel
-Public Class PettyCashCO
+Public Class PettyCashCO2
     Inherits System.Web.UI.Page
     Public AttachTable As DataTable '= createtable()
     Public CommentTable As DataTable '= createtable()
@@ -14,8 +14,6 @@ Public Class PettyCashCO
     Public total_vat As String
     Public total_tax As String
     Public total As String
-    Public total_clear As String
-
     Public chkunsave As Integer = 0
 
 
@@ -29,19 +27,22 @@ Public Class PettyCashCO
     Public verifier As String
     Public now_action As String
 
+    Public d365code As String = ""
+
     Dim md_code As String
     Dim fm_code As String
     Dim dm_code As String
     Dim sm_code As String
     Dim am_code As String
 
-    Dim account_code As String = "SPP"
+    Public account_code As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objNonpo As New NonPO
         Dim objbranch As New Branch
         Dim objdep As New Department
         Dim objsec As New Section
         Dim objsupplier As New Supplier
+        Dim objuser As New Users
 
         Dim nonpoDs = New DataSet
         Dim statusid As Integer = 0
@@ -63,6 +64,8 @@ Public Class PettyCashCO
             menutable = Session("menulist")
         End If
 
+        txtDuedate.Attributes.Add("readonly", "readonly")
+        txtinvoicedate.Attributes.Add("readonly", "readonly")
 
         If Not IsPostBack() Then
             head = createHeadtable()
@@ -87,9 +90,9 @@ Public Class PettyCashCO
             'End With
 
 
-            objbranch.SetComboBranch(cboBranch, Session("usercode"))
-            objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objbranch.SetComboBranch(cboBranch, "")
+            'objdep.SetCboDepartmentBybranch(cboDepartment, 0)
+            'objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
             SetCboUsers(cboOwner)
             setmaindefault()
 
@@ -100,35 +103,24 @@ Public Class PettyCashCO
             objsupplier.SetCboVendorByName(cboVendor, "")
             objNonpo.SetCboBu(cboBU)
             objNonpo.SetCboPj(cboPJ)
-
-            'Dim dt As New DataTable
-
-            'dt.Columns.Add("buid", GetType(Integer))
-            'dt.Columns.Add("bunamename", GetType(String))
-            'dt.Rows.Add(0, "")
-            'dt.Rows.Add(1, "Oil")
-            'dt.Rows.Add(2, "NonOil")
-            'cboBU.DataSource = dt
-            'cboBU.DataValueField = ("buid")
-            'cboBU.DataTextField = ("bunamename")
-            'cboBU.DataBind()
-
+            d365code = objuser.D365Code(Session("userid"))
             If Not Request.QueryString("NonpoCode") Is Nothing Then
-                Session("detailtable_pettycashHO") = detailtable
-                If Not Session("status_pettycashHO") = "edit" Then
-                    Session("status_pettycashHO") = "read"
-                End If
+                Session("detailtable_pcco") = detailtable
+                'If Not Session("status_pcco") = "edit" Then
+                Session("status_pcco") = "read"
+                ' End If
                 Try
                     findNonPO()
-                    account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
 
                     statusid = maintable.Rows(0).Item("statusid")
                     createby = maintable.Rows(0).Item("createby")
                     chkuser(createby)
 
+                    account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
+
                     If (account_code.IndexOf(Session("usercode").ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 7) Then
-                        Session("status_pettycashHO") = "account"
+                        Session("status_pcco") = "account"
 
                     End If
 
@@ -137,7 +129,7 @@ Public Class PettyCashCO
 
                         at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
                         approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(0).Item("approver").ToString
-                        'verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
+                        verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
                         now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString + PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
                     End If
 
@@ -147,10 +139,13 @@ Public Class PettyCashCO
                     Session("usercode") = sm_code Or
                     Session("usercode") = am_code) And
                     (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then
-                        Session("status_pettycashHO") = "write"
+                        Session("status_pcco") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
                         'Dim SearchForThis As String = "DEF"
                         'Dim FirstCharacter As Integer = SearchWithinThis.IndexOf(SearchForThis)
+
+
+
 
 
                         For Each row As DataRow In PermissionOwner.Tables(0).Rows
@@ -219,12 +214,13 @@ Public Class PettyCashCO
                                     End If
                                 End If
                             End If
+
                         Next row
 endprocess:
 
                     End If
 
-                    'sethead(head)
+                    sethead(head)
                     setmain(maintable)
                     'SetBtn(1)
                 Catch ex As Exception
@@ -232,39 +228,38 @@ endprocess:
                     Dim javaScript As String = "alertWarning('Find Fail')"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
-                'ElseIf Not Request.QueryString("f") Is Nothing Then
-                '    Dim objjob As New jobs
-                '    Dim ds As New DataSet
-                '    If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
-                '        Session("status_pettycashHO") = "new"
-                '        codeRef.Text = Request.QueryString("code_ref").ToString
-                '        ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", Session("usercode").ToString)
-                '        head = ds.Tables(0)
-                '        sethead(head)
-                '    End If
+            ElseIf Not Request.QueryString("f") Is Nothing Then
+                Dim objjob As New jobs
+                Dim ds As New DataSet
+                If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
+                    Session("status_pcco") = "new"
+                    codeRef.Text = Request.QueryString("code_ref").ToString
+                    ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", Session("usercode").ToString)
+                    head = ds.Tables(0)
+                    sethead(head)
+                End If
             Else
-                Session("status_pettycashHO") = "new"
+                Session("status_pcco") = "new"
 
             End If
 
 
 
-            Session("head_pettycashHO") = head
-            Session("detailtable_pettycashHO") = detailtable
-            Session("maintable_pettycashHO") = maintable
-            Session("comment_pettycashHO") = CommentTable
-            Session("attatch_pettycashHO") = AttachTable
+            Session("head_pcco") = head
+            Session("detailtable_pcco") = detailtable
+            Session("maintable_pcco") = maintable
+            Session("comment_pcco") = CommentTable
+            Session("attatch_pcco") = AttachTable
         Else
             If Not String.IsNullOrEmpty(Request.QueryString("NonpoCode")) Then
                 account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
             End If
-            'account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
 
-            head = Session("head_pettycashHO")
-            detailtable = Session("detailtable_pettycashHO")
-            maintable = Session("maintable_pettycashHO")
-            AttachTable = Session("attatch_pettycashHO")
-            CommentTable = Session("comment_pettycashHO")
+            head = Session("head_pcco")
+            detailtable = Session("detailtable_pcco")
+            maintable = Session("maintable_pcco")
+            AttachTable = Session("attatch_pcco")
+            CommentTable = Session("comment_pcco")
 
             Try
                 statusid = maintable.Rows(0).Item("statusid")
@@ -343,32 +338,35 @@ endprocess:
         Return npoPermission
     End Function
 
-    'Private Sub sethead(dt As DataTable)
-    '    With dt
+    Private Sub sethead(dt As DataTable)
+        With dt
 
-    '        codeRef.Text = .Rows(0).Item("coderef").ToString
-    '        amount.Text = String.Format("{0:n2}", .Rows(0).Item("amount"))
-    '        txtremark.Text = .Rows(0).Item("remark").ToString
+            codeRef.Text = .Rows(0).Item("coderef").ToString
+            'amount.Text = String.Format("{0:n2}", .Rows(0).Item("amount"))
+            txtremark.Text = .Rows(0).Item("remark").ToString
 
-    '    End With
+        End With
 
-    'End Sub
+    End Sub
 
     Private Sub setmaindefault()
 
         Dim objsec As New Section
+        Dim objnonpo As New NonPO
 
         cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(Session("userid").ToString))
         cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid").ToString))
-        cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
-        objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
-        cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(Session("secid").ToString))
-
+        'cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
+        'objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+        'cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(Session("secid").ToString))
+        Dim budget As Double
+        budget = objnonpo.NonPO_GetBudget_PettyCash(Session("usercode").ToString)
+        txtBudget.Text = String.Format("{0:n2}", budget)
         txtCreateDate.Text = Now()
 
         cboOwner.Attributes.Add("disabled", "True")
-        cboSection.Attributes.Add("disabled", "True")
-        cboDepartment.Attributes.Add("disabled", "True")
+        'cboSection.Attributes.Add("disabled", "True")
+        'cboDepartment.Attributes.Add("disabled", "True")
         cboBranch.Attributes.Add("disabled", "True")
 
 
@@ -382,7 +380,7 @@ endprocess:
                 Case = "1" '1 : รอยืนยัน
                     statusnonpo.Attributes.Add("class", "btn btn-info")
                     If .Rows(0).Item("createby").ToString = Session("userid") Then
-                        Session("status_pettycashHO") = "edit"
+                        Session("status_pcco") = "edit"
                     End If
                 Case = "2" '2 : รออนุมัติ
                     statusnonpo.Attributes.Add("class", "btn btn-warning")
@@ -402,149 +400,143 @@ endprocess:
                     statusnonpo.Attributes.Add("class", "btn btn-danger")
                 Case = "15" '15 : รอตราวจสอบ
                     statusnonpo.Attributes.Add("class", "btn btn-warning")
+                Case = "16" '16 : อนุมัติหักยอดขาย
+                    statusnonpo.Attributes.Add("class", "btn btn-secondary")
             End Select
             statusnonpo.Text = .Rows(0).Item("statusname").ToString
 
 
             cboOwner.Attributes.Remove("disabled")
-            cboSection.Attributes.Remove("disabled")
-            cboDepartment.Attributes.Remove("disabled")
+            'cboSection.Attributes.Remove("disabled")
+            'cboDepartment.Attributes.Remove("disabled")
             cboBranch.Attributes.Remove("disabled")
 
             cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Rows(0).Item("createby").ToString))
             cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(.Rows(0).Item("branchid").ToString))
-            cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(.Rows(0).Item("depid").ToString))
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
-            cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(.Rows(0).Item("secid").ToString))
+            'cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(.Rows(0).Item("depid").ToString))
+            'objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            'cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(.Rows(0).Item("secid").ToString))
 
             txtCreateDate.Text = .Rows(0).Item("createdate").ToString
             txtCreateDate.ToolTip = .Rows(0).Item("createdate").ToString
-            txtadvno.Text = .Rows(0).Item("nonpocode").ToString
-            txtadvno.ToolTip = .Rows(0).Item("nonpocode").ToString
-
-            txtremark.Text = .Rows(0).Item("detail").ToString
+            txtpmno.Text = .Rows(0).Item("nonpocode").ToString
+            txtpmno.ToolTip = .Rows(0).Item("nonpocode").ToString
 
 
             cboOwner.Attributes.Add("disabled", "True")
-            cboSection.Attributes.Add("disabled", "True")
-            cboDepartment.Attributes.Add("disabled", "True")
+            'cboSection.Attributes.Add("disabled", "True")
+            'cboDepartment.Attributes.Add("disabled", "True")
             cboBranch.Attributes.Add("disabled", "True")
 
+            'If .Rows(0).Item("payby").ToString = "cheque" Then
+            '    chkCheque.Checked = True
+            'ElseIf .Rows(0).Item("payby").ToString = "cashiercheque" Then
+            '    chkCashierCheque.Checked = True
+            'ElseIf .Rows(0).Item("payby").ToString = "tt" Then
+            '    chkTT.Checked = True
+            'ElseIf .Rows(0).Item("payby").ToString = "eft" Then
+            '    chkEFT.Checked = True
+            'ElseIf .Rows(0).Item("payby").ToString = "deductsell" Then
+            '    chkdeductSell.Checked = True
+            'End If
 
+            txtDuedate.Text = .Rows(0).Item("duedate").ToString
+            'txtNote.Text = .Rows(0).Item("detail").ToString
+
+            'cboVendor.SelectedIndex = cboVendor.Items.IndexOf(cboVendor.Items.FindByValue(.Rows(0).Item("vendorcode").ToString))
 
             chkVat.Checked = .Rows(0).Item("vat_wait")
+            'If (Session("status_pcco") = "new" Or Session("status_pcco") = "edit" Or Session("status_pcco") = "account") Then
+            '    cboVendor.Attributes.Remove("disabled")
 
-            'chkpayBack.Checked = .Rows(0).Item("chkpayback")
-            'chkdeductSell.Checked = .Rows(0).Item("chkdeductsell")
+            '    chkCheque.Attributes.Remove("disabled")
+            '    chkCashierCheque.Attributes.Remove("disabled")
+            '    chkTT.Attributes.Remove("disabled")
+            '    chkEFT.Attributes.Remove("disabled")
+            '    chkdeductSell.Attributes.Remove("disabled")
 
-            If (Session("status_pettycashHO") = "new" Or Session("status_pettycashHO") = "edit" Or Session("status_pettycashHO") = "account") Then
-                'txtamountpayBack.Attributes.Remove("disabled")
-                'txtamountdedusctsell.Attributes.Remove("disabled")
+            '    If Not Session("status_pcco") = "account" Then
+            '        txtNote.Attributes.Remove("readonly")
+            '    Else
+            '        txtNote.Attributes.Add("readonly", "readonly")
+            '    End If
 
-                'txtamountpayBack.Attributes.Remove("type")
-                'txtamountpayBack.Attributes.Add("type", "number")
-                'txtamountpayBack.Text = .Rows(0).Item("payback_amount")
+            'Else
+            '    cboVendor.Attributes.Add("disabled", "True")
 
-                'txtamountdedusctsell.Attributes.Remove("type")
-                'txtamountdedusctsell.Attributes.Add("type", "number")
-                'txtamountdedusctsell.Text = .Rows(0).Item("deductsell_amount")
+            '    chkCheque.Attributes.Add("disabled", "True")
+            '    chkCashierCheque.Attributes.Add("disabled", "True")
+            '    chkTT.Attributes.Add("disabled", "True")
+            '    chkEFT.Attributes.Add("disabled", "True")
+            '    chkdeductSell.Attributes.Add("disabled", "True")
 
-                'chkpayBack.Attributes.Remove("disabled")
-                'chkdeductSell.Attributes.Remove("disabled")
-                If Not Session("status_pettycashHO") = "account" Then
-                    txtremark.Attributes.Remove("readonly")
-                Else
-                    txtremark.Attributes.Add("readonly", "readonly")
-                End If
-                chkVat.Attributes.Remove("disabled")
-            Else
-
-                'txtamountpayBack.Attributes.Remove("type")
-                'txtamountpayBack.Attributes.Add("type", "input")
-                'txtamountpayBack.Text = String.Format("{0:n2}", .Rows(0).Item("payback_amount"))
-
-
-                'txtamountdedusctsell.Attributes.Remove("type")
-                'txtamountdedusctsell.Attributes.Add("type", "input")
-                'txtamountdedusctsell.Text = String.Format("{0:n2}", .Rows(0).Item("deductsell_amount"))
-
-
-                'txtamountpayBack.Attributes.Add("readonly", "readonly")
-                'txtamountdedusctsell.Attributes.Add("readonly", "readonly")
-                ''txtamountpayBack.Attributes.Add("disabled", "True")
-                ''txtamountdedusctsell.Attributes.Add("disabled", "True")
-
-                'chkpayBack.Attributes.Add("disabled", "True")
-                'chkdeductSell.Attributes.Add("disabled", "True")
-
-                txtremark.Attributes.Add("readonly", "readonly")
-                chkVat.Attributes.Add("disabled", "True")
-            End If
+            '    txtNote.Attributes.Add("readonly", "readonly")
+            'End If
         End With
 
 
     End Sub
-    'Private Sub SetMenu()
-    '    Select Case Session("status_pettycashHO")
-    '        Case = "new"
-    '            'ช่อง ปุ่ม เพิ่มรายการ
-    '            btnFromAddDetail.Visible = True
-    '            FromAddDetail.Visible = True
+    Private Sub SetMenu()
+        Select Case Session("status_pcco")
+            Case = "new"
+                'ช่อง ปุ่ม เพิ่มรายการ
+                btnFromAddDetail.Visible = True
+                FromAddDetail.Visible = True
 
-    '            'ปุ่ม & status 
-    '            statusnonpo.Visible = False
+                'ปุ่ม & status 
+                statusnonpo.Visible = False
 
-    '            'กล่อง comment & attatch file
-    '            card_comment.Visible = False
-    '            card_attatch.Visible = False
-    '        Case = "read"
-    '            'ช่อง ปุ่ม เพิ่มรายการ
-    '            btnFromAddDetail.Visible = True
-    '            FromAddDetail.Visible = True
+                'กล่อง comment & attatch file
+                card_comment.Visible = False
+                card_attatch.Visible = False
+            Case = "read"
+                'ช่อง ปุ่ม เพิ่มรายการ
+                btnFromAddDetail.Visible = True
+                FromAddDetail.Visible = True
 
-    '            'ปุ่ม & status 
-    '            statusnonpo.Visible = False
+                'ปุ่ม & status 
+                statusnonpo.Visible = False
 
-    '            'กล่อง comment & attatch file
-    '            card_comment.Visible = False
-    '            card_attatch.Visible = False
-    '        Case = "edit"
-    '            'ช่อง ปุ่ม เพิ่มรายการ
-    '            btnFromAddDetail.Visible = True
-    '            FromAddDetail.Visible = True
+                'กล่อง comment & attatch file
+                card_comment.Visible = False
+                card_attatch.Visible = False
+            Case = "edit"
+                'ช่อง ปุ่ม เพิ่มรายการ
+                btnFromAddDetail.Visible = True
+                FromAddDetail.Visible = True
 
-    '            'ปุ่ม & status 
-    '            statusnonpo.Visible = False
+                'ปุ่ม & status 
+                statusnonpo.Visible = False
 
-    '            'กล่อง comment & attatch file
-    '            card_comment.Visible = True
-    '            card_attatch.Visible = True
-    '        Case = "write"
-    '            'ช่อง ปุ่ม เพิ่มรายการ
-    '            btnFromAddDetail.Visible = False
-    '            FromAddDetail.Visible = False
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+            Case = "write"
+                'ช่อง ปุ่ม เพิ่มรายการ
+                btnFromAddDetail.Visible = False
+                FromAddDetail.Visible = False
 
-    '            'ปุ่ม & status 
-    '            statusnonpo.Visible = True
+                'ปุ่ม & status 
+                statusnonpo.Visible = True
 
-    '            'กล่อง comment & attatch file
-    '            card_comment.Visible = True
-    '            card_attatch.Visible = True
-    '        Case = "account"
-    '            'ช่อง ปุ่ม เพิ่มรายการ
-    '            btnFromAddDetail.Visible = True
-    '            FromAddDetail.Visible = True
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+            Case = "account"
+                'ช่อง ปุ่ม เพิ่มรายการ
+                btnFromAddDetail.Visible = True
+                FromAddDetail.Visible = True
 
-    '            'ปุ่ม & status 
-    '            statusnonpo.Visible = True
+                'ปุ่ม & status 
+                statusnonpo.Visible = True
 
-    '            'กล่อง comment & attatch file
-    '            card_comment.Visible = True
-    '            card_attatch.Visible = True
-    '    End Select
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+        End Select
 
 
-    'End Sub
+    End Sub
 
     Private Sub checkunsave()
         For i = 0 To detailtable.Rows.Count - 1
@@ -562,7 +554,7 @@ endprocess:
                 btnSave.Enabled = True
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
-
+                btnCancel.Enabled = False
 
                 btnExport.Visible = False
                 btnPrint.Visible = False
@@ -585,20 +577,22 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = True
                     btnConfirm.Enabled = True
+                    btnCancel.Enabled = True
 
-                    Session("status_pettycashHO") = "edit"
+                    Session("status_pcco") = "edit"
 
                     'ช่อง ปุ่ม เพิ่มรายการ
 
                     btnFromAddDetail.Visible = True
-                    FromAddDetail.Visible = True
                     btnAddDetails.Visible = True
+                    FromAddDetail.Visible = True
                 Else
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
-                    Session("status_pettycashHO") = "read"
+                    Session("status_pcco") = "read"
 
                     'ช่อง ปุ่ม เพิ่มรายการ
 
@@ -628,15 +622,19 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
-
+                If createby = Session("userid") Then
+                    btnCancel.Enabled = True
+                Else
+                    btnCancel.Enabled = False
+                End If
 
                 btnExport.Visible = False
                 btnPrint.Visible = True
 
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
-                FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
+                FromAddDetail.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -655,7 +653,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = True
-
+                    btnCancel.Enabled = True
 
                     btnAddAttatch.Visible = True
 
@@ -663,11 +661,12 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnAddAttatch.Visible = False
 
                 End If
-                Session("status_pettycashHO") = "read"
+                Session("status_pcco") = "read"
 
 
                 btnExport.Visible = False
@@ -675,8 +674,8 @@ endprocess:
 
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
-                FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
+                FromAddDetail.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -685,6 +684,7 @@ endprocess:
                 card_comment.Visible = True
                 card_attatch.Visible = True
 
+
                 Dim scriptKey As String = "UniqueKeyForThisScript"
                 Dim javaScript As String = "disbtndelete()"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
@@ -692,10 +692,12 @@ endprocess:
                 'btnSave.Enabled = False
                 'btnUpdate.Enabled = False
                 'btnConfirm.Enabled = False
+                'btnCancel.Enabled = False
             Case = "6" '6 : ไม่ผ่าน
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -703,8 +705,8 @@ endprocess:
 
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
-                FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
+                FromAddDetail.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -725,11 +727,13 @@ endprocess:
 
                 'ช่อง ปุ่ม เพิ่มรายการ
                 If account_code.IndexOf(Session("usercode").ToString) > -1 Then
+
                     btnExport.Visible = True
 
                     btnSave.Enabled = False
                     btnUpdate.Enabled = True
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnFromAddDetail.Visible = True
                     FromAddDetail.Visible = True
@@ -740,6 +744,7 @@ endprocess:
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
                     btnConfirm.Enabled = False
+                    btnCancel.Enabled = False
 
                     btnFromAddDetail.Visible = False
                     FromAddDetail.Visible = False
@@ -763,6 +768,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -793,6 +799,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -823,6 +830,7 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
@@ -849,10 +857,42 @@ endprocess:
                 btnSave.Enabled = False
                 btnUpdate.Enabled = False
                 btnConfirm.Enabled = False
+                btnCancel.Enabled = False
 
 
                 btnExport.Visible = False
                 btnPrint.Visible = True
+
+                'ช่อง ปุ่ม เพิ่มรายการ
+                btnFromAddDetail.Visible = False
+                FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
+
+                'ปุ่ม & status 
+                statusnonpo.Visible = True
+
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+
+                btnAddAttatch.Visible = False
+
+                Dim scriptKey As String = "UniqueKeyForThisScript"
+                Dim javaScript As String = "disbtndelete()"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Case = "16" '16 : อนุมัติหักยอดขาย
+                btnSave.Enabled = False
+                btnUpdate.Enabled = False
+                btnConfirm.Enabled = False
+                btnCancel.Enabled = False
+
+
+                btnExport.Visible = False
+                btnPrint.Visible = True
+
+                If account_code.IndexOf(Session("usercode").ToString) > -1 Then
+                    btnExport.Visible = True
+                End If
 
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = False
@@ -886,9 +926,9 @@ endprocess:
     End Function
     Private Function createmaintable() As DataTable
         Dim dt As New DataTable
-
         dt.Columns.Add("nonpoid", GetType(Double)) 'new =0
         dt.Columns.Add("nonpocode", GetType(String))
+        dt.Columns.Add("payby", GetType(String))
         dt.Columns.Add("coderef", GetType(String))
         dt.Columns.Add("limit", GetType(Double))
         dt.Columns.Add("statusid", GetType(Integer)) 'new=0
@@ -906,6 +946,8 @@ endprocess:
 
         dt.Columns.Add("vendorcode", GetType(String))
         dt.Columns.Add("totalforcheck", GetType(String))
+
+        dt.Columns.Add("DueDate", GetType(String))
 
         dt.Columns.Add("vat_wait", GetType(Integer))
 
@@ -934,7 +976,7 @@ endprocess:
         dt.Columns.Add("row", GetType(Integer))
         dt.Columns.Add("status", GetType(String))
         dt.Columns.Add("nonpodtl_id", GetType(Integer))
-        dt.Columns.Add("accountcodeid", GetType(Integer))
+        dt.Columns.Add("accountcodeid", GetType(String))
         dt.Columns.Add("accountcode", GetType(String))
         dt.Columns.Add("depid", GetType(Integer))
         dt.Columns.Add("depname", GetType(String))
@@ -944,6 +986,7 @@ endprocess:
         dt.Columns.Add("ppname", GetType(String))
         dt.Columns.Add("pjid", GetType(Integer))
         dt.Columns.Add("pjname", GetType(String))
+        dt.Columns.Add("docdate", GetType(String))
         dt.Columns.Add("cost", GetType(Double))
         dt.Columns.Add("vat_per", GetType(Integer))
         dt.Columns.Add("tax_per", GetType(Integer))
@@ -956,6 +999,7 @@ endprocess:
         dt.Columns.Add("invoice", GetType(String))
         dt.Columns.Add("taxid", GetType(String))
         dt.Columns.Add("invoicedate", GetType(String))
+        dt.Columns.Add("nobill", GetType(Boolean))
 
         Return dt
     End Function
@@ -988,23 +1032,44 @@ endprocess:
         Dim result As Boolean = True
         Dim msg As String = ""
         Dim cost As Double
-
+        'Dim amountpayBack As Double
+        'Dim amountdedusctsell As Double
         Try
-            cost = Convert.ToDouble(detailtable.Compute("SUM(cost_total)", String.Empty))
+            cost = Convert.ToDouble(detailtable.Compute("SUM(cost)", String.Empty))
         Catch ex As Exception
             cost = 0
         End Try
-
-        If txtremark.Text.Trim() = "" Then
-            result = False
-            msg = "กรุณาใส่จุดประสงค์"
-            GoTo endprocess
-        End If
+        'Try
+        '    amountpayBack = Convert.ToDouble(txtamountpayBack.Text)
+        'Catch ex As Exception
+        '    amountpayBack = 0
+        'End Try
+        'Try
+        '    amountdedusctsell = Convert.ToDouble(txtamountdedusctsell.Text)
+        'Catch ex As Exception
+        '    amountdedusctsell = 0
+        'End Try
+        'If cboVendor.SelectedItem.Value = "" Then
+        '    result = False
+        '    msg = "กรุณาใส่ Vendor"
+        '    GoTo endprocess
+        'End If
+        'If txtNote.Text.Trim() = "" Then
+        '    result = False
+        '    msg = "กรุณาใส่จุดประสงค์"
+        '    GoTo endprocess
+        'End If
         If cost <= 0 Then
             result = False
             msg = "กรุณาใส่รายการ"
             GoTo endprocess
         End If
+
+        'If amountdedusctsell < 0 Then
+        '    result = False
+        '    msg = "กรุณาใส่จำนวนเต็ม"
+        '    GoTo endprocess
+        'End If
 endprocess:
         If result = False Then
             Dim scriptKey As String = "alert"
@@ -1016,14 +1081,14 @@ endprocess:
 
         Return result
     End Function
-    Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
-        cboSection.SelectedIndex = -1
-        Dim depid As Integer
-        Dim objsection As New Section
+    'Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
+    '    cboSection.SelectedIndex = -1
+    '    Dim depid As Integer
+    '    Dim objsection As New Section
 
-        depid = cboDepartment.SelectedItem.Value
-        objsection.SetCboSection_seccode(cboSection, depid)
-    End Sub
+    '    depid = cboDepartment.SelectedItem.Value
+    '    objsection.SetCboSection_seccode(cboSection, depid)
+    'End Sub
 
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
         For i = 0 To detailtable.Rows.Count - 1
@@ -1050,7 +1115,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        'Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 
 endprocess:
     End Sub
@@ -1072,11 +1137,11 @@ endprocess:
             AttachTable = nonpoDs.Tables(3)
             CommentTable = nonpoDs.Tables(4)
 
-            Session("head_pettycashHO") = head
-            Session("detailtable_pettycashHO") = detailtable
-            Session("maintable_pettycashHO") = maintable
-            Session("comment_pettycashHO") = CommentTable
-            Session("attatch_pettycashHO") = AttachTable
+            Session("head_pcco") = head
+            Session("detailtable_pcco") = detailtable
+            Session("maintable_pcco") = maintable
+            Session("comment_pcco") = CommentTable
+            Session("attatch_pcco") = AttachTable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1084,71 +1149,6 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
-    'Public Sub AddDetails()
-
-    '    Dim cost As Double
-    '    Try
-    '        cost = Double.Parse(txtPrice.Text)
-    '    Catch ex As Exception
-    '        cost = 0
-    '    End Try
-
-    '    Dim row As DataRow
-    '    row = detailtable.NewRow()
-    '    row("row") = detailtable.Rows.Count + 1
-    '    row("nonpodtl_id") = hiddenAdvancedetailid.Value 'df 0
-    '    row("accountcodeid") = cboAccountCode.SelectedItem.Value
-    '    row("accountcode") = cboAccountCode.SelectedItem.Text
-    '    row("depid") = cboDep.SelectedItem.Value
-    '    row("depname") = cboDep.SelectedItem.Text
-    '    row("buid") = cboBU.SelectedItem.Value
-    '    row("buname") = cboBU.SelectedItem.Text
-    '    row("ppid") = cboPP.SelectedItem.Value
-    '    row("ppname") = cboPP.SelectedItem.Text
-
-    '    row("cost") = cost
-    '    row("detail") = txtDetail.Text
-    '    row("vendorname") = cboVendor.SelectedItem.Text
-    '    row("vendorcode") = cboVendor.SelectedItem.Value
-
-
-    '    detailtable.Rows.Add(row)
-    '    'detailtable.Rows.Add(0, cboJobType.SelectedItem.Value, cboJobType.SelectedItem.Text, txtAssetCode.Text, txtAssetName.Text,
-    '    '                    qty, cboUnit.SelectedItem.Value, cboUnit.SelectedItem.Text, cost, cboSupplier.SelectedItem.Value,
-    '    '                    cboSupplier.SelectedItem.Text, urgent, cboPolicy.SelectedValue, reqdate, txtJobDetail.Text, 0)
-
-    '    Session("detailtable_pettycashHO") = detailtable
-
-    'End Sub
-    'Private Sub updateDetails(indexrow As Integer)
-    '    Dim cost As Double
-    '    Try
-    '        cost = Double.Parse(txtPrice.Text)
-    '    Catch ex As Exception
-    '        cost = 0
-    '    End Try
-
-    '    'update detail
-    '    With detailtable.Rows(indexrow)
-    '        .Item("row") = row.Value 'df 0
-    '        .Item("nonpodtl_id") = hiddenAdvancedetailid.Value 'df 0
-    '        .Item("accountcodeid") = cboAccountCode.SelectedItem.Value
-    '        .Item("accountcode") = cboAccountCode.SelectedItem.Text
-    '        .Item("depid") = cboDep.SelectedItem.Value
-    '        .Item("depname") = cboDep.SelectedItem.Text
-    '        .Item("buid") = cboBU.SelectedItem.Value
-    '        .Item("buname") = cboBU.SelectedItem.Text
-    '        .Item("ppid") = cboPP.SelectedItem.Value
-    '        .Item("ppname") = cboPP.SelectedItem.Text
-
-    '        .Item("cost") = cost
-    '        .Item("detail") = txtDetail.Text
-    '        .Item("vendorname") = cboVendor.SelectedItem.Text
-    '        .Item("vendorcode") = cboVendor.SelectedItem.Value
-    '    End With
-
-    'End Sub
-
     Private Sub cleardetail()
         row.Value = 0
         'nextrow.Value = 0
@@ -1159,7 +1159,8 @@ endprocess:
         cboBU.SelectedIndex = -1
         cboPP.SelectedIndex = -1
         cboPJ.SelectedIndex = -1
-        cboVendor.SelectedIndex = -1
+
+        'cboVendor.SelectedIndex = -1
 
         txtPrice.Text = "0"
         txtVat.Text = "0"
@@ -1191,9 +1192,6 @@ endprocess:
         Dim cost As Double
         Dim vat As Double
         Dim tax As Double
-
-        Dim amountpayBack As Double
-        Dim amountdedusctsell As Double
         Try
             cost = Convert.ToDouble(detailtable.Compute("SUM(cost_total)", String.Empty))
         Catch ex As Exception
@@ -1214,22 +1212,10 @@ endprocess:
         Catch ex As Exception
             totalcost = 0
         End Try
-
-        'Try
-        '    amountpayBack = Convert.ToDouble(txtamountpayBack.Text)
-        'Catch ex As Exception
-        '    amountpayBack = 0
-        'End Try
-        'Try
-        '    amountdedusctsell = Convert.ToDouble(txtamountdedusctsell.Text)
-        'Catch ex As Exception
-        '    amountdedusctsell = 0
-        'End Try
         total_cost = String.Format("{0:n2}", totalcost)
         total_vat = String.Format("{0:n2}", vat)
-        total_tax = String.Format("{0:n2}", tax)
+        total_tax = String.Format("({0:n2})", (tax))
         total = String.Format("{0:n2}", cost)
-        total_clear = String.Format("{0:n2}", cost + amountpayBack)
         'total = Format(cost, "0.00")
     End Sub
     <System.Web.Services.WebMethod>
@@ -1242,91 +1228,6 @@ endprocess:
             Return "fail"
         End Try
         Return "success"
-
-    End Function
-
-    <System.Web.Services.WebMethod>
-    Public Function addoreditdetail(ByVal rows As Integer, ByVal status As String, ByVal nonpodtl_id As Integer, ByVal accountcodeid As Integer,
-                                           ByVal accountcode As String, ByVal depid As Integer, ByVal depname As String,
-                                           ByVal buid As Integer, ByVal buname As String, ByVal ppid As Integer, ByVal ppname As String, ByVal pjid As Integer, ByVal pjname As String,
-                                           ByVal cost As Double, ByVal vat As Integer, ByVal tax As Integer, ByVal detail As String,
-                                           ByVal vendorname As String, ByVal vendorcode As String,
-                                           ByVal invoice As String, ByVal taxid As String, ByVal invoicedate As String)
-        Dim cntrow As Integer = detailtable.Rows.Count + 1
-        Try
-            If status = "undefined" Then
-                Dim row As DataRow
-                row = detailtable.NewRow()
-                row("row") = cntrow
-                row("status") = "new"
-                row("nonpodtl_id") = nonpodtl_id
-                row("accountcodeid") = accountcodeid
-                row("accountcode") = accountcode
-                row("depid") = depid
-                row("depname") = depname
-                row("buid") = buid
-                row("buname") = buname
-                row("ppid") = ppid
-                row("ppname") = ppname
-                row("pjid") = pjid
-                row("pjname") = pjname
-
-                row("cost") = cost
-                row("vat_per") = vat
-                row("tax_per") = tax
-                row("vat") = cost * vat / 100
-                row("tax") = cost * tax / 100
-                row("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
-                row("detail") = detail
-                row("vendorname") = vendorname
-                row("vendorcode") = vendorcode
-                row("invoice") = invoice
-                row("taxid") = taxid
-                row("invoicedate") = invoicedate
-
-                detailtable.Rows.Add(row)
-            Else
-                With detailtable.Rows(detailtable.Rows.IndexOf(detailtable.Select("row='" & rows & "'")(0)))
-                    .Item("row") = rows
-                    .Item("status") = "edit"
-                    .Item("nonpodtl_id") = nonpodtl_id
-                    .Item("accountcodeid") = accountcodeid
-                    .Item("accountcode") = accountcode
-                    .Item("depid") = depid
-                    .Item("depname") = depname
-                    .Item("buid") = buid
-                    .Item("buname") = buname
-                    .Item("ppid") = ppid
-                    .Item("ppname") = ppname
-                    .Item("pjid") = pjid
-                    .Item("pjname") = pjname
-
-                    .Item("cost") = cost
-                    .Item("vat_per") = vat
-                    .Item("tax_per") = tax
-                    .Item("vat") = cost * vat / 100
-                    .Item("tax") = cost * tax / 100
-                    .Item("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
-                    .Item("detail") = detail
-                    .Item("vendorname") = vendorname
-                    .Item("vendorcode") = vendorcode
-                    .Item("invoice") = invoice
-                    .Item("taxid") = taxid
-                    .Item("invoicedate") = invoicedate
-                End With
-            End If
-
-        Catch ex As Exception
-            Return "fail"
-            GoTo endprocess
-        End Try
-        If rows = 0 Then
-            Return cntrow
-        Else
-            Return rows
-        End If
-
-endprocess:
 
     End Function
 
@@ -1407,21 +1308,10 @@ endprocess:
         saveorupdate()
     End Sub
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
-        'Dim payback As Double
         Dim cost As Double
-        'Try
-        '    payback = Convert.ToDouble(txtamountpayBack.Text)
-        'Catch ex As Exception
-        '    payback = 0
-        'End Try
-
-        Try
-            cost = Convert.ToDouble(detailtable.Compute("SUM(cost_total)", String.Empty))
-        Catch ex As Exception
-            cost = 0
-        End Try
-        'cost = cost + payback
-        If account_code.IndexOf(Session("usercode").ToString) > -1 Then
+        cost = Convert.ToDouble(detailtable.Compute("SUM(cost_total)", String.Empty))
+        If account_code.IndexOf(Session("usercode").ToString) > -1 And
+                    (maintable.Rows(0).Item("statusid") = 7) Then
             If cost > maintable.Rows(0).Item("totalforcheck") Then
                 Dim scriptKey As String = "alert"
                 'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1429,14 +1319,14 @@ endprocess:
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 GoTo endprocess
             End If
-        Else
-            If cost > head.Rows(0).Item("amount") Then
-                Dim scriptKey As String = "alert"
-                'Dim javaScript As String = "alert('" & ex.Message & "');"
-                Dim javaScript As String = "invalidtotal();"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                GoTo endprocess
-            End If
+            'Else
+            '    If cost > head.Rows(0).Item("amount") Then
+            '        Dim scriptKey As String = "alert"
+            '        'Dim javaScript As String = "alert('" & ex.Message & "');"
+            '        Dim javaScript As String = "invalidtotal();"
+            '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '        GoTo endprocess
+            '    End If
         End If
         saveorupdate()
 endprocess:
@@ -1457,13 +1347,13 @@ endprocess:
 
     Private Sub Save()
         Dim objNonpo As New NonPO
-        Dim nonpocode As String = ""
+        Dim payno As String = ""
 
-        nonpocode = txtadvno.Text
+        payno = txtpmno.Text
         Try
-            nonpocode = objNonpo.SavePettyCashHO(nonpocode, maintable, detailtable, Session("usercode"))
-            txtadvno.Text = nonpocode
-            Session("status_pettycashHO") = "edit"
+            payno = objNonpo.SavePettyCashCO(payno, maintable, detailtable, Session("usercode"))
+            txtpmno.Text = payno
+            Session("status_pcco") = "edit"
 
 
         Catch ex As Exception
@@ -1474,7 +1364,7 @@ endprocess:
 
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & nonpocode)
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & payno)
 endprocess:
     End Sub
 
@@ -1483,6 +1373,18 @@ endprocess:
         Dim userowner As Double
 
         userid = Session("userid")
+        'Dim payby As String = ""
+        'If chkCheque.Checked Then
+        '    payby = "cheque"
+        'ElseIf chkCashierCheque.Checked Then
+        '    payby = "cashiercheque"
+        'ElseIf chkTT.Checked Then
+        '    payby = "tt"
+        'ElseIf chkEFT.Checked Then
+        '    payby = "eft"
+        'ElseIf chkdeductSell.Checked Then
+        '    payby = "deductsell"
+        'End If
 
         If cboOwner.SelectedItem.Value = 0 Then
             userowner = userid
@@ -1492,28 +1394,33 @@ endprocess:
         If maintable.Rows.Count > 0 Then
             'update
             With maintable.Rows(0)
-                '.Item("chkpayback") = chkpayBack.Checked
-                '.Item("chkdeductsell") = chkdeductSell.Checked
-                '.Item("payback_amount") = amountpayBack.ToString
-                '.Item("deductsell_amount") = amountdedusctsell.ToString
-                .Item("vat_wait") = chkVat.Checked
+                '.Item("payby") = payby
+                '.Item("vendorcode") = cboVendor.SelectedItem.Value
+                .Item("DueDate") = txtDuedate.Text.Trim()
+                '.Item("detail") = txtNote.Text.Trim()
+                .Item("vat_wait") = If(chkVat.Checked, 1, 0)
             End With
         Else
+            'Dim amountpayBack As Double
+            'Dim amountdedusctsell As Double
+
+
 
             'insert
             With maintable
-                .Rows.Add(0, "", "", 0, 0, "", txtremark.Text.Trim,
-                          cboBranch.SelectedItem.Value, cboDepartment.SelectedItem.Value, cboSection.SelectedItem.Value,
-                            0, 0,
-                            0, 0,
-                          "", "", chkVat.Checked,
-                          userowner, Date.Now.ToString, "", "", "", "", "", "",
-                          userowner, Date.Now.ToString, userowner, Date.Now.ToString, userowner, userowner)
+                .Rows.Add(0, "", "", codeRef.Text.Trim(), 0, 0, "", "",
+                              cboBranch.SelectedItem.Value, 0, 0,
+                              0, 0,
+                              0, 0,
+                              0, "",
+                              txtDuedate.Text.Trim(), chkVat.Checked,
+                              userowner, Date.Now.ToString, "", "", "", "", "", "",
+                              userowner, Date.Now.ToString, userowner, Date.Now.ToString, userowner, userowner)
 
             End With
 
         End If
-        Session("maintable_pettycashHO") = maintable
+        Session("maintable_pcco") = maintable
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
@@ -1524,10 +1431,11 @@ endprocess:
         End If
     End Sub
     Private Sub Confirm(nonpocode As String, usercode As String)
+
         Dim objnonpo As New NonPO
 
         Try
-            objnonpo.Confirm(nonpocode, usercode)
+            objnonpo.Confirm_ft(nonpocode, usercode)
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1535,8 +1443,8 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Session("status_pettycashHO") = "read"
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Session("status_pcco") = "read"
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1545,7 +1453,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_NotAllow(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pettycashHO") = "read"
+            Session("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1554,7 +1462,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1562,8 +1470,8 @@ endprocess:
         Dim objnonpo As New NonPO
 
         Try
-            objnonpo.NonPO_Allow(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pettycashHO") = "read"
+            objnonpo.NonPO_Allow_ft(Request.QueryString("NonpoCode"), Session("usercode"))
+            Session("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1572,7 +1480,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1581,7 +1489,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Verify(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pettycashHO") = "read"
+            Session("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1590,16 +1498,22 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
     Private Sub btnPass_ServerClick(sender As Object, e As EventArgs) Handles btnPass.ServerClick
         Dim objnonpo As New NonPO
-
+        Dim result As Boolean = True
+        Dim msg As String = ""
+        If String.IsNullOrEmpty(txtDuedate.Text) Then
+            result = False
+            msg = "กรุณาใส่รายการ"
+            GoTo endprocess
+        End If
         Try
-            objnonpo.NonPO_Pass(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pettycashHO") = "read"
+            objnonpo.NonPO_Pass_ft(Request.QueryString("NonpoCode"), Session("usercode"))
+            Session("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1608,8 +1522,14 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            'MsgBox(msg)
+        End If
     End Sub
 
     Private Sub btnEdit_ServerClick(sender As Object, e As EventArgs) Handles btnEdit.ServerClick
@@ -1617,7 +1537,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AccountEdit(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pettycashHO") = "read"
+            Session("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1626,7 +1546,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1635,7 +1555,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Reject(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pettycashHO") = "read"
+            Session("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1644,7 +1564,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1653,7 +1573,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Complete(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pettycashHO") = "read"
+            Session("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1662,14 +1582,13 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashHO.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
-
     Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String, nonpocode As String)
 
         Using wb As New XLWorkbook()
-            wb.Worksheets.Add(mydatatable, "test")
+            wb.Worksheets.Add(mydatatable, "General_journal")
             'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
 
             Dim filename As String = usercode & "_" & closedate & "_" & nonpocode & "_" & Date.Now.ToString
@@ -1680,7 +1599,7 @@ endprocess:
                 encode = "(final)"
             End If
             Dim byt As Byte() = System.Text.Encoding.UTF8.GetBytes(filename)
-            encode = Convert.ToBase64String(byt)
+            encode += Convert.ToBase64String(byt)
 
             'Dim decode As String
             'Dim b As Byte() = Convert.FromBase64String(encode)
@@ -1701,50 +1620,37 @@ endprocess:
         End Using
     End Sub
 
-    'Private Sub btnExport_ServerClick(sender As Object, e As EventArgs) Handles btnExport.ServerClick
-    '    Dim createdate As String
-    '    createdate = txtCreateDate.Text.Substring(6, 4) & txtCreateDate.Text.Substring(3, 2) & txtCreateDate.Text.Substring(0, 2)
-    '    Dim objnonpo As New NonPO
-    '    Try
-    '        Dim dt As DataTable
-    '        dt = objnonpo.Nonpo_Export_ADV(Request.QueryString("NonpoCode"))
-    '        ExportToExcel(dt, Session("usercode"), createdate, Request.QueryString("NonpoCode"))
-    '    Catch ex As Exception
-    '        Dim scriptKey As String = "alert"
-    '        'Dim javaScript As String = "alert('" & ex.Message & "');"
-    '        Dim javaScript As String = "alertWarning('Verify fail');"
-    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-    '    End Try
-    'End Sub
-
     Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
         Dim res As String = Request.Form("confirm_value")
         Dim jss As New JavaScriptSerializer
         Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
 
-        Dim rows As Integer = json("rows")
-        Dim status As String = json("status")
-        Dim nonpodtl_id As Integer = json("nonpodtl_id")
-        Dim accountcodeid As Integer = json("accountcodeid")
-        Dim accountcode As String = json("accountcode")
-        Dim depid As Integer = json("depid")
-        Dim depname As String = json("depname")
-        Dim buid As Integer = json("buid")
-        Dim buname As String = json("buname")
-        Dim ppid As Integer = json("ppid")
-        Dim ppname As String = json("ppname")
-        Dim pjid As Integer = json("pjid")
-        Dim pjname As String = json("pjname")
-        Dim cost As Double = json("cost")
-        Dim vat As Integer = json("vat")
-        Dim tax As Integer = json("tax")
-        Dim detail As String = json("detail")
-        Dim vendorname As String = json("vendorname")
-        Dim vendorcode As String = json("vendorcode")
-        Dim invoice As String = json("invoice")
-        Dim taxid As String = json("taxid")
-        Dim invoicedate As String = json("invoicedate")
+        Dim rows As Integer = json("rows").Trim
+        Dim status As String = json("status").Trim
+        Dim nonpodtl_id As Integer = json("nonpodtl_id").Trim
+        Dim accountcodeid As String = json("accountcodeid").Trim
+        Dim accountcode As String = json("accountcode").Trim
+        Dim depid As Integer = json("depid").Trim
+        Dim depname As String = json("depname").Trim
+        Dim buid As Integer = json("buid").Trim
+        Dim buname As String = json("buname").Trim
+        Dim ppid As Integer = json("ppid").Trim
+        Dim ppname As String = json("ppname").Trim
+        Dim pjid As Integer = json("pjid").Trim
+        Dim pjname As String = json("pjname").Trim
+        Dim docdate As String = json("docdate").Trim
+        Dim cost As Double = json("cost").Trim
+        Dim vat As Integer = json("vat").Trim
+        Dim tax As Integer = json("tax").Trim
+        Dim detail As String = json("detail").Trim
+        Dim vendorname As String = json("vendorname").Trim
+        Dim vendorcode As String = json("vendorcode").Trim
+        Dim invoice As String = json("invoice").Trim
+        Dim taxid As String = json("taxid").Trim
+        Dim invoicedate As String = json("invoicedate").Trim
+        Dim nobill As Boolean = json("nobill").Trim
 
+        invoice = invoice.Replace(" ", "")
 
 
         Dim cntrow As Integer = detailtable.Rows.Count + 1
@@ -1765,6 +1671,7 @@ endprocess:
                 row("ppname") = ppname
                 row("pjid") = pjid
                 row("pjname") = pjname
+                row("docdate") = docdate
 
                 row("cost") = cost
                 row("vat_per") = vat
@@ -1778,6 +1685,8 @@ endprocess:
                 row("invoice") = invoice
                 row("taxid") = taxid
                 row("invoicedate") = invoicedate
+                row("nobill") = nobill
+
 
                 detailtable.Rows.Add(row)
             Else
@@ -1795,6 +1704,7 @@ endprocess:
                     .Item("ppname") = ppname
                     .Item("pjid") = pjid
                     .Item("pjname") = pjname
+                    .Item("docdate") = docdate
 
                     .Item("cost") = cost
                     .Item("vat_per") = vat
@@ -1808,10 +1718,12 @@ endprocess:
                     .Item("invoice") = invoice
                     .Item("taxid") = taxid
                     .Item("invoicedate") = invoicedate
+                    .Item("nobill") = nobill
                 End With
             End If
 
-            Session("detailtable_pettycashHO") = detailtable
+            Session("detailtable_pcco") = detailtable
+            checkunsave()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1826,7 +1738,7 @@ endprocess:
         Dim objnonpo As New NonPO
         Try
             Dim dt As DataTable
-            dt = objnonpo.Nonpo_Export_ADV(Request.QueryString("NonpoCode"), chkGroupVAT.Checked, chkGroupVendor.Checked)
+            dt = objnonpo.Nonpo_Export(Request.QueryString("NonpoCode"), chkGroupVAT.Checked, chkGroupVendor.Checked)
             ExportToExcel(dt, Session("usercode"), createdate, Request.QueryString("NonpoCode"))
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1835,4 +1747,88 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_Cancel(Request.QueryString("NonpoCode"), Session("usercode"))
+            Session("status_pcco") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('cancel fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+endprocess:
+    End Sub
+
+    '    Private Sub btnft_confirm_Click(sender As Object, e As EventArgs) Handles btnft_confirm.Click
+    '        Dim objnonpo As New NonPO
+
+    '        Try
+    '            objnonpo.Confirm_ft(Request.QueryString("NonpoCode").ToString.Trim, Session("usercode"))
+    '        Catch ex As Exception
+    '            Dim scriptKey As String = "alert"
+    '            'Dim javaScript As String = "alert('" & ex.Message & "');"
+    '            Dim javaScript As String = "alertWarning('Confirm fail');"
+    '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '            GoTo endprocess
+    '        End Try
+    '        Session("status_pcco") = "read"
+    '        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+    'endprocess:
+    '    End Sub
+
+    '    Private Sub btft_approval_Click(sender As Object, e As EventArgs) Handles btft_approval.Click
+    '        Dim objnonpo As New NonPO
+
+    '        Try
+    '            objnonpo.NonPO_Allow_ft(Request.QueryString("NonpoCode"), Session("usercode"))
+    '            Session("status_pcco") = "read"
+
+    '        Catch ex As Exception
+    '            Dim scriptKey As String = "alert"
+    '            'Dim javaScript As String = "alert('" & ex.Message & "');"
+    '            Dim javaScript As String = "alertWarning('Approval fail');"
+    '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '            GoTo endprocess
+    '        End Try
+    '        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+    'endprocess:
+    '    End Sub
+
+    '    Private Sub btnft_verify_Click(sender As Object, e As EventArgs) Handles btnft_verify.Click
+    '        Dim objnonpo As New NonPO
+
+    '        Try
+    '            objnonpo.NonPO_Pass_ft(Request.QueryString("NonpoCode"), Session("usercode"))
+    '            Session("status_pcco") = "read"
+
+    '        Catch ex As Exception
+    '            Dim scriptKey As String = "alert"
+    '            'Dim javaScript As String = "alert('" & ex.Message & "');"
+    '            Dim javaScript As String = "alertWarning('Verify fail');"
+    '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '            GoTo endprocess
+    '        End Try
+    '        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+    'endprocess:
+    '    End Sub
+
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function SearchVendor(empName As String)
+        Dim vendorlist As New List(Of String)
+        Dim dt As DataTable
+
+        Dim objSupplier As New Supplier
+        objSupplier.vendor_list_by_name(empName)
+        For Each row As String In dt.Rows
+            vendorlist.Add(CType(row, String))
+        Next row
+    End Function
 End Class

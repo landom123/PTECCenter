@@ -42,8 +42,8 @@
         }
 
         .logopure {
-            content: url("http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_210800066.png");
-            width: 100px;
+            /*content: url("http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_210800066.png");*/
+            width: 200px;
             height: auto;
             margin-left: 30px;
             margin-top: 10px;
@@ -236,7 +236,7 @@
                                     <td colspan="18" style="width: 720px !important; height: 10px">
                                         <div class="row">
                                             <div class="col-3">
-                                                <img class="logopure" />
+                                                <img class="logopure" src="..\..\..\icon\Logo_pure.png" alt="logopure" width="500" height="600">
                                             </div>
                                             <div class="col-9 company">
                                                 <div class="row company-th">
@@ -385,7 +385,7 @@
                                                                                         ,'<%= detailtable.Rows(i).Item("invoice").ToString() %>','<%= detailtable.Rows(i).Item("taxid").ToString() %>','<%= detailtable.Rows(i).Item("invoicedate").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("nobill").ToString() %>');">
                                         <%--<tr class="draggable detail" name="<%= detailtable.Rows(i).Item("row").ToString() %>">--%>
-                                        <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
+                                        <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", Left(detailtable.Rows(i).Item("accountcodeid").ToString(), 6)) %></td>
                                         <td colspan="7" style="width: 280px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
                                         <%--<td colspan="2" style="width: 80px !important;" title="<%= detailtable.Rows(i).Item("depname").ToString() %>"><%= detailtable.Rows(i).Item("depname").ToString() %></td>--%>
                                         <td colspan="4" style="width: 160px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>

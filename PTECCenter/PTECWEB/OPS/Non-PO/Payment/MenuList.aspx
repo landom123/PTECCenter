@@ -22,8 +22,10 @@
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
                         <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
 
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="Search" />&nbsp;
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
                             <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
+                        
+                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
                         <% End If %>
                     </div>
                 </div>
@@ -97,6 +99,14 @@
                                 <span class="input-group-text">จนถึง (DueDate)</span>
                             </div>
                             <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Vendor</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboVendor" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3 HO">
@@ -179,6 +189,11 @@
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("CreateBy")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Vendor_Code")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Duedate")%>'></asp:Label>
@@ -207,10 +222,10 @@
 
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
+                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
                                         <button id="btnRun" onclick="dup('<%# String.Format("{0}", Eval("NonPO_Code")) %>','<%= Session("usercode") %>');" class="btn btn-mini text-info" title="คัดลอก">
                                             <i class="far fa-copy"></i>
                                         </button>
-                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

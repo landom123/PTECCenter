@@ -1,9 +1,11 @@
 ﻿Imports System.Drawing
+Imports System.IO
+Imports ClosedXML.Excel
 
 Public Class AdvanceMenuList
     Inherits System.Web.UI.Page
     Public itemtable As DataTable = createdetailtable()
-    Public criteria As DataTable = createCriteria()
+    Public criteria As DataTable '= createCriteria()
     Public menutable As DataTable
 
     Public cntdt As Integer
@@ -39,7 +41,7 @@ Public Class AdvanceMenuList
         txtEndDueDate.Attributes.Add("readonly", "readonly")
         operator_code = objNonpo.NonPOPermisstionOperator("ADV")
         If Not IsPostBack() Then
-
+            criteria = createCriteria()
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
                 'objjob.SetCboJobStatusListForReport(cboStatusFollow)
@@ -91,20 +93,24 @@ Public Class AdvanceMenuList
     End Sub
     Private Sub setCriteria()
         'criteria = createCriteria()
-        criteria.Rows.Clear()
-        criteria.Rows.Add(txtAdvRQ.Text.Trim(),
-                            txtStartDate.Text.Trim(),
-                            txtEndDate.Text.Trim(),
-                            cboStatusFollow.SelectedItem.Value.ToString,
-                            txtStartDueDate.Text.Trim(),
-                            txtEndDueDate.Text.Trim(),
-                            cboDepartment.SelectedItem.Value.ToString,
-                            cboSection.SelectedItem.Value.ToString,
-                            cboBranchGroup.SelectedItem.Value.ToString,
-                            cboBranch.SelectedItem.Value.ToString,
-                            gvRemind.PageIndex)
+        If Not criteria Is Nothing Then
 
-        Session("criteria_advlist") = criteria
+            criteria.Rows.Clear()
+            criteria.Rows.Add(txtAdvRQ.Text.Trim(),
+                                txtStartDate.Text.Trim(),
+                                txtEndDate.Text.Trim(),
+                                cboStatusFollow.SelectedItem.Value.ToString,
+                                txtStartDueDate.Text.Trim(),
+                                txtEndDueDate.Text.Trim(),
+                                cboDepartment.SelectedItem.Value.ToString,
+                                cboSection.SelectedItem.Value.ToString,
+                                cboBranchGroup.SelectedItem.Value.ToString,
+                                cboBranch.SelectedItem.Value.ToString,
+                                gvRemind.PageIndex)
+
+            Session("criteria_advlist") = criteria
+        End If
+
     End Sub
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Response.Redirect("AdvanceRequest.aspx")
@@ -341,5 +347,54 @@ Public Class AdvanceMenuList
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         searchjobslist()
+    End Sub
+
+    Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String)
+
+        Using wb As New XLWorkbook()
+            wb.Worksheets.Add(mydatatable, "General_journal")
+            'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
+
+            Dim filename As String = usercode & "_" & closedate & "_" & Date.Now.ToString
+            Dim encode As String
+            'If (maintable.Rows(0).Item("statusid") = 7) Then
+            '    encode = "(preview)"
+            'Else
+            '    encode = "(final)"
+            'End If
+            Dim byt As Byte() = System.Text.Encoding.UTF8.GetBytes(filename)
+            encode = Convert.ToBase64String(byt)
+
+            'Dim decode As String
+            'Dim b As Byte() = Convert.FromBase64String(encode)
+            'decode = System.Text.Encoding.UTF8.GetString(b)
+
+            Response.Clear()
+            Response.Buffer = True
+            Response.Charset = ""
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            Response.AddHeader("content-disposition", "attachment;filename=" & encode & ".xlsx")
+            Using MyMemoryStream As New MemoryStream()
+                wb.SaveAs(MyMemoryStream)
+                MyMemoryStream.WriteTo(Response.OutputStream)
+                Response.Flush()
+                Response.End()
+            End Using
+
+        End Using
+    End Sub
+
+    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
+        Dim createdate As String
+        createdate = Date.Now
+        Dim objnonpo As New NonPO
+        Try
+            ExportToExcel(itemtable, Session("usercode"), createdate)
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('export fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
     End Sub
 End Class

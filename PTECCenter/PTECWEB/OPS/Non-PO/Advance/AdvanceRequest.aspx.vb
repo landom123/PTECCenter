@@ -94,9 +94,9 @@ Public Class AdvanceRequest
                         PermissionOwner = chkPermissionNonPO(Request.QueryString("ADV"))
 
                         at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
-                        approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(0).Item("approver").ToString
-                        verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
-                        now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString + PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
+                        approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString
+                        verifier = "ผู้ตรวจ : " '+ PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
+                        now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString '+ PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
                     End If
 
                     If (Session("usercode") = md_code Or
@@ -628,7 +628,7 @@ endprocess:
         BindData()
     End Sub
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 6
+        Dim statusAt As Integer = 7
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then

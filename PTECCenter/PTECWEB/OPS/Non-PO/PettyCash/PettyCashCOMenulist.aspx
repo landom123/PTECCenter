@@ -1,91 +1,92 @@
-﻿<%@ Page Title="AdvanceMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="AdvanceMenuList.aspx.vb" Inherits="PTECCENTER.AdvanceMenuList" %>
+﻿<%@ Page Title="PaymentMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="PettyCashCOMenulist.aspx.vb" Inherits="PTECCENTER.PettyCashCOMenulist" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
-    <style>
-        th {
-            text-align: center;
-        }
 
-        .input-group {
-            padding-top: 1rem;
+    <style>
+        .HO {
+            display:none;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
 
-        <!-- #include virtual ="/include/menu.inc" -->
-        <!-- add side menu -->
-
         <!-- เนื้อหาเว็บ -->
         <div id="content-wrapper">
 
             <div class="container-fluid">
-                <ol class="breadcrumb" style="background-color: deeppink; color: white">
-                    <li class="breadcrumb-item">รายการขอเบิก Advance
+                <ol class="breadcrumb" style="background-color: navy; color: white">
+                    <li class="breadcrumb-item">รายการ Petty Cash CO
                     </li>
                 </ol>
 
                 <div class="row">
-                    <div class="col-12">
-
+                    <div class="col-12 mb-3">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
                         <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
-                        <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
-                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
-                         <% End If %>
+
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="Search" />&nbsp;
+                            <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
+                        <% End If %>
                     </div>
                 </div>
 
                 <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
 
-                <div class="row">
-                    <div class="col-auto" style="margin-left: auto;">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server" >
+                <div class="row d-none">
+                    <div class="col-auto mb-3" style="margin-left: auto;">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server">
                         <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
                     </div>
-                    <div class="col-auto">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server" >
+                    <div class="col-auto mb-3">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server">
                         <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control noEnterSubmit" ID="txtAdvRQ" runat="server" placeholder="21XXXXXXX" autocomplete="off"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-prepend"> 
-                                <span class="input-group-text">ตั้งแต่ (วันที่เบิก)</span>
+                   <%-- <div class="col-md-4 mb-3">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Code_ref</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
                         </div>
-                    </div>
-                    <div class="col-md-4">
+                    </div>--%>
+                    
+                    <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">จนถึง (วันที่เบิก)</span>
+                                <span class="input-group-text">ตั้งแต่วันที่</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">จนถึง</span>
+                            </div>
+                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
 
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะงานย่อย</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" ></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -93,7 +94,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่ (DueDate)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtStartDueDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtStartDueDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -101,10 +102,18 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จนถึง (DueDate)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4 HO">
+                    <div class="col-md-4 mb-3 d-none">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Vendor</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboVendor" runat="server" AutoPostBack="false"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ฝ่าย</span>
@@ -112,15 +121,15 @@
                             <asp:DropDownList ID="cboDepartment" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 HO">
+                    <div class="col-md-4 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">แผนก</span>
                             </div>
-                            <asp:DropDownList ID="cboSection" class="form-control" runat="server" ></asp:DropDownList>
+                            <asp:DropDownList ID="cboSection" class="form-control" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 CO">
+                    <div class="col-md-4 mb-3 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทสาขา</span>
@@ -128,15 +137,15 @@
                             <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 CO">
+                    <div class="col-md-4 mb-3 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" ></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <div class="row" style="padding-top: 1rem;">
@@ -171,27 +180,22 @@
                             <Columns>
                                 <asp:TemplateField HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("AdvanceRequest_Code")%>'></asp:Label>
+                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("NonPO_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="วันที่เบิก" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="วันที่ทำรายการ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ขอเบิกโดย" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="ผู้เบิก" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Createname")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("CreateBy")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("duedate")%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Duedate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="รายละเอียด">
@@ -199,14 +203,9 @@
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("detail")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="จำนวนเงินที่เบิก" ItemStyle-HorizontalAlign="Right">
+                                <asp:TemplateField HeaderText="ยอด" ItemStyle-HorizontalAlign="Right">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#String.Format("{0:n2}", Eval("amount"))%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ยอดคงค้างชำระ" ItemStyle-HorizontalAlign="Right">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#String.Format("{0:n2}", Eval("balance"))%>'></asp:Label>
+                                        <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
@@ -216,47 +215,36 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="สถาณะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("status")%>'></asp:Label>
+                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusNonPO")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
-                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                        <button id="btnRun" onclick="dup('<%# String.Format("{0}", Eval("NonPO_Code")) %>','<%= Session("usercode") %>');" class="btn btn-mini text-info" title="คัดลอก">
+                                            <i class="far fa-copy"></i>
+                                        </button>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </div>
+
                     <h4>ทั้งหมด <% =cntdt%> รายการ</h4>
                 </div>
-
-
             </div>
             <!-- /.container-fluid -->
 
 
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2019</span>
-                    </div>
-                </div>
-            </footer>
-
         </div>
-        <!-- /.content-wrapper -->
-        <!-- end เนื้อหาเว็บ -->
-
-
     </div>
-    <!-- /#wrapper -->
-
 
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script type="text/javascript">
+    <script>
+        
         jQuery('[id$=txtStartDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             onShow: function (ct) {
@@ -280,7 +268,6 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
-
         jQuery('[id$=txtStartDueDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             onShow: function (ct) {
@@ -304,9 +291,6 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
-    </script>
-
-    <script type="text/javascript">
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
@@ -316,39 +300,7 @@
             checkCOorHO();
         });
 
-    </script>
-    <script type="text/javascript">
-        function alertSuccess() {
-            Swal.fire(
-                'สำเร็จ',
-                '',
-                'success'
-            )
-        }
-
-        function alertWarning(massage) {
-            Swal.fire(
-                massage,
-                '',
-                'warning'
-            )
-        }
-        function checkCOorHO() {
-            if ($("#" + "<%= chkHO.ClientID.ToString %>").is(":checked")) {
-                $(".HO").show();
-                $(".CO").hide();
-            } else if ($("#" + "<%= chkCO.ClientID.ToString %>").is(":checked")){
-                $(".CO").show();
-                $(".HO").hide();
-            } else {
-                $(".CO").hide();
-                $(".HO").hide();
-
-            }
-
-        }
-
-        $("input:checkbox").on('click', function () {
+        <%--$("input:checkbox").on('click', function () {
             // in the handler, 'this' refers to the box clicked on
             console.log(this);
             var $box = $(this);
@@ -367,11 +319,75 @@
 
             checkCOorHO();
         });
+        function checkCOorHO() {
+            if ($("#" + "<%= chkHO.ClientID.ToString %>").is(":checked")) {
+                $(".HO").show();
+                $(".CO").hide();
+            } else if ($("#" + "<%= chkCO.ClientID.ToString %>").is(":checked")) {
+                $(".CO").show();
+                $(".HO").hide();
+            } else {
+                $(".CO").hide();
+                $(".HO").hide();
+
+            }
+
+        }--%>
         $('.noEnterSubmit').keypress(function (e) {
             if (e.which == 13) return false;
             //or...
             if (e.which == 13) e.preventDefault();
         });
+
+        function dup(nonpocode, usercode) {
+
+            event.preventDefault();
+            event.stopPropagation();
+            Swal.fire({
+                input: 'textarea',
+                inputLabel: 'กรอกวัตถุประสงค์',
+                inputPlaceholder: 'ใส่ข้อความ . . .',
+                inputAttributes: {
+                    'aria-label': 'ใส่ข้อความ.'
+                },
+                preConfirm: () => {
+                    if (!document.getElementById('swal2-input').value) {
+                        // Handle return value 
+                        Swal.showValidationMessage('First input missing')
+                    }
+                },
+                showCancelButton: true
+            }).then((result) => {
+                console.log(result.value);
+
+                if (result.isConfirmed) {
+                    var params = "{'nonpocode': '" + nonpocode + "','usercode': '" + usercode + "','note': '" + result.value + "'}";
+                    $.ajax({
+                        type: "POST",
+                        url: "../Payment/MenuList.aspx/dup",
+                        async: true,
+                        data: params,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            /*alertSuccessToast();*/
+                            if (msg.d == 'success') {
+                                //alert(elemenmt.textContent);
+                                window.location.href = location.href;
+                            }
+
+                        },
+                        error: function () {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    });
+                }
+            })
+
+            return false;
+
+        }
     </script>
 
 </asp:Content>

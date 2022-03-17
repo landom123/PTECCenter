@@ -17,6 +17,9 @@ Public Class Supplier
             If Not String.IsNullOrEmpty(dt.Rows(i).Item("Vendor_Code").ToString) Then
                 item.Attributes("data-subtext") = dt.Rows(i).Item("Vendor_Code").ToString
             End If
+            If Not String.IsNullOrEmpty(dt.Rows(i).Item("taxidno").ToString) Then
+                item.Attributes("data-taxidno") = dt.Rows(i).Item("taxidno").ToString
+            End If
 
             cboVendor.Items.Add(item)
 
@@ -64,6 +67,33 @@ Public Class Supplier
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@username", SqlDbType.VarChar).Value = username
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function vendor_list_by_name(vendorname As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "vendor_list_by_name"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@vendorname", SqlDbType.VarChar).Value = vendorname
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype

@@ -43,7 +43,9 @@ Public Class NonPO
                 item.Attributes("data-tokens") = dtcost.Rows(i).Item("accountgroup").ToString
                 item.Attributes("data-category") = dtcost.Rows(i).Item("accountgroup").ToString
             End If
-
+            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountcode").ToString) Then
+                item.Attributes("data-code") = dtcost.Rows(i).Item("accountcode").ToString
+            End If
             cboAccountCode.Items.Add(item)
 
         Next
@@ -87,6 +89,76 @@ Public Class NonPO
         Return result
     End Function
 
+    Public Function SavePettyCashCO(pccono As String, headtable As DataTable, detailtable As DataTable, username As String) As String
+        Dim result As String
+
+        'Credit_Balance_List_Createdate
+
+        pccono = SaveHeadPCCO(headtable, username)
+        result = pccono
+        SaveDetailPCCO(pccono, detailtable, username)
+
+
+        Return result
+    End Function
+
+    Private Function SaveHeadPCCO(mytable As DataTable, username As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_PettyCashCO_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        With mytable.Rows(0)
+            cmd.Parameters.Add("@pccono", SqlDbType.VarChar).Value = .Item("nonpocode")
+            cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = .Item("branchid")
+            cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(.Item("duedate")), DBNull.Value, DateTime.Parse(.Item("duedate")))
+            cmd.Parameters.Add("@vat_wait", SqlDbType.Bit).Value = .Item("vat_wait")
+            cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+        End With
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+    End Function
+
+    Private Sub SaveDetailPCCO(pccono As String, mytable As DataTable, username As String)
+        Dim nonpocode As String
+        With mytable
+            For i = 0 To mytable.Rows.Count - 1
+                If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
+                    nonpocode = SaveDetailToTable(pccono,
+                                      .Rows(i).Item("row"),
+                                      .Rows(i).Item("nonpodtl_id"),
+                                      .Rows(i).Item("detail").ToString,
+                                      .Rows(i).Item("accountcodeid").ToString,
+                                      .Rows(i).Item("depid"),
+                                      .Rows(i).Item("buid"),
+                                      .Rows(i).Item("ppid"),
+                                      .Rows(i).Item("pjid"),
+                                      .Rows(i).Item("docdate"),
+                                    .Rows(i).Item("cost"),
+                                    .Rows(i).Item("vat_per"),
+                                    .Rows(i).Item("tax_per"),
+                                    .Rows(i).Item("vendorcode").ToString,
+                                    .Rows(i).Item("invoice").ToString,
+                                    .Rows(i).Item("taxid").ToString,
+                                    .Rows(i).Item("invoicedate"),
+                                    .Rows(i).Item("nobill"),
+                                    username)
+                End If
+            Next
+        End With
+        'Result = ds.Tables(0).Rows(0).Item("code")
+
+    End Sub
     Private Function SaveHeadPCHO(mytable As DataTable, username As String) As String
         Dim result As String
         Dim ds As New DataSet
@@ -700,7 +772,7 @@ Public Class NonPO
     End Function
 
     Public Function PaymentList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
-                                          depid As String, secid As String, branchgroupid As String, branchid As String) As DataTable
+                                          depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -724,6 +796,8 @@ Public Class NonPO
         cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
         cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
         cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
+        cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
+
 
 
 
@@ -734,6 +808,66 @@ Public Class NonPO
         Return result
     End Function
 
+    Public Function PettyCashCO_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
+                                          depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_PettyCashCO_For_Operator"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        'cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        'cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
+        cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
+        cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
+
+
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+    Public Function PettyCashCO_For_Owner(userid As Integer, working As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_PettyCashCO_For_Owner"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
 
     Public Function Purpose_List() As DataTable
         Dim result As DataTable
@@ -896,6 +1030,28 @@ Public Class NonPO
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "NonPO_Confirm"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+    Public Sub Confirm_ft(nonpocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_Confirm_for_PettyCashCO"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
@@ -1110,6 +1266,28 @@ Public Class NonPO
         conn.Close()
         'Return result
     End Sub
+    Public Sub NonPO_Allow_ft(nonpocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_Allow_for_PettyCashCO"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
     Public Sub NonPO_NotAllow(nonpocode As String, usercode As String)
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -1179,6 +1357,29 @@ Public Class NonPO
         'Return result
     End Sub
 
+    Public Sub NonPO_Pass_ft(nonpocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_Pass_for_PettyCashCO"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
     Public Sub NonPO_Cancel(nonpocode As String, usercode As String)
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -1211,6 +1412,29 @@ Public Class NonPO
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "NonPO_Complete"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub NonPO_FNS_ReceiveDoc(nonpocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_FNS_ReceiveDoc"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
@@ -1367,6 +1591,26 @@ Public Class NonPO
         adp.SelectCommand = cmd
         adp.Fill(ds)
         result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function NonPO_GetBudget_PettyCash(username As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_GetBudget_PettyCash"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("Budget")
         conn.Close()
         Return result
     End Function

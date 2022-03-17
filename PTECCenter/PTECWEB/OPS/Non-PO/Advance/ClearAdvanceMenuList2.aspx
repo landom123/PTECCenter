@@ -22,8 +22,11 @@
                     <div class="col-12 mb-3">
                         <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
 
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="Search" />&nbsp;
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
                             <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
+                        
+                        
+                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
                         <% End If %>
                     </div>
                 </div>

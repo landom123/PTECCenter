@@ -1725,6 +1725,7 @@
     <Content Include="fileupload\src\thirdparty\react\Fileuploader.js" />
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
+    <Content Include="icon\Logo_pure.png" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\main.js" />
@@ -1751,7 +1752,8 @@
     <Content Include="OPS\Non-PO\Payment\Payment2.aspx" />
     <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
     <Content Include="OPS\Non-PO\NonPO.aspx" />
-    <Content Include="OPS\Non-PO\PettyCash\PettyCashCO.aspx" />
+    <Content Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx" />
+    <Content Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
@@ -3724,12 +3726,19 @@
       <DependentUpon>NonPO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO.aspx.designer.vb">
-      <DependentUpon>PettyCashCO.aspx</DependentUpon>
+    <Compile Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx.designer.vb">
+      <DependentUpon>PettyCashCOMenulist.aspx</DependentUpon>
     </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO.aspx.vb">
-      <DependentUpon>PettyCashCO.aspx</DependentUpon>
+    <Compile Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx.vb">
+      <DependentUpon>PettyCashCOMenulist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx.designer.vb">
+      <DependentUpon>PettyCashCO2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx.vb">
+      <DependentUpon>PettyCashCO2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.designer.vb">
       <DependentUpon>PettyCashHO.aspx</DependentUpon>

@@ -10,12 +10,23 @@
             return "ข้อมูลนำเข้าเกินขอบเขตที่ตั้งไว้";
         } else {
             Number = Number.split(".");
+            //console.log(Number);
             if (Number[1].length > 0) {
                 Number[1] = Number[1].substring(0, 2);
             }
+            if (Number[0][0] == '-') {
+                BahtText += 'ลบ'
+                Number[0] = Number[0].replace("-", "");
+            }
+            //console.log(Number);
+            //console.log(Number[0].indexOf('-'));
+
             var NumberLen = Number[0].length - 0;
+            //console.log(NumberLen);
+
             for (var i = 0; i < NumberLen; i++) {
                 var tmp = Number[0].substring(i, i + 1) - 0;
+                //console.log(tmp);
                 if (tmp != 0) {
                     if ((i == (NumberLen - 1)) && (tmp == 1)) {
                         BahtText += "เอ็ด";
@@ -242,3 +253,7 @@ function confirmDelete(commentID, userid) {
 //        $box.prop("checked", false);
 //    }
 //});
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
