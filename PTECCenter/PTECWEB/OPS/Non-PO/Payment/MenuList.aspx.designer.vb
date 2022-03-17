@@ -41,6 +41,15 @@ Partial Public Class MenuList
     Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnExport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnExport As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''chkCO control.
     '''</summary>
     '''<remarks>
@@ -129,6 +138,15 @@ Partial Public Class MenuList
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtEndDueDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboVendor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboVendor As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cboDepartment control.

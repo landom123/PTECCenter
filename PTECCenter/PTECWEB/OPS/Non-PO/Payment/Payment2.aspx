@@ -42,8 +42,8 @@
         }
 
         .logopure {
-            content: url("http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_210800066.png");
-            width: 100px;
+            /*content: url("..\..\..\icon\Logo_pure.png");*/
+            width: 200px;
             height: auto;
             margin-left: 30px;
             margin-top: 10px;
@@ -129,6 +129,10 @@
         .modal-body .btn-light.disabled, .modal-body .btn-light:disabled {
             background-color: #e9ecef;
             border-color: #ced4da;
+        }
+        .modal .showCost {
+            background-color: #f7faff;
+            padding: 1rem;
         }
         /*####################### END CSS FROM MODAL ########################*/
     </style>
@@ -263,7 +267,7 @@
                                     <td colspan="18" style="width: 720px !important; height: 10px">
                                         <div class="row">
                                             <div class="col-3">
-                                                <img class="logopure" />
+                                                <img class="logopure" src="..\..\..\icon\Logo_pure.png" alt="logopure" width="500" height="600">
                                             </div>
                                             <div class="col-9 company">
                                                 <div class="row company-th">
@@ -485,7 +489,7 @@
                                                                         ,'<%= detailtable.Rows(i).Item("nobill").ToString() %>'
                                                                         );">
                                         <%--<tr class="draggable detail" name="<%= detailtable.Rows(i).Item("row").ToString() %>">--%>
-                                        <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
+                                        <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", Left(detailtable.Rows(i).Item("accountcodeid").ToString(), 6)) %></td>
                                         <td colspan="8" style="width: 360px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
                                         <%--<td colspan="2" style="width: 80px !important;" title="<%= detailtable.Rows(i).Item("depname").ToString() %>"><%= detailtable.Rows(i).Item("depname").ToString() %></td>
                                             <td colspan="5" style="width: 200px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>--%>
@@ -751,6 +755,11 @@
         <button class="btn btn-sm " style="color: #ffc107; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnWDoc" runat="server" title="ยืนยันรับเอกสาร">
             <i class="fas fa-check-circle shadow" style="border-radius: 100%;"></i>
         </button>
+        <% ElseIf maintable.Rows(0).Item("statusid") = 9 And Session("secid").ToString = "10" Then %>
+        <!-- 9 = ได้รับเอกสารตัวจริง-->
+        <button class="btn btn-sm " style="color: #6c757d; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnFNS_Rec_Doc" runat="server" title="การเงินยืนยันรับเอกสาร">
+            <i class="fas fa-check-circle shadow" style="border-radius: 100%;"></i>
+        </button>
         <% End If %>
         <% End If %>
     </div>
@@ -796,7 +805,7 @@
                         <asp:DropDownList class="form-control" ID="cboPP" runat="server"></asp:DropDownList>
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lbPJ" CssClass="form-label" AssociatedControlID="cboPJ" runat="server" Text="Project" />
+                        <asp:Label ID="lbPJ" CssClass="form-label" AssociatedControlID="cboPJ" runat="server" Text="Project - ( PM / OilLoss / Capex )" />
                         <asp:DropDownList class="form-control" ID="cboPJ" runat="server"></asp:DropDownList>
                     </div>
                     <div class="form-group">
@@ -840,7 +849,7 @@
                         <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
                     </div>
-                    <div class="showCost d-none">
+                    <div class="showCost">
                         <p class="text-muted" id="p_vat"></p>
                         <p class="text-muted" id="p_tax"></p>
                         <p class="text-muted" id="p_cost"></p>
@@ -849,15 +858,15 @@
                     <hr />
                     <h3>ใบแจ้งหนี้ / ใบส่งของ / ใบกำกับ</h3>
                     <div class="form-group">
-                        <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
                         <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
+                        <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Document no." />
+                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Document date" />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="gropnobill d-none">
@@ -1086,19 +1095,19 @@ alert('else nonpo')
             //console.log(calTax(cost, tax).toFixed(2));
 
             if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
-                p_cost.innerHTML = "รวมทั้งสิ้น : " + c_CostTotal + " บาท";
+                p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
             } else {
                 p_cost.innerHTML = "";
             }
 
             if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
-                p_vat.innerHTML = "Vat : " + c_Vat + " บาท";
+                p_vat.innerHTML = "Vat : " + numberWithCommas(c_Vat) + " บาท";
             } else {
                 p_vat.innerHTML = "";
             }
 
             if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
-                p_tax.innerHTML = "Tax : (" + c_Tax + ") บาท";
+                p_tax.innerHTML = "Tax : (" + numberWithCommas(c_Tax) + ") บาท";
             } else {
                 p_tax.innerHTML = "";
             }
@@ -1347,7 +1356,11 @@ alert('else nonpo')
         }
         function clearfromadddetail() {
 
-            $('#<%= row.ClientID%>').val(0);
+
+            $('.form-control').selectpicker('refresh');
+            console.log("clearfromadddetail");
+
+                 $('#<%= row.ClientID%>').val(0);
                 $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
                 $('#<%= cboAccountCode.ClientID%>').val(0);
                 $('#<%= cboDep.ClientID%>').val(0);
@@ -1359,11 +1372,15 @@ alert('else nonpo')
                 $('#<%= txtTax.ClientID%>').val('');
                 $('#<%= txtDetail.ClientID%>').val('');
                 $('#<%= txtinvoiceno.ClientID%>').val('');
-                $('#<%= txttaxid.ClientID%>').val('');
+
+                $('#<%= txttaxid.ClientID%>').val($("#<%= cboVendor.ClientID%> option:selected").attr('data-taxidno'));
+
                 $('#<%= txtinvoicedate.ClientID%>').val('');
                 $('#<%= chkNoBill.ClientID%>').prop('checked', false);
             <%--$('#<%= cboVendor.ClientID%>').val('');
             $('#<%= txtVendor.ClientID%>').val('');--%>
+
+            console.log($("#<%= cboVendor.ClientID%> option:selected").attr('data-taxidno'));
 
             $('.form-control').selectpicker('refresh');
         }
@@ -1488,12 +1505,12 @@ alert('else nonpo')
                 event.stopPropagation();
                 return 0;
             }
-            if (vat != 0 && (!invoice || !taxid || !invoicedate)) {
-                alertWarning('กรุณากรอกข้อมูล invoice ให้ครบถ้วน');
-                event.preventDefault();
-                event.stopPropagation();
-                return 0;
-            }
+            //if (vat != 0 && (!invoice || !taxid || !invoicedate)) {
+            //    alertWarning('กรุณากรอกข้อมูล invoice ให้ครบถ้วน');
+            //    event.preventDefault();
+            //    event.stopPropagation();
+            //    return 0;
+            //}
             //alert(row);
             //var params = "{'row': '" + row + "'}";
             var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +

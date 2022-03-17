@@ -111,7 +111,7 @@ Public Class Payment2
 
                     statusid = maintable.Rows(0).Item("statusid")
                     createby = maintable.Rows(0).Item("createby")
-                    chkuser(createby)
+                    chkuser(createby, Request.QueryString("NonpoCode"))
 
                     account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
 
@@ -248,6 +248,7 @@ endprocess:
             Session("comment_payment") = CommentTable
             Session("attatch_payment") = AttachTable
         Else
+
             If Not String.IsNullOrEmpty(Request.QueryString("NonpoCode")) Then
                 account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
             End If
@@ -278,11 +279,11 @@ endprocess:
         'SetMenu()
         checkunsave()
     End Sub
-    Private Sub chkuser(userid As Integer)
+    Private Sub chkuser(userid As Integer, nonpocode As String)
         Dim objuser As New Users
         Dim NonPOPermissionTable As New DataTable
         Try
-            NonPOPermissionTable = objuser.NonPOPermissionRead(userid)
+            NonPOPermissionTable = objuser.NonPOPermissionRead(userid, nonpocode)
             md_code = NonPOPermissionTable.Rows(0).Item("md_code")
             fm_code = NonPOPermissionTable.Rows(0).Item("fm_code")
             dm_code = NonPOPermissionTable.Rows(0).Item("dm_code")
@@ -394,6 +395,8 @@ endprocess:
                     statusnonpo.Attributes.Add("class", "btn btn-danger")
                 Case = "15" '15 : รอตราวจสอบ
                     statusnonpo.Attributes.Add("class", "btn btn-warning")
+                Case = "17" '17 : การเงินได้รับเอกสาร
+                    statusnonpo.Attributes.Add("class", "btn btn-secondary")
             End Select
             statusnonpo.Text = .Rows(0).Item("statusname").ToString
 
@@ -872,6 +875,37 @@ endprocess:
                 Dim scriptKey As String = "UniqueKeyForThisScript"
                 Dim javaScript As String = "disbtndelete()"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Case = "17" '17 : การเงินได้รับเอกสาร
+                btnSave.Enabled = False
+                btnUpdate.Enabled = False
+                btnConfirm.Enabled = False
+                btnCancel.Enabled = False
+
+
+                btnExport.Visible = False
+                btnPrint.Visible = True
+
+                If account_code.IndexOf(Session("usercode").ToString) > -1 Then
+                    btnExport.Visible = True
+                End If
+
+                'ช่อง ปุ่ม เพิ่มรายการ
+                btnFromAddDetail.Visible = False
+                FromAddDetail.Visible = False
+                btnAddDetails.Visible = False
+
+                'ปุ่ม & status 
+                statusnonpo.Visible = True
+
+                'กล่อง comment & attatch file
+                card_comment.Visible = True
+                card_attatch.Visible = True
+
+                btnAddAttatch.Visible = False
+
+                Dim scriptKey As String = "UniqueKeyForThisScript"
+                Dim javaScript As String = "disbtndelete()"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Select
     End Sub
 
@@ -937,7 +971,7 @@ endprocess:
         dt.Columns.Add("row", GetType(Integer))
         dt.Columns.Add("status", GetType(String))
         dt.Columns.Add("nonpodtl_id", GetType(Integer))
-        dt.Columns.Add("accountcodeid", GetType(Integer))
+        dt.Columns.Add("accountcodeid", GetType(String))
         dt.Columns.Add("accountcode", GetType(String))
         dt.Columns.Add("depid", GetType(Integer))
         dt.Columns.Add("depname", GetType(String))
@@ -991,13 +1025,14 @@ endprocess:
     Private Function validatedata() As Boolean
         Dim result As Boolean = True
         Dim msg As String = ""
-        Dim cost As Double
+        Dim cnt_cost As Integer
         'Dim amountpayBack As Double
         'Dim amountdedusctsell As Double
         Try
-            cost = Convert.ToDouble(detailtable.Compute("SUM(cost)", String.Empty))
+            'cost = Convert.ToDouble(detailtable.Compute("SUM(cost)", String.Empty))
+            cnt_cost = detailtable.Rows.Count
         Catch ex As Exception
-            cost = 0
+            cnt_cost = 0
         End Try
         'Try
         '    amountpayBack = Convert.ToDouble(txtamountpayBack.Text)
@@ -1019,7 +1054,7 @@ endprocess:
             msg = "กรุณาใส่จุดประสงค์"
             GoTo endprocess
         End If
-        If cost <= 0 Then
+        If cnt_cost <= 0 Then
             result = False
             msg = "กรุณาใส่รายการ"
             GoTo endprocess
@@ -1075,7 +1110,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        'Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 
 endprocess:
     End Sub
@@ -1202,15 +1237,15 @@ endprocess:
         cboAccountCode.Text = yy
     End Sub
 
-    'Private Sub cboVendor_PreRender(sender As Object, e As EventArgs) Handles cboVendor.PreRender
-    '    Dim objsupplier As New Supplier
-    '    Dim yy As String = cboVendor.SelectedValue
-    '    cboVendor.Items.Clear()
+    Private Sub cboVendor_PreRender(sender As Object, e As EventArgs) Handles cboVendor.PreRender
+        Dim objsupplier As New Supplier
+        Dim yy As String = cboVendor.SelectedValue
+        cboVendor.Items.Clear()
 
-    '    objsupplier.SetCboVendorByName(cboVendor, "")
+        objsupplier.SetCboVendorByName(cboVendor, "")
 
-    '    cboVendor.Text = yy
-    'End Sub
+        cboVendor.Text = yy
+    End Sub
 
     Private Sub ClearAdvance_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         Dim totalcost As Double
@@ -1239,7 +1274,7 @@ endprocess:
         End Try
         total_cost = String.Format("{0:n2}", totalcost)
         total_vat = String.Format("{0:n2}", vat)
-        total_tax = String.Format("({0:n2})", Math.Truncate(tax))
+        total_tax = String.Format("({0:n2})", (tax))
         total = String.Format("{0:n2}", cost)
         'total = Format(cost, "0.00")
     End Sub
@@ -1677,6 +1712,24 @@ endprocess:
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Complete fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+endprocess:
+    End Sub
+
+    Private Sub btnFNS_Rec_Doc_ServerClick(sender As Object, e As EventArgs) Handles btnFNS_Rec_Doc.ServerClick
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_FNS_ReceiveDoc(Request.QueryString("NonpoCode"), Session("usercode"))
+            Session("status_payment") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('Verify fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
@@ -1684,6 +1737,7 @@ endprocess:
         Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
+
     Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String, nonpocode As String)
 
         Using wb As New XLWorkbook()
@@ -1724,31 +1778,31 @@ endprocess:
         Dim jss As New JavaScriptSerializer
         Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
 
-        Dim rows As Integer = json("rows")
-        Dim status As String = json("status")
-        Dim nonpodtl_id As Integer = json("nonpodtl_id")
-        Dim accountcodeid As Integer = json("accountcodeid")
-        Dim accountcode As String = json("accountcode")
-        Dim depid As Integer = json("depid")
-        Dim depname As String = json("depname")
-        Dim buid As Integer = json("buid")
-        Dim buname As String = json("buname")
-        Dim ppid As Integer = json("ppid")
-        Dim ppname As String = json("ppname")
-        Dim pjid As Integer = json("pjid")
-        Dim pjname As String = json("pjname")
-        Dim cost As Double = json("cost")
-        Dim vat As Integer = json("vat")
-        Dim tax As Integer = json("tax")
-        Dim detail As String = json("detail")
-        Dim vendorname As String = json("vendorname")
-        Dim vendorcode As String = json("vendorcode")
-        Dim invoice As String = json("invoice")
-        Dim taxid As String = json("taxid")
-        Dim invoicedate As String = json("invoicedate")
-        Dim nobill As Boolean = json("nobill")
+        Dim rows As Integer = json("rows").Trim
+        Dim status As String = json("status").Trim
+        Dim nonpodtl_id As Integer = json("nonpodtl_id").Trim
+        Dim accountcodeid As String = json("accountcodeid").Trim
+        Dim accountcode As String = json("accountcode").Trim
+        Dim depid As Integer = json("depid").Trim
+        Dim depname As String = json("depname").Trim
+        Dim buid As Integer = json("buid").Trim
+        Dim buname As String = json("buname").Trim
+        Dim ppid As Integer = json("ppid").Trim
+        Dim ppname As String = json("ppname").Trim
+        Dim pjid As Integer = json("pjid").Trim
+        Dim pjname As String = json("pjname").Trim
+        Dim cost As Double = json("cost").Trim
+        Dim vat As Integer = json("vat").Trim
+        Dim tax As Integer = json("tax").Trim
+        Dim detail As String = json("detail").Trim
+        Dim vendorname As String = json("vendorname").Trim
+        Dim vendorcode As String = json("vendorcode").Trim
+        Dim invoice As String = json("invoice").Trim
+        Dim taxid As String = json("taxid").Trim
+        Dim invoicedate As String = json("invoicedate").Trim
+        Dim nobill As Boolean = json("nobill").Trim
 
-
+        invoice = invoice.Replace(" ", "")
 
         Dim cntrow As Integer = detailtable.Rows.Count + 1
         Try

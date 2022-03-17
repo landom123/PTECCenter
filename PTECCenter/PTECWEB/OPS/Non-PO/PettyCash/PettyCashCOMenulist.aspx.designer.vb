@@ -11,7 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class ClearAdvanceMenuList2
+Partial Public Class PettyCashCOMenulist
+
+    '''<summary>
+    '''btnNew control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''btnSearch control.
@@ -30,15 +39,6 @@ Partial Public Class ClearAdvanceMenuList2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnExport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnExport As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''chkCO control.
@@ -86,24 +86,6 @@ Partial Public Class ClearAdvanceMenuList2
     Protected WithEvents txtclearadv As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtcoderef control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtcoderef As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cboStatusFollow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''txtStartDate control.
     '''</summary>
     '''<remarks>
@@ -120,6 +102,42 @@ Partial Public Class ClearAdvanceMenuList2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboStatusFollow control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtStartDueDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtStartDueDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtEndDueDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtEndDueDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboVendor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboVendor As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cboDepartment control.

@@ -263,4 +263,51 @@ Public Class Users
         conn.Close()
         Return result
     End Function
+    Public Function NonPOPermissionRead(userid As Integer, nonpocode As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_Permisstion"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function D365Code(userid As Integer) As String
+        Dim result As String
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "D365Code_By_Userid"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("D365Code")
+        conn.Close()
+        Return result
+    End Function
+
 End Class

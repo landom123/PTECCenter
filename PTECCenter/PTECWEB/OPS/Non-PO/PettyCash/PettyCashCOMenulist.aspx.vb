@@ -1,14 +1,12 @@
 ﻿Imports System.Drawing
-Imports System.IO
-Imports ClosedXML.Excel
 
-Public Class ClearAdvanceMenuList2
+Public Class PettyCashCOMenulist
     Inherits System.Web.UI.Page
+
+    Public itemtable As DataTable
 
     Public criteria As DataTable = createCriteria()
     Public menutable As DataTable
-    Public itemtable As DataTable
-
     Public cntdt As Integer
 
     Public operator_code As String = ""
@@ -18,10 +16,10 @@ Public Class ClearAdvanceMenuList2
         Dim objbranch As New Branch
         Dim objdep As New Department
         Dim objsec As New Section
-        Dim objjob As New jobs
+        Dim objsupplier As New Supplier
+        'Dim objjob As New jobs
         Dim usercode As String
         usercode = Session("usercode")
-
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -40,22 +38,26 @@ Public Class ClearAdvanceMenuList2
         txtStartDate.Attributes.Add("readonly", "readonly")
         txtEndDate.Attributes.Add("readonly", "readonly")
 
-        operator_code = objNonpo.NonPOPermisstionOperator("CLADV")
-        If Not IsPostBack() Then
 
+
+        txtStartDueDate.Attributes.Add("readonly", "readonly")
+        txtEndDueDate.Attributes.Add("readonly", "readonly")
+        operator_code = objNonpo.NonPOPermisstionOperator("PCCO")
+
+        If Not IsPostBack() Then
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
-
-                objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "CLADV")
+                objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "PCCO")
                 objbranch.SetComboBranchGroup(cboBranchGroup)
                 objbranch.SetComboBranch(cboBranch, "")
+                'objsupplier.SetCboVendorByName(cboVendor, "")
                 objdep.SetCboDepartmentBybranch(cboDepartment, 0)
                 objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
-                chkHO.Checked = True
+                'chkHO.Checked = True
 
                 '------------------------------------
-                If Not Session("criteria_clearadvlist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                    criteria = Session("criteria_clearadvlist")
+                If Not Session("criteria_joblist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_joblist")
                     BindCriteria(criteria)
                     searchjobslist()
                 Else
@@ -69,21 +71,22 @@ Public Class ClearAdvanceMenuList2
 
                 Try
                     'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-                    itemtable = objNonpo.ClearAdvanceList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+                    itemtable = objNonpo.PettyCashCO_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
                 Catch ex As Exception
                     Dim scriptKey As String = "alert"
                     Dim javaScript As String = "alertWarning('search fail');"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
-                Session("advlist") = itemtable
+                Session("joblist") = itemtable
                 BindData()
             End If
         Else
 
-            criteria = Session("criteria_clearadvlist")
-            itemtable = Session("advlist")
+            criteria = Session("criteria_joblist")
+            itemtable = Session("joblist")
         End If
     End Sub
+
     Private Function createCriteria() As DataTable
         Dim dt As New DataTable
 
@@ -92,6 +95,8 @@ Public Class ClearAdvanceMenuList2
         dt.Columns.Add("txtStartDate", GetType(String))
         dt.Columns.Add("txtEndDate", GetType(String))
         dt.Columns.Add("cboStatusFollow", GetType(String))
+        dt.Columns.Add("txtStartDueDate", GetType(String))
+        dt.Columns.Add("txtEndDueDate", GetType(String))
         dt.Columns.Add("cboDep", GetType(String))
         dt.Columns.Add("cboSec", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
@@ -101,29 +106,21 @@ Public Class ClearAdvanceMenuList2
         Return dt
     End Function
 
-    'Private Function createdetailtable() As DataTable
-    '    Dim dt As New DataTable
+    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+        Response.Redirect("PettyCashCO2.aspx")
+    End Sub
 
-    '    dt.Columns.Add("jobcode", GetType(String))
-    '    dt.Columns.Add("jobdate", GetType(Date))
-    '    dt.Columns.Add("jobtype", GetType(String))
-    '    dt.Columns.Add("details", GetType(String))
-    '    dt.Columns.Add("status", GetType(String))
-    '    dt.Columns.Add("closedate", GetType(Date))
-    '    dt.Columns.Add("detailFollow", GetType(String))
-    '    dt.Columns.Add("cost", GetType(Double))
-    '    dt.Columns.Add("link", GetType(String))
-
-    '    Return dt
-    'End Function
     Private Sub BindCriteria(criteria As DataTable)
         If criteria.Rows.Count > 0 Then
             txtclearadv.Text = criteria.Rows(0).Item("txtclearadv")
-            txtcoderef.Text = criteria.Rows(0).Item("txtcoderef")
+            'txtcoderef.Text = criteria.Rows(0).Item("txtcoderef")
 
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
+
+            txtStartDueDate.Text = criteria.Rows(0).Item("txtStartDueDate")
+            txtEndDueDate.Text = criteria.Rows(0).Item("txtEndDueDate")
 
             cboStatusFollow.SelectedValue = criteria.Rows(0).Item("cboStatusFollow")
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
@@ -149,46 +146,19 @@ Public Class ClearAdvanceMenuList2
         Dim objNonPO As New NonPO
         Dim detailtable As New DataTable
         Try
-            If chkCO.Checked Then
-                itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
-                                                                txtcoderef.Text.Trim(),
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
-                                                      "",
-                                                      "",
-                                                        cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString,
-                                                        "CO")
-            ElseIf chkHO.Checked Then
-                itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
-                                                                txtcoderef.Text.Trim(),
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
-                                                        cboDepartment.SelectedItem.Value.ToString,
-                                                        cboSection.SelectedItem.Value.ToString,
-                                                      "",
-                                                      "",
-                                                    "HO")
-            Else
-                itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
-                                                                txtcoderef.Text.Trim(),
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
-                                                        "",
-                                                      "",
-                                                      "",
-                                                      "",
-                                                        "")
-            End If
-
-
-
-            Session("advlist") = itemtable
+            itemtable = objNonPO.PettyCashCO_For_Operator(txtclearadv.Text.Trim(),
+                                                    txtStartDate.Text.Trim(),
+                                                    txtEndDate.Text.Trim(),
+                                                  cboStatusFollow.SelectedItem.Value.ToString,
+                                                    txtStartDueDate.Text.Trim(),
+                                                    txtEndDueDate.Text.Trim(),
+                                                  "",
+                                                  "",
+                                                    cboBranchGroup.SelectedItem.Value.ToString,
+                                                    cboBranch.SelectedItem.Value.ToString,
+                                                    "")
+            Session("joblist") = itemtable
             BindData()
-
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             Dim javaScript As String = "alertWarning('search fail');"
@@ -196,6 +166,41 @@ Public Class ClearAdvanceMenuList2
         End Try
     End Sub
 
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        Dim objbranch As New Branch
+        txtclearadv.Text = ""
+        'txtcoderef.Text = ""
+        txtStartDate.Text = ""
+        txtEndDate.Text = ""
+
+        txtStartDueDate.Text = ""
+        txtEndDueDate.Text = ""
+        cboDepartment.SelectedIndex = -1
+        cboSection.SelectedIndex = -1
+        cboStatusFollow.SelectedIndex = -1
+        cboBranchGroup.SelectedIndex = -1
+        cboBranch.SelectedIndex = -1
+        cboVendor.SelectedIndex = -1
+        If itemtable IsNot Nothing Then
+            itemtable.Rows.Clear()
+        End If
+        If criteria IsNot Nothing Then
+            criteria.Rows.Clear()
+        End If
+        Session("joblist") = itemtable
+        Session("criteria_joblist") = criteria
+
+
+        Dim depid As Integer
+        Dim objsection As New Section
+
+        depid = cboDepartment.SelectedItem.Value
+        objsection.SetCboSection_seccode(cboSection, depid)
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+
+
+        BindData()
+    End Sub
     Private Sub BindData()
         cntdt = itemtable.Rows.Count
         gvRemind.DataSource = itemtable
@@ -211,53 +216,20 @@ Public Class ClearAdvanceMenuList2
         searchjobslist()
     End Sub
 
-    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
-        Dim objbranch As New Branch
-        txtclearadv.Text = ""
-        txtcoderef.Text = ""
-        txtStartDate.Text = ""
-        txtEndDate.Text = ""
+    <System.Web.Services.WebMethod>
+    Public Shared Function dup(ByVal nonpocode As String, ByVal usercode As String, ByVal note As String)
+        Dim objnonpo As New NonPO
+        Try
+            objnonpo.NonPO_Payment_Duplicate(nonpocode, usercode, note)
 
-        cboDepartment.SelectedIndex = -1
-        cboSection.SelectedIndex = -1
-        cboStatusFollow.SelectedIndex = -1
-        cboBranchGroup.SelectedIndex = -1
-        cboBranch.SelectedIndex = -1
-        If itemtable IsNot Nothing Then
-            itemtable.Rows.Clear()
-        End If
-        If criteria IsNot Nothing Then
-            criteria.Rows.Clear()
-        End If
-        Session("joblist") = itemtable
-        Session("criteria_advlist") = criteria
+        Catch ex As Exception
+            Return "fail"
 
-
-        Dim depid As Integer
-        Dim objsection As New Section
-
-        depid = cboDepartment.SelectedItem.Value
-        objsection.SetCboSection_seccode(cboSection, depid)
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-
-        BindData()
-    End Sub
-
-    Private Sub cboBranchGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranchGroup.SelectedIndexChanged
-        Dim objbranch As New Branch
-
-        cboBranch.SelectedIndex = -1
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-    End Sub
-
-    Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
-        cboSection.SelectedIndex = -1
-        Dim depid As Integer
-        Dim objsection As New Section
-
-        depid = cboDepartment.SelectedItem.Value
-        objsection.SetCboSection_seccode(cboSection, depid)
-    End Sub
+            GoTo endprocess
+        End Try
+        Return "success"
+endprocess:
+    End Function
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
         Dim statusAt As Integer = 7
@@ -293,6 +265,9 @@ Public Class ClearAdvanceMenuList2
                 e.Row.Cells.Item(statusAt).BackColor = Color.Gray
             ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
+            ElseIf Data.Item("statusnonpo") = "อนุมัติหักยอดขาย" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Gray
+
             End If
         End If
     End Sub
@@ -303,8 +278,8 @@ Public Class ClearAdvanceMenuList2
 
         Try
             'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-            itemtable = objNonpo.ClearAdvanceList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
-            Session("advlist") = itemtable
+            itemtable = objNonpo.PaymentList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+            Session("joblist") = itemtable
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -313,54 +288,21 @@ Public Class ClearAdvanceMenuList2
         End Try
         BindData()
     End Sub
+    Private Sub cboBranchGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranchGroup.SelectedIndexChanged
+        Dim objbranch As New Branch
 
-
-    Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String)
-
-        Using wb As New XLWorkbook()
-            wb.Worksheets.Add(mydatatable, "General_journal")
-            'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
-
-            Dim filename As String = usercode & "_" & closedate & "_" & Date.Now.ToString
-            Dim encode As String
-            'If (maintable.Rows(0).Item("statusid") = 7) Then
-            '    encode = "(preview)"
-            'Else
-            '    encode = "(final)"
-            'End If
-            Dim byt As Byte() = System.Text.Encoding.UTF8.GetBytes(filename)
-            encode = Convert.ToBase64String(byt)
-
-            'Dim decode As String
-            'Dim b As Byte() = Convert.FromBase64String(encode)
-            'decode = System.Text.Encoding.UTF8.GetString(b)
-
-            Response.Clear()
-            Response.Buffer = True
-            Response.Charset = ""
-            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            Response.AddHeader("content-disposition", "attachment;filename=" & encode & ".xlsx")
-            Using MyMemoryStream As New MemoryStream()
-                wb.SaveAs(MyMemoryStream)
-                MyMemoryStream.WriteTo(Response.OutputStream)
-                Response.Flush()
-                Response.End()
-            End Using
-
-        End Using
+        cboBranch.SelectedIndex = -1
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+        'searchjobslist()
     End Sub
+    Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
+        cboSection.SelectedIndex = -1
+        Dim depid As Integer
+        Dim objsection As New Section
 
-    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
-        Dim createdate As String
-        createdate = Date.Now
-        Dim objnonpo As New NonPO
-        Try
-            ExportToExcel(itemtable, Session("usercode"), createdate)
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('export fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+        depid = cboDepartment.SelectedItem.Value
+        objsection.SetCboSection_seccode(cboSection, depid)
+        'searchjobslist()
+
     End Sub
 End Class
