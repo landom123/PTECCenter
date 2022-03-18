@@ -7,12 +7,14 @@ Public Class CJImprotDBF
     Public menutable As DataTable
     Public editable As DataTable = create()
     Public usercode, username
+    Public _cultureEnInfo As New Globalization.CultureInfo("en-US")
+    Public tempname As String
+    Public filename As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
 
         usercode = Session("usercode")
         username = Session("username")
-        txtCloseDate.Attributes.Add("readonly", "readonly")
 
         'Dim objsupplier As New Supplier
 
@@ -64,17 +66,6 @@ Public Class CJImprotDBF
         gvData.DataBind()
     End Sub
 
-    Protected Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
-
-        Dim InvoiceDate As String
-        Dim objedi As New EDI
-
-        InvoiceDate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
-        editable = objedi.ListInvoice(InvoiceDate, "OIL")
-        Session("edioil") = editable
-        BindData()
-
-    End Sub
 
     Private Sub gvData_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvData.PageIndexChanging
         gvData.PageIndex = e.NewPageIndex
@@ -90,7 +81,7 @@ Public Class CJImprotDBF
         Dim javaScript As String
 
 
-        Dim InvoiceDate As String = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
+        Dim InvoiceDate As String '= txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
         Dim invoiceno As Label
         Dim jsonstr As String
         For i = 0 To gvData.Rows.Count - 1
@@ -148,26 +139,22 @@ Public Class CJImprotDBF
 
     End Sub
 
-    Private Sub btnFind_Command(sender As Object, e As CommandEventArgs) Handles btnFind.Command
+    Private Sub btnOpen_Click(sender As Object, e As EventArgs) Handles btnOpen.Click
 
+        filename = Server.MapPath("~\temp\" & FileUpload1.FileName)
+        tempname = Server.MapPath("~\temp\" & usercode & Guid.NewGuid().ToString & Path.GetExtension(filename))
+        'filename = Path.GetFileName(FileUpload1.FileName)
+        'filename = FileUpload1.FileName
+        'filename = Path.GetDirectoryName(FileUpload1.FileName)
+        'filename = Path.GetFullPath(FileUpload1.FileName)
+        'filename = FileUpload1.PostedFile.FileName
+        If Me.FileUpload1.HasFile Then
+
+            FileUpload1.SaveAs(tempname) 'save file to web server temp
+            'import dbf
+            'remove file
+
+        End If
     End Sub
 
-    'Private Sub btnselectall_Click(sender As Object, e As EventArgs) Handles btnselectall.Click
-    '    Dim chk As CheckBox
-    '    For Each row As GridViewRow In gvData.Rows
-
-    '        chk = CType(row.FindControl("chk"), CheckBox)
-    '        chk.Checked = True
-    '    Next
-
-    'End Sub
-
-    'Private Sub btnunselect_Click(sender As Object, e As EventArgs) Handles btnunselect.Click
-    '    Dim chk As CheckBox
-    '    For Each row As GridViewRow In gvData.Rows
-
-    '        chk = CType(row.FindControl("chk"), CheckBox)
-    '        chk.Checked = False
-    '    Next
-    'End Sub
 End Class

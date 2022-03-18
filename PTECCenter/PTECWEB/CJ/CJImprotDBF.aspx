@@ -19,29 +19,22 @@
                   </li>
                 </ol>
                 <p></p>
-                <div class="card card-login mx-auto mt-5">
-                  <div class="card-header">เลือก Folder</div>
-                  <div class="card-body">
-                      <label class="sr-only" for="inlineFormInputGroupUsername">Folder</label>
-                      <asp:FileUpload ID="FileUpload1" class="btn btn-primary" runat="server" text="เลือกไฟล์" />
-                                <p></p>
-                      <asp:Button ID="btnOpen" class="btn btn-sm  btn-primary" runat="server" Text="เปิด" />&nbsp;
-                   </div>
+                <div class="row">
+                    <div class="col-4" style="text-align:right">
+                        GNDITEM.DBF 
+                    </div>
+                    <div class="col-4">
+                      <asp:FileUpload ID="FileUploadGNDITEM" class="form-control" runat="server" />
+                    </div>
+                    <div class="col-4">
+                      <asp:label ID="lblGNDITEM"  class="form-control" runat="server" text=".." />
+                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-4">
-                        <div class="input-group sm-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">เลือกวันที่</span>
-                          </div>
-                          <asp:TextBox class="form-control" ID="txtCloseDate" runat="server"></asp:TextBox>
-                          &nbsp;<asp:Button ID="btnFind" class="btn btn-sm  btn-primary" runat="server" Text="Find" />&nbsp;
-                          
-                        </div>
-                    </div>
-                    <div class="col-4 text-right">
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save and download" />  
+                    <div class="col-12 ">
+                        <asp:Button ID="btnOpen" class="btn btn-sm  btn-primary" runat="server" Text="ประมวลผล" />&nbsp;
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="ส่งข้อมูล" />  
                     </div>
                 </div>
 

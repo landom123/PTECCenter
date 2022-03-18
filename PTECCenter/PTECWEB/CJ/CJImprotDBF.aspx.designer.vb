@@ -14,13 +14,22 @@ Option Explicit On
 Partial Public Class CJImprotDBF
 
     '''<summary>
-    '''FileUpload1 control.
+    '''FileUploadGNDITEM control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
+    Protected WithEvents FileUploadGNDITEM As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''lblGNDITEM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblGNDITEM As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''btnOpen control.
@@ -30,24 +39,6 @@ Partial Public Class CJImprotDBF
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnOpen As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''txtCloseDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtCloseDate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''btnFind control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''btnSave control.
