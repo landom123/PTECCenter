@@ -23,22 +23,85 @@ Partial Public Class CJImprotDBF
     Protected WithEvents FileUploadGNDITEM As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-    '''lblGNDITEM control.
+    '''txtGNDITEM control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblGNDITEM As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txtGNDITEM As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''btnOpen control.
+    '''FileUploadGNDTndr control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnOpen As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents FileUploadGNDTndr As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''txtGNDTndr control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtGNDTndr As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''FileUploadITM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileUploadITM As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''txtITM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtITM As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''FileUploadCAT control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileUploadCAT As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''txtCAT control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCAT As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''FileUploadTDR control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileUploadTDR As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''txtTDR control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtTDR As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''btnSave control.

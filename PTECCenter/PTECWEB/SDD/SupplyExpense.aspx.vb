@@ -144,6 +144,14 @@
             cboSupplier.SelectedIndex = cboSupplier.Items.IndexOf(cboSupplier.Items.FindByValue(.Item("supplierid")))
             status = .Item("status")
             setBtn(status)
+            Select Case status
+                Case = 1
+                    lblstatus.Text = "บันทึก"
+                Case = 2
+                    lblstatus.Text = "รับรอง"
+                Case = 3
+                    lblstatus.Text = "ยกเลิก"
+            End Select
         End With
     End Sub
 

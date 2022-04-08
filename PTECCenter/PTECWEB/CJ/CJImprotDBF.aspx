@@ -20,20 +20,85 @@
                 </ol>
                 <p></p>
                 <div class="row">
-                    <div class="col-4" style="text-align:right">
-                        GNDITEM.DBF 
+                    <div class="col-4" style="text-align:right;color:red">
+                        *GNDITEM.DBF 
                     </div>
                     <div class="col-4">
-                      <asp:FileUpload ID="FileUploadGNDITEM" class="form-control" runat="server" />
+                      <asp:FileUpload ID="FileUploadGNDITEM" class="form-control" runat="server" accept="GNDITEM.DBF" />
                     </div>
                     <div class="col-4">
-                      <asp:label ID="lblGNDITEM"  class="form-control" runat="server" text=".." />
+                      <asp:textbox ID="txtGNDITEM"  class="form-control" runat="server" text=".."  readonly="true"/>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-4" style="text-align:right;color:red">
+                        *GNDTndr.DBF 
+                    </div>
+                    <div class="col-4">
+                      <asp:FileUpload ID="FileUploadGNDTndr" class="form-control" runat="server" />
+                    </div>
+                    <div class="col-4">
+                      <asp:textbox ID="txtGNDTndr"  class="form-control" runat="server" text=".." readonly="true"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="text-align:right">
+                        ITM.DBF 
+                    </div>
+                    <div class="col-4">
+                      <asp:FileUpload ID="FileUploadITM" class="form-control" runat="server" />
+                    </div>
+                    <div class="col-4">
+                      <asp:textbox ID="txtITM"  class="form-control" runat="server" text=".." readonly="true"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="text-align:right">
+                        CAT.DBF 
+                    </div>
+                    <div class="col-4">
+                      <asp:FileUpload ID="FileUploadCAT" class="form-control" runat="server" />
+                    </div>
+                    <div class="col-4">
+                      <asp:textbox ID="txtCAT"  class="form-control" runat="server" text=".." readonly="true"/>
+                    </div>
+                </div>
+<%--                <div class="row">
+                    <div class="col-4" style="text-align:right">
+                        MOD.DBF 
+                    </div>
+                    <div class="col-4">
+                      <asp:FileUpload ID="FileUploadMOD" class="form-control" runat="server" />
+                    </div>
+                    <div class="col-4">
+                      <asp:textbox ID="txtMOD"  class="form-control" runat="server" text=".." readonly="true"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="text-align:right">
+                        PRO.DBF 
+                    </div>
+                    <div class="col-4">
+                      <asp:FileUpload ID="FileUploadPRO" class="form-control" runat="server" />
+                    </div>
+                    <div class="col-4">
+                      <asp:textbox ID="txtPRO"  class="form-control" runat="server" text=".." readonly="true"/>
+                    </div>
+                </div>--%>
+                <div class="row">
+                    <div class="col-4" style="text-align:right">
+                        TDR.DBF 
+                    </div>
+                    <div class="col-4">
+                      <asp:FileUpload ID="FileUploadTDR" class="form-control" runat="server" />
+                    </div>
+                    <div class="col-4">
+                      <asp:textbox ID="txtTDR"  class="form-control" runat="server" text=".." readonly="true"/>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 ">
-                        <asp:Button ID="btnOpen" class="btn btn-sm  btn-primary" runat="server" Text="ประมวลผล" />&nbsp;
+<%--                        <asp:Button ID="btnOpen" class="btn btn-sm  btn-primary" runat="server" Text="ประมวลผล" />&nbsp;--%>
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="ส่งข้อมูล" />  
                     </div>
                 </div>
@@ -129,6 +194,22 @@
             format:'d/m/Y'
         });
     </script>
+        <script type="text/javascript">
+            function alertSuccess() {
+                Swal.fire(
+                    'สำเร็จ',
+                    '',
+                    'success'
+                )
+            }
 
+            function alertWarning(massage) {
+                Swal.fire(
+                    massage,
+                    '',
+                    'warning'
+                )
+            }
+        </script>
 
 </asp:Content>

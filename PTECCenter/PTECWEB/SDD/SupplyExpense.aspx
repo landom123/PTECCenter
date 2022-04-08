@@ -24,11 +24,14 @@
                 </ol>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-8">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-success" runat="server" Text=" Confirm " />
                         <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text=" Cancel " />
+                    </div>
+                    <div class="col-4" style="text-align:right">
+                        <asp:Label ID="lblstatus"  class="btn btn-sm  btn-success" runat="server" Text="สถานะ"></asp:Label>
                     </div>
                 </div>
 

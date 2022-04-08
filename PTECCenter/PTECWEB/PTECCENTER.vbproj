@@ -128,6 +128,9 @@
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportViewer.WebForms.10.0.40219.1\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
     </Reference>
+    <Reference Include="NDbfReader, Version=2.4.0.0, Culture=neutral, PublicKeyToken=421d1ecd09787b1d, processorArchitecture=MSIL">
+      <HintPath>..\packages\NDbfReader.2.4.0\lib\net45\NDbfReader.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -1779,6 +1782,7 @@
     <Content Include="SDD\ReportTTCostBySupplier.aspx" />
     <Content Include="SDD\SupplyExpense.aspx" />
     <Content Include="SDD\OthersTTCosttoD365.aspx" />
+    <Content Include="SDD\wholesales\SupplyImportWSPrice.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
     <Content Include="SSD\Rpt_Customer_bal.aspx" />
     <Content Include="SSD\newgsm_billingnote01_cover.aspx" />
@@ -3482,7 +3486,7 @@
     </Compile>
     <Compile Include="ACS\testag.aspx.vb">
       <DependentUpon>testag.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ACS\agreement.aspx.designer.vb">
       <DependentUpon>agreement.aspx</DependentUpon>
@@ -3577,6 +3581,7 @@
     </Compile>
     <Compile Include="class\Account.vb" />
     <Compile Include="class\ACS.vb" />
+    <Compile Include="class\CJ.vb" />
     <Compile Include="class\NonPO.vb" />
     <Compile Include="class\Approval.vb" />
     <Compile Include="class\Area.vb" />
@@ -3711,7 +3716,7 @@
     </Compile>
     <Compile Include="OPS\Non-PO\Advance\ClearAdvanceMenuList2.aspx.vb">
       <DependentUpon>ClearAdvanceMenuList2.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\Payment\MenuList.aspx.designer.vb">
       <DependentUpon>MenuList.aspx</DependentUpon>
@@ -3725,7 +3730,7 @@
     </Compile>
     <Compile Include="OPS\Non-PO\Payment\Payment2.aspx.vb">
       <DependentUpon>Payment2.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\Payment\defaultPayment.aspx.designer.vb">
       <DependentUpon>defaultPayment.aspx</DependentUpon>
@@ -3753,7 +3758,7 @@
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx.vb">
       <DependentUpon>PettyCashCO2.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.designer.vb">
       <DependentUpon>PettyCashHO.aspx</DependentUpon>
@@ -3865,6 +3870,13 @@
     </Compile>
     <Compile Include="SDD\OthersTTCosttoD365.aspx.vb">
       <DependentUpon>OthersTTCosttoD365.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyImportWSPrice.aspx.designer.vb">
+      <DependentUpon>SupplyImportWSPrice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyImportWSPrice.aspx.vb">
+      <DependentUpon>SupplyImportWSPrice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SSD\DeducttoNEWGSM.aspx.designer.vb">
