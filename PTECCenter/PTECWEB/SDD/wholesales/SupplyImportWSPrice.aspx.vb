@@ -72,7 +72,7 @@ Public Class SupplyImportWSPrice
         BindData()
     End Sub
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnImport.Click
+    Private Sub btnImport_Click(sender As Object, e As EventArgs) Handles btnImport.Click
         Dim objedi As New EDI
 
         Dim chkerror As Boolean = False
@@ -81,24 +81,54 @@ Public Class SupplyImportWSPrice
         Dim javaScript As String
 
 
-        Dim InvoiceDate As String '= txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
-        Dim invoiceno As Label
-        Dim jsonstr As String
+        Dim saledate, pricedate As DateTime
+        Dim supply As String
+        Dim g91price, g95price, e20price, e85price, b5price, b7price, b10price As Double
+        Dim g91gap, g95gap, e20gap, e85gap, b5gap, b7gap, b10gap As Double
+
+        Dim lblsaledate, lblpricedate, lblsupply As Label
+        Dim lblg91price, lblg95price, lble20price, lble85price, lblb5price, lblb7price, lblb10price As Label
+        Dim lblg91gap, lblg95gap, lble20gap, lble85gap, lblb5gap, lblb7gap, lblb10gap As Label
+        Dim wsobj As New wholesales
         For i = 0 To gvData.Rows.Count - 1
             Dim row As GridViewRow = gvData.Rows(i)
             'Dim id As String = row.Cells(0).Text
             'Dim chkSelect As CheckBox = DirectCast(row.FindControl("chk"), CheckBox)
-            invoiceno = CType(row.FindControl("lblinvoiceno"), Label)
+            lblsaledate = CType(row.FindControl("lblsaledate"), Label)
+            lblpricedate = CType(row.FindControl("lblpricedate"), Label)
+            lblsupply = CType(row.FindControl("lblsupply"), Label)
+            lblg91price = CType(row.FindControl("lblg91price"), Label)
+            lblg95price = CType(row.FindControl("lblg95price"), Label)
+            lble20price = CType(row.FindControl("lble20price"), Label)
+            lble85price = CType(row.FindControl("lble85price"), Label)
+            lblb5price = CType(row.FindControl("lblb5price"), Label)
+            lblb7price = CType(row.FindControl("lblb7price"), Label)
+            lblb10price = CType(row.FindControl("lblb10price"), Label)
+
+            lblg91gap = CType(row.FindControl("lblg91gap"), Label)
+            lblg95gap = CType(row.FindControl("lblg95gap"), Label)
+            lble20gap = CType(row.FindControl("lble20gap"), Label)
+            lble85gap = CType(row.FindControl("lble85gap"), Label)
+            lblb5gap = CType(row.FindControl("lblb5gap"), Label)
+            lblb7gap = CType(row.FindControl("lblb7gap"), Label)
+            lblb10gap = CType(row.FindControl("lblb10gap"), Label)
+
 
             Try
-                '2. save data and get json
-                'result = objedi.SaveTTForD365AndGetJson(invoiceno.Text, usercode) 
-                jsonstr = objedi.SaveInvoiceForD365AndGetJson(invoiceno.Text, usercode) '36317898
-
-                jsonstr = objedi.SaveCnDnAdjustCostForD365AndGetJson(invoiceno.Text, usercode)
+                'insert into database
+                wsobj.Wholesales_Import_Price(lblsaledate.Text, lblpricedate.Text, lblsupply.Text,
+                                              check_empy_return_0(lblg91price.Text), check_empy_return_0(lblg95price.Text),
+                                              check_empy_return_0(lble20price.Text), check_empy_return_0(lble85price.Text),
+                                              check_empy_return_0(lblb5price.Text), check_empy_return_0(lblb7price.Text),
+                                              check_empy_return_0(lblb10price.Text), check_empy_return_0(lblg91gap.Text),
+                                              check_empy_return_0(lblg95gap.Text), check_empy_return_0(lble20gap.Text),
+                                              check_empy_return_0(lble85gap.Text), check_empy_return_0(lblb5gap.Text),
+                                              check_empy_return_0(lblb7gap.Text), check_empy_return_0(lblb10gap.Text), usercode)
 
             Catch ex As Exception
-                javaScript = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
+                chkerror = True
+                Dim err As String = ex.Message.Replace("'", "")
+                javaScript = "<script type='text/javascript'>msgalert('" & err & "');</script>"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
 
             End Try
@@ -106,10 +136,22 @@ Public Class SupplyImportWSPrice
         Next
 
         If chkerror = False Then
-            'mydataset = objedi.EDI_CnDnAdjust_forExcel(InvoiceDate, InvoiceDate)
-            'ExportToExcel(mydataset, "CNDNOIL", InvoiceDate)
+            javaScript = "<script type='text/javascript'>msgalert('บันทึกเรียบร้อย');</script>"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
         End If
     End Sub
+    Public Function check_empy_return_0(chkstring As String) As String
+        'check empy string and return "0"
+        Dim result As String
+
+        If String.IsNullOrEmpty(chkstring) Then
+            result = "0"
+        Else
+            result = chkstring
+        End If
+
+        Return result
+    End Function
     'Private Sub ExportToExcel(mydataset As DataSet, branch As String, closedate As String)
 
     '    Using wb As New XLWorkbook()

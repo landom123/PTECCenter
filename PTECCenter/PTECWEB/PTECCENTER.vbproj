@@ -1782,6 +1782,7 @@
     <Content Include="SDD\ReportTTCostBySupplier.aspx" />
     <Content Include="SDD\SupplyExpense.aspx" />
     <Content Include="SDD\OthersTTCosttoD365.aspx" />
+    <Content Include="SDD\wholesales\SupplyWSQuatation.aspx" />
     <Content Include="SDD\wholesales\SupplyImportWSPrice.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
     <Content Include="SSD\Rpt_Customer_bal.aspx" />
@@ -3870,6 +3871,13 @@
     </Compile>
     <Compile Include="SDD\OthersTTCosttoD365.aspx.vb">
       <DependentUpon>OthersTTCosttoD365.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSQuatation.aspx.designer.vb">
+      <DependentUpon>SupplyWSQuatation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSQuatation.aspx.vb">
+      <DependentUpon>SupplyWSQuatation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SDD\wholesales\SupplyImportWSPrice.aspx.designer.vb">

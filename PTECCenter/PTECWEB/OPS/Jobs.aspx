@@ -587,6 +587,8 @@
         });
     </script>
 
+
+    <!--end datetimepicker ต้องไปทั้งชุด-->
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -597,7 +599,6 @@
         });
 
     </script>
-    <!--end datetimepicker ต้องไปทั้งชุด-->
 
     <script type="text/javascript">
         function alertSuccess() {

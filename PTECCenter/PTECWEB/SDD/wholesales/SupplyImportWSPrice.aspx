@@ -15,7 +15,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
-                           <i class="fa fa-tasks" aria-hidden="true"></i> Import CJ POS to HO
+                           <i class="fa fa-tasks" aria-hidden="true"></i> Import Price
                   </li>
                 </ol>
                 <p></p>
@@ -66,9 +66,9 @@
 			                                    <asp:Label id="lblg91price" runat="server" Text='<%#Eval("g91price")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="G91 Margin">
+	                                    <asp:TemplateField HeaderText="G91 Gap">
 		                                    <ItemTemplate>
-			                                    <asp:Label id="lblg91margin" runat="server" Text='<%#Eval("g91margin")%>'></asp:Label>
+			                                    <asp:Label id="lblg91gap" runat="server" Text='<%#Eval("g91gap")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
 		                                <asp:TemplateField HeaderText="G95 Price">
@@ -76,9 +76,9 @@
 			                                    <asp:Label id="lblg95price" runat="server" Text='<%#Eval("g95price")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="G95 Margin">
+	                                    <asp:TemplateField HeaderText="G95 Gap">
 		                                    <ItemTemplate>
-			                                    <asp:Label id="lblg95margin" runat="server" Text='<%#Eval("g95margin")%>'></asp:Label>
+			                                    <asp:Label id="lblg95gap" runat="server" Text='<%#Eval("g95gap")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>      
 		                                <asp:TemplateField HeaderText="E20 Price">
@@ -86,9 +86,9 @@
 			                                    <asp:Label id="lble20price" runat="server" Text='<%#Eval("e20price")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="E20 Margin">
+	                                    <asp:TemplateField HeaderText="E20 Gap">
 		                                    <ItemTemplate>
-			                                    <asp:Label id="lble20margin" runat="server" Text='<%#Eval("e20margin")%>'></asp:Label>
+			                                    <asp:Label id="lble20gap" runat="server" Text='<%#Eval("e20gap")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>         
 		                                <asp:TemplateField HeaderText="E85 Price">
@@ -96,9 +96,9 @@
 			                                    <asp:Label id="lble85price" runat="server" Text='<%#Eval("e85price")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="E85 Margin">
+	                                    <asp:TemplateField HeaderText="E85 Gap">
 		                                    <ItemTemplate>
-			                                    <asp:Label id="lble85margin" runat="server" Text='<%#Eval("e85margin")%>'></asp:Label>
+			                                    <asp:Label id="lble85gap" runat="server" Text='<%#Eval("e85gap")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>      
 		                                <asp:TemplateField HeaderText="B5 Price">
@@ -106,9 +106,9 @@
 			                                    <asp:Label id="lblb5price" runat="server" Text='<%#Eval("b5price")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="B5 Margin">
+	                                    <asp:TemplateField HeaderText="B5 Gap">
 		                                    <ItemTemplate>
-			                                    <asp:Label id="lblb5margin" runat="server" Text='<%#Eval("b5margin")%>'></asp:Label>
+			                                    <asp:Label id="lblb5gap" runat="server" Text='<%#Eval("b5gap")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>        
 		                                <asp:TemplateField HeaderText="B7 Price">
@@ -116,9 +116,9 @@
 			                                    <asp:Label id="lblb7price" runat="server" Text='<%#Eval("b7price")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="B7 Margin">
+	                                    <asp:TemplateField HeaderText="B7 Gap">
 		                                    <ItemTemplate>
-			                                    <asp:Label id="lblb7margin" runat="server" Text='<%#Eval("b7margin")%>'></asp:Label>
+			                                    <asp:Label id="lblb7gap" runat="server" Text='<%#Eval("b7gap")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>       
 		                                <asp:TemplateField HeaderText="B10 Price">
@@ -126,9 +126,9 @@
 			                                    <asp:Label id="lblb10price" runat="server" Text='<%#Eval("b10price")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="B10 Margin">
+	                                    <asp:TemplateField HeaderText="B10 Gap">
 		                                    <ItemTemplate>
-			                                    <asp:Label id="lblb10margin" runat="server" Text='<%#Eval("b10margin")%>'></asp:Label>
+			                                    <asp:Label id="lblb10gap" runat="server" Text='<%#Eval("b10gap")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>    										  
                                     </Columns>
@@ -163,9 +163,38 @@
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
             scrollInput: false,
-            format:'d/m/Y'
+            format:'d/m/Y H:i'
         });
     </script>
 
+	
+    <script type="text/javascript">
+        function alertSuccess() {
+            Swal.fire(
+                'สำเร็จ',
+                '',
+                'success'
+            )
+        }
+
+        function alertWarning(massage) {
+            Swal.fire(
+                massage,
+                '',
+                'warning'
+            )
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.form-control').selectpicker({
+                liveSearch: true,
+                maxOptions: 1
+            });
+        });
+
+    </script>
 
 </asp:Content>

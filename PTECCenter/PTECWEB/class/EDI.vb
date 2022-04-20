@@ -3,7 +3,179 @@ Imports System.IO
 Imports System.Web.Configuration
 Imports System.Xml
 
+Public Class wholesales
 
+
+    Public Function Wholesales_Calc_Detail_for_Sale(pricedate As DateTime, supplyid As Double, product As String, customer As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Calc_Detail_for_Sale"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+        cmd.Parameters.Add("@supplyid", SqlDbType.BigInt).Value = supplyid
+        cmd.Parameters.Add("@product", SqlDbType.VarChar).Value = product
+        cmd.Parameters.Add("@customer", SqlDbType.VarChar).Value = customer
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Terminal_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Terminal_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Product_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Product_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Customer_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Customer_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Wholesales_Import_Price(ByRef saledate As DateTime, pricedate As DateTime, supply As String,
+                                            g91price As Double, g95price As Double, e20price As Double, e85price As Double,
+                                            b5price As Double, b7price As Double, b10price As Double,
+                                            g91gap As Double, g95gap As Double, e20gap As Double, e85gap As Double,
+                                            b5gap As Double, b7gap As Double, b10gap As Double, usercode As String) As String
+
+        Dim result As String = ""
+        Dim dt As New DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Import_Price"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@saledate", SqlDbType.DateTime).Value = saledate
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+        cmd.Parameters.Add("@supply", SqlDbType.VarChar).Value = supply
+        cmd.Parameters.Add("@g91price", SqlDbType.Float).Value = g91price
+        cmd.Parameters.Add("@g95price", SqlDbType.Float).Value = g95price
+        cmd.Parameters.Add("@e20price", SqlDbType.Float).Value = e20price
+        cmd.Parameters.Add("@e85price", SqlDbType.Float).Value = e85price
+        cmd.Parameters.Add("@b5price", SqlDbType.Float).Value = b5price
+        cmd.Parameters.Add("@b7price", SqlDbType.Float).Value = b7price
+        cmd.Parameters.Add("@b10price", SqlDbType.Float).Value = b10price
+        cmd.Parameters.Add("@g91gap", SqlDbType.Float).Value = g91gap
+        cmd.Parameters.Add("@g95gap", SqlDbType.Float).Value = g95gap
+        cmd.Parameters.Add("@e20gap", SqlDbType.Float).Value = e20gap
+        cmd.Parameters.Add("@e85gap", SqlDbType.Float).Value = e85gap
+        cmd.Parameters.Add("@b5gap", SqlDbType.Float).Value = b5gap
+        cmd.Parameters.Add("@b7gap", SqlDbType.Float).Value = b7gap
+        cmd.Parameters.Add("@b10gap", SqlDbType.Float).Value = b10gap
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+
+        cmd.ExecuteNonQuery()
+        'Try
+        '    adp.SelectCommand = cmd
+        '    adp.Fill(ds)
+        '    dt = ds.Tables(0)
+        'Catch ex As Exception
+        '    Throw ex
+        'End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+End Class
 Public Class EDI
     Public popath As String = WebConfigurationManager.AppSettings("popath")
     Public orderpath As String = WebConfigurationManager.AppSettings("OrderPath")
