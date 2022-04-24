@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class ClearAdvance
+Partial Public Class PettyCashHO2
 
     '''<summary>
     '''btnSave control.
@@ -68,60 +68,6 @@ Partial Public Class ClearAdvance
     Protected WithEvents btnPrint As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
-    '''lbcodeRef control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbcodeRef As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''codeRef control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents codeRef As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lbamount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbamount As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''amount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents amount As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lbtxtremark control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbtxtremark As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtremark control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtremark As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''txtUnsave control.
     '''</summary>
     '''<remarks>
@@ -149,49 +95,31 @@ Partial Public Class ClearAdvance
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboCreateby control.
+    '''cboOwner control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboCreateby As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lbcboBranch control.
+    '''lbpmno control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbcboBranch As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbpmno As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboBranch control.
+    '''txtpmno control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''lbtxtadvno control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbtxtadvno As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtadvno control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtadvno As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtpmno As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Label3 control.
@@ -203,40 +131,31 @@ Partial Public Class ClearAdvance
     Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboDepartment control.
+    '''cboBranch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboDepartment As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lbApprovalcode control.
+    '''txtDuedate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbApprovalcode As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txtDuedate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cboSection control.
+    '''Label9 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''Label7 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label9 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''txtCreateDate control.
@@ -248,22 +167,40 @@ Partial Public Class ClearAdvance
     Protected WithEvents txtCreateDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lbcboOwner control.
+    '''lbtxtBudget control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbcboOwner As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbtxtBudget As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboOwner control.
+    '''txtBudget control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txtBudget As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbCommitDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbCommitDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtCommitDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCommitDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''chkVat control.
@@ -300,60 +237,6 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnFromAddDetail As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''chkpayBack control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkpayBack As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''lbchkpayBack control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbchkpayBack As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtamountpayBack control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtamountpayBack As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''chkdeductSell control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkdeductSell As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''lbchkdeductSell control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbchkdeductSell As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtamountdedusctsell control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtamountdedusctsell As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''btnApproval control.
@@ -491,6 +374,24 @@ Partial Public Class ClearAdvance
     Protected WithEvents hiddenAdvancedetailid As Global.System.Web.UI.HtmlControls.HtmlInputHidden
 
     '''<summary>
+    '''lbtxtdocdate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbtxtdocdate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtdocdate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtdocdate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lbcboAccountCode control.
     '''</summary>
     '''<remarks>
@@ -534,6 +435,24 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtDetail As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbDep control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbDep As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboDep control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboDep As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''lbBU control.
@@ -590,6 +509,24 @@ Partial Public Class ClearAdvance
     Protected WithEvents cboPJ As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''lbBrachSeller control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbBrachSeller As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtBrachSeller control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBrachSeller As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lbPrice control.
     '''</summary>
     '''<remarks>
@@ -644,22 +581,22 @@ Partial Public Class ClearAdvance
     Protected WithEvents txtTax As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label1 control.
+    '''lbNetPrice control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbNetPrice As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboDep control.
+    '''TxtNetPrice control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboDep As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents TxtNetPrice As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lbcboVendor control.

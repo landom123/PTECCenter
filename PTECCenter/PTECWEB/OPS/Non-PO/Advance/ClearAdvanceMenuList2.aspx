@@ -35,11 +35,11 @@
 
                 <div class="row">
                     <div class="col-auto mb-3" style="margin-left: auto;">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server" >
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server">
                         <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
                     </div>
                     <div class="col-auto mb-3">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server" >
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server">
                         <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
                     </div>
                 </div>
@@ -192,7 +192,9 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
-                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                        <div class="d-flex align-items-center">
+                                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" ><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

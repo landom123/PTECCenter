@@ -314,46 +314,42 @@
 
                                     <% End If %>
                                     <% End If %>
-                                    <% If Session("status") = "new" Then%>
                                     <div class="card-footer text-center bg-white">
+                                        <% If Session("status") = "new" Then%>
                                         <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" />
-                                    </div>
-                                    <% ElseIf Session("status") = "read" And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
-                                    <div class="card-footer text-center bg-white">
+                                        <% ElseIf Session("status") = "read" And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
                                         <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                                         <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" />
                                         <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" />
                                         <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน" />
                                         <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" />
-
-                                    </div>
-                                    <% ElseIf Session("status") = "write" And detailtable.Rows(0).Item("statusid") = 1 Then%>
-                                    <div class="card-footer text-center bg-white">
+                                        <% ElseIf Session("status") = "write" And detailtable.Rows(0).Item("statusid") = 1 Then%>
                                         <% If approval Then%>
                                         <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
                                         <% End If %>
                                         <button runat="server" id="btnDisApproval" name="btnEdit" onclick="return disApproval();" class="btn btn-danger">
                                             ไม่อนุมัติ
                                         </button>
-                                    </div>
-                                    <% ElseIf Session("status") = "edit" Then%>
-                                    <div class="card-footer text-center bg-white">
+                                        <% ElseIf Session("status") = "edit" Then%>
                                         <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
                                         <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
+                                        <% End If %>
+                                        <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And Session("secid").ToString = "2" Then%>
+                                        <% If detailtable.Rows(0).Item("statusid") = 8 Then%>
+                                        <asp:Button ID="btnSupportKnowlange" class="btn btn-warning d-none" runat="server" Text="รับเรื่อง" />
+                                        <% End If %>
+                                        <% If (detailtable.Rows(0).Item("statusid") = 9) And Session("secid").ToString = "2" Then%>
+                                        <asp:Button ID="btnSupportClose" class="btn btn-danger d-none" runat="server" Text="ปิดงาน / กรอกรหัส" />
+                                        <% End If %>
+                                        <% End If %>
+
+                                        <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing Then%>
+                                        <% If (detailtable.Rows(0).Item("statusid") = 9) And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
+                                        <asp:Button ID="btnCLADV" class="btn btn-warning" runat="server" Text="สร้างใบ CLADV" />
+                                        <% End If %>
+                                        <% End If %>
                                     </div>
-                                    <% End If %>
-                                    <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And Session("secid").ToString = "2" Then%>
-                                    <% If detailtable.Rows(0).Item("statusid") = 8 Then%>
-                                    <div class="card-footer text-center bg-white" style="display:none;">
-                                        <asp:Button ID="btnSupportKnowlange" class="btn btn-warning" runat="server" Text="รับเรื่อง" />
-                                    </div>
-                                    <% End If %>
-                                    <% If (detailtable.Rows(0).Item("statusid") = 9) And Session("secid").ToString = "2" Then%>
-                                    <div class="card-footer text-center bg-white">
-                                        <asp:Button ID="btnSupportClose" class="btn btn-danger" runat="server" Text="ปิดงาน / กรอกรหัส" />
-                                    </div>
-                                    <% End If %>
-                                    <% End If %>
+
                                 </div>
                             </div>
                             <!-- end card-->
@@ -382,6 +378,36 @@
                                             <div class="row">
                                                 <div class="col-md-12 text-muted">
                                                     แนบเอกสารเมื่อ : <%=Approval_DocDate%>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted">
+                                                    VAT : <%=vat%>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted">
+                                                    TAX : <%=tax%>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted">
+                                                    Vendor : <%=vendorcode%>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted">
+                                                    Tax id : <%=taxid%>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted">
+                                                    Invoice no. : <%=invoice%>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted">
+                                                    InvoiceDateอ : <%=invoicedate%>
                                                 </div>
                                             </div>
                                         </div>

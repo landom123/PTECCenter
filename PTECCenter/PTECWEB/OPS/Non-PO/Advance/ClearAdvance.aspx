@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="ClearAdvance" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ClearAdvance.aspx.vb" Inherits="PTECCENTER.ClearAdvance" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="<%=Page.ResolveUrl("~/css/autocomplete.css")%>" rel="stylesheet">
 
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
@@ -114,6 +115,12 @@
             text-overflow: ellipsis;
         }
 
+        
+        /*####################### CSS FROM ATTATCH ########################*/
+        .attatchItems-link-btndelete .deletedetail{
+            font-size: .7rem
+        }
+        /*####################### END CSS FROM ATTATCH ########################*/
 
         /*####################### CSS FROM MODAL ########################*/
         .modal .modal-body {
@@ -473,7 +480,7 @@
                                         <td colspan="4" style="width: 160px !important; text-align: right;" id="total_amount"><%= total_cost %></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="9" style="width: 360px !important;">
+                                        <td class="d-none" colspan="9" style="width: 360px !important;">
                                             <div class="row">
                                                 <div class="col-11" style="margin-left: auto;">
                                                     <input class="form-check-input chk-img-after" type="checkbox" id="chkdeductSell" name="pay[1][]" runat="server">
@@ -481,7 +488,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td colspan="4" style="width: 160px !important;" id="deduct_sell">
+                                        <td class="d-none" colspan="4" style="width: 160px !important;" id="deduct_sell">
                                             <div class="row">
                                                 <div class="col">
                                                     <asp:TextBox class="form-control noEnterSubmit text-right" type="number" ID="txtamountdedusctsell" runat="server" min="0" Text="0"></asp:TextBox>
@@ -489,7 +496,8 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td colspan="7" style="width: 280px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px;">
+                                        
+                                        <td colspan="20" style="width: 800px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px;">
                                             <h6>VAT
                                             </h6>
                                         </td>
@@ -619,10 +627,16 @@
                                         </div>
                                         <% End If %>
                                         <% End If %>
+                                        <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
+                                            <div class="col-auto">
+                                                <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                                    <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
 
-                                        <div class="col-auto">
-                                            <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
-                                                <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
+                                                <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <%-- end Attatch item--%>
@@ -689,7 +703,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
-                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" disabled />
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
                                             </div>
                                         </div>
                                     </div>
@@ -742,7 +756,7 @@
                     <input type="hidden" class="form-control" id="row" value="0" runat="server">
                     <input type="hidden" class="form-control" id="nextrow" value="0" runat="server">
                     <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
-                    <div class="form-group">
+                    <div class="form-group ">
                         <asp:Label ID="lbcboAccountCode" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="รหัสบัญชี" />
                         <asp:Label ID="lbcboAccountCodeMandatory" CssClass="text-danger" AssociatedControlID="cboAccountCode" runat="server" Text="*" />
                         <asp:DropDownList class="form-control" ID="cboAccountCode" runat="server" onchange="setdetail(this);"></asp:DropDownList>
@@ -813,7 +827,7 @@
                         <p class="text-muted" id="p_tax"></p>
                         <p class="text-muted" id="p_cost"></p>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group autocomplete">
                         <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
                         <asp:DropDownList class="form-control" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
                         <asp:TextBox class="form-control" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1" autocomplete="off"></asp:TextBox>
@@ -834,11 +848,15 @@
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Document date" />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
                     </div>
-                    <div class="gropnobill d-none">
+                    <div class="gropincompletebill d-none">
                         <hr />
                         <div class="form-group pl-4">
                             <input class="form-check-input chk-img-after" type="checkbox" id="chkNoBill" runat="server">
                             <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล" />
+                        </div>
+                        <div class="form-group pl-4">
+                            <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
+                            <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์" />
                         </div>
                     </div>
                 </div>
@@ -892,12 +910,6 @@
         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
         <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
                       (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
-        jQuery('[id$=txtDuedate]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08'
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
         jQuery('[id$=txtinvoicedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -906,12 +918,6 @@
         });
         <% End If %>
         <% else If Session("status_clearadvance").ToString = "new" Then %>
-        jQuery('[id$=txtDuedate]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08'
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
         jQuery('[id$=txtinvoicedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -1218,6 +1224,7 @@
                     const urlParams = new URLSearchParams(window.location.search);
                     const nonpocode = urlParams.get('NonpoCode');
                     var user = "<% =Session("usercode").ToString %>";
+                    var userid = <%= Session("userid") %>;
                     var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
                     $.ajax({
                         type: "POST",
@@ -1230,16 +1237,21 @@
 
 
                             /*alertSuccessToast();*/
-                            if (msg.d == 'success') {
+                            if (msg.d) {
                                 if (!description) {
                                     description = 'Link';
                                 }
                                 /*__doPostBack('AttachTable', '')*/
                                 $('.attatchItems').append(
                                     '<div class="row">' +
-                                    '<div class="col">' +
+                                    '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d +'" >' +
+                                    '<div class="col-auto">' +
                                     '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
-                                    '<span>' + description + '</span></a>' +
+                                    '<span>' + description + '</span></a>'+
+                                    '<a onclick="removeAttach(' + msg.d + ',' + userid+');" class="btn btn-sm pt-0 text-danger deletedetail">' +
+                                    '<i class="fas fa-times"></i>' +
+                                    '</a>' +
+                                    '</div>' +
                                     '</div>' +
                                     '</div>'
                                 );
@@ -1718,8 +1730,6 @@
             //or...
             if (e.which == 13) e.preventDefault();
         });
-    </script>
-    <script type="text/javascript">
         function alertSuccess() {
             Swal.fire(
                 'สำเร็จ',
@@ -1735,5 +1745,12 @@
                 'warning'
             )
         }
+
+        var arrVendor = new Array;
+        $("#<%= cboVendor.ClientID%> option").each(function () {
+            arrVendor.push($(this).val());
+        });
+
+        autocomplete(document.getElementById("<%= txtVendor.ClientID%>"), arrVendor, '<%= cboVendor.ClientID%>', '<%= txttaxid.ClientID%>');
     </script>
 </asp:Content>

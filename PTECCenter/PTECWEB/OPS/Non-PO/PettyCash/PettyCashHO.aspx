@@ -1,7 +1,8 @@
-﻿<%@ Page Title="ClearAdvance" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="PettyCashHO.aspx.vb" Inherits="PTECCENTER.PettyCashHO" %>
+﻿<%@ Page Title="PettyCashHO" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="PettyCashHO.aspx.vb" Inherits="PTECCENTER.PettyCashHO" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+    <link href="<%=Page.ResolveUrl("~/css/autocomplete.css")%>" rel="stylesheet">
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
@@ -114,6 +115,11 @@
             text-overflow: ellipsis;
         }
 
+        /*####################### CSS FROM ATTATCH ########################*/
+        .attatchItems-link-btndelete .deletedetail {
+            font-size: .7rem
+        }
+        /*####################### END CSS FROM ATTATCH ########################*/
 
         /*####################### CSS FROM MODAL ########################*/
         .modal .modal-body {
@@ -121,13 +127,19 @@
             padding-top: 1rem;
         }
 
-        .form-group, .form-control, .bootstrap-select .dropdown-toggle, .bootstrap-select .dropdown-menu {
+        .modal .form-group, .modal .form-control, .modal .bootstrap-select .dropdown-toggle, .modal .bootstrap-select .dropdown-menu {
             font-size: 0.875rem;
         }
 
         .modal-body .btn-light.disabled, .modal-body .btn-light:disabled {
             background-color: #e9ecef;
             border-color: #ced4da;
+        }
+
+        .modal .showCost {
+            background-color: #f7faff;
+            padding: 1rem;
+            font-size: .9rem;
         }
         /*####################### END CSS FROM MODAL ########################*/
     </style>
@@ -170,7 +182,7 @@
                             <button id="btnPrint" class="btn btn-sm  btn-warning" style="color: #495057;" onclick="event.preventDefault();event.stopPropagation();window.print();" title="Print" runat="server">
                                 <i class="fas fa-print"></i>
                             </button>
-                            <a href="ClearAdvanceMenuList2.aspx" class="btn btn-sm btn-danger " >
+                            <a href="ClearAdvanceMenuList2.aspx" class="btn btn-sm btn-danger ">
                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                         </div>
 
@@ -364,7 +376,7 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important; text-overflow: unset;padding-left: 0px;">%WHT</th>
+                                    <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important; text-overflow: unset; padding-left: 0px;">%WHT</th>
 
                                 </tr>
                                 <tr>
@@ -391,7 +403,7 @@
                                         <td colspan="4" style="width: 160px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("buname").ToString() %>"><%= detailtable.Rows(i).Item("buname").ToString() %></td>
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("ppname").ToString() %>"><%= detailtable.Rows(i).Item("ppname").ToString() %></td>
-                                       <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("pjname").ToString() %>"><%= detailtable.Rows(i).Item("pjname").ToString() %></td>
+                                        <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("pjname").ToString() %>"><%= detailtable.Rows(i).Item("pjname").ToString() %></td>
                                         <td colspan="3" style="width: 120px !important; text-align: right;" title="<%= detailtable.Rows(i).Item("cost").ToString() %>"><%= if((detailtable.Rows(i).Item("cost").ToString()) = "0", "", String.Format("{0:n2}", detailtable.Rows(i).Item("cost"))) %>
                                         </td>
                                         <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100, 2) %>"><%= detailtable.Rows(i).Item("vat_per").ToString() %></td>
@@ -481,13 +493,13 @@
                                         </td>
                                         <td colspan="4" style="width: 160px !important; text-align: right; border-left-width: 0px; border-top-width: 0px; padding-right: 5px;">
                                             <b>
-                                            <h6>รวมทั้งสิ้น</h6>
+                                                <h6>รวมทั้งสิ้น</h6>
                                             </b>
                                         </td>
                                         <td colspan="4" style="width: 160px !important; text-align: right;" id="total"><%= total %></td>
                                     </tr>
 
-                                 <%--   <tr>
+                                    <%--   <tr>
                                         <td colspan="20" style="width: 800px !important; text-align: right; padding-right: 5px; border-top-width: 0px;">
                                             <h6>รวมยอดขอเคลียร์ทั้งหมด</h6>
                                         </td>
@@ -588,9 +600,15 @@
                                         <% End If %>
                                         <% End If %>
 
-                                        <div class="col-auto">
-                                            <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
-                                                <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
+                                        <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
+                                            <div class="col-auto">
+                                                <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                                    <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
+
+                                                <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                     <%-- end Attatch item--%>
@@ -651,13 +669,13 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <asp:TextBox class="form-control bg-white" ID="txtComment" runat="server" Style="cursor: auto;" Rows="2" Columns="50" TextMode="MultiLine"  onkeyup="stoppedTyping();" placeholder="Comment . ." value=""></asp:TextBox>
+                                                    <asp:TextBox class="form-control bg-white" ID="txtComment" runat="server" Style="cursor: auto;" Rows="2" Columns="50" TextMode="MultiLine" onkeyup="stoppedTyping();" placeholder="Comment . ." value=""></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
-                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" disabled />
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
                                             </div>
                                         </div>
                                     </div>
@@ -724,11 +742,7 @@
                         <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="Department" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
                     </div>--%>
-                    <div class="form-group">
-                        <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
-                        <asp:DropDownList class="form-control" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
-                        <asp:TextBox class="form-control" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
-                    </div>
+                    
                     <div class="form-group">
                         <asp:Label ID="lbBU" CssClass="form-label" AssociatedControlID="cboBU" runat="server" Text="Business Unit" />
                         <asp:DropDownList class="form-control" ID="cboBU" runat="server"></asp:DropDownList>
@@ -743,16 +757,18 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน (ก่อน VAT)" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onkeyup="setnetprice();calculate();"></asp:TextBox>
                         <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
                     <div class="row">
                         <div class="form-group ">
-                            <div class="col">
-                                <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT (%)" />
+                            <div class="row justify-content-between mr-0 ml-0">
+                                <div class="col text-left align-self-center">
+                                    <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT (%)" />
+                                </div>
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
                             </div>
                             <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                         </div>
@@ -761,10 +777,15 @@
                                 <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="WHT (%)" />
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
                                 <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lbNetPrice" CssClass="form-label" AssociatedControlID="TxtNetPrice" runat="server" Text="จำนวนเงิน (รวม VAT)" />
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="TxtNetPrice" runat="server" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
+                        <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
 
                     <%--<div class="form-group">
@@ -775,32 +796,50 @@
                         <asp:Label ID="lbTax" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="TAX" />
                         <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" Text="0"'></asp:TextBox>
                     </div>--%>
+                    <div class="showCost">
 
-                    <div class="form-group" style="display: none;">
+                        <p class="text-muted" id="p_vat"></p>
+
+                        <p class="text-muted" id="p_tax"></p>
+                        <p class="text-muted font-weight-bold" id="p_cost"></p>
+
+                    </div>
+                    <div class="form-group d-none">
                         <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
                     </div>
 
+                    
                     <!--  ############## End Detail ############### -->
                     <hr />
-                    <h3>Invoice</h3>
+                    <h3>ใบแจ้งหนี้ / ใบส่งของ / ใบกำกับ</h3>
+                    
                     <div class="form-group">
                         <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server"></asp:TextBox>
                     </div>
                     <div class="form-group">
+                        <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
+                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" ></asp:TextBox>
+                    </div>
+                    <div class="form-group autocomplete">
+                        <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
+                        <asp:DropDownList class="form-control d-none" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
+                        <asp:TextBox class="form-control" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
                         <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server"></asp:TextBox>
                     </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
-                    </div>
-                    <div class="gropnobill d-none">
+                    <div class="gropincompletebill d-none">
                         <hr />
                         <div class="form-group pl-4">
                             <input class="form-check-input chk-img-after" type="checkbox" id="chkNoBill" runat="server">
                             <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล" />
+                        </div>
+                        <div class="form-group pl-4">
+                            <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
+                            <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์" />
                         </div>
                     </div>
                 </div>
@@ -894,6 +933,9 @@
 
 
 
+            $('#exampleModal').on('shown.bs.modal', function (e) {
+                calculate();
+            });
             /*$(".listCommentAndAttatch").click(function () {
                 $(".card_attatch").toggle();
                 $(".card_comment").toggle();
@@ -901,13 +943,13 @@
             /*stoppedTyping();*/
             checkUnSave();
             /*
-            const urlParams = new URLSearchParams(window.location.search);
-            const nonpocode = urlParams.get('NonpoCode');
-            if (nonpocode) {
-            checkStatusNonpo();
-            } else {
-            alert('else nonpo')
-            }*/
+        const urlParams = new URLSearchParams(window.location.search);
+        const nonpocode = urlParams.get('NonpoCode');
+        if (nonpocode) {
+        checkStatusNonpo();
+        } else {
+        alert('else nonpo')
+        }*/
 
             <% If Not AttachTable Is Nothing Then %>
                 <% For i = 0 To AttachTable.Rows.Count - 1 %>
@@ -920,7 +962,7 @@
             <% End if %>
 
             $('.DetailArea tr').each(function (index, tr) {
-                    console.log(index);
+                console.log(index);
                 console.log($(this).attr("data-status"));
                 if ($(this).attr("data-status") == "new" || $(this).attr("data-status") == "edit") {
                     $(this).css("background-color", "#d8d8d8");
@@ -1095,39 +1137,46 @@
                     const urlParams = new URLSearchParams(window.location.search);
                     const nonpocode = urlParams.get('NonpoCode');
                     var user = "<% =Session("usercode").ToString %>";
+                    var userid = <%= Session("userid") %>;
                     var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
                     $.ajax({
                         type: "POST",
-                        url: "../Advance/ClearAdvance.aspx/addAttach",
+                        url: "../PettyCash/PettyCashHO.aspx/addAttach",
                         async: true,
                         data: params,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
-
-
                             /*alertSuccessToast();*/
-                            if (msg.d == 'success') {
+                            if (msg.d) {
                                 if (!description) {
                                     description = 'Link';
                                 }
                                 /*__doPostBack('AttachTable', '')*/
                                 $('.attatchItems').append(
                                     '<div class="row">' +
-                                    '<div class="col">' +
+                                    '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d + '" >' +
+                                    '<div class="col-auto">' +
                                     '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
                                     '<span>' + description + '</span></a>' +
+                                    '<a onclick="removeAttach(' + msg.d + ',' + userid + ');" class="btn btn-sm pt-0 text-danger deletedetail">' +
+                                    '<i class="fas fa-times"></i>' +
+                                    '</a>' +
+                                    '</div>' +
                                     '</div>' +
                                     '</div>'
                                 );
                                 alertSuccessToast('บันทึกเรียบร้อย' + description);
                             } else {
-                                alertWarning('Add URL faila');
+                                alertWarning('Add URL fail');
                             }
 
                         },
-                        error: function () {
-                            alertWarning('Add URL fail');
+                        error: function (msg) {
+                            console.log(msg);
+
+                            alertWarning('Add URL faila');
+
                         }
                     });
 
@@ -1200,12 +1249,13 @@
             $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
             $('#<%= cboAccountCode.ClientID%>').val(0);
             $('#<%= cboDep.ClientID%>').val(0);
-            $('#<%= cboBU.ClientID%>').val(0);
+            $('#<%= cboBU.ClientID%>').val(6); //6 = CENTER
             $('#<%= cboPP.ClientID%>').val(0);
             $('#<%= cboPJ.ClientID%>').val(0);
             $('#<%= txtPrice.ClientID%>').val('');
-            $('#<%= txtVat.ClientID%>').val('7');
+            $('#<%= txtVat.ClientID%>').val('');
             $('#<%= txtTax.ClientID%>').val('');
+            $('#<%= TxtNetPrice.ClientID%>').val('');
             $('#<%= txtDetail.ClientID%>').val('');
             $('#<%= cboVendor.ClientID%>').val('');
             $('#<%= txtVendor.ClientID%>').val('');
@@ -1270,7 +1320,7 @@
             $('#<%= chkNoBill.ClientID%>').prop('checked', NoBill.toLowerCase() == "true" ? true : false);
             $('.form-control').selectpicker('refresh');
             /*__doPostBack('setFromDetail', $(row).attr('name'));
-    */
+*/
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
             <% If (Not Session("status_pettycashHO") = "new" And Not Session("status_pettycashHO") = "edit" And Not Session("status_pettycashHO") = "account") Then%>
@@ -1575,7 +1625,6 @@
             $('.modal-footer #btnAddDetail').show();
             $('.modal-body input,.modal-body textarea').removeAttr("readonly");
             $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
-            $('#<% =txtinvoicedate.ClientID%>').attr('readonly', true);
 
             $('.form-control').selectpicker('refresh');
 
@@ -1587,8 +1636,6 @@
             //or...
             if (e.which == 13) e.preventDefault();
         });
-    </script>
-    <script type="text/javascript">
         function alertSuccess() {
             Swal.fire(
                 'สำเร็จ',
@@ -1604,5 +1651,102 @@
                 'warning'
             )
         }
+        function setprice() {
+            let netprice = CheckNumber(document.getElementById("<%=TxtNetPrice.ClientID%>").value);
+            let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            netprice = parseFloat(netprice);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+            if (netprice) {
+
+                var price = document.getElementById("<%= txtPrice.ClientID%>")
+                price.value = (netprice / (1 + (vat / 100) - (tax / 100))).toFixed(2).toLocaleString();
+            }
+        }
+        function setnetprice() {
+            let price = CheckNumber(document.getElementById("<%=txtPrice.ClientID%>").value);
+            let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            price = parseFloat(price);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+            if (price) {
+                var netprice = document.getElementById("<%= TxtNetPrice.ClientID%>")
+                netprice.value = calCostTotal(price, vat, tax).toFixed(2).toLocaleString();
+            }
+        }
+        function calculate() {
+
+            //console.log("############ calculate");
+
+            let netcost = CheckNumber(document.getElementById("<%= txtNetPrice.ClientID%>").value);
+            let cost = CheckNumber(document.getElementById("<%= txtPrice.ClientID%>").value);
+            let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            const p_cost = document.getElementById("p_cost");
+            const p_tax = document.getElementById("p_tax");
+            const p_vat = document.getElementById("p_vat");
+
+            netcost = parseFloat(netcost);
+            //if (netcost > 0) {
+            //    console.log('aa');
+            //}
+            cost = parseFloat(cost);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+
+            //console.log(cost);
+            //console.log(vat);
+            //console.log(tax);
+
+            const c_CostTotal = calCostTotal(cost, vat, tax).toFixed(2).toLocaleString();
+            const c_Vat = calVat(cost, vat).toFixed(2).toLocaleString();
+            const c_Tax = calTax(cost, tax).toFixed(2).toLocaleString();
+
+            //console.log(c_CostTotal);
+            //console.log(c_Vat);
+            //console.log(c_Tax);
+
+            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+                p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
+            } else {
+                p_cost.innerHTML = "";
+            }
+
+            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+                p_vat.innerHTML = "Vat : " + numberWithCommas(c_Vat) + " บาท";
+            } else {
+                p_vat.innerHTML = "";
+            }
+
+            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+                p_tax.innerHTML = "Tax : (" + numberWithCommas(c_Tax) + ") บาท";
+            } else {
+                p_tax.innerHTML = "";
+            }
+
+        }
+
+
+
+        var arrVendor = new Array;
+        var myArray = new Array;
+        //var tst = {};
+        $("#<%= cboVendor.ClientID%> option").each(function () {
+        arrVendor.push($(this).val());
+        myArray[$(this).val()] = $(this).attr("data-taxidno");
+        //tst[$(this).val()] = [$(this).attr("data-taxidno"),"test"]
+    });
+    //for (var key in myArray) {
+    //    console.log("key " + key + " has value " + myArray[key]);
+    //}
+
+
+    //console.log(tst);
+    nonpo_autocomplete(document.getElementById("<%= txtVendor.ClientID%>"), arrVendor, myArray, '<%= txttaxid.ClientID%>');
     </script>
 </asp:Content>

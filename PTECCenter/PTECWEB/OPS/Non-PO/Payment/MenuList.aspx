@@ -51,7 +51,7 @@
                             <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
-                   <%-- <div class="col-md-4 mb-3">
+                    <%-- <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code_ref</span>
@@ -59,7 +59,7 @@
                             <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
                         </div>
                     </div>--%>
-                    
+
                     <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -222,10 +222,12 @@
 
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
-                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
-                                        <button id="btnRun" onclick="dup('<%# String.Format("{0}", Eval("NonPO_Code")) %>','<%= Session("usercode") %>');" class="btn btn-mini text-info" title="คัดลอก">
-                                            <i class="far fa-copy"></i>
-                                        </button>
+                                        <div class="d-flex align-items-center">
+                                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" ><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                            <button id="btnRun" onclick="dup('<%# String.Format("{0}", Eval("NonPO_Code")) %>','<%= Session("usercode") %>');" class="btn btn-mini text-info" title="คัดลอก">
+                                                <i class="far fa-copy"></i>
+                                            </button>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -245,7 +247,7 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
     <script>
-        
+
         jQuery('[id$=txtStartDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             onShow: function (ct) {

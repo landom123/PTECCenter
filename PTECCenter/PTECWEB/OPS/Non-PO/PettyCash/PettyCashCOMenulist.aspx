@@ -1,4 +1,4 @@
-﻿<%@ Page Title="PaymentMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="PettyCashCOMenulist.aspx.vb" Inherits="PTECCENTER.PettyCashCOMenulist" %>
+﻿<%@ Page Title="PettyCashCOMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="PettyCashCOMenulist.aspx.vb" Inherits="PTECCENTER.PettyCashCOMenulist" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -28,8 +28,10 @@
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
                         <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
 
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="Search" />&nbsp;
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
                             <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
+                        
+                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
                         <% End If %>
                     </div>
                 </div>
@@ -67,7 +69,7 @@
                     <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">ตั้งแต่วันที่</span>
+                                <span class="input-group-text">วันที่ส่ง ตั้งแต่</span>
                             </div>
                             <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
                         </div>
@@ -75,7 +77,7 @@
                     <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">จนถึง</span>
+                                <span class="input-group-text">จนถึง วันที่ส่ง</span>
                             </div>
                             <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
 
@@ -178,14 +180,19 @@
                             AllowPaging="true"
                             runat="server">
                             <Columns>
+                                <asp:TemplateField HeaderText="วันที่สร้างรายการ" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("NonPO_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="วันที่ทำรายการ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="วันที่ส่งตรวจสอบ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CommitDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="ผู้เบิก" ItemStyle-HorizontalAlign="center">
@@ -221,10 +228,12 @@
 
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
-                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
-                                        <button id="btnRun" onclick="dup('<%# String.Format("{0}", Eval("NonPO_Code")) %>','<%= Session("usercode") %>');" class="btn btn-mini text-info" title="คัดลอก">
-                                            <i class="far fa-copy"></i>
-                                        </button>
+                                        <div class="d-flex align-items-center">
+                                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" ><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                            <button id="btnRun" onclick="dup('<%# String.Format("{0}", Eval("NonPO_Code")) %>','<%= Session("usercode") %>');" class="btn btn-mini text-info" title="คัดลอก">
+                                                <i class="far fa-copy"></i>
+                                            </button>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

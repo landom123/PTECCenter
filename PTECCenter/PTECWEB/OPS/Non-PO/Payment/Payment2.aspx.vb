@@ -1281,14 +1281,29 @@ endprocess:
     <System.Web.Services.WebMethod>
     Public Shared Function addAttach(ByVal user As String, ByVal url As String, ByVal description As String, ByVal nonpocode As String)
         Dim objNonpo As New NonPO
+        Dim id As String = ""
         Try
-            Dim id As String
             id = objNonpo.NonPO_Attatch_Save(nonpocode, url, description, user)
         Catch ex As Exception
             Return "fail"
         End Try
-        Return "success"
+        Return id
 
+    End Function
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function deleteAttach(ByVal attachid As Integer, userid As Integer)
+
+        Dim objNonpo As New NonPO
+        Try
+            objNonpo.Delete_Attach_By_attachid(attachid, userid)
+        Catch ex As Exception
+            Return "fail"
+
+            GoTo endprocess
+        End Try
+        Return "success"
+endprocess:
     End Function
 
 
@@ -1775,6 +1790,9 @@ endprocess:
 
     Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
         Dim res As String = Request.Form("confirm_value")
+        Dim strarr() As String
+        strarr = res.Split("}")
+        res = strarr(0) + "}"
         Dim jss As New JavaScriptSerializer
         Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
 
@@ -1805,6 +1823,9 @@ endprocess:
         invoice = invoice.Replace(" ", "")
 
         Dim cntrow As Integer = detailtable.Rows.Count + 1
+        While detailtable.Rows.IndexOf(detailtable.Select("row='" & cntrow & "'").FirstOrDefault()) > -1
+            cntrow += 1
+        End While
         Try
             If status = "undefined" Then
                 Dim row As DataRow
