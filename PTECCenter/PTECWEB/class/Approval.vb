@@ -641,7 +641,7 @@ Public Class Approval
         conn.Close()
         Return result
     End Function
-    Public Function Approval_Support_Allow(approvalcode As String, cost As Double, username As String) As String
+    Public Function Approval_Support_Allow(approvalcode As String, cost As Double, vat As Integer, tax As Integer, vendor As String, invoice As String, taxid As String, invoicedate As String, username As String) As String
         Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -655,14 +655,20 @@ Public Class Approval
 
         cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
         cmd.Parameters.Add("@cost", SqlDbType.Money).Value = cost
+        cmd.Parameters.Add("@vat_per", SqlDbType.Int).Value = vat
+        cmd.Parameters.Add("@tax_per", SqlDbType.Int).Value = tax
+        cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
+        cmd.Parameters.Add("@invoice", SqlDbType.VarChar).Value = invoice
+        cmd.Parameters.Add("@taxid", SqlDbType.VarChar).Value = taxid
+        cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(invoicedate), DBNull.Value, DateTime.Parse(invoicedate))
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
 
         'cmd.ExecuteNonQuery()
         adp.SelectCommand = cmd
         adp.Fill(ds)
-        Result = ds.Tables(0).Rows(0).Item("code")
+        result = ds.Tables(0).Rows(0).Item("code")
         conn.Close()
-        Return Result
+        Return result
     End Function
 
     Public Function Approval_Support_Knowledge(approvalcode As String, username As String)

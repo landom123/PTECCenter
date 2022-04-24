@@ -349,7 +349,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="">
                                                 <ItemTemplate>
-                                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" ><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -403,9 +403,16 @@
                                         <% End If %>
                                         <% End If %>
 
-                                        <div class="col-auto">
-                                            <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
-                                                <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
+                                        <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
+                                            <div class="col-auto">
+                                                <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                                    <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
+
+                                                <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <%-- end Attatch item--%>
@@ -621,6 +628,7 @@
                     const urlParams = new URLSearchParams(window.location.search);
                     const nonpocode = urlParams.get('ADV');
                     var user = "<% =Session("usercode").ToString %>";
+                    var userid = <%= Session("userid") %>;
                     var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
                     $.ajax({
                         type: "POST",
@@ -633,16 +641,21 @@
 
 
                             /*alertSuccessToast();*/
-                            if (msg.d == 'success') {
+                            if (msg.d) {
                                 if (!description) {
                                     description = 'Link';
                                 }
                                 /*__doPostBack('AttachTable', '')*/
                                 $('.attatchItems').append(
                                     '<div class="row">' +
-                                    '<div class="col">' +
+                                    '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d + '" >' +
+                                    '<div class="col-auto">' +
                                     '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
                                     '<span>' + description + '</span></a>' +
+                                    '<a onclick="removeAttach(' + msg.d + ',' + userid + ');" class="btn btn-sm pt-0 text-danger deletedetail">' +
+                                    '<i class="fas fa-times"></i>' +
+                                    '</a>' +
+                                    '</div>' +
                                     '</div>' +
                                     '</div>'
                                 );

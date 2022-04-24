@@ -1255,13 +1255,13 @@ endprocess:
     <System.Web.Services.WebMethod>
     Public Shared Function addAttach(ByVal user As String, ByVal url As String, ByVal description As String, ByVal nonpocode As String)
         Dim objNonpo As New NonPO
+        Dim id As String = ""
         Try
-            Dim id As String
             id = objNonpo.NonPO_Attatch_Save(nonpocode, url, description, user)
         Catch ex As Exception
             Return "fail"
         End Try
-        Return "success"
+        Return id
 
     End Function
 

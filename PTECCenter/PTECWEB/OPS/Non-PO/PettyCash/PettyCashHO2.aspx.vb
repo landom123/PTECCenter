@@ -2,7 +2,7 @@
 Imports System.Web.Script.Serialization
 Imports ClosedXML.Excel
 
-Public Class PettyCashCO2
+Public Class PettyCashHO2
     Inherits System.Web.UI.Page
     Public AttachTable As DataTable '= createtable()
     Public CommentTable As DataTable '= createtable()
@@ -224,7 +224,6 @@ endprocess:
 
                     End If
 
-                    sethead(head)
                     setmain(maintable)
                     'SetBtn(1)
                 Catch ex As Exception
@@ -232,16 +231,6 @@ endprocess:
                     Dim javaScript As String = "alertWarning('Find Fail')"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
-            ElseIf Not Request.QueryString("f") Is Nothing Then
-                Dim objjob As New jobs
-                Dim ds As New DataSet
-                If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
-                    Session("status_pcco") = "new"
-                    codeRef.Text = Request.QueryString("code_ref").ToString
-                    ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", Session("usercode").ToString)
-                    head = ds.Tables(0)
-                    sethead(head)
-                End If
             Else
                 Session("status_pcco") = "new"
 
@@ -342,17 +331,6 @@ endprocess:
         End Try
         Return npoPermission
     End Function
-
-    Private Sub sethead(dt As DataTable)
-        With dt
-
-            codeRef.Text = .Rows(0).Item("coderef").ToString
-            'amount.Text = String.Format("{0:n2}", .Rows(0).Item("amount"))
-            txtremark.Text = .Rows(0).Item("remark").ToString
-
-        End With
-
-    End Sub
 
     Private Sub setmaindefault()
 
@@ -1452,7 +1430,7 @@ endprocess:
 
             'insert
             With maintable
-                .Rows.Add(0, "", "", codeRef.Text.Trim(), 0, 0, "", "",
+                .Rows.Add(0, "", "", "", 0, 0, "", "",
                               cboBranch.SelectedItem.Value, 0, 0,
                               0, 0,
                               0, 0,

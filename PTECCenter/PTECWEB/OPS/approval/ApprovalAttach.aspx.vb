@@ -11,9 +11,13 @@ Public Class approvalattach
         Dim objapproval As New Approval
         Dim approvaldataset = New DataSet
         Dim statusid As Integer
+        Dim objsupplier As New Supplier
 
+        'txtinvoicedate.Attributes.Add("readonly", "readonly")
         If Not IsPostBack() Then
             If Not Request.QueryString("approvalcode") Is Nothing Then
+
+                objsupplier.SetCboVendorByName(cboVendor, "")
                 Try
                     approvaldataset = objapproval.Approval_Find(Request.QueryString("approvalcode"))
                     detailtable = approvaldataset.Tables(0)
@@ -133,7 +137,7 @@ Public Class approvalattach
             Next i
             Dim code As String
             Try
-                code = approval.Approval_Support_Allow(Request.QueryString("approvalcode"), String.Format("{0:n4}", txtCost.Text), Session("usercode"))
+                code = approval.Approval_Support_Allow(Request.QueryString("approvalcode"), String.Format("{0:n4}", txtCost.Text), txtVat.Text, txtTax.Text, txtVendor.Text, txtinvoiceno.Text, txttaxid.Text, txtinvoicedate.Text, Session("usercode"))
             Catch ex As Exception
                 scriptKey = "alert"
                 'Dim javaScript As String = "alert('" & ex.Message & "');"

@@ -1,4 +1,6 @@
 ﻿Imports System.Drawing
+Imports System.IO
+Imports ClosedXML.Excel
 
 Public Class PettyCashCOMenulist
     Inherits System.Web.UI.Page
@@ -232,7 +234,7 @@ endprocess:
     End Function
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 7
+        Dim statusAt As Integer = 8
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -278,7 +280,7 @@ endprocess:
 
         Try
             'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-            itemtable = objNonpo.PaymentList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+            itemtable = objNonpo.PettyCashCO_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
             Session("joblist") = itemtable
 
         Catch ex As Exception
@@ -304,5 +306,53 @@ endprocess:
         objsection.SetCboSection_seccode(cboSection, depid)
         'searchjobslist()
 
+    End Sub
+    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
+        Dim createdate As String
+        createdate = Date.Now
+        Dim objnonpo As New NonPO
+        Try
+            ExportToExcel(itemtable, Session("usercode"), createdate)
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('export fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String)
+
+        Using wb As New XLWorkbook()
+            wb.Worksheets.Add(mydatatable, "General_journal")
+            'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
+
+            Dim filename As String = usercode & "_" & closedate & "_" & Date.Now.ToString
+            Dim encode As String
+            'If (maintable.Rows(0).Item("statusid") = 7) Then
+            '    encode = "(preview)"
+            'Else
+            '    encode = "(final)"
+            'End If
+            Dim byt As Byte() = System.Text.Encoding.UTF8.GetBytes(filename)
+            encode = Convert.ToBase64String(byt)
+
+            'Dim decode As String
+            'Dim b As Byte() = Convert.FromBase64String(encode)
+            'decode = System.Text.Encoding.UTF8.GetString(b)
+
+            Response.Clear()
+            Response.Buffer = True
+            Response.Charset = ""
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            Response.AddHeader("content-disposition", "attachment;filename=" & encode & ".xlsx")
+            Using MyMemoryStream As New MemoryStream()
+                wb.SaveAs(MyMemoryStream)
+                MyMemoryStream.WriteTo(Response.OutputStream)
+                Response.Flush()
+                Response.End()
+            End Using
+
+        End Using
     End Sub
 End Class

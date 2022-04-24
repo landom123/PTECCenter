@@ -12,6 +12,12 @@ Public Class WebForm1
     Public Approval_Bill As String = ""
     Public Approval_Doc As String = ""
     Public Approval_DocDate As String = ""
+    Public vat As String = ""
+    Public tax As String = ""
+    Public vendorcode As String = ""
+    Public invoice As String = ""
+    Public taxid As String = ""
+    Public invoicedate As String = ""
     Public flag As Boolean = True
     Public approval As Boolean = False
     Public deadline As String
@@ -63,6 +69,13 @@ Public Class WebForm1
                     If approvaldataset.Tables(5).Rows.Count > 0 Then
                         Approval_Doc = convertToJSON(approvaldataset.Tables(5))
                         Approval_DocDate = detailtable.Rows(0).Item("attatchdate").ToString
+                        vat = detailtable.Rows(0).Item("vat_per").ToString
+                        tax = detailtable.Rows(0).Item("tax_per").ToString
+                        vendorcode = detailtable.Rows(0).Item("Vendor_Code").ToString
+                        invoice = detailtable.Rows(0).Item("InvoiceNo").ToString
+                        taxid = detailtable.Rows(0).Item("TaxIDNo").ToString
+                        invoicedate = detailtable.Rows(0).Item("InvoiceDate").ToString
+
                     End If
                     If Not Session("status") = "edit" Then
                         Session("status") = "read"
@@ -670,5 +683,9 @@ endprocess:
 
     Private Sub btnSupportClose_Click(sender As Object, e As EventArgs) Handles btnSupportClose.Click
         Response.Redirect("../approval/approvalClose.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+    End Sub
+
+    Private Sub btnCLADV_Click(sender As Object, e As EventArgs) Handles btnCLADV.Click
+        Response.Redirect("../Non-PO/Advance/ClearAdvance.aspx?f=APP&code_ref=" & Request.QueryString("approvalcode"))
     End Sub
 End Class

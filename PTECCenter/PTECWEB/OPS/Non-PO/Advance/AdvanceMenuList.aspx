@@ -46,11 +46,11 @@
 
                 <div class="row">
                     <div class="col-auto" style="margin-left: auto;">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server" >
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server">
                         <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
                     </div>
                     <div class="col-auto">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server" >
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server">
                         <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
                     </div>
                 </div>
@@ -65,10 +65,10 @@
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <div class="input-group-prepend"> 
+                            <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่ (วันที่เบิก)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -76,7 +76,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จนถึง (วันที่เบิก)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
 
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะงานย่อย</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" ></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -93,7 +93,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่ (DueDate)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtStartDueDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtStartDueDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -101,7 +101,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จนถึง (DueDate)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" ></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4 HO">
@@ -117,7 +117,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">แผนก</span>
                             </div>
-                            <asp:DropDownList ID="cboSection" class="form-control" runat="server" ></asp:DropDownList>
+                            <asp:DropDownList ID="cboSection" class="form-control" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4 CO">
@@ -133,10 +133,10 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" ></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <div class="row" style="padding-top: 1rem;">
@@ -221,7 +221,9 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
-                                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" Target="_blank"><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                        <div class="d-flex align-items-center">
+                                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text=""><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -337,7 +339,7 @@
             if ($("#" + "<%= chkHO.ClientID.ToString %>").is(":checked")) {
                 $(".HO").show();
                 $(".CO").hide();
-            } else if ($("#" + "<%= chkCO.ClientID.ToString %>").is(":checked")){
+            } else if ($("#" + "<%= chkCO.ClientID.ToString %>").is(":checked")) {
                 $(".CO").show();
                 $(".HO").hide();
             } else {
