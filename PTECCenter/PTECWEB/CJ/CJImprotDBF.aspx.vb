@@ -297,9 +297,10 @@ error_handler:
             parent As Double, category As Double, mode As Integer,
             hour As Integer, minute As Integer, price As Double,
             dob As DateTime, sysdate As DateTime, quantity As Integer,
-            discpric As Double
+            discpric, entryid As Double
         Dim cjobj As New CJ
         For Each row As DataRow In mytable.Rows
+            entryid = row("entryid")
             branch = usercode
             check = row("check")
             item = row("item")
@@ -314,7 +315,7 @@ error_handler:
             quantity = row("quantity")
             discpric = row("discpric")
             Try
-                cjobj.InsertGNDITEM(branch, check, item, parent, category, mode, hour, minute,
+                cjobj.InsertGNDITEM(entryid, branch, check, item, parent, category, mode, hour, minute,
                                     price, dob, sysdate, quantity, discpric, usercode)
             Catch ex As Exception
 

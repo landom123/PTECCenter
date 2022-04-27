@@ -48,7 +48,7 @@ Public Class CJ
         Return result
     End Function
 
-    Public Function InsertGNDITEM(branch As String, check As Double, item As Double,
+    Public Function InsertGNDITEM(entryid As Double, branch As String, check As Double, item As Double,
                                   parent As Double, category As Double, mode As Integer,
                                   hour As Integer, minute As Integer, price As Double,
                                   dob As DateTime, sysdate As DateTime, quantity As Integer,
@@ -67,6 +67,7 @@ Public Class CJ
         cmd.CommandText = "Insert_GNDITEM"
         cmd.CommandType = CommandType.StoredProcedure
 
+        cmd.Parameters.Add("@entryid", SqlDbType.BigInt).Value = entryid
         cmd.Parameters.Add("@branch", SqlDbType.VarChar).Value = branch
         cmd.Parameters.Add("@check", SqlDbType.BigInt).Value = check
         cmd.Parameters.Add("@item", SqlDbType.BigInt).Value = item
