@@ -285,9 +285,10 @@ error_handler:
                 'remove file
                 'IO.File.Delete(tempname)
             End If
-            result = "บันทึกข้อมูลเรียบร้อย"
+
 
         End If
+        result = "บันทึกข้อมูลเรียบร้อย"
 error_handler:
         Return result
     End Function
