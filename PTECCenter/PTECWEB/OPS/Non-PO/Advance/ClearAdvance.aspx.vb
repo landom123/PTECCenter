@@ -1106,7 +1106,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../Advance/ClearAdvance.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 
 endprocess:
     End Sub
