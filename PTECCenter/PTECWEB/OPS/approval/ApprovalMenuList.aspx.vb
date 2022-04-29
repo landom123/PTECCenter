@@ -134,7 +134,7 @@ Public Class WebForm3
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 6
+        Dim statusAt As Integer = 7
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then

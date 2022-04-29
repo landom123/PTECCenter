@@ -136,8 +136,22 @@ Public Class approvalattach
                 End If
             Next i
             Dim code As String
+            Dim urldes As String
             Try
                 code = approval.Approval_Support_Allow(Request.QueryString("approvalcode"), String.Format("{0:n4}", txtCost.Text), txtVat.Text, txtTax.Text, txtVendor.Text, txtinvoiceno.Text, txttaxid.Text, txtinvoicedate.Text, Session("usercode"))
+
+                Dim ds As DataSet
+                Dim dt As DataTable
+                Dim statusid As Integer
+                ds = approval.Approval_Find(Request.QueryString("approvalcode"))
+                dt = ds.Tables(0)
+                statusid = dt.Rows(0).Item("statusid") '9 = ดำเนินการด้านเอกสาร
+                If detailtable.Rows(0).Item("category").ToString = "หักยอดขาย" And statusid = 9 Then
+                    urldes = "../Non-PO/Advance/ClearAdvance.aspx?f=APP&code_ref=" & code
+                Else
+                    urldes = "../approval/approval.aspx?approvalcode=" & code
+                End If
+
             Catch ex As Exception
                 scriptKey = "alert"
                 'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -146,7 +160,7 @@ Public Class approvalattach
                 GoTo endprocess
             End Try
             scriptKey = "alert"
-            javaScript = "alertSuccessUpload('" & code & "')"
+            javaScript = "alertSuccessUpload('" & code & "','" & urldes & "')"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
 endprocess:
         End If

@@ -686,6 +686,26 @@ endprocess:
     End Sub
 
     Private Sub btnCLADV_Click(sender As Object, e As EventArgs) Handles btnCLADV.Click
+        '        Dim objnonpo As New NonPO
+        '        Dim result As Boolean = True
+        '        Dim msg As String = ""
+        '        If String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) Then
+        '            result = False
+        '            msg = "เคยสร้างใบแล้วเลขที่ : " + detailtable.Rows(0).Item("statusCLADV").ToString
+        '            GoTo endprocess
+        '        End If
+        'endprocess:
+        '        If result = False Then
+        '            Dim scriptKey As String = "alert"
+        '            Dim javaScript As String = "alertWarning('" + msg + "');"
+        '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        '            'MsgBox(msg)
+        '        End If
         Response.Redirect("../Non-PO/Advance/ClearAdvance.aspx?f=APP&code_ref=" & Request.QueryString("approvalcode"))
+
+    End Sub
+
+    Private Sub btnrdrCLADV_Click(sender As Object, e As EventArgs) Handles btnrdrCLADV.Click
+        Response.Redirect("../Non-PO/Advance/ClearAdvance.aspx?NonpoCode=" & detailtable.Rows(0).Item("statusCLADV").ToString)
     End Sub
 End Class

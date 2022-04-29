@@ -169,6 +169,12 @@
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("approvalcode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="เลขที่ใบเคลียร์" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("cladvcode")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                
                                 <asp:TemplateField HeaderText="วันที่แจ้ง">
                                     <ItemTemplate>
                                         <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("createdate")%>'></asp:Label>

@@ -339,13 +339,17 @@
                                         <asp:Button ID="btnSupportKnowlange" class="btn btn-warning d-none" runat="server" Text="รับเรื่อง" />
                                         <% End If %>
                                         <% If (detailtable.Rows(0).Item("statusid") = 9) And Session("secid").ToString = "2" Then%>
-                                        <asp:Button ID="btnSupportClose" class="btn btn-danger d-none" runat="server" Text="ปิดงาน / กรอกรหัส" />
+                                        <asp:Button ID="btnSupportClose" class="btn btn-danger" runat="server" Text="ปิดงาน / กรอกรหัส" />
                                         <% End If %>
                                         <% End If %>
 
                                         <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing Then%>
                                         <% If (detailtable.Rows(0).Item("statusid") = 9) And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
-                                        <asp:Button ID="btnCLADV" class="btn btn-warning" runat="server" Text="สร้างใบ CLADV" />
+                                            <% if String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) %>
+                                                <asp:Button ID="btnCLADV" class="btn btn-warning" runat="server" Text="สร้างใบ CLADV" />
+                                            <% Else %>
+                                                <asp:Button ID="btnrdrCLADV" class="btn btn-success" runat="server" Text="ดูใบ CLADV" />
+                                            <% End If %>
                                         <% End If %>
                                         <% End If %>
                                     </div>
