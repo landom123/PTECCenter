@@ -32,6 +32,13 @@ Public Class NonPO
         obj.DataBind()
 
     End Sub
+    Public Sub SetCboPayby(obj As Object)
+        obj.DataSource = Me.NonPO_Payby_List()
+        obj.DataValueField = "name"
+        obj.DataTextField = "name"
+        obj.DataBind()
+
+    End Sub
 
     Public Sub SetCboAccountCode(cboAccountCode As DropDownList, userid As Integer)
 
@@ -186,6 +193,7 @@ Public Class NonPO
                                     .Rows(i).Item("taxid").ToString,
                                     .Rows(i).Item("invoicedate"),
                                     .Rows(i).Item("nobill"),
+                                    .Rows(i).Item("incompletebill"),
                                     username)
                 End If
             Next
@@ -246,6 +254,7 @@ Public Class NonPO
                                     .Rows(i).Item("taxid").ToString,
                                     .Rows(i).Item("invoicedate"),
                                     .Rows(i).Item("nobill"),
+                                    .Rows(i).Item("incompletebill"),
                                     username)
                 End If
             Next
@@ -310,6 +319,7 @@ Public Class NonPO
                                     .Rows(i).Item("taxid").ToString,
                                     .Rows(i).Item("invoicedate"),
                                     .Rows(i).Item("nobill"),
+                                    .Rows(i).Item("incompletebill"),
                                     username)
                 End If
             Next
@@ -372,6 +382,7 @@ Public Class NonPO
                                     .Rows(i).Item("taxid").ToString,
                                     .Rows(i).Item("invoicedate"),
                                     .Rows(i).Item("nobill"),
+                                    .Rows(i).Item("incompletebill"),
                                     username)
                 End If
             Next
@@ -382,7 +393,7 @@ Public Class NonPO
     Private Function SaveDetailToTable(nonpocode As String, Row As Integer, nonpodtl_id As Integer, detail As String, accountcode As String,
                                        dep As Integer, bu As Integer, pp As Integer, pj As Integer,
                                   docdate As String, branchseller As String, amount As Double, vat As Integer, tax As Integer, vendor As String,
-                                       invoice As String, taxid As String, invoicedate As String, nobill As Boolean, user As String) As String
+                                       invoice As String, taxid As String, invoicedate As String, nobill As Boolean, incompletebill As Boolean, user As String) As String
         Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -414,6 +425,7 @@ Public Class NonPO
         cmd.Parameters.Add("@taxid", SqlDbType.VarChar).Value = taxid
         cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(invoicedate), DBNull.Value, DateTime.Parse(invoicedate))
         cmd.Parameters.Add("@nobill", SqlDbType.Bit).Value = nobill
+        cmd.Parameters.Add("@incompletebill", SqlDbType.Bit).Value = incompletebill
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
 
 
@@ -811,7 +823,7 @@ Public Class NonPO
     End Function
 
     Public Function PaymentList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
-                                          depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String) As DataTable
+                                          depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String, payby As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -836,8 +848,7 @@ Public Class NonPO
         cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
         cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
         cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
-
-
+        cmd.Parameters.Add("@payby", SqlDbType.VarChar).Value = payby
 
 
         adp.SelectCommand = cmd
@@ -1703,7 +1714,31 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
+    Public Function NonPO_Payby_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
 
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_Payby_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@nonpocategory", SqlDbType.VarChar).Value = nonpocategory
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
     Public Function NonPO_GetBudget_PettyCash(username As String) As String
         Dim result As String
         Dim ds As New DataSet

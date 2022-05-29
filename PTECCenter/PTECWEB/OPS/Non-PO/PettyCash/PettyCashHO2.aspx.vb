@@ -1102,7 +1102,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 
 endprocess:
     End Sub
@@ -1174,7 +1174,7 @@ endprocess:
         cboVendor.Text = yy
     End Sub
 
-    Private Sub PettyCashCO2_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+    Private Sub PettyCashHO2_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         Dim totalcostvat As Double
         Dim totalcostNonvat As Double
         Dim totalcost As Double
@@ -1386,7 +1386,7 @@ endprocess:
 
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & payno)
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & payno)
 endprocess:
     End Sub
 
@@ -1466,7 +1466,7 @@ endprocess:
             GoTo endprocess
         End Try
         Session("status_pcco") = "read"
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1484,7 +1484,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1502,7 +1502,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1520,7 +1520,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1544,7 +1544,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
         If result = False Then
             Dim scriptKey As String = "alert"
@@ -1568,7 +1568,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1586,7 +1586,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1604,7 +1604,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
     Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String, nonpocode As String)
@@ -1797,7 +1797,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 
@@ -1814,7 +1814,7 @@ endprocess:
     '            GoTo endprocess
     '        End Try
     '        Session("status_pcco") = "read"
-    '        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+    '        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
     'endprocess:
     '    End Sub
 
@@ -1832,7 +1832,7 @@ endprocess:
     '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
     '            GoTo endprocess
     '        End Try
-    '        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+    '        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
     'endprocess:
     '    End Sub
 
@@ -1850,7 +1850,7 @@ endprocess:
     '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
     '            GoTo endprocess
     '        End Try
-    '        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+    '        Response.Redirect("../PettyCash/PettyCashHO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
     'endprocess:
     '    End Sub
 

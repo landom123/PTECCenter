@@ -11,6 +11,8 @@ Public Class Payment2
     Public menutable As DataTable
     Public PermissionOwner As DataSet '= createtable()
     Public total_cost As String
+    Public total_completebill As String
+    Public total_incompletebill As String
     Public total_vat As String
     Public total_tax As String
     Public total As String
@@ -425,6 +427,8 @@ endprocess:
 
             If .Rows(0).Item("payby").ToString = "cheque" Then
                 chkCheque.Checked = True
+            ElseIf .Rows(0).Item("payby").ToString = "chequecounter" Then
+                chkChequeCounter.Checked = True
             ElseIf .Rows(0).Item("payby").ToString = "cashiercheque" Then
                 chkCashierCheque.Checked = True
             ElseIf .Rows(0).Item("payby").ToString = "tt" Then
@@ -433,6 +437,8 @@ endprocess:
                 chkEFT.Checked = True
             ElseIf .Rows(0).Item("payby").ToString = "deductsell" Then
                 chkdeductSell.Checked = True
+            ElseIf .Rows(0).Item("payby").ToString = "pcx" Then
+                chkPXC.Checked = True
             End If
 
             txtDuedate.Text = .Rows(0).Item("duedate").ToString
@@ -445,9 +451,11 @@ endprocess:
                 cboVendor.Attributes.Remove("disabled")
 
                 chkCheque.Attributes.Remove("disabled")
+                chkChequeCounter.Attributes.Remove("disabled")
                 chkCashierCheque.Attributes.Remove("disabled")
                 chkTT.Attributes.Remove("disabled")
                 chkEFT.Attributes.Remove("disabled")
+                chkPXC.Attributes.Remove("disabled")
                 chkdeductSell.Attributes.Remove("disabled")
 
                 If Not Session("status_payment") = "account" Then
@@ -460,9 +468,11 @@ endprocess:
                 cboVendor.Attributes.Add("disabled", "True")
 
                 chkCheque.Attributes.Add("disabled", "True")
+                chkChequeCounter.Attributes.Add("disabled", "True")
                 chkCashierCheque.Attributes.Add("disabled", "True")
                 chkTT.Attributes.Add("disabled", "True")
                 chkEFT.Attributes.Add("disabled", "True")
+                chkPXC.Attributes.Add("disabled", "True")
                 chkdeductSell.Attributes.Add("disabled", "True")
 
                 txtNote.Attributes.Add("readonly", "readonly")
@@ -994,6 +1004,7 @@ endprocess:
         dt.Columns.Add("taxid", GetType(String))
         dt.Columns.Add("invoicedate", GetType(String))
         dt.Columns.Add("nobill", GetType(Boolean))
+        dt.Columns.Add("incompletebill", GetType(Boolean))
 
         Return dt
     End Function
@@ -1248,6 +1259,8 @@ endprocess:
     End Sub
 
     Private Sub ClearAdvance_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        Dim totalincompletebill As Double
+        Dim totalcompletebill As Double
         Dim totalcost As Double
         Dim cost As Double
         Dim vat As Double
@@ -1272,7 +1285,20 @@ endprocess:
         Catch ex As Exception
             totalcost = 0
         End Try
+        Try
+            totalincompletebill = Convert.ToDouble(detailtable.Compute("SUM(cost)", "incompletebill or nobill"))
+        Catch ex As Exception
+            totalincompletebill = 0
+        End Try
+        Try
+            totalcompletebill = Convert.ToDouble(detailtable.Compute("SUM(cost)", "not incompletebill and not nobill"))
+        Catch ex As Exception
+            totalcompletebill = 0
+        End Try
+
         total_cost = String.Format("{0:n2}", totalcost)
+        total_completebill = String.Format("{0:n2}", totalcompletebill)
+        total_incompletebill = String.Format("{0:n2}", totalincompletebill)
         total_vat = String.Format("{0:n2}", vat)
         total_tax = String.Format("({0:n2})", (tax))
         total = String.Format("{0:n2}", cost)
@@ -1538,6 +1564,8 @@ endprocess:
         Dim payby As String = ""
         If chkCheque.Checked Then
             payby = "cheque"
+        ElseIf chkChequeCounter.Checked Then
+            payby = "chequecounter"
         ElseIf chkCashierCheque.Checked Then
             payby = "cashiercheque"
         ElseIf chkTT.Checked Then
@@ -1546,6 +1574,8 @@ endprocess:
             payby = "eft"
         ElseIf chkdeductSell.Checked Then
             payby = "deductsell"
+        ElseIf chkPXC.Checked Then
+            payby = "pcx"
         End If
 
         If cboOwner.SelectedItem.Value = 0 Then
@@ -1819,6 +1849,7 @@ endprocess:
         Dim taxid As String = json("taxid").Trim
         Dim invoicedate As String = json("invoicedate").Trim
         Dim nobill As Boolean = json("nobill").Trim
+        Dim incompletebill As Boolean = json("incompletebill").Trim
 
         invoice = invoice.Replace(" ", "")
 
@@ -1857,7 +1888,7 @@ endprocess:
                 row("taxid") = taxid
                 row("invoicedate") = invoicedate
                 row("nobill") = nobill
-
+                row("incompletebill") = incompletebill
 
                 detailtable.Rows.Add(row)
             Else
@@ -1889,6 +1920,7 @@ endprocess:
                     .Item("taxid") = taxid
                     .Item("invoicedate") = invoicedate
                     .Item("nobill") = nobill
+                    .Item("incompletebill") = incompletebill
                 End With
             End If
 

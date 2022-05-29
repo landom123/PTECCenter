@@ -14,6 +14,8 @@ Public Class PettyCashCO2
     Public total_costVat As String
     Public total_costNonVat As String
     Public total_cost As String
+    Public total_costinbill As String
+    Public total_costbill As String
     Public total_vat As String
     Public total_tax As String
     Public total As String
@@ -1009,6 +1011,7 @@ endprocess:
         dt.Columns.Add("taxid", GetType(String))
         dt.Columns.Add("invoicedate", GetType(String))
         dt.Columns.Add("nobill", GetType(Boolean))
+        dt.Columns.Add("incompletebill", GetType(Boolean))
 
         Return dt
     End Function
@@ -1197,6 +1200,8 @@ endprocess:
     End Sub
 
     Private Sub PettyCashCO2_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        Dim totalbill As Double
+        Dim totalinbill As Double
         Dim totalcostvat As Double
         Dim totalcostNonvat As Double
         Dim totalcost As Double
@@ -1238,6 +1243,18 @@ endprocess:
         Catch ex As Exception
             totalcost = 0
         End Try
+        Try
+            totalinbill = Convert.ToDouble(detailtable.Compute("SUM(cost)", "(incompletebill or nobill ) and vat_per = 0"))
+        Catch ex As Exception
+            totalinbill = 0
+        End Try
+        Try
+            totalbill = Convert.ToDouble(detailtable.Compute("SUM(cost)", "not incompletebill and not nobill and vat_per = 0"))
+        Catch ex As Exception
+            totalbill = 0
+        End Try
+        total_costbill = String.Format("{0:n2}", totalbill)
+        total_costinbill = String.Format("{0:n2}", totalinbill)
         total_cost = String.Format("{0:n2}", totalcost)
         total_costVat = String.Format("{0:n2}", totalcostvat)
         total_costNonVat = String.Format("{0:n2}", totalcostNonvat)
@@ -1698,6 +1715,7 @@ endprocess:
         Dim taxid As String = json("taxid").Trim
         Dim invoicedate As String = json("invoicedate").Trim
         Dim nobill As Boolean = json("nobill").Trim
+        Dim incompletebill As Boolean = json("incompletebill").Trim
 
         invoice = invoice.Replace(" ", "")
 
@@ -1706,9 +1724,6 @@ endprocess:
         While detailtable.Rows.IndexOf(detailtable.Select("row='" & cntrow & "'").FirstOrDefault()) > -1
             cntrow += 1
         End While
-
-
-
         Try
             If status = "undefined" Then
                 Dim row As DataRow
@@ -1742,6 +1757,7 @@ endprocess:
                 row("taxid") = taxid
                 row("invoicedate") = invoicedate
                 row("nobill") = nobill
+                row("incompletebill") = incompletebill
 
 
                 detailtable.Rows.Add(row)
@@ -1776,6 +1792,7 @@ endprocess:
                     .Item("taxid") = taxid
                     .Item("invoicedate") = invoicedate
                     .Item("nobill") = nobill
+                    .Item("incompletebill") = incompletebill
                 End With
             End If
 

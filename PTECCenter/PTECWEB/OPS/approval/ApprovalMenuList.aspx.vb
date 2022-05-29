@@ -57,7 +57,7 @@ Public Class WebForm3
                     cboWorking.SelectedValue = Session("cboWorking")
                 End If
                 itemtable = approval.ApprovalMenuList(Session("userid"), cboWorking.SelectedItem.Value)
-                gvRemind.Columns(5).Visible = False
+                'gvRemind.Columns(5).Visible = False
                 Session("approvallist") = itemtable
                 BindData()
             End If
