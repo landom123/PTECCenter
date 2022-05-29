@@ -49,6 +49,8 @@ Public Class MenuList
         If Not IsPostBack() Then
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
+
+                objNonpo.SetCboPayby(cboPayby)
                 objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "PAY")
                 objbranch.SetComboBranchGroup(cboBranchGroup)
                 objbranch.SetComboBranch(cboBranch, "")
@@ -159,7 +161,8 @@ Public Class MenuList
                                                       "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
-                                                        cboVendor.SelectedItem.Value)
+                                                        cboVendor.SelectedItem.Value,
+                                                        cboPayby.SelectedItem.Value.ToString.ToLower)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.PaymentList_For_Operator(txtclearadv.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
@@ -171,7 +174,8 @@ Public Class MenuList
                                                         cboSection.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
-                                                        cboVendor.SelectedItem.Value)
+                                                        cboVendor.SelectedItem.Value,
+                                                        cboPayby.SelectedItem.Value.ToString.ToLower)
             Else
                 itemtable = objNonPO.PaymentList_For_Operator(txtclearadv.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
@@ -183,7 +187,8 @@ Public Class MenuList
                                                       "",
                                                       "",
                                                       "",
-                                                        cboVendor.SelectedItem.Value)
+                                                        cboVendor.SelectedItem.Value,
+                                                        cboPayby.SelectedItem.Value.ToString.ToLower)
             End If
 
 
@@ -211,6 +216,7 @@ Public Class MenuList
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
         cboVendor.SelectedIndex = -1
+        cboPayby.SelectedIndex = -1
         If itemtable IsNot Nothing Then
             itemtable.Rows.Clear()
         End If
@@ -262,7 +268,7 @@ endprocess:
     End Function
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 8
+        Dim statusAt As Integer = 9
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then

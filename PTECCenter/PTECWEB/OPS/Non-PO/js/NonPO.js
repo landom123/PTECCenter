@@ -1,12 +1,12 @@
 ﻿function ArabicNumberToText(Number) {
     var Number = CheckNumber(Number);
     var NumberArray = new Array("ศูนย์", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า", "สิบ");
-    var DigitArray = new Array("", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน");
+    var DigitArray = new Array("", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน","สิบ", "ร้อย", "พัน", "หมื่น", "แสน");
     var BahtText = "";
     if (isNaN(Number)) {
         return "ข้อมูลนำเข้าไม่ถูกต้อง";
     } else {
-        if ((Number - 0) > 9999999.9999) {
+        if ((Number - 0) > 999999999.9999) {
             return "ข้อมูลนำเข้าเกินขอบเขตที่ตั้งไว้";
         } else {
             Number = Number.split(".");

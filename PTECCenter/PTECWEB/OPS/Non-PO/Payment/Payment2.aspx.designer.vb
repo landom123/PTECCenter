@@ -302,6 +302,24 @@ Partial Public Class Payment2
     Protected WithEvents lbchkCheque As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''chkChequeCounter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkChequeCounter As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
+
+    '''<summary>
+    '''Label12 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label12 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''chkCashierCheque control.
     '''</summary>
     '''<remarks>
@@ -354,6 +372,24 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lbchkEFT As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''chkPXC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkPXC As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
+
+    '''<summary>
+    '''lbchkPXC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbchkPXC As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''chkdeductSell control.

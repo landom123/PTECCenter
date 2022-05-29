@@ -192,7 +192,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="หัวข้อ">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
+                                        <asp:Label ID="lblApprovalname" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">

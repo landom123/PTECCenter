@@ -109,6 +109,14 @@
                             <asp:DropDownList class="form-control" ID="cboVendor" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">จ่ายโดย</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboPayby" runat="server" AutoPostBack="false"></asp:DropDownList>
+                        </div>
+                    </div>
                     <div class="col-md-4 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -192,6 +200,11 @@
                                 <asp:TemplateField HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Vendor_Code")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="จ่ายโดย" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Pay_by").ToString.ToUpper%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
