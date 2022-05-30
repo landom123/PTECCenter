@@ -633,7 +633,7 @@ endprocess:
                     btnCancel.Enabled = False
                 End If
 
-                btnExport.Visible = False
+                btnExport.Visible = True
                 btnPrint.Visible = True
 
                 'ช่อง ปุ่ม เพิ่มรายการ
@@ -1060,9 +1060,25 @@ endprocess:
             msg = "กรุณาใส่ Vendor"
             GoTo endprocess
         End If
+        If Not chkCheque.Checked And
+            Not chkChequeCounter.Checked And
+            Not chkCashierCheque.Checked And
+            Not chkTT.Checked And
+            Not chkEFT.Checked And
+            Not chkdeductSell.Checked And
+            Not chkPXC.Checked Then
+            result = False
+            msg = "กรุณาเลือกช่องทางจ่ายโดย"
+            GoTo endprocess
+        End If
         If txtNote.Text.Trim() = "" Then
             result = False
             msg = "กรุณาใส่จุดประสงค์"
+            GoTo endprocess
+        End If
+        If txtDuedate.Text.Trim() = "" Then
+            result = False
+            msg = "กรุณาเลือก Duedate"
             GoTo endprocess
         End If
         If cnt_cost <= 0 Then
