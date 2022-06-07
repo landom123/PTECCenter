@@ -914,23 +914,28 @@
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
+                        <div class="row justify-content-between">
+                            <div class="col">
+                                <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
+                            </div>
+                            <div class="col gropincompletebill">
+                                <div class="row flex-nowrap form-group">
+                                    <div class="pr-4" style="color: #0f66c4;">
+                                        <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
+                                        <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
+                                    </div>
+                                    <div class="pl-4" style="color: #0f66c4;">
+                                        <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
+                                        <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
-                    </div>
-                    <div class="gropincompletebill">
-                        <hr />
-                        <div class="form-group pl-4">
-                            <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
-                            <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
-                        </div>
-                        <div class="form-group pl-4">
-                            <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
-                            <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1038,7 +1043,7 @@
 
         $(window).load(function () {
 
-            //$('.form-control').prop('disabled', false);
+            $('.form-control').prop('disabled', false);
         });
         $(document).ready(function () {
             var groups = {};

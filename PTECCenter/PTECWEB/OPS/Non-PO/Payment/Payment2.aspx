@@ -410,7 +410,7 @@
                                             <div class="col-2">
                                                 <asp:Label ID="Label11" CssClass="form-label" runat="server" Text="จ่ายโดย" />
                                             </div>
-                                            <div class="col-auto pr-4" style="color:#0f66c4 ;">
+                                            <div class="col-auto pr-4" style="color: #0f66c4;">
                                                 <input class="form-check-input chk-img-after" type="checkbox" id="chkCheque" runat="server">
                                                 <asp:Label ID="lbchkCheque" CssClass="form-check-label" AssociatedControlID="chkCheque" runat="server" Text="เช็ค" />
                                             </div>
@@ -505,7 +505,7 @@
                                                                         ,'<%= detailtable.Rows(i).Item("incompletebill").ToString() %>'
                                                                         );">
                                         <%--<tr class="draggable detail" name="<%= detailtable.Rows(i).Item("row").ToString() %>">--%>
-                                        <td colspan="2" style="width: 80px !important; height: 22px; " title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
+                                        <td colspan="2" style="width: 80px !important; height: 22px;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", detailtable.Rows(i).Item("accountcodeid").ToString()) %></td>
                                         <td colspan="7" style="width: 320px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
                                         <%--<td colspan="2" style="width: 80px !important;" title="<%= detailtable.Rows(i).Item("depname").ToString() %>"><%= detailtable.Rows(i).Item("depname").ToString() %></td>
                                             <td colspan="5" style="width: 200px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>--%>
@@ -545,13 +545,13 @@
                                                     ข้าพเจ้าขอรับรองว่า ได้ใช้จ่ายเงินจริงตามที่ระบุไว้ในเอกสารนี้ทั้งหมด<br />
                                                     เพื่อกิจการของบริษัทฯ แต่ไม่สามารถนำส่งใบเสร็จรับเงินตามระเบียบของบริษัทได้<br />
                                                 </p>
-                                                <p class="text-left" >
+                                                <p class="text-left">
                                                     <br />
                                                     U = บิลไม่สมบูรณ์ &nbsp;&nbsp;&nbsp;&nbsp;N = ไม่มีบิล<br />
                                                 </p>
                                             </div>
                                         </td>
-                                        <td colspan="4" style="width: 160px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px;border-left-width: 0px;">
+                                        <td colspan="4" style="width: 160px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-left-width: 0px;">
                                             <h6>รวมยอดที่มีบิล
                                             </h6>
                                         </td>
@@ -911,24 +911,30 @@
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Document no." />
+                        <div class="row justify-content-between">
+                            <div class="col">
+                                <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Document no." />
+                            </div>
+                            <div class="col gropincompletebill">
+                                <div class="row flex-nowrap form-group">
+                                    <div class="pr-4" style="color: #0f66c4;">
+                                        <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
+                                        <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
+                                    </div>
+                                    <div class="pl-4" style="color: #0f66c4;">
+                                        <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
+                                        <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Document date" />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
                     </div>
-                    <div class="gropincompletebill">
-                        <hr />
-                        <div class="form-group pl-4">
-                            <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
-                            <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
-                        </div>
-                        <div class="form-group pl-4">
-                            <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
-                            <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
-                        </div>
-                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
@@ -985,7 +991,7 @@
 
         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
         <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
-  (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
+(maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,

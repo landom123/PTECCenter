@@ -716,33 +716,6 @@ Partial Public Class ClearAdvance
     Protected WithEvents lbinvoiceno As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtinvoiceno control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtinvoiceno As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lbinvoicedate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbinvoicedate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtinvoicedate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtinvoicedate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''chkNoBill control.
     '''</summary>
     '''<remarks>
@@ -777,6 +750,33 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lbchkIncompleteBill As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtinvoiceno control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtinvoiceno As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbinvoicedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbinvoicedate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtinvoicedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtinvoicedate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''btnAddDetails control.
