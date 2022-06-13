@@ -3578,6 +3578,7 @@
       <DependentUpon>ChangePassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Chilkat\JsonArray.vb" />
     <Compile Include="CJ\CJImprotDBF.aspx.designer.vb">
       <DependentUpon>CJImprotDBF.aspx</DependentUpon>
     </Compile>

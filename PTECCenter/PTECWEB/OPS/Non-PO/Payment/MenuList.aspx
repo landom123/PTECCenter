@@ -227,7 +227,7 @@
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="สถาณะ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusNonPO")%>'></asp:Label>
                                     </ItemTemplate>
