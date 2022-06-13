@@ -1,6 +1,9 @@
 ﻿Imports ClosedXML.Excel
 Imports ExcelDataReader
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 Imports System.IO
+Imports System.Web.Script.Serialization
 
 Public Class approvalHO
 
@@ -45,6 +48,7 @@ Public Class approvalHO
     Private Function creatervtable() As DataTable
 
         Dim dt As New DataTable
+
         dt.Columns.Add("id", GetType(Integer))
         dt.Columns.Add("branch", GetType(String))
         dt.Columns.Add("detail", GetType(String))
@@ -85,12 +89,12 @@ Public Class approvalHO
                 dr("branch") = r.Item("column0")
                 dr("detail") = r.Item("column1")
                 dr("amount") = r.Item("column2")
-                dr("date") = r.Item("column3")
+                'dr("date") = r.Item("column3")
                 rvtable.Rows.Add(dr)
 
             Next
 
-
+            'GetData()
             Session("rv") = rvtable
             gvData.DataSource = rvtable
             gvData.DataBind()
@@ -110,9 +114,9 @@ Public Class approvalHO
 
         Dim objgsm As New gsm
         Try
-            For Each row As DataRow In rvtable.Rows
-                objgsm.Deduct_Save(row("branch"), row("detail"), row("amount"), row("date"), usercode)
-            Next row
+            'For Each row As DataRow In rvtable.Rows
+            'objgsm.Deduct_Save(row("branch"), row("detail"), row("amount"), row("date"), usercode)
+            'Next row
         Catch ex As Exception
             result = False
             scriptKey = "alert"
@@ -154,5 +158,19 @@ Public Class approvalHO
             ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
         End If
 
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim confirmValue As String = Request.Form("confirm_value")
+        'Dim rawresp As String = "[{""id"":""1""},{""id"":""2""},{""id"":""3""},{""id"":""4""},{""id"":""5""},{""id"":""6""},{""id"":""7""}]"
+
+        Dim result = JsonConvert.DeserializeObject(Of ArrayList)(confirmValue)
+        Dim token As JToken
+        Dim id
+        For Each value As Object In result
+            token = JObject.Parse(value.ToString())
+            id = token.SelectToken("id")
+
+        Next value
     End Sub
 End Class

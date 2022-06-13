@@ -41,15 +41,6 @@ Partial Public Class approvalHO
     Protected WithEvents btnOpen As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnSave control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''gvData control.
     '''</summary>
     '''<remarks>
@@ -57,4 +48,40 @@ Partial Public Class approvalHO
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gvData As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''hfCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hfCount As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''btnFromAddDetail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnFromAddDetail As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''btnDelete control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnDelete As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnAddDetails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddDetails As Global.System.Web.UI.WebControls.Button
 End Class
