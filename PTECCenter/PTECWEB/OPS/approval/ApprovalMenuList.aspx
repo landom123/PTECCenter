@@ -171,7 +171,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="เลขที่ใบเคลียร์" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("cladvcode")%>'></asp:Label>
+                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("cladvcode")%>' ToolTip='<%#Eval("cladvstatus")%>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 

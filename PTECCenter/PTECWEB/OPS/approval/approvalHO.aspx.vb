@@ -150,15 +150,15 @@ Public Class approvalHO
         gvData.DataBind()
     End Sub
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        If SaveData() = True Then
+    'Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+    '    If SaveData() = True Then
 
-            Dim ScriptKey As String = "alert"
-            Dim javaScript As String = "alertWarning('บันทึกเรียบร้อย');"
-            ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
-        End If
+    '        Dim ScriptKey As String = "alert"
+    '        Dim javaScript As String = "alertWarning('บันทึกเรียบร้อย');"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+    '    End If
 
-    End Sub
+    'End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Dim confirmValue As String = Request.Form("confirm_value")
@@ -167,10 +167,12 @@ Public Class approvalHO
         Dim result = JsonConvert.DeserializeObject(Of ArrayList)(confirmValue)
         Dim token As JToken
         Dim id
-        For Each value As Object In result
-            token = JObject.Parse(value.ToString())
-            id = token.SelectToken("id")
+        If result IsNot Nothing Then
+            For Each value As Object In result
+                token = JObject.Parse(value.ToString())
+                id = token.SelectToken("id")
 
-        Next value
+            Next value
+        End If
     End Sub
 End Class

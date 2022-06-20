@@ -488,7 +488,7 @@
                                 <tfoot>
                                     <!--  total -->
                                     <tr>
-                                        <td rowspan="7" colspan="14" style="width: 560px !important; vertical-align: text-top;color: #065ca9 !important; font-size: .8rem; border-top-width: 0px; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
+                                        <td rowspan="7" colspan="14" style="width: 560px !important; vertical-align: text-top; color: #065ca9 !important; font-size: .8rem; border-top-width: 0px; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
                                             <div class="gropincompletebill">
                                                 <p class="text-break mb-0">
                                                     <br />
@@ -892,7 +892,7 @@
                         <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
                     </div>--%>
-                    <div class="showCost">
+                    <div class="showCost mb-3">
 
                         <p class="text-muted" id="p_vat"></p>
 
@@ -900,10 +900,20 @@
                         <p class="text-muted font-weight-bold" id="p_cost"></p>
 
                     </div>
+                    <div class="gropincompletebill form-group">
+                            <div class="pl-4 mb-1" style="color: #0f66c4;">
+                                <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
+                                <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
+                            </div>
+                            <div class="pl-4 mb-1" style="color: #0f66c4;">
+                                <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
+                                <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
+                            </div>
+                    </div>
                     <div class="form-group autocomplete">
                         <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
                         <asp:DropDownList class="form-control d-none" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
-                        <asp:TextBox class="form-control" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
+                        <asp:TextBox class="form-control bill" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
                     </div>
 
                     <!--  ############## End Detail ############### -->
@@ -911,31 +921,15 @@
                     <h3>ใบเสร็จรับเงิน / ใบกำกับ</h3>
                     <div class="form-group">
                         <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit bill" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
-                            </div>
-                            <div class="col gropincompletebill">
-                                <div class="row flex-nowrap form-group">
-                                    <div class="pr-4" style="color: #0f66c4;">
-                                        <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
-                                        <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
-                                    </div>
-                                    <div class="pl-4" style="color: #0f66c4;">
-                                        <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
-                                        <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
+                        <asp:TextBox class="form-control noEnterSubmit bill" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit " type="input" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1035,7 +1029,7 @@
         });
         <% End If %>
 
-    </script>
+        </script>
 
     <script>
         var cntdetail =<% =chkunsave%>;
@@ -1161,8 +1155,10 @@ alert('else nonpo')
             tax = parseFloat(tax);
             if (netprice) {
 
+
                 var price = document.getElementById("<%= txtPrice.ClientID%>")
-                price.value = (netprice / (1 + (vat / 100) - (tax / 100))).toFixed(2).toLocaleString();
+                //console.log((netprice / (1 + (vat / 100) - (tax / 100))))
+                price.value = (netprice / (1 + (vat / 100) - (tax / 100))).toFixed(4).toLocaleString();
             }
         }
         function setnetprice() {
@@ -1590,7 +1586,7 @@ alert('else nonpo')
             $('#<%= txtdocdate.ClientID%>').val(docdate);
             $('#<%= chkNoBill.ClientID%>').prop('checked', NoBill.toLowerCase() == "true" ? true : false);
             $('#<%= chkIncompleteBill.ClientID%>').prop('checked', IncompleteBill.toLowerCase() == "true" ? true : false);
-            
+
             setnetprice();
             calculate();
 
@@ -1603,6 +1599,12 @@ alert('else nonpo')
             $('.modal-footer #btnAddDetail').hide();
             $('.modal-body input,.modal-body textarea').attr('readonly', true);
             $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').attr('disabled', true);
+            
+            <% Else %>
+            $('.modal-footer #btnAddDetail').show();
+            $('.modal-body input,.modal-body textarea').removeAttr("readonly");
+            $('.modal-body input,.modal-body textarea').removeAttr("disabled");
+            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
             <% End If %>
             <% End If %>
 
@@ -1755,6 +1757,7 @@ alert('else nonpo')
         $('#<% =btnFromAddDetail.ClientID%>').click(function () {
             $('.modal-footer #btnAddDetail').show();
             $('.modal-body input,.modal-body textarea').removeAttr("readonly");
+            $('.modal-body input,.modal-body textarea').removeAttr("disabled");
             $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
 
 
@@ -1814,17 +1817,35 @@ alert('else nonpo')
         $("#exampleModal input:checkbox").on('click', function () {
             // in the handler, 'this' refers to the box clicked on
             //console.log(this);
-            var $box = $(this);
+            const $box = $(this);
+            const elem = document.querySelectorAll('.bill');
+            const array = elem;
             if ($box.is(":checked")) {
                 // the name of the box is retrieved using the .attr() method
                 // as it is assumed and expected to be immutable
-                var group = "#exampleModal input:checkbox";
+                const group = "#exampleModal input:checkbox";
                 // the checked state of the group/box on the other hand will change
                 // and the current value is retrieved using .prop() method
                 $(group).prop("checked", false);
                 $box.prop("checked", true);
+
+                
+                array.forEach((element) => {
+                    console.log(`${element.textContent}`);
+                    element.value = '';
+                    element.setAttribute("disabled", true);
+                });
+                //elem.removeAttribute("disabled");
+
+
             } else {
                 $box.prop("checked", false);
+
+                array.forEach((element) => {
+                    console.log(`${element}`);
+                    element.value = '';
+                    element.removeAttribute("disabled");
+                });
             }
         });
 
