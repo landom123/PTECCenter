@@ -821,6 +821,38 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
+    Public Function PaymentList_For_Owner(nonpocode As String, startdate As String, enddate As String, working As String, startduedate As String, endduedate As String,
+                                           vendor As String, payby As String, userid As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_PaymentList_For_Owner"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
+        cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
+        cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
+        cmd.Parameters.Add("@payby", SqlDbType.VarChar).Value = payby
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
 
     Public Function PaymentList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
                                           depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String, payby As String) As DataTable

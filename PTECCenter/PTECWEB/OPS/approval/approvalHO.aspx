@@ -52,8 +52,8 @@
                                         EmptyDataText="No data available."
                                         runat="server">
                                         <Columns>
-                                            <asp:TemplateField>
-                                                <HeaderTemplate>
+                                            <asp:TemplateField HeaderStyle-Width="50px" HeaderStyle-CssClass="text-center" ItemStyle-Width="50px" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="Center">
+                                                <HeaderTemplate >
                                                     <asp:CheckBox ID="chkAll" runat="server"
                                                         onclick="checkAll(this);" />
                                                 </HeaderTemplate>
@@ -70,6 +70,7 @@
                                             <asp:TemplateField HeaderText="branch">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("branch")%>'></asp:Label>
+                                                    <asp:Label ID="lbbranch2" CssClass="badge badge-success" runat="server" Text='<%#Eval("branch")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -165,8 +166,9 @@
             )
         }
         function Check_Click(objRef) {
+
             //Get the Row based on checkbox
-            var row = objRef.parentNode.parentNode;
+            var row = objRef.parentNode.parentNode.parentNode;
 
             //Get the reference of GridView
             var GridView = row.parentNode;
@@ -174,13 +176,14 @@
             //Get all input elements in Gridview
             var inputList = GridView.getElementsByTagName("input");
 
+            var headerCheckBox = inputList[0];
+            var checked = true;
             for (var i = 0; i < inputList.length; i++) {
                 //The First element is the Header Checkbox
-                var headerCheckBox = inputList[0];
 
                 //Based on all or none checkboxes
                 //are checked check/uncheck Header Checkbox
-                var checked = true;
+                checked = true;
                 if (inputList[i].type == "checkbox" && inputList[i] != headerCheckBox) {
                     if (!inputList[i].checked) {
                         checked = false;
@@ -189,13 +192,41 @@
                 }
             }
             headerCheckBox.checked = checked;
-
         }
+        //function Check_Click(objRef) {
+        //    var startTime = performance.now()
+
+
+        //    //Get the Row based on checkbox
+        //    let row = objRef.parentNode.parentNode.parentNode;
+
+        //    //Get the reference of GridView
+        //    let GridView = row.parentNode;
+
+        //    //Get all input elements in Gridview
+        //    let inputList = GridView.getElementsByTagName("input");
+        //    let headerCheckBox = inputList[0];
+        //    const [, ...array] = inputList;
+        //    console.log(inputList)
+        //    console.log(array)
+        //    let checkbox = array.filter(input => input.type == "checkbox");
+        //    let isnotchecked = checkbox.some(input => (input.type == "checkbox" && !input.checked && input != headerCheckBox));
+
+        //    if (isnotchecked) {
+        //        headerCheckBox.checked = false;
+        //    } else {
+        //        headerCheckBox.checked = true;
+        //    }
+
+        //    var endTime = performance.now()
+
+        //    console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
+        //}
         function checkAll(objRef) {
-            var GridView = objRef.parentNode.parentNode.parentNode;
-            var inputList = GridView.getElementsByTagName("input");
-            for (var i = 0; i < inputList.length; i++) {
-                var row = inputList[i].parentNode.parentNode;
+            let GridView = objRef.parentNode.parentNode.parentNode;
+            let inputList = GridView.getElementsByTagName("input");
+            for (let i = 0; i < inputList.length; i++) {
+                let row = inputList[i].parentNode.parentNode;
                 if (inputList[i].type == "checkbox" && objRef != inputList[i]) {
                     if (objRef.checked) {
                         inputList[i].checked = true;
@@ -215,7 +246,7 @@
         function getSeleted() {
             //console.log("xxx22");
 
-            var textinputs = document.querySelectorAll('td input:checked');
+            let textinputs = document.querySelectorAll('td input:checked');
 
             //console.log(arrs);
             let arrs = [];
@@ -249,10 +280,10 @@
         
         function sendID() {
             //console.log("xxx");
-
+            let textinputs = document.querySelectorAll('td input:checked');
             const params = getSeleted();
             //console.log("xxx");
-            //console.log(params);
+            console.log(textinputs.length);
 
             let elements = document.getElementsByName("confirm_value");
             //console.log(elements);
@@ -261,11 +292,13 @@
                 elements[i].remove();
             }
 
-            var confirm_value = document.createElement("INPUT");
+            let confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
-            if (confirm("คุณต้องการจะลบรายการที่เลือกหรือไม่ ?")) {
+            if (textinputs.length > 0) {
+                if (confirm("คุณต้องการจะลบรายการที่เลือกหรือไม่ ?")) {
                 confirm_value.value = params;
+                }
             }
             else {
                 event.preventDefault();

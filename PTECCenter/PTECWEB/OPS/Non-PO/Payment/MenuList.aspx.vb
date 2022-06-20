@@ -39,11 +39,16 @@ Public Class MenuList
 
         txtStartDate.Attributes.Add("readonly", "readonly")
         txtEndDate.Attributes.Add("readonly", "readonly")
-
-
-
         txtStartDueDate.Attributes.Add("readonly", "readonly")
         txtEndDueDate.Attributes.Add("readonly", "readonly")
+
+
+        txtStartDate_owner.Attributes.Add("readonly", "readonly")
+        txtEndDate_owner.Attributes.Add("readonly", "readonly")
+        txtStartDueDate_owner.Attributes.Add("readonly", "readonly")
+        txtEndDueDate_owner.Attributes.Add("readonly", "readonly")
+
+
         operator_code = objNonpo.NonPOPermisstionOperator("PAY")
 
         If Not IsPostBack() Then
@@ -69,20 +74,14 @@ Public Class MenuList
                 End If
             Else
                 approval.SetCboApprovalStatusForOwner(cboWorking)
+
+                objNonpo.SetCboPayby(cboPayby_owner)
+                objsupplier.SetCboVendorByName(cboVendor_owner, "")
                 'If Not Session("cboWorking_clearadv") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                 '    cboWorking.SelectedValue = Session("cboWorking_clearadv")
                 'End If
+                searchjobslist_owner()
 
-                Try
-                    'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-                    itemtable = objNonpo.PaymentList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
-                Catch ex As Exception
-                    Dim scriptKey As String = "alert"
-                    Dim javaScript As String = "alertWarning('search fail');"
-                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                End Try
-                Session("joblist") = itemtable
-                BindData()
             End If
         Else
 
@@ -201,6 +200,31 @@ Public Class MenuList
         End Try
     End Sub
 
+    Private Sub searchjobslist_owner()
+
+        Dim objNonPO As New NonPO
+        Dim detailtable As New DataTable
+        Dim userid As Integer = Session("userid")
+        Try
+            itemtable = objNonPO.PaymentList_For_Owner(txtclearadv_owner.Text.Trim(),
+                                                    txtStartDate_owner.Text.Trim(),
+                                                    txtEndDate_owner.Text.Trim(),
+                                                  cboWorking.SelectedItem.Value.ToString,
+                                                    txtStartDueDate_owner.Text.Trim(),
+                                                    txtEndDueDate_owner.Text.Trim(),
+                                                    cboVendor_owner.SelectedItem.Value,
+                                                    cboPayby_owner.SelectedItem.Value.ToString.ToLower,
+                                                    userid
+                                                    )
+            Session("joblist") = itemtable
+            BindData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('search fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
         Dim objbranch As New Branch
         txtclearadv.Text = ""
@@ -308,22 +332,22 @@ endprocess:
         End If
     End Sub
 
-    Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
+    'Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
 
-        Dim objNonpo As New NonPO
+    '    Dim objNonpo As New NonPO
 
-        Try
-            'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-            itemtable = objNonpo.PaymentList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
-            Session("joblist") = itemtable
+    '    Try
+    '        'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
+    '        itemtable = objNonpo.PaymentList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+    '        Session("joblist") = itemtable
 
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            Dim javaScript As String = "alertWarning('search fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
-        BindData()
-    End Sub
+    '    Catch ex As Exception
+    '        Dim scriptKey As String = "alert"
+    '        Dim javaScript As String = "alertWarning('search fail');"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '    End Try
+    '    BindData()
+    'End Sub
     Private Sub cboBranchGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranchGroup.SelectedIndexChanged
         Dim objbranch As New Branch
 
@@ -389,5 +413,34 @@ endprocess:
             Dim javaScript As String = "alertWarning('export fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+    End Sub
+
+    Private Sub btnSearch_owner_Click(sender As Object, e As EventArgs) Handles btnSearch_owner.Click
+        searchjobslist_owner()
+    End Sub
+
+    Private Sub btnClear_owner_Click(sender As Object, e As EventArgs) Handles btnClear_owner.Click
+        Dim objbranch As New Branch
+        txtclearadv_owner.Text = ""
+        'txtcoderef.Text = ""
+        txtStartDate_owner.Text = ""
+        txtEndDate_owner.Text = ""
+
+        txtStartDueDate_owner.Text = ""
+        txtEndDueDate_owner.Text = ""
+        cboWorking.SelectedIndex = -1
+        cboVendor_owner.SelectedIndex = -1
+        cboPayby_owner.SelectedIndex = -1
+        If itemtable IsNot Nothing Then
+            itemtable.Rows.Clear()
+        End If
+        If criteria IsNot Nothing Then
+            criteria.Rows.Clear()
+        End If
+        Session("joblist") = itemtable
+        Session("criteria_joblist") = criteria
+
+
+        BindData()
     End Sub
 End Class
