@@ -25,8 +25,12 @@
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
                             <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                         
-                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
+                        <% Else%>
+
+                        <asp:Button ID="btnSearch_owner" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
+                            <asp:Button ID="btnClear_owner" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                         <% End If %>
+                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
                     </div>
                 </div>
 
@@ -109,6 +113,14 @@
                             <asp:DropDownList class="form-control" ID="cboVendor" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">จ่ายโดย</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboPayby" runat="server" AutoPostBack="false"></asp:DropDownList>
+                        </div>
+                    </div>
                     <div class="col-md-4 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -154,15 +166,83 @@
                 </div>
                 <% else %>
                 <div class="row">
-                    <div class="col-md-4">
+                    
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Code</span>
+                            </div>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv_owner" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
+                        </div>
+                    </div>
+                    <%-- <div class="col-md-4 mb-3">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Code_ref</span>
+                            </div>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
+                        </div>
+                    </div>--%>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ตั้งแต่วันที่</span>
+                            </div>
+                            <asp:TextBox class="form-control" ID="txtStartDate_owner" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">จนถึง</span>
+                            </div>
+                            <asp:TextBox class="form-control" ID="txtEndDate_owner" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะงาน</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboWorking" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboWorking" runat="server" AutoPostBack="false"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ตั้งแต่ (DueDate)</span>
+                            </div>
+                            <asp:TextBox class="form-control" ID="txtStartDueDate_owner" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">จนถึง (DueDate)</span>
+                            </div>
+                            <asp:TextBox class="form-control" ID="txtEndDueDate_owner" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Vendor</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboVendor_owner" runat="server" AutoPostBack="false"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">จ่ายโดย</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboPayby_owner" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                 </div>
+
                 <% End If %>
                 <div class="card-body">
                     <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
@@ -194,6 +274,11 @@
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Vendor_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="จ่ายโดย" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Pay_by").ToString.ToUpper%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Duedate")%>'></asp:Label>
@@ -214,7 +299,7 @@
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="สถาณะ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusNonPO")%>'></asp:Label>
                                     </ItemTemplate>
@@ -223,7 +308,7 @@
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
                                         <div class="d-flex align-items-center">
-                                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" ><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text=""><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
                                             <button id="btnRun" onclick="dup('<%# String.Format("{0}", Eval("NonPO_Code")) %>','<%= Session("usercode") %>');" class="btn btn-mini text-info" title="คัดลอก">
                                                 <i class="far fa-copy"></i>
                                             </button>
@@ -247,7 +332,7 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
     <script>
-
+        // <!-- #################################  for operator ########################### -->
         jQuery('[id$=txtStartDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             onShow: function (ct) {
@@ -294,6 +379,59 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
+
+        //< !-- #################################  for operator ###########################-- >
+
+        // <!-- #################################  for owner ########################### -->
+        jQuery('[id$=txtStartDate_owner]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            onShow: function (ct) {
+                this.setOptions({
+                    maxDate: jQuery('[id$=txtEndDate_owner]').val() ? jQuery('[id$=txtEndDate_owner]').val() : false, formatDate: 'd.m.Y'
+                })
+            },
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+
+        jQuery('[id$=txtEndDate_owner]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08
+            onShow: function (ct) {
+                this.setOptions({
+                    minDate: jQuery('[id$=txtStartDate_owner]').val() ? jQuery('[id$=txtStartDate_owner]').val() : false, formatDate: 'd.m.Y'
+                })
+            },
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+        jQuery('[id$=txtStartDueDate_owner]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            onShow: function (ct) {
+                this.setOptions({
+                    maxDate: jQuery('[id$=txtEndDueDate_owner]').val() ? jQuery('[id$=txtEndDueDate_owner]').val() : false, formatDate: 'd.m.Y'
+                })
+            },
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+
+        jQuery('[id$=txtEndDueDate_owner]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08
+            onShow: function (ct) {
+                this.setOptions({
+                    minDate: jQuery('[id$=txtStartDueDate_owner]').val() ? jQuery('[id$=txtStartDueDate_owner]').val() : false, formatDate: 'd.m.Y'
+                })
+            },
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+
+        //< !-- #################################  for owner ###########################-- >
+
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
@@ -302,6 +440,7 @@
             });
             checkCOorHO();
         });
+
 
         $("input:checkbox").on('click', function () {
             // in the handler, 'this' refers to the box clicked on

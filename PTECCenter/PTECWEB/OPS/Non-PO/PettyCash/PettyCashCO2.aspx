@@ -116,9 +116,9 @@
             text-overflow: ellipsis;
         }
 
-        .gropincompletebill {
+        /*.gropincompletebill {
             display: none;
-        }
+        }*/
 
         /*####################### CSS FROM ATTATCH ########################*/
         .attatchItems-link-btndelete .deletedetail {
@@ -404,7 +404,7 @@
                                 <tr>
                                     <th class="text-center" colspan="2" style="width: 80px !important;">วันที่เอกสาร</th>
                                     <th class="text-center" colspan="2" style="width: 80px !important;">รหัสบัญชี</th>
-                                    <th class="text-center" colspan="6" style="width: 240px !important;">รายละเอียด</th>
+                                    <th class="text-center" colspan="5" style="width: 200px !important;">รายละเอียด</th>
                                     <th class="text-center" colspan="4" style="width: 160px !important;">Vendor</th>
                                     <th class="text-center" colspan="3" style="width: 120px !important;">จำนวนเงิน</th>
                                     <th class="text-center mr-0 ml-0" colspan="2" style="width: 80px !important;">
@@ -448,12 +448,13 @@
                                                                         ,'<%= detailtable.Rows(i).Item("taxid").ToString() %>'
                                                                         ,'<%= detailtable.Rows(i).Item("invoicedate").ToString() %>'
                                                                         ,'<%= detailtable.Rows(i).Item("nobill").ToString() %>'
+                                                                        ,'<%= detailtable.Rows(i).Item("incompletebill").ToString() %>'
                                                                         );">
                                         <%--<tr class="draggable detail" name="<%= detailtable.Rows(i).Item("row").ToString() %>">--%>
                                         <%--<td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("docdate").ToString() %>"><%= detailtable.Rows(i).Item("docdate").ToString() %></td>--%>
                                         <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("invoicedate").ToString() %>"><%= detailtable.Rows(i).Item("invoicedate").ToString() %></td>
                                         <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", Left(detailtable.Rows(i).Item("accountcodeid").ToString(), 6)) %></td>
-                                        <td colspan="6" style="width: 240px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
+                                        <td colspan="5" style="width: 200px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
                                         <td colspan="4" style="width: 160px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>
                                         <%--<td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("depname").ToString() %>"><%= detailtable.Rows(i).Item("depname").ToString() %></td>
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("buname").ToString() %>"><%= detailtable.Rows(i).Item("buname").ToString() %></td>
@@ -465,7 +466,7 @@
                                         <td colspan="2" style="width: 80px !important; text-align: right; padding-right: 5px;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100, 2) %>"><%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100, 2) %></td>
 
                                         <td colspan="3" style="width: 120px !important; text-align: right; padding-right: 5px;" title="<%= detailtable.Rows(i).Item("cost_total").ToString() %>"><%= if((detailtable.Rows(i).Item("cost_total").ToString()) = "0", "", String.Format("{0:n2}", detailtable.Rows(i).Item("cost_total"))) %></td>
-                                        <td class="text-center gropincompletebill" colspan="1" style="width: 40px !important; text-align: right; padding-right: 5px;">&#10004;</td>
+                                        <td class="text-center gropincompletebill" colspan="1" style="width: 40px !important; text-align: right; padding-right: 5px;"><%= if( (Not detailtable.Rows(i).Item("nobill") And Not detailtable.Rows(i).Item("incompletebill")), "", If(detailtable.Rows(i).Item("nobill"), "N", "U")) %></td>
                                         <td class="deletedetail notprint" style="position: absolute; border: 0px solid #000;">
                                             <div>
                                                 <a onclick="confirmDeletedetail('<%= detailtable.Rows(i).Item("nonpodtl_id").ToString() %>','<%= detailtable.Rows(i).Item("row").ToString() %>')" class="btn btn-sm p-0 notPrint">
@@ -487,15 +488,45 @@
                                 <tfoot>
                                     <!--  total -->
                                     <tr>
-                                        <td rowspan="5" colspan="14" style="width: 560px !important; text-align: center; color: red !important; border-top-width: 0px; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
+                                        <td rowspan="7" colspan="14" style="width: 560px !important; vertical-align: text-top; color: #065ca9 !important; font-size: .8rem; border-top-width: 0px; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
                                             <div class="gropincompletebill">
-                                                <h5>**ข้อความใบแทนใบเสร็จ**</h5>
+                                                <p class="text-break mb-0">
+                                                    <br />
+                                                    ข้าพเจ้าขอรับรองว่า ได้ใช้จ่ายเงินจริงตามที่ระบุไว้ในเอกสารนี้ทั้งหมด<br />
+                                                    เพื่อกิจการของบริษัทฯ แต่ไม่สามารถนำส่งใบเสร็จรับเงินตามระเบียบของบริษัทได้<br />
+                                                </p>
+                                                <p class="text-left" style="margin-left: 30px;">
+                                                    U = บิลไม่สมบูรณ์<br />
+                                                    N = ไม่มีบิล<br />
+                                                </p>
                                             </div>
                                         </td>
                                         <td colspan="5" style="width: 200px !important; border-right-width: 0px; border-top-width: 0px; padding-right: 5px; border-bottom-width: 0px;">
                                             <h6>รายการที่ไม่มี VAT</h6>
                                         </td>
                                         <td colspan="5" style="width: 200px !important; text-align: right; padding-right: 5px; border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px;" id="total_amountNonVat"><%= total_costNonVat %></td>
+                                    </tr>
+                                    <tr>
+                                        <%--<td colspan="14" style="width: 560px !important; text-align: center; border-top-width: 0px; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
+                                            <h5></h5>
+                                        </td>--%>
+                                        <td colspan="5" style="width: 200px !important; color: #6c757d !important; border-right-width: 0px; border-top-width: 0px; padding-left: 35px; border-bottom-width: 0px;">
+                                            <h6>รับรองบิล</h6>
+                                        </td>
+                                        <td colspan="2" style="width: 80px !important; text-align: right; padding-right: 5px; border: 0px;" id="total_costinbill"><%= total_costinbill %></td>
+                                        <td colspan="3" style="width: 120px !important; text-align: right; padding-right: 5px; border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px;"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <%--<td colspan="14" style="width: 560px !important; text-align: center; border-top-width: 0px; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
+                                            <h5></h5>
+                                        </td>--%>
+                                        <td colspan="5" style="width: 200px !important; color: #6c757d !important; border-right-width: 0px; border-top-width: 0px; padding-left: 35px; border-bottom-width: 0px;">
+                                            <h6>ใบเสร็จสมบูรณ์</h6>
+                                        </td>
+                                        <td colspan="2" style="width: 80px !important; text-align: right; padding-right: 5px; border: 0px;" id="total_costbill"><%= total_costbill %></td>
+                                        <td colspan="3" style="width: 120px !important; text-align: right; padding-right: 5px; border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px;"></td>
+
                                     </tr>
                                     <tr>
                                         <%--<td colspan="14" style="width: 560px !important; text-align: center; border-top-width: 0px; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
@@ -739,7 +770,7 @@
     </div>
     <div class="row btn-operator justify-content-center notPrint">
         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4") Then%>
-        <% If maintable.Rows(0).Item("statusid") = 7 Then%>
+        <% If maintable.Rows(0).Item("statusid") = 7 And account_code.IndexOf(Session("usercode").ToString) > -1 Then%>
         <!-- 7 = รอบช.ตรวจ-->
         <button class="btn btn-sm " style="color: #39cd5b; font-size: 3rem; position: fixed; bottom: 9rem; right: 1rem;" id="btnPass" runat="server" title="ผ่านการตรวจสอบจาก บช.">
             <i class="fas fa-check-circle shadow" style="border-radius: 100%;"></i>
@@ -750,7 +781,7 @@
         <button class="btn btn-sm " style="color: #dc3545; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnReject" runat="server" title="ยกเลิกใบงาน">
             <i class="fas fa-times-circle" style="border-radius: 100%;"></i>
         </button>
-        <% ElseIf maintable.Rows(0).Item("statusid") = 8 Then %>
+        <% ElseIf maintable.Rows(0).Item("statusid") = 8 And account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
         <!-- 8 = รอเอกสารตัวจริง-->
         <button class="btn btn-sm " style="color: #ffc107; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnWDoc" runat="server" title="ยืนยันรับเอกสาร">
             <i class="fas fa-check-circle shadow" style="border-radius: 100%;"></i>
@@ -821,7 +852,7 @@
                         <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onkeyup="setnetprice();calculate();"></asp:TextBox>
                         <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
-                    <div class="row">
+                    <div class="row flex-nowrap">
                         <div class="form-group ">
                             <div class="row justify-content-between mr-0 ml-0">
                                 <div class="col text-left align-self-center">
@@ -861,7 +892,7 @@
                         <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
                     </div>--%>
-                    <div class="showCost">
+                    <div class="showCost mb-3">
 
                         <p class="text-muted" id="p_vat"></p>
 
@@ -869,10 +900,20 @@
                         <p class="text-muted font-weight-bold" id="p_cost"></p>
 
                     </div>
+                    <div class="gropincompletebill form-group">
+                            <div class="pl-4 mb-1" style="color: #0f66c4;">
+                                <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
+                                <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
+                            </div>
+                            <div class="pl-4 mb-1" style="color: #0f66c4;">
+                                <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
+                                <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
+                            </div>
+                    </div>
                     <div class="form-group autocomplete">
                         <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
                         <asp:DropDownList class="form-control d-none" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
-                        <asp:TextBox class="form-control" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
+                        <asp:TextBox class="form-control bill" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
                     </div>
 
                     <!--  ############## End Detail ############### -->
@@ -880,26 +921,15 @@
                     <h3>ใบเสร็จรับเงิน / ใบกำกับ</h3>
                     <div class="form-group">
                         <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit bill" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit bill" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
-                    </div>
-                    <div class="gropincompletebill">
-                        <hr />
-                        <div class="form-group pl-4">
-                            <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
-                            <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล" />
-                        </div>
-                        <div class="form-group pl-4">
-                            <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
-                            <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์" />
-                        </div>
+                        <asp:TextBox class="form-control noEnterSubmit " type="input" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -999,16 +1029,16 @@
         });
         <% End If %>
 
-    </script>
+        </script>
 
     <script>
         var cntdetail =<% =chkunsave%>;
         var d365code ="<% =d365code%>";
 
-        //$(window).load(function () {
+        $(window).load(function () {
 
-        //    $('.form-control').prop('disabled', false);
-        //});
+            $('.form-control').prop('disabled', false);
+        });
         $(document).ready(function () {
             var groups = {};
             $("select option[data-category]").each(function () {
@@ -1125,8 +1155,10 @@ alert('else nonpo')
             tax = parseFloat(tax);
             if (netprice) {
 
+
                 var price = document.getElementById("<%= txtPrice.ClientID%>")
-                price.value = (netprice / (1 + (vat / 100) - (tax / 100))).toFixed(2).toLocaleString();
+                //console.log((netprice / (1 + (vat / 100) - (tax / 100))))
+                price.value = (netprice / (1 + (vat / 100) - (tax / 100))).toFixed(4).toLocaleString();
             }
         }
         function setnetprice() {
@@ -1459,6 +1491,9 @@ alert('else nonpo')
         }
         function clearfromadddetail() {
 
+
+            $('.form-control').selectpicker('refresh');
+
             $('#<%= row.ClientID%>').val(0);
             $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
             $('#<%= cboAccountCode.ClientID%>').val(0);
@@ -1476,6 +1511,7 @@ alert('else nonpo')
             $('#<%= txttaxid.ClientID%>').val('');
             $('#<%= txtinvoicedate.ClientID%>').val('');
             $('#<%= chkNoBill.ClientID%>').prop('checked', false);
+            $('#<%= chkIncompleteBill.ClientID%>').prop('checked', false);
             $('#<%= cboVendor.ClientID%>').val('');
             $('#<%= txtVendor.ClientID%>').val('');
             $('#<%= txtdocdate.ClientID%>').val('');
@@ -1500,7 +1536,7 @@ alert('else nonpo')
             let element = document.getElementById(id);
             element.value = valueToSelect;
         }
-        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, docdate, branchseller, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate, NoBill) {
+        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, docdate, branchseller, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate, NoBill, IncompleteBill) {
             //console.log(advancedetailid);
             //console.log(accountcodeid);
             //console.log(depid);
@@ -1549,6 +1585,7 @@ alert('else nonpo')
 
             $('#<%= txtdocdate.ClientID%>').val(docdate);
             $('#<%= chkNoBill.ClientID%>').prop('checked', NoBill.toLowerCase() == "true" ? true : false);
+            $('#<%= chkIncompleteBill.ClientID%>').prop('checked', IncompleteBill.toLowerCase() == "true" ? true : false);
 
             setnetprice();
             calculate();
@@ -1562,6 +1599,12 @@ alert('else nonpo')
             $('.modal-footer #btnAddDetail').hide();
             $('.modal-body input,.modal-body textarea').attr('readonly', true);
             $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').attr('disabled', true);
+            
+            <% Else %>
+            $('.modal-footer #btnAddDetail').show();
+            $('.modal-body input,.modal-body textarea').removeAttr("readonly");
+            $('.modal-body input,.modal-body textarea').removeAttr("disabled");
+            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
             <% End If %>
             <% End If %>
 
@@ -1617,6 +1660,7 @@ alert('else nonpo')
             const taxid = $('#<%= txttaxid.ClientID%>').val();
             const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
             const nobill = $('#<%= chkNoBill.ClientID%>').is(":checked");
+            const incompletebill = $('#<%= chkIncompleteBill.ClientID%>').is(":checked");
 
             const vendorname = $("#<%= cboVendor.ClientID%> option:selected").text();
             const vendorcode = $('#<%= txtVendor.ClientID%>').val();
@@ -1643,7 +1687,7 @@ alert('else nonpo')
                 "','branchseller': '" + branchseller +
                 "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
                 "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
-                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "','nobill': '" + nobill + "'}";
+                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "','nobill': '" + nobill + "','incompletebill': '" + incompletebill + "'}";
 
             //alert(params);
             //PageMethods.addoreditdetail(params);
@@ -1713,13 +1757,13 @@ alert('else nonpo')
         $('#<% =btnFromAddDetail.ClientID%>').click(function () {
             $('.modal-footer #btnAddDetail').show();
             $('.modal-body input,.modal-body textarea').removeAttr("readonly");
+            $('.modal-body input,.modal-body textarea').removeAttr("disabled");
             $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
 
 
             $('.form-control').selectpicker('refresh');
 
             clearfromadddetail();
-
         });
         $('.noEnterSubmit').keypress(function (e) {
             if (e.which == 13) return false;
@@ -1768,6 +1812,41 @@ alert('else nonpo')
             }
             cntdetail = 1; //show unsave
             checkUnSave(); //show unsave
+        });
+
+        $("#exampleModal input:checkbox").on('click', function () {
+            // in the handler, 'this' refers to the box clicked on
+            //console.log(this);
+            const $box = $(this);
+            const elem = document.querySelectorAll('.bill');
+            const array = elem;
+            if ($box.is(":checked")) {
+                // the name of the box is retrieved using the .attr() method
+                // as it is assumed and expected to be immutable
+                const group = "#exampleModal input:checkbox";
+                // the checked state of the group/box on the other hand will change
+                // and the current value is retrieved using .prop() method
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+
+                
+                array.forEach((element) => {
+                    console.log(`${element.textContent}`);
+                    element.value = '';
+                    element.setAttribute("disabled", true);
+                });
+                //elem.removeAttribute("disabled");
+
+
+            } else {
+                $box.prop("checked", false);
+
+                array.forEach((element) => {
+                    console.log(`${element}`);
+                    element.value = '';
+                    element.removeAttribute("disabled");
+                });
+            }
         });
 
         <%--function SearchVendor() {

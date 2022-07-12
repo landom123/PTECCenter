@@ -387,7 +387,7 @@
                                 </tr>
                                 <tr>
                                     <th class="text-center" rowspan="2" colspan="2" style="width: 80px !important;">รหัสบัญชี</th>
-                                    <th class="text-center" rowspan="2" colspan="7" style="width: 280px !important;">รายละเอียด</th>
+                                    <th class="text-center" rowspan="2" colspan="6" style="width: 240px !important;">รายละเอียด</th>
                                     <th class="text-center" rowspan="2" colspan="4" style="width: 160px !important;">Vendor</th>
                                     <th class="text-center" colspan="6" style="width: 180px !important;">Dimension</th>
                                     <th class="text-center" rowspan="2" colspan="3" style="width: 120px !important;">จำนวนเงิน</th>
@@ -406,6 +406,7 @@
                                     </th>
                                     <th class="text-center" rowspan="2" colspan="1" style="width: 40px !important; text-overflow: unset; padding-left: 0px;">%WHT</th>
 
+                                    <th class="text-center gropincompletebill pl-0" rowspan="2" colspan="1" style="width: 40px !important;">Bill</th>
                                 </tr>
                                 <tr>
                                     <th class="text-center" colspan="2" style="width: 80px !important;">BU.</th>
@@ -423,10 +424,10 @@
                                                                                         ,'<%= detailtable.Rows(i).Item("vat_per").ToString() %>','<%= detailtable.Rows(i).Item("tax_per").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("detail").ToString() %>','<%= detailtable.Rows(i).Item("vendorcode").ToString() %>'
                                                                                         ,'<%= detailtable.Rows(i).Item("invoice").ToString() %>','<%= detailtable.Rows(i).Item("taxid").ToString() %>','<%= detailtable.Rows(i).Item("invoicedate").ToString() %>'
-                                                                                        ,'<%= detailtable.Rows(i).Item("nobill").ToString() %>');">
+                                                                                        ,'<%= detailtable.Rows(i).Item("nobill").ToString() %>','<%= detailtable.Rows(i).Item("incompletebill").ToString() %>');">
                                         <%--<tr class="draggable detail" name="<%= detailtable.Rows(i).Item("row").ToString() %>">--%>
                                         <td colspan="2" style="width: 80px !important; height: 22px; text-align: center;" title="<%= detailtable.Rows(i).Item("accountcode").ToString() %>"><%= if((detailtable.Rows(i).Item("accountcodeid").ToString()) = "0", "", Left(detailtable.Rows(i).Item("accountcodeid").ToString(), 6)) %></td>
-                                        <td colspan="7" style="width: 280px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
+                                        <td colspan="6" style="width: 240px !important;" title="<%= detailtable.Rows(i).Item("detail").ToString() %>"><span><%= detailtable.Rows(i).Item("detail").ToString() %></span></td>
                                         <%--<td colspan="2" style="width: 80px !important;" title="<%= detailtable.Rows(i).Item("depname").ToString() %>"><%= detailtable.Rows(i).Item("depname").ToString() %></td>--%>
                                         <td colspan="4" style="width: 160px !important;" title="<%= detailtable.Rows(i).Item("vendorcode").ToString() %>"><%= detailtable.Rows(i).Item("vendorcode").ToString() %>  </td>
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("buname").ToString() %>"><%= detailtable.Rows(i).Item("buname").ToString() %></td>
@@ -436,7 +437,7 @@
                                         </td>
                                         <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100, 2) %>"><%= detailtable.Rows(i).Item("vat_per").ToString() %></td>
                                         <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100, 2) %>"><%= detailtable.Rows(i).Item("tax_per").ToString() %></td>
-
+                                        <td class="text-center gropincompletebill" colspan="1" style="width: 40px !important; text-align: right; padding-right: 5px;"><%= if( (Not detailtable.Rows(i).Item("nobill") And Not detailtable.Rows(i).Item("incompletebill")), "", If(detailtable.Rows(i).Item("nobill"), "N", "U")) %></td>
                                         <td class="deletedetail notprint" style="position: absolute; border: 0px solid #000;">
                                             <div>
                                                 <a onclick="confirmDeletedetail('<%= detailtable.Rows(i).Item("nonpodtl_id").ToString() %>','<%= detailtable.Rows(i).Item("row").ToString() %>')" class="btn btn-sm p-0 notPrint">
@@ -457,7 +458,7 @@
                                 <tfoot>
                                     <!--  total -->
                                     <tr>
-                                        <td colspan="9" style="width: 360px !important;">
+                                        <td colspan="8" style="width: 320px !important;">
                                             <div class="row">
                                                 <div class="col-11" style="margin-left: auto;">
                                                     <input class="form-check-input chk-img-after" type="checkbox" id="chkpayBack" name="pay[1][]" runat="server">
@@ -473,7 +474,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td colspan="7" style="width: 280px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px;">
+                                        <td colspan="8" style="width: 320px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px;">
                                             <h6>รวม
                                             </h6>
                                         </td>
@@ -496,15 +497,28 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td rowspan="2" colspan="16" style="width: 640px !important; vertical-align: text-top; color: #065ca9 !important; font-size: .8rem; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px;">
+                                            <div class="gropincompletebill">
+                                                <p class="text-break mb-0">
+                                                    <br />
+                                                    ข้าพเจ้าขอรับรองว่า ได้ใช้จ่ายเงินจริงตามที่ระบุไว้ในเอกสารนี้ทั้งหมด<br />
+                                                    เพื่อกิจการของบริษัทฯ แต่ไม่สามารถนำส่งใบเสร็จรับเงินตามระเบียบของบริษัทได้<br />
+                                                </p>
+                                                <p class="text-left" style="margin-left: 30px;">
+                                                    U = บิลไม่สมบูรณ์<br />
+                                                    N = ไม่มีบิล<br />
+                                                </p>
+                                            </div>
+                                        </td>
                                         
-                                        <td colspan="20" style="width: 800px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px;">
+                                        <td colspan="4" style="width: 160px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px; border-left-width: 0px;">
                                             <h6>VAT
                                             </h6>
                                         </td>
                                         <td colspan="4" style="width: 160px !important; text-align: right;" id="total_tax"><%= total_vat %></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="20" style="width: 800px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px;">
+                                        <td colspan="4" style="width: 160px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px; border-left-width: 0px;">
                                             <h6>หัก WHT
                                             </h6>
                                         </td>
@@ -788,7 +802,7 @@
                         <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onchange="calculate();"></asp:TextBox>
                         <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
-                    <div class="row">
+                    <div class="row flex-nowrap">
                         <div class="form-group ">
                             <div class="col">
                                 <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT (%)" />
@@ -829,7 +843,7 @@
                     </div>
                     <div class="form-group autocomplete">
                         <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
-                        <asp:DropDownList class="form-control" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
+                        <asp:DropDownList class="form-control d-none" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
                         <asp:TextBox class="form-control" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1" autocomplete="off"></asp:TextBox>
                     </div>
                     <!--  ############## End Detail ############### -->
@@ -841,24 +855,30 @@
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Document no." />
+                        <div class="row justify-content-between">
+                            <div class="col">
+                                <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Document no." />
+                            </div>
+                            <div class="col gropincompletebill">
+                                <div class="row flex-nowrap form-group">
+                                    <div class="pr-4" style="color: #0f66c4;">
+                                        <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
+                                        <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
+                                    </div>
+                                    <div class="pl-4" style="color: #0f66c4;">
+                                        <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
+                                        <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Document date" />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
                     </div>
-                    <div class="gropincompletebill d-none">
-                        <hr />
-                        <div class="form-group pl-4">
-                            <input class="form-check-input chk-img-after" type="checkbox" id="chkNoBill" runat="server">
-                            <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล" />
-                        </div>
-                        <div class="form-group pl-4">
-                            <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
-                            <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์" />
-                        </div>
-                    </div>
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
@@ -949,7 +969,7 @@
             const Number = CheckNumber(total.textContent);
             console.log(Number);
 
-            if (!isNaN(Number) && (Number - 0) < 9999999.9999) {
+            if (!isNaN(Number) && (Number - 0) < 999999999.9999) {
                 element.innerHTML = " (   " + ArabicNumberToText(total.textContent) + "   )";
             } else {
                 element.innerHTML = "รวม ";
@@ -1348,6 +1368,7 @@
             $('#<%= txttaxid.ClientID%>').val('');
             $('#<%= txtinvoicedate.ClientID%>').val('');
             $('#<%= chkNoBill.ClientID%>').prop('checked', false);
+            $('#<%= chkIncompleteBill.ClientID%>').prop('checked', false);
             $('.form-control').selectpicker('refresh');
         }
 
@@ -1356,7 +1377,7 @@
             let element = document.getElementById(id);
             element.value = valueToSelect;
         }
-        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate, NoBill) {
+        function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, vendorcode, invoice, taxid, invoicedate, NoBill, IncompleteBill) {
             console.log(advancedetailid);
             console.log(accountcodeid);
             console.log(depid);
@@ -1402,6 +1423,8 @@
             $('#<%= txttaxid.ClientID%>').val(taxid);
             $('#<%= txtinvoicedate.ClientID%>').val(invoicedate);
             $('#<%= chkNoBill.ClientID%>').prop('checked', NoBill.toLowerCase() == "true" ? true : false);
+            $('#<%= chkIncompleteBill.ClientID%>').prop('checked', IncompleteBill.toLowerCase() == "true" ? true : false);
+
             $('.form-control').selectpicker('refresh');
             /*__doPostBack('setFromDetail', $(row).attr('name'));
 */
@@ -1477,6 +1500,7 @@
             const taxid = $('#<%= txttaxid.ClientID%>').val();
             const invoicedate = $('#<%= txtinvoicedate.ClientID%>').val();
             const nobill = $('#<%= chkNoBill.ClientID%>').is(":checked");
+            const incompletebill = $('#<%= chkIncompleteBill.ClientID%>').is(":checked");
             const status = $(".DetailArea tr[name='" + row + "']").attr("data-status")
 
             //alert('cost' + cost);
@@ -1500,7 +1524,7 @@
                 "','buid': '" + buid + "','buname': '" + buname + "','ppid': '" + ppid + "','ppname': '" + ppname + "','pjid': '" + pjid + "','pjname': '" + pjname +
                 "','cost': '" + (cost == 0 ? 0.0 : cost) + "','vat': '" + (vat == '' ? 0 : vat) + "','tax': '" + (tax == '' ? 0 : tax) + "','detail': '" + detail +
                 "','vendorname': '" + vendorname + "','vendorcode': '" + vendorcode +
-                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "','nobill': '" + nobill + "'}";
+                "','invoice': '" + invoice + "','taxid': '" + taxid + "','invoicedate': '" + invoicedate + "','nobill': '" + nobill + "','incompletebill': '" + incompletebill + "'}";
 
             //alert(params);
             //PageMethods.addoreditdetail(params);
@@ -1745,12 +1769,28 @@
                 'warning'
             )
         }
+        $("#exampleModal input:checkbox").on('click', function () {
+            // in the handler, 'this' refers to the box clicked on
+            //console.log(this);
+            var $box = $(this);
+            if ($box.is(":checked")) {
+                // the name of the box is retrieved using the .attr() method
+                // as it is assumed and expected to be immutable
+                var group = "#exampleModal input:checkbox";
+                // the checked state of the group/box on the other hand will change
+                // and the current value is retrieved using .prop() method
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+            } else {
+                $box.prop("checked", false);
+            }
+        });
 
         var arrVendor = new Array;
         $("#<%= cboVendor.ClientID%> option").each(function () {
             arrVendor.push($(this).val());
         });
 
-        autocomplete(document.getElementById("<%= txtVendor.ClientID%>"), arrVendor, '<%= cboVendor.ClientID%>', '<%= txttaxid.ClientID%>');
+        nonpo_autocomplete(document.getElementById("<%= txtVendor.ClientID%>"), arrVendor, '<%= cboVendor.ClientID%>', '<%= txttaxid.ClientID%>');
     </script>
 </asp:Content>

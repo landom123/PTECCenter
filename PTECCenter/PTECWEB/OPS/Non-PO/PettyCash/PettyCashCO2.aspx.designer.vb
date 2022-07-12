@@ -635,6 +635,42 @@ Partial Public Class PettyCashCO2
     Protected WithEvents TxtNetPrice As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''chkNoBill control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkNoBill As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
+
+    '''<summary>
+    '''lbchkNoBill control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbchkNoBill As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''chkIncompleteBill control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkIncompleteBill As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
+
+    '''<summary>
+    '''lbchkIncompleteBill control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbchkIncompleteBill As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''lbcboVendor control.
     '''</summary>
     '''<remarks>
@@ -714,42 +750,6 @@ Partial Public Class PettyCashCO2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtinvoicedate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''chkNoBill control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkNoBill As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''lbchkNoBill control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbchkNoBill As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''chkIncompleteBill control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkIncompleteBill As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
-
-    '''<summary>
-    '''lbchkIncompleteBill control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbchkIncompleteBill As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''btnAddDetails control.

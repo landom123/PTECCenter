@@ -3448,6 +3448,7 @@
     <Content Include="vendor\fontawesome-free\webfonts\fa-brands-400.svg" />
     <Content Include="vendor\fontawesome-free\webfonts\fa-regular-400.svg" />
     <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.svg" />
+    <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="vendor\jquery-easing\jquery.easing.compatibility.js" />
     <Content Include="vendor\jquery-easing\jquery.easing.js" />
     <Content Include="vendor\jquery-easing\jquery.easing.min.js" />
@@ -3593,6 +3594,7 @@
       <DependentUpon>ChangePassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Chilkat\JsonArray.vb" />
     <Compile Include="CJ\CJImprotDBF.aspx.designer.vb">
       <DependentUpon>CJImprotDBF.aspx</DependentUpon>
     </Compile>
@@ -4560,7 +4562,6 @@
     <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.eot" />
     <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.ttf" />
     <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.woff" />
-    <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="vendor\jquery\jquery.min.map" />
     <Content Include="vendor\jquery\jquery.slim.min.map" />
     <Content Include="site.Master" />

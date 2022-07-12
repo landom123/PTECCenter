@@ -468,7 +468,7 @@
                 'warning'
             )
         }
-        function alertSuccessUpload(code) {
+        function alertSuccessUpload(code, urldes) {
             Swal.fire({
                 title: 'อัปโหลดสำเร็จ',
                 icon: 'success',
@@ -477,7 +477,8 @@
                 allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '../approval/approval.aspx?approvalcode=' + code;
+                    window.location.href = urldes;
+                    //window.location.href = '../approval/approval.aspx?approvalcode=' + code;
                 }
             })
         }

@@ -993,6 +993,7 @@ endprocess:
         dt.Columns.Add("taxid", GetType(String))
         dt.Columns.Add("invoicedate", GetType(String))
         dt.Columns.Add("nobill", GetType(Boolean))
+        dt.Columns.Add("incompletebill", GetType(Boolean))
         Return dt
     End Function
     Private Function createtablecomment() As DataTable
@@ -1106,7 +1107,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../Advance/ClearAdvance.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 
 endprocess:
     End Sub
@@ -1851,6 +1852,7 @@ endprocess:
         Dim taxid As String = json("taxid").Trim
         Dim invoicedate As String = json("invoicedate").Trim
         Dim nobill As Boolean = json("nobill").Trim
+        Dim incompletebill As Boolean = json("incompletebill").Trim
 
 
         invoice = invoice.Replace(" ", "")
@@ -1891,6 +1893,7 @@ endprocess:
                 row("taxid") = taxid
                 row("invoicedate") = invoicedate
                 row("nobill") = nobill
+                row("incompletebill") = incompletebill
 
                 detailtable.Rows.Add(row)
             Else
@@ -1922,6 +1925,7 @@ endprocess:
                     .Item("taxid") = taxid
                     .Item("invoicedate") = invoicedate
                     .Item("nobill") = nobill
+                    .Item("incompletebill") = incompletebill
                 End With
             End If
 

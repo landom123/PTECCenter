@@ -169,6 +169,12 @@
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("approvalcode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="เลขที่ใบเคลียร์" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("cladvcode")%>' ToolTip='<%#Eval("cladvstatus")%>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                
                                 <asp:TemplateField HeaderText="วันที่แจ้ง">
                                     <ItemTemplate>
                                         <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("createdate")%>'></asp:Label>
@@ -186,7 +192,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="หัวข้อ">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
+                                        <asp:Label ID="lblApprovalname" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
