@@ -142,9 +142,15 @@ Public Class EssoCNDNOiltoD365
     Private Sub gvData_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvData.RowDataBound
         '*** chk ***'
         Dim chk As CheckBox = CType(e.Row.FindControl("chk"), CheckBox)
+        Dim terminal As Label = CType(e.Row.FindControl("lblTerminal"), Label)
+
         If Not IsNothing(chk) Then
             chk.Checked = e.Row.DataItem("chk")
+            If chk.Checked = True Then
+                terminal.Text = "xx"
+            End If
         End If
+
 
     End Sub
 

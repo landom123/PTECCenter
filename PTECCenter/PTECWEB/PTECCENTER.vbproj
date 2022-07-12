@@ -196,14 +196,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
-    <Content Include="ACS\agreementtest.aspx" />
-    <Content Include="ACS\client_list.aspx" />
-    <Content Include="ACS\clientinfo.aspx" />
-    <Content Include="ACS\titlename.aspx" />
-    <Content Include="ACS\testag.aspx" />
-    <Content Include="ACS\agreement.aspx" />
-    <Content Include="ACS\test03.aspx" />
-    <Content Include="ACS\test02.aspx" />
+    <Content Include="Contract\projectinfo.aspx" />
+    <Content Include="Contract\agreementtest.aspx" />
+    <Content Include="Contract\client_list.aspx" />
+    <Content Include="Contract\clientinfo.aspx" />
+    <Content Include="Contract\projectlist.aspx" />
+    <Content Include="Contract\titlename.aspx" />
+    <Content Include="Contract\testag.aspx" />
+    <Content Include="Contract\agreement.aspx" />
+    <Content Include="Contract\test03.aspx" />
+    <Content Include="Contract\test02.aspx" />
     <Content Include="ADMIN\JobsManageCost.aspx" />
     <Content Include="ADMIN\Questionnair.aspx" />
     <Content Include="ADMIN\JobsManageStatus.aspx" />
@@ -1771,6 +1773,7 @@
     <Content Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx" />
     <Content Include="Preloader.gif" />
+    <Content Include="ReportViewer.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
     <Content Include="ROD\OilPriceFormula.aspx" />
     <Content Include="ROD\UpdateSmileSheetID.aspx" />
@@ -1825,7 +1828,6 @@
     <Content Include="OPS\RemindInfoFrm.aspx" />
     <Content Include="OPS\RemindFrm.aspx" />
     <Content Include="Registration.aspx" />
-    <Content Include="ReportViewer.aspx" />
     <Content Include="SDD\ESSOEDI\EssoPDFBrowse.aspx" />
     <Content Include="SDD\ESSOEDI\EssoInvCNDNReport.aspx" />
     <Content Include="SDD\ESSOEDI\EssoUploadOrder.aspx" />
@@ -3458,59 +3460,73 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACS\agreementtest.aspx.designer.vb">
+    <Compile Include="Contract\projectinfo.aspx.designer.vb">
+      <DependentUpon>projectinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\projectinfo.aspx.vb">
+      <DependentUpon>projectinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\agreementtest.aspx.designer.vb">
       <DependentUpon>agreementtest.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ACS\agreementtest.aspx.vb">
+    <Compile Include="Contract\agreementtest.aspx.vb">
       <DependentUpon>agreementtest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ACS\client_list.aspx.designer.vb">
+    <Compile Include="Contract\client_list.aspx.designer.vb">
       <DependentUpon>client_list.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ACS\client_list.aspx.vb">
+    <Compile Include="Contract\client_list.aspx.vb">
       <DependentUpon>client_list.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ACS\clientinfo.aspx.designer.vb">
+    <Compile Include="Contract\clientinfo.aspx.designer.vb">
       <DependentUpon>clientinfo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ACS\clientinfo.aspx.vb">
+    <Compile Include="Contract\clientinfo.aspx.vb">
       <DependentUpon>clientinfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ACS\titlename.aspx.designer.vb">
+    <Compile Include="Contract\projectlist.aspx.designer.vb">
+      <DependentUpon>projectlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\projectlist.aspx.vb">
+      <DependentUpon>projectlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\titlename.aspx.designer.vb">
       <DependentUpon>titlename.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ACS\titlename.aspx.vb">
+    <Compile Include="Contract\titlename.aspx.vb">
       <DependentUpon>titlename.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ACS\testag.aspx.designer.vb">
+    <Compile Include="Contract\testag.aspx.designer.vb">
       <DependentUpon>testag.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ACS\testag.aspx.vb">
+    <Compile Include="Contract\testag.aspx.vb">
       <DependentUpon>testag.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ACS\agreement.aspx.designer.vb">
+    <Compile Include="Contract\agreement.aspx.designer.vb">
       <DependentUpon>agreement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ACS\agreement.aspx.vb">
+    <Compile Include="Contract\agreement.aspx.vb">
       <DependentUpon>agreement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ACS\test03.aspx.designer.vb">
+    <Compile Include="Contract\test03.aspx.designer.vb">
       <DependentUpon>test03.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ACS\test03.aspx.vb">
+    <Compile Include="Contract\test03.aspx.vb">
       <DependentUpon>test03.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ACS\test02.aspx.designer.vb">
+    <Compile Include="Contract\test02.aspx.designer.vb">
       <DependentUpon>test02.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ACS\test02.aspx.vb">
+    <Compile Include="Contract\test02.aspx.vb">
       <DependentUpon>test02.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -3585,7 +3601,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="class\Account.vb" />
-    <Compile Include="class\ACS.vb" />
+    <Compile Include="class\Contract.vb" />
     <Compile Include="class\CJ.vb" />
     <Compile Include="class\NonPO.vb" />
     <Compile Include="class\Approval.vb" />
@@ -3756,7 +3772,7 @@
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO2.aspx.vb">
       <DependentUpon>PettyCashHO2.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx.designer.vb">
       <DependentUpon>PettyCashCO2.aspx</DependentUpon>
@@ -3777,6 +3793,13 @@
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.vb">
       <DependentUpon>PettyCashHO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportViewer.aspx.designer.vb">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportViewer.aspx.vb">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ROD\OilPriceFormulaUpdate.aspx.designer.vb">
@@ -4127,13 +4150,6 @@
     </Compile>
     <Compile Include="Registration.aspx.vb">
       <DependentUpon>Registration.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ReportViewer.aspx.designer.vb">
-      <DependentUpon>ReportViewer.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ReportViewer.aspx.vb">
-      <DependentUpon>ReportViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SDD\ESSOEDI\EssoPDFBrowse.aspx.designer.vb">

@@ -10,7 +10,7 @@ Public Class AgreeClient
         Dim result As String
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -52,7 +52,7 @@ Public Class AgreeClient
         Dim result As New DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -79,7 +79,7 @@ Public Class AgreeClient
         Dim result As New DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -106,7 +106,7 @@ Public Class AgreeClient
         Dim result As New DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -132,7 +132,7 @@ Public Class AgreeClient
         Dim result As New DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -161,7 +161,7 @@ Public Class Payment
         Dim result As New DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -190,7 +190,7 @@ Public Class TitleName
         Dim result As New DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -217,7 +217,7 @@ Public Class AgAssets
     Public Function AssetsType_Cbo() As DataTable
         Dim result As DataTable
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -243,22 +243,25 @@ Public Class AgAssets
         Return result
     End Function
 End Class
-Public Class Agree
-    Public Function FindProject(projectno As String, agreeno As String) As DataSet
+
+Public Class Project
+
+
+    Public Function Find(projectno As String) As DataSet
         Dim result As DataSet
 
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Ag_Find"
+        cmd.CommandText = "Project_Find"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@projectno", SqlDbType.VarChar).Value = projectno
-        cmd.Parameters.Add("@agreeno", SqlDbType.VarChar).Value = agreeno
+        'cmd.Parameters.Add("@agreeno", SqlDbType.VarChar).Value = agreeno
 
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
@@ -273,6 +276,65 @@ Public Class Agree
 
         Return result
     End Function
+
+    Public Function List() As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Project_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+End Class
+Public Class Agree
+
+    Public Function List() As DataSet
+        Dim result As DataSet
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Ag_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds
+        conn.Close()
+
+        Return result
+    End Function
+
     Public Function saveAgree(projectno As String, projectdate As DateTime, branch As String, agreetype As String,
                               agreeno As String, agreedate As DateTime, agreeactivedate As DateTime,
                               usercode As String) As String
@@ -280,7 +342,7 @@ Public Class Agree
         'Ag_AgreeSave
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -314,7 +376,7 @@ Public Class Agree
     Public Sub saveClient(projectno As String, client As DataTable, usercode As String)
 
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -350,7 +412,7 @@ Public Class Agree
     Public Sub removeClient(projectno As String, clientno As String, usercode As String)
 
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -417,7 +479,7 @@ Public Class Agree
         Dim result As New DataTable
         'Credit_Balance_List_Createdate
         'Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -446,7 +508,7 @@ Public Class Agree
         Dim result As New DataSet
         'Credit_Balance_List_Createdate
         'Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -476,7 +538,7 @@ Public Class Agree
         Dim result As New DataSet
         'Credit_Balance_List_Createdate
         'Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -505,7 +567,7 @@ Public Class Agree
         Dim result As New DataSet
         'Credit_Balance_List_Createdate
         'Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
@@ -535,7 +597,7 @@ Public Class Agree
         Dim result As New DataTable
         'Credit_Balance_List_Createdate
         'Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_acs").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
