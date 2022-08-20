@@ -920,7 +920,7 @@
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("../js/NonPO.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
 
     <script type="text/javascript">
         //jQuery('[id$=txtDuedate]').datetimepicker({

@@ -33,6 +33,7 @@
             objdepart.SetCboDepartment(cboDepart, 0)
             objsection.SetCboSection(cboSection, 0)
             objposition.SetCboPosition(cboPosition)
+            SetCboUsers(cboEmpper)
             Session("status") = "new"
             If Session("maintable_usermanage") IsNot Nothing Then
                 showdata(Session("maintable_usermanage"))
@@ -69,6 +70,10 @@
 
         Dim users As New Users
         Dim usercode As String
+        Dim empupper As String
+        If Not cboEmpper.SelectedItem.Value = 0 Then
+            empupper = cboEmpper.SelectedItem.Value
+        End If
         Try
 
             usercode = users.AddUser(txtUserName.Text.Trim,
@@ -77,6 +82,7 @@
                           cboDepart.SelectedItem.Value,
                           cboSection.SelectedItem.Value,
                           cboPosition.SelectedItem.Value,
+                          empupper,
                           txtEmail.Text.Trim,
                           txtUsercode.Text.Trim.ToLower + "@rpcthai.com")
             findUser(usercode)
@@ -120,6 +126,8 @@
                 cboDepart.SelectedIndex = cboDepart.Items.IndexOf(cboDepart.Items.FindByValue(.Item("depid").ToString))
                 cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(.Item("secid").ToString))
                 cboPosition.SelectedIndex = cboPosition.Items.IndexOf(cboPosition.Items.FindByValue(.Item("PositionID").ToString))
+                cboEmpper.SelectedIndex = cboEmpper.Items.IndexOf(cboEmpper.Items.FindByValue(.Item("EmpUpper").ToString))
+
                 txtEmail.Text = .Item("email")
 
                 Session("status") = "edit"
@@ -142,6 +150,7 @@
         cboDepart.SelectedIndex = -1
         cboSection.SelectedIndex = -1
         cboPosition.SelectedIndex = -1
+        cboEmpper.SelectedIndex = -1
 
         If maintable IsNot Nothing Then
             maintable.Rows.Clear()

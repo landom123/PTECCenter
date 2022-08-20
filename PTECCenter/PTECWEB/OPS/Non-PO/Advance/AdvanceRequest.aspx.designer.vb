@@ -461,7 +461,25 @@ Partial Public Class AdvanceRequest
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnAddAttatch As Global.System.Web.UI.HtmlControls.HtmlAnchor
+    Protected WithEvents btnAddAttatch As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''btnAddNewAttatch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddNewAttatch As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''btnAddAttatch2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddAttatch2 As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
     '''card_comment control.
@@ -516,4 +534,40 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnAddamount As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lbcboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboMyfile As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbMandatorycboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbMandatorycboMyfile As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboMyfile As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''asd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents asd As Global.System.Web.UI.WebControls.Button
 End Class

@@ -13,28 +13,20 @@
 
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: navy; color: white">
-                    <li class="breadcrumb-item">รายการ Payment
+                    <li class="breadcrumb-item">รายการ Payment <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
                     </li>
                 </ol>
 
                 <div class="row">
                     <div class="col-12 mb-3">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
-                        <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
-
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
                             <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                         
-                        <% Else%>
-
-                        <asp:Button ID="btnSearch_owner" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
-                            <asp:Button ID="btnClear_owner" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
-                        <% End If %>
                             <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
                     </div>
                 </div>
 
-                <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
 
                 <div class="row">
                     <div class="col-auto mb-3" style="margin-left: auto;">
@@ -121,6 +113,7 @@
                             <asp:DropDownList class="form-control" ID="cboPayby" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
+                    <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                     <div class="col-md-4 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -137,6 +130,9 @@
                             <asp:DropDownList ID="cboSection" class="form-control" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
+                    <% End If %>
+
+                    <% If Not Session("positionid") = "10" Then %>
                     <div class="col-md-4 mb-3 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -154,6 +150,7 @@
                         </div>
                     </div>
 
+                    <% End If %>
                 </div>
 
                 <div class="row" style="padding-top: 1rem;">
@@ -164,86 +161,8 @@
                         <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'สาขา' จะเปลี่ยนไปตาม 'ประเภทสาขา' ที่เลือก )" />
                     </div>
                 </div>
-                <% else %>
-                <div class="row">
-                    
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Code</span>
-                            </div>
-                            <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv_owner" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
-                        </div>
-                    </div>
-                    <%-- <div class="col-md-4 mb-3">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Code_ref</span>
-                            </div>
-                            <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
-                        </div>
-                    </div>--%>
+                
 
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ตั้งแต่วันที่</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtStartDate_owner" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">จนถึง</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtEndDate_owner" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
-
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สถานะงาน</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboWorking" runat="server" AutoPostBack="false"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ตั้งแต่ (DueDate)</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtStartDueDate_owner" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">จนถึง (DueDate)</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtEndDueDate_owner" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Vendor</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboVendor_owner" runat="server" AutoPostBack="false"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">จ่ายโดย</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboPayby_owner" runat="server" AutoPostBack="false"></asp:DropDownList>
-                        </div>
-                    </div>
-                </div>
-
-                <% End If %>
                 <div class="card-body">
                     <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
                         <asp:GridView ID="gvRemind"
@@ -276,7 +195,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="จ่ายโดย" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Pay_by").ToString.ToUpper%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Pay_by").ToString.ToUpper.Replace("CHEQUE", " CHQ")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
@@ -382,55 +301,6 @@
 
         //< !-- #################################  for operator ###########################-- >
 
-        // <!-- #################################  for owner ########################### -->
-        jQuery('[id$=txtStartDate_owner]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08'
-            onShow: function (ct) {
-                this.setOptions({
-                    maxDate: jQuery('[id$=txtEndDate_owner]').val() ? jQuery('[id$=txtEndDate_owner]').val() : false, formatDate: 'd.m.Y'
-                })
-            },
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
-
-        jQuery('[id$=txtEndDate_owner]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08
-            onShow: function (ct) {
-                this.setOptions({
-                    minDate: jQuery('[id$=txtStartDate_owner]').val() ? jQuery('[id$=txtStartDate_owner]').val() : false, formatDate: 'd.m.Y'
-                })
-            },
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
-        jQuery('[id$=txtStartDueDate_owner]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08'
-            onShow: function (ct) {
-                this.setOptions({
-                    maxDate: jQuery('[id$=txtEndDueDate_owner]').val() ? jQuery('[id$=txtEndDueDate_owner]').val() : false, formatDate: 'd.m.Y'
-                })
-            },
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
-
-        jQuery('[id$=txtEndDueDate_owner]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08
-            onShow: function (ct) {
-                this.setOptions({
-                    minDate: jQuery('[id$=txtStartDueDate_owner]').val() ? jQuery('[id$=txtStartDueDate_owner]').val() : false, formatDate: 'd.m.Y'
-                })
-            },
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
-
-        //< !-- #################################  for owner ###########################-- >
 
         $(document).ready(function () {
             $('.form-control').selectpicker({

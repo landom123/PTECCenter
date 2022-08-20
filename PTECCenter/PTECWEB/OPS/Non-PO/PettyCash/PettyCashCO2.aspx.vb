@@ -49,6 +49,7 @@ Public Class PettyCashCO2
         Dim objsupplier As New Supplier
         Dim objuser As New Users
 
+        Dim attatch As New Attatch
         Dim nonpoDs = New DataSet
         Dim statusid As Integer = 0
         Dim createby As Integer = 0
@@ -116,6 +117,7 @@ Public Class PettyCashCO2
                 Session("status_pcco") = "read"
                 ' End If
                 Try
+                    attatch.SetCboMyfile(cboMyfile, Session("userid"))
                     findNonPO()
 
                     statusid = maintable.Rows(0).Item("statusid")
@@ -431,6 +433,10 @@ endprocess:
             txtCommitDate.Text = .Rows(0).Item("commitdate").ToString
             txtCommitDate.ToolTip = .Rows(0).Item("commitdate").ToString
 
+            Dim budget As Double
+            budget = .Rows(0).Item("limit")
+            txtBudget.Text = String.Format("{0:n2}", budget)
+            txtBudget.ToolTip = String.Format("{0:n2}", budget)
 
             cboOwner.Attributes.Add("disabled", "True")
             'cboSection.Attributes.Add("disabled", "True")

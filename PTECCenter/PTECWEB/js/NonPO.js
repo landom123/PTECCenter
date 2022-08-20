@@ -111,7 +111,7 @@ function chkAttach(elem, userid) {
     var params = "{'attatchid': '" + elem.id + "','chked': '" + elem.checked + "','userid': '" + userid + "'}";
     $.ajax({
         type: "POST",
-        url: "../Advance/ClearAdvance.aspx/changeChecked",
+        url: "/OPS/Non-PO/Advance/ClearAdvance.aspx/changeChecked",
         async: true,
         data: params,
         contentType: "application/json; charset=utf-8",
@@ -215,7 +215,7 @@ function confirmDelete(commentID, userid) {
             var params = "{'commentid': '" + commentID + "','userid': '" + userid + "'}";
             $.ajax({
                 type: "POST",
-                url: "../Advance/ClearAdvance.aspx/deleteComment",
+                url: "/OPS/Non-PO/Advance/ClearAdvance.aspx/deleteComment",
                 async: true,
                 data: params,
                 contentType: "application/json; charset=utf-8",
@@ -251,7 +251,7 @@ function removeAttach(attachid, userid) {
             var params = "{'attachid': '" + attachid + "','userid': '" + userid + "'}";
             $.ajax({
                 type: "POST",
-                url: "../Payment/Payment2.aspx/deleteAttach",
+                url: "/OPS/Non-PO/Payment/Payment2.aspx/deleteAttach",
                 async: true,
                 data: params,
                 contentType: "application/json; charset=utf-8",

@@ -82,7 +82,7 @@ Public Class WebForm1
                     End If
                     chkuser(detailtable.Rows(0).Item("createby"))
                     showdata(detailtable)
-                    SetBtn(detailtable.Rows(0).Item("statusid"))
+                    SetBtn(detailtable.Rows(0).Item("statusid"), detailtable.Rows(0).Item("ownerapproval"))
                     If (Session("userid") = am_id Or
                     Session("userid") = rm_id Or
                     Session("userid") = dm_id Or
@@ -278,6 +278,7 @@ endprocess:
             Not Session("userid") = dm_id And
             Not Session("secid").ToString = "2" And
             Not Session("depid").ToString = "2" And
+            Not Session("depid").ToString = "1" And
             Not Session("depid").ToString = "4" Then
                 flag = False
             End If
@@ -402,7 +403,7 @@ endprocess:
 
         End Select
     End Sub
-    Private Sub SetBtn(statusid As String)
+    Private Sub SetBtn(statusid As String, Optional approver As Integer = 0)
         Select Case statusid
             Case = "1" 'รออนุมัติ
                 btnConfirm.Visible = False
@@ -445,9 +446,14 @@ endprocess:
                 btnCancel.Visible = True
                 btnClose.Visible = False
                 btnAddDoc.Visible = False
-                btnEdit.Visible = True
+                If approver = 0 Then
+                    btnEdit.Visible = True
+                Else
+                    btnEdit.Visible = False
+                End If
+
             Case = "8"  'รอประสานงานรับเรื่อง
-                btnConfirm.Visible = False
+                    btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
                 btnAddDoc.Visible = False
