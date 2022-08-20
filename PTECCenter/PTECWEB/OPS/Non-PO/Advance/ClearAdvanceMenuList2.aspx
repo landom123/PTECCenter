@@ -14,7 +14,7 @@
 
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: navy; color: white">
-                    <li class="breadcrumb-item">รายการเคลียร์ค้างชำระ Advance
+                    <li class="breadcrumb-item">รายการเคลียร์ค้างชำระ Advance <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
                     </li>
                 </ol>
 
