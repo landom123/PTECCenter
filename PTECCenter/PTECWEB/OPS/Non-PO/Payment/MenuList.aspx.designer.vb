@@ -41,24 +41,6 @@ Partial Public Class MenuList
     Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnSearch_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnSearch_owner As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnClear_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnClear_owner As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''btnExport control.
     '''</summary>
     '''<remarks>
@@ -228,78 +210,6 @@ Partial Public Class MenuList
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents note2 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtclearadv_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtclearadv_owner As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''txtStartDate_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtStartDate_owner As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''txtEndDate_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtEndDate_owner As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cboWorking control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboWorking As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''txtStartDueDate_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtStartDueDate_owner As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''txtEndDueDate_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtEndDueDate_owner As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cboVendor_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboVendor_owner As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboPayby_owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboPayby_owner As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''gvRemind control.

@@ -265,195 +265,197 @@
                             <!-- (table-width = 1000px ) -->
                             <!--  เนื้อหาข้างใน = 1000px - 40px  = 960 px -->
                             <table class="print">
+                                <thead>
 
-                                <!--  colทั้งหทด = 24 col -->
-                                <!--  960/24  = 40 px -->
-                                <tr>
-                                    <!--  18 * 40  = 720 px -->
-                                    <td colspan="18" style="width: 720px !important; height: 10px">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <img class="logopure" src="..\..\..\icon\Logo_pure.png" alt="logopure" width="500" height="600">
-                                            </div>
-                                            <div class="col-9 company">
-                                                <div class="row company-th">
-                                                    <h3>บริษัท เพียวพลังงานไทย จำกัด</h3>
+                                    <!--  colทั้งหทด = 24 col -->
+                                    <!--  960/24  = 40 px -->
+                                    <tr>
+                                        <!--  18 * 40  = 720 px -->
+                                        <td colspan="18" style="width: 720px !important; height: 10px">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <img class="logopure" src="..\..\..\icon\Logo_pure.png" alt="logopure" width="500" height="600">
                                                 </div>
-                                                <div class="row company-en">
-                                                    <h5>PURE THAI ENERGY COMPANY LIMITED</h5>
+                                                <div class="col-9 company">
+                                                    <div class="row company-th">
+                                                        <h3>บริษัท เพียวพลังงานไทย จำกัด</h3>
+                                                    </div>
+                                                    <div class="row company-en">
+                                                        <h5>PURE THAI ENERGY COMPANY LIMITED</h5>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <!--  6 * 40  = 240 px -->
-                                    <td colspan="6" style="width: 240px !important;">
-                                        <div class="row">
+                                        </td>
+                                        <!--  6 * 40  = 240 px -->
+                                        <td colspan="6" style="width: 240px !important;">
+                                            <div class="row">
 
-                                            <h5>PAYMENT REQUEST</h5>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
+                                                <h5>PAYMENT REQUEST</h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
 
 
-                                    <td colspan="12" style="width: 420px !important;">
-                                        <div class="row">
+                                        <td colspan="12" style="width: 420px !important;">
+                                            <div class="row">
 
-                                            <div class="col-1">
-                                                <asp:Label ID="Label2" CssClass="form-label" AssociatedControlID="cboOwner" runat="server" Text="ผู้เบิก" />
-                                            </div>
-                                            <div class="col-11">
+                                                <div class="col-1">
+                                                    <asp:Label ID="Label2" CssClass="form-label" AssociatedControlID="cboOwner" runat="server" Text="ผู้เบิก" />
+                                                </div>
+                                                <div class="col-11">
 
-                                                <asp:DropDownList class="form-control" ID="cboOwner" runat="server"></asp:DropDownList>
+                                                    <asp:DropDownList class="form-control" ID="cboOwner" runat="server"></asp:DropDownList>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td colspan="6" style="width: 240px !important;">
-                                        <div class="row">
+                                        </td>
+                                        <td colspan="6" style="width: 240px !important;">
+                                            <div class="row">
 
-                                            <div class="col-3">
-                                                <asp:Label ID="Label3" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="สาขา" />
+                                                <div class="col-3">
+                                                    <asp:Label ID="Label3" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="สาขา" />
+                                                </div>
+                                                <div class="col-9">
+                                                    <asp:DropDownList class="form-control" ID="cboBranch" runat="server">
+                                                    </asp:DropDownList>
+                                                </div>
                                             </div>
-                                            <div class="col-9">
-                                                <asp:DropDownList class="form-control" ID="cboBranch" runat="server">
-                                                </asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td colspan="6" style="width: 240px !important;">
-                                        <div class="row">
+                                        </td>
+                                        <td colspan="6" style="width: 240px !important;">
+                                            <div class="row">
 
-                                            <div class="col-3">
-                                                <asp:Label ID="lbpmno" CssClass="form-label" AssociatedControlID="txtpmno" runat="server" Text="เลขที่" />
+                                                <div class="col-3">
+                                                    <asp:Label ID="lbpmno" CssClass="form-label" AssociatedControlID="txtpmno" runat="server" Text="เลขที่" />
+                                                </div>
+                                                <div class="col-9">
+                                                    <asp:TextBox class="form-control" ID="txtpmno" runat="server" ReadOnly="True"></asp:TextBox>
+                                                </div>
                                             </div>
-                                            <div class="col-9">
-                                                <asp:TextBox class="form-control" ID="txtpmno" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="width: 240px !important;">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="cboSection" runat="server" Text="แผนก" />
+                                                </div>
+                                                <div class="col-9">
+                                                    <asp:DropDownList class="form-control" ID="cboSection" runat="server">
+                                                    </asp:DropDownList>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" style="width: 240px !important;">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="cboSection" runat="server" Text="แผนก" />
+                                        </td>
+                                        <td colspan="6" style="width: 240px !important;">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <asp:Label ID="Label7" CssClass="form-label" AssociatedControlID="cboDepartment" runat="server" Text="ฝ่าย" />
+                                                </div>
+                                                <div class="col-9">
+                                                    <asp:DropDownList class="form-control" ID="cboDepartment" AutoPostBack="True"
+                                                        runat="server">
+                                                    </asp:DropDownList>
+                                                </div>
                                             </div>
-                                            <div class="col-9">
-                                                <asp:DropDownList class="form-control" ID="cboSection" runat="server">
-                                                </asp:DropDownList>
+                                        </td>
+                                        <td colspan="6" style="width: 240px !important;">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <asp:Label ID="lbAffiliation" CssClass="form-label" AssociatedControlID="cboAffiliation" runat="server" Text="สายงาน" />
+                                                </div>
+                                                <div class="col-9">
+                                                    <asp:DropDownList class="form-control " ID="cboAffiliation" runat="server" required></asp:DropDownList>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td colspan="6" style="width: 240px !important;">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <asp:Label ID="Label7" CssClass="form-label" AssociatedControlID="cboDepartment" runat="server" Text="ฝ่าย" />
+                                        </td>
+                                        <td colspan="6" style="width: 240px !important;">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <asp:Label ID="Label9" CssClass="form-label" AssociatedControlID="txtCreateDate" runat="server" Text="วันที่" />
+                                                </div>
+                                                <div class="col-9">
+                                                    <asp:TextBox class="form-control font-weight-bold" ID="txtCreateDate" runat="server" ReadOnly="True"></asp:TextBox>
+                                                </div>
                                             </div>
-                                            <div class="col-9">
-                                                <asp:DropDownList class="form-control" ID="cboDepartment" AutoPostBack="True"
-                                                    runat="server">
-                                                </asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td colspan="6" style="width: 240px !important;">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <asp:Label ID="lbAffiliation" CssClass="form-label" AssociatedControlID="cboAffiliation" runat="server" Text="สายงาน" />
-                                            </div>
-                                            <div class="col-9">
-                                                <asp:DropDownList class="form-control " ID="cboAffiliation" runat="server" required></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td colspan="6" style="width: 240px !important;">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <asp:Label ID="Label9" CssClass="form-label" AssociatedControlID="txtCreateDate" runat="server" Text="วันที่" />
-                                            </div>
-                                            <div class="col-9">
-                                                <asp:TextBox class="form-control font-weight-bold" ID="txtCreateDate" runat="server" ReadOnly="True"></asp:TextBox>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
+                                    <tr>
 
-                                    <td colspan="18" style="width: 720px !important;">
-                                        <div class="row">
-                                            <div class="col-1">
-                                                <asp:Label ID="lbVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="ผู้รับเงิน" />
+                                        <td colspan="18" style="width: 720px !important;">
+                                            <div class="row">
+                                                <div class="col-1">
+                                                    <asp:Label ID="lbVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="ผู้รับเงิน" />
+                                                </div>
+                                                <div class="col-11">
+                                                    <asp:DropDownList class="form-control " ID="cboVendor" runat="server" required></asp:DropDownList>
+                                                </div>
                                             </div>
-                                            <div class="col-11">
-                                                <asp:DropDownList class="form-control " ID="cboVendor" runat="server" required></asp:DropDownList>
-                                            </div>
-                                        </div>
 
-                                    </td>
-                                    <td rowspan="2" colspan="6" style="width: 240px !important;">
+                                        </td>
+                                        <td rowspan="2" colspan="6" style="width: 240px !important;">
 
-                                        <div class="row">
-                                            <h5>Due Date</h5>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col dueDate" style="height: 60px;">
-                                                <asp:TextBox class="form-control font-weight-bold text-center" ID="txtDuedate" runat="server" required></asp:TextBox>
+                                            <div class="row">
+                                                <h5>Due Date</h5>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
+                                            <div class="row">
+                                                <div class="col dueDate" style="height: 60px;">
+                                                    <asp:TextBox class="form-control font-weight-bold text-center" ID="txtDuedate" runat="server" required></asp:TextBox>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
 
-                                    <td colspan="18" style="width: 720px !important;">
-                                        <div class="row chk">
-                                            <div class="col-2">
-                                                <asp:Label ID="Label11" CssClass="form-label" runat="server" Text="จ่ายโดย" />
+                                        <td colspan="18" style="width: 720px !important;">
+                                            <div class="row chk">
+                                                <div class="col-2">
+                                                    <asp:Label ID="Label11" CssClass="form-label" runat="server" Text="จ่ายโดย" />
+                                                </div>
+                                                <div class="col-auto pr-4" style="color: #0f66c4;">
+                                                    <input class="form-check-input chk-img-after" type="checkbox" id="chkCheque" runat="server">
+                                                    <asp:Label ID="lbchkCheque" CssClass="form-check-label" AssociatedControlID="chkCheque" runat="server" Text="เช็ค" />
+                                                </div>
+                                                <div class="col-auto pr-4" style="color: #0f66c4;">
+                                                    <input class="form-check-input chk-img-after" type="checkbox" id="chkChequeCounter" runat="server">
+                                                    <asp:Label ID="Label12" CssClass="form-check-label" AssociatedControlID="chkChequeCounter" runat="server" Text="เช็คเคาน์เตอร์" />
+                                                </div>
+                                                <div class="col-auto pr-4" style="color: #0f66c4;">
+                                                    <input class="form-check-input chk-img-after" type="checkbox" id="chkCashierCheque" runat="server">
+                                                    <asp:Label ID="lbchkCashierCheque" CssClass="form-check-label" AssociatedControlID="chkCashierCheque" runat="server" Text="แคชเชียร์เช็ค" />
+                                                </div>
+                                                <div class="col-auto pr-4" style="color: #0f66c4;">
+                                                    <input class="form-check-input chk-img-after" type="checkbox" id="chkTT" runat="server">
+                                                    <asp:Label ID="lbchkTT" CssClass="form-check-label" AssociatedControlID="chkTT" runat="server" Text="TT" />
+                                                </div>
+                                                <div class="col-auto pr-4 d-none" style="color: #0f66c4;">
+                                                    <input class="form-check-input chk-img-after" type="checkbox" id="chkEFT" runat="server">
+                                                    <asp:Label ID="lbchkEFT" CssClass="form-check-label" AssociatedControlID="chkEFT" runat="server" Text="EFT" />
+                                                </div>
+                                                <div class="col-auto pr-4" style="color: #0f66c4;">
+                                                    <input class="form-check-input chk-img-after" type="checkbox" id="chkPXC" runat="server">
+                                                    <asp:Label ID="lbchkPXC" CssClass="form-check-label" AssociatedControlID="chkPXC" runat="server" Text="PCX" />
+                                                </div>
+                                                <div class="col-auto pr-4 d-none" style="color: #0f66c4;">
+                                                    <input class="form-check-input chk-img-after" type="checkbox" id="chkdeductSell" runat="server">
+                                                    <asp:Label ID="lbchkdeductSell" CssClass="form-check-label" AssociatedControlID="chkdeductSell" runat="server" Text="หักยอดขาย" />
+                                                </div>
                                             </div>
-                                            <div class="col-auto pr-4" style="color: #0f66c4;">
-                                                <input class="form-check-input chk-img-after" type="checkbox" id="chkCheque" runat="server">
-                                                <asp:Label ID="lbchkCheque" CssClass="form-check-label" AssociatedControlID="chkCheque" runat="server" Text="เช็ค" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="24" style="width: 960px !important;">
+                                            <div class="row">
+                                                <div class="col-1">
+                                                    <asp:Label ID="lbnote" CssClass="form-label" AssociatedControlID="txtNote" runat="server" Text="วัตถุประสงค์" />
+                                                </div>
+                                                <div class="col-11">
+                                                    <asp:TextBox class="form-control" ID="txtNote" runat="server"></asp:TextBox>
+                                                </div>
                                             </div>
-                                            <div class="col-auto pr-4" style="color: #0f66c4;">
-                                                <input class="form-check-input chk-img-after" type="checkbox" id="chkChequeCounter" runat="server">
-                                                <asp:Label ID="Label12" CssClass="form-check-label" AssociatedControlID="chkChequeCounter" runat="server" Text="เช็คเคาน์เตอร์" />
-                                            </div>
-                                            <div class="col-auto pr-4" style="color: #0f66c4;">
-                                                <input class="form-check-input chk-img-after" type="checkbox" id="chkCashierCheque" runat="server">
-                                                <asp:Label ID="lbchkCashierCheque" CssClass="form-check-label" AssociatedControlID="chkCashierCheque" runat="server" Text="แคชเชียร์เช็ค" />
-                                            </div>
-                                            <div class="col-auto pr-4" style="color: #0f66c4;">
-                                                <input class="form-check-input chk-img-after" type="checkbox" id="chkTT" runat="server">
-                                                <asp:Label ID="lbchkTT" CssClass="form-check-label" AssociatedControlID="chkTT" runat="server" Text="TT" />
-                                            </div>
-                                            <div class="col-auto pr-4 d-none" style="color: #0f66c4;">
-                                                <input class="form-check-input chk-img-after" type="checkbox" id="chkEFT" runat="server">
-                                                <asp:Label ID="lbchkEFT" CssClass="form-check-label" AssociatedControlID="chkEFT" runat="server" Text="EFT" />
-                                            </div>
-                                            <div class="col-auto pr-4" style="color: #0f66c4;">
-                                                <input class="form-check-input chk-img-after" type="checkbox" id="chkPXC" runat="server">
-                                                <asp:Label ID="lbchkPXC" CssClass="form-check-label" AssociatedControlID="chkPXC" runat="server" Text="PCX" />
-                                            </div>
-                                            <div class="col-auto pr-4 d-none" style="color: #0f66c4;">
-                                                <input class="form-check-input chk-img-after" type="checkbox" id="chkdeductSell" runat="server">
-                                                <asp:Label ID="lbchkdeductSell" CssClass="form-check-label" AssociatedControlID="chkdeductSell" runat="server" Text="หักยอดขาย" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="24" style="width: 960px !important;">
-                                        <div class="row">
-                                            <div class="col-1">
-                                                <asp:Label ID="lbnote" CssClass="form-label" AssociatedControlID="txtNote" runat="server" Text="วัตถุประสงค์" />
-                                            </div>
-                                            <div class="col-11">
-                                                <asp:TextBox class="form-control" ID="txtNote" runat="server"></asp:TextBox>
-                                            </div>
-                                        </div>
 
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                </thead>
                                 <tr>
                                     <th class="text-center" rowspan="2" colspan="2" style="width: 80px !important;">รหัสบัญชี</th>
                                     <th class="text-center" rowspan="2" colspan="7" style="width: 320px !important;">รายละเอียด</th>
@@ -534,7 +536,7 @@
                                 </tr>
 
                                 <!--  ############## End Detail ############### -->
-                                <tfoot>
+                                <tfoot class="ss">
                                     <!--  total -->
 
                                     <tr>
@@ -708,8 +710,11 @@
                                     <% Next i %>
                                 </div>
                                 <div class="card-footer">
-                                    <a onclick="addAttach()" id="btnAddAttatch" runat="server" class="text-primary" style="cursor: pointer; transition: .2s;">
-                                        <i class="fas fa-plus-circle"></i><span>&nbsp;แนบลิ้งเอกสาร</span></a>
+                                    <div id="btnAddAttatch" runat="server">
+                                        <a onclick="addAttach()" id="btnAddNewAttatch" runat="server" class="text-primary" style="cursor: pointer; transition: .2s;">
+                                            <i class="fas fa-plus-circle"></i><span>&nbsp;แนบลิ้งเอกสาร</span></a>
+                                        <a href="#" id="btnAddAttatch2" runat="server" title="addAttach" data-toggle="modal" data-target="#chooseMyfile">เลือกจากคลังไฟล์...</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -973,12 +978,42 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade bd-example-modal-lg" id="chooseMyfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">เลือกจากคลังไฟล์</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <asp:Label ID="lbcboMyfile" CssClass="form-label" AssociatedControlID="cboMyfile" runat="server" Text="ไฟล์ของฉัน" />
+                                <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboMyfile" runat="server" Text="*" />
+                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server" required></asp:DropDownList>
+                                <div class="invalid-feedback">กรุณาเลือกไฟล์</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("../js/NonPO.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
 
     <script type="text/javascript">
         //jQuery('[id$=txtDuedate]').datetimepicker({
@@ -1265,64 +1300,78 @@ alert('else nonpo')
                 if (result.isConfirmed) {
                     let url = result.value[0];
                     let description = result.value[1];
-                    if (url.substring(0, 7) != 'http://' && url.substring(0, 8) != 'https://') {
-                        url = 'http://' + url;
-                    }
-                    /*alert(url);*/
-                    let msg = '<a href="' + url + '" target="_blank">' + description + '</a>'
-
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const nonpocode = urlParams.get('NonpoCode');
-                    var user = "<% =Session("usercode").ToString %>";
-                    var userid = <%= Session("userid") %>;
-                    var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
-                    $.ajax({
-                        type: "POST",
-                        url: "../Payment/Payment2.aspx/addAttach",
-                        async: true,
-                        data: params,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (msg) {
-
-
-                            /*alertSuccessToast();*/
-                            if (msg.d) {
-                                if (!description) {
-                                    description = 'Link';
-                                }
-                                /*__doPostBack('AttachTable', '')*/
-                                $('.attatchItems').append(
-                                    '<div class="row">' +
-                                    '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d + '" >' +
-                                    '<div class="col-auto">' +
-                                    '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
-                                    '<span>' + description + '</span></a>' +
-                                    '<a onclick="removeAttach(' + msg.d + ',' + userid + ');" class="btn btn-sm pt-0 text-danger deletedetail">' +
-                                    '<i class="fas fa-times"></i>' +
-                                    '</a>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>'
-                                );
-                                alertSuccessToast('บันทึกเรียบร้อย' + description);
-                            } else {
-                                alertWarning('Add URL fail');
-                            }
-
-                        },
-                        error: function (msg) {
-                            console.log(msg);
-
-                            alertWarning('Add URL faila');
-
-                        }
-                    });
-
+                    sentAddAttach(url, description)
                 }
             })
 
         }
+
+        function chooseMyfile() {
+            validateData();
+
+            const url = $('#<%= cboMyfile.ClientID%>').val();
+            const description = $("#<%= cboMyfile.ClientID%> option:selected").text();
+            sentAddAttach(url, description)
+
+            return true;
+        }
+        function sentAddAttach(url, description) {
+            if (url.substring(0, 7) != 'http://' && url.substring(0, 8) != 'https://') {
+                url = 'http://' + url;
+            }
+            /*alert(url);*/
+            let msg = '<a href="' + url + '" target="_blank">' + description + '</a>'
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const nonpocode = urlParams.get('NonpoCode');
+            var user = "<% =Session("usercode").ToString %>";
+            var userid = <%= Session("userid") %>;
+            var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
+            $.ajax({
+                type: "POST",
+                url: "/OPS/Non-PO/Payment/Payment2.aspx/addAttach",
+                async: true,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+
+
+                    /*alertSuccessToast();*/
+                    if (msg.d) {
+                        if (!description) {
+                            description = 'Link';
+                        }
+                        /*__doPostBack('AttachTable', '')*/
+                        $('.attatchItems').append(
+                            '<div class="row">' +
+                            '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d + '" >' +
+                            '<div class="col-auto">' +
+                            '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
+                            '<span>' + description + '</span></a>' +
+                            '<a onclick="removeAttach(' + msg.d + ',' + userid + ');" class="btn btn-sm pt-0 text-danger deletedetail">' +
+                            '<i class="fas fa-times"></i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                        alertSuccessToast('บันทึกเรียบร้อย' + description);
+                    } else {
+                        alertWarning('Add URL fail');
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+
+                    alertWarning('Add URL faila');
+
+                }
+            });
+
+        }
+
 
 
         function confirmDeletedetail(nonpodtlid, row) {

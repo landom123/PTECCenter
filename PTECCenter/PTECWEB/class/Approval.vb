@@ -7,6 +7,12 @@ Public Class Approval
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+    Public Sub SetCboApproval(obj As Object, depid As String)
+        obj.DataSource = Me.Approval_List(depid)
+        obj.DataValueField = "ApprovalListID"
+        obj.DataTextField = "name"
+        obj.DataBind()
+    End Sub
 
     Public Sub SetCboApprovalGroup(obj As Object)
         obj.DataSource = Me.ApprovalGroup_List()
@@ -40,13 +46,21 @@ Public Class Approval
         obj.DataBind()
     End Sub
 
+    Public Sub SetCboApprovalHOStatus(obj As Object)
+        obj.DataSource = Me.ApprovalHOStatus_List()
+        obj.DataValueField = "statusid"
+        obj.DataTextField = "statusname"
+        obj.DataBind()
+    End Sub
+
+
     Public Sub SetCboApprovalStatusForOwner(obj As Object)
         obj.DataSource = Me.ApprovalStatus_List_ForOwner()
         obj.DataValueField = "statusid"
         obj.DataTextField = "statusname"
         obj.DataBind()
     End Sub
-    Public Function Approval_List() As DataTable
+    Public Function Approval_List(Optional depid As String = "") As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -59,7 +73,7 @@ Public Class Approval
         cmd.CommandText = "Approval_List"
         cmd.CommandType = CommandType.StoredProcedure
 
-        'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
@@ -198,6 +212,33 @@ Public Class Approval
         Return result
     End Function
 
+    Public Function ApprovalHOStatus_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHOStatus_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+
     Public Function ApprovalStatus_List_ForOwner() As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -250,7 +291,91 @@ Public Class Approval
         conn.Close()
         Return result
     End Function
+    Public Function SaveApprovalHO(ahono As String, headtable As DataTable, detailtable As DataTable, username As String) As String
+        Dim result As String
 
+        'Credit_Balance_List_Createdate
+
+        ahono = SaveHeadAho(headtable, username)
+        result = ahono
+        SaveDetailAho(ahono, detailtable, username)
+
+
+        Return result
+    End Function
+    Private Function SaveHeadAho(mytable As DataTable, username As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+        With mytable.Rows(0)
+            cmd.Parameters.Add("@approvalhocode", SqlDbType.VarChar).Value = .Item("approvalHO_code")
+            cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = .Item("detail")
+            cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+        End With
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+    End Function
+    Private Sub SaveDetailAho(ahono As String, mytable As DataTable, username As String)
+        Dim nonpocode As String
+        With mytable
+            For i = 0 To mytable.Rows.Count - 1
+                If String.IsNullOrEmpty(.Rows(i).Item("approvalcode").ToString) Then
+                    nonpocode = SaveDetailToTable(ahono,
+                                      .Rows(i).Item("approvalid"),
+                                      "[" & ahono & "] - " & username,
+                                      .Rows(i).Item("detail"),
+                                      .Rows(i).Item("cost"),
+                                    0,
+                                    .Rows(i).Item("branchid"),
+                                    username)
+                End If
+            Next
+        End With
+        'Result = ds.Tables(0).Rows(0).Item("code")
+
+    End Sub
+
+    Private Function SaveDetailToTable(ahono As String, approvallistid As Integer, name As String, detail As String, price As Double,
+                                   day As Integer, branchid As Integer, username As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHOdtl_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahono", SqlDbType.VarChar).Value = ahono
+        cmd.Parameters.Add("@approvallistid", SqlDbType.Int).Value = approvallistid
+        cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name
+        cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = detail
+        cmd.Parameters.Add("@price", SqlDbType.Money).Value = price
+        cmd.Parameters.Add("@approvalday", SqlDbType.Int).Value = day
+        cmd.Parameters.Add("@branchid", SqlDbType.Int).Value = branchid
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+
+    End Function
     Public Sub Save_Comment_By_Code(codeRef As String, message As String, userid As Integer)
         'Dim result As String
         Dim ds As New DataSet
@@ -489,6 +614,31 @@ Public Class Approval
         Return result
     End Function
 
+    Public Function ApprovalHO_Find(code As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_Find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@code", SqlDbType.VarChar).Value = code
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+
     Public Function FindApprovalMenuList(approvalcode As String, branchid As String, groupid As String, categoryid As String, approvallistid As String, statusid As String,
                                          areaid As String, userid As String, startdate As String, enddate As String) As DataTable
         Dim result As DataTable
@@ -546,6 +696,35 @@ Public Class Approval
 
         conn.Close()
 
+        Return result
+    End Function
+
+    Public Function ApprovalHOMenuList(ahocode As String, statusid As String, startdate As String, enddate As String, depid As String, secid As String, user As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHOMenuList_Find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = ahocode
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
         Return result
     End Function
     Public Function GetImageName() As String
@@ -740,4 +919,230 @@ Public Class Approval
         'Return result
     End Function
 
+    Public Function deleteDetailbycrossid(crossid As Integer, user As String) As Boolean
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHODtl_Del"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@crossid", SqlDbType.BigInt).Value = crossid
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+        Return result
+    End Function
+    'Public Sub ApprovalHO_Pass(ahocode As String, usercode As String)
+    '    'Credit_Balance_List_Createdate
+    '    Dim ds As New DataSet
+    '    Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+    '    Dim cmd As New SqlCommand
+    '    Dim adp As New SqlDataAdapter
+
+    '    conn.Open()
+    '    cmd.Connection = conn
+    '    cmd.CommandText = "ApprovalHO_Pass"
+    '    cmd.CommandType = CommandType.StoredProcedure
+
+    '    cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = ahocode
+    '    cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+    '    cmd.ExecuteNonQuery()
+    '    'adp.SelectCommand = cmd
+    '    'adp.Fill(ds)
+    '    'result = ds.Tables(0).Rows(0).Item("jobcode")
+    '    conn.Close()
+    '    'Return result
+    'End Sub
+
+    Public Sub ApprovalHO_Confirm(ahocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_Confirm"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = ahocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Function ApprovalHOPermission(ahocode As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_PermisstionOwner"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = ahocode
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+    Public Sub ApprovalHO_Cancel(ahocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_Cancel"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = ahocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub ApprovalHO_NotAllow(ahocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_NotAllow"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = ahocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+    Public Sub ApprovalHO_AllowDeductSell(ahocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_AllowDeductSell"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = ahocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub ApprovalHO_Allow(ahocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_Allow"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = ahocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub ApprovalHO_Verify(ahocode As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalLevel_Verify"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@code", SqlDbType.VarChar).Value = ahocode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Function ApprovalHOPermisstionConfirm(aho As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "ApprovalHO_PermisstionConfirm"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ahocode", SqlDbType.VarChar).Value = aho
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("acc")
+        conn.Close()
+        Return result
+
+    End Function
 End Class

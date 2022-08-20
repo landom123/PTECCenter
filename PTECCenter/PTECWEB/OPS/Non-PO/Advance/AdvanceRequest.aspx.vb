@@ -32,6 +32,7 @@ Public Class AdvanceRequest
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
+        Dim attatch As New Attatch
         Dim objNonPO As New NonPO
         Dim nonpods = New DataSet
 
@@ -63,6 +64,7 @@ Public Class AdvanceRequest
             If Not Request.QueryString("ADV") Is Nothing Then
 
                 Try
+                    attatch.SetCboMyfile(cboMyfile, Session("userid"))
                     nonpods = objNonPO.NonPO_AdvanceRQ_Find(Request.QueryString("ADV"))
                     detailtable = nonpods.Tables(0)
                     AttachTable = nonpods.Tables(1)

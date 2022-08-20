@@ -26,7 +26,7 @@
 
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: deeppink; color: white">
-                    <li class="breadcrumb-item">รายการขอเบิก Advance
+                    <li class="breadcrumb-item">รายการขอเบิก Advance <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
                     </li>
                 </ol>
 
@@ -34,15 +34,13 @@
                     <div class="col-12">
 
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
-                        <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
                         <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                             <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
-                         <% End If %>
                     </div>
                 </div>
 
-                <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+               <%-- <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>--%>
 
                 <div class="row">
                     <div class="col-auto" style="margin-left: auto;">
@@ -104,6 +102,8 @@
                             <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                         </div>
                     </div>
+
+                     <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                     <div class="col-md-4 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -120,6 +120,9 @@
                             <asp:DropDownList ID="cboSection" class="form-control" runat="server"></asp:DropDownList>
                         </div>
                     </div>
+                    <% End If %>
+
+                    <% If Not Session("positionid") = "10" Then %>
                     <div class="col-md-4 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -136,7 +139,7 @@
                             <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
                         </div>
                     </div>
-
+                    <% End If %>
                 </div>
 
                 <div class="row" style="padding-top: 1rem;">
@@ -147,7 +150,7 @@
                         <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'สาขา' จะเปลี่ยนไปตาม 'ประเภทสาขา' ที่เลือก )" />
                     </div>
                 </div>
-                <% else %>
+                <%--<% else %>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="input-group">
@@ -158,7 +161,7 @@
                         </div>
                     </div>
                 </div>
-                <% End If %>
+                <% End If %>--%>
                 <div class="card-body">
                     <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
                         <asp:GridView ID="gvRemind"

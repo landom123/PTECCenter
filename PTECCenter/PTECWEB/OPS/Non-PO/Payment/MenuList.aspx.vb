@@ -43,26 +43,25 @@ Public Class MenuList
         txtEndDueDate.Attributes.Add("readonly", "readonly")
 
 
-        txtStartDate_owner.Attributes.Add("readonly", "readonly")
-        txtEndDate_owner.Attributes.Add("readonly", "readonly")
-        txtStartDueDate_owner.Attributes.Add("readonly", "readonly")
-        txtEndDueDate_owner.Attributes.Add("readonly", "readonly")
-
-
         operator_code = objNonpo.NonPOPermisstionOperator("PAY")
 
         If Not IsPostBack() Then
+
+            objNonpo.SetCboPayby(cboPayby)
+            objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "PAY")
+            objbranch.SetComboBranchGroup(cboBranchGroup)
+            objbranch.SetComboBranch(cboBranch, "")
+            objsupplier.SetCboVendorByName(cboVendor, "")
+            objdep.SetCboDepartmentBybranch(cboDepartment, 0)
+            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            If Session("positionid") = "10" Then
+                chkCO.Checked = True
+            Else
+                chkHO.Checked = True
+            End If
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
 
-                objNonpo.SetCboPayby(cboPayby)
-                objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "PAY")
-                objbranch.SetComboBranchGroup(cboBranchGroup)
-                objbranch.SetComboBranch(cboBranch, "")
-                objsupplier.SetCboVendorByName(cboVendor, "")
-                objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-                objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
-                chkHO.Checked = True
 
                 '------------------------------------
                 If Not Session("criteria_joblist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
@@ -73,14 +72,20 @@ Public Class MenuList
                     searchjobslist()
                 End If
             Else
-                approval.SetCboApprovalStatusForOwner(cboWorking)
+                'approval.SetCboApprovalStatusForOwner(cboWorking)
 
-                objNonpo.SetCboPayby(cboPayby_owner)
-                objsupplier.SetCboVendorByName(cboVendor_owner, "")
+                'objNonpo.SetCboPayby(cboPayby_owner)
+                'objsupplier.SetCboVendorByName(cboVendor_owner, "")
                 'If Not Session("cboWorking_clearadv") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                 '    cboWorking.SelectedValue = Session("cboWorking_clearadv")
                 'End If
-                searchjobslist_owner()
+                If Not Session("criteria_joblist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_joblist")
+                    BindCriteria(criteria)
+                    searchjobslist_owner()
+                Else
+                    searchjobslist_owner()
+                End If
 
             End If
         Else
@@ -93,13 +98,16 @@ Public Class MenuList
     Private Function createCriteria() As DataTable
         Dim dt As New DataTable
 
+        dt.Columns.Add("chkCO", GetType(Boolean))
+        dt.Columns.Add("chkHO", GetType(Boolean))
         dt.Columns.Add("txtclearadv", GetType(String))
-        dt.Columns.Add("txtcoderef", GetType(String))
         dt.Columns.Add("txtStartDate", GetType(String))
         dt.Columns.Add("txtEndDate", GetType(String))
         dt.Columns.Add("cboStatusFollow", GetType(String))
         dt.Columns.Add("txtStartDueDate", GetType(String))
         dt.Columns.Add("txtEndDueDate", GetType(String))
+        dt.Columns.Add("cboVendor", GetType(String))
+        dt.Columns.Add("cboPayby", GetType(String))
         dt.Columns.Add("cboDep", GetType(String))
         dt.Columns.Add("cboSec", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
@@ -108,6 +116,27 @@ Public Class MenuList
 
         Return dt
     End Function
+
+    Private Sub setCriteria()
+        'criteria = createCriteria()
+        criteria.Rows.Clear()
+        criteria.Rows.Add(chkCO.Checked,
+                          chkHO.Checked,
+                          txtclearadv.Text.ToString.Trim(),
+                          txtStartDate.Text.ToString.Trim(),
+                          txtEndDate.Text.ToString.Trim(),
+                          (cboStatusFollow.SelectedItem.Value),
+                          txtStartDueDate.Text.ToString.Trim(),
+                          txtEndDueDate.Text.ToString.Trim(),
+                          (cboVendor.SelectedItem.Value),
+                          (cboPayby.SelectedItem.Value),
+                          (cboDepartment.SelectedItem.Value),
+                          (cboSection.SelectedItem.Value),
+                          (cboBranchGroup.SelectedItem.Value),
+                          (cboBranch.SelectedItem.Value),
+                          gvRemind.PageIndex)
+        Session("criteria_joblist") = criteria
+    End Sub
 
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Response.Redirect("Payment2.aspx")
@@ -125,6 +154,10 @@ Public Class MenuList
             txtStartDueDate.Text = criteria.Rows(0).Item("txtStartDueDate")
             txtEndDueDate.Text = criteria.Rows(0).Item("txtEndDueDate")
 
+
+            cboVendor.SelectedValue = criteria.Rows(0).Item("cboVendor")
+            cboPayby.SelectedValue = criteria.Rows(0).Item("cboPayby")
+
             cboStatusFollow.SelectedValue = criteria.Rows(0).Item("cboStatusFollow")
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
             Dim objbranch As New Branch
@@ -141,6 +174,8 @@ Public Class MenuList
             objsection.SetCboSection_seccode(cboSection, depid)
             cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
 
+            chkCO.Checked = criteria.Rows(0).Item("chkCO")
+            chkHO.Checked = criteria.Rows(0).Item("chkHO")
 
         End If
     End Sub
@@ -195,6 +230,8 @@ Public Class MenuList
             BindData()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
+            'Dim res As String = Regex.Replace(ex.ToString, "[^A-Za-z0-9\-/]", "")
+            'Dim javaScript As String = "alertWarning('" + res + "');"
             Dim javaScript As String = "alertWarning('search fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
@@ -206,16 +243,41 @@ Public Class MenuList
         Dim detailtable As New DataTable
         Dim userid As Integer = Session("userid")
         Try
-            itemtable = objNonPO.PaymentList_For_Owner(txtclearadv_owner.Text.Trim(),
-                                                    txtStartDate_owner.Text.Trim(),
-                                                    txtEndDate_owner.Text.Trim(),
-                                                  cboWorking.SelectedItem.Value.ToString,
-                                                    txtStartDueDate_owner.Text.Trim(),
-                                                    txtEndDueDate_owner.Text.Trim(),
-                                                    cboVendor_owner.SelectedItem.Value,
-                                                    cboPayby_owner.SelectedItem.Value.ToString.ToLower,
-                                                    userid
-                                                    )
+            If chkCO.Checked Then
+                itemtable = objNonPO.PaymentList_For_Owner(txtclearadv.Text.Trim(),
+                                                    txtStartDate.Text.Trim(),
+                                                    txtEndDate.Text.Trim(),
+                                                  cboStatusFollow.SelectedItem.Value.ToString,
+                                                    txtStartDueDate.Text.Trim(),
+                                                    txtEndDueDate.Text.Trim(),
+                                                    cboVendor.SelectedItem.Value,
+                                                    cboPayby.SelectedItem.Value.ToString.ToLower,
+                                                    userid,
+                                                    "CO")
+            ElseIf chkHO.Checked Then
+                itemtable = objNonPO.PaymentList_For_Owner(txtclearadv.Text.Trim(),
+                                                    txtStartDate.Text.Trim(),
+                                                    txtEndDate.Text.Trim(),
+                                                  cboStatusFollow.SelectedItem.Value.ToString,
+                                                    txtStartDueDate.Text.Trim(),
+                                                    txtEndDueDate.Text.Trim(),
+                                                    cboVendor.SelectedItem.Value,
+                                                    cboPayby.SelectedItem.Value.ToString.ToLower,
+                                                    userid,
+                                                    "HO")
+            Else
+                itemtable = objNonPO.PaymentList_For_Owner(txtclearadv.Text.Trim(),
+                                                    txtStartDate.Text.Trim(),
+                                                    txtEndDate.Text.Trim(),
+                                                  cboStatusFollow.SelectedItem.Value.ToString,
+                                                    txtStartDueDate.Text.Trim(),
+                                                    txtEndDueDate.Text.Trim(),
+                                                    cboVendor.SelectedItem.Value,
+                                                    cboPayby.SelectedItem.Value.ToString.ToLower,
+                                                    userid,
+                                                    "")
+            End If
+
             Session("joblist") = itemtable
             BindData()
         Catch ex As Exception
@@ -262,6 +324,9 @@ Public Class MenuList
         BindData()
     End Sub
     Private Sub BindData()
+        'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+        setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
+        'End If
         cntdt = itemtable.Rows.Count
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
@@ -274,6 +339,11 @@ Public Class MenuList
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         searchjobslist()
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+            searchjobslist()
+        Else
+            searchjobslist_owner()
+        End If
     End Sub
 
     <System.Web.Services.WebMethod>
@@ -415,32 +485,5 @@ endprocess:
         End Try
     End Sub
 
-    Private Sub btnSearch_owner_Click(sender As Object, e As EventArgs) Handles btnSearch_owner.Click
-        searchjobslist_owner()
-    End Sub
 
-    Private Sub btnClear_owner_Click(sender As Object, e As EventArgs) Handles btnClear_owner.Click
-        Dim objbranch As New Branch
-        txtclearadv_owner.Text = ""
-        'txtcoderef.Text = ""
-        txtStartDate_owner.Text = ""
-        txtEndDate_owner.Text = ""
-
-        txtStartDueDate_owner.Text = ""
-        txtEndDueDate_owner.Text = ""
-        cboWorking.SelectedIndex = -1
-        cboVendor_owner.SelectedIndex = -1
-        cboPayby_owner.SelectedIndex = -1
-        If itemtable IsNot Nothing Then
-            itemtable.Rows.Clear()
-        End If
-        If criteria IsNot Nothing Then
-            criteria.Rows.Clear()
-        End If
-        Session("joblist") = itemtable
-        Session("criteria_joblist") = criteria
-
-
-        BindData()
-    End Sub
 End Class
