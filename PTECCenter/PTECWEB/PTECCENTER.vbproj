@@ -3653,6 +3653,7 @@
     </Compile>
     <Compile Include="OPS\approval\ApprovalHOMenuList.aspx.vb">
       <DependentUpon>ApprovalHOMenuList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\approval\ApprovalMenuList.aspx.designer.vb">
       <DependentUpon>ApprovalMenuList.aspx</DependentUpon>
