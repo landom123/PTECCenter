@@ -1744,12 +1744,14 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\main.js" />
+    <Content Include="js\NonPO.js" />
     <Content Include="js\popper.js" />
     <Content Include="js\btn-loading.js" />
     <Content Include="js\Sortable.js" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
     <Content Include="OPS\approval\ApprovalAttach.aspx" />
+    <Content Include="OPS\approval\ApprovalHOMenuList.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\approvalHO.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
@@ -3645,6 +3647,12 @@
     <Compile Include="OPS\approval\ApprovalAttach.aspx.vb">
       <DependentUpon>ApprovalAttach.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\approval\ApprovalHOMenuList.aspx.designer.vb">
+      <DependentUpon>ApprovalHOMenuList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\approval\ApprovalHOMenuList.aspx.vb">
+      <DependentUpon>ApprovalHOMenuList.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPS\approval\ApprovalMenuList.aspx.designer.vb">
       <DependentUpon>ApprovalMenuList.aspx</DependentUpon>
