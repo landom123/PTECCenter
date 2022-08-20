@@ -1763,15 +1763,11 @@
     <Content Include="OPS\Non-PO\Advance\ClearAdvance.aspx" />
     <Content Include="OPS\Non-PO\Advance\AdvanceMenuList.aspx" />
     <Content Include="OPS\Non-PO\Advance\ClearAdvanceMenuList2.aspx" />
-    <Content Include="OPS\Non-PO\js\NonPO.js" />
     <Content Include="OPS\Non-PO\Payment\MenuList.aspx" />
     <Content Include="OPS\Non-PO\Payment\Payment2.aspx" />
     <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
-    <Content Include="OPS\Non-PO\NonPO.aspx" />
-    <Content Include="OPS\Non-PO\PettyCash\PettyCashHO2.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx" />
-    <Content Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
@@ -3762,20 +3758,6 @@
       <DependentUpon>defaultPayment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OPS\Non-PO\NonPO.aspx.designer.vb">
-      <DependentUpon>NonPO.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Non-PO\NonPO.aspx.vb">
-      <DependentUpon>NonPO.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO2.aspx.designer.vb">
-      <DependentUpon>PettyCashHO2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO2.aspx.vb">
-      <DependentUpon>PettyCashHO2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx.designer.vb">
       <DependentUpon>PettyCashCO2.aspx</DependentUpon>
     </Compile>
@@ -3788,13 +3770,6 @@
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx.vb">
       <DependentUpon>PettyCashCOMenulist.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.designer.vb">
-      <DependentUpon>PettyCashHO.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.vb">
-      <DependentUpon>PettyCashHO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ReportViewer.aspx.designer.vb">
@@ -4581,7 +4556,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="OPS\Attatch\" />
-    <Folder Include="OPS\Non-PO\css\" />
     <Folder Include="temp\" />
   </ItemGroup>
   <ItemGroup>
