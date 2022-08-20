@@ -1640,15 +1640,15 @@ alert('else nonpo')
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
             <% If (Not Session("status_pcco") = "new" And Not Session("status_pcco") = "edit" And Not Session("status_pcco") = "account") Then%>
-            $('.modal-footer #btnAddDetail').hide();
-            $('.modal-body input,.modal-body textarea').attr('readonly', true);
-            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').attr('disabled', true);
-            
+            $('#exampleModal .modal-footer #btnAddDetail').hide();
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
+            $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
+
             <% Else %>
-            $('.modal-footer #btnAddDetail').show();
-            $('.modal-body input,.modal-body textarea').removeAttr("readonly");
-            $('.modal-body input,.modal-body textarea').removeAttr("disabled");
-            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
+            $('#exampleModal .modal-footer #btnAddDetail').show();
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("readonly");
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("disabled");
+            $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').removeAttr("disabled");
             <% End If %>
             <% End If %>
 
@@ -1799,10 +1799,10 @@ alert('else nonpo')
 
 
         $('#<% =btnFromAddDetail.ClientID%>').click(function () {
-            $('.modal-footer #btnAddDetail').show();
-            $('.modal-body input,.modal-body textarea').removeAttr("readonly");
-            $('.modal-body input,.modal-body textarea').removeAttr("disabled");
-            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
+            $('#exampleModal .modal-footer #btnAddDetail').show();
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("readonly");
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("disabled");
+            $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').removeAttr("disabled");
 
 
             $('.form-control').selectpicker('refresh');
