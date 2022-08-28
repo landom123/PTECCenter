@@ -75,7 +75,7 @@ Public Class approvalHO
 
 
             'objapproval.SetCboApproval(cboApproval, "")
-            objapproval.SetCboApproval(cboApproval, Session("depid"))
+            objapproval.SetCboApproval(cboApproval, Session("depid"), "ds")
 
             objbranch.SetComboBranch(cboBranch, "")
             setmaindefault()

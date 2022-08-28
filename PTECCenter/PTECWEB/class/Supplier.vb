@@ -13,13 +13,14 @@ Public Class Supplier
         cboVendor.Items.Clear()
 
         For i As Integer = 0 To dt.Rows.Count - 1
-            Dim item As ListItem = New ListItem(dt.Rows(i).Item("name").ToString, dt.Rows(i).Item("name").ToString)
-            If Not String.IsNullOrEmpty(dt.Rows(i).Item("Vendor_Code").ToString) Then
-                item.Attributes("data-subtext") = dt.Rows(i).Item("Vendor_Code").ToString
-            End If
-            If Not String.IsNullOrEmpty(dt.Rows(i).Item("taxidno").ToString) Then
-                item.Attributes("data-taxidno") = dt.Rows(i).Item("taxidno").ToString
-            End If
+            Dim name = dt.Rows(i).Item("name").ToString
+            Dim item As ListItem = New ListItem(name, name)
+            'If Not String.IsNullOrEmpty(dt.Rows(i).Item("Vendor_Code").ToString) Then
+            'End If
+            item.Attributes("data-subtext") = dt.Rows(i).Item("Vendor_Code").ToString
+            'If Not String.IsNullOrEmpty(dt.Rows(i).Item("taxidno").ToString) Then
+            item.Attributes("data-taxidno") = dt.Rows(i).Item("taxidno").ToString
+            'End If
 
             cboVendor.Items.Add(item)
 
