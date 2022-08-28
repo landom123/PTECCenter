@@ -7,8 +7,8 @@ Public Class Approval
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
-    Public Sub SetCboApproval(obj As Object, depid As String)
-        obj.DataSource = Me.Approval_List(depid)
+    Public Sub SetCboApproval(obj As Object, depid As String, ds As String)
+        obj.DataSource = Me.Approval_List(depid, ds)
         obj.DataValueField = "ApprovalListID"
         obj.DataTextField = "name"
         obj.DataBind()
@@ -60,7 +60,7 @@ Public Class Approval
         obj.DataTextField = "statusname"
         obj.DataBind()
     End Sub
-    Public Function Approval_List(Optional depid As String = "") As DataTable
+    Public Function Approval_List(Optional depid As String = "", Optional deductsale As String = "") As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -74,6 +74,7 @@ Public Class Approval
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@aho_ds", SqlDbType.VarChar).Value = deductsale
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype

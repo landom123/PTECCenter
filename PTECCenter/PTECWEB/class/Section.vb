@@ -27,6 +27,14 @@ Public Class Section
 
         Return result
     End Function
+    Public Sub SetCboSectionCodeName(obj As Object, depid As Integer)
+        obj.DataSource = Me.List(depid)
+        obj.DataValueField = "secid"
+        obj.DataTextField = "codename"
+        obj.DataBind()
+
+
+    End Sub
     Public Sub SetCboSection(obj As Object, depid As Integer)
         obj.DataSource = Me.List(depid)
         obj.DataValueField = "secid"

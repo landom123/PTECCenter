@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Payment" Language="vb" AutoEventWireup="true" MasterPageFile="~/site.Master" CodeBehind="Payment2.aspx.vb" Inherits="PTECCENTER.Payment2" %>
+﻿<%@ Page Title="Payment" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Payment2.aspx.vb" Inherits="PTECCENTER.Payment2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 

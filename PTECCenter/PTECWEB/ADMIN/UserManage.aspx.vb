@@ -31,7 +31,7 @@
 
             objbranch.SetComboBranch(cboBranch)
             objdepart.SetCboDepartment(cboDepart, 0)
-            objsection.SetCboSection(cboSection, 0)
+            objsection.SetCboSectionCodeName(cboSection, 0)
             objposition.SetCboPosition(cboPosition)
             SetCboUsers(cboEmpper)
             Session("status") = "new"
