@@ -1760,6 +1760,9 @@
     <Content Include="OPS\Jobs_Report_JobReport.aspx" />
     <Content Include="OPS\Jobs_Report_JobForm.aspx" />
     <Content Include="OPS\Master.aspx" />
+    <Content Include="OPS\Master\NonPOManage_CLADV.aspx" />
+    <Content Include="OPS\Master\NonPOManage_PCCO.aspx" />
+    <Content Include="OPS\Master\NonPOManage_PAY.aspx" />
     <Content Include="OPS\Master\WebForm2.aspx" />
     <Content Include="OPS\Non-PO\Advance\AdvanceRequest.aspx" />
     <Content Include="OPS\Non-PO\Advance\ClearAdvance.aspx" />
@@ -3709,6 +3712,27 @@
     </Compile>
     <Compile Include="OPS\Master.aspx.vb">
       <DependentUpon>Master.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_CLADV.aspx.designer.vb">
+      <DependentUpon>NonPOManage_CLADV.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_CLADV.aspx.vb">
+      <DependentUpon>NonPOManage_CLADV.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_PCCO.aspx.designer.vb">
+      <DependentUpon>NonPOManage_PCCO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_PCCO.aspx.vb">
+      <DependentUpon>NonPOManage_PCCO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_PAY.aspx.designer.vb">
+      <DependentUpon>NonPOManage_PAY.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_PAY.aspx.vb">
+      <DependentUpon>NonPOManage_PAY.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Master\WebForm2.aspx.designer.vb">

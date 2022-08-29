@@ -181,6 +181,10 @@ endprocess:
             itemtable = Session("joblist")
 
             'showdata(detailtable)
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "addDetail" Then
+                save()
+            End If
         End If
 
         SetMenu()
@@ -522,32 +526,9 @@ endprocess:
     End Sub
 
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Dim objNonPO As New NonPO
-        Dim dt As DataTable
-
-        Dim userid As Double
-        Dim jobowner As Double
-
-        userid = Session("userid")
-        If cboOwner.SelectedItem.Value = 0 Then
-            jobowner = userid
-        Else
-            jobowner = cboOwner.SelectedItem.Value
-        End If
-        Try
-            dt = objNonPO.NonPO_AdvanceRequest_Save(txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("usercode"), jobowner)
-
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('save fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            GoTo endprocess
-        End Try
-        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & dt.Rows(0).Item("code"))
-endprocess:
-    End Sub
+    'Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+    '    save()
+    'End Sub
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
         Session("status") = "edit"
         Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
@@ -853,4 +834,40 @@ endprocess:
     '        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
     'endprocess:
     '    End Sub
+
+    Private Sub save()
+        Dim objNonPO As New NonPO
+        Dim dt As DataTable
+
+        Dim userid As Double
+        Dim jobowner As Double
+
+        userid = Session("userid")
+        If cboOwner.SelectedItem.Value = 0 Then
+            jobowner = userid
+        Else
+            jobowner = cboOwner.SelectedItem.Value
+        End If
+        If String.IsNullOrEmpty(txtamount.Text.Trim()) Or String.IsNullOrEmpty(txtdetail.Text.Trim()) Then
+
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('กรุณาใส่เงื่อนไขให้ครบถ้วน');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End If
+
+        Try
+            dt = objNonPO.NonPO_AdvanceRequest_Save(txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("usercode"), jobowner)
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('save fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & dt.Rows(0).Item("code"))
+endprocess:
+    End Sub
 End Class
