@@ -255,7 +255,7 @@
                                 </div>
                                 <div class="card-footer text-center bg-white">
                                     <% If Session("status") = "new" Then%>
-                                    <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" />
+                                    <asp:Button ID="btnSaves" class="btn btn-primary" runat="server" Text="Save" OnClientClick="save()" />
                                     <% ElseIf Session("status") = "edit" Then%>
                                     <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
                                     <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
@@ -656,7 +656,12 @@
             })
 
         }
+        function save() {
+            validateData();
+            __doPostBack('addDetail', '')
 
+            return true;
+        }
         function chooseMyfile() {
             validateData();
 
