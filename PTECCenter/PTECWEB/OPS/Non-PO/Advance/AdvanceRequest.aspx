@@ -255,7 +255,7 @@
                                 </div>
                                 <div class="card-footer text-center bg-white">
                                     <% If Session("status") = "new" Then%>
-                                    <asp:Button ID="btnSaves" class="btn btn-primary" runat="server" Text="Save" OnClientClick="save()" />
+                                    <asp:Button ID="btnSaves" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" />
                                     <% ElseIf Session("status") = "edit" Then%>
                                     <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
                                     <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
@@ -539,7 +539,7 @@
                             <div class="form-group">
                                 <asp:Label ID="lbcboMyfile" CssClass="form-label" AssociatedControlID="cboMyfile" runat="server" Text="ไฟล์ของฉัน" />
                                 <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboMyfile" runat="server" Text="*" />
-                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server" required></asp:DropDownList>
+                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server"></asp:DropDownList>
                                 <div class="invalid-feedback">กรุณาเลือกไฟล์</div>
                             </div>
                         </div>
@@ -656,12 +656,12 @@
             })
 
         }
-        function save() {
-            validateData();
-            __doPostBack('addDetail', '')
+        //function save() {
+        //    validateData();
+        //    __doPostBack('addDetail', '')
 
-            return true;
-        }
+        //    return true;
+        //}
         function chooseMyfile() {
             validateData();
 

@@ -181,10 +181,10 @@ endprocess:
             itemtable = Session("joblist")
 
             'showdata(detailtable)
-            Dim target = Request.Form("__EVENTTARGET")
-            If target = "addDetail" Then
-                save()
-            End If
+            'Dim target = Request.Form("__EVENTTARGET")
+            'If target = "addDetail" Then
+            '    save()
+            'End If
         End If
 
         SetMenu()
@@ -869,5 +869,9 @@ endprocess:
         End Try
         Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & dt.Rows(0).Item("code"))
 endprocess:
+    End Sub
+
+    Private Sub btnSaves_Click(sender As Object, e As EventArgs) Handles btnSaves.Click
+        save()
     End Sub
 End Class
