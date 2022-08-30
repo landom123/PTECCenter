@@ -43,6 +43,7 @@ Public Class Payment2
         Dim objsec As New Section
         Dim objsupplier As New Supplier
 
+        Dim attatch As New Attatch
         Dim nonpoDs = New DataSet
         Dim statusid As Integer = 0
         Dim createby As Integer = 0
@@ -109,6 +110,7 @@ Public Class Payment2
                 Session("status_payment") = "read"
                 ' End If
                 Try
+                    attatch.SetCboMyfile(cboMyfile, Session("userid"))
                     findNonPO()
 
                     statusid = maintable.Rows(0).Item("statusid")

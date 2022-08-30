@@ -42,6 +42,7 @@ Public Class ClearAdvance
         Dim objdep As New Department
         Dim objsec As New Section
         Dim objsupplier As New Supplier
+        Dim attatch As New Attatch
 
         Dim nonpoDs = New DataSet
         Dim statusid As Integer = 0
@@ -121,8 +122,9 @@ Public Class ClearAdvance
                 Session("detailtable_clearadvance") = detailtable
                 'If Not Session("status_clearadvance") = "edit" Then
                 Session("status_clearadvance") = "read"
-                    'End If
-                    Try
+                'End If
+                Try
+                    attatch.SetCboMyfile(cboMyfile, Session("userid"))
                     findNonPO()
                     setmaindefault()
 
@@ -653,7 +655,7 @@ endprocess:
                 End If
 
 
-                btnExport.Visible = False
+                btnExport.Visible = True
                 btnPrint.Visible = True
 
                 'ช่อง ปุ่ม เพิ่มรายการ

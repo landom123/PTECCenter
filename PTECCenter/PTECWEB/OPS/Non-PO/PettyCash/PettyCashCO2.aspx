@@ -690,8 +690,11 @@
                                     <% Next i %>
                                 </div>
                                 <div class="card-footer">
-                                    <a onclick="addAttach()" id="btnAddAttatch" runat="server" class="text-primary" style="cursor: pointer; transition: .2s;">
-                                        <i class="fas fa-plus-circle"></i><span>&nbsp;แนบลิ้งเอกสาร</span></a>
+                                    <div id="btnAddAttatch" runat="server">
+                                        <a onclick="addAttach()" id="btnAddNewAttatch" runat="server" class="text-primary" style="cursor: pointer; transition: .2s;">
+                                            <i class="fas fa-plus-circle"></i><span>&nbsp;แนบลิ้งเอกสาร</span></a>
+                                        <a href="#" id="btnAddAttatch2" runat="server" title="addAttach" data-toggle="modal" data-target="#chooseMyfile">เลือกจากคลังไฟล์...</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -970,13 +973,42 @@
         </div>
     </div>
 
+    <div class="modal fade bd-example-modal-lg" id="chooseMyfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">เลือกจากคลังไฟล์</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <asp:Label ID="lbcboMyfile" CssClass="form-label" AssociatedControlID="cboMyfile" runat="server" Text="ไฟล์ของฉัน" />
+                                <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboMyfile" runat="server" Text="*" />
+                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server" required></asp:DropDownList>
+                                <div class="invalid-feedback">กรุณาเลือกไฟล์</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/js/btn-loading.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("../js/NonPO.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
 
     <script type="text/javascript">
         //jQuery('[id$=txtDuedate]').datetimepicker({
@@ -1358,63 +1390,75 @@ alert('else nonpo')
                 if (result.isConfirmed) {
                     let url = result.value[0];
                     let description = result.value[1];
-                    if (url.substring(0, 7) != 'http://' && url.substring(0, 8) != 'https://') {
-                        url = 'http://' + url;
-                    }
-                    /*alert(url);*/
-                    let msg = '<a href="' + url + '" target="_blank">' + description + '</a>'
-
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const nonpocode = urlParams.get('NonpoCode');
-                    var user = "<% =Session("usercode").ToString %>";
-                    var userid = <%= Session("userid") %>;
-                    var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
-                    $.ajax({
-                        type: "POST",
-                        url: "../PettyCash/PettyCashCO2.aspx/addAttach",
-                        async: true,
-                        data: params,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (msg) {
-                            /*alertSuccessToast();*/
-                            if (msg.d) {
-                                if (!description) {
-                                    description = 'Link';
-                                }
-                                /*__doPostBack('AttachTable', '')*/
-                                $('.attatchItems').append(
-                                    '<div class="row">' +
-                                    '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d + '" >' +
-                                    '<div class="col-auto">' +
-                                    '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
-                                    '<span>' + description + '</span></a>' +
-                                    '<a onclick="removeAttach(' + msg.d + ',' + userid + ');" class="btn btn-sm pt-0 text-danger deletedetail">' +
-                                    '<i class="fas fa-times"></i>' +
-                                    '</a>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>'
-                                );
-                                alertSuccessToast('บันทึกเรียบร้อย' + description);
-                            } else {
-                                alertWarning('Add URL fail');
-                            }
-
-                        },
-                        error: function (msg) {
-                            console.log(msg);
-
-                            alertWarning('Add URL faila');
-
-                        }
-                    });
+                    sentAddAttach(url, description)
+                    
 
                 }
             })
-
         }
 
+        function chooseMyfile() {
+            validateData();
+
+            const url = $('#<%= cboMyfile.ClientID%>').val();
+            const description = $("#<%= cboMyfile.ClientID%> option:selected").text();
+            sentAddAttach(url, description)
+
+            return true;
+        }
+        function sentAddAttach(url, description) {
+            if (url.substring(0, 7) != 'http://' && url.substring(0, 8) != 'https://') {
+                url = 'http://' + url;
+            }
+            /*alert(url);*/
+            let msg = '<a href="' + url + '" target="_blank">' + description + '</a>'
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const nonpocode = urlParams.get('NonpoCode');
+            var user = "<% =Session("usercode").ToString %>";
+            var userid = <%= Session("userid") %>;
+            var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
+            $.ajax({
+                type: "POST",
+                url: "../PettyCash/PettyCashCO2.aspx/addAttach",
+                async: true,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    /*alertSuccessToast();*/
+                    if (msg.d) {
+                        if (!description) {
+                            description = 'Link';
+                        }
+                        /*__doPostBack('AttachTable', '')*/
+                        $('.attatchItems').append(
+                            '<div class="row">' +
+                            '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d + '" >' +
+                            '<div class="col-auto">' +
+                            '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
+                            '<span>' + description + '</span></a>' +
+                            '<a onclick="removeAttach(' + msg.d + ',' + userid + ');" class="btn btn-sm pt-0 text-danger deletedetail">' +
+                            '<i class="fas fa-times"></i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                        alertSuccessToast('บันทึกเรียบร้อย' + description);
+                    } else {
+                        alertWarning('Add URL fail');
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+
+                    alertWarning('Add URL faila');
+
+                }
+            });
+        }
 
         function confirmDeletedetail(nonpodtlid, row) {
             Swal.fire({
@@ -1596,15 +1640,15 @@ alert('else nonpo')
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
             <% If (Not Session("status_pcco") = "new" And Not Session("status_pcco") = "edit" And Not Session("status_pcco") = "account") Then%>
-            $('.modal-footer #btnAddDetail').hide();
-            $('.modal-body input,.modal-body textarea').attr('readonly', true);
-            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').attr('disabled', true);
-            
+            $('#exampleModal .modal-footer #btnAddDetail').hide();
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
+            $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
+
             <% Else %>
-            $('.modal-footer #btnAddDetail').show();
-            $('.modal-body input,.modal-body textarea').removeAttr("readonly");
-            $('.modal-body input,.modal-body textarea').removeAttr("disabled");
-            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
+            $('#exampleModal .modal-footer #btnAddDetail').show();
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("readonly");
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("disabled");
+            $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').removeAttr("disabled");
             <% End If %>
             <% End If %>
 
@@ -1755,10 +1799,10 @@ alert('else nonpo')
 
 
         $('#<% =btnFromAddDetail.ClientID%>').click(function () {
-            $('.modal-footer #btnAddDetail').show();
-            $('.modal-body input,.modal-body textarea').removeAttr("readonly");
-            $('.modal-body input,.modal-body textarea').removeAttr("disabled");
-            $('.modal-body select,.modal-body button,.modal-body input[type="checkbox"]').removeAttr("disabled");
+            $('#exampleModal .modal-footer #btnAddDetail').show();
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("readonly");
+            $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("disabled");
+            $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').removeAttr("disabled");
 
 
             $('.form-control').selectpicker('refresh');

@@ -1,10 +1,14 @@
-﻿<%@ Page Title="ClearAdvanceMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ClearAdvanceMenuList2.aspx.vb" Inherits="PTECCENTER.ClearAdvanceMenuList2" %>
+﻿<%@ Page Title="ApprovalHOMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ApprovalHOMenuList.aspx.vb" Inherits="PTECCENTER.ApprovalHOMenuList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
+    <style>
+        th {
+            text-align:center;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
@@ -14,57 +18,38 @@
 
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: navy; color: white">
-                    <li class="breadcrumb-item">รายการเคลียร์ค้างชำระ Advance <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
+                    <li class="breadcrumb-item">รายการ Payment
                     </li>
                 </ol>
 
                 <div class="row">
                     <div class="col-12 mb-3">
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
 
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
-                            <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
-                        
-                        
-                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
+                        <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
+                        <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
                     </div>
                 </div>
 
-
-                <div class="row">
-                    <div class="col-auto mb-3" style="margin-left: auto;">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server">
-                        <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
-                    </div>
-                    <div class="col-auto mb-3">
-                        <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server">
-                        <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtaho" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <%-- <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code_ref</span>
                             </div>
-                            <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false"></asp:TextBox>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สถานะงานย่อย</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
-                        </div>
-                    </div>
+                    </div>--%>
+
                     <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -82,7 +67,14 @@
 
                         </div>
                     </div>
-                    <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">สถานะงานย่อย</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
+                        </div>
+                    </div>
 
                     <div class="col-md-4 mb-3 HO">
                         <div class="input-group">
@@ -100,35 +92,14 @@
                             <asp:DropDownList ID="cboSection" class="form-control" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
-                    <% End If %>
-                    <% If Not Session("positionid") = "10" Then %>
-                    <div class="col-md-4 mb-3 CO">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ประเภทสาขา</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3 CO">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สาขา</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" AutoPostBack="false"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <% End If %>
                 </div>
 
                 <div class="row" style="padding-top: 1rem;">
                     <div class="col-md-12 HO">
                         <asp:Label ID="note" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'แผนก' จะเปลี่ยนไปตาม 'ฝ่าย' ที่เลือก )" />
                     </div>
-                    <div class="col-md-12 CO">
-                        <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'สาขา' จะเปลี่ยนไปตาม 'ประเภทสาขา' ที่เลือก )" />
-                    </div>
                 </div>
+
                 <div class="card-body">
                     <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
                         <asp:GridView ID="gvRemind"
@@ -141,22 +112,7 @@
                             <Columns>
                                 <asp:TemplateField HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("NonPO_Code")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Code_ref" ItemStyle-HorizontalAlign="center">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("Code_ref")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ผู้เบิก" ItemStyle-HorizontalAlign="center">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("CreateBy")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
+                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("ApprovalHO_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="วันที่ทำรายการ" ItemStyle-HorizontalAlign="center">
@@ -164,42 +120,57 @@
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ผู้ทำรายการ" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownercode")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="รายละเอียด">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("detail")%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("ApprovalHO_Detail")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ยอดรวม" ItemStyle-HorizontalAlign="Right">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("approvalcode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusNonPO")%>'></asp:Label>
+                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusName")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="">
+                                <asp:TemplateField HeaderText="สำเร็จ / ยกเลิก / ทั้งหมด">
                                     <ItemTemplate>
-                                        <div class="d-flex align-items-center">
-                                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" ><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="col-auto">
+                                                <asp:Label ID="lbprogress" runat="server">
+                                                            <span class="text-success font-weight-bold"><%#Eval("progress").ToString.Split("/")(0)%></span> / <span class="text-danger font-weight-bold"><%#Eval("progress").ToString.Split("/")(1)%></span> / <span class="font-weight-bold"><%#Eval("progress").ToString.Split("/")(2)%></span>
+                                                </asp:Label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text=""><img src="../../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
+                                            </div>
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </div>
+
                     <h4>ทั้งหมด <% =cntdt%> รายการ</h4>
-
                 </div>
-
             </div>
             <!-- /.container-fluid -->
 
 
         </div>
     </div>
-
 
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
@@ -235,8 +206,8 @@
                 liveSearch: true,
                 maxOptions: 1
             });
-            checkCOorHO();
         });
+
 
         $("input:checkbox").on('click', function () {
             // in the handler, 'this' refers to the box clicked on
@@ -255,38 +226,7 @@
                 $box.prop("checked", false);
             }
 
-            checkCOorHO();
         });
-
-        function alertSuccess() {
-            Swal.fire(
-                'สำเร็จ',
-                '',
-                'success'
-            )
-        }
-
-        function alertWarning(massage) {
-            Swal.fire(
-                massage,
-                '',
-                'warning'
-            )
-        }
-        function checkCOorHO() {
-            if ($("#" + "<%= chkHO.ClientID.ToString %>").is(":checked")) {
-                $(".HO").show();
-                $(".CO").hide();
-            } else if ($("#" + "<%= chkCO.ClientID.ToString %>").is(":checked")) {
-                $(".CO").show();
-                $(".HO").hide();
-            } else {
-                $(".CO").hide();
-                $(".HO").hide();
-
-            }
-
-        }
         $('.noEnterSubmit').keypress(function (e) {
             if (e.which == 13) return false;
             //or...

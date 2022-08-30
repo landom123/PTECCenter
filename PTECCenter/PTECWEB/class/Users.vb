@@ -56,7 +56,7 @@ Public Class Users
         Return result
     End Function
 
-    Public Function AddUser(name As String, usercode As String, branchid As String, depid As String, secid As String, positionid As String, email As String, password As String) As String
+    Public Function AddUser(name As String, usercode As String, branchid As String, depid As String, secid As String, positionid As String, empupper As String, email As String, password As String) As String
         Dim result As String
 
         Dim ds As New DataSet
@@ -75,6 +75,7 @@ Public Class Users
         cmd.Parameters.Add("@department", SqlDbType.VarChar).Value = depid
         cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
         cmd.Parameters.Add("@positionid", SqlDbType.VarChar).Value = positionid
+        cmd.Parameters.Add("@empupper", SqlDbType.VarChar).Value = empupper
         cmd.Parameters.Add("@email", SqlDbType.VarChar).Value = email
         cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = password
 

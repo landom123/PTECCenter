@@ -35,7 +35,7 @@ Public Class NonPO
     Public Sub SetCboPayby(obj As Object)
         obj.DataSource = Me.NonPO_Payby_List()
         obj.DataValueField = "name"
-        obj.DataTextField = "name"
+        obj.DataTextField = "code"
         obj.DataBind()
 
     End Sub
@@ -714,7 +714,7 @@ Public Class NonPO
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "NonPO_AdvanceRQList_For_Owner"
+        cmd.CommandText = "NonPO_AdvanceRQList_For_Owner_Remain"
         cmd.CommandType = CommandType.StoredProcedure
 
 
@@ -727,6 +727,39 @@ Public Class NonPO
         'cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
         'cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
 
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function AdvanceRQList_For_Owner(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String, branchgroupid As String, branchid As String, userid As Integer, category As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_AdvanceRQList_For_Owner"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
+        cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
 
 
         adp.SelectCommand = cmd
@@ -772,7 +805,33 @@ Public Class NonPO
         Return result
     End Function
 
-    Public Function ClearAdvanceList_For_Owner(userid As Integer, working As Integer) As DataTable
+    'Public Function ClearAdvanceList_For_Owner(userid As Integer, working As Integer) As DataTable
+    '    Dim result As DataTable
+    '    'Credit_Balance_List_Createdate
+    '    Dim ds As New DataSet
+    '    Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+    '    Dim cmd As New SqlCommand
+    '    Dim adp As New SqlDataAdapter
+
+    '    conn.Open()
+    '    cmd.Connection = conn
+    '    cmd.CommandText = "NonPO_ClearAdvanceList_For_Owner"
+    '    cmd.CommandType = CommandType.StoredProcedure
+
+
+    '    cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+    '    cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+
+
+    '    adp.SelectCommand = cmd
+    '    adp.Fill(ds)
+    '    result = ds.Tables(0)
+    '    conn.Close()
+    '    Return result
+    'End Function
+
+    Public Function ClearAdvanceList_For_Owner(nonpocode As String, coderef As String, startdate As String, enddate As String, statusid As String,
+                                           branchgroupid As String, branchid As String, userid As Integer, category As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -786,8 +845,17 @@ Public Class NonPO
         cmd.CommandType = CommandType.StoredProcedure
 
 
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@coderef", SqlDbType.VarChar).Value = coderef
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
-        cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+        cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+
+
 
 
         adp.SelectCommand = cmd
@@ -821,8 +889,8 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
-    Public Function PaymentList_For_Owner(nonpocode As String, startdate As String, enddate As String, working As String, startduedate As String, endduedate As String,
-                                           vendor As String, payby As String, userid As Integer) As DataTable
+    Public Function PaymentList_For_Owner(nonpocode As String, startdate As String, enddate As String, statusid As Integer, startduedate As String, endduedate As String,
+                                           vendor As String, payby As String, userid As Integer, category As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -836,7 +904,7 @@ Public Class NonPO
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
-        cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+        cmd.Parameters.Add("@statusid", SqlDbType.Int).Value = statusid
         cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
         cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
         cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
@@ -844,6 +912,7 @@ Public Class NonPO
         cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
         cmd.Parameters.Add("@payby", SqlDbType.VarChar).Value = payby
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
 
 
 
@@ -1790,4 +1859,28 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
+
+    Public Sub ManageNonPO(nonpocode As String, statusid As Integer, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_ManageStatus"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@statusid", SqlDbType.Int).Value = statusid
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
 End Class

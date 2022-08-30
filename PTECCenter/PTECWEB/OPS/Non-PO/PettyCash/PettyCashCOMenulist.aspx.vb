@@ -58,8 +58,8 @@ Public Class PettyCashCOMenulist
                 'chkHO.Checked = True
 
                 '------------------------------------
-                If Not Session("criteria_joblist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                    criteria = Session("criteria_joblist")
+                If Not Session("criteria_pcco") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_pcco")
                     BindCriteria(criteria)
                     searchjobslist()
                 Else
@@ -79,28 +79,38 @@ Public Class PettyCashCOMenulist
                     Dim javaScript As String = "alertWarning('search fail');"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
-                Session("joblist") = itemtable
+                Session("joblist_pcco") = itemtable
                 BindData()
             End If
         Else
 
-            criteria = Session("criteria_joblist")
-            itemtable = Session("joblist")
+            criteria = Session("criteria_pcco")
+            itemtable = Session("joblist_pcco")
         End If
     End Sub
-
+    Private Sub setCriteria()
+        'criteria = createCriteria()
+        criteria.Rows.Clear()
+        criteria.Rows.Add(txtclearadv.Text.ToString.Trim(),
+                          txtStartDate.Text.ToString.Trim(),
+                          txtEndDate.Text.ToString.Trim(),
+                          (cboStatusFollow.SelectedItem.Value),
+                          txtStartDueDate.Text.ToString.Trim(),
+                          txtEndDueDate.Text.ToString.Trim(),
+                          (cboBranchGroup.SelectedItem.Value),
+                          (cboBranch.SelectedItem.Value),
+                          gvRemind.PageIndex)
+        Session("criteria_pcco") = criteria
+    End Sub
     Private Function createCriteria() As DataTable
         Dim dt As New DataTable
 
         dt.Columns.Add("txtclearadv", GetType(String))
-        dt.Columns.Add("txtcoderef", GetType(String))
         dt.Columns.Add("txtStartDate", GetType(String))
         dt.Columns.Add("txtEndDate", GetType(String))
         dt.Columns.Add("cboStatusFollow", GetType(String))
         dt.Columns.Add("txtStartDueDate", GetType(String))
         dt.Columns.Add("txtEndDueDate", GetType(String))
-        dt.Columns.Add("cboDep", GetType(String))
-        dt.Columns.Add("cboSec", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
         dt.Columns.Add("cboBranch", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
@@ -115,8 +125,6 @@ Public Class PettyCashCOMenulist
     Private Sub BindCriteria(criteria As DataTable)
         If criteria.Rows.Count > 0 Then
             txtclearadv.Text = criteria.Rows(0).Item("txtclearadv")
-            'txtcoderef.Text = criteria.Rows(0).Item("txtcoderef")
-
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
@@ -130,16 +138,6 @@ Public Class PettyCashCOMenulist
             cboBranch.SelectedIndex = -1
             objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
             cboBranch.SelectedValue = criteria.Rows(0).Item("cboBranch")
-
-            cboDepartment.SelectedValue = criteria.Rows(0).Item("cboDep")
-            cboSection.SelectedIndex = -1
-            Dim depid As Integer
-            Dim objsection As New Section
-
-            depid = cboDepartment.SelectedItem.Value
-            objsection.SetCboSection_seccode(cboSection, depid)
-            cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
-
 
         End If
     End Sub
@@ -159,7 +157,7 @@ Public Class PettyCashCOMenulist
                                                     cboBranchGroup.SelectedItem.Value.ToString,
                                                     cboBranch.SelectedItem.Value.ToString,
                                                     "")
-            Session("joblist") = itemtable
+            Session("joblist_pcco") = itemtable
             BindData()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -189,8 +187,8 @@ Public Class PettyCashCOMenulist
         If criteria IsNot Nothing Then
             criteria.Rows.Clear()
         End If
-        Session("joblist") = itemtable
-        Session("criteria_joblist") = criteria
+        Session("joblist_pcco") = itemtable
+        Session("criteria_pcco") = criteria
 
 
         Dim depid As Integer
@@ -204,6 +202,9 @@ Public Class PettyCashCOMenulist
         BindData()
     End Sub
     Private Sub BindData()
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+            setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
+        End If
         cntdt = itemtable.Rows.Count
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
@@ -281,7 +282,7 @@ endprocess:
         Try
             'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
             itemtable = objNonpo.PettyCashCO_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
-            Session("joblist") = itemtable
+            Session("joblist_pcco") = itemtable
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"

@@ -1,6 +1,12 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Web.Configuration
 Public Class Attatch
+    Public Sub SetCboMyfile(obj As Object, userid As Integer)
+        obj.DataSource = Me.Attatch_Find(userid)
+        obj.DataValueField = "url"
+        obj.DataTextField = "attatchdetail"
+        obj.DataBind()
+    End Sub
     Public Function GetAttatchName() As String
         Dim result As String
         Dim ds As New DataSet

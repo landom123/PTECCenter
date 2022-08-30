@@ -43,15 +43,19 @@ Public Class ClearAdvanceMenuList2
         operator_code = objNonpo.NonPOPermisstionOperator("CLADV")
         If Not IsPostBack() Then
 
+            objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "CLADV")
+            objbranch.SetComboBranchGroup(cboBranchGroup)
+            objbranch.SetComboBranch(cboBranch, "")
+            objdep.SetCboDepartmentBybranch(cboDepartment, 0)
+            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            If Session("positionid") = "10" Then
+                chkCO.Checked = True
+            Else
+                chkHO.Checked = True
+            End If
+
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
-
-                objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "CLADV")
-                objbranch.SetComboBranchGroup(cboBranchGroup)
-                objbranch.SetComboBranch(cboBranch, "")
-                objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-                objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
-                chkHO.Checked = True
 
                 '------------------------------------
                 If Not Session("criteria_clearadvlist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
@@ -62,21 +66,14 @@ Public Class ClearAdvanceMenuList2
                     searchjobslist()
                 End If
             Else
-                approval.SetCboApprovalStatusForOwner(cboWorking)
-                'If Not Session("cboWorking_clearadv") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                '    cboWorking.SelectedValue = Session("cboWorking_clearadv")
-                'End If
+                If Not Session("criteria_clearadvlist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_clearadvlist")
+                    BindCriteria(criteria)
+                    searchjobslist_owner()
+                Else
+                    searchjobslist_owner()
+                End If
 
-                Try
-                    'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-                    itemtable = objNonpo.ClearAdvanceList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
-                Catch ex As Exception
-                    Dim scriptKey As String = "alert"
-                    Dim javaScript As String = "alertWarning('search fail');"
-                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                End Try
-                Session("advlist") = itemtable
-                BindData()
             End If
         Else
 
@@ -84,14 +81,34 @@ Public Class ClearAdvanceMenuList2
             itemtable = Session("advlist")
         End If
     End Sub
+
+    Private Sub setCriteria()
+        'criteria = createCriteria()
+        criteria.Rows.Clear()
+        criteria.Rows.Add(chkCO.Checked,
+                          chkHO.Checked,
+                          txtclearadv.Text.ToString.Trim(),
+                          txtcoderef.Text.ToString.Trim(),
+                          (cboStatusFollow.SelectedItem.Value),
+                          txtStartDate.Text.ToString.Trim(),
+                          txtEndDate.Text.ToString.Trim(),
+                          (cboDepartment.SelectedItem.Value),
+                          (cboSection.SelectedItem.Value),
+                          (cboBranchGroup.SelectedItem.Value),
+                          (cboBranch.SelectedItem.Value),
+                          gvRemind.PageIndex)
+        Session("criteria_clearadvlist") = criteria
+    End Sub
     Private Function createCriteria() As DataTable
         Dim dt As New DataTable
 
+        dt.Columns.Add("chkCO", GetType(Boolean))
+        dt.Columns.Add("chkHO", GetType(Boolean))
         dt.Columns.Add("txtclearadv", GetType(String))
         dt.Columns.Add("txtcoderef", GetType(String))
+        dt.Columns.Add("cboStatusFollow", GetType(String))
         dt.Columns.Add("txtStartDate", GetType(String))
         dt.Columns.Add("txtEndDate", GetType(String))
-        dt.Columns.Add("cboStatusFollow", GetType(String))
         dt.Columns.Add("cboDep", GetType(String))
         dt.Columns.Add("cboSec", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
@@ -141,7 +158,8 @@ Public Class ClearAdvanceMenuList2
             objsection.SetCboSection_seccode(cboSection, depid)
             cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
 
-
+            chkCO.Checked = criteria.Rows(0).Item("chkCO")
+            chkHO.Checked = criteria.Rows(0).Item("chkHO")
         End If
     End Sub
     Private Sub searchjobslist()
@@ -196,7 +214,58 @@ Public Class ClearAdvanceMenuList2
         End Try
     End Sub
 
+    Private Sub searchjobslist_owner()
+
+        Dim objNonPO As New NonPO
+        Dim detailtable As New DataTable
+        Try
+            If chkCO.Checked Then
+                itemtable = objNonPO.ClearAdvanceList_For_Owner(txtclearadv.Text.Trim(),
+                                                                txtcoderef.Text.Trim(),
+                                                        txtStartDate.Text.Trim(),
+                                                        txtEndDate.Text.Trim(),
+                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                        cboBranchGroup.SelectedItem.Value.ToString,
+                                                        cboBranch.SelectedItem.Value.ToString,
+                                                        Session("userid"),
+                                                        "CO")
+            ElseIf chkHO.Checked Then
+                itemtable = objNonPO.ClearAdvanceList_For_Owner(txtclearadv.Text.Trim(),
+                                                                txtcoderef.Text.Trim(),
+                                                        txtStartDate.Text.Trim(),
+                                                        txtEndDate.Text.Trim(),
+                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      "",
+                                                      "",
+                                                        Session("userid"),
+                                                    "HO")
+            Else
+                itemtable = objNonPO.ClearAdvanceList_For_Owner(txtclearadv.Text.Trim(),
+                                                                txtcoderef.Text.Trim(),
+                                                        txtStartDate.Text.Trim(),
+                                                        txtEndDate.Text.Trim(),
+                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      "",
+                                                      "",
+                                                        Session("userid"),
+                                                        "")
+            End If
+
+
+
+            Session("advlist") = itemtable
+            BindData()
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('search fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
     Private Sub BindData()
+        'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+        setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
+        'End If
         cntdt = itemtable.Rows.Count
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
@@ -208,7 +277,11 @@ Public Class ClearAdvanceMenuList2
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
-        searchjobslist()
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+            searchjobslist()
+        Else
+            searchjobslist_owner()
+        End If
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
@@ -230,7 +303,7 @@ Public Class ClearAdvanceMenuList2
             criteria.Rows.Clear()
         End If
         Session("joblist") = itemtable
-        Session("criteria_advlist") = criteria
+        Session("criteria_clearadvlist") = criteria
 
 
         Dim depid As Integer
@@ -297,22 +370,22 @@ Public Class ClearAdvanceMenuList2
         End If
     End Sub
 
-    Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
+    'Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
 
-        Dim objNonpo As New NonPO
+    '    Dim objNonpo As New NonPO
 
-        Try
-            'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-            itemtable = objNonpo.ClearAdvanceList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
-            Session("advlist") = itemtable
+    '    Try
+    '        'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
+    '        itemtable = objNonpo.ClearAdvanceList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+    '        Session("advlist") = itemtable
 
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            Dim javaScript As String = "alertWarning('search fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
-        BindData()
-    End Sub
+    '    Catch ex As Exception
+    '        Dim scriptKey As String = "alert"
+    '        Dim javaScript As String = "alertWarning('search fail');"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '    End Try
+    '    BindData()
+    'End Sub
 
 
     Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String)

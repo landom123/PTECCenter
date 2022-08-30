@@ -11,16 +11,34 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class UserManage
+Partial Public Class NonPOManage_PAY
 
     '''<summary>
-    '''btnNew control.
+    '''lbapprovalcode control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lbapprovalcode As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''badgeapprovalcode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents badgeapprovalcode As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''cboStatusFollow control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''btnSave control.
@@ -32,92 +50,65 @@ Partial Public Class UserManage
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnUpdate control.
+    '''card_attatch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnUpdate As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents card_attatch As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
-    '''btnResetPassword control.
+    '''btnAddAttatch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnResetPassword As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnAddAttatch As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
-    '''txtUsercode control.
+    '''btnAddNewAttatch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtUsercode As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnAddNewAttatch As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
-    '''txtUserName control.
+    '''btnAddAttatch2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtUserName As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnAddAttatch2 As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
-    '''cboBranch control.
+    '''card_comment control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents card_comment As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
-    '''cboDepart control.
+    '''txtComment control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboDepart As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txtComment As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cboSection control.
+    '''btnSaveComment control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboPosition control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboPosition As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboEmpper control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboEmpper As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''txtEmail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtEmail As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnSaveComment As Global.System.Web.UI.WebControls.Button
 End Class

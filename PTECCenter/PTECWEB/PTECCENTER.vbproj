@@ -1750,12 +1750,14 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\main.js" />
+    <Content Include="js\NonPO.js" />
     <Content Include="js\popper.js" />
     <Content Include="js\btn-loading.js" />
     <Content Include="js\Sortable.js" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
     <Content Include="OPS\approval\ApprovalAttach.aspx" />
+    <Content Include="OPS\approval\ApprovalHOMenuList.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\approvalHO.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
@@ -1764,20 +1766,19 @@
     <Content Include="OPS\Jobs_Report_JobReport.aspx" />
     <Content Include="OPS\Jobs_Report_JobForm.aspx" />
     <Content Include="OPS\Master.aspx" />
+    <Content Include="OPS\Master\NonPOManage_CLADV.aspx" />
+    <Content Include="OPS\Master\NonPOManage_PCCO.aspx" />
+    <Content Include="OPS\Master\NonPOManage_PAY.aspx" />
     <Content Include="OPS\Master\WebForm2.aspx" />
     <Content Include="OPS\Non-PO\Advance\AdvanceRequest.aspx" />
     <Content Include="OPS\Non-PO\Advance\ClearAdvance.aspx" />
     <Content Include="OPS\Non-PO\Advance\AdvanceMenuList.aspx" />
     <Content Include="OPS\Non-PO\Advance\ClearAdvanceMenuList2.aspx" />
-    <Content Include="OPS\Non-PO\js\NonPO.js" />
     <Content Include="OPS\Non-PO\Payment\MenuList.aspx" />
     <Content Include="OPS\Non-PO\Payment\Payment2.aspx" />
     <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
-    <Content Include="OPS\Non-PO\NonPO.aspx" />
-    <Content Include="OPS\Non-PO\PettyCash\PettyCashHO2.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx" />
-    <Content Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
@@ -3698,6 +3699,13 @@
       <DependentUpon>ApprovalAttach.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="OPS\approval\ApprovalHOMenuList.aspx.designer.vb">
+      <DependentUpon>ApprovalHOMenuList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\approval\ApprovalHOMenuList.aspx.vb">
+      <DependentUpon>ApprovalHOMenuList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="OPS\approval\ApprovalMenuList.aspx.designer.vb">
       <DependentUpon>ApprovalMenuList.aspx</DependentUpon>
     </Compile>
@@ -3752,6 +3760,27 @@
     </Compile>
     <Compile Include="OPS\Master.aspx.vb">
       <DependentUpon>Master.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_CLADV.aspx.designer.vb">
+      <DependentUpon>NonPOManage_CLADV.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_CLADV.aspx.vb">
+      <DependentUpon>NonPOManage_CLADV.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_PCCO.aspx.designer.vb">
+      <DependentUpon>NonPOManage_PCCO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_PCCO.aspx.vb">
+      <DependentUpon>NonPOManage_PCCO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_PAY.aspx.designer.vb">
+      <DependentUpon>NonPOManage_PAY.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Master\NonPOManage_PAY.aspx.vb">
+      <DependentUpon>NonPOManage_PAY.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Master\WebForm2.aspx.designer.vb">
@@ -3810,20 +3839,6 @@
       <DependentUpon>defaultPayment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OPS\Non-PO\NonPO.aspx.designer.vb">
-      <DependentUpon>NonPO.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Non-PO\NonPO.aspx.vb">
-      <DependentUpon>NonPO.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO2.aspx.designer.vb">
-      <DependentUpon>PettyCashHO2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO2.aspx.vb">
-      <DependentUpon>PettyCashHO2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx.designer.vb">
       <DependentUpon>PettyCashCO2.aspx</DependentUpon>
     </Compile>
@@ -3836,13 +3851,6 @@
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx.vb">
       <DependentUpon>PettyCashCOMenulist.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.designer.vb">
-      <DependentUpon>PettyCashHO.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Non-PO\PettyCash\PettyCashHO.aspx.vb">
-      <DependentUpon>PettyCashHO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ReportViewer.aspx.designer.vb">
@@ -4629,7 +4637,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="OPS\Attatch\" />
-    <Folder Include="OPS\Non-PO\css\" />
     <Folder Include="temp\" />
   </ItemGroup>
   <ItemGroup>

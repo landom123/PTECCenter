@@ -86,8 +86,12 @@
                             <asp:DropDownList class="form-control" ID="cboPosition" runat="server"></asp:DropDownList>
                         </div>
                     </div>
-                </div>
-                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend"><span class="input-group-text">Empper</span></div>
+                            <asp:DropDownList class="form-control" ID="cboEmpper" runat="server"></asp:DropDownList>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
