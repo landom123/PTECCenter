@@ -23,7 +23,10 @@ Public Class TTCostToD365
             Else
                 menutable = Session("menulist")
             End If
-
+            If Not (Session("TT") Is Nothing) Then
+                editable = Session("TT")
+                BindData()
+            End If
             'gsmtable = Session("gsmtable")
             'BindData()
         Else
@@ -178,6 +181,26 @@ Public Class TTCostToD365
 
         End Using
     End Sub
+    Private Sub ExportTableToExcel(mytable As DataTable, branch As String, closedate As String)
+
+        Using wb As New XLWorkbook()
+            wb.Worksheets.Add(mytable, "TTCost")
+            'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
+
+            Response.Clear()
+            Response.Buffer = True
+            Response.Charset = ""
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            Response.AddHeader("content-disposition", "attachment;filename=" & branch & "_" & closedate & ".xlsx")
+            Using MyMemoryStream As New MemoryStream()
+                wb.SaveAs(MyMemoryStream)
+                MyMemoryStream.WriteTo(Response.OutputStream)
+                Response.Flush()
+                Response.End()
+            End Using
+
+        End Using
+    End Sub
     Private Sub gvData_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvData.RowDataBound
         '*** chk ***'
         Dim chk As CheckBox = CType(e.Row.FindControl("chk"), CheckBox)
@@ -185,6 +208,14 @@ Public Class TTCostToD365
             chk.Checked = e.Row.DataItem("chk")
         End If
 
+    End Sub
+
+    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
+        'editable
+        Dim invoicedate As String
+        invoicedate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
+
+        ExportTableToExcel(editable, "CheckTT", invoicedate)
     End Sub
 
     'Private Sub btnselectall_Click(sender As Object, e As EventArgs) Handles btnselectall.Click

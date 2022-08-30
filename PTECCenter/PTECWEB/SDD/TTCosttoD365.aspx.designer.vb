@@ -50,6 +50,15 @@ Partial Public Class TTCostToD365
     Protected WithEvents txtDueDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''btnExport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnExport As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnSave control.
     '''</summary>
     '''<remarks>

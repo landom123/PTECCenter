@@ -20,8 +20,11 @@
                 </ol>
                 <p></p>
                 <div class="row">
-                    <div class="col-4 ">
+                    <div class="col-8 ">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-success" runat="server" Text="New Project" />  
+                    </div>
+                    <div class="col-4" style="text-align:right">
+                        <asp:Button ID="btnRefresh" class="btn btn-sm  btn-warning" runat="server" Text="Refresh" />  
                     </div>
                 </div>
 

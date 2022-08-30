@@ -9,7 +9,7 @@ Public Class client_list
     Public clienttable As DataTable = create()
     Public usercode, username
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim client As New AgreeClient
+        Dim client As New Client
 
         usercode = Session("usercode")
         username = Session("username")
@@ -37,7 +37,7 @@ Public Class client_list
                 clienttable = Session("clienttable")
                 BindData()
             Else
-                clienttable = client.Client_List("", "")
+                clienttable = client.List("", "")
                 BindData()
             End If
         End If

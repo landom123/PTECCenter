@@ -23,6 +23,15 @@ Partial Public Class projectlist
     Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnRefresh control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnRefresh As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''gvData control.
     '''</summary>
     '''<remarks>

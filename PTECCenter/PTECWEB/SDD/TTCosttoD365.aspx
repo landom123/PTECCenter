@@ -49,6 +49,9 @@
                         </div>
                     </div>
                     <div class="col-4 text-right">
+                        <asp:Button ID="btnExport" class="btn btn-sm  btn-success" runat="server" Text="export to Excel" />  
+                    </div>
+                    <div class="col-4 text-right">
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save and Download" />  
                     </div>
                 </div>

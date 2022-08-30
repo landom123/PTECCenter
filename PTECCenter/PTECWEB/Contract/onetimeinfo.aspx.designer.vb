@@ -11,16 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class projectinfo
+Partial Public Class onetimeinfo
 
     '''<summary>
-    '''btnNewProject control.
+    '''btnNew control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnNewProject As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''btnSave control.
@@ -32,58 +32,31 @@ Partial Public Class projectinfo
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnConfirm control.
+    '''btnDel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnDel As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnCancel control.
+    '''BtnContract control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnCancel As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents BtnContract As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnChange control.
+    '''txtContractNo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnChange As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnApprove control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnApprove As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''txtprojectno control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtprojectno As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''txtbranch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtbranch As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtContractNo As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lblStatus control.
@@ -95,13 +68,58 @@ Partial Public Class projectinfo
     Protected WithEvents lblStatus As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtSaleVolume control.
+    '''txtid control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtSaleVolume As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtid As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboPayment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboPayment As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtDueDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDueDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtAmount As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''rdoClient control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rdoClient As Global.System.Web.UI.WebControls.RadioButton
+
+    '''<summary>
+    '''rdoCompany control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rdoCompany As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
     '''txtRemark control.
@@ -111,22 +129,4 @@ Partial Public Class projectinfo
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtRemark As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''btnNewAgree control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnNewAgree As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''gvData control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gvData As Global.System.Web.UI.WebControls.GridView
 End Class

@@ -16,7 +16,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
-                           <i class="fa fa-tasks" aria-hidden="true"></i>ข้อมูลโครงการ
+                           <a href="projectlist.aspx"><i class="fa fa-tasks" aria-hidden="true"></i></a> ข้อมูลโครงการ
                   </li>
                 </ol>
                 <p></p>
@@ -56,8 +56,16 @@
                 <asp:label class="form-control" ID="lblStatus"  runat="server"></asp:label>    
         </div>
     </div><br />
- <div class="row">
-        <div class="col-12">
+    <div class="row">
+        <div class="col-4">
+            <div class="input-group sm-3">
+                <div class="input-group-prepend">
+                <span class="input-group-text">ประมาณการยอดขาย (ลิตร)</span>
+                </div>
+                <asp:TextBox class="form-control" ID="txtSaleVolume"  runat="server" ></asp:TextBox>    
+            </div>
+        </div>
+        <div class="col-8">
             <div class="input-group sm-3">
                 <div class="input-group-prepend">
                 <span class="input-group-text">Note</span>
@@ -93,9 +101,14 @@
                                     <AlternatingRowStyle BackColor="#CCCCFF" />
 
                                       <Columns>
-	                                    <asp:TemplateField HeaderText="Agree">
+	                                    <asp:TemplateField HeaderText="เลขที่สัญญาในระบบ">
 		                                    <ItemTemplate>
 			                                    <asp:Label id="lblagno" runat="server" Text='<%#Eval("agno")%>'></asp:Label>
+		                                    </ItemTemplate>
+	                                    </asp:TemplateField>
+	                                    <asp:TemplateField HeaderText="เลขที่เอกสารสัญญา">
+		                                    <ItemTemplate>
+			                                    <asp:Label id="lblLawContractNo" runat="server" Text='<%#Eval("lawcontractno")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
 	                                    <asp:TemplateField HeaderText="Date">
@@ -106,21 +119,6 @@
 	                                    <asp:TemplateField HeaderText="Type">
 		                                    <ItemTemplate>
 			                                    <asp:Label id="lblagtype" runat="server" Text='<%#Eval("agtype")%>'></asp:Label>
-		                                    </ItemTemplate>
-	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="Status">
-		                                    <ItemTemplate>
-			                                    <asp:Label id="lblagstatus" runat="server" Text='<%#Eval("agstatus")%>'></asp:Label>
-		                                    </ItemTemplate>
-	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="Approver">
-		                                    <ItemTemplate>
-			                                    <asp:Label id="lblapproveby" runat="server" Text='<%#Eval("approveby")%>'></asp:Label>
-		                                    </ItemTemplate>
-	                                    </asp:TemplateField>
-	                                    <asp:TemplateField HeaderText="Approve Date">
-		                                    <ItemTemplate>
-			                                    <asp:Label id="lblapprovedate" runat="server" Text='<%#Eval("approvedate")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
                                         <asp:TemplateField HeaderText="">

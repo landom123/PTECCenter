@@ -1,8 +1,5 @@
 ﻿
 
-Imports System.IO
-
-Imports ClosedXML.Excel
 Public Class agreement
     Inherits System.Web.UI.Page
     Public menutable As DataTable
@@ -41,7 +38,7 @@ Public Class agreement
             mainFlexible = Session("flexible")
         End If
         gvClientBindData()
-        gvOneTimeBindData
+        gvOneTimeBindData()
         gvFixBindData()
         gvFlexibleBindData()
 
@@ -87,7 +84,7 @@ Public Class agreement
     End Sub
 
     Private Sub SetCboAssetType(obj As Object)
-        Dim asset As New AgAssets
+        Dim asset As New ContractAssets
 
         obj.DataSource = asset.AssetsType_Cbo
         obj.DataValueField = "assetstypeid"
@@ -95,18 +92,18 @@ Public Class agreement
         obj.DataBind()
     End Sub
     Private Sub SetCboClient(obj As Object)
-        Dim ag As New AgreeClient
+        Dim ag As New Client
 
-        obj.DataSource = ag.Client_Cbo_List(agreeid)
+        obj.DataSource = ag.Cbo_List(agreeid)
         obj.DataValueField = "clientid"
         obj.DataTextField = "client"
         obj.DataBind()
     End Sub
 
     Private Sub SetCboAgreeType(obj As Object)
-        Dim ag As New Agree
+        Dim ag As New Contract
 
-        obj.DataSource = ag.Ag_Cbo_Type()
+        obj.DataSource = ag.ContractTypeCbo()
         obj.DataValueField = "agtypeid"
         obj.DataTextField = "agtype"
         obj.DataBind()
@@ -114,7 +111,7 @@ Public Class agreement
     Private Sub SetCboOneTimePayment(obj As Object)
         Dim payment As New Payment
 
-        obj.DataSource = payment.PaymentType_Cbo_List()
+        obj.DataSource = payment.PaymentType_List()
         obj.DataValueField = "paymenttypeid"
         obj.DataTextField = "paymenttype"
         obj.DataBind()
@@ -341,7 +338,7 @@ Public Class agreement
     End Sub
     Private Function FindClientInfo(clientid As Double) As DataTable
         Dim result As DataTable
-        Dim client As New AgreeClient
+        Dim client As New Client
 
         Try
             result = client.Client_Get_Info(clientid)
@@ -375,7 +372,7 @@ Public Class agreement
         gvFlexible.DataBind()
     End Sub
     Protected Sub gvClient_RowCommand(sender As Object, e As GridViewCommandEventArgs)
-        Dim ag As New Agree
+        Dim ag As New Contract
 
         Dim rowIndex As Integer
         Dim row As GridViewRow
@@ -396,9 +393,9 @@ Public Class agreement
                 Dim scriptKey As String
                 Dim javaScript As String
                 err = ex.Message.ToString.Replace("'", "")
-                ScriptKey = "UniqueKeyForThisScript"
+                scriptKey = "UniqueKeyForThisScript"
                 javaScript = "alertWarning('" & err & "')"
-                ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End Try
 
         End If
@@ -422,7 +419,7 @@ Public Class agreement
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim projectno, branch, agreetype As String
         Dim result As String = ""
-        Dim ag As New Agree
+        Dim ag As New Contract
         Dim projectdate, agreedate, agreeactivedate As DateTime
 
         Dim err As String
@@ -454,21 +451,21 @@ Public Class agreement
             End Try
 
             Try
-                result = ag.saveAgree(projectno, projectdate, branch, agreetype, agreeno, agreedate, agreeactivedate, usercode)
-                If result <> "error" Then
-                    txtProjectNo.Text = result
-                    ag.saveClient(txtProjectNo.Text, mainClient, usercode)
-                    ag.saveAssets()
-                    ag.saveOnetime()
-                    ag.saveRecurringFix()
-                    ag.saveRecurringFlexible()
-                    ag.saveFinance()
-                    ag.saveOther()
-                    err = "บันทึกเรียบร้อย"
-                    scriptKey = "UniqueKeyForThisScript"
-                    javaScript = "alertSuccess('" & err & "')"
-                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                End If
+                'result = ag.Save(projectno, projectdate, branch, agreetype, agreeno, agreedate, agreeactivedate, usercode)
+                'If result <> "error" Then
+                '    txtProjectNo.Text = result
+                '    ag.saveClient(txtProjectNo.Text, mainClient, usercode)
+                '    ag.saveAssets()
+                '    ag.saveOnetime()
+                '    ag.saveRecurringFix()
+                '    ag.saveRecurringFlexible()
+                '    ag.saveFinance()
+                '    ag.saveOther()
+                '    err = "บันทึกเรียบร้อย"
+                '    scriptKey = "UniqueKeyForThisScript"
+                '    javaScript = "alertSuccess('" & err & "')"
+                '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                'End If
             Catch ex As Exception
                 err = ex.Message.ToString.Replace("'", "")
                 scriptKey = "UniqueKeyForThisScript"

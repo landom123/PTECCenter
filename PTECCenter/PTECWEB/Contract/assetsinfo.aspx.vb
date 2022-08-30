@@ -1,9 +1,9 @@
 ﻿
 
-Public Class clientinfo
+Public Class assetsinfo
     Inherits System.Web.UI.Page
     Public menutable As DataTable
-    Public usercode, username, clientno, contractno, projectno As String
+    Public usercode, username, assetsno, contractno, projectno As String
     Public clientid As Double = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objTitleName As New titlename
@@ -11,11 +11,8 @@ Public Class clientinfo
         usercode = Session("usercode")
         username = Session("username")
 
-        txtBirthday.Attributes.Add("readonly", "readonly")
+        'txtBirthday.Attributes.Add("readonly", "readonly")
 
-
-        cboSex.Items.Add("Male")
-        cboSex.Items.Add("Female")
         'Dim objsupplier As New Supplier
 
         If IsPostBack() Then
@@ -26,15 +23,16 @@ Public Class clientinfo
                 menutable = Session("menulist")
             End If
             contractno = Session("contractno")
-            clientno = Session("clientno")
+            assetsno = Session("assetsno")
         Else
             contractno = Request.QueryString("contractno")
-            clientno = Request.QueryString("clientno")
-            projectno = Session("projectno")
+            assetsno = Request.QueryString("assetsno")
 
+
+            SetCboAssetType(cboAssetType)
 
             Session("contractno") = contractno
-            Session("clientno") = clientno
+            Session("assetsno") = assetsno
 
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
@@ -43,8 +41,8 @@ Public Class clientinfo
                 menutable = Session("menulist")
             End If
 
-            If Not String.IsNullOrEmpty(clientno) Then
-                FindData(clientno)
+            If Not String.IsNullOrEmpty(assetsno) Then
+                FindData(assetsno)
             Else
                 txtContractNo.Text = contractno
                 SetButton("NEW")
@@ -52,6 +50,16 @@ Public Class clientinfo
 
         End If
 
+
+    End Sub
+
+    Private Sub SetCboAssetType(obj As Object)
+        Dim asset As New ContractAssets
+
+        obj.DataSource = asset.AssetsType_Cbo
+        obj.DataValueField = "assetstypeid"
+        obj.DataTextField = "assetstype"
+        obj.DataBind()
     End Sub
 
     Public Sub SetButton(chkstatus As String)
@@ -76,11 +84,11 @@ Public Class clientinfo
 
         End Select
     End Sub
-    Private Sub FindData(clientno As String)
+    Private Sub FindData(assetsno As String)
         Dim mytable As DataTable
-        Dim client As New Client
+        Dim objassets As New ContractAssets
         Try
-            mytable = client.Find(clientno)
+            mytable = objassets.Find(assetsno)
             ShowData(mytable)
         Catch ex As Exception
             Dim err As String = ex.Message.ToString.Replace("'", "")
@@ -93,25 +101,25 @@ Public Class clientinfo
 
     Private Sub ShowData(mytable As DataTable)
         With mytable.Rows(0)
+            If .Item("fullarea") = True Then
+                rdoFull.Checked = True
+            Else
+                rdoPart.Checked = True
+            End If
             txtContractNo.Text = contractno
-            txtClientNo.Text = .Item("clientno")
-            txtName.Text = .Item("clientname")
-            txtCardID.Text = .Item("cardid")
-            cboSex.SelectedIndex = cboSex.Items.IndexOf(cboSex.Items.FindByValue(.Item("sex")))
-            txtCompany.Text = .Item("companyname")
-            txtBirthday.Text = .Item("birthday")
-            txtMobile.Text = .Item("mobile")
-            txtTel.Text = .Item("tel")
-            txtEmail.Text = .Item("email")
-            txtLine.Text = .Item("line")
-            txtCreateBy.Text = .Item("createby")
-            txtCreateDate.Text = .Item("createdate")
-            txtAddress.Text = .Item("address")
-            txtSubdistrict.Text = .Item("subdistrict")
+            txtAssetsNo.Text = .Item("assetsno")
+            txtLandno.Text = .Item("landno")
+            txtSurveyNo.Text = .Item("surveyno")
+            txtSubDistrict.Text = .Item("subdistrict")
             txtDistrict.Text = .Item("district")
             txtProvince.Text = .Item("province")
-            txtPostcode.Text = .Item("postcode")
+            txtRai.Text = .Item("area_rai")
+            txtNgan.Text = .Item("area_ngan")
+            txtWa.Text = .Item("area_wa")
+            txtGPS.Text = .Item("gps")
+            cboAssetType.SelectedIndex = cboAssetType.Items.IndexOf(cboAssetType.Items.FindByText(.Item("assetstype")))
             SetButton(.Item("status"))
+
         End With
     End Sub
 
@@ -119,34 +127,30 @@ Public Class clientinfo
         Clear()
     End Sub
     Private Sub Clear()
-        txtClientNo.Text = ""
-        txtName.Text = ""
-        txtCardID.Text = ""
-
-        txtCompany.Text = ""
-        txtBirthday.Text = ""
-        txtMobile.Text = ""
-        txtTel.Text = ""
-        txtEmail.Text = ""
-        txtLine.Text = ""
-        txtCreateBy.Text = ""
-        txtCreateDate.Text = ""
-        txtAddress.Text = ""
-        txtSubdistrict.Text = ""
+        cboAssetType.SelectedIndex = -1
+        txtAssetsNo.Text = ""
+        txtLandno.Text = ""
+        txtSurveyNo.Text = ""
+        txtSubDistrict.Text = ""
         txtDistrict.Text = ""
         txtProvince.Text = ""
-        txtPostcode.Text = ""
+        txtRai.Text = ""
+        txtNgan.Text = ""
+        txtWa.Text = ""
+        txtGPS.Text = ""
+        rdoFull.Checked = True
         SetButton("New")
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Dim clientno As String
+        'Dim assetsno As String
         Dim err, scriptKey, javaScript As String
+        err = ""
         If validateData() Then
             Try
-                clientno = Save()
-                txtClientNo.Text = clientno
-                Session("clientno") = clientno
+                assetsno = Save()
+                'txtClientNo.Text = clientno
+                Session("assetsno") = assetsno
 
             Catch ex As Exception
                 err = ex.Message.ToString.Replace("'", "")
@@ -166,10 +170,10 @@ Public Class clientinfo
         Dim result As Boolean = True
         Dim err, scriptKey, javaScript As String
 
-        If String.IsNullOrEmpty(txtName.Text) Then
-            result = False
-            err = "กรุณาระบุชื่อ นามสกุล คู่สัญญา"
-        End If
+        'If String.IsNullOrEmpty(txtName.Text) Then
+        '    result = False
+        '    err = "กรุณาระบุชื่อ นามสกุล คู่สัญญา"
+        'End If
 
         If result = False Then
             scriptKey = "UniqueKeyForThisScript"
@@ -181,40 +185,35 @@ Public Class clientinfo
     End Function
     Private Function Save() As String
         Dim result As String
-        Dim client As New Client
-        Dim clientno As String,
-            clientname As String, cardid As String, sex As String,
-            companyname As String, birthday As DateTime, mobile As String,
-            tel As String, email As String, line As String,
-            address As String, subdistrict As String, district As String,
-            province As String, postcode As String
-        clientno = txtClientNo.Text
-        clientname = txtName.Text
-        cardid = txtCardID.Text
-        sex = Strings.Left(cboSex.Text, 1)
-        companyname = txtCompany.Text
-        birthday = DateTime.Parse(txtBirthday.Text)
-        mobile = txtMobile.Text
-        tel = txtTel.Text
-        email = txtEmail.Text
-        line = txtLine.Text
-        address = txtAddress.Text
-        subdistrict = txtSubdistrict.Text
+        Dim objassets As New ContractAssets
+        Dim assetstype As Integer = cboAssetType.SelectedItem.Value
+        Dim landno, surveyno, subdistrict, district, province, gps As String
+        Dim rai, ngan, fullarea As Integer
+        Dim wa As Double
+
+        landno = txtLandno.Text
+        surveyno = txtSurveyNo.Text
+        subdistrict = txtSubDistrict.Text
         district = txtDistrict.Text
         province = txtProvince.Text
-        postcode = txtPostcode.Text
+        gps = txtGPS.Text
+        rai = Integer.Parse(txtRai.Text)
+        ngan = Integer.Parse(txtNgan.Text)
+        wa = Double.Parse(txtWa.Text)
+        If rdoFull.Checked = True Then
+            fullarea = 1
+        Else
+            fullarea = 0
+        End If
 
-
-        result = client.Save(contractno, clientno, usercode, clientname, cardid, sex, companyname,
-birthday, mobile, tel, email, line, address, subdistrict, district, province, postcode)
-
-
-
+        result = objassets.Save(contractno, assetsno, assetstype, landno, surveyno, subdistrict,
+                                district, province, rai, ngan, wa, gps, fullarea, usercode)
 
         Return result
     End Function
 
     Private Sub BtnContract_Click(sender As Object, e As EventArgs) Handles BtnContract.Click
+        projectno = Session("projectno")
         Response.Redirect("contractinfo.aspx?agreeno=" & contractno & "&projectno=" & projectno)
     End Sub
 End Class

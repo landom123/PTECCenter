@@ -98,7 +98,7 @@ Module global_module
 
 
     Public Sub SetCboProjectStatus(obj As Object)
-        Dim ag As New Agree
+        Dim ag As New Contract
 
         obj.DataSource = ag.Ag_Status_list
         obj.DataValueField = "agstatusid"

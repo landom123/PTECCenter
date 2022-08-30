@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class clientinfo
+Partial Public Class flexibleinfo
 
     '''<summary>
     '''btnNew control.
@@ -68,155 +68,146 @@ Partial Public Class clientinfo
     Protected WithEvents lblStatus As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtClientNo control.
+    '''txtid control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtClientNo As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtid As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtCreateDate control.
+    '''cboPaymentType control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCreateDate As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboPaymentType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''txtCreateBy control.
+    '''rdoMax control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCreateBy As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents rdoMax As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
-    '''txtName control.
+    '''rdoRank control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtName As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents rdoRank As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
-    '''txtCardID control.
+    '''rdoMonth control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCardID As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents rdoMonth As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
-    '''cboSex control.
+    '''rdoYear control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboSex As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents rdoYear As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
-    '''txtCompany control.
+    '''txtFrequency control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCompany As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtFrequency As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtBirthday control.
+    '''txtBegindate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtBirthday As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtBegindate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtMobile control.
+    '''txtEnddate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtMobile As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtEnddate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtTel control.
+    '''txtDueDate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtTel As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtDueDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtEmail control.
+    '''gvFlexDetail control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtEmail As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents gvFlexDetail As Global.System.Web.UI.WebControls.GridView
 
     '''<summary>
-    '''txtLine control.
+    '''txtBeginvolume control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtLine As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtBeginvolume As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtAddress control.
+    '''txtEndvolume control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtAddress As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtEndvolume As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtSubdistrict control.
+    '''txtWarranty control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtSubdistrict As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtWarranty As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtDistrict control.
+    '''txtRate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtDistrict As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtRate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtProvince control.
+    '''btnAddDetail control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtProvince As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''txtPostcode control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtPostcode As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnAddDetail As Global.System.Web.UI.WebControls.Button
 End Class

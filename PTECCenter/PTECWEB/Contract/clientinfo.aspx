@@ -23,18 +23,42 @@
                     <div class="col-6">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
+                        <asp:Button ID="btnDel" class="btn btn-sm  btn-success" runat="server" Text=" Delete " />
+                    </div>
+                    <div class="col-6" style="text-align:right">
+                        <asp:Button ID="BtnContract" class="btn btn-sm  btn-success" runat="server" Text=" กลับ สัญญา " />
                     </div>
                 </div>
 
                 <div class="card-body">
+                <div class="row">
+                        <div class="col-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">เลขที่สัญญา</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtContractNo" placeholder="please save first" ReadOnly="true" runat="server" ></asp:TextBox>    
+
+                            </div>
+                        </div>
+                        <div class="col-4">
+
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">สถานะ</span>
+                                </div>
+                                <asp:Label class="form-control" ID="lblStatus" style="background-color:darkgreen;color:white" runat="server" ></asp:Label>    
+
+                            </div>
+                        </div>
+                    </div>
                 <div class="row" style="padding-top: 1rem;">
                     <div class="col-md-4 ">
                             รหัสคู่สัญญา
                         <div class="input-group sm-3">
                             <asp:TextBox class="form-control" ID="txtClientNo" runat="server" ReadOnly="true"></asp:TextBox>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../ACS/clientinfo.aspx?clientno=','ระบุรหัสคู่สัญญา')">Find</button>
-                            </div>
                         </div>
                     </div>
                     <div class="col-md-4">

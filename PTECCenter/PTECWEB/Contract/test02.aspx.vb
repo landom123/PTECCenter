@@ -86,7 +86,7 @@ Public Class test02
 
     Protected Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
 
-        Dim objagree As New Agree
+        Dim objagree As New Contract
         Dim mydataset As DataSet
         'InvoiceDate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
         'editable = objedi.ListInvoice(InvoiceDate, "ZF2")

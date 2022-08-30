@@ -94,4 +94,11 @@ Public Class projectlist
 
     End Sub
 
+    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+        Response.Redirect("projectinfo.aspx")
+    End Sub
+
+    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
+        List()
+    End Sub
 End Class

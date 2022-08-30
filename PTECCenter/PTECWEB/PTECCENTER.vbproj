@@ -196,6 +196,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="Contract\assetsinfo.aspx" />
+    <Content Include="Contract\flexibleinfo.aspx" />
+    <Content Include="Contract\fixibleinfo.aspx" />
+    <Content Include="Contract\paymentinfo.aspx" />
+    <Content Include="Contract\onetimeinfo.aspx" />
+    <Content Include="Contract\contractinfo.aspx" />
     <Content Include="Contract\projectinfo.aspx" />
     <Content Include="Contract\agreementtest.aspx" />
     <Content Include="Contract\client_list.aspx" />
@@ -3461,6 +3467,48 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\assetsinfo.aspx.designer.vb">
+      <DependentUpon>assetsinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\assetsinfo.aspx.vb">
+      <DependentUpon>assetsinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\flexibleinfo.aspx.designer.vb">
+      <DependentUpon>flexibleinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\flexibleinfo.aspx.vb">
+      <DependentUpon>flexibleinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\fixibleinfo.aspx.designer.vb">
+      <DependentUpon>fixibleinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\fixibleinfo.aspx.vb">
+      <DependentUpon>fixibleinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\paymentinfo.aspx.designer.vb">
+      <DependentUpon>paymentinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\paymentinfo.aspx.vb">
+      <DependentUpon>paymentinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\onetimeinfo.aspx.designer.vb">
+      <DependentUpon>onetimeinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\onetimeinfo.aspx.vb">
+      <DependentUpon>onetimeinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\contractinfo.aspx.designer.vb">
+      <DependentUpon>contractinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\contractinfo.aspx.vb">
+      <DependentUpon>contractinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Contract\projectinfo.aspx.designer.vb">
       <DependentUpon>projectinfo.aspx</DependentUpon>
     </Compile>
