@@ -1,4 +1,4 @@
-﻿Public Class NonPOManage_PAY
+﻿Public Class NonPOManage_ADV
     Inherits System.Web.UI.Page
 
     Public menutable As DataTable
@@ -37,28 +37,28 @@
                 Dim nonpocode = Request.QueryString("NonpoCode")
                 Dim category As String = Split(nonpocode, Right(nonpocode, 9))(0)
                 Dim nonpoDs = New DataSet
-                If category = "PAY" Then
+                If category = "ADV" Then
                     objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, category)
                 Else
                     Dim scriptKey As String = "UniqueKeyForThisScript"
-                    Dim javaScript As String = "alertWarning('PAY only!')"
+                    Dim javaScript As String = "alertWarning('ADV only!')"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                     GoTo endprocess
                 End If
                 Try
 
-                    Attatch.SetCboMyfile(cboMyfile, Session("userid"))
-                    nonpoDs = objNonpo.NonPO_Find(Request.QueryString("NonpoCode"))
+                    attatch.SetCboMyfile(cboMyfile, Session("userid"))
+                    nonpoDs = objNonpo.NonPO_AdvanceRQ_Find(Request.QueryString("NonpoCode"))
 
-                    nonpodt = nonpoDs.Tables(1)
-                    AttachTable = nonpoDs.Tables(3)
-                    CommentTable = nonpoDs.Tables(4)
+                    nonpodt = nonpoDs.Tables(0)
+                    AttachTable = nonpoDs.Tables(1)
+                    CommentTable = nonpoDs.Tables(2)
 
                     With nonpodt.Rows(0)
-                        lbapprovalcode.Text = .Item("nonpocode")
-                        badgeapprovalcode.InnerText = .Item("statusname")
-                        cboStatusFollow.SelectedIndex = cboStatusFollow.Items.IndexOf(cboStatusFollow.Items.FindByValue(.Item("statusid")))
-                        badgeapprovalcode.HRef = "../Non-PO/Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode")
+                        lbapprovalcode.Text = .Item("advancerequestcode")
+                        badgeapprovalcode.InnerText = .Item("statusrqname")
+                        cboStatusFollow.SelectedIndex = cboStatusFollow.Items.IndexOf(cboStatusFollow.Items.FindByValue(.Item("statusrqid")))
+                        badgeapprovalcode.HRef = "../Non-PO/Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("NonpoCode")
                     End With
 
                 Catch ex As Exception
@@ -83,47 +83,33 @@ endprocess:
     End Sub
     Private Function createmaintable() As DataTable
         Dim dt As New DataTable
-        dt.Columns.Add("nonpoid", GetType(Double)) 'new =0
-        dt.Columns.Add("nonpocode", GetType(String))
-        dt.Columns.Add("payby", GetType(String))
-        dt.Columns.Add("coderef", GetType(String))
-        dt.Columns.Add("limit", GetType(Double))
-        dt.Columns.Add("statusid", GetType(Integer)) 'new=0
-        dt.Columns.Add("statusname", GetType(String))
+        dt.Columns.Add("advancerequestcode", GetType(String))
+        dt.Columns.Add("amount", GetType(Double))
+        dt.Columns.Add("amount_more", GetType(Double))
+        dt.Columns.Add("statusrqid", GetType(Integer))
+        dt.Columns.Add("statusrqname", GetType(String))
+
         dt.Columns.Add("detail", GetType(String))
 
-        dt.Columns.Add("branchid", GetType(String))
-        dt.Columns.Add("depid", GetType(String))
-        dt.Columns.Add("secid", GetType(String))
+        dt.Columns.Add("approvalrqby", GetType(String))
+        dt.Columns.Add("approvalrqdate", GetType(String))
+        dt.Columns.Add("verifyrqby", GetType(String))
+        dt.Columns.Add("verifyrqdate", GetType(String))
+        dt.Columns.Add("accountverifyrqby", GetType(String))
+        dt.Columns.Add("accountverifyrqdate", GetType(String))
 
-        dt.Columns.Add("chkpayback", GetType(Integer))
-        dt.Columns.Add("chkdeductsell", GetType(Integer))
-        dt.Columns.Add("payback_amount", GetType(Double))
-        dt.Columns.Add("deductsell_amount", GetType(Double))
+        dt.Columns.Add("duedate", GetType(String))
 
-        dt.Columns.Add("vendorcode", GetType(String))
-        dt.Columns.Add("totalforcheck", GetType(String))
-
-        dt.Columns.Add("DueDate", GetType(String))
-
-        dt.Columns.Add("vat_wait", GetType(Integer))
-
-        dt.Columns.Add("withdraw_by", GetType(String))
-        dt.Columns.Add("withdraw_date", GetType(String))
-        dt.Columns.Add("service_by", GetType(String))
-        dt.Columns.Add("service_date", GetType(String))
-        dt.Columns.Add("verify_by", GetType(String))
-        dt.Columns.Add("verify_date", GetType(String))
-        dt.Columns.Add("approval_by", GetType(String))
-        dt.Columns.Add("approval_date", GetType(String))
-        '---------------------------------------
-        dt.Columns.Add("updateby", GetType(String))
+        dt.Columns.Add("updateby", GetType(Integer))
         dt.Columns.Add("updatedate", GetType(String))
-        dt.Columns.Add("createby", GetType(String))
+        dt.Columns.Add("createby", GetType(Integer))
         dt.Columns.Add("createdate", GetType(String))
+
+        dt.Columns.Add("ownerid", GetType(Integer))
+
         dt.Columns.Add("updateby_name", GetType(String))
         dt.Columns.Add("createby_name", GetType(String))
-
+        dt.Columns.Add("ownerby_name", GetType(String))
         Return dt
     End Function
 
@@ -166,7 +152,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Master/NonPOManage_PAY.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../Master/NonPOManage_ADV.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 
 endprocess:
     End Sub
@@ -184,7 +170,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../Master/NonPOManage_PAY.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+        Response.Redirect("../Master/NonPOManage_ADV.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
 End Class

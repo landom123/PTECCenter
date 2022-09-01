@@ -11,6 +11,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objNonpo As New NonPO
+        Dim attatch As New Attatch
         usercode = Session("usercode")
 
         If Session("usercode") Is Nothing Then
@@ -45,6 +46,7 @@
                     GoTo endprocess
                 End If
                 Try
+                    Attatch.SetCboMyfile(cboMyfile, Session("userid"))
                     nonpoDs = objNonpo.NonPO_Find(Request.QueryString("NonpoCode"))
 
                     nonpodt = nonpoDs.Tables(1)
@@ -55,6 +57,7 @@
                         lbapprovalcode.Text = .Item("nonpocode")
                         badgeapprovalcode.InnerText = .Item("statusname")
                         cboStatusFollow.SelectedIndex = cboStatusFollow.Items.IndexOf(cboStatusFollow.Items.FindByValue(.Item("statusid")))
+                        badgeapprovalcode.HRef = "../Non-PO/PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode")
                     End With
 
                 Catch ex As Exception
@@ -66,14 +69,15 @@
 
             End If
 
-            Session("maintable_payment") = nonpodt
-            Session("comment_payment") = CommentTable
-            Session("attatch_payment") = AttachTable
+
+            Session("maintable_pcco") = nonpodt
+            Session("comment_pcco") = CommentTable
+            Session("attatch_pcco") = AttachTable
         Else
 
-            nonpodt = Session("maintable_payment")
-            AttachTable = Session("attatch_payment")
-            CommentTable = Session("comment_payment")
+            nonpodt = Session("maintable_pcco")
+            AttachTable = Session("attatch_pcco")
+            CommentTable = Session("comment_pcco")
         End If
 endprocess:
     End Sub

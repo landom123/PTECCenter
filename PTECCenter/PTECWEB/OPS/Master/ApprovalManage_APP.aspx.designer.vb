@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class NonPOManage_CLADV
+Partial Public Class ApprovalManage_APP
 
     '''<summary>
     '''lbapprovalcode control.
@@ -50,6 +50,42 @@ Partial Public Class NonPOManage_CLADV
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''txtPrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPrice As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnSavePrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSavePrice As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''txtDay control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDay As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnSaveDay control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSaveDay As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''card_attatch control.
     '''</summary>
     '''<remarks>
@@ -57,33 +93,6 @@ Partial Public Class NonPOManage_CLADV
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents card_attatch As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''btnAddAttatch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnAddAttatch As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''btnAddNewAttatch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnAddNewAttatch As Global.System.Web.UI.HtmlControls.HtmlAnchor
-
-    '''<summary>
-    '''btnAddAttatch2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnAddAttatch2 As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
     '''card_comment control.
@@ -111,40 +120,4 @@ Partial Public Class NonPOManage_CLADV
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSaveComment As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''lbcboMyfile control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbcboMyfile As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbMandatorycboMyfile control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbMandatorycboMyfile As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cboMyfile control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboMyfile As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''asd control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents asd As Global.System.Web.UI.WebControls.Button
 End Class

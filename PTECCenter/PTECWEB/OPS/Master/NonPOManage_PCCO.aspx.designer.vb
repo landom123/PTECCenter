@@ -111,4 +111,40 @@ Partial Public Class NonPOManage_PCCO
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSaveComment As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lbcboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboMyfile As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbMandatorycboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbMandatorycboMyfile As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboMyfile As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''asd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents asd As Global.System.Web.UI.WebControls.Button
 End Class
