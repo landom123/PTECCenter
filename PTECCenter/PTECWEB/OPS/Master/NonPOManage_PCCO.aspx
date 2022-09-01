@@ -46,7 +46,6 @@
                         </div>
                     </div>
                 </div>
-                <% End If %>
                 <hr />
                 <div class="row notPrint" id="card_attatch" runat="server">
                     <div class="col-md-6">
@@ -157,10 +156,39 @@
                         <!-- end card-->
                     </div>
                 </div>
+                <% End If %>
             </div>
         </div>
     </div>
-
+    <div class="modal fade bd-example-modal-lg" id="chooseMyfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">เลือกจากคลังไฟล์</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <asp:Label ID="lbcboMyfile" CssClass="form-label" AssociatedControlID="cboMyfile" runat="server" Text="ไฟล์ของฉัน" />
+                                <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboMyfile" runat="server" Text="*" />
+                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server" required></asp:DropDownList>
+                                <div class="invalid-feedback">กรุณาเลือกไฟล์</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
 
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
@@ -260,88 +288,107 @@
                 'warning'
             )
         }
-        //function confirmDelete(lnk) {
-        //    var row = lnk.parentNode.parentNode.parentNode.parentNode;
-        //    console.log(row.cells[0])
-        //    console.log(row.rowIndex - 1)
-        //    console.log(row)
+        function addAttach() {
 
-        //    var GroupID = document.getElementsByName('btnDelete')[row.rowIndex - 1].getAttribute("customdata");
-        //    console.log(GroupID)
-        //    /*alert(GridView);*/
+            Swal.fire({
+                title: 'แนบลิ้งเอกสาร',
+                html:
+                    '<input id="swal-input1" class="swal2-input" type="url" placeholder="URL">' +
+                    '<input id="swal-input2" class="swal2-input" placeholder="Description">',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                preConfirm: () => {
+                    if (!document.getElementById('swal-input1').value || !document.getElementById('swal-input2').value) {
+                        // Handle return value 
+                        if (!document.getElementById('swal-input1').value && document.getElementById('swal-input2').value) {
+                            Swal.showValidationMessage('URL missing')
+                        } else if (document.getElementById('swal-input1').value && !document.getElementById('swal-input2').value) {
+                            Swal.showValidationMessage('Description missing')
+                        } else {
+                            Swal.showValidationMessage('URL,Description missing')
+                        }
+                    } else {
+                        return [
+                            document.getElementById('swal-input1').value,
+                            document.getElementById('swal-input2').value
+                        ]
+                    }
+                },
+                confirmButtonText: 'Save',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = result.value[0];
+                    let description = result.value[1];
+                    sentAddAttach(url, description)
 
-        //    Swal.fire({
-        //        title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',
-        //        text: "",
-        //        icon: 'warning',
-        //        showCancelButton: true,
-        //        confirmButtonColor: '#3085d6',
-        //        cancelButtonColor: '#d33',
-        //        confirmButtonText: 'Yes'
-        //    }).then((result) => {
-        //        if (result.isConfirmed) {
-        //            var params = "{'groupId': '" + GroupID + "'}";
-        //            $.ajax({
-        //                type: "POST",
-        //                url: "../OPS/Master.aspx/deleteGroupById",
-        //                async: true,
-        //                data: params,
-        //                contentType: "application/json; charset=utf-8",
-        //                dataType: "json",
-        //                success: function (msg) {
-        //                    if (msg.d == 'success') {
-        //                        swal.fire({
-        //                            title: "Deleted!",
-        //                            text: "",
-        //                            icon: "success"
-        //                        }).then(function () {
-        //                            window.location.href = location.href;
-        //                        });
-        //                    } else {
-        //                        alertWarning('fail')
-        //                    }
-        //                },
-        //                error: function () {
-        //                    alertWarning('fail')
-        //                }
-        //            });
-        //        }
-        //    })
 
-        //    return false;
-        //}
-        function confirmEdit(lnk) {
-            var row = lnk.parentNode.parentNode.parentNode.parentNode;
-            console.log(row.cells[0])
-            console.log(row.rowIndex - 1)
-            console.log(row)
+                }
+            })
+        }
 
-            var GroupID = document.getElementsByName('btnEdit')[row.rowIndex - 1].getAttribute("customdata");
-            console.log(GroupID)
-            //alert("edit");
+        function chooseMyfile() {
+            validateData();
 
-            var params = "{'groupId': '" + GroupID + "'}";
+            const url = $('#<%= cboMyfile.ClientID%>').val();
+            const description = $("#<%= cboMyfile.ClientID%> option:selected").text();
+            sentAddAttach(url, description)
+
+            return true;
+        }
+        function sentAddAttach(url, description) {
+            if (url.substring(0, 7) != 'http://' && url.substring(0, 8) != 'https://') {
+                url = 'http://' + url;
+            }
+            /*alert(url);*/
+            let msg = '<a href="' + url + '" target="_blank">' + description + '</a>'
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const nonpocode = urlParams.get('NonpoCode');
+            var user = "<% =Session("usercode").ToString %>";
+            var userid = <%= Session("userid") %>;
+            var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
             $.ajax({
                 type: "POST",
-                url: "../OPS/Master.aspx/updateGroupById",
+                url: "../Non-PO/PettyCash/PettyCashCO2.aspx/addAttach",
                 async: true,
                 data: params,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (data) {
-                    console.log(data)
-                    console.log(data.d['GroupID'])
-                    var obj = JSON.parse(data.d);
-                    console.log(obj)
-                    console.log(obj['GroupID'])
+                success: function (msg) {
+                    /*alertSuccessToast();*/
+                    if (msg.d) {
+                        if (!description) {
+                            description = 'Link';
+                        }
+                        /*__doPostBack('AttachTable', '')*/
+                        $('.attatchItems').append(
+                            '<div class="row">' +
+                            '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d + '" >' +
+                            '<div class="col-auto">' +
+                            '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
+                            '<span>' + description + '</span></a>' +
+                            '<a onclick="removeAttach(' + msg.d + ',' + userid + ');" class="btn btn-sm pt-0 text-danger deletedetail">' +
+                            '<i class="fas fa-times"></i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                        alertSuccessToast('บันทึกเรียบร้อย' + description);
+                    } else {
+                        alertWarning('Add URL fail');
+                    }
 
-                    //alert("yes")
                 },
-                error: function () {
-                    alertWarning('fail')
+                error: function (msg) {
+                    console.log(msg);
+
+                    alertWarning('Add URL faila');
+
                 }
             });
-
         }
         function stoppedTyping() {
             if (document.getElementById('<%= txtComment.ClientID%>').value.length > 0) {

@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class NonPOManage_CLADV
+Partial Public Class NonPOManage_ADV
 
     '''<summary>
     '''lbapprovalcode control.
