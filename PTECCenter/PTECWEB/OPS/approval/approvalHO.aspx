@@ -281,29 +281,28 @@
                                                     <asp:Label ID="lbcost" runat="server" Text='<%#String.Format("{0:n2}", Eval("cost"))%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="approvalcode" HeaderStyle-CssClass="table-header">
+                                            <asp:TemplateField HeaderText="APP" HeaderStyle-CssClass="table-header">
                                                 <ItemTemplate>
                                                     <div class="d-flex flex-column align-items-center">
                                                         <asp:Label CssClass="approvalcode" ID="lbapprovalcode" runat="server" Text='<%#Eval("approvalcode")%>'></asp:Label>
-                                                        <a href="#" class="badge badgestatus_app" title="<%#Eval("approvalcode")%>"><%#Eval("statusname")%></a>
+                                                        <a href="../approval/approval.aspx?approvalcode=<%#Eval("approvalcode")%>" class="badge badgestatus_app" title="<%#Eval("statusname")%>" target="_blank"><%#Eval("statusname")%></a>
                                                         <li class="breadcrumb-item " runat="server" visible='<%#Eval("approvalcode").ToString() = HttpContext.Current.Profile.UserName %>'>
                                                             <a href="#" class="badge badgestatus_cladv text-muted " title="">ยังไม่ได้บันทึกรายการนี้</a>
                                                         </li>
                                                     </div>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <%--<asp:TemplateField HeaderText="status" HeaderStyle-CssClass="table-header">
+                                            <asp:TemplateField HeaderText="CLADV" HeaderStyle-CssClass="table-header">
                                                 <ItemTemplate>
-                                                        <ol class="breadcrumb p-0 bg-transparent">
-                                                            <li class="breadcrumb-item">
-                                                                <a href="#" class="badge badgestatus_app" title="<%#Eval("approvalcode")%>"><%#Eval("statusname")%></a>
-                                                            </li>
-                                                            <li class="breadcrumb-item " runat="server" visible='<%#Not Eval("cladvstatus").ToString() = HttpContext.Current.Profile.UserName %>'>
-                                                                <a href="#" class="badge badgestatus_cladv" title="<%#Eval("cladvcode")%>"><%#Eval("cladvstatus")%></a>
-                                                            </li>
-                                                        </ol>
+                                                    <div class="d-flex flex-column align-items-center">
+                                                        <asp:Label CssClass="approvalcode" ID="lbcladvcode" runat="server" Text='<%#Eval("cladvcode")%>'></asp:Label>
+                                                        <a href="../Non-PO/Advance/ClearAdvance.aspx?NonpoCode=<%#Eval("cladvcode")%>" target="_blank" class="badge badgestatus_cladv" title="<%#Eval("cladvstatus")%>"><%#Eval("cladvstatus")%></a>
+                                                        <li class="breadcrumb-item " runat="server" visible='<%#Eval("cladvcode").ToString() = HttpContext.Current.Profile.UserName %>'>
+                                                            <a href="#" class="badge badgestatus_cladv text-muted " title="">ยังไม่มีใบ CLADV</a>
+                                                        </li>
+                                                    </div>
                                                 </ItemTemplate>
-                                            </asp:TemplateField>--%>
+                                            </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
                                     <asp:HiddenField ID="hfCount" runat="server" Value="0" />

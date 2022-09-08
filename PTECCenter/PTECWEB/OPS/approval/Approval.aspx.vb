@@ -276,10 +276,11 @@ endprocess:
             Not Session("userid") = am_id And
             Not Session("userid") = rm_id And
             Not Session("userid") = dm_id And
-            Not Session("secid").ToString = "2" And
-            Not Session("depid").ToString = "2" And
-            Not Session("depid").ToString = "1" And
-            Not Session("depid").ToString = "4" Then
+            Session("positionid").ToString = "10" Then
+                'Not Session("secid").ToString = "2" And
+                'Not Session("depid").ToString = "2" And
+                'Not Session("depid").ToString = "1" And
+                'Not Session("depid").ToString = "4" Then
                 flag = False
             End If
         Catch ex As Exception

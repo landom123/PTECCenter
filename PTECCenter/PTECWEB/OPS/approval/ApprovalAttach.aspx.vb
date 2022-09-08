@@ -4,6 +4,8 @@ Public Class approvalattach
 
     Public flag As Boolean = True
 
+    Public cost As Double
+
     Public detailtable As DataTable '= createdetailtable()
     Public menutable As DataTable
 
@@ -13,7 +15,15 @@ Public Class approvalattach
         Dim statusid As Integer
         Dim objsupplier As New Supplier
 
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
+
         'txtinvoicedate.Attributes.Add("readonly", "readonly")
+
+        Double.TryParse(txtCost.Text, cost)
+
         If Not IsPostBack() Then
             If Not Request.QueryString("approvalcode") Is Nothing Then
 
@@ -39,6 +49,18 @@ Public Class approvalattach
             End If
         Else
             detailtable = Session("detailtable")
+
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "btnUpload_Click" Then
+
+                Dim argument As String = Request("__EVENTARGUMENT")
+                If argument = "isConfirmed" Then
+                    upload()
+                ElseIf argument = "isDenied" Then
+                    cacel()
+                End If
+
+            End If
         End If
     End Sub
 
@@ -86,8 +108,24 @@ Public Class approvalattach
             txtOwnerApprovalDate.Text = .Item("OwnerApprovalDate").ToString
         End With
     End Sub
+    Private Sub cacel()
+        Dim approval As New Approval
+        Dim approvalcode As String
 
-    Private Sub btnUpload_Click(sender As Object, e As EventArgs) Handles btnUpload.Click
+        Try
+            approvalcode = approval.Approval_Cancel(Request.QueryString("approvalcode"), Session("usercode"))
+            Session("status") = "read"
+            Response.Redirect("../approval/approval.aspx?approvalcode=" & approvalcode)
+
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('save fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+    Private Sub upload()
 
         If InStr(Request.ContentType, "multipart/form-data") Then
             Dim approval As New Approval
@@ -143,7 +181,7 @@ Public Class approvalattach
                 Dim ds As DataSet
                 Dim dt As DataTable
                 Dim statusid As Integer
-                ds = approval.Approval_Find(Request.QueryString("approvalcode"))
+                ds = approval.Approval_Find(code)
                 dt = ds.Tables(0)
                 statusid = dt.Rows(0).Item("statusid") '9 = ดำเนินการด้านเอกสาร
                 If detailtable.Rows(0).Item("category").ToString = "หักยอดขาย" And statusid = 9 Then
@@ -165,6 +203,9 @@ Public Class approvalattach
 endprocess:
         End If
     End Sub
+    Private Sub btnUpload_Click(sender As Object, e As EventArgs) Handles btnUpload.Click
+        upload()
+    End Sub
     Private Sub saveTodba(fullfilename As String)
         Dim approval As New Approval
         Try
@@ -176,4 +217,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+
+    'Private Sub approvalattach_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+    'End Sub
 End Class
