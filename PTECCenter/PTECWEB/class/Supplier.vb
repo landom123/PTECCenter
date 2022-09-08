@@ -11,15 +11,22 @@ Public Class Supplier
 
         Dim dt As DataTable = vendor_list(username)
         cboVendor.Items.Clear()
-
-        For i As Integer = 0 To dt.Rows.Count - 1
-            Dim name = dt.Rows(i).Item("name").ToString
+        Dim cnt_dt = dt.Rows.Count
+        For i As Integer = 0 To cnt_dt - 1
+            Dim name As String
+            Dim valuemember As String
+            Dim taxidno As String
+            With dt.Rows(i)
+                name = .Item("name").ToString
+                valuemember = .Item("Vendor_Code").ToString
+                taxidno = .Item("taxidno").ToString
+            End With
             Dim item As ListItem = New ListItem(name, name)
             'If Not String.IsNullOrEmpty(dt.Rows(i).Item("Vendor_Code").ToString) Then
             'End If
-            item.Attributes("data-subtext") = dt.Rows(i).Item("Vendor_Code").ToString
+            item.Attributes("data-subtext") = valuemember
             'If Not String.IsNullOrEmpty(dt.Rows(i).Item("taxidno").ToString) Then
-            item.Attributes("data-taxidno") = dt.Rows(i).Item("taxidno").ToString
+            item.Attributes("data-taxidno") = taxidno
             'End If
 
             cboVendor.Items.Add(item)

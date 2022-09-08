@@ -1830,10 +1830,12 @@
         });
 
         var arrVendor = new Array;
+        var myArray = new Array;
         $("#<%= cboVendor.ClientID%> option").each(function () {
             arrVendor.push($(this).val());
+            myArray[$(this).val()] = $(this).attr("data-taxidno");
         });
 
-        nonpo_autocomplete(document.getElementById("<%= txtVendor.ClientID%>"), arrVendor, '<%= cboVendor.ClientID%>', '<%= txttaxid.ClientID%>');
+        nonpo_autocomplete(document.getElementById("<%= txtVendor.ClientID%>"), arrVendor, myArray, '<%= txttaxid.ClientID%>');
     </script>
 </asp:Content>

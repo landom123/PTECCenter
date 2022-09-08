@@ -137,7 +137,7 @@
                                 <div class="row justify-content-md-center">
                                     <div class="col-md-10">
                                         <div class="input-group justify-content-center">
-                                            <input type="file" name="files" accept="image/*,.pdf" >
+                                            <input type="file" name="files" accept="image/*,.pdf">
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +146,7 @@
                                         <div class="form-group">
                                             <asp:Label ID="lbCodeGSM" CssClass="form-label" AssociatedControlID="txtCost" runat="server" Text="ค่าใช้จ่ายที่ใช้จริง" />
                                             <asp:Label ID="lbCodeGSMMandatory" CssClass="text-danger" AssociatedControlID="txtCost" runat="server" Text="* (กรณีไม่มีค่าใช้จ่ายใส่ 0)" />
-                                            <asp:TextBox class="form-control" ID="txtCost" runat="server" type="number" min="0"  required></asp:TextBox>
+                                            <asp:TextBox class="form-control" ID="txtCost" runat="server" type="number" min="0" required></asp:TextBox>
                                             <div class="invalid-feedback">กรุณาใส่ค่าใช้จ่ายตามบิล</div>
                                         </div>
                                     </div>
@@ -447,11 +447,35 @@
             const approvalcode = urlParams.get('approvalcode');
             console.log(approvalcode.length);
 
+
             if ($('input[type=file]').length == 1 && approvalcode.length == 12) {
                 alertWarning('กรุณาแนบเอกสาร');
                 event.preventDefault();
                 event.stopPropagation();
+            } else {
+
+                console.log("pre");
+                <% If Not Request.QueryString("approvalcode") Is Nothing Then%>
+                    console.log("in1");
+                <% If detailtable.Rows(0).Item("list_depcode").ToString <> "ROD" Then%>
+                    const price = <%=detailtable.Rows(0).Item("price") %> ;
+                    const cost = document.getElementById("<%= txtCost.ClientID%>").value;
+                    console.log(price)
+                    console.log(cost)
+                    console.log(parseFloat(cost))
+                    if (price < parseFloat(cost)) {
+                        console.log("in2");
+                        const payload = `ยอดที่ใส่มา (${parseFloat(cost)}บ.) มากกว่า ยอดที่ตั้งเดิม (${price}บ.)`
+                        alertValidateCost(payload, price, parseFloat(cost));
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                <% End If %>
+                <% End If %>
+                console.log("end");
             }
+
+
         }
         function alertSuccess() {
             Swal.fire(
@@ -467,6 +491,42 @@
                 '',
                 'warning'
             )
+        }
+        function alertValidateCost(massage,oldcost,newcost) {
+            Swal.fire({
+                title: '',
+                text: massage,
+                icon: 'info',
+                showCancelButton: true,
+                showDenyButton: true,
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'ยกเลิก',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: `ดำเนินการต่อ (${oldcost})`,
+                denyButtonText: `ยกเลิกและแจ้งต้นเรื่อง`,
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (confirm(`คุณต้องการดำเนินการต่อที่ยอดเดิม (${oldcost}) หรือไม่ ?`)) {
+                        __doPostBack('btnUpload_Click', 'isConfirmed');
+                    }
+                    else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                } else if (result.dismiss === Swal.DismissReason.cancel){
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else if (result.isDenied) {
+                    if (confirm("คุณต้องการจะยกเลิกและแจ้งต้นเรื่องรับทราบ หรือไม่ ?")) {
+                        __doPostBack('btnUpload_Click', 'isDenied');
+                    }
+                    else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                }
+            })
         }
         function alertSuccessUpload(code, urldes) {
             Swal.fire({
