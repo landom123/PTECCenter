@@ -40,7 +40,7 @@ Public Class WebForm1
 
 
         If Not IsPostBack() Then
-            objapproval.SetCboApproval(cboApproval)
+            objapproval.SetCboApproval(cboApproval, "", "nds")
             'If Not Session("positionid") = "10" Then
             'objbranch.SetComboBranchByAreaid(cboBranch, Session("areaid").ToString, 1)
             'Else
@@ -50,6 +50,7 @@ Public Class WebForm1
             detailtable = createtable()
             CommentTable = createtablecomment()
             If Not Request.QueryString("approvalcode") Is Nothing Then
+                objapproval.SetCboApproval(cboApproval)
                 Try
                     approvaldataset = objapproval.Approval_Find(Request.QueryString("approvalcode"))
                     detailtable = approvaldataset.Tables(0)
