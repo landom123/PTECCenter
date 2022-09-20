@@ -226,7 +226,7 @@ Public Class flexibleinfo
     End Function
 
     Private Function validateDataDetail() As Boolean
-        Dim result As Boolean = False
+        Dim result As Boolean = True
         Dim scriptKey, javaScript As String
 
 

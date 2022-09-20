@@ -41,6 +41,15 @@ Partial Public Class contractinfo
     Protected WithEvents btnDel As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnEstimate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnEstimate As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnBack control.
     '''</summary>
     '''<remarks>

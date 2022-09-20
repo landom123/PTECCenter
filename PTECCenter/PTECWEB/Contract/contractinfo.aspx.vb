@@ -447,4 +447,10 @@ Public Class contractinfo
             Response.Redirect("onetimeinfo.aspx?contractno=" & contractno & "&onetimeid=")
         End If
     End Sub
+
+    Private Sub btnEstimate_Click(sender As Object, e As EventArgs) Handles btnEstimate.Click
+        If Not String.IsNullOrEmpty(txtContractNo.Text) Then
+            Response.Redirect("estimate_payment_byContract.aspx?agreeno=" & txtContractNo.Text & "&projectno=" & projectno)
+        End If
+    End Sub
 End Class

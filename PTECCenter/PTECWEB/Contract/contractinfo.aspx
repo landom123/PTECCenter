@@ -27,6 +27,7 @@
                         <asp:Button ID="btnDel" class="btn btn-sm  btn-danger" runat="server" Text=" Delete " OnClientClick="return cancel_data();"/>
                     </div>
                     <div class="col-6" style="text-align:right">
+                        <asp:Button ID="btnEstimate" class="btn btn-sm  btn-success" runat="server" Text=" ประมาณการ " />
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-success" runat="server" Text=" กลับ Project " />
                     </div>
                 </div>
@@ -349,10 +350,13 @@
 
                               <div class="table-responsive">
                                    <div class="row">
-                                        <div class="col-8" style="font-size:large;">
+                                        <div class="col-4" style="font-size:large;">
                                             ผลตอบแทนแบบ Fix                                           
                                         </div>
-                                        <div class="col-4" style="text-align:right">
+                                        <div class="col-8" style="text-align:right">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                              Launch demo modal
+                                            </button>
                                             <asp:Button ID="btnFix" class="btn btn-sm  btn-primary" runat="server" Text=" + เพิ่มเงื่อนไข" />
                                         </div>
                                     </div>
@@ -494,6 +498,26 @@
 
         <!-- end เนื้อหาเว็บ -->
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
     </div>
     <!-- /#wrapper -->

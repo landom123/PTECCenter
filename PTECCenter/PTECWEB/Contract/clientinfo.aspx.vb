@@ -11,7 +11,7 @@ Public Class clientinfo
         usercode = Session("usercode")
         username = Session("username")
 
-        txtBirthday.Attributes.Add("readonly", "readonly")
+        'txtBirthday.Attributes.Add("readonly", "readonly")
 
 
         cboSex.Items.Add("Male")

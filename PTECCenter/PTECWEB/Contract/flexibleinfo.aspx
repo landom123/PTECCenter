@@ -129,7 +129,6 @@
                                     runat="server" CssClass="table table-striped">
                                     <HeaderStyle BackColor="#507CD1" Font-Bold="false" Font-size="Smaller" ForeColor="White" />
                                     <AlternatingRowStyle BackColor="#CCCCFF" />
-
                                       <Columns>
 	                                    <asp:TemplateField HeaderText="ID">
 		                                    <ItemTemplate>

@@ -20,12 +20,12 @@
                 </ol>
                 <p></p>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-8">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
                         <asp:Button ID="btnDel" class="btn btn-sm  btn-success" runat="server" Text=" Delete " />
                     </div>
-                    <div class="col-6" style="text-align:right">
+                    <div class="col-4" style="text-align:right">
                         <asp:Button ID="BtnContract" class="btn btn-sm  btn-success" runat="server" Text=" กลับ สัญญา " />
                     </div>
                 </div>
@@ -128,7 +128,6 @@
 
 
         <!-- end เนื้อหาเว็บ -->
-
 
     </div>
     <!-- /#wrapper -->

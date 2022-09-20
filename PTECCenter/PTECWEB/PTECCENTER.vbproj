@@ -197,21 +197,18 @@
   <ItemGroup>
     <Content Include="404.html" />
     <Content Include="Contract\assetsinfo.aspx" />
+    <Content Include="Contract\estimate_payment_byContract.aspx" />
     <Content Include="Contract\flexibleinfo.aspx" />
     <Content Include="Contract\fixibleinfo.aspx" />
+    <Content Include="Contract\monthly_payment.aspx" />
     <Content Include="Contract\paymentinfo.aspx" />
     <Content Include="Contract\onetimeinfo.aspx" />
     <Content Include="Contract\contractinfo.aspx" />
     <Content Include="Contract\projectinfo.aspx" />
-    <Content Include="Contract\agreementtest.aspx" />
     <Content Include="Contract\client_list.aspx" />
     <Content Include="Contract\clientinfo.aspx" />
     <Content Include="Contract\projectlist.aspx" />
     <Content Include="Contract\titlename.aspx" />
-    <Content Include="Contract\testag.aspx" />
-    <Content Include="Contract\agreement.aspx" />
-    <Content Include="Contract\test03.aspx" />
-    <Content Include="Contract\test02.aspx" />
     <Content Include="ADMIN\JobsManageCost.aspx" />
     <Content Include="ADMIN\Questionnair.aspx" />
     <Content Include="ADMIN\JobsManageStatus.aspx" />
@@ -1796,6 +1793,7 @@
     <Content Include="SDD\ReportTTCostBySupplier.aspx" />
     <Content Include="SDD\SupplyExpense.aspx" />
     <Content Include="SDD\OthersTTCosttoD365.aspx" />
+    <Content Include="SDD\wholesales\SupplyWSPriceSet.aspx" />
     <Content Include="SDD\wholesales\SupplyWSQuatation.aspx" />
     <Content Include="SDD\wholesales\SupplyImportWSPrice.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
@@ -3475,6 +3473,13 @@
       <DependentUpon>assetsinfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Contract\estimate_payment_byContract.aspx.designer.vb">
+      <DependentUpon>estimate_payment_byContract.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\estimate_payment_byContract.aspx.vb">
+      <DependentUpon>estimate_payment_byContract.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Contract\flexibleinfo.aspx.designer.vb">
       <DependentUpon>flexibleinfo.aspx</DependentUpon>
     </Compile>
@@ -3487,6 +3492,13 @@
     </Compile>
     <Compile Include="Contract\fixibleinfo.aspx.vb">
       <DependentUpon>fixibleinfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\monthly_payment.aspx.designer.vb">
+      <DependentUpon>monthly_payment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\monthly_payment.aspx.vb">
+      <DependentUpon>monthly_payment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Contract\paymentinfo.aspx.designer.vb">
@@ -3517,13 +3529,6 @@
       <DependentUpon>projectinfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Contract\agreementtest.aspx.designer.vb">
-      <DependentUpon>agreementtest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Contract\agreementtest.aspx.vb">
-      <DependentUpon>agreementtest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Contract\client_list.aspx.designer.vb">
       <DependentUpon>client_list.aspx</DependentUpon>
     </Compile>
@@ -3550,34 +3555,6 @@
     </Compile>
     <Compile Include="Contract\titlename.aspx.vb">
       <DependentUpon>titlename.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contract\testag.aspx.designer.vb">
-      <DependentUpon>testag.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Contract\testag.aspx.vb">
-      <DependentUpon>testag.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contract\agreement.aspx.designer.vb">
-      <DependentUpon>agreement.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Contract\agreement.aspx.vb">
-      <DependentUpon>agreement.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contract\test03.aspx.designer.vb">
-      <DependentUpon>test03.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Contract\test03.aspx.vb">
-      <DependentUpon>test03.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contract\test02.aspx.designer.vb">
-      <DependentUpon>test02.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Contract\test02.aspx.vb">
-      <DependentUpon>test02.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ADMIN\JobsManageCost.aspx.designer.vb">
@@ -3963,6 +3940,13 @@
     </Compile>
     <Compile Include="SDD\OthersTTCosttoD365.aspx.vb">
       <DependentUpon>OthersTTCosttoD365.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSPriceSet.aspx.designer.vb">
+      <DependentUpon>SupplyWSPriceSet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSPriceSet.aspx.vb">
+      <DependentUpon>SupplyWSPriceSet.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SDD\wholesales\SupplyWSQuatation.aspx.designer.vb">

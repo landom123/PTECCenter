@@ -714,7 +714,34 @@ Public Class Project
     End Function
 End Class
 Public Class Contract
+    Public Function MonthlyPayment(monthly As String) As DataTable
+        Dim result As DataTable
 
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Ag_MonthlyPayment"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
     Public Function Find(contractno As String) As DataSet
         Dim result As DataSet
 
@@ -937,7 +964,7 @@ Public Class Contract
 
         Return result
     End Function
-    Public Function Ag_Payment_Table_Calcuate(agreeid As Double, volume As Integer) As DataSet
+    Public Function Ag_Payment_Table_Calcuate(agreeid As Double, volume As Integer, agreeno As String) As DataSet
         'แสดงข้อมูลตารางค่าใช้จ่ายทั้งหมดของสัญญา จนจบสัญญา
         Dim result As New DataSet
         'Credit_Balance_List_Createdate
@@ -953,6 +980,7 @@ Public Class Contract
 
         cmd.Parameters.Add("@agid", SqlDbType.BigInt).Value = agreeid
         cmd.Parameters.Add("@volume", SqlDbType.Int).Value = volume
+        cmd.Parameters.Add("@agno", SqlDbType.VarChar).Value = agreeno
 
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
