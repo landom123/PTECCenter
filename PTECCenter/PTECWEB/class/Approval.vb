@@ -1146,4 +1146,75 @@ Public Class Approval
         Return result
 
     End Function
+    Public Sub ManageDay(appcode As String, day As Integer, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_ManageDay"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
+        cmd.Parameters.Add("@day", SqlDbType.Int).Value = day
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub ManageStatus(appcode As String, statusid As Integer, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_ManageStatus"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
+        cmd.Parameters.Add("@statusid", SqlDbType.Int).Value = statusid
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub ManagePrice(appcode As String, cost As Double, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_ManagePrice"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
+        cmd.Parameters.Add("@cost", SqlDbType.Money).Value = cost
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
 End Class

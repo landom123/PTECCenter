@@ -40,7 +40,7 @@ Public Class WebForm1
 
 
         If Not IsPostBack() Then
-            objapproval.SetCboApproval(cboApproval)
+            objapproval.SetCboApproval(cboApproval, "", "nds")
             'If Not Session("positionid") = "10" Then
             'objbranch.SetComboBranchByAreaid(cboBranch, Session("areaid").ToString, 1)
             'Else
@@ -50,6 +50,7 @@ Public Class WebForm1
             detailtable = createtable()
             CommentTable = createtablecomment()
             If Not Request.QueryString("approvalcode") Is Nothing Then
+                objapproval.SetCboApproval(cboApproval)
                 Try
                     approvaldataset = objapproval.Approval_Find(Request.QueryString("approvalcode"))
                     detailtable = approvaldataset.Tables(0)
@@ -276,10 +277,11 @@ endprocess:
             Not Session("userid") = am_id And
             Not Session("userid") = rm_id And
             Not Session("userid") = dm_id And
-            Not Session("secid").ToString = "2" And
-            Not Session("depid").ToString = "2" And
-            Not Session("depid").ToString = "1" And
-            Not Session("depid").ToString = "4" Then
+            Session("positionid").ToString = "10" Then
+                'Not Session("secid").ToString = "2" And
+                'Not Session("depid").ToString = "2" And
+                'Not Session("depid").ToString = "1" And
+                'Not Session("depid").ToString = "4" Then
                 flag = False
             End If
         Catch ex As Exception

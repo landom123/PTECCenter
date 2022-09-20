@@ -1,4 +1,4 @@
-﻿<%@ Page Title="จัดการงาน (CLADV)" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="NonPOManage_CLADV.aspx.vb" Inherits="PTECCENTER.NonPOManage_CLADV" %>
+﻿<%@ Page Title="จัดการงาน (ADV)" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="NonPOManage_ADV.aspx.vb" Inherits="PTECCENTER.NonPOManage_ADV" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -16,7 +16,7 @@
             <div class="container-fluid">
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb" style="background-color: navy; color: white">
-                    จัดการงาน (CLADV)
+                    จัดการงาน (ADV)
                 </ol>
                 <div class="row">
                     <div class="col-12 mb-3">
@@ -29,7 +29,7 @@
                                 <a href="#" class="badge badgestatus_app" id="badgeapprovalcode" runat="server"></a>
                             </div>
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../Master/NonPOManage_CLADV.aspx?NonpoCode=','ระบุเลขที่เอกสาร')">Find</button>
+                                <button type="button" class="btn btn-sm  btn-secondary" onclick="find('../Master/NonPOManage_ADV.aspx?NonpoCode=','ระบุเลขที่เอกสาร')">Find</button>
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                                 <% For i = 0 To AttachTable.Rows.Count - 1 %>
                                 <div class="row">
                                     <% If Not Request.QueryString("NonpoCode") Is Nothing And nonpodt.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4") Then%>
-                                    <% If nonpodt.Rows(0).Item("statusid") = 7 Then%>
+                                    <% If nonpodt.Rows(0).Item("statusrqid") = 7 Then%>
                                     <div class="col-1">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="<%= AttachTable.Rows(i).Item("id") %>" onclick="chkAttach(this,'<%= Session("userid") %>')">
@@ -156,7 +156,7 @@
                         <!-- end card-->
                     </div>
                 </div>
-                <% End If %>
+            <% End If %>
             </div>
         </div>
     </div>
@@ -296,6 +296,8 @@
 
             }
         }
+
+
         function addAttach() {
 
             Swal.fire({
@@ -334,6 +336,7 @@
             })
 
         }
+
         function chooseMyfile() {
             validateData();
 
@@ -357,7 +360,7 @@
             var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
             $.ajax({
                 type: "POST",
-                url: "../Non-PO/Advance/ClearAdvance.aspx/addAttach",
+                url: "/OPS/Non-PO/Payment/Payment2.aspx/addAttach",
                 async: true,
                 data: params,
                 contentType: "application/json; charset=utf-8",
@@ -386,15 +389,20 @@
                         );
                         alertSuccessToast('บันทึกเรียบร้อย' + description);
                     } else {
-                        alertWarning('Add URL faila');
+                        alertWarning('Add URL fail');
                     }
 
                 },
-                error: function () {
-                    alertWarning('Add URL fail');
+                error: function (msg) {
+                    console.log(msg);
+
+                    alertWarning('Add URL faila');
+
                 }
             });
 
         }
+
+
     </script>
 </asp:Content>
