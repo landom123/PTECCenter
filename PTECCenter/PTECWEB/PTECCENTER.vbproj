@@ -196,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="ADMIN\VendorManage.aspx" />
     <Content Include="Contract\assetsinfo.aspx" />
     <Content Include="Contract\flexibleinfo.aspx" />
     <Content Include="Contract\fixibleinfo.aspx" />
@@ -3470,6 +3471,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ADMIN\VendorManage.aspx.designer.vb">
+      <DependentUpon>VendorManage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ADMIN\VendorManage.aspx.vb">
+      <DependentUpon>VendorManage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Contract\assetsinfo.aspx.designer.vb">
       <DependentUpon>assetsinfo.aspx</DependentUpon>
     </Compile>
