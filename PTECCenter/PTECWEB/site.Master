@@ -44,15 +44,15 @@
     <form id="form1" runat="server" enctype="multipart/form-data" novalidate>
         <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
             <div class="col text-left">
-                <a class="navbar-brand mr-1" href="<%=Page.ResolveUrl("~/default.aspx")%>">PTEC Web Center V2 <i class="fas fa-home"></i></a>
+                <a class="navbar-brand mr-1 d-inline-flex align-items-center" href="<%=Page.ResolveUrl("~/default.aspx")%>"><span class="d-none d-sm-block">PTEC Web Center V2 </span>&nbsp;<i class="fas fa-home"></i></a>
             </div>
 
             <!-- Navbar -->
             <div class="col">
                 <ul class="navbar-nav ml-auto ml-md-0  justify-content-end">
                     <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user-circle fa-fw"></i><% =Session("username") %>
+                        <a class="nav-link dropdown-toggle d-inline-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle fa-fw "></i><span class="d-none d-sm-block"><% =Session("username") %></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="<%=Page.ResolveUrl("~/ADMIN/changepassword.aspx")%>">Change Password</a>
