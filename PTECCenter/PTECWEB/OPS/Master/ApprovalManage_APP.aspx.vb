@@ -34,7 +34,8 @@
 
             If Not Request.QueryString("approvalcode") Is Nothing Then
                 Dim approvalcode = Request.QueryString("approvalcode")
-                Dim category As String = Split(approvalcode, Right(approvalcode, 9))(0)
+                Dim new_approvalcode = Split(approvalcode, "/")(0)
+                Dim category As String = Split(new_approvalcode, Right(new_approvalcode, 9))(0)
                 Dim nonpoDs = New DataSet
                 If category = "APP" Then
                     objapproval.SetCboApprovalStatus(cboStatusFollow)
