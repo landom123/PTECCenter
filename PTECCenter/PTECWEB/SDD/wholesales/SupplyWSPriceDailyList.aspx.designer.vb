@@ -11,16 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class OthersTTCosttoD365
+Partial Public Class SupplyWSPriceDailyList
 
     '''<summary>
-    '''txtCloseDate control.
+    '''txtPriceDate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCloseDate As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtPriceDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''btnFind control.
@@ -32,29 +32,11 @@ Partial Public Class OthersTTCosttoD365
     Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''txtDueDate control.
+    '''gvPrice control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtDueDate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''btnSave control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''gvData control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gvData As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents gvPrice As Global.System.Web.UI.WebControls.GridView
 End Class

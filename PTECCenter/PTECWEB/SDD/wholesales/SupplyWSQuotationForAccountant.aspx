@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" 
-    MasterPageFile="~/site.Master" CodeBehind="SupplyWSQuatation.aspx.vb" Inherits="PTECCENTER.SupplyWSQuatation" %>
+    MasterPageFile="~/site.Master" CodeBehind="SupplyWSQuotationForAccountant.aspx.vb" Inherits="PTECCENTER.SupplyWSQuotationForAccountant" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
@@ -18,27 +18,46 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
-                           <i class="fa fa-tasks" aria-hidden="true"></i> คำนวนราคาขายส่ง
+                           <a href="SupplyWSQuotationList.aspx"><i class="fa fa-tasks" aria-hidden="true"></i></a>&nbsp; ใบเสนอราคาขายส่ง
                   </li>
                 </ol>
-
+<%--                <div class="row">
+                    <div class="col-6">
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
+                        <asp:Button ID="btnConfirm" class="btn btn-sm  btn-success" runat="server" Text=" Confirm " />
+                    </div>
+                    <div class="col-6" style="text-align:right">
+                        <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text=" Cancel " OnClientClick="return cancel_data();"/>
+                    </div>
+                </div> --%>
                 <div class="container">
-
                     <div class="row">
+                        <div class="col-md-4"><asp:label ID="lblstatus" class="btn btn-sm  btn-danger" runat="server"></asp:label></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">เลขที่เอกสาร</span>
+                                </div>
+                                <asp:label class="form-control" ID="lblDocNo" runat="server"></asp:label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">วันที่ทำรายการ</span>
+                                </div>
+                                <asp:textbox class="form-control" ID="txtDocDate" runat="server" readonly="true"></asp:textbox>
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">วันที่ขาย</span>
                                 </div>
-                                <asp:textbox class="form-control" ID="txtSaleDate" runat="server" AutoPostBack="true"></asp:textbox>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">วันที่ เวลา ราคามีผล</span>
-                                </div>
-                                <asp:textbox class="form-control" ID="txtPriceDate" runat="server" AutoPostBack="true"></asp:textbox>
+                                <asp:textbox class="form-control" ID="txtSaledate" runat="server" AutoPostBack="true"></asp:textbox>
                             </div>
                         </div>
                     </div>
@@ -47,54 +66,23 @@
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">เลือกคลัง</span>
+                                    <span class="input-group-text">คลัง</span>
                                 </div>
-                                <asp:DropDownList class="form-control" ID="cboTerminal" runat="server" AutoPostBack="true"></asp:DropDownList>
+                                <asp:label class="form-control" ID="lblTerminal" runat="server" AutoPostBack="true"></asp:label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">เลือกลูกค้า</span>
+                                    <span class="input-group-text">ลูกค้า</span>
                                 </div>
-                                <asp:DropDownList class="form-control" ID="cboCustomer" runat="server" AutoPostBack="true"></asp:DropDownList>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">เลือกผลิตภัณฑ์</span>
-                                </div>
-                                <asp:DropDownList class="form-control" ID="cboProduct" runat="server" AutoPostBack="true"></asp:DropDownList>
+                                <asp:label class="form-control" ID="lblcustomer" runat="server" AutoPostBack="true"></asp:label>
                             </div>
                         </div>
 
+
                     </div>
                     <br />
-                    <div class="row">
-                        <div class="col-12">
-                            <asp:Button ID="btnClear" class="btn btn-sm  btn-primary" runat="server" Text="Clear" />&nbsp;
-                            <asp:Button ID="btnCalc" class="btn btn-sm  btn-success" runat="server" Text="คำนวน" />  
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">ราคาตามตาราง/ลิตร</span>
-                                </div>
-                                <asp:label class="form-control" ID="lblPrice" runat="server" AutoPostBack="true"></asp:label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">+ เพิ่ม</span>
-                                </div>
-                                <asp:textbox class="form-control bg-warning text-dark" ID="txtAdd" runat="server" AutoPostBack="false" ></asp:textbox>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="input-group sm-3">
@@ -112,8 +100,6 @@
                                 <asp:label class="form-control" ID="lblTTCost" runat="server" AutoPostBack="true"></asp:label>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
@@ -122,31 +108,78 @@
                                 <asp:label class="form-control" ID="lblCommission" runat="server" AutoPostBack="true"></asp:label>
                             </div>
                         </div>
+                    </div>
+                    <br />
+                <div class="container">
+                    <div class="table-responsive">
+                        <asp:GridView ID="gvSaleitem"  
+                            OnDataBound = "OnDataBound"
+                                    class="table table-striped table-bordered" 
+                                    AllowSorting="True" 
+                                    allowpaging="false"
+                                    AutoGenerateColumns="false" 
+                            showfooter="true"
+                            ShowHeaderWhenEmpty="True"
+                            ShowFooterWhenEmpty="true"
+                                    runat="server" CssClass="table table-striped">
+                        <HeaderStyle BackColor="#507CD1" Font-Bold="false" Font-size="Smaller" ForeColor="White" />
+                        <AlternatingRowStyle BackColor="#CCCCFF" />
 
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">ปริมาณสั่งซื้อ (ลิตร)</span>
-                                </div>
-                                <asp:textbox class="form-control bg-warning text-dark" ID="txtVolume"  runat="server" AutoPostBack="true"></asp:textbox>
-                            </div>
-                        </div>
+                        <Columns>
+	                        <asp:TemplateField HeaderText="ผลิตภัณฑ์">
+		                        <ItemTemplate>
+			                        <asp:Label id="lblproduct" runat="server" Text='<%#Eval("product")%>'></asp:Label>
+		                        </ItemTemplate>
+                               <FooterTemplate>
+                                  <asp:Label id="lblcaption" runat="server" Text="รวม"></asp:Label>
+                               </FooterTemplate>
+	                        </asp:TemplateField>	
+	                        <asp:TemplateField HeaderText="ลิตร">
+		                        <ItemTemplate>
+			                        <asp:Label id="lblvolume" runat="server" Text='<%#Eval("volume")%>'></asp:Label>
+		                        </ItemTemplate>
+                               <FooterTemplate>
+                                  <asp:Label id="lblvolumetotal" runat="server" Text=""></asp:Label>
+                               </FooterTemplate>
+	                        </asp:TemplateField>	           
+	                        <asp:TemplateField HeaderText="ราคา">
+		                        <ItemTemplate>
+			                        <asp:Label id="lblprice" runat="server" Text='<%#Eval("price")%>'></asp:Label>
+		                        </ItemTemplate>
+	                        </asp:TemplateField>	
+	                        <asp:TemplateField HeaderText="+ค่าคลัง">
+		                        <ItemTemplate>
+			                        <asp:Label id="lblterminalmarkup" runat="server" Text='<%#Eval("terminalmarkup")%>'></asp:Label>
+		                        </ItemTemplate>
+	                        </asp:TemplateField>	                            
+	                        <asp:TemplateField HeaderText="Markup">
+		                        <ItemTemplate>
+			                        <asp:Label id="lblmarkup" runat="server" Text='<%#Eval("markup")%>'></asp:Label>
+		                        </ItemTemplate>
+	                        </asp:TemplateField>	    
+	                        <asp:TemplateField HeaderText="รวม">
+		                        <ItemTemplate>
+			                        <asp:Label id="lbltotal" runat="server" Text='<%#Eval("total")%>'></asp:Label>
+		                        </ItemTemplate>
+                               <FooterTemplate>
+                                  <asp:Label id="lblnettotal" runat="server" Text=""></asp:Label>
+                               </FooterTemplate>
+	                        </asp:TemplateField>	      
+                            
+                        </Columns>
+                    </asp:GridView>
+                                               
+                </div><!-- end Table detail-->
 
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <asp:Button ID="btnCalcPrice" class="btn btn-sm  btn-success" runat="server" Text="คำนวนค่าน้ำมัน" />  
-                        </div>
-                    </div>
+                </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ค่าน้ำมันสุทธิ</span>
                                 </div>
-                                <asp:label class="form-control" ID="lblOilPrice" runat="server" AutoPostBack="true"></asp:label>
+                                <asp:label class="form-control" ID="lblOilPrice" runat="server" ></asp:label>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -154,7 +187,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ค่าขนส่งสุทธิ</span>
                                 </div>
-                                <asp:label class="form-control" ID="lblNetTTCost" runat="server" AutoPostBack="true"></asp:label>
+                                <asp:label class="form-control" ID="lblNetTTCost" runat="server" ></asp:label>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -162,7 +195,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ค่าคอมมิสชั่นสุทธิ</span>
                                 </div>
-                                <asp:label class="form-control" ID="lblNetCommission" runat="server" AutoPostBack="true"></asp:label>
+                                <asp:label class="form-control" ID="lblNetCommission" runat="server" ></asp:label>
                             </div>
                         </div>
                     </div>
@@ -172,15 +205,25 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ราคาขายสุทธิ/ลิตร</span>
                                 </div>
-                                <asp:label class="form-control" ID="lblTotalPerLitre" runat="server" AutoPostBack="true"></asp:label>
+                                <asp:label class="form-control" ID="lblTotalPerLitre" runat="server"></asp:label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">ราคาขายสุทธิ</span>
+                                    <span class="input-group-text">ราคาขายสุทธิ (ที่ต้องชำระ)</span>
                                 </div>
-                                <asp:label class="form-control" ID="lblTotal" runat="server" AutoPostBack="true"></asp:label>
+                                <asp:label class="form-control" ID="lblTotal" runat="server" ></asp:label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">หมายเหตุ</span>
+                                </div>
+                                <asp:textbox class="form-control bg-warning text-dark" ID="txtremark"  runat="server" AutoPostBack="true"></asp:textbox>
                             </div>
                         </div>
                     </div>
@@ -209,7 +252,7 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
 
     <script type="text/javascript">
-        jQuery('[id$=txtPriceDate]').datetimepicker({
+        jQuery('[id$=txtSaledate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: true,
             scrollInput: false,
@@ -217,14 +260,6 @@
         });
     </script>
 
-    <script type="text/javascript">
-        jQuery('[id$=txtSaleDate]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
-    </script>
     
     <script type="text/javascript">
         function alertSuccess() {

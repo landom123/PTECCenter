@@ -11,25 +11,79 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class SupplyWSQuatation
+Partial Public Class SupplyWSQuotation
 
     '''<summary>
-    '''txtSaleDate control.
+    '''btnNew control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtSaleDate As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''txtPriceDate control.
+    '''btnSave control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtPriceDate As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnConfirm control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnCancel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCancel As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lblstatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblstatus As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblDocNo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDocNo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDocDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDocDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtSaledate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSaledate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''cboTerminal control.
@@ -48,51 +102,6 @@ Partial Public Class SupplyWSQuatation
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboCustomer As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboProduct control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboProduct As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''btnClear control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnCalc control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnCalc As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''lblPrice control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblPrice As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtAdd control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtAdd As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lblDistanct control.
@@ -122,6 +131,33 @@ Partial Public Class SupplyWSQuatation
     Protected WithEvents lblCommission As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''gvSaleitem control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvSaleitem As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''cboProduct control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboProduct As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtAdd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtAdd As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtVolume control.
     '''</summary>
     '''<remarks>
@@ -131,13 +167,13 @@ Partial Public Class SupplyWSQuatation
     Protected WithEvents txtVolume As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''btnCalcPrice control.
+    '''btnAddtoTable control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnCalcPrice As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnAddtoTable As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''lblOilPrice control.
@@ -183,4 +219,13 @@ Partial Public Class SupplyWSQuatation
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblTotal As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtremark control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtremark As Global.System.Web.UI.WebControls.TextBox
 End Class

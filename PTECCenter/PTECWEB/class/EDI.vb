@@ -4,11 +4,9 @@ Imports System.Web.Configuration
 Imports System.Xml
 
 Public Class wholesales
+    Public Function Wholesales_Quotation_Cancel(docno As String, user As String) As Boolean
+        Dim result As Boolean = True
 
-
-    Public Function Wholesales_Calc_Detail_for_Sale(pricedate As DateTime, supplyid As Double, product As String, customer As String) As DataTable
-        Dim result As DataTable
-        'Credit_Balance_List_Createdate
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
         Dim cmd As New SqlCommand
@@ -16,13 +14,74 @@ Public Class wholesales
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Wholesales_Calc_Detail_for_Sale"
+        cmd.CommandText = "Wholesales_Quotation_Cancel"
         cmd.CommandType = CommandType.StoredProcedure
 
-        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
-        cmd.Parameters.Add("@supplyid", SqlDbType.BigInt).Value = supplyid
-        cmd.Parameters.Add("@product", SqlDbType.VarChar).Value = product
-        cmd.Parameters.Add("@customer", SqlDbType.VarChar).Value = customer
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Wholesales_Quotation_Confirm(docno As String, user As String) As Boolean
+        Dim result As Boolean = True
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Confirm"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+
+    Public Function Wholesales_Quotation_Report(begindate As String, enddate As String) As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Report"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@begindate", SqlDbType.VarChar).Value = begindate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@terminal", SqlDbType.VarChar).Value = ""
+        cmd.Parameters.Add("@customer", SqlDbType.VarChar).Value = ""
+        cmd.Parameters.Add("@status", SqlDbType.VarChar).Value = ""
 
         Try
             adp.SelectCommand = cmd
@@ -38,6 +97,345 @@ Public Class wholesales
         Return result
     End Function
 
+    Public Function Wholesales_Quotation_Delete_before_Save_Detail(docno As String) As Boolean
+        Dim result As Boolean
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Delete_before_Save_Detail"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+
+        Try
+            cmd.ExecuteNonQuery()
+            result = True
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Wholesales_Quotation_SaveDetail(docno As String, product As String, terminalmarkup As Double,
+                                                    price As Double, volume As Double, markup As Double) As Boolean
+        Dim result As Boolean
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Save_Detail"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@product", SqlDbType.VarChar).Value = product
+        cmd.Parameters.Add("@terminalmarkup", SqlDbType.BigInt).Value = terminalmarkup
+        cmd.Parameters.Add("@price", SqlDbType.Float).Value = price
+        cmd.Parameters.Add("@volume", SqlDbType.Float).Value = volume
+        cmd.Parameters.Add("@markup", SqlDbType.Float).Value = markup
+
+        Try
+            cmd.ExecuteNonQuery()
+            result = True
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Wholesales_Quotation_Save(docno As String, pricedate As DateTime, supplyid As Double,
+                                              customerid As Double, volume As Double, amount As Double,
+                                              remark As String, user As String) As String
+        Dim result As String
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+        cmd.Parameters.Add("@supplyid", SqlDbType.BigInt).Value = supplyid
+        cmd.Parameters.Add("@customerid", SqlDbType.BigInt).Value = customerid
+        cmd.Parameters.Add("@volume", SqlDbType.Float).Value = volume
+        cmd.Parameters.Add("@amount", SqlDbType.Float).Value = amount
+        cmd.Parameters.Add("@remark", SqlDbType.VarChar).Value = remark
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0).Rows(0).Item("docno")
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Sub Wholesales_Price_Delete_before_Save(pricedate As DateTime)
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Price_Delete_before_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+
+        Try
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+    End Sub
+    Public Function Wholesales_Price_Save(pricedate As DateTime, supply As String, g91 As Double, g95 As Double,
+                                          e20 As Double, e85 As Double, b5 As Double, b7 As Double, b10 As Double,
+                                          remark As String, user As String) As Boolean
+        Dim result As Boolean = True
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Price_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+        cmd.Parameters.Add("@supply", SqlDbType.VarChar).Value = supply
+        cmd.Parameters.Add("@g91price", SqlDbType.Float).Value = g91
+        cmd.Parameters.Add("@g95price", SqlDbType.Float).Value = g95
+        cmd.Parameters.Add("@e20price", SqlDbType.Float).Value = e20
+        cmd.Parameters.Add("@e85price", SqlDbType.Float).Value = e85
+        cmd.Parameters.Add("@b5price", SqlDbType.Float).Value = b5
+        cmd.Parameters.Add("@b7price", SqlDbType.Float).Value = b7
+        cmd.Parameters.Add("@b10price", SqlDbType.Float).Value = b10
+        cmd.Parameters.Add("@remark", SqlDbType.Text).Value = remark
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+        Try
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Price_Cancel(pricedate As DateTime, user As String) As Boolean
+        Dim result As Boolean = True
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Price_Cancel"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+        Try
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Wholesales_Price_Confirm(pricedate As DateTime, user As String) As Boolean
+        Dim result As Boolean = True
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Price_Confirm"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+        Try
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Price_Daily_List(pricedate As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Price_Daily_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@pricedate", SqlDbType.VarChar).Value = pricedate
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Wholesales_Price_Find(pricedate As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Price_Find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Calc_Detail_for_Sale(pricedate As DateTime, supplyid As Double, product As String, customerid As Double) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Calc_Detail_for_Sale"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@pricedate", SqlDbType.DateTime).Value = pricedate
+        cmd.Parameters.Add("@supplyid", SqlDbType.BigInt).Value = supplyid
+        cmd.Parameters.Add("@product", SqlDbType.VarChar).Value = product
+        cmd.Parameters.Add("@customerid", SqlDbType.BigInt).Value = customerid
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Quotation_Remove_SaleItem(docno As String, product As String) As Boolean
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Remove_SaleItem"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.DateTime).Value = docno
+        cmd.Parameters.Add("@product", SqlDbType.BigInt).Value = product
+
+
+        Try
+            cmd.ExecuteNonQuery()
+            result = True
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
     Public Function Wholesales_Terminal_List() As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -66,6 +464,93 @@ Public Class wholesales
         Return result
     End Function
 
+    Public Function Wholesales_Quotation_Find(docno As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Quotation_List_for_Accountant(begindate As String, enddate As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_List_for_accountant"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@begindate", SqlDbType.VarChar).Value = begindate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Wholesales_Quotation_List(begindate As String, enddate As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@begindate", SqlDbType.VarChar).Value = begindate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
     Public Function Wholesales_Product_List() As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate

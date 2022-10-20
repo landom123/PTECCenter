@@ -1794,9 +1794,15 @@
     <Content Include="SDD\ESSOEDI\EssoLoadConfirm.aspx" />
     <Content Include="SDD\ReportTTCostBySupplier.aspx" />
     <Content Include="SDD\SupplyExpense.aspx" />
-    <Content Include="SDD\OthersTTCosttoD365.aspx" />
+    <Content Include="SDD\wholesales\SupplyWSQuotationReport.aspx" />
+    <Content Include="SDD\wholesales\SupplyWSQuotationForAccountant.aspx" />
+    <Content Include="SDD\wholesales\SupplyWSQuotationListForAccountant.aspx">
+      <BrowseToURL>~/SDD/wholesales/SupplyWSQuotationListForAccountant.aspx</BrowseToURL>
+    </Content>
+    <Content Include="SDD\wholesales\SupplyWSQuotationList.aspx" />
+    <Content Include="SDD\wholesales\SupplyWSPriceDailyList.aspx" />
     <Content Include="SDD\wholesales\SupplyWSPriceSet.aspx" />
-    <Content Include="SDD\wholesales\SupplyWSQuatation.aspx" />
+    <Content Include="SDD\wholesales\SupplyWSQuotation.aspx" />
     <Content Include="SDD\wholesales\SupplyImportWSPrice.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
     <Content Include="SSD\Rpt_Customer_bal.aspx" />
@@ -3951,11 +3957,39 @@
       <DependentUpon>SupplyExpense.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SDD\OthersTTCosttoD365.aspx.designer.vb">
-      <DependentUpon>OthersTTCosttoD365.aspx</DependentUpon>
+    <Compile Include="SDD\wholesales\SupplyWSQuotationReport.aspx.designer.vb">
+      <DependentUpon>SupplyWSQuotationReport.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SDD\OthersTTCosttoD365.aspx.vb">
-      <DependentUpon>OthersTTCosttoD365.aspx</DependentUpon>
+    <Compile Include="SDD\wholesales\SupplyWSQuotationReport.aspx.vb">
+      <DependentUpon>SupplyWSQuotationReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSQuotationForAccountant.aspx.designer.vb">
+      <DependentUpon>SupplyWSQuotationForAccountant.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSQuotationForAccountant.aspx.vb">
+      <DependentUpon>SupplyWSQuotationForAccountant.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSQuotationListForAccountant.aspx.designer.vb">
+      <DependentUpon>SupplyWSQuotationListForAccountant.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSQuotationListForAccountant.aspx.vb">
+      <DependentUpon>SupplyWSQuotationListForAccountant.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSQuotationList.aspx.designer.vb">
+      <DependentUpon>SupplyWSQuotationList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSQuotationList.aspx.vb">
+      <DependentUpon>SupplyWSQuotationList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSPriceDailyList.aspx.designer.vb">
+      <DependentUpon>SupplyWSPriceDailyList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\wholesales\SupplyWSPriceDailyList.aspx.vb">
+      <DependentUpon>SupplyWSPriceDailyList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SDD\wholesales\SupplyWSPriceSet.aspx.designer.vb">
@@ -3965,11 +3999,11 @@
       <DependentUpon>SupplyWSPriceSet.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SDD\wholesales\SupplyWSQuatation.aspx.designer.vb">
-      <DependentUpon>SupplyWSQuatation.aspx</DependentUpon>
+    <Compile Include="SDD\wholesales\SupplyWSQuotation.aspx.designer.vb">
+      <DependentUpon>SupplyWSQuotation.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SDD\wholesales\SupplyWSQuatation.aspx.vb">
-      <DependentUpon>SupplyWSQuatation.aspx</DependentUpon>
+    <Compile Include="SDD\wholesales\SupplyWSQuotation.aspx.vb">
+      <DependentUpon>SupplyWSQuotation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SDD\wholesales\SupplyImportWSPrice.aspx.designer.vb">

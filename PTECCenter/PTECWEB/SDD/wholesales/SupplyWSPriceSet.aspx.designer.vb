@@ -32,13 +32,22 @@ Partial Public Class SupplyWSPriceSet
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnDel control.
+    '''btnConfirm control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnDel As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnCancel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCancel As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''txtPriceDate control.
@@ -50,6 +59,15 @@ Partial Public Class SupplyWSPriceSet
     Protected WithEvents txtPriceDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblstatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblstatus As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''gvPrice control.
     '''</summary>
     '''<remarks>
@@ -57,4 +75,13 @@ Partial Public Class SupplyWSPriceSet
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gvPrice As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''txtremark control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtremark As Global.System.Web.UI.WebControls.TextBox
 End Class
