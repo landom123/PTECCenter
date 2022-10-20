@@ -80,6 +80,8 @@ Public Class ClearAdvanceMenuList2
             criteria = Session("criteria_clearadvlist")
             itemtable = Session("advlist")
         End If
+
+
     End Sub
 
     Private Sub setCriteria()
@@ -333,7 +335,8 @@ Public Class ClearAdvanceMenuList2
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 7
+        Dim statusAt As Integer = 8
+        Dim approvalname As Integer = 5
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -367,7 +370,13 @@ Public Class ClearAdvanceMenuList2
             ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
             End If
+            If String.IsNullOrEmpty(Data.Item("approvalname").ToString) Then
+                gvRemind.Columns(approvalname).Visible = False
+            Else
+                gvRemind.Columns(approvalname).Visible = True
+            End If
         End If
+
     End Sub
 
     'Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
