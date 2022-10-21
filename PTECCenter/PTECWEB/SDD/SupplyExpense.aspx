@@ -53,7 +53,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtDocDate" runat="server" ReadOnly="True"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtDocDate" runat="server"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -147,17 +147,13 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
 
+
     <script type="text/javascript">
-        jQuery('[id$=xxx]').datetimepicker({
+        jQuery('[id$=txtDocDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
-            timepicker: true,
-            onShow: function (ct) {
-                this.setOptions({
-                    minDate: 0
-                })
-            },
+            timepicker: false,
             scrollInput: false,
-            format: 'd/m/Y H:i'
+            format: 'd/m/Y'
         });
     </script>
     <script type="text/javascript">

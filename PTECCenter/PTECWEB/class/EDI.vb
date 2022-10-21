@@ -2309,7 +2309,8 @@ Public Class EDI
     End Function
 
 
-    Public Function Supply_SaveHead(docno As String, supplierid As Integer, usercode As String, status As Integer) As String
+    Public Function Supply_SaveHead(docno As String, supplierid As Integer,
+                                    usercode As String, status As Integer, docdate As DateTime) As String
 
         ' Dim result As String
         'Credit_Balance_List_Createdate
@@ -2324,6 +2325,7 @@ Public Class EDI
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@docdate", SqlDbType.DateTime).Value = docdate
         cmd.Parameters.Add("@supplierid", SqlDbType.Int).Value = supplierid
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
         cmd.Parameters.Add("@status", SqlDbType.Int).Value = status

@@ -1787,6 +1787,7 @@
     <Content Include="ROD\OilPriceUpdate.aspx" />
     <Content Include="SDD\ESSOEDI\EssoCNDNOiltoD365.aspx" />
     <Content Include="SDD\ESSOEDI\EssoCNDNnonoiltoD365.aspx" />
+    <Content Include="SDD\OthersTTCosttoD365.aspx" />
     <Content Include="SDD\TTCosttoD365.aspx" />
     <Content Include="SDD\ESSOEDI\EssotoLoadconfirmList.aspx" />
     <Content Include="SDD\ESSOEDI\EssoViewInvoiceDetail.aspx" />
@@ -3907,6 +3908,13 @@
     </Compile>
     <Compile Include="SDD\ESSOEDI\EssoCNDNnonoiltoD365.aspx.vb">
       <DependentUpon>EssoCNDNnonoiltoD365.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SDD\OthersTTCosttoD365.aspx.designer.vb">
+      <DependentUpon>OthersTTCosttoD365.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SDD\OthersTTCosttoD365.aspx.vb">
+      <DependentUpon>OthersTTCosttoD365.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SDD\TTCosttoD365.aspx.designer.vb">

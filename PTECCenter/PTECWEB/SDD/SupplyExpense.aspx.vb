@@ -16,7 +16,7 @@
         username = Session("username")
         usercode = Session("usercode")
 
-        txtDocDate.Text = Now
+        'txtDocDate.Text = Now
         txtDocDate.Attributes.Add("readonly", "readonly")
 
         If Session("menulist") Is Nothing Then
@@ -174,11 +174,13 @@
         Dim supplierid As Integer
         supplierid = cboSupplier.SelectedItem.Value
 
+        Dim docdate As DateTime
+        docdate = DateTime.Parse(txtDocDate.Text)
         If docno = "" Then
             'add new
             Try
 
-                docno = SaveHead("", supplierid, 1, usercode)
+                docno = SaveHead("", supplierid, 1, usercode, docdate)
                 SaveDetail(docno, details)
             Catch ex As Exception
                 javaScript = "alertWarning('Add new : " + ex.Message + "');"
@@ -190,7 +192,7 @@
         Else
             'update
             Try
-                SaveHead(docno, supplierid, 1, usercode)
+                SaveHead(docno, supplierid, 1, usercode, docdate)
                 ClearDetail(docno)
                 SaveDetail(docno, details)
             Catch ex As Exception
@@ -209,8 +211,10 @@
 
         Dim docno As String = txtDocNo.Text
         Dim supplierid As Integer = cboSupplier.SelectedItem.Value
+        Dim docdate As DateTime
+        docdate = DateTime.Parse(txtDocDate.Text)
         Try
-            SaveHead(docno, supplierid, 2, usercode)
+            SaveHead(docno, supplierid, 2, usercode, docdate)
             setBtn(2)
         Catch ex As Exception
             javaScript = "alertWarning('Confirm : " + ex.Message + "');"
@@ -224,9 +228,10 @@
 
         Dim docno As String = txtDocNo.Text
         Dim supplierid As Integer = cboSupplier.SelectedItem.Value
-
+        Dim docdate As DateTime
+        docdate = DateTime.Parse(txtDocDate.Text)
         Try
-            SaveHead(docno, supplierid, 3, usercode)
+            SaveHead(docno, supplierid, 3, usercode, docdate)
             setBtn(3)
         Catch ex As Exception
             javaScript = "alertWarning('Cancel : " + ex.Message + "');"
@@ -344,9 +349,10 @@ endprocess:
 
     '    Page.ClientScript.RegisterStartupScript(Me.GetType(), "alertscript", s, True)
     'End Sub
-    Public Function SaveHead(ByRef docno As String, ByRef supplierid As Integer, ByRef status As Integer, ByRef usercode As String) As String
+    Public Function SaveHead(ByRef docno As String, ByRef supplierid As Integer,
+                             ByRef status As Integer, ByRef usercode As String, docdate As DateTime) As String
         Dim objedi As New EDI
-        docno = objedi.Supply_SaveHead(docno, supplierid, usercode, status)
+        docno = objedi.Supply_SaveHead(docno, supplierid, usercode, status, docdate)
         Return docno
     End Function
 
