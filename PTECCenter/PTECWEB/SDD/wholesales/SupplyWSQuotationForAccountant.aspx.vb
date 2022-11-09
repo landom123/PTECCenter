@@ -64,25 +64,41 @@ Public Class SupplyWSQuotationForAccountant
     Private Sub FindData(docno As String)
         Dim wsobj As New wholesales
         Dim mydataset As DataSet
+        Dim findataset As DataSet
         Try
             mydataset = wsobj.Wholesales_Quotation_Find(docno)
+            findataset = wsobj.Wholesales_Quotation_Finance_Find(docno)
             'showdata
-            ShowData(mydataset.Tables(0))
+            If mydataset.Tables(0).Rows.Count > 0 Then
+                ShowData(mydataset.Tables(0))
+            End If
+            If findataset.Tables(0).Rows.Count > 0 Then
+                ShowFinData(findataset.Tables(0))
+            End If
             saleitemtable = mydataset.Tables(1)
             Session("saleitemtable") = saleitemtable
             BindData(saleitemtable)
 
         Catch ex As Exception
             Dim err As String = ex.Message.Replace("'", "")
-            javaScript = "alertWarning('setCboCustomer : " & err & "')"
+            javaScript = "alertWarning('FindData : " & err & "')"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
-
+    Private Sub ShowFinData(mytable As DataTable)
+        With mytable.Rows(0)
+            lblCreateBy.Text = ""
+            lblFinanceDate.Text = .Item("createdate")
+            txtPaymentdate.Text = .Item("paiddate")
+            txtPaymentAmount.Text = .Item("paidamount")
+            txtCreditAmount.Text = .Item("creditamount")
+            txtRemark.Text = .Item("remark")
+        End With
+    End Sub
     Private Sub ShowData(mytable As DataTable)
         With mytable.Rows(0)
             lblDocNo.Text = .Item("docno")
-            txtremark.Text = .Item("remark")
+            lblRemark.Text = .Item("remark")
             lblCommission.Text = .Item("comm_rate")
             lblTTCost.Text = .Item("ttcost_rate")
             lblNetCommission.Text = .Item("comm_amount")
@@ -90,12 +106,7 @@ Public Class SupplyWSQuotationForAccountant
             lblNetTTCost.Text = .Item("ttcost")
             txtSaledate.Text = .Item("saledate")
             txtDocDate.Text = .Item("createdate")
-            Select Case .Item("status")
-                Case = "A"
-                    lblstatus.Text = "Approve"
-                Case = "C"
-                    lblstatus.Text = "Cancel"
-            End Select
+            lblstatus.Text = .Item("status")
             lblcustomer.Text = .Item("customer")
             lblTerminal.Text = .Item("vendor")
         End With
@@ -234,4 +245,44 @@ error_handler:
 
     End Sub
 
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim wsobj As New wholesales
+        Dim paiddate As DateTime
+        Dim creditamt, paidamt As Double
+        Dim remark As String
+        docno = lblDocNo.Text
+        Try
+            paiddate = DateTime.Parse(txtPaymentdate.Text)
+            creditamt = Double.Parse(txtCreditAmount.Text)
+            paidamt = Double.Parse(txtPaymentAmount.Text)
+            remark = txtRemark.Text
+            If wsobj.Wholesales_Quotation_Finance_Save(docno, paiddate, remark, creditamt, paidamt, usercode) Then
+
+                javaScript = "alertSuccess('save : Complete')"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End If
+        Catch ex As Exception
+            Dim err As String = ex.Message.Replace("'", "")
+            javaScript = "alertWarning('save : " & err & "')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        Dim wsobj As New wholesales
+
+        docno = lblDocNo.Text
+        Try
+
+            If wsobj.Wholesales_Quotation_Finance_Confirm(docno, usercode) Then
+
+                javaScript = "alertSuccess('Confirm : Complete')"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End If
+        Catch ex As Exception
+            Dim err As String = ex.Message.Replace("'", "")
+            javaScript = "alertWarning('Confirm : " & err & "')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
 End Class

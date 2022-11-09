@@ -223,10 +223,81 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">หมายเหตุ</span>
                                 </div>
-                                <asp:textbox class="form-control bg-warning text-dark" ID="txtremark"  runat="server" AutoPostBack="true"></asp:textbox>
+                                <asp:label class="form-control " ID="lblRemark"  runat="server" ></asp:label>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" style="background-color: navy; color: white">
+                        <i class="fas fa-table"></i>
+                        สำหรับบัญชี
+                    </div>
+                    <div id="accountant" class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">วันที่บันทึก</span>
+                                    </div>
+                                    <asp:label class="form-control " ID="lblFinanceDate"  runat="server"  ></asp:label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">ผู้บันทึก</span>
+                                    </div>
+                                    <asp:label class="form-control " ID="lblCreateBy"  runat="server"  ></asp:label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">วันที่รับชำระ</span>
+                                    </div>
+                                    <asp:textbox class="form-control " ID="txtPaymentdate"  runat="server" style="background-color:cornsilk" ></asp:textbox>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">ยอดเงิน Credit (ถ้ามี)</span>
+                                    </div>
+                                    <asp:textbox class="form-control " ID="txtCreditAmount"  runat="server" style="background-color:cornsilk" ></asp:textbox>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">ยอดเงินรับชำระ</span>
+                                    </div>
+                                    <asp:textbox class="form-control " ID="txtPaymentAmount"  runat="server" style="background-color:cornsilk" ></asp:textbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">หมายเหตุ</span>
+                                    </div>
+                                    <asp:textbox class="form-control " ID="txtRemark"  runat="server" TextMode="MultiLine" style="background-color:cornsilk" ></asp:textbox>
+                                </div>
+                            </div>
+                        </div><br />
+                        <div class="row">
+                            <div class="col-6">
+                                <asp:Button ID="btnSave" class="btn btn-sm  btn-primary" runat="server" Text=" Save " />
+                                <asp:Button ID="btnConfirm" class="btn btn-sm  btn-success" runat="server" Text=" Confirm " />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end jobdetail -->
+
                 </div>
 
             </div>            <!-- /.container-fluid -->
@@ -260,6 +331,14 @@
         });
     </script>
 
+      <script type="text/javascript">
+          jQuery('[id$=txtPaymentdate]').datetimepicker({
+              startDate: '+1971/05/01',//or 1986/12/08
+              timepicker: true,
+              scrollInput: false,
+              format: 'd/m/Y'
+          });
+      </script>
     
     <script type="text/javascript">
         function alertSuccess() {

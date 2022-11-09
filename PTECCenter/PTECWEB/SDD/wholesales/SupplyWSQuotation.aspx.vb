@@ -438,7 +438,11 @@ error_handler:
                 btnSave.Enabled = False
                 btnConfirm.Enabled = False
                 btnCancel.Enabled = True
-
+            Case = "Finance"
+                btnNew.Enabled = True
+                btnSave.Enabled = False
+                btnConfirm.Enabled = False
+                btnCancel.Enabled = True
             Case = "Pendding"
                 btnNew.Enabled = True
                 btnSave.Enabled = True

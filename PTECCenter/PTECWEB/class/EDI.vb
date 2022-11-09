@@ -4,6 +4,103 @@ Imports System.Web.Configuration
 Imports System.Xml
 
 Public Class wholesales
+
+
+    Public Function Wholesales_Quotation_Finance_Find(docno As String) As DataSet
+        Dim result As DataSet
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Finance_Find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Wholesales_Quotation_Finance_Confirm(docno As String,
+                                                      user As String) As Boolean
+        Dim result As Boolean = True
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Finance_Confirm"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Wholesales_Quotation_Finance_Save(docno As String, paiddate As DateTime,
+                                                      remark As String, creditamount As Double, paidamount As Double,
+                                                      user As String) As Boolean
+        Dim result As Boolean = True
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Finance_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@paiddate", SqlDbType.DateTime).Value = paiddate
+        cmd.Parameters.Add("@remark", SqlDbType.VarChar).Value = remark
+        cmd.Parameters.Add("@creditamount", SqlDbType.Money).Value = creditamount
+        cmd.Parameters.Add("@paidamount", SqlDbType.Money).Value = paidamount
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
     Public Function Wholesales_Quotation_Cancel(docno As String, user As String) As Boolean
         Dim result As Boolean = True
 
