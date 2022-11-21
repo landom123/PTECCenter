@@ -512,7 +512,7 @@
                                             <span class="input-group-text">เอกสารแนบ</span>
                                         </div>
                                         <asp:Label ID="lblattatch" class="form-control" runat="server" Text=""></asp:Label>
-                                        <asp:FileUpload ID="FileUpload1" class="btn btn-sm  btn-secondary files" runat="server" text="เลือกไฟล์ --ยังไม่เสร็จ" accept="image/*,.pdf" />
+                                        <asp:FileUpload ID="FileUpload1" class="btn btn-sm  btn-secondary files" runat="server" text="เลือกไฟล์ " accept="image/*,.pdf" />
                                         <asp:Button ID="btnUpload" class="btn btn-sm  btn-secondary" runat="server" Text="upload" />
                                     </div>
                                 </div>

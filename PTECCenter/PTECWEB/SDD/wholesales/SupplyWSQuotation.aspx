@@ -202,20 +202,6 @@
                                 <asp:textbox class="form-control bg-warning text-dark" ID="txtVolume"  runat="server" AutoPostBack="false"></asp:textbox>
                             </div>
                         </div>
-<%--                        <div class="col-md-4">
-                            <asp:Button ID="btnClear" class="btn btn-sm  btn-primary" runat="server" Text="Clear" />&nbsp;
-                            <asp:Button ID="btnCalc" class="btn btn-sm  btn-success" runat="server" Text="คำนวนราคา" />  
-                        </div>--%>
-                    </div>
-                    <div class="row">
-<%--                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">ราคาตามตาราง/ลิตร</span>
-                                </div>
-                                <asp:label class="form-control" ID="lblPrice" runat="server" AutoPostBack="true"></asp:label>
-                            </div>
-                        </div>--%>
 
                     </div>
 
@@ -224,12 +210,6 @@
                             <asp:Button ID="btnAddtoTable" class="btn btn-sm  btn-success" runat="server" Text="เพิ่มในตาราง" />  
                         </div>
                     </div>
-<%--                    <div class="row">
-                        <div class="col-6">
-                            <asp:Button ID="btnCalcPrice" class="btn btn-sm  btn-success" runat="server" Text="คำนวนค่าน้ำมัน" />  
-                        </div>
-
-                    </div>--%>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="input-group sm-3">
@@ -274,6 +254,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="input-group sm-3">
@@ -284,6 +265,43 @@
                             </div>
                         </div>
                     </div>
+                    <br />
+                   <div class="table-responsive">
+                        <asp:GridView ID="gvImage"  
+
+                            class="table table-striped table-bordered" 
+                            AllowSorting="True" 
+                            allowpaging="false"
+                            AutoGenerateColumns="false" 
+                            showfooter="true"
+                            ShowHeaderWhenEmpty="True"
+                            ShowFooterWhenEmpty="true"
+                                    runat="server" CssClass="table table-striped">
+                        <HeaderStyle BackColor="#507CD1" Font-Bold="false" Font-size="Smaller" ForeColor="White" />
+                        <AlternatingRowStyle BackColor="#CCCCFF" />
+
+                        <Columns>
+	                        <asp:TemplateField HeaderText="รูปภาพ">
+		                        <ItemTemplate>
+                                <a href="<%#Eval("url")%>" target="_blank">
+                                    <%#Eval("imagepath")%>
+                                </a>
+
+		                        </ItemTemplate>
+	                        </asp:TemplateField>	  
+	                        <asp:TemplateField HeaderText="">
+		                        <ItemTemplate>
+			                        <asp:Button class="btn btn-sm  btn-danger" ID="btnDelRow" runat="server" Text="Del" OnClick="BtnDelRow" />
+		                        </ItemTemplate>
+	                        </asp:TemplateField>	
+                        
+                        </Columns>
+                    </asp:GridView>
+                                               
+                </div><!-- end Table image detail-->
+                <div class="row">
+                    <asp:FileUpload ID="FileUpload1" class="btn btn-sm  btn-secondary files" runat="server" text="เลือกไฟล์ " accept="image/*,.pdf" />                                    
+                    <asp:Button ID="btnAddImage" class="btn btn-sm  btn-success" runat="server" Text="Add File" />
                 </div>
 
             </div>            <!-- /.container-fluid -->
@@ -302,7 +320,8 @@
 
 
     </div>
-    <!-- /#wrapper -->
+
+    </div>   <!-- /#wrapper -->
   <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>

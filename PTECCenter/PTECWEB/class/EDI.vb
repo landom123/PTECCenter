@@ -256,6 +256,37 @@ Public Class wholesales
 
         Return result
     End Function
+    Public Function Wholesales_Quotation_Save_Image(docno As String, filename As String) As Boolean
+        Dim result As Boolean = False
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_Quotation_Save_Image"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@docno", SqlDbType.VarChar).Value = docno
+        cmd.Parameters.Add("@filename", SqlDbType.VarChar).Value = filename
+
+        Try
+            cmd.ExecuteNonQuery()
+            'adp.SelectCommand = cmd
+            'adp.Fill(ds)
+            'result = ds.Tables(0).Rows(0).Item("docno")
+        Catch ex As Exception
+            result = False
+            Throw ex
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
     Public Function Wholesales_Quotation_Save(docno As String, pricedate As DateTime, supplyid As Double,
                                               customerid As Double, volume As Double, amount As Double,
                                               remark As String, user As String) As String

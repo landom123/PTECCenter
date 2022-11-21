@@ -93,6 +93,7 @@ Public Class SupplyWSQuotationForAccountant
             txtPaymentAmount.Text = .Item("paidamount")
             txtCreditAmount.Text = .Item("creditamount")
             txtRemark.Text = .Item("remark")
+            setbutton(.Item("status"))
         End With
     End Sub
     Private Sub ShowData(mytable As DataTable)
@@ -257,7 +258,7 @@ error_handler:
             paidamt = Double.Parse(txtPaymentAmount.Text)
             remark = txtRemark.Text
             If wsobj.Wholesales_Quotation_Finance_Save(docno, paiddate, remark, creditamt, paidamt, usercode) Then
-
+                setbutton("Pendding")
                 javaScript = "alertSuccess('save : Complete')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
@@ -275,7 +276,7 @@ error_handler:
         Try
 
             If wsobj.Wholesales_Quotation_Finance_Confirm(docno, usercode) Then
-
+                setbutton("Confirm")
                 javaScript = "alertSuccess('Confirm : Complete')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
@@ -284,5 +285,18 @@ error_handler:
             javaScript = "alertWarning('Confirm : " & err & "')"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+    End Sub
+
+    Private Sub setbutton(status As String)
+        'lblstatus.Text = "สถานะ : " & status
+        Select Case status
+            Case = "Confirm"
+                'btnNew.Enabled = True
+                btnSave.Enabled = False
+                btnConfirm.Enabled = False
+            Case = "Pendding"
+                btnSave.Enabled = True
+                btnConfirm.Enabled = True
+        End Select
     End Sub
 End Class

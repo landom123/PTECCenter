@@ -267,7 +267,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">ยอดเงิน Credit (ถ้ามี)</span>
                                     </div>
-                                    <asp:textbox class="form-control " ID="txtCreditAmount"  runat="server" style="background-color:cornsilk" ></asp:textbox>
+                                    <asp:textbox class="form-control " ID="txtCreditAmount" text="0" runat="server" style="background-color:cornsilk" ></asp:textbox>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -275,7 +275,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">ยอดเงินรับชำระ</span>
                                     </div>
-                                    <asp:textbox class="form-control " ID="txtPaymentAmount"  runat="server" style="background-color:cornsilk" ></asp:textbox>
+                                    <asp:textbox class="form-control " ID="txtPaymentAmount"  text="0" runat="server" style="background-color:cornsilk" ></asp:textbox>
                                 </div>
                             </div>
                         </div>

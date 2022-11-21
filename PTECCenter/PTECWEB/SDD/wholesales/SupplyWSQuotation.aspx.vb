@@ -6,6 +6,7 @@ Public Class SupplyWSQuotation
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public saleitemtable As DataTable = create()
+    Public imagetable As DataTable = createimagetable()
     Public usercode, username
     Public _cultureEnInfo As New Globalization.CultureInfo("en-US")
     Public docno As String
@@ -36,6 +37,8 @@ Public Class SupplyWSQuotation
             End If
 
             saleitemtable = Session("saleitemtable")
+            imagetable = Session("imagetable")
+            BindDataImage(imagetable)
             'BindData(saleitemtable)
         Else
 
@@ -54,10 +57,16 @@ Public Class SupplyWSQuotation
             docno = Request.QueryString("docno")
             If String.IsNullOrEmpty(docno) Then
                 Dim emptytable As DataTable = create()
+                Dim emptyimagetable As DataTable = createimagetable()
                 Dim R As DataRow = emptytable.NewRow
                 emptytable.Rows.Add(R)
-                Session("saleitemtable") = saleitemtable
+                Session("saleitemtable") = emptytable
                 BindData(emptytable)
+
+                Dim img As DataRow = emptyimagetable.NewRow
+                emptyimagetable.Rows.Add(img)
+                Session("imagetable") = emptyimagetable
+                BindDataImage(emptyimagetable)
             Else
                 FindData(docno)
             End If
@@ -73,8 +82,11 @@ Public Class SupplyWSQuotation
             'showdata
             ShowData(mydataset.Tables(0))
             saleitemtable = mydataset.Tables(1)
+            imagetable = mydataset.Tables(2)
+            Session("imagetable") = imagetable
             Session("saleitemtable") = saleitemtable
             BindData(saleitemtable)
+            BindDataImage(imagetable)
 
         Catch ex As Exception
             Dim err As String = ex.Message.Replace("'", "")
@@ -100,6 +112,35 @@ Public Class SupplyWSQuotation
         End With
 
     End Sub
+    'Protected Sub btnAddImage(sender As Object, e As EventArgs)
+
+    '    If (FileUpload1.HasFile) Then
+    '        Dim allow_send_pic() As String = {".jpg", ".png", ".gif", ".pdf"}
+    '        Dim Extension As String = System.IO.Path.GetExtension(FileUpload1.FileName)
+    '        If Array.IndexOf(allow_send_pic, Extension.ToLower()) = -1 Then
+    '            Dim scriptKey As String = "alert"
+    '            Dim javaScript As String = "alertWarning('Upload ได้เฉพาะ jpg png gif pdf');"
+    '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '        Else
+    '            If System.IO.File.Exists("D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\" & FileUpload1.FileName) Then
+    '                Dim scriptKey As String = "alert"
+    '                Dim javaScript As String = "alertWarning('ชื่อไฟล์ซ้ำกันไม่ได้');"
+    '                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '            Else
+    '                Dim attatchName As New jobs
+    '                Dim fileName As String
+    '                fileName = attatchName.GetAttatchName()
+    '                Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
+    '                'Dim fileName As String = FileUpload1.FileName
+    '                savePath += fileName
+    '                savePath += Extension
+    '                FileUpload1.SaveAs(savePath)
+    '                fileName += Extension
+    '                'lblattatch.Text = fileName
+    '            End If
+    '        End If
+    '    End If
+    'End Sub
     Protected Sub BtnDelRow(sender As Object, e As EventArgs)
 
         'javaScript = "alertWarning('ยังไม่เสร็จ');"
@@ -122,6 +163,11 @@ Public Class SupplyWSQuotation
     Private Sub BindData(mytable As DataTable)
         gvSaleitem.DataSource = mytable
         gvSaleitem.DataBind()
+    End Sub
+
+    Private Sub BindDataImage(mytable As DataTable)
+        gvImage.DataSource = mytable
+        gvImage.DataBind()
     End Sub
     Private Sub setCboTerminal()
         Dim wsobj As New wholesales
@@ -173,6 +219,14 @@ Public Class SupplyWSQuotation
         End Try
     End Sub
 
+    Private Function createimagetable() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("imagepath", GetType(String))
+        dt.Columns.Add("url", GetType(String))
+
+        Return dt
+    End Function
     Private Function create() As DataTable
         Dim dt As New DataTable
 
@@ -551,5 +605,80 @@ error_handler:
         saleitemtable.Rows.Clear()
         Session("saleitemtable") = saleitemtable
         BindData(saleitemtable)
+    End Sub
+
+    Private Sub btnAddImage_Click(sender As Object, e As EventArgs) Handles btnAddImage.Click
+        If Not String.IsNullOrEmpty(lblDocNo.Text) Then
+            If (FileUpload1.HasFile) Then
+                Dim allow_send_pic() As String = {".jpg", ".png", ".gif", ".pdf"}
+                Dim Extension As String = System.IO.Path.GetExtension(FileUpload1.FileName)
+                If Array.IndexOf(allow_send_pic, Extension.ToLower()) = -1 Then
+                    Dim scriptKey As String = "alert"
+                    Dim javaScript As String = "alertWarning('Upload ได้เฉพาะ jpg png gif pdf');"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                Else
+                    If System.IO.File.Exists("D:\\PTECAttatch\\IMG\\wholesales\\" & FileUpload1.FileName) Then
+                        Dim scriptKey As String = "alert"
+                        Dim javaScript As String = "alertWarning('ชื่อไฟล์ซ้ำกันไม่ได้');"
+                        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                    Else
+                        'Dim attatchName As New jobs
+                        Dim fileName As String
+                        Dim imgno As Integer = 1
+                        fileName = lblDocNo.Text & "_" & imgno.ToString & Extension 'attatchName.GetAttatchName()
+                        For imgno = 1 To 20
+                            If System.IO.File.Exists("D:\\PTECAttatch\\IMG\\wholesales\\" & fileName) Then
+                                imgno += 1
+                                fileName = lblDocNo.Text & "_" & imgno.ToString & Extension
+                            Else
+                                imgno = 30
+                            End If
+                        Next
+
+
+                        Dim savePath As String = "D:\\PTECAttatch\\IMG\\wholesales\\"
+                        'Dim fileName As String = FileUpload1.FileName
+                        savePath += fileName
+                        'savePath += Extension
+                        Try
+                            FileUpload1.SaveAs(savePath)
+                            SaveImgName(fileName)
+                        Catch ex As Exception
+                            Dim err As String = ex.Message
+                            err = err.Replace("'", "")
+                            javaScript = "alertWarning('error ขณะบันทึกรูป '" & err & "')"
+                            'javaScript = "<script type='text/javascript'>msgalert('');</script>"
+                            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                        End Try
+
+                        'fileName += Extension
+                        'lblattatch.Text = fileName
+                    End If
+                End If
+            End If
+        Else
+            javaScript = "alertWarning('ไม่พบเลขที่เอกสาร ไม่สามารถเพิ่มรูปได้')"
+            'javaScript = "<script type='text/javascript'>msgalert('');</script>"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End If
+    End Sub
+    Private Sub SaveImgName(filename As String)
+        'save file name to database
+        Dim docno As String = lblDocNo.Text
+        Dim wsobj As New wholesales
+        Try
+            wsobj.Wholesales_Quotation_Save_Image(docno, filename)
+            Dim R As DataRow = imagetable.NewRow
+            R("imagepath") = filename
+            imagetable.Rows.Add(R)
+            BindDataImage(imagetable)
+            Session("imagetable") = imagetable
+        Catch ex As Exception
+            javaScript = "alertWarning('error : SaveImgName')"
+            'javaScript = "<script type='text/javascript'>msgalert('');</script>"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
+        'refresh imagetable
     End Sub
 End Class

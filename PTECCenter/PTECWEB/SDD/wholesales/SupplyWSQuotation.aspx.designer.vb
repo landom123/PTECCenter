@@ -228,4 +228,31 @@ Partial Public Class SupplyWSQuotation
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtremark As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''gvImage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvImage As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''FileUpload1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''btnAddImage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddImage As Global.System.Web.UI.WebControls.Button
 End Class
