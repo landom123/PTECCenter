@@ -1744,6 +1744,7 @@
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
     <Content Include="icon\BranchSeller.svg" />
+    <Content Include="icon\logoSAP.svg" />
     <Content Include="icon\Logo_pure.png" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery.min.js" />
@@ -1779,6 +1780,8 @@
     <Content Include="OPS\Non-PO\Payment\defaultPayment.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashCO2.aspx" />
     <Content Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx" />
+    <Content Include="OPS\Station\newNTIMenuList.aspx" />
+    <Content Include="OPS\Station\newNTI.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
@@ -3483,6 +3486,8 @@
       <DependentUpon>VendorManage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="class\NTI.vb" />
+    <Compile Include="class\Company.vb" />
     <Compile Include="Contract\assetsinfo.aspx.designer.vb">
       <DependentUpon>assetsinfo.aspx</DependentUpon>
     </Compile>
@@ -3859,6 +3864,20 @@
     </Compile>
     <Compile Include="OPS\Non-PO\PettyCash\PettyCashCOMenulist.aspx.vb">
       <DependentUpon>PettyCashCOMenulist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Station\newNTIMenuList.aspx.designer.vb">
+      <DependentUpon>newNTIMenuList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Station\newNTIMenuList.aspx.vb">
+      <DependentUpon>newNTIMenuList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Station\newNTI.aspx.designer.vb">
+      <DependentUpon>newNTI.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Station\newNTI.aspx.vb">
+      <DependentUpon>newNTI.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ReportViewer.aspx.designer.vb">

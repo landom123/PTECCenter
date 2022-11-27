@@ -25,7 +25,8 @@
         <div id="content-wrapper">
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: deeppink; color: white">
-                    <li class="breadcrumb-item">ปิดงาน (Close Job)
+                    <li class="breadcrumb-item"><a href="JobsLists.aspx" class="btn btn-sm btn-danger">
+                        <i class="fa fa-tasks" aria-hidden="true"></i></a> ปิดงาน (Close Job)
                     </li>
                 </ol>
                 <div class="row">

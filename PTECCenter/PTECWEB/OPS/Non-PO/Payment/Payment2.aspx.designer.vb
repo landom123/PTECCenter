@@ -122,6 +122,33 @@ Partial Public Class Payment2
     Protected WithEvents statusnonpo As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''logo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents logo As Global.System.Web.UI.HtmlControls.HtmlImage
+
+    '''<summary>
+    '''company_th control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents company_th As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''company_en control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents company_en As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''Label2 control.
     '''</summary>
     '''<remarks>
@@ -138,6 +165,24 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''lbCompany control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbCompany As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboCompany control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboCompany As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''Label3 control.

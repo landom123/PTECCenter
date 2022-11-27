@@ -45,7 +45,7 @@
         .logopure {
             /*content: url("http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_210800066.png");*/
             width: 200px;
-            height: auto;
+            height: 100px;
             margin-left: 30px;
             margin-top: 10px;
             margin-bottom: 10px;
@@ -271,14 +271,14 @@
                                     <td colspan="18" style="width: 720px !important; height: 10px">
                                         <div class="row">
                                             <div class="col-3">
-                                                <img class="logopure" src="..\..\..\icon\Logo_pure.png" alt="logopure" width="500" height="600">
+                                                <img runat="server" id="logo" class="logopure" src="#" alt="logopure" width="500" height="600">
                                             </div>
                                             <div class="col-9 company">
                                                 <div class="row company-th">
-                                                    <h3>บริษัท เพียวพลังงานไทย จำกัด</h3>
+                                                    <h3 runat="server" id="company_th">บริษัท เพียวพลังงานไทย จำกัด</h3>
                                                 </div>
                                                 <div class="row company-en">
-                                                    <h5>PURE THAI ENERGY COMPANY LIMITED</h5>
+                                                    <h5 runat="server" id="company_en">PURE THAI ENERGY COMPANY LIMITED</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -331,7 +331,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="9" style="width: 360px !important;">
+                                    <td colspan="6" style="width: 240px !important;">
                                         <div class="row">
                                             <div class="col-2">
                                                 <asp:Label ID="Label3" CssClass="form-label" AssociatedControlID="cboDepartment" runat="server" Text="ฝ่าย" />
@@ -343,7 +343,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td colspan="9" style="width: 360px !important;">
+                                    <td colspan="6" style="width: 240px !important;">
                                         <div class="row">
                                             <div class="col-2">
                                                 <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="cboSection" runat="server" Text="แผนก" />
@@ -355,6 +355,16 @@
                                         </div>
                                     </td>
 
+                                    <td colspan="6" style="width: 240px !important;">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <asp:Label ID="lbCompany" CssClass="form-label" AssociatedControlID="cboCompany" runat="server" Text="สังกัด" />
+                                            </div>
+                                            <div class="col-9">
+                                                <asp:DropDownList class="form-control " ID="cboCompany" runat="server" AutoPostBack="true"></asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td colspan="6" style="width: 240px !important;">
                                         <div class="row">
                                             <div class="col-3">

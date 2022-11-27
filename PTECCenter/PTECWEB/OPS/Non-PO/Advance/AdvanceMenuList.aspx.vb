@@ -17,6 +17,7 @@ Public Class AdvanceMenuList
         Dim objdep As New Department
         Dim objNonpo As New NonPO
         Dim objsec As New Section
+        Dim objcompany As New Company
         'Dim objjob As New jobs
         Dim usercode As String
         usercode = Session("usercode")
@@ -47,7 +48,9 @@ Public Class AdvanceMenuList
             objbranch.SetComboBranch(cboBranch, "")
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
-
+            objcompany.SetCboCompany(cboCompany, 0)
+            SetCboUsers(cboCreateby)
+            SetCboUsers(cboOwner)
             If Session("positionid") = "10" Then
                 chkCO.Checked = True
             Else
@@ -106,8 +109,11 @@ Public Class AdvanceMenuList
                                 txtEndDueDate.Text.Trim(),
                                 cboDepartment.SelectedItem.Value.ToString,
                                 cboSection.SelectedItem.Value.ToString,
+                                cboCompany.SelectedItem.Value.ToString,
                                 cboBranchGroup.SelectedItem.Value.ToString,
                                 cboBranch.SelectedItem.Value.ToString,
+                                cboCreateby.SelectedItem.Value.ToString,
+                                cboOwner.SelectedItem.Value.ToString,
                                 gvRemind.PageIndex)
 
             Session("criteria_advlist") = criteria
@@ -145,8 +151,11 @@ Public Class AdvanceMenuList
         dt.Columns.Add("txtEndDueDate", GetType(String))
         dt.Columns.Add("cboDep", GetType(String))
         dt.Columns.Add("cboSec", GetType(String))
+        dt.Columns.Add("cboCom", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
         dt.Columns.Add("cboBranch", GetType(String))
+        dt.Columns.Add("cboCreateby", GetType(String))
+        dt.Columns.Add("cboOwner", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
 
         Return dt
@@ -177,6 +186,9 @@ Public Class AdvanceMenuList
             depid = cboDepartment.SelectedItem.Value
             objsection.SetCboSection_seccode(cboSection, depid)
             cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
+            cboCompany.SelectedValue = criteria.Rows(0).Item("cboCom")
+            cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
+            cboOwner.SelectedValue = criteria.Rows(0).Item("cboOwner")
 
 
         End If
@@ -196,8 +208,11 @@ Public Class AdvanceMenuList
                                                         txtEndDueDate.Text.Trim(),
                                                       "",
                                                       "",
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                         cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString)
+                                                        cboBranch.SelectedItem.Value.ToString,
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        cboOwner.SelectedItem.Value.ToString)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.AdvanceRQList_For_Operator(txtAdvRQ.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
@@ -207,8 +222,11 @@ Public Class AdvanceMenuList
                                                         txtEndDueDate.Text.Trim(),
                                                         cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                       "",
-                                                      "")
+                                                      "",
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        cboOwner.SelectedItem.Value.ToString)
             Else
                 itemtable = objNonPO.AdvanceRQList_For_Operator(txtAdvRQ.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
@@ -218,8 +236,11 @@ Public Class AdvanceMenuList
                                                         txtEndDueDate.Text.Trim(),
                                                         "",
                                                       "",
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                       "",
-                                                      "")
+                                                      "",
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        cboOwner.SelectedItem.Value.ToString)
             End If
 
 
@@ -246,6 +267,7 @@ Public Class AdvanceMenuList
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         Session("userid"),
@@ -257,6 +279,7 @@ Public Class AdvanceMenuList
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
                                                         Session("userid"),
@@ -268,6 +291,7 @@ Public Class AdvanceMenuList
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
                                                         Session("userid"),
@@ -287,7 +311,8 @@ Public Class AdvanceMenuList
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 9
+        Dim statusAt As Integer = 10
+        Dim companyAt As Integer = 0
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -318,6 +343,12 @@ Public Class AdvanceMenuList
                 e.Row.Cells.Item(statusAt).BackColor = Color.Gray
             ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
+            End If
+
+            If Data.Item("comcode") = "PURE" Then
+                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 237, 1, 128)
+            ElseIf Data.Item("comcode") = "SAP" Then
+                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 0, 166, 81)
             End If
         End If
     End Sub
@@ -364,9 +395,12 @@ Public Class AdvanceMenuList
 
         cboDepartment.SelectedIndex = -1
         cboSection.SelectedIndex = -1
+        cboCompany.SelectedIndex = -1
         cboStatusFollow.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
+        cboCreateby.SelectedIndex = -1
+        cboOwner.SelectedIndex = -1
         If itemtable IsNot Nothing Then
             itemtable.Rows.Clear()
         End If

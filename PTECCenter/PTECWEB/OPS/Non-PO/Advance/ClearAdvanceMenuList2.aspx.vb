@@ -19,6 +19,7 @@ Public Class ClearAdvanceMenuList2
         Dim objdep As New Department
         Dim objsec As New Section
         Dim objjob As New jobs
+        Dim objcompany As New Company
         Dim usercode As String
         usercode = Session("usercode")
 
@@ -48,6 +49,9 @@ Public Class ClearAdvanceMenuList2
             objbranch.SetComboBranch(cboBranch, "")
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objcompany.SetCboCompany(cboCompany, 0)
+            SetCboUsers(cboCreateby)
+            SetCboUsers(cboOwner)
             If Session("positionid") = "10" Then
                 chkCO.Checked = True
             Else
@@ -96,8 +100,11 @@ Public Class ClearAdvanceMenuList2
                           txtEndDate.Text.ToString.Trim(),
                           (cboDepartment.SelectedItem.Value),
                           (cboSection.SelectedItem.Value),
+                          (cboCompany.SelectedItem.Value),
                           (cboBranchGroup.SelectedItem.Value),
                           (cboBranch.SelectedItem.Value),
+                            cboCreateby.SelectedItem.Value.ToString,
+                            cboOwner.SelectedItem.Value.ToString,
                           gvRemind.PageIndex)
         Session("criteria_clearadvlist") = criteria
     End Sub
@@ -113,8 +120,11 @@ Public Class ClearAdvanceMenuList2
         dt.Columns.Add("txtEndDate", GetType(String))
         dt.Columns.Add("cboDep", GetType(String))
         dt.Columns.Add("cboSec", GetType(String))
+        dt.Columns.Add("cboCom", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
         dt.Columns.Add("cboBranch", GetType(String))
+        dt.Columns.Add("cboCreateby", GetType(String))
+        dt.Columns.Add("cboOwner", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
 
         Return dt
@@ -159,6 +169,9 @@ Public Class ClearAdvanceMenuList2
             depid = cboDepartment.SelectedItem.Value
             objsection.SetCboSection_seccode(cboSection, depid)
             cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
+            cboCompany.SelectedValue = criteria.Rows(0).Item("cboCom")
+            cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
+            cboOwner.SelectedValue = criteria.Rows(0).Item("cboOwner")
 
             chkCO.Checked = criteria.Rows(0).Item("chkCO")
             chkHO.Checked = criteria.Rows(0).Item("chkHO")
@@ -177,8 +190,11 @@ Public Class ClearAdvanceMenuList2
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        cboOwner.SelectedItem.Value.ToString,
                                                         "CO")
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
@@ -188,8 +204,11 @@ Public Class ClearAdvanceMenuList2
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                         cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        cboOwner.SelectedItem.Value.ToString,
                                                     "HO")
             Else
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
@@ -199,8 +218,11 @@ Public Class ClearAdvanceMenuList2
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                         "",
                                                       "",
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        cboOwner.SelectedItem.Value.ToString,
                                                         "")
             End If
 
@@ -229,6 +251,7 @@ Public Class ClearAdvanceMenuList2
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                         Session("userid"),
                                                         "CO")
             ElseIf chkHO.Checked Then
@@ -239,6 +262,7 @@ Public Class ClearAdvanceMenuList2
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                         Session("userid"),
                                                     "HO")
             Else
@@ -249,6 +273,7 @@ Public Class ClearAdvanceMenuList2
                                                       cboStatusFollow.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                         Session("userid"),
                                                         "")
             End If
@@ -295,9 +320,12 @@ Public Class ClearAdvanceMenuList2
 
         cboDepartment.SelectedIndex = -1
         cboSection.SelectedIndex = -1
+        cboCompany.SelectedIndex = -1
         cboStatusFollow.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
+        cboCreateby.SelectedIndex = -1
+        cboOwner.SelectedIndex = -1
         If itemtable IsNot Nothing Then
             itemtable.Rows.Clear()
         End If
@@ -335,8 +363,9 @@ Public Class ClearAdvanceMenuList2
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 8
-        Dim approvalname As Integer = 5
+        Dim statusAt As Integer = 9
+        Dim approvalname As Integer = 6
+        Dim companyAt As Integer = 0
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -374,6 +403,12 @@ Public Class ClearAdvanceMenuList2
                 gvRemind.Columns(approvalname).Visible = False
             Else
                 gvRemind.Columns(approvalname).Visible = True
+            End If
+
+            If Data.Item("comcode") = "PURE" Then
+                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 237, 1, 128)
+            ElseIf Data.Item("comcode") = "SAP" Then
+                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 0, 166, 81)
             End If
         End If
 

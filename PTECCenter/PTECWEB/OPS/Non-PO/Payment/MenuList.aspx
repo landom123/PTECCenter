@@ -76,9 +76,9 @@
                     <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">สถานะงานย่อย</span>
+                                <span class="input-group-text">สังกัด</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -95,6 +95,15 @@
                                 <span class="input-group-text">จนถึง (DueDate)</span>
                             </div>
                             <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">สถานะงานย่อย</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -173,6 +182,11 @@
                             AllowPaging="true"
                             runat="server">
                             <Columns>
+                                <asp:TemplateField HeaderText="สังกัด" ItemStyle-HorizontalAlign="center">
+                                    <itemtemplate>
+                                        <asp:Label ID="lbcomcode" runat="server" Text='<%#Eval("comcode")%>'></asp:Label>
+                                    </itemtemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("NonPO_Code")%>'></asp:Label>

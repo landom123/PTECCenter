@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
@@ -49,7 +49,7 @@
                             <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code_ref</span>
@@ -57,7 +57,7 @@
                             <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะงานย่อย</span>
@@ -65,7 +65,16 @@
                             <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+
+                    <div class="col-md-3 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">สังกัด</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่วันที่</span>
@@ -73,7 +82,7 @@
                             <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จนถึง</span>
@@ -83,8 +92,24 @@
                         </div>
                     </div>
                     <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+                    <div class="col-md-3 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ผู้เบิก</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboCreateby" runat="server" readonly="true"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ผู้รับเงิน</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboOwner" runat="server" readonly="true"></asp:DropDownList>
+                        </div>
+                    </div>
 
-                    <div class="col-md-4 mb-3 HO">
+                    <div class="col-md-3 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ฝ่าย</span>
@@ -92,7 +117,7 @@
                             <asp:DropDownList ID="cboDepartment" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3 HO">
+                    <div class="col-md-3 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">แผนก</span>
@@ -102,7 +127,7 @@
                     </div>
                     <% End If %>
                     <% If Not Session("positionid") = "10" Then %>
-                    <div class="col-md-4 mb-3 CO">
+                    <div class="col-md-3 mb-3 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทสาขา</span>
@@ -110,7 +135,7 @@
                             <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3 CO">
+                    <div class="col-md-3 mb-3 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
@@ -139,6 +164,11 @@
                             AllowPaging="true"
                             runat="server">
                             <Columns>
+                                <asp:TemplateField HeaderText="สังกัด" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbcomcode" runat="server" Text='<%#Eval("comcode")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("NonPO_Code")%>'></asp:Label>
