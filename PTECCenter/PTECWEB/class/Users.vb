@@ -272,6 +272,15 @@ Public Class Users
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
+
+        Dim connstr As String = WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString
+        Dim strarr() As String
+        Dim strarr_final() As String
+        Dim from As String
+        strarr = connstr.Split("=")
+        strarr_final = strarr(2).Split(";")
+        from = If((strarr_final(0).Trim.ToLower = "test_ops"), "uat", "")
+
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "NonPO_Permisstion"
@@ -279,7 +288,7 @@ Public Class Users
 
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
-        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+        cmd.Parameters.Add("@form", SqlDbType.VarChar).Value = from
 
 
         adp.SelectCommand = cmd

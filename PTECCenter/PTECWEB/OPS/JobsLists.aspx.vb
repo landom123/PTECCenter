@@ -51,10 +51,10 @@ Public Class JobsList_test
                 If Not Session("criteria_Job") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                     criteria = Session("criteria_Job")
                     BindCriteria(criteria)
-                    'searchjobslist()
+                    searchjobslist()
                 Else
 
-                    'searchjobslist()
+                    searchjobslist()
                 End If
             Else
                 'กรณีถ้าเป็น ผจก. สาขา

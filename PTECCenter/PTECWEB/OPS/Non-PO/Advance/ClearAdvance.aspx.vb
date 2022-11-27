@@ -42,6 +42,7 @@ Public Class ClearAdvance
         Dim objdep As New Department
         Dim objsec As New Section
         Dim objsupplier As New Supplier
+        Dim objcompany As New Company
         Dim attatch As New Attatch
 
         Dim nonpoDs = New DataSet
@@ -94,6 +95,7 @@ Public Class ClearAdvance
             objbranch.SetComboBranch(cboBranch, Session("usercode"))
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objcompany.SetCboCompany(cboCompany, 1)
             SetCboUsers(cboCreateby)
             SetCboUsers(cboOwner)
 
@@ -371,6 +373,8 @@ endprocess:
             amount.Text = String.Format("{0:n2}", .Rows(0).Item("amount"))
             txtremark.Text = .Rows(0).Item("remark").ToString
             cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Rows(0).Item("ownerid")))
+            cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(.Rows(0).Item("comid"))) 'Pure
+
 
         End With
 
@@ -385,6 +389,7 @@ endprocess:
         cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
         objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
         cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(Session("secid").ToString))
+        cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(1)) 'Pure
 
         txtCreateDate.Text = Now()
 
@@ -393,7 +398,7 @@ endprocess:
         cboDepartment.Attributes.Add("disabled", "True")
         cboBranch.Attributes.Add("disabled", "True")
         cboOwner.Attributes.Add("disabled", "True")
-
+        cboCompany.Attributes.Add("disabled", "True")
 
     End Sub
 
@@ -434,6 +439,7 @@ endprocess:
             cboDepartment.Attributes.Remove("disabled")
             cboBranch.Attributes.Remove("disabled")
             cboOwner.Attributes.Remove("disabled")
+            cboCompany.Attributes.Remove("disabled")
 
             cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(.Rows(0).Item("createby").ToString))
             cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Rows(0).Item("ownerid")))
@@ -441,6 +447,7 @@ endprocess:
             cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(.Rows(0).Item("depid").ToString))
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
             cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(.Rows(0).Item("secid").ToString))
+            cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(.Rows(0).Item("comid").ToString))
 
             txtCreateDate.Text = .Rows(0).Item("createdate").ToString
             txtCreateDate.ToolTip = .Rows(0).Item("createdate").ToString
@@ -453,6 +460,7 @@ endprocess:
             cboDepartment.Attributes.Add("disabled", "True")
             cboBranch.Attributes.Add("disabled", "True")
             cboOwner.Attributes.Add("disabled", "True")
+            cboCompany.Attributes.Add("disabled", "True")
 
 
 
@@ -633,7 +641,7 @@ endprocess:
                 End If
 
 
-                btnExport.Visible = False
+                btnExport.Visible = True
                 btnPrint.Visible = True
 
                 'ปุ่ม & status 
@@ -917,6 +925,7 @@ endprocess:
         dt.Columns.Add("amount", GetType(String))
         dt.Columns.Add("remark", GetType(String))
         dt.Columns.Add("ownerid", GetType(Integer))
+        dt.Columns.Add("comid", GetType(String))
 
 
         Return dt
@@ -935,6 +944,7 @@ endprocess:
         dt.Columns.Add("branchid", GetType(String))
         dt.Columns.Add("depid", GetType(String))
         dt.Columns.Add("secid", GetType(String))
+        dt.Columns.Add("comid", GetType(String))
 
         dt.Columns.Add("chkpayback", GetType(Integer))
         dt.Columns.Add("chkdeductsell", GetType(Integer))
@@ -1208,6 +1218,20 @@ endprocess:
 
     'End Sub
 
+    Private Sub changecompany()
+        Dim companyid As Integer = cboCompany.SelectedItem.Value
+        If companyid = 2 Then
+            logo.Src = "..\..\..\icon\logoSAP.svg" 'แสดง card SAP
+            company_th.InnerText = "บริษัท เอสซีที สหภัณฑ์ จำกัด"
+            company_en.InnerText = "SCT SAHAPAN COMPANY LIMITED"
+        Else
+            logo.Src = "..\..\..\icon\Logo_pure.png" 'แสดง card PURE
+            company_th.InnerText = "บริษัท เพียวพลังงานไทย จำกัด"
+            company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
+
+        End If
+    End Sub
+
     Private Sub cleardetail()
         row.Value = 0
         'nextrow.Value = 0
@@ -1290,6 +1314,8 @@ endprocess:
         total = String.Format("{0:n2}", cost)
         total_clear = String.Format("{0:n2}", cost + amountpayBack)
         'total = Format(cost, "0.00")
+
+        changecompany()
     End Sub
     <System.Web.Services.WebMethod>
     Public Shared Function addAttach(ByVal user As String, ByVal url As String, ByVal description As String, ByVal nonpocode As String)
@@ -1588,6 +1614,7 @@ endprocess:
             With maintable.Rows(0)
                 .Item("chkpayback") = chkpayBack.Checked
                 .Item("chkdeductsell") = chkdeductSell.Checked
+                .Item("comid") = cboCompany.SelectedItem.Value
                 .Item("payback_amount") = amountpayBack.ToString
                 .Item("deductsell_amount") = amountdedusctsell.ToString
                 .Item("vat_wait") = chkVat.Checked
@@ -1609,7 +1636,7 @@ endprocess:
             'insert
             With maintable
                 .Rows.Add(0, "", codeRef.Text.Trim(), 0, 0, "", "",
-                          cboBranch.SelectedItem.Value, cboDepartment.SelectedItem.Value, cboSection.SelectedItem.Value,
+                          cboBranch.SelectedItem.Value, cboDepartment.SelectedItem.Value, cboSection.SelectedItem.Value, cboCompany.SelectedItem.Value,
                           chkpayBack.Checked, chkdeductSell.Checked,
                           amountpayBack, amountdedusctsell,
                           "", "", chkVat.Checked, cboOwner.SelectedItem.Value,
@@ -1974,5 +2001,9 @@ endprocess:
         End Try
         Response.Redirect("../Advance/ClearAdvance.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
+    End Sub
+
+    Private Sub cboCompany_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboCompany.SelectedIndexChanged
+        updatehead()
     End Sub
 End Class

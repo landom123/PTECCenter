@@ -19,6 +19,7 @@ Public Class MenuList
         Dim objdep As New Department
         Dim objsec As New Section
         Dim objsupplier As New Supplier
+        Dim objcompany As New Company
         'Dim objjob As New jobs
         Dim usercode As String
         usercode = Session("usercode")
@@ -54,6 +55,7 @@ Public Class MenuList
             objsupplier.SetCboVendorByName(cboVendor, "")
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objcompany.SetCboCompany(cboCompany, 0)
             If Session("positionid") = "10" Then
                 chkCO.Checked = True
             Else
@@ -110,6 +112,7 @@ Public Class MenuList
         dt.Columns.Add("cboPayby", GetType(String))
         dt.Columns.Add("cboDep", GetType(String))
         dt.Columns.Add("cboSec", GetType(String))
+        dt.Columns.Add("cboCom", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
         dt.Columns.Add("cboBranch", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
@@ -118,24 +121,25 @@ Public Class MenuList
     End Function
 
     Private Sub setCriteria()
-        'criteria = createCriteria()
+        criteria = createCriteria()
         criteria.Rows.Clear()
         criteria.Rows.Add(chkCO.Checked,
-                          chkHO.Checked,
-                          txtclearadv.Text.ToString.Trim(),
-                          txtStartDate.Text.ToString.Trim(),
-                          txtEndDate.Text.ToString.Trim(),
-                          (cboStatusFollow.SelectedItem.Value),
-                          txtStartDueDate.Text.ToString.Trim(),
-                          txtEndDueDate.Text.ToString.Trim(),
-                          (cboVendor.SelectedItem.Value),
-                          (cboPayby.SelectedItem.Value),
-                          (cboDepartment.SelectedItem.Value),
-                          (cboSection.SelectedItem.Value),
-                          (cboBranchGroup.SelectedItem.Value),
-                          (cboBranch.SelectedItem.Value),
-                          gvRemind.PageIndex)
-        Session("criteria_joblist") = criteria
+                              chkHO.Checked,
+                              txtclearadv.Text.ToString.Trim(),
+                              txtStartDate.Text.ToString.Trim(),
+                              txtEndDate.Text.ToString.Trim(),
+                              (cboStatusFollow.SelectedItem.Value),
+                              txtStartDueDate.Text.ToString.Trim(),
+                              txtEndDueDate.Text.ToString.Trim(),
+                              (cboVendor.SelectedItem.Value),
+                              (cboPayby.SelectedItem.Value),
+                              (cboDepartment.SelectedItem.Value),
+                              (cboSection.SelectedItem.Value),
+                              (cboCompany.SelectedItem.Value),
+                              (cboBranchGroup.SelectedItem.Value),
+                              (cboBranch.SelectedItem.Value),
+                              gvRemind.PageIndex)
+            Session("criteria_joblist") = criteria
     End Sub
 
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
@@ -173,6 +177,7 @@ Public Class MenuList
             depid = cboDepartment.SelectedItem.Value
             objsection.SetCboSection_seccode(cboSection, depid)
             cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
+            cboCompany.SelectedValue = criteria.Rows(0).Item("cboCom")
 
             chkCO.Checked = criteria.Rows(0).Item("chkCO")
             chkHO.Checked = criteria.Rows(0).Item("chkHO")
@@ -193,6 +198,7 @@ Public Class MenuList
                                                         txtEndDueDate.Text.Trim(),
                                                       "",
                                                       "",
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         cboVendor.SelectedItem.Value,
@@ -206,6 +212,7 @@ Public Class MenuList
                                                         txtEndDueDate.Text.Trim(),
                                                         cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
                                                         cboVendor.SelectedItem.Value,
@@ -219,6 +226,7 @@ Public Class MenuList
                                                         txtEndDueDate.Text.Trim(),
                                                         "",
                                                       "",
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
                                                         cboVendor.SelectedItem.Value,
@@ -250,6 +258,7 @@ Public Class MenuList
                                                   cboStatusFollow.SelectedItem.Value.ToString,
                                                     txtStartDueDate.Text.Trim(),
                                                     txtEndDueDate.Text.Trim(),
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                     cboVendor.SelectedItem.Value,
                                                     cboPayby.SelectedItem.Value.ToString.ToLower,
                                                     userid,
@@ -261,6 +270,7 @@ Public Class MenuList
                                                   cboStatusFollow.SelectedItem.Value.ToString,
                                                     txtStartDueDate.Text.Trim(),
                                                     txtEndDueDate.Text.Trim(),
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                     cboVendor.SelectedItem.Value,
                                                     cboPayby.SelectedItem.Value.ToString.ToLower,
                                                     userid,
@@ -272,6 +282,7 @@ Public Class MenuList
                                                   cboStatusFollow.SelectedItem.Value.ToString,
                                                     txtStartDueDate.Text.Trim(),
                                                     txtEndDueDate.Text.Trim(),
+                                                        cboCompany.SelectedItem.Value.ToString,
                                                     cboVendor.SelectedItem.Value,
                                                     cboPayby.SelectedItem.Value.ToString.ToLower,
                                                     userid,
@@ -298,6 +309,7 @@ Public Class MenuList
         txtEndDueDate.Text = ""
         cboDepartment.SelectedIndex = -1
         cboSection.SelectedIndex = -1
+        cboCompany.SelectedIndex = -1
         cboStatusFollow.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
@@ -362,7 +374,8 @@ endprocess:
     End Function
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 9
+        Dim statusAt As Integer = 10
+        Dim companyAt As Integer = 0
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -399,7 +412,17 @@ endprocess:
                 e.Row.Cells.Item(statusAt).BackColor = Color.Gray
 
             End If
+
+
+            If Data.Item("comcode") = "PURE" Then
+                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 237, 1, 128)
+            ElseIf Data.Item("comcode") = "SAP" Then
+                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 0, 166, 81)
+            End If
+
         End If
+
+
     End Sub
 
     'Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged

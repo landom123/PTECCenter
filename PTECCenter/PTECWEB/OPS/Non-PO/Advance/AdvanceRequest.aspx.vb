@@ -34,6 +34,7 @@ Public Class AdvanceRequest
 
         Dim attatch As New Attatch
         Dim objNonPO As New NonPO
+        Dim objcompany As New Company
         Dim nonpods = New DataSet
 
         If Session("usercode") Is Nothing Then
@@ -53,6 +54,7 @@ Public Class AdvanceRequest
         End If
 
         txtDuedate.Attributes.Add("readonly", "readonly")
+        txtDuedate_more.Attributes.Add("readonly", "readonly")
 
         If Not IsPostBack() Then
             detailtable = createtableDetail()
@@ -60,6 +62,7 @@ Public Class AdvanceRequest
             CommentTable = createtablecomment()
 
             SetCboUsers(cboOwner)
+            objcompany.SetCboCompany(cboCompany, 1)
 
             If Not Request.QueryString("ADV") Is Nothing Then
 
@@ -69,7 +72,7 @@ Public Class AdvanceRequest
                     detailtable = nonpods.Tables(0)
                     AttachTable = nonpods.Tables(1)
                     CommentTable = nonpods.Tables(2)
-
+                    Dim a As Double = Convert.ToDouble(detailtable.Rows(0).Item("amount_more"))
 
 
                     If Not Session("status") = "edit" Then
@@ -168,6 +171,7 @@ endprocess:
                 Session("status") = "new"
                 txtCreateBy.Text = Session("username")
                 cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(Session("userid")))
+                cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(1)) '1 PURE
             End If
 
             Session("detailtable_advancerq") = detailtable
@@ -272,12 +276,14 @@ endprocess:
         dt.Columns.Add("accountverifyrqdate", GetType(String))
 
         dt.Columns.Add("duedate", GetType(String))
+        dt.Columns.Add("duedate_more", GetType(String))
 
         dt.Columns.Add("updateby", GetType(Integer))
         dt.Columns.Add("updatedate", GetType(String))
         dt.Columns.Add("createby", GetType(Integer))
         dt.Columns.Add("createdate", GetType(String))
 
+        dt.Columns.Add("comid", GetType(String))
         dt.Columns.Add("ownerid", GetType(Integer))
 
         dt.Columns.Add("updateby_name", GetType(String))
@@ -286,7 +292,19 @@ endprocess:
 
         Return dt
     End Function
+    Private Sub changecompany()
+        Dim companyid As Integer = cboCompany.SelectedItem.Value
+        If companyid = 2 Then
+            logo.Src = "..\..\..\icon\logoSAP.svg" 'แสดง card SAP
+            company_th.InnerText = "บริษัท เอสซีที สหภัณฑ์ จำกัด"
+            company_en.InnerText = "SCT SAHAPAN COMPANY LIMITED"
+        Else
+            logo.Src = "..\..\..\icon\Logo_pure.png" 'แสดง card PURE
+            company_th.InnerText = "บริษัท เพียวพลังงานไทย จำกัด"
+            company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
+        End If
+    End Sub
     Private Function createdetailtable() As DataTable
         Dim dt As New DataTable
 
@@ -427,6 +445,8 @@ endprocess:
             txtCreateBy.Text = .Item("createby_name").ToString
             txtDocDate.Text = .Item("createdate").ToString
             'txtOwnerby.Text = .Item("ownerby_name").ToString
+
+            cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(.Item("comid")))
             cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Item("ownerid")))
 
             txtApprovalby.Text = .Item("approvalrqby").ToString
@@ -439,6 +459,7 @@ endprocess:
             txtSupportdate.Text = .Item("verifyrqdate").ToString
 
             txtDuedate.Text = .Item("duedate").ToString
+            txtDuedate_more.Text = .Item("duedate_more").ToString
             If Session("status") = "edit" Then
                 txtamount.Attributes.Add("type", "number")
                 txtamount.Text = .Item("amount")
@@ -460,6 +481,7 @@ endprocess:
                 txtamount.ReadOnly = False
                 txtdetail.ReadOnly = False
 
+                cboCompany.Attributes.Remove("disabled")
                 cboOwner.Attributes.Remove("disabled")
 
 
@@ -474,6 +496,7 @@ endprocess:
                 txtdetail.ReadOnly = True
                 'searchjobslist()
 
+                cboCompany.Attributes.Add("disabled", "True")
                 cboOwner.Attributes.Add("disabled", "True")
 
 
@@ -488,6 +511,7 @@ endprocess:
                 txtdetail.ReadOnly = True
                 'searchjobslist()
 
+                cboCompany.Attributes.Add("disabled", "True")
                 cboOwner.Attributes.Add("disabled", "True")
 
 
@@ -502,6 +526,7 @@ endprocess:
                 txtdetail.ReadOnly = False
                 'searchjobslist()
 
+                cboCompany.Attributes.Remove("disabled")
                 cboOwner.Attributes.Remove("disabled")
 
                 'กล่อง comment & attatch file
@@ -515,6 +540,7 @@ endprocess:
                 txtdetail.ReadOnly = True
                 'searchjobslist()
 
+                cboCompany.Attributes.Add("disabled", "True")
                 cboOwner.Attributes.Add("disabled", "True")
 
                 'กล่อง comment & attatch file
@@ -550,7 +576,7 @@ endprocess:
             jobowner = cboOwner.SelectedItem.Value
         End If
         Try
-            objnonpo.NonPO_AdvanceRequest_Edit(Request.QueryString("ADV").ToString, txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("userid"), jobowner)
+            objnonpo.NonPO_AdvanceRequest_Edit(Request.QueryString("ADV").ToString, txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("userid"), jobowner, cboCompany.SelectedItem.Value)
             Session("status") = "read"
 
         Catch ex As Exception
@@ -611,7 +637,8 @@ endprocess:
         BindData()
     End Sub
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 7
+        Dim statusAt As Integer = 8
+        Dim companyAt As Integer = 0
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -645,6 +672,13 @@ endprocess:
             ElseIf Data.Item("status") = "รอเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
 
+            End If
+
+
+            If Data.Item("comcode") = "PURE" Then
+                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 237, 1, 128)
+            ElseIf Data.Item("comcode") = "SAP" Then
+                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 0, 166, 81)
             End If
         End If
     End Sub
@@ -751,6 +785,17 @@ endprocess:
 endprocess:
     End Sub
 
+
+    Private Sub updatehead()
+
+        If detailtable.Rows.Count > 0 Then
+            'update
+            With detailtable.Rows(0)
+                .Item("comid") = cboCompany.SelectedItem.Value
+            End With
+        End If
+        Session("detailtable_advancerq") = detailtable
+    End Sub
     Private Sub btnAddamount_Click(sender As Object, e As EventArgs) Handles btnAddamount.Click
         Dim objNonPO As New NonPO
 
@@ -802,8 +847,35 @@ endprocess:
     Private Sub btnUpdateDuedate_Click(sender As Object, e As EventArgs) Handles btnUpdateDuedate.Click
         Dim objnonpo As New NonPO
 
+        If String.IsNullOrEmpty(txtDuedate.Text) Then
+            Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+            GoTo endprocess
+        End If
+
         Try
             objnonpo.NonPO_AdvanceRequest_SetDueDate(Request.QueryString("ADV"), txtDuedate.Text.Trim(), Session("usercode"))
+            Session("status") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('set Duedate fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+endprocess:
+    End Sub
+
+    Private Sub btnUpdateDuedate_more_Click(sender As Object, e As EventArgs) Handles btnUpdateDuedate_more.Click
+        Dim objnonpo As New NonPO
+
+        If String.IsNullOrEmpty(txtDuedate_more.Text) Then
+            Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+            GoTo endprocess
+        End If
+        Try
+            objnonpo.NonPO_AdvanceRequest_SetDueDateMore(Request.QueryString("ADV"), txtDuedate_more.Text.Trim(), Session("usercode"))
             Session("status") = "read"
 
         Catch ex As Exception
@@ -858,7 +930,7 @@ endprocess:
         End If
 
         Try
-            dt = objNonPO.NonPO_AdvanceRequest_Save(txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("usercode"), jobowner)
+            dt = objNonPO.NonPO_AdvanceRequest_Save(txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("usercode"), jobowner, cboCompany.SelectedItem.Value)
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -874,4 +946,13 @@ endprocess:
     Private Sub btnSaves_Click(sender As Object, e As EventArgs) Handles btnSaves.Click
         save()
     End Sub
+
+    Private Sub AdvanceRequest_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        changecompany()
+    End Sub
+
+    Private Sub cboCompany_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboCompany.SelectedIndexChanged
+        'updatehead()
+    End Sub
+
 End Class

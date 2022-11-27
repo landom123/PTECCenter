@@ -104,6 +104,15 @@ Partial Public Class ClearAdvanceMenuList2
     Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cboCompany control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboCompany As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''txtStartDate control.
     '''</summary>
     '''<remarks>
@@ -120,6 +129,24 @@ Partial Public Class ClearAdvanceMenuList2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboCreateby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboCreateby As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cboDepartment control.

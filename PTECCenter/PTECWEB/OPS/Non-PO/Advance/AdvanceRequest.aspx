@@ -23,9 +23,17 @@
         .HO, .CO {
             display: none;
         }
-        .dropdown .disabled{
+        /*.dropdown .disabled{
             background-color: #e9ecef;
             opacity: 1;
+        }*/
+        .logopure {
+            /*content: url("..\..\..\icon\Logo_pure.png");*/
+            width: 200px;
+            height: 100px;
+            margin-left: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
     </style>
 </asp:Content>
@@ -85,8 +93,30 @@
                                     </div>
                                 </div>
                                 <div class="card-body frmADV_RQ">
+
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-auto">
+                                            <img runat="server" id="logo" class="logopure" src="#" alt="logopure" width="500" height="600">
+                                        </div>
+                                        <div class="col-auto company">
+                                            <div class="row company-th">
+                                                <h3 runat="server" id="company_th">บริษัท เพียวพลังงานไทย จำกัด</h3>
+                                            </div>
+                                            <div class="row company-en">
+                                                <h5 runat="server" id="company_en">PURE THAI ENERGY COMPANY LIMITED</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-2 col-form-label">
+                                            <asp:Label ID="Label2" CssClass="form-label" AssociatedControlID="cboCompany" runat="server" Text="สังกัด" />
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <asp:DropDownList class="form-control " ID="cboCompany" runat="server" ReadOnly="True" AutoPostBack="true"></asp:DropDownList>
+                                        </div>
+                                    </div>
                                     <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbNonPOcode" CssClass="form-label" AssociatedControlID="txtNonPOcode" runat="server" Text="เลขที่ใบงาน" />
                                         </div>
@@ -94,7 +124,7 @@
                                             <asp:TextBox class="form-control" ID="txtNonPOcode" runat="server" ReadOnly="True"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbStatusRq" CssClass="form-label" AssociatedControlID="txtStatusRq" runat="server" Text="สถานะ" />
                                         </div>
@@ -104,7 +134,7 @@
                                     </div>
                                     <% End If %>
 
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbCreateBy" CssClass="form-label" AssociatedControlID="txtCreateBy" runat="server" Text="ผู้ขอเบิก" />
                                         </div>
@@ -112,7 +142,7 @@
                                             <asp:TextBox class="form-control" ID="txtCreateBy" runat="server" ReadOnly="True"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbcboOwner" CssClass="form-label" AssociatedControlID="cboOwner" runat="server" Text="ผู้รับเงิน" />
                                         </div>
@@ -121,7 +151,7 @@
                                         </div>
                                     </div>
                                     <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbDocDate" CssClass="form-label" AssociatedControlID="txtDocDate" runat="server" Text="วันที่เบิก" />
                                         </div>
@@ -129,7 +159,7 @@
                                             <asp:TextBox class="form-control" ID="txtDocDate" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbApprovalby" CssClass="form-label" AssociatedControlID="txtApprovalby" runat="server" Text="ผู้อนุมัติ" />
                                         </div>
@@ -140,13 +170,13 @@
                                             <asp:TextBox class="form-control  text-success font-weight-bold" ID="txtApprovalDate" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                   <%-- <div class="row form-group">
+                                   <%-- <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbApprovalDate" CssClass="form-label" AssociatedControlID="txtApprovalDate" runat="server" Text="วันที่อนุมัติ" />
                                         </div>
                                         
                                     </div>--%>
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbAccountby" CssClass="form-label" AssociatedControlID="txtAccountby" runat="server" Text="ตรวจสอบโดย" />
                                         </div>
@@ -157,13 +187,13 @@
                                             <asp:TextBox class="form-control  text-warning font-weight-bold" ID="txtAccountdate" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                   <%-- <div class="row form-group">
+                                   <%-- <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbAccountdate" CssClass="form-label" AssociatedControlID="txtAccountdate" runat="server" Text="วันที่ตรวจสอบ" />
                                         </div>
                                        
                                     </div>--%>
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbtxtSupportby" CssClass="form-label" AssociatedControlID="txtSupportby" runat="server" Text="ทำจ่ายโดย" />
                                         </div>
@@ -174,7 +204,7 @@
                                             <asp:TextBox class="form-control  text-info font-weight-bold" ID="txtSupportdate" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                 <%--   <div class="row form-group">
+                                 <%--   <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbtxtSupportdate" CssClass="form-label" AssociatedControlID="txtSupportdate" runat="server" Text="วันที่ยืนยันทำจ่าย" />
                                         </div>
@@ -182,31 +212,62 @@
                                     </div>--%>
                                     <% End If %>
 
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
 
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbtxtamount" CssClass="form-label" AssociatedControlID="txtamount" runat="server" Text="ยอดขอเบิก" />
                                             <asp:Label ID="lbMandatoryamount" CssClass="text-danger " AssociatedControlID="txtamount" runat="server" Text="*" />
                                         </div>
-                                        <div class="col-lg-10">
+                                        <div class="col-lg-5">
                                             <div class="input-group">
 
                                                 <asp:TextBox class="form-control" ID="txtamount" runat="server" type="number" min="0" step="any" required></asp:TextBox>
                                                 <div class="invalid-feedback">กรุณาใส่จำนวนเงิน</div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-5">
+
+                                            <div class="input-group ">
+                                                <asp:TextBox class="form-control  font-weight-bold font-weight-bold" ID="txtDuedate" runat="server" placeholder="- / - / -"></asp:TextBox>
+                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
+                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3  Then %>
+                                                <div class="input-group-append">
+                                                    <asp:Button ID="btnUpdateDuedate" class="btn btn-sm btn-primary" runat="server" Text="Update" />
+                                                </div>
+                                                <% End If %>
+                                                <% End If %>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     <% If Not Request.QueryString("ADV") Is Nothing Then%>
 
                                     <% If Not String.IsNullOrEmpty(detailtable.Rows(0).Item("amount_more")) Then%>
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbamountmore" CssClass="form-label" AssociatedControlID="txtamountmore" runat="server" Text="เบิกเพิ่มเติม" />
                                         </div>
-                                        <div class="col-lg-10">
+                                        <div class="col-lg-5">
 
                                             <div class="input-group">
                                                 <asp:TextBox class="form-control" ID="txtamountmore" runat="server" ReadOnly="true"></asp:TextBox>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-5">
+
+                                            <div class="input-group ">
+                                                <asp:TextBox class="form-control  font-weight-bold font-weight-bold" ID="txtDuedate_more" runat="server" placeholder="- / - / -"></asp:TextBox>
+                                                <% If Not Request.QueryString("ADV") Is Nothing Then%>
+                                                <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3  Then %>
+                                                <% If (Not String.IsNullOrEmpty(detailtable.Rows(0).Item("verifyrqby").ToString) And Not String.IsNullOrEmpty(detailtable.Rows(0).Item("verifyrqdate").ToString) ) %>
+
+                                                <div class="input-group-append">
+                                                    <asp:Button ID="btnUpdateDuedate_more" class="btn btn-sm btn-primary" runat="server" Text="Update" />
+                                                </div>
+                                                <% End If %>
+                                                <% End If %>
+                                                <% End If %>
                                             </div>
 
                                         </div>
@@ -214,7 +275,7 @@
 
                                     <% End If %>
 
-                                    <div class="row form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbbalance" CssClass="form-label" AssociatedControlID="txtbalance" runat="server" Text="ยอดคงค้างชำระ" />
                                         </div>
@@ -224,7 +285,7 @@
                                     </div>
 
                                     <% End If %>
-                                    <div class="row form-group">
+                                    <%--<div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbDuedate" CssClass="form-label font-weight-bold" AssociatedControlID="txtDuedate" runat="server" Text="Due Date" />
                                         </div>
@@ -241,8 +302,8 @@
                                                 <% End If %>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row form-group">
+                                    </div>--%>
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbtxtdetail" CssClass="form-label" AssociatedControlID="txtdetail" runat="server" Text="วัตถุประสงค์" />
                                             <asp:Label ID="lbMandatorydetail" CssClass="text-danger " AssociatedControlID="txtdetail" runat="server" Text="*" />
@@ -307,6 +368,11 @@
                                         AllowPaging="true"
                                         runat="server">
                                         <Columns>
+                                            <asp:TemplateField HeaderText="สังกัด" ItemStyle-HorizontalAlign="center">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbcomcode" runat="server" Text='<%#Eval("comcode")%>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="เลขที่ใบงาน" ItemStyle-HorizontalAlign="center">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblcode" runat="server" Text='<%#Eval("AdvanceRequest_Code")%>'></asp:Label>
@@ -373,7 +439,7 @@
                                 <div class="row">
                                     <div class="col">
 
-                                        <h4>ยอดรวมค้างชำระ <b><% =String.Format("{0:n4}", sumitem)%></b> บาท</h4>
+                                        <h4>ยอดรวมค้างชำระ <b><% =String.Format("{0:n2}", sumitem)%></b> บาท</h4>
                                     </div>
                                 </div>
 
@@ -569,6 +635,12 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
+        jQuery('[id$=txtDuedate_more]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
         <% End If %>
         <% else If Session("status") = "new" Then %>
         jQuery('[id$=txtDuedate]').datetimepicker({
@@ -585,6 +657,9 @@
                     liveSearch: true,
                     maxOptions: 1
                 });
+
+
+                $('.form-control').selectpicker('refresh');
             });
 
             <% If Not AttachTable Is Nothing Then %>
@@ -614,6 +689,11 @@
             event.preventDefault();
             event.stopPropagation();
             alertWarning('กรุณากำหนด Due Date');
+            <% ElseIf (Not String.IsNullOrEmpty(detailtable.Rows(0).Item("verifyrqby").ToString) And Not String.IsNullOrEmpty(detailtable.Rows(0).Item("verifyrqdate").ToString) And String.IsNullOrEmpty(detailtable.Rows(0).Item("duedate_more").ToString) And detailtable.Rows(0).Item("statusrqid") = 3) %>
+            event.preventDefault();
+            event.stopPropagation();
+            alertWarning('กรุณากำหนด Due Date ยอดเบิกเพิ่มเติม');
+
             <% End If %>
             <% End if %>
         }

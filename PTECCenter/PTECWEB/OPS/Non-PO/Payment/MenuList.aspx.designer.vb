@@ -113,13 +113,13 @@ Partial Public Class MenuList
     Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cboStatusFollow control.
+    '''cboCompany control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboCompany As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''txtStartDueDate control.
@@ -138,6 +138,15 @@ Partial Public Class MenuList
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtEndDueDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboStatusFollow control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cboVendor control.

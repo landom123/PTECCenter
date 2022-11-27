@@ -140,6 +140,33 @@ Partial Public Class AdvanceMenuList
     Protected WithEvents txtEndDueDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cboCompany control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboCompany As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboCreateby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboCreateby As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cboDepartment control.
     '''</summary>
     '''<remarks>
