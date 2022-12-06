@@ -42,7 +42,7 @@ Public Class NTI
     End Function
 
 
-    Public Function NewNTI_List() As DataTable
+    Public Function NewNTI_List(code As String, statusid As String, offertype As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -55,9 +55,9 @@ Public Class NTI
         cmd.CommandText = "NewNTI_List"
         cmd.CommandType = CommandType.StoredProcedure
 
-        'cmd.Parameters.Add("@nticode", SqlDbType.VarChar).Value = nticode
-        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
-        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+        cmd.Parameters.Add("@nticode", SqlDbType.VarChar).Value = code
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        cmd.Parameters.Add("@offertype", SqlDbType.VarChar).Value = offertype
 
 
         adp.SelectCommand = cmd
@@ -119,6 +119,32 @@ Public Class NTI
         Return result
     End Function
 
+
+    Public Function Status_List_for_Step(Optional nticode As String = "") As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NewNTIStatus_List_for_Step"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nticode", SqlDbType.VarChar).Value = nticode
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
 
     Public Function NewNTIOfferType_List() As DataTable
         Dim result As DataTable
