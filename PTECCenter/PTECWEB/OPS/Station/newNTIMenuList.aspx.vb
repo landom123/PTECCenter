@@ -13,13 +13,7 @@ Public Class newNTIMenuList
 
     'Public operator_code As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim approval As New Approval
-        Dim objNonpo As New NonPO
-        Dim objbranch As New Branch
-        Dim objdep As New Department
-        Dim objsec As New Section
-        Dim objsupplier As New Supplier
-        Dim objcompany As New Company
+        Dim objNewNTI As New NTI
         'Dim objjob As New jobs
         Dim usercode As String
         usercode = Session("usercode")
@@ -47,6 +41,8 @@ Public Class newNTIMenuList
         'operator_code = objNonpo.NonPOPermisstionOperator("PAY")
 
         If Not IsPostBack() Then
+            objNewNTI.SetCboStatusList(cboStatus)
+            objNewNTI.SetCboOfferType(cboOfferType)
             searchjobslist()
 
 
@@ -63,7 +59,7 @@ Public Class newNTIMenuList
         Dim detailtable As New DataTable
         Try
 
-            itemtable = objnewnti.NewNTI_List()
+            itemtable = objnewnti.NewNTI_List(txtcode.Text.Trim, cboStatus.SelectedItem.Value.ToString, cboOfferType.SelectedItem.Value.ToString)
 
             Session("joblist") = itemtable
             BindData()

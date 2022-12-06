@@ -8,6 +8,7 @@ Public Class newNTI
     Public CommentTable As DataTable '= createtable()
 
     Public menutable As DataTable
+    Public stepStatus As DataTable
 
     Public operator_code As String = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -50,6 +51,10 @@ Public Class newNTI
                     objNewNTI.SetCboOfferType(cboOfferType)
                     Dim ds As DataSet
                     ds = objNewNTI.NewNTI_Find(Request.QueryString("nticode"))
+
+
+                    stepStatus = objNewNTI.Status_List_for_Step(Request.QueryString("nticode"))
+
 
                     detailtable = ds.Tables(0)
                     AttachTable = ds.Tables(1)

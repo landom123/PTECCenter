@@ -41,6 +41,33 @@ Partial Public Class newNTIMenuList
     Protected WithEvents btnExport As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''txtcode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtcode As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboStatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboStatus As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboOfferType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboOfferType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''gvRemind control.
     '''</summary>
     '''<remarks>
