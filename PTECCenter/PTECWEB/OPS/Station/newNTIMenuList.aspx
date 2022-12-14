@@ -33,7 +33,7 @@
                                                 </div>
                                             </div>--%>
                 <div class="row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
@@ -41,7 +41,15 @@
                             <asp:TextBox class="form-control noEnterSubmit" ID="txtcode" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ชื่อสถานที่</span>
+                            </div>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txttitle" runat="server" AutoPostBack="false" autocomplete="off"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะ</span>
@@ -49,7 +57,7 @@
                             <asp:DropDownList class="form-control" ID="cboStatus" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ข้อเสนอ</span>

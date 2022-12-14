@@ -42,7 +42,7 @@ Public Class NTI
     End Function
 
 
-    Public Function NewNTI_List(code As String, statusid As String, offertype As String) As DataTable
+    Public Function NewNTI_List(code As String, title As String, statusid As String, offertype As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -56,6 +56,7 @@ Public Class NTI
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@nticode", SqlDbType.VarChar).Value = code
+        cmd.Parameters.Add("@title", SqlDbType.VarChar).Value = title
         cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
         cmd.Parameters.Add("@offertype", SqlDbType.VarChar).Value = offertype
 

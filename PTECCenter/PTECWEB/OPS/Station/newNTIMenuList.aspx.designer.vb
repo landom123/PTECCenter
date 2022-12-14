@@ -50,6 +50,15 @@ Partial Public Class newNTIMenuList
     Protected WithEvents txtcode As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''txttitle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txttitle As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''cboStatus control.
     '''</summary>
     '''<remarks>
