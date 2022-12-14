@@ -372,6 +372,18 @@ endprocess:
         cboBranch.Attributes.Add("disabled", "True")
 
 
+        lbcboAffiliation_show.Visible = False
+        lbcboBranch_show.Visible = False
+        lbcboCompany_show.Visible = False
+        lbcboDepartment_show.Visible = False
+        lbcboOwner_show.Visible = False
+        lbcboSection_show.Visible = False
+        lbcboVendor_show.Visible = False
+        lbtxtCreateDate_show.Visible = False
+        lbtxtDuedate_show.Visible = False
+        lbtxtNote_show.Visible = False
+        lbtxtpmno_show.Visible = False
+
     End Sub
 
     Private Sub setmain(dt As DataTable)
@@ -414,17 +426,25 @@ endprocess:
             cboBranch.Attributes.Remove("disabled")
             cboCompany.Attributes.Remove("disabled")
 
+
+            lbcboAffiliation_show.Text = If((cboAffiliation.SelectedItem) Is Nothing, "", cboAffiliation.SelectedItem.Text)
             cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Rows(0).Item("createby").ToString))
+            lbcboOwner_show.Text = cboOwner.SelectedItem.Text
             cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(.Rows(0).Item("branchid").ToString))
+            lbcboBranch_show.Text = cboBranch.SelectedItem.Text
             cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(.Rows(0).Item("depid").ToString))
+            lbcboDepartment_show.Text = cboDepartment.SelectedItem.Text
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
             cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(.Rows(0).Item("secid").ToString))
+            lbcboSection_show.Text = cboSection.SelectedItem.Text
             cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(.Rows(0).Item("comid").ToString))
+            lbcboCompany_show.Text = cboCompany.SelectedItem.Text
 
             txtCreateDate.Text = .Rows(0).Item("createdate").ToString
             txtCreateDate.ToolTip = .Rows(0).Item("createdate").ToString
             txtpmno.Text = .Rows(0).Item("nonpocode").ToString
             txtpmno.ToolTip = .Rows(0).Item("nonpocode").ToString
+            lbtxtpmno_show.Text = .Rows(0).Item("nonpocode").ToString
 
 
             cboOwner.Attributes.Add("disabled", "True")
@@ -485,6 +505,39 @@ endprocess:
 
                 txtNote.Attributes.Add("readonly", "readonly")
             End If
+            lbtxtNote_show.Text = txtNote.Text
+            lbtxtDuedate_show.Text = txtDuedate.Text
+            lbtxtCreateDate_show.Text = txtCreateDate.Text
+            lbcboVendor_show.Text = cboVendor.SelectedItem.Text
+
+
+
+            'Show label text แทน 
+            lbcboAffiliation_show.Visible = True
+            lbcboBranch_show.Visible = True
+            lbcboCompany_show.Visible = True
+            lbcboDepartment_show.Visible = True
+            lbcboOwner_show.Visible = True
+            lbcboSection_show.Visible = True
+            lbcboVendor_show.Visible = True
+            lbtxtCreateDate_show.Visible = True
+            lbtxtDuedate_show.Visible = True
+            lbtxtNote_show.Visible = True
+            lbtxtpmno_show.Visible = True
+
+            'hide Input field
+            cboOwner.Visible = False
+            cboSection.Visible = False
+            cboDepartment.Visible = False
+            cboBranch.Visible = False
+            cboCompany.Visible = False
+            txtNote.Visible = False
+            txtDuedate.Visible = False
+            txtCreateDate.Visible = False
+            cboVendor.Visible = False
+            cboAffiliation.Visible = False
+            txtpmno.Visible = False
+
         End With
 
 

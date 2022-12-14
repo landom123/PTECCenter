@@ -158,6 +158,15 @@ Partial Public Class Payment2
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lbcboOwner_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboOwner_show As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cboOwner control.
     '''</summary>
     '''<remarks>
@@ -174,6 +183,15 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lbCompany As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbcboCompany_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboCompany_show As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cboCompany control.
@@ -194,6 +212,15 @@ Partial Public Class Payment2
     Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lbcboBranch_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboBranch_show As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cboBranch control.
     '''</summary>
     '''<remarks>
@@ -210,6 +237,15 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lbpmno As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbtxtpmno_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbtxtpmno_show As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''txtpmno control.
@@ -230,6 +266,15 @@ Partial Public Class Payment2
     Protected WithEvents lbApprovalcode As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lbcboSection_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboSection_show As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cboSection control.
     '''</summary>
     '''<remarks>
@@ -246,6 +291,15 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbcboDepartment_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboDepartment_show As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cboDepartment control.
@@ -266,6 +320,15 @@ Partial Public Class Payment2
     Protected WithEvents lbAffiliation As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lbcboAffiliation_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboAffiliation_show As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cboAffiliation control.
     '''</summary>
     '''<remarks>
@@ -282,6 +345,15 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Label9 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbtxtCreateDate_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbtxtCreateDate_show As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''txtCreateDate control.
@@ -302,6 +374,15 @@ Partial Public Class Payment2
     Protected WithEvents lbVendor As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lbcboVendor_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboVendor_show As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cboVendor control.
     '''</summary>
     '''<remarks>
@@ -309,6 +390,15 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboVendor As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''lbtxtDuedate_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbtxtDuedate_show As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''txtDuedate control.
@@ -462,6 +552,15 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lbnote As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbtxtNote_show control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbtxtNote_show As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''txtNote control.

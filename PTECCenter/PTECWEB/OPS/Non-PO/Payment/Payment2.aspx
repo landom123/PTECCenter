@@ -305,7 +305,9 @@
                                                 </div>
                                                 <div class="col-11">
 
+                                                    <asp:Label ID="lbcboOwner_show" CssClass="form-label"   AssociatedControlID="cboOwner" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control" ID="cboOwner" runat="server"></asp:DropDownList>
+
                                                 </div>
                                             </div>
                                         </td>
@@ -315,6 +317,7 @@
                                                     <asp:Label ID="lbCompany" CssClass="form-label" AssociatedControlID="cboCompany" runat="server" Text="สังกัด" />
                                                 </div>
                                                 <div class="col-9">
+                                                    <asp:Label ID="lbcboCompany_show" CssClass="form-label"   AssociatedControlID="cboCompany" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control " ID="cboCompany" runat="server" ReadOnly="True" AutoPostBack="true"></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -324,6 +327,7 @@
                                                     <asp:Label ID="Label3" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="สาขา" />
                                                 </div>
                                                 <div class="col-9">
+                                                    <asp:Label ID="lbcboBranch_show" CssClass="form-label"   AssociatedControlID="cboBranch" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control" ID="cboBranch" runat="server">
                                                     </asp:DropDownList>
                                                 </div>
@@ -336,6 +340,7 @@
                                                     <asp:Label ID="lbpmno" CssClass="form-label" AssociatedControlID="txtpmno" runat="server" Text="เลขที่" />
                                                 </div>
                                                 <div class="col-9">
+                                                    <asp:Label ID="lbtxtpmno_show" CssClass="form-label"   AssociatedControlID="txtpmno" runat="server" Text="" />
                                                     <asp:TextBox class="form-control" ID="txtpmno" runat="server" ReadOnly="True"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -348,6 +353,7 @@
                                                     <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="cboSection" runat="server" Text="แผนก" />
                                                 </div>
                                                 <div class="col-9">
+                                                    <asp:Label ID="lbcboSection_show" CssClass="form-label"   AssociatedControlID="cboSection" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control" ID="cboSection" runat="server">
                                                     </asp:DropDownList>
                                                 </div>
@@ -359,6 +365,7 @@
                                                     <asp:Label ID="Label7" CssClass="form-label" AssociatedControlID="cboDepartment" runat="server" Text="ฝ่าย" />
                                                 </div>
                                                 <div class="col-9">
+                                                    <asp:Label ID="lbcboDepartment_show" CssClass="form-label"   AssociatedControlID="cboDepartment" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control" ID="cboDepartment" AutoPostBack="True"
                                                         runat="server">
                                                     </asp:DropDownList>
@@ -371,6 +378,7 @@
                                                     <asp:Label ID="lbAffiliation" CssClass="form-label" AssociatedControlID="cboAffiliation" runat="server" Text="สายงาน" />
                                                 </div>
                                                 <div class="col-9">
+                                                    <asp:Label ID="lbcboAffiliation_show" CssClass="form-label"   AssociatedControlID="cboAffiliation" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control " ID="cboAffiliation" runat="server" required></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -382,6 +390,7 @@
                                                     <asp:Label ID="Label9" CssClass="form-label" AssociatedControlID="txtCreateDate" runat="server" Text="วันที่" />
                                                 </div>
                                                 <div class="col-9">
+                                                    <asp:Label ID="lbtxtCreateDate_show" CssClass="form-label"   AssociatedControlID="txtCreateDate" runat="server" Text="" />
                                                     <asp:TextBox class="form-control font-weight-bold" ID="txtCreateDate" runat="server" ReadOnly="True"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -396,6 +405,7 @@
                                                     <asp:Label ID="lbVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="ผู้รับเงิน" />
                                                 </div>
                                                 <div class="col-11">
+                                                    <asp:Label ID="lbcboVendor_show" CssClass="form-label"   AssociatedControlID="cboVendor" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control " ID="cboVendor" runat="server" required></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -407,7 +417,8 @@
                                                 <h5>Due Date</h5>
                                             </div>
                                             <div class="row">
-                                                <div class="col dueDate" style="height: 60px;">
+                                                <div class="col dueDate text-center" style="height: 60px;">
+                                                    <asp:Label ID="lbtxtDuedate_show" CssClass="form-label font-weight-bold text-center" AssociatedControlID="txtDuedate" runat="server" Text="" />
                                                     <asp:TextBox class="form-control font-weight-bold text-center" ID="txtDuedate" runat="server" required></asp:TextBox>
                                                 </div>
                                             </div>
@@ -458,6 +469,7 @@
                                                     <asp:Label ID="lbnote" CssClass="form-label" AssociatedControlID="txtNote" runat="server" Text="วัตถุประสงค์" />
                                                 </div>
                                                 <div class="col-11">
+                                                    <asp:Label ID="lbtxtNote_show" CssClass="form-label"   AssociatedControlID="txtNote" runat="server" Text="" />
                                                     <asp:TextBox class="form-control" ID="txtNote" runat="server"></asp:TextBox>
                                                 </div>
                                             </div>
