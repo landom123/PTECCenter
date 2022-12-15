@@ -59,7 +59,7 @@ Public Class newNTIMenuList
         Dim detailtable As New DataTable
         Try
 
-            itemtable = objnewnti.NewNTI_List(txtcode.Text.Trim, cboStatus.SelectedItem.Value.ToString, cboOfferType.SelectedItem.Value.ToString)
+            itemtable = objnewnti.NewNTI_List(txtcode.Text.Trim, txttitle.Text.Trim, cboStatus.SelectedItem.Value.ToString, cboOfferType.SelectedItem.Value.ToString)
 
             Session("joblist") = itemtable
             BindData()
@@ -181,5 +181,23 @@ Public Class newNTIMenuList
         End Try
     End Sub
 
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        Dim objbranch As New Branch
+        txttitle.Text = ""
+        'txtcoderef.Text = ""
+        txtcode.Text = ""
+        cboStatus.SelectedIndex = -1
+        cboOfferType.SelectedIndex = -1
+        If itemtable IsNot Nothing Then
+            itemtable.Rows.Clear()
+        End If
+        If criteria IsNot Nothing Then
+            criteria.Rows.Clear()
+        End If
+        Session("joblist") = itemtable
+        Session("criteria_joblist") = criteria
 
+
+        BindData()
+    End Sub
 End Class

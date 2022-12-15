@@ -122,7 +122,7 @@ Public Class PettyCashCO2
 
                     statusid = maintable.Rows(0).Item("statusid")
                     createby = maintable.Rows(0).Item("createby")
-                    chkuser(createby)
+                    chkuser(createby, Request.QueryString("NonpoCode"))
 
                     account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
 
@@ -290,11 +290,11 @@ endprocess:
         'SetMenu()
         checkunsave()
     End Sub
-    Private Sub chkuser(userid As Integer)
+    Private Sub chkuser(userid As Integer, nonpocode As String)
         Dim objuser As New Users
         Dim NonPOPermissionTable As New DataTable
         Try
-            NonPOPermissionTable = objuser.NonPOPermissionRead(userid)
+            NonPOPermissionTable = objuser.NonPOPermissionRead(userid, nonpocode)
             md_code = NonPOPermissionTable.Rows(0).Item("md_code")
             fm_code = NonPOPermissionTable.Rows(0).Item("fm_code")
             dm_code = NonPOPermissionTable.Rows(0).Item("dm_code")
