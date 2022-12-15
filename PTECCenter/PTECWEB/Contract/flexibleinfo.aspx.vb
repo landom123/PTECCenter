@@ -208,9 +208,9 @@ Public Class flexibleinfo
         duedate = DateTime.Parse(txtDueDate.Text)
         frequency = Integer.Parse(txtFrequency.Text)
         If rdoMonth.Checked = True Then
-            recuring = "T"
+            recuring = "M"
         Else
-            recuring = "C"
+            recuring = "Y"
         End If
         If rdoMax.Checked = True Then
             calcmaxorrank = 1

@@ -3,6 +3,46 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">    
+        <style>
+        body {
+            background-color: #f0f2f5;
+        }
+
+        .col-form-label {
+            text-align: right;
+        }
+
+
+        @media only screen and (max-width: 992px) {
+            .col-form-label {
+                text-align: left;
+            }
+        }
+
+
+        .icon__status {
+            background-color: #bfc2c4;
+        
+        }
+        .name__status {
+            text-align:center;
+            font-size: .7rem;
+        }
+        .group__status .past {
+            background-color: #0078d4;
+        }
+        .group__status .now {
+            background-color: #00ff27;
+        }
+        .group__status .end {
+            background-color: #dc3545;
+        }
+        /*####################### CSS FROM ATTATCH ########################*/
+        .attatchItems-link-btndelete .deletedetail {
+            font-size: .7rem
+        }
+        /*####################### END CSS FROM ATTATCH ########################*/
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -20,6 +60,49 @@
                   </li>
                 </ol>
                 <p></p>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+
+                            <div class="group__status row" >
+                                <div class="col">
+
+                                <div class="icon__status past" id="stGSM" style="margin-top: 6.5px; margin-left: auto; margin-right: auto; width: 15px !important; height: 15px !important; border-radius: 50%; margin-bottom: 0.15rem !important;">
+                                </div>
+                                    <div class="name__status" >
+                                        บันทึก
+                                    </div>
+                                </div>
+
+                                <div class="col">
+
+                                <div class="icon__status now" id="stGSM" style="margin-top: 6.5px; margin-left: auto; margin-right: auto; width: 15px !important; height: 15px !important; border-radius: 50%; margin-bottom: 0.15rem !important;">
+                                </div>
+                                    <div class="name__status" >
+                                        ตรวจสอบ
+                                    </div>
+                                </div>
+
+                                <div class="col">
+
+                                    <div class="icon__status " id="stGSM" style="margin-top: 6.5px; margin-left: auto; margin-right: auto; width: 15px !important; height: 15px !important; border-radius: 50%; margin-bottom: 0.15rem !important;">
+                                    </div>
+                                    <div class="name__status" >
+                                        อนุมัติ
+                                    </div>
+                                </div>
+
+                                <div class="col">
+
+                                    <div class="icon__status " id="stGSM" style="margin-top: 6.5px; margin-left: auto; margin-right: auto; width: 15px !important; height: 15px !important; border-radius: 50%; margin-bottom: 0.15rem !important;">
+                                    </div>
+                                    <div class="name__status" >
+                                        ทำสัญญา
+                                    </div>
+                                </div>
+
+                            </div>                            
+                        </div>
+                    </div>
                 <div class="row">
                     <div class="col-6">
                         <asp:Button ID="btnNewProject" class="btn btn-sm  btn-primary" runat="server" Text=" New " />

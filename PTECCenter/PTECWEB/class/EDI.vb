@@ -445,7 +445,7 @@ Public Class wholesales
         Return result
     End Function
 
-    Public Function Wholesales_Price_Daily_List(pricedate As String) As DataTable
+    Public Function Wholesales_Price_Daily_List(pricedate As String, enddate As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -459,6 +459,7 @@ Public Class wholesales
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@pricedate", SqlDbType.VarChar).Value = pricedate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
 
         Try
             adp.SelectCommand = cmd

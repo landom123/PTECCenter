@@ -25,6 +25,9 @@
                     <div class="col-4">เลือกวันที่
                         <asp:textbox class="form-control" ID="txtPriceDate" runat="server" AutoPostBack="true"></asp:textbox>
                     </div>
+                    <div class="col-4">ถึงวันที่
+                        <asp:textbox class="form-control" ID="txtEnddate" runat="server" AutoPostBack="true"></asp:textbox>
+                    </div>
                     <div class="col-4">
                         <asp:Button class="btn btn-sm  btn-success" ID="btnFind" runat="server" Text="Find" />
                     </div>
@@ -139,7 +142,14 @@
         });
     </script>
 
-    
+     <script type="text/javascript">
+         jQuery('[id$=txtEnddate]').datetimepicker({
+             startDate: '+1971/05/01',//or 1986/12/08
+             timepicker: true,
+             scrollInput: false,
+             format: 'd/m/Y'
+         });
+     </script>   
     <script type="text/javascript">
         function alertSuccess() {
             Swal.fire(

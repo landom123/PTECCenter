@@ -59,11 +59,11 @@ Public Class SupplyWSPriceDailyList
         End If
 
     End Sub
-    Public Sub FindData(pricedate As String)
+    Public Sub FindData(pricedate As String, enddate As String)
         Dim wsobj As New wholesales
         Dim mytable As DataTable
 
-        mytable = wsobj.Wholesales_Price_Daily_List(pricedate)
+        mytable = wsobj.Wholesales_Price_Daily_List(pricedate, enddate)
         Session("pricetable") = mytable
         BindData(mytable)
 
@@ -128,7 +128,10 @@ Public Class SupplyWSPriceDailyList
 
     Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
         Dim pricedate As String
+        Dim enddate As String
+
         pricedate = Date.Parse(txtPriceDate.Text).Year.ToString("0000") & Date.Parse(txtPriceDate.Text).Month.ToString("00") & Date.Parse(txtPriceDate.Text).Day.ToString("00")
-        FindData(pricedate)
+        enddate = Date.Parse(txtEnddate.Text).Year.ToString("0000") & Date.Parse(txtEnddate.Text).Month.ToString("00") & Date.Parse(txtEnddate.Text).Day.ToString("00")
+        FindData(pricedate, enddate)
     End Sub
 End Class

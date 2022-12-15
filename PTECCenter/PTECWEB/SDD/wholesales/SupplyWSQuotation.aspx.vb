@@ -80,17 +80,18 @@ Public Class SupplyWSQuotation
         Try
             mydataset = wsobj.Wholesales_Quotation_Find(docno)
             'showdata
+
             ShowData(mydataset.Tables(0))
             saleitemtable = mydataset.Tables(1)
             imagetable = mydataset.Tables(2)
             Session("imagetable") = imagetable
             Session("saleitemtable") = saleitemtable
-            BindData(saleitemtable)
             BindDataImage(imagetable)
+            BindData(saleitemtable)
 
         Catch ex As Exception
             Dim err As String = ex.Message.Replace("'", "")
-            javaScript = "alertWarning('setCboCustomer : " & err & "')"
+            javaScript = "alertWarning('FindData : " & err & "')"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
@@ -403,10 +404,11 @@ error_handler:
 
 
 
-        Try
-            wsobj.Wholesales_Quotation_Delete_before_Save_Detail(docno)
 
-            For Each row As DataRow In saleitemtable.Rows
+        wsobj.Wholesales_Quotation_Delete_before_Save_Detail(docno)
+
+        For Each row As DataRow In saleitemtable.Rows
+            Try
                 If Not row.RowState = DataRowState.Deleted Then
                     terminalmarkup = row.Item("terminalmarkup")
                     product = row.Item("product")
@@ -415,12 +417,13 @@ error_handler:
                     markup = row.Item("markup")
                     wsobj.Wholesales_Quotation_SaveDetail(docno, product, terminalmarkup, price, volume, markup)
                 End If
-            Next
-        Catch ex As Exception
-            Dim err As String = ex.Message.Replace("'", "")
-            javaScript = "alertWarning('SaveDetail() : " & err & " ')"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+            Catch ex As Exception
+                Dim err As String = ex.Message.Replace("'", "")
+                javaScript = "alertWarning('SaveDetail() : " & err & " ')"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End Try
+        Next
+
 
     End Sub
 
