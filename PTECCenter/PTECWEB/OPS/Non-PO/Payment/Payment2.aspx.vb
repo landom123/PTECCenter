@@ -510,33 +510,61 @@ endprocess:
             lbtxtCreateDate_show.Text = txtCreateDate.Text
             lbcboVendor_show.Text = cboVendor.SelectedItem.Text
 
+            If Not .Rows(0).Item("statusid").ToString = "1" And Not .Rows(0).Item("statusid").ToString = "7" Then
 
 
-            'Show label text แทน 
-            lbcboAffiliation_show.Visible = True
-            lbcboBranch_show.Visible = True
-            lbcboCompany_show.Visible = True
-            lbcboDepartment_show.Visible = True
-            lbcboOwner_show.Visible = True
-            lbcboSection_show.Visible = True
-            lbcboVendor_show.Visible = True
-            lbtxtCreateDate_show.Visible = True
-            lbtxtDuedate_show.Visible = True
-            lbtxtNote_show.Visible = True
-            lbtxtpmno_show.Visible = True
+                'Show label text แทน 
+                lbcboAffiliation_show.Visible = True
+                lbcboBranch_show.Visible = True
+                lbcboCompany_show.Visible = True
+                lbcboDepartment_show.Visible = True
+                lbcboOwner_show.Visible = True
+                lbcboSection_show.Visible = True
+                lbcboVendor_show.Visible = True
+                lbtxtCreateDate_show.Visible = True
+                lbtxtDuedate_show.Visible = True
+                lbtxtNote_show.Visible = True
+                lbtxtpmno_show.Visible = True
 
-            'hide Input field
-            cboOwner.Visible = False
-            cboSection.Visible = False
-            cboDepartment.Visible = False
-            cboBranch.Visible = False
-            cboCompany.Visible = False
-            txtNote.Visible = False
-            txtDuedate.Visible = False
-            txtCreateDate.Visible = False
-            cboVendor.Visible = False
-            cboAffiliation.Visible = False
-            txtpmno.Visible = False
+                'hide Input field
+                cboOwner.Visible = False
+                cboSection.Visible = False
+                cboDepartment.Visible = False
+                cboBranch.Visible = False
+                cboCompany.Visible = False
+                txtNote.Visible = False
+                txtDuedate.Visible = False
+                txtCreateDate.Visible = False
+                cboVendor.Visible = False
+                cboAffiliation.Visible = False
+                txtpmno.Visible = False
+            Else
+                'hide label text แทน 
+                lbcboAffiliation_show.Visible = False
+                lbcboBranch_show.Visible = False
+                lbcboCompany_show.Visible = False
+                lbcboDepartment_show.Visible = False
+                lbcboOwner_show.Visible = False
+                lbcboSection_show.Visible = False
+                lbcboVendor_show.Visible = False
+                lbtxtCreateDate_show.Visible = False
+                lbtxtDuedate_show.Visible = False
+                lbtxtNote_show.Visible = False
+                lbtxtpmno_show.Visible = False
+
+                'Show Input field
+                cboOwner.Visible = True
+                cboSection.Visible = True
+                cboDepartment.Visible = True
+                cboBranch.Visible = True
+                cboCompany.Visible = True
+                txtNote.Visible = True
+                txtDuedate.Visible = True
+                txtCreateDate.Visible = True
+                cboVendor.Visible = True
+                cboAffiliation.Visible = True
+                txtpmno.Visible = True
+            End If
 
         End With
 
@@ -690,8 +718,12 @@ endprocess:
                 btnConfirm.Enabled = False
                 If createby = Session("userid") Then
                     btnCancel.Enabled = True
+
+                    btnAddAttatch.Visible = True
                 Else
                     btnCancel.Enabled = False
+                    btnAddAttatch.Visible = False
+
                 End If
 
                 btnExport.Visible = True
@@ -709,7 +741,6 @@ endprocess:
                 card_comment.Visible = True
                 card_attatch.Visible = True
 
-                btnAddAttatch.Visible = False
 
                 Dim scriptKey As String = "UniqueKeyForThisScript"
                 Dim javaScript As String = "disbtndelete()"
