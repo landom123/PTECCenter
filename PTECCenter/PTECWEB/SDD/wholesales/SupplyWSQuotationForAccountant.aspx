@@ -18,7 +18,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
-                           <a href="SupplyWSQuotationList.aspx"><i class="fa fa-tasks" aria-hidden="true"></i></a>&nbsp; ใบเสนอราคาขายส่ง
+                           <a href="SupplyWSQuotationListForAccountant.aspx"><i class="fa fa-tasks" aria-hidden="true"></i></a>&nbsp; ใบเสนอราคาขายส่ง
                   </li>
                 </ol>
 <%--                <div class="row">
@@ -224,6 +224,24 @@
                                     <span class="input-group-text">หมายเหตุ</span>
                                 </div>
                                 <asp:label class="form-control " ID="lblRemark"  runat="server" ></asp:label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ไฟล์แนบ</span>
+                                </div>
+                                <% if imagetable.Rows.Count > 0 Then
+                                        Dim row As Integer
+                                        For row = 0 To imagetable.Rows.Count - 1 %>
+                                            <div class="btn btn-outline-warning" >
+                                                <a href="<% =imagetable.Rows(row).Item("url") %>" target="_blank"><% =imagetable.Rows(row).Item("imagepath") %> </a>
+                                            </div>
+                                            
+                                        <% next row %>
+                                <% End if %>
                             </div>
                         </div>
                     </div>

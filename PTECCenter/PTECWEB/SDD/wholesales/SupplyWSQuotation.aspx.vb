@@ -402,9 +402,6 @@ error_handler:
         Dim product As String
         Dim terminalmarkup, volume, price, markup As Double
 
-
-
-
         wsobj.Wholesales_Quotation_Delete_before_Save_Detail(docno)
 
         For Each row As DataRow In saleitemtable.Rows
@@ -423,7 +420,6 @@ error_handler:
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End Try
         Next
-
 
     End Sub
 

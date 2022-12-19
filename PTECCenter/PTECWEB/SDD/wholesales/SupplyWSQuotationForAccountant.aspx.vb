@@ -6,6 +6,7 @@ Public Class SupplyWSQuotationForAccountant
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public saleitemtable As DataTable = create()
+    Public imagetable As DataTable = createimagetable()
     Public usercode, username
     Public _cultureEnInfo As New Globalization.CultureInfo("en-US")
     Public docno As String
@@ -61,6 +62,15 @@ Public Class SupplyWSQuotationForAccountant
         End If
 
     End Sub
+    Private Function createimagetable() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("imagepath", GetType(String))
+        dt.Columns.Add("url", GetType(String))
+
+        Return dt
+    End Function
+
     Private Sub FindData(docno As String)
         Dim wsobj As New wholesales
         Dim mydataset As DataSet
@@ -76,6 +86,7 @@ Public Class SupplyWSQuotationForAccountant
                 ShowFinData(findataset.Tables(0))
             End If
             saleitemtable = mydataset.Tables(1)
+            imagetable = mydataset.Tables(2)
             Session("saleitemtable") = saleitemtable
             BindData(saleitemtable)
 

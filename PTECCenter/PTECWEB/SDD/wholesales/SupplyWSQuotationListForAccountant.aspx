@@ -18,7 +18,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
-                           <i class="fa fa-tasks" aria-hidden="true"></i>รายการใบเสนอราคา
+                           <i class="fa fa-tasks" aria-hidden="true"></i>รายการใบเสนอราคา (สำหรับแผนกบัญชี)
                   </li>
                 </ol>
                 <div class="row">
