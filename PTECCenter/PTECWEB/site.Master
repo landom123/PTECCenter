@@ -43,7 +43,11 @@
 <body id="page-top">
     <form id="form1" runat="server" enctype="multipart/form-data" novalidate>
         <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+           
             <div class="col text-left">
+                <button class="btn btn-dark mr-4" id="btnMenu" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <a class="navbar-brand mr-1 d-inline-flex align-items-center" href="<%=Page.ResolveUrl("~/default.aspx")%>"><span class="d-none d-sm-block">PTEC Web Center V2 </span>&nbsp;<i class="fas fa-home"></i></a>
             </div>
 
@@ -155,6 +159,16 @@
             title: massage
         })
     }
+
+    $(document).ready(function () {
+        console.log($('#navbarSupportedContent').length);
+        if ($('#navbarSupportedContent').length)         // use this if you are using class to check
+        {
+            $('#btnMenu').show();
+        } else {
+            $('#btnMenu').hide();
+        }
+     });
 </script>
 
 

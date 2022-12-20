@@ -58,6 +58,8 @@
     <div class="bg">
         <div id="wrapper">
 
+            <!-- #include virtual ="/include/menu.inc" -->
+            <!-- add side menu -->
             <div id="content-wrapper">
                 <div class="container">
                     <% If flag Then%>

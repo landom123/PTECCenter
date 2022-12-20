@@ -351,7 +351,11 @@ endprocess:
                 btnClearAdvance.Visible = False
                 btnAdvanceMore.Visible = False
 
-                btnAddAttatch.Visible = False
+                If createby = Session("userid") Then
+                    btnAddAttatch.Visible = True
+                Else
+                    btnAddAttatch.Visible = False
+                End If
 
             Case = "3" 'รอการเงินตรวจสอบ
                 txtStatusRq.BackColor = Color.LightCoral

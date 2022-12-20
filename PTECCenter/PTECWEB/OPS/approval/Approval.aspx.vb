@@ -3,6 +3,7 @@
 Public Class WebForm1
     Inherits System.Web.UI.Page
 
+    Public menutable As DataTable
 
     Dim am_id As String
     Dim rm_id As String
@@ -35,9 +36,22 @@ Public Class WebForm1
             Response.Redirect("~/login.aspx")
         End If
 
-        Dim usercode As String
+        Dim usercode, username As String
         usercode = Session("usercode")
 
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
+
+        username = Session("username")
+
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
+        Else
+            menutable = Session("menulist")
+        End If
 
         If Not IsPostBack() Then
             objapproval.SetCboApproval(cboApproval, "", "nds")
