@@ -3,11 +3,12 @@ Public Class approvalattach
     Inherits System.Web.UI.Page
 
     Public flag As Boolean = True
+    Public menutable As DataTable
 
     Public cost As Double
+    Public usercode, username
 
     Public detailtable As DataTable '= createdetailtable()
-    Public menutable As DataTable
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objapproval As New Approval
@@ -18,6 +19,16 @@ Public Class approvalattach
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
             Response.Redirect("~/login.aspx")
+        End If
+
+        usercode = Session("usercode")
+        username = Session("username")
+
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
+        Else
+            menutable = Session("menulist")
         End If
 
         'txtinvoicedate.Attributes.Add("readonly", "readonly")

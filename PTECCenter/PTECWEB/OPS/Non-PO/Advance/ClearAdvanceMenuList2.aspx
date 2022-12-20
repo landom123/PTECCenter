@@ -9,6 +9,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
 
+        <!-- #include virtual ="/include/menu.inc" -->
+        <!-- add side menu -->
+
         <!-- เนื้อหาเว็บ -->
         <div id="content-wrapper">
 

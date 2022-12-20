@@ -32,6 +32,8 @@
 
     <div id="wrapper">
 
+        <!-- #include virtual ="/include/menu.inc" -->
+        <!-- add side menu -->
 
         <!-- เนื้อหาเว็บ -->
         <div id="content-wrapper">
@@ -47,9 +49,9 @@
                         <a href="approval.aspx" class="btn btn-sm btn-danger ">New</a>
                         &nbsp;
                         <% If Not Session("positionid") = "10" Then%>
-                        <!--<asp:Button ID="btnSearch" class="btn btn-sm  btn-primary" runat="server" Text="Search" />&nbsp; -->
-                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />&nbsp;
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp; 
                         <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
+                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
                          <% End If %>
                     </div>
                 </div>
@@ -61,7 +63,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtApprovalCode" runat="server" placeholder="APP21XXXXXXX" AutoPostBack="true" autocomplete="off"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtApprovalCode" runat="server" placeholder="APP2XXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -77,7 +79,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทงาน</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboApprovalCategory" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboApprovalCategory" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                 </div>
@@ -87,7 +89,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">หัวข้อ</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboApproval" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboApproval" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -95,7 +97,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะ</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboStatus" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboStatus" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -113,7 +115,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -121,7 +123,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่วันที่</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -129,7 +131,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จนถึง</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
 
                         </div>
                     </div>

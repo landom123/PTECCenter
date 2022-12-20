@@ -5,6 +5,8 @@ Public Class WebForm4
     Inherits System.Web.UI.Page
     Public flag As Boolean = True
 
+    Public usercode, username
+    Public menutable As DataTable
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objapproval As New Approval
@@ -16,9 +18,18 @@ Public Class WebForm4
             Response.Redirect("~/login.aspx")
         End If
 
-        Dim usercode As String
-        usercode = Session("usercode")
+        'Dim usercode As String
+        'usercode = Session("usercode")
 
+        usercode = Session("usercode")
+        username = Session("username")
+
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
+        Else
+            menutable = Session("menulist")
+        End If
 
 
         If Not IsPostBack() Then

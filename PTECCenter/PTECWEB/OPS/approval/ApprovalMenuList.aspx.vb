@@ -233,7 +233,7 @@ Public Class WebForm3
         objbranch.SetComboBranchByAreaid(cboBranch, cboArea.SelectedItem.Value, Session("userid"), 0)
         approval.SetCboApprovalByGroupID(cboApproval, cboApprovalGroup.SelectedItem.Value)
 
-        searchapprovallist()
+        'searchapprovallist()
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
@@ -252,46 +252,46 @@ Public Class WebForm3
         Page.ClientScript.RegisterStartupScript(Me.GetType(), "alertscript", s, True)
     End Sub
 
-    Private Sub cboApprovalCategory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboApprovalCategory.SelectedIndexChanged
+    'Private Sub cboApprovalCategory_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboApprovalCategory.SelectedIndexChanged
 
-        searchapprovallist()
-    End Sub
+    '    searchapprovallist()
+    'End Sub
 
     Private Sub cboArea_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboArea.SelectedIndexChanged
         Dim objbranch As New Branch
         cboBranch.SelectedIndex = -1
         objbranch.SetComboBranchByAreaid(cboBranch, cboArea.SelectedItem.Value, Session("userid"), 0)
-        searchapprovallist()
+        'searchapprovallist()
     End Sub
 
-    Private Sub cboApproval_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboApproval.SelectedIndexChanged
-        searchapprovallist()
-    End Sub
+    'Private Sub cboApproval_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboApproval.SelectedIndexChanged
+    '    searchapprovallist()
+    'End Sub
 
-    Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
-        searchapprovallist()
-    End Sub
-    Private Sub cboStatus_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboStatus.SelectedIndexChanged
-        searchapprovallist()
-    End Sub
+    'Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
+    '    searchapprovallist()
+    'End Sub
+    'Private Sub cboStatus_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboStatus.SelectedIndexChanged
+    '    searchapprovallist()
+    'End Sub
 
-    Private Sub txtStartDate_TextChanged(sender As Object, e As EventArgs) Handles txtStartDate.TextChanged
-        searchapprovallist()
-    End Sub
+    'Private Sub txtStartDate_TextChanged(sender As Object, e As EventArgs) Handles txtStartDate.TextChanged
+    '    searchapprovallist()
+    'End Sub
 
-    Private Sub txtEndDate_TextChanged(sender As Object, e As EventArgs) Handles txtEndDate.TextChanged
-        searchapprovallist()
-    End Sub
+    'Private Sub txtEndDate_TextChanged(sender As Object, e As EventArgs) Handles txtEndDate.TextChanged
+    '    searchapprovallist()
+    'End Sub
 
-    Private Sub txtApprovalCode_TextChanged(sender As Object, e As EventArgs) Handles txtApprovalCode.TextChanged
-        searchapprovallist()
-    End Sub
+    'Private Sub txtApprovalCode_TextChanged(sender As Object, e As EventArgs) Handles txtApprovalCode.TextChanged
+    '    searchapprovallist()
+    'End Sub
 
     Private Sub cboApprovalGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboApprovalGroup.SelectedIndexChanged
         Dim approval As New Approval
         cboApproval.SelectedIndex = -1
         approval.SetCboApprovalByGroupID(cboApproval, cboApprovalGroup.SelectedItem.Value)
-        searchapprovallist()
+        'searchapprovallist()
     End Sub
     Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
         Session("cboWorking") = cboWorking.SelectedItem.Value

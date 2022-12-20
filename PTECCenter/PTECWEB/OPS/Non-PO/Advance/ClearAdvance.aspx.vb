@@ -658,8 +658,12 @@ endprocess:
                 btnConfirm.Enabled = False
                 If createby = Session("userid") Then
                     btnCancel.Enabled = True
+                    btnAddAttatch.Visible = True
+
                 Else
                     btnCancel.Enabled = False
+                    btnAddAttatch.Visible = False
+
                 End If
 
 
@@ -678,7 +682,6 @@ endprocess:
                 card_comment.Visible = True
                 card_attatch.Visible = True
 
-                btnAddAttatch.Visible = False
 
                 Dim scriptKey As String = "UniqueKeyForThisScript"
                 Dim javaScript As String = "disbtndelete()"
