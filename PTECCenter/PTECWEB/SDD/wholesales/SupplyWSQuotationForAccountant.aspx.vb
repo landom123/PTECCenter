@@ -98,7 +98,7 @@ Public Class SupplyWSQuotationForAccountant
     End Sub
     Private Sub ShowFinData(mytable As DataTable)
         With mytable.Rows(0)
-            lblCreateBy.Text = ""
+            lblCreateBy.Text = .Item("finance_user")
             lblFinanceDate.Text = .Item("createdate")
             txtPaymentdate.Text = .Item("paiddate")
             txtPaymentAmount.Text = .Item("paidamount")

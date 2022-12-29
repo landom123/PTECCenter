@@ -26,7 +26,8 @@ Public Class SupplyWSPriceDailyList
 
 
         txtPriceDate.Attributes.Add("autocomplete", "off")
-        txtPriceDate.Attributes.Add("readonly", "true")
+        txtEnddate.Attributes.Add("autocomplete", "off")
+        'txtPriceDate.Attributes.Add("readonly", "true")
         'Dim objsupplier As New Supplier
 
         If IsPostBack() Then
