@@ -14,7 +14,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>PTECCENTER</RootNamespace>
     <AssemblyName>PTECCENTER</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -3677,6 +3677,8 @@
     <Compile Include="class\Supplier.vb" />
     <Compile Include="class\Units.vb" />
     <Compile Include="class\Users.vb" />
+    <Compile Include="CrystalDecisions.vb" />
+    <Compile Include="CrystalDecisions1.vb" />
     <Compile Include="OPS\approval\Approval.aspx.designer.vb">
       <DependentUpon>Approval.aspx</DependentUpon>
     </Compile>

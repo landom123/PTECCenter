@@ -1,5 +1,8 @@
 {
-  "ExpandedNodes": [],
-  "SelectedNode": "\\PTECWeb.sln",
+  "ExpandedNodes": [
+    "",
+    "\\PTECCenter"
+  ],
+  "SelectedNode": "\\PTECCenter\\PTECWeb.sln",
   "PreviewInSolutionExplorer": false
 }
