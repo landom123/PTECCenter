@@ -281,7 +281,7 @@
 
                                     <% For i = 0 To AttachTable.Rows.Count - 1 %>
                                     <div class="row">
-                                        <%--<% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4") Then%>
+                                        <%--<% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4" Or Session("depid").ToString = "24" Or Session("depid").ToString = "25") Then%>
                                         <% If maintable.Rows(0).Item("statusid") = 7 Then%>
                                         <div class="col-1">
                                             <div class="form-check">

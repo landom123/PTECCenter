@@ -706,7 +706,7 @@
 
                                     <% For i = 0 To AttachTable.Rows.Count - 1 %>
                                     <div class="row">
-                                        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4") Then%>
+                                        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4" Or Session("depid").ToString = "24" Or Session("depid").ToString = "25") Then%>
                                         <% If maintable.Rows(0).Item("statusid") = 7 Then%>
                                         <div class="col-1">
                                             <div class="form-check">
@@ -813,7 +813,7 @@
         </div>
     </div>
     <div class="row btn-operator justify-content-center notPrint">
-        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4") Then%>
+        <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4" Or Session("depid").ToString = "24" Or Session("depid").ToString = "25") Then%>
         <% If maintable.Rows(0).Item("statusid") = 7 And account_code.IndexOf(Session("usercode").ToString) > -1 Then%>
         <!-- 7 = รอบช.ตรวจ-->
         <button class="btn btn-sm " style="color: #39cd5b; font-size: 3rem; position: fixed; bottom: 9rem; right: 1rem;" id="btnPass" runat="server" title="ผ่านการตรวจสอบจาก บช.">
@@ -830,7 +830,7 @@
         <button class="btn btn-sm " style="color: #ffc107; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnWDoc" runat="server" title="ยืนยันรับเอกสาร">
             <i class="fas fa-check-circle shadow" style="border-radius: 100%;"></i>
         </button>
-        <% ElseIf maintable.Rows(0).Item("statusid") = 9 And Session("secid").ToString = "10" And account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
+        <% ElseIf maintable.Rows(0).Item("statusid") = 9 And (Session("secid").ToString = "10" Or Session("secid").ToString = "30") And account_code.IndexOf(Session("usercode").ToString) > -1 Then %>
         <!-- 9 = ได้รับเอกสารตัวจริง-->
         <button class="btn btn-sm " style="color: #6c757d; font-size: 3rem; position: fixed; bottom: 1rem; right: 1rem;" id="btnFNS_Rec_Doc" runat="server" title="การเงินยืนยันรับเอกสาร">
             <i class="fas fa-check-circle shadow" style="border-radius: 100%;"></i>

@@ -459,7 +459,7 @@
 
                                     <% For i = 0 To AttachTable.Rows.Count - 1 %>
                                     <div class="row">
-                                        <% If Not Request.QueryString("ADV") Is Nothing And detailtable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4") Then%>
+                                        <% If Not Request.QueryString("ADV") Is Nothing And detailtable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4" Or Session("depid").ToString = "24" Or Session("depid").ToString = "25") Then%>
                                         <% If detailtable.Rows(0).Item("statusrqid") = 3 Then%>
                                         <div class="col-1">
                                             <div class="form-check">

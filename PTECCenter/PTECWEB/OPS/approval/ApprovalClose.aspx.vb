@@ -78,7 +78,7 @@ Public Class WebForm4
         End If
     End Sub
     Private Sub chkuser(userid As String, supportid As String)
-        If Not userid = Session("userid") And Not Session("secid").ToString = "2" Then
+        If Not userid = Session("userid") And Not (Session("secid").ToString = "2" Or Session("secid").ToString = "35") Then
             flag = False
         End If
     End Sub
