@@ -320,6 +320,9 @@ endprocess:
             If Not Session("userid") = userid And
                 Not Session("usercode") = strSplit(i) And
                 Not Session("secid").ToString = "2" And
+                Not Session("secid").ToString = "35" And
+                Not Session("depid").ToString = "24" And
+                Not Session("depid").ToString = "25" And
                 Not Session("depid").ToString = "2" And
                 Not Session("depid").ToString = "4" Then
                 flag = False
