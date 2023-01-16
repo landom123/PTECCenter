@@ -103,7 +103,7 @@ Public Class PettyCashCO2
             setmaindefault()
 
             objdep.SetCboDepartmentBybranch(cboDep, 0)
-            objNonpo.SetCboPurpose(cboPP)
+            'objNonpo.SetCboPurpose(cboPP)
             'objNonpo.SetCboAccountCode(cboAccountCode, Session("userid"))
             objNonpo.SetCboAccountCode_List_for_PettyCashCO(cboAccountCode, Session("userid"))
             'objsupplier.SetCboVendor(cboVendor, "")
@@ -112,6 +112,7 @@ Public Class PettyCashCO2
             objNonpo.SetCboPj(cboPJ)
             d365code = objuser.D365Code(Session("userid"))
             If Not Request.QueryString("NonpoCode") Is Nothing Then
+                objNonpo.SetCboPurpose(cboPP, "all")
                 Session("detailtable_pcco") = detailtable
                 'If Not Session("status_pcco") = "edit" Then
                 Session("status_pcco") = "read"
@@ -237,6 +238,7 @@ endprocess:
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
             ElseIf Not Request.QueryString("f") Is Nothing Then
+                objNonpo.SetCboPurpose(cboPP, "active")
                 Dim objjob As New jobs
                 Dim ds As New DataSet
                 If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
@@ -247,6 +249,7 @@ endprocess:
                     sethead(head)
                 End If
             Else
+                objNonpo.SetCboPurpose(cboPP, "active")
                 Session("status_pcco") = "new"
 
             End If

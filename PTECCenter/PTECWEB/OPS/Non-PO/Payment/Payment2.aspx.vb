@@ -99,14 +99,15 @@ Public Class Payment2
             setmaindefault()
 
             objdep.SetCboDepartmentBybranch(cboDep, 0)
-            objNonpo.SetCboPurpose(cboPP)
             objNonpo.SetCboAccountCode(cboAccountCode, Session("userid"))
             'objsupplier.SetCboVendor(cboVendor, "")
+            'objNonpo.SetCboPurpose(cboPP, "all")
             objsupplier.SetCboVendorByName(cboVendor, "")
             objNonpo.SetCboBu(cboBU)
             objNonpo.SetCboPj(cboPJ)
 
             If Not Request.QueryString("NonpoCode") Is Nothing Then
+                objNonpo.SetCboPurpose(cboPP, "all")
                 Session("detailtable_payment") = detailtable
                 'If Not Session("status_payment") = "edit" Then
                 Session("status_payment") = "read"
@@ -232,6 +233,7 @@ endprocess:
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
             ElseIf Not Request.QueryString("f") Is Nothing Then
+                objNonpo.SetCboPurpose(cboPP, "active")
                 Dim objjob As New jobs
                 Dim ds As New DataSet
                 If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
@@ -242,8 +244,8 @@ endprocess:
                     sethead(head)
                 End If
             Else
+                objNonpo.SetCboPurpose(cboPP, "active")
                 Session("status_payment") = "new"
-
             End If
 
 
