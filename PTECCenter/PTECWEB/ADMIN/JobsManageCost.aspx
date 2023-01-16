@@ -213,13 +213,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
                                     </div>
-                                    <asp:TextBox class="form-control" ID="TextBox1" runat="server"></asp:TextBox>
-                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
-                                        ControlToValidate="txtCost" runat="server"
-                                        ErrorMessage="ตัวเลขเท่านั้น"
-                                        ValidationExpression="\d+.\d+"
-                                        ForeColor="Red">
-                                    </asp:RegularExpressionValidator>
+                                    <asp:TextBox ID="TextBox1" class="form-control text-right" runat="server" type="number" min="0"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">

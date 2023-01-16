@@ -114,6 +114,11 @@
             txtJobCenter.Text = .Item("jobcentername")
             txtSupplier.Text = .Item("supplier")
             txtDetail.Text = .Item("details")
+
+            TextBox1.Text = .Item("cost")
+            cboSupplier.SelectedIndex = cboSupplier.Items.IndexOf(cboSupplier.Items.FindByText(.Item("supplier").ToString))
+            cboJobCenter.SelectedIndex = cboJobCenter.Items.IndexOf(cboJobCenter.Items.FindByText(.Item("jobcentername").ToString))
+
         End With
         If mydataset.Tables(1).Rows.Count > 0 Then
 
@@ -237,7 +242,7 @@ endprocess:
         Dim cost As Double
 
         Try
-            cost = Double.Parse(txtCost.Text)
+            cost = Double.Parse(TextBox1.Text)
         Catch
             cost = 0
         End Try

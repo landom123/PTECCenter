@@ -10,6 +10,14 @@ Public Class NonPO
 
     End Sub
 
+    Public Sub SetCboPurpose(obj As Object, show As String)
+        obj.DataSource = Me.Purpose_List(show)
+        obj.DataValueField = "ppid"
+        obj.DataTextField = "ppcode"
+        obj.DataBind()
+
+    End Sub
+
     Public Sub SetCboBu(obj As Object)
         obj.DataSource = Me.Bu_List()
         obj.DataValueField = "buid"
@@ -1048,6 +1056,32 @@ Public Class NonPO
         cmd.CommandType = CommandType.StoredProcedure
 
         'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Purpose_List(Optional show As String = "all") As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Pp_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@show", SqlDbType.VarChar).Value = show
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
