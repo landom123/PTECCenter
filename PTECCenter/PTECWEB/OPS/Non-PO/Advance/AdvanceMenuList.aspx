@@ -143,7 +143,7 @@
                     <% End If %>
 
                     <% If Not Session("positionid") = "10" Then %>
-                    <div class="col-md-4 CO">
+                    <div class="col-md-4 mb-3 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทสาขา</span>
@@ -151,7 +151,7 @@
                             <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 CO">
+                    <div class="col-md-4 mb-3 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>

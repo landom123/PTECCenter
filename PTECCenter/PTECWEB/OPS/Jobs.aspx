@@ -1,11 +1,6 @@
 ﻿<%@ Page Title="OPS : จัดการใบแจ้งงาน" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Jobs.aspx.vb" Inherits="PTECCENTER.frmJobs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        .input-group {
-            margin-bottom: 1rem;
-        }
-    </style>
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <script src="https://cdn.tiny.cloud/1/eivog24cbgm1fhi4pm2cg4pw1lp478mhyjjtxnzml4fi51pa/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -48,7 +43,7 @@
                 </div>
 
                 <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4 ">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขที่เอกสาร</span>
@@ -59,7 +54,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่สร้างรายการ</span>
@@ -67,7 +62,7 @@
                             <asp:TextBox class="form-control" ID="txtCreateDate" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ผู้สร้างรายการ</span>
@@ -78,7 +73,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่แจ้ง</span>
@@ -86,7 +81,7 @@
                             <asp:TextBox class="form-control" ID="txtDocDate" runat="server"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ผู้แจ้ง</span>
@@ -94,20 +89,20 @@
                             <asp:DropDownList class="form-control" ID="cboOwner" runat="server" readonly="true"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-lg-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะ</span>
                             </div>
                             <div class="input-group-append">
-                                <asp:TextBox class="btn btn-danger" ID="txtStatus" runat="server" ReadOnly="true"></asp:TextBox>
+                                <asp:TextBox class="btn btn-sm btn-danger" ID="txtStatus" runat="server" ReadOnly="true"></asp:TextBox>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
@@ -117,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ฝ่าย</span>
@@ -127,7 +122,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">แผนก</span>
@@ -164,7 +159,7 @@
                             <%-- begin detail row--%>
                             <% if detailtable.Rows(i).Item("jobtypeid") = 1 Then%>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ประเภทงาน</span>
@@ -172,7 +167,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ตำแหน่งตู้จ่าย</span>
@@ -181,7 +176,7 @@
                                     </div>
                                 </div>
                                 <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname").ToString) Then%>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <span class="input-group-text" style="width: 550px"><% =detailtable.Rows(i).Item("assetname") %></span>
                                     </div>
@@ -191,7 +186,7 @@
 
                             <% Else If detailtable.Rows(i).Item("jobtypeid") = 16 Then %>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ประเภทงาน</span>
@@ -200,7 +195,7 @@
                                     </div>
                                 </div>
                                 <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetcode").ToString) Then%>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รหัสทรัพย์สิน</span>
@@ -210,7 +205,7 @@
                                 </div>
                                 <% End if %>
                                 <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname").ToString) Then%>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <span class="input-group-text" style="width: 550px"><% =detailtable.Rows(i).Item("assetname") %></span>
                                     </div>
@@ -220,7 +215,7 @@
                             <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("brand").ToString) Or Not String.IsNullOrEmpty(detailtable.Rows(i).Item("model").ToString) Then%>
                             <div class="row">
                                 <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("brand").ToString) Then%>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ยี่ห้อ</span>
@@ -230,7 +225,7 @@
                                 </div>
                                 <% End if %>
                                 <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("model").ToString) Then%>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รุ่น</span>
@@ -244,7 +239,7 @@
 
                             <% Else %>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ประเภทงาน</span>
@@ -253,7 +248,7 @@
                                     </div>
                                 </div>
                                 <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetcode").ToString) Then%>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รหัสทรัพย์สิน</span>
@@ -263,7 +258,7 @@
                                 </div>
                                 <% End if %>
                                 <% if Not String.IsNullOrEmpty(detailtable.Rows(i).Item("assetname").ToString) Then%>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <span class="input-group-text" style="width: 550px"><% =detailtable.Rows(i).Item("assetname") %></span>
                                     </div>
@@ -273,7 +268,7 @@
 
                             <% End if %>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">จำนวน</span>
@@ -281,7 +276,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">หน่วย</span>
@@ -289,7 +284,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
@@ -300,7 +295,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Supplier</span>
@@ -308,7 +303,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ความเร่งด่วน</span>
@@ -316,7 +311,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">กำหนดการ</span>
@@ -327,7 +322,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">เอกสารแนบ</span>
@@ -344,7 +339,7 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-8 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รายละเอียดงาน</span>
@@ -353,7 +348,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <% If objStatus = "confirm" Then %>
                                     <button type="button" class="btn btn-sm  btn-primary"
                                         onclick="location.href='../OPS/jobs_followup.aspx?jobno=<% =detailtable.Rows(i).Item("jobno") %>&jobdetailid=<% =detailtable.Rows(i).Item("jobdetailid") %>'">
@@ -375,7 +370,7 @@
                             <%-- begin free detail row--%>
                             <% If objStatus = "new" Or objStatus = "edit" Then %>
                             <div class="row">
-                                <div class=" col-md-auto">
+                                <div class=" col-md-auto mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">แจ้งไปยังฝ่าย</span>
@@ -384,7 +379,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ประเภทงาน</span>
@@ -396,7 +391,7 @@
                             </div>
                             <% If cboJobType.SelectedItem.Value = "1" Then %>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ตำแหน่งตู้จ่าย</span>
@@ -408,7 +403,7 @@
                             </div>
                             <% End if %>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รหัสทรัพย์สิน</span>
@@ -419,7 +414,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <div class="input-group sm-3">
                                         <asp:TextBox class="form-control" ID="txtAssetName" runat="server" ReadOnly="true"></asp:TextBox>
                                     </div>
@@ -427,7 +422,7 @@
                             </div>
                             <% If cboJobType.SelectedItem.Value = "16" Then %>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ชื่อยี่ห้อ</span>
@@ -435,7 +430,7 @@
                                         <asp:TextBox class="form-control" ID="txtBrand" runat="server" placeholder="ตัวอย่าง ( DELL , Brother ) ..." autocomplete="off"></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รุ่น</span>
@@ -447,7 +442,7 @@
                             <% End if %>
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">จำนวน</span>
@@ -455,7 +450,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">หน่วย</span>
@@ -464,7 +459,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
@@ -475,7 +470,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Supplier</span>
@@ -485,7 +480,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ความเร่งด่วน</span>
@@ -495,7 +490,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">วันที่ต้องการ</span>
@@ -506,7 +501,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-md-12 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">เอกสารแนบ</span>
@@ -519,7 +514,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-md-8 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รายละเอียดงาน</span>
@@ -530,7 +525,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <div class="d-flex justify-content-center">
                                         <asp:Button ID="btnAddDetail" class="btn btn-sm  btn-primary" runat="server" Text=" + " OnClientClick="validateData()" />&nbsp;
                                     </div>

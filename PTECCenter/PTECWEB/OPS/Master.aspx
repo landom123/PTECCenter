@@ -29,15 +29,15 @@
                 <br />
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">รหัสกลุ่มหมวดงาน</span>
+                                <asp:TextBox class="form-control" ID="txtGroupID" name="txtGroupID" runat="server" required></asp:TextBox>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtGroupID" name="txtGroupID" runat="server" required></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ชื่อหมวดงาน</span>
@@ -46,7 +46,7 @@
 
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขหมวดงาน</span>
@@ -56,12 +56,11 @@
                     </div>
                 </div>
 
-                <br />
                 <% If objStatus = "update" Then %>
                 <div class="row">
 
 
-                    <div class="col-3">
+                    <div class="col-lg-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">UpdateUser</span>
@@ -69,7 +68,7 @@
                             <asp:TextBox class="form-control" ID="txtUpdateUser" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">UpdateDate</span>
@@ -77,7 +76,7 @@
                             <asp:TextBox class="form-control" ID="txtUpdateDate" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">CreateUser</span>
@@ -86,7 +85,7 @@
 
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">CreateDate</span>

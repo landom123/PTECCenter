@@ -22,7 +22,7 @@
                 </ol>
 <p></p>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">สาขา</span>
@@ -75,7 +75,7 @@
                         <!-- end display job detail -->
 <p></p>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่</span>
