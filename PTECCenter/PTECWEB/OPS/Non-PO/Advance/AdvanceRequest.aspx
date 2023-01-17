@@ -95,15 +95,19 @@
                                 <div class="card-body frmADV_RQ">
 
                                     <div class="row align-items-center justify-content-center">
-                                        <div class="col-auto">
+                                        <div class="col-lg-auto  text-center">
                                             <img runat="server" id="logo" class="logopure" src="#" alt="logopure" width="500" height="600">
                                         </div>
-                                        <div class="col-auto company">
+                                        <div class="col-lg-auto company">
                                             <div class="row company-th">
-                                                <h3 runat="server" id="company_th">บริษัท เพียวพลังงานไทย จำกัด</h3>
+                                                <div class="col text-center">
+                                                    <h3 runat="server" id="company_th">บริษัท เพียวพลังงานไทย จำกัด</h3>
+                                                </div>
                                             </div>
                                             <div class="row company-en">
-                                                <h5 runat="server" id="company_en">PURE THAI ENERGY COMPANY LIMITED</h5>
+                                                <div class="col text-center">
+                                                    <h5 runat="server" id="company_en">PURE THAI ENERGY COMPANY LIMITED</h5>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

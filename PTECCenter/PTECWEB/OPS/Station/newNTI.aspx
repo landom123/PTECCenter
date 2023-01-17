@@ -85,7 +85,7 @@
 
                             <div class="group__status row" >
                             <% For i = 0 To stepStatus.Rows.Count - 1 %>
-                                <div class="col">
+                                <div class="col-lg-auto">
 
                                 <div class="icon__status <%= stepStatus.Rows(i).Item("step") %>" id="stGSM" style="margin-top: 6.5px; margin-left: auto; margin-right: auto; width: 15px !important; height: 15px !important; border-radius: 50%; margin-bottom: 0.15rem !important;">
                                 </div>

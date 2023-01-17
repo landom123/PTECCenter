@@ -36,7 +36,7 @@
                 </div>
                 <% If Not Request.QueryString("NonpoCode") Is Nothing And nonpodt.Rows.Count > 0 Then%>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-lg-6 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ต้องการเปลี่ยนเป็นสถานะ</span>
@@ -48,7 +48,7 @@
                 </div>
                 <hr />
                 <div class="row notPrint" id="card_attatch" runat="server">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <div class="card shadow card_attatch">
                             <div class="card-header">
                                 เอกสารแนบ
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6" id="card_comment" runat="server">
+                    <div class="col-md-6 mb-3" id="card_comment" runat="server">
                         <div class="card shadow card_comment">
                             <div class="table-responsive">
                                 <div class="card-header">
