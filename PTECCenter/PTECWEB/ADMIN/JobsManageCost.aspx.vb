@@ -16,6 +16,8 @@
         Dim objjob As New jobs
 
 
+        'txtDueDate.Attributes.Add("readonly", "readonly")
+
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
             Response.Redirect("~/login.aspx")
@@ -99,6 +101,8 @@
     End Sub
 
     Private Sub showjobdata(mydataset As DataSet)
+        Dim objpolicy As New Policy
+
         With mydataset.Tables(0).Rows(0)
             txtDocDate.Text = .Item("jobdate")
             txtOwner.Text = .Item("jobowner")
@@ -114,6 +118,18 @@
             txtJobCenter.Text = .Item("jobcentername")
             txtSupplier.Text = .Item("supplier")
             txtDetail.Text = .Item("details")
+
+
+            objpolicy.setComboPolicyByJobTypeID(cboPolicy, .Item("jobtypeid"))
+            cboPolicy.SelectedIndex = cboPolicy.Items.IndexOf(cboPolicy.Items.FindByValue(.Item("PolicyID").ToString))
+            txtDueDate.Text = .Item("requestdate").ToString
+
+            TextBox1.Text = .Item("cost")
+            cboSupplier.SelectedIndex = cboSupplier.Items.IndexOf(cboSupplier.Items.FindByText(.Item("supplier").ToString))
+            cboJobCenter.SelectedIndex = cboJobCenter.Items.IndexOf(cboJobCenter.Items.FindByText(.Item("jobcentername").ToString))
+
+
+
         End With
         If mydataset.Tables(1).Rows.Count > 0 Then
 
@@ -237,7 +253,7 @@ endprocess:
         Dim cost As Double
 
         Try
-            cost = Double.Parse(txtCost.Text)
+            cost = Double.Parse(TextBox1.Text)
         Catch
             cost = 0
         End Try
@@ -262,4 +278,72 @@ endprocess:
 endprocess:
 
     End Sub
+
+    Private Sub btnUpdatePolicy_Click(sender As Object, e As EventArgs) Handles btnUpdatePolicy.Click
+        'update cost and supplier
+
+        Dim objjob As New jobs
+        Dim policyid As Double = cboPolicy.SelectedItem.Value
+        Dim jobCenter As Integer = cboJobCenter.SelectedItem.Value
+
+        Try
+
+            jobno = Request.QueryString("jobno")
+            jobdetailid = cboJobdtlId.SelectedItem.Value
+            objjob.Updatepolicyid(jobno, jobdetailid, jobCenter, policyid, Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+
+        End Try
+
+        Response.Redirect("JobsManageCost.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+
+    End Sub
+
+    Private Sub btnUpdateDuedate_Click(sender As Object, e As EventArgs) Handles btnUpdateDuedate.Click
+        'update cost and supplier
+
+        Dim objjob As New jobs
+        Dim duedate As String = txtDueDate.Text.ToString
+        Dim jobCenter As Integer = cboJobCenter.SelectedItem.Value
+
+        Try
+
+            jobno = Request.QueryString("jobno")
+            jobdetailid = cboJobdtlId.SelectedItem.Value
+            objjob.Updateduedate(jobno, jobdetailid, jobCenter, duedate, Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+
+        End Try
+
+        Response.Redirect("JobsManageCost.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+
+    End Sub
+
+    Private Function setDueDate(policyid As String) As Boolean
+        Dim objjobs As New jobs
+        Dim mydataset As DataSet
+        Try
+            mydataset = objjobs.setDueDateByPolicyID(policyid)
+            txtDueDate.Text = mydataset.Tables(0).Rows(0).Item("duedate")
+            Return True
+        Catch ex As Exception
+            txtDueDate.Text = ""
+            Return False
+        End Try
+    End Function
+    'Private Sub cboPolicy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboPolicy.SelectedIndexChanged
+    '    setDueDate(cboPolicy.SelectedItem.Value)
+    'End Sub
 End Class

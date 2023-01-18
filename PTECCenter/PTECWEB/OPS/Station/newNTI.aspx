@@ -85,7 +85,7 @@
 
                             <div class="group__status row" >
                             <% For i = 0 To stepStatus.Rows.Count - 1 %>
-                                <div class="col">
+                                <div class="col-lg-auto">
 
                                 <div class="icon__status <%= stepStatus.Rows(i).Item("step") %>" id="stGSM" style="margin-top: 6.5px; margin-left: auto; margin-right: auto; width: 15px !important; height: 15px !important; border-radius: 50%; margin-bottom: 0.15rem !important;">
                                 </div>
@@ -281,7 +281,7 @@
 
                                     <% For i = 0 To AttachTable.Rows.Count - 1 %>
                                     <div class="row">
-                                        <%--<% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4") Then%>
+                                        <%--<% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4" Or Session("depid").ToString = "24" Or Session("depid").ToString = "25") Then%>
                                         <% If maintable.Rows(0).Item("statusid") = 7 Then%>
                                         <div class="col-1">
                                             <div class="form-check">

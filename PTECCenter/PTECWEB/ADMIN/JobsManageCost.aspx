@@ -200,6 +200,41 @@
                 </div>
 
 
+                <div class="card  mb-3">
+                    <div class="card-header" style="background-color: lightslategray; color: white">
+                        สำหรับผู้ปฏิบัติงาน
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-4  mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">ความเร่งด่วน</span>
+                                    </div>
+                                    <asp:DropDownList class="form-control" ID="cboPolicy"
+                                        runat="server" AutoPostBack="false">
+                                    </asp:DropDownList>
+                                    <div class="input-group-append">
+                                        <asp:Button ID="btnUpdatePolicy" class="btn btn-sm  btn-success" runat="server" Text="Update" />
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4  mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">วันที่ต้องการ</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="txtDueDate" runat="server" ></asp:TextBox>
+                                    <div class="input-group-append">
+                                        <asp:Button ID="btnUpdateDuedate" class="btn btn-sm  btn-success" runat="server" Text="Update" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
 
                 <div class="card  mb-3">
@@ -208,21 +243,15 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
                                     </div>
-                                    <asp:TextBox class="form-control" ID="TextBox1" runat="server"></asp:TextBox>
-                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
-                                        ControlToValidate="txtCost" runat="server"
-                                        ErrorMessage="ตัวเลขเท่านั้น"
-                                        ValidationExpression="\d+.\d+"
-                                        ForeColor="Red">
-                                    </asp:RegularExpressionValidator>
+                                    <asp:TextBox ID="TextBox1" class="form-control text-right" runat="server" type="number" min="0"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Supplier</span>
@@ -232,7 +261,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">ประเภทหมวดราคา</span>
@@ -450,6 +479,12 @@
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'
+        });
+        jQuery('[id$=txtDueDate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08
+            timepicker: true,
+            scrollInput: false,
+            format: 'd/m/Y H:i'
         });
     </script>
 

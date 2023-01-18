@@ -15,16 +15,16 @@
         <div id="content-wrapper">
             <div class="container-fluid">         
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         <button type="button" class="btn btn-sm  btn-primary"  onclick="chkNew()" >new</button> &nbsp;
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="save" /> &nbsp;           
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-secondary" runat="server" Text="Search" />  &nbsp;   
                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />&nbsp;
                     </div>
                 </div>
-                <p></p>
+                
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">รหัสทรัพย์สิน</span>
@@ -35,7 +35,7 @@
                           </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่สร้างรายการ</span>
@@ -43,7 +43,7 @@
                           <asp:TextBox class="form-control" ID="txtCreateDate" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ผู้สร้างรายการ</span>
@@ -52,9 +52,9 @@
                         </div>                                                
                     </div>
                 </div>
-                <p></p>
+                
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ชื่อ</span>
@@ -62,7 +62,7 @@
                           <asp:TextBox class="form-control" ID="txtname" runat="server"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">กลุ่ม</span>
@@ -72,7 +72,7 @@
                               </asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ประเภท</span>
@@ -83,9 +83,9 @@
                     </div>
                 </div>
 
-                <p></p>
+                
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">Serial No.</span>
@@ -93,7 +93,7 @@
                           <asp:TextBox class="form-control" ID="txtSerialNo" runat="server"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ราคา</span>
@@ -103,7 +103,7 @@
                                 ControlToValidate="txtPrice" ErrorMessage=" ใส่จำนวนเงิน" />
                         </div>                                                
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">รหัสทรัพย์สิน (บัญชี)</span>
@@ -112,9 +112,9 @@
                         </div>
                     </div>
                 </div>
-                <p></p>
+                
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">Supplier</span>
@@ -123,7 +123,7 @@
                               </asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">เริ่มต้นรับประกัน</span>
@@ -132,7 +132,7 @@
                               </asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">สิ้นสุดรับประกัน</span>
@@ -141,28 +141,28 @@
                         </div>                                                
                     </div>
                 </div>
-                <p></p>
+                
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">เลขที่ Invoice</span>
-                              <asp:TextBox class="form-control" ID="txtInvoiceno" runat="server"  ></asp:TextBox>
                           </div>
+                            <asp:TextBox class="form-control" ID="txtInvoiceno" runat="server"  ></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                               <span class="input-group-text">วันที่ Invoice</span>
-                              <asp:TextBox class="form-control" ID="txtInvoiceDate" runat="server"></asp:TextBox>
                           </div>
+                            <asp:TextBox class="form-control" ID="txtInvoiceDate" runat="server"></asp:TextBox>
                         </div>
                     </div>
                 </div>
-                <p></p>
+                
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">สาขา</span>
@@ -171,7 +171,7 @@
                           </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ฝ่าย</span>
@@ -181,7 +181,7 @@
                           </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">แผนก</span>
@@ -191,9 +191,9 @@
                         </div>
                     </div>
                 </div>
-                <p></p>
+                
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">รายละเอียด (255 ตัวอักษร)</span>
@@ -202,7 +202,7 @@
                         </div>
                     </div>
                 </div>
-                <p></p>
+                
                 <div class="row">
                     <div class="card" >
                         <div class="card-header">

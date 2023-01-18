@@ -94,7 +94,7 @@
                             <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่ (DueDate)</span>
@@ -102,7 +102,7 @@
                             <asp:TextBox class="form-control" ID="txtStartDueDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จนถึง (DueDate)</span>

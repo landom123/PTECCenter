@@ -591,7 +591,7 @@
             const chkBill = document.getElementById('<%= chkBill.ClientID%>');
             
             const secid = "<%= Session("secid")%>"
-            if (secid != "2") {
+            if (secid != "2" && secid != "35" ) {
                 //alert("in secid != 2")
                 if (!($('#<%= chkAfter.ClientID%>').prop("checked")) && !($('#<%= chkBill.ClientID%>').prop("checked"))) {
                     alertWarning('ต้องมีรูปอย่างใดอย่างนึง');

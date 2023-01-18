@@ -24,7 +24,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>
@@ -42,7 +42,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>
@@ -60,7 +60,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>
@@ -78,7 +78,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>
@@ -96,7 +96,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>
@@ -114,7 +114,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>
@@ -132,7 +132,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>
@@ -150,7 +150,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>
@@ -168,7 +168,7 @@
 					<% if menutable.rows(i).item("menu_name")="-" then %>
 						<div class="dropdown-divider"></div>
 					<% else %>
-						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-nowrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
+						<div style="font-size:12px"><a class="dropdown-item" href="<%=Page.ResolveUrl(menutable.rows(i).item("menu_url"))%>"><div class="row flex-wrap"><div class="text-left col"><% =menutable.rows(i).item("menu_name") %></div><div class="text-right col"><% if menutable.rows(i).item("active_mobile")="1" then %><i class="fas fa-mobile-alt mr-1" style="font-size: 10px;color: #d2d2d2;"></i><% end if %><% if menutable.rows(i).item("active_pc")="1" then %><i class="fas fa-desktop" style="font-size: 10px;color: #d2d2d2;"></i><% end if %></div></div></a></div>
 					<% end if %>
 				<% end if 
 			end if %>

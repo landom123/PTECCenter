@@ -176,6 +176,42 @@ Partial Public Class JobsManageCost
     Protected WithEvents txtDetail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cboPolicy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboPolicy As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''btnUpdatePolicy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdatePolicy As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''txtDueDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDueDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnUpdateDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateDuedate As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''TextBox1 control.
     '''</summary>
     '''<remarks>
@@ -183,15 +219,6 @@ Partial Public Class JobsManageCost
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents TextBox1 As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''RegularExpressionValidator1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
 
     '''<summary>
     '''cboSupplier control.

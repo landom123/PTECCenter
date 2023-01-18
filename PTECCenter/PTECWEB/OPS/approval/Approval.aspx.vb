@@ -101,10 +101,11 @@ Public Class WebForm1
                     If (Session("userid") = am_id Or
                     Session("userid") = rm_id Or
                     Session("userid") = dm_id Or
-                    Session("secid").ToString = "2"
+                    Session("secid").ToString = "2" Or
+                    Session("secid").ToString = "35"
                     ) And
                     (detailtable.Rows(0).Item("statusid") = 1) Then
-                        If Not Session("secid").ToString = "2" Then
+                        If Not (Session("secid").ToString = "2" And Session("secid").ToString = "35") Then
                             Session("status") = "write"
                         End If
 

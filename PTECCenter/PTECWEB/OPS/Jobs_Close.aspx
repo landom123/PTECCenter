@@ -2,11 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        .input-group {
-            margin-bottom: 1rem;
-        }
         
-
             .btn-light.disabled {
                 border: 1px solid #ced4da;
                 background-color: #e9ecef;
@@ -30,12 +26,12 @@
                     </li>
                 </ol>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
                     </div>
                 </div>
                 <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขที่เอกสาร</span>
@@ -46,7 +42,7 @@
                         </div>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่แจ้ง</span>
@@ -54,7 +50,7 @@
                             <asp:TextBox class="form-control" ID="txtDocDate" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ผู้แจ้ง</span>
@@ -65,42 +61,42 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สาขา</span>
-                                <asp:TextBox class="form-control" ID="txtBranch" runat="server" ReadOnly="True"></asp:TextBox>
                             </div>
+                                <asp:TextBox class="form-control" ID="txtBranch" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ฝ่าย</span>
-                                <asp:TextBox class="form-control" ID="txtDepartment" runat="server" ReadOnly="True"></asp:TextBox>
                             </div>
+                                <asp:TextBox class="form-control" ID="txtDepartment" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">แผนก</span>
-                                <asp:TextBox class="form-control" ID="txtSection" runat="server" ReadOnly="True"></asp:TextBox>
                             </div>
+                                <asp:TextBox class="form-control" ID="txtSection" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทงาน</span>
-                                <asp:TextBox class="form-control" ID="txtJobType" runat="server" ReadOnly="true"></asp:TextBox>
                             </div>
+                                <asp:TextBox class="form-control" ID="txtJobType" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">รหัสทรัพย์สิน</span>
@@ -108,7 +104,7 @@
                             <asp:TextBox class="form-control" ID="txtAssetCode" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <asp:TextBox class="form-control" ID="txtAssetName" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
@@ -116,15 +112,15 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จำนวน</span>
-                                <asp:TextBox class="form-control" ID="txtQuantity" runat="server" ReadOnly="true"></asp:TextBox>
                             </div>
+                                <asp:TextBox class="form-control" ID="txtQuantity" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">หน่วย</span>
@@ -132,19 +128,19 @@
                             <asp:TextBox class="form-control" ID="txtUnit" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทหมวดราคา</span>
+                            </div>
                                 <asp:TextBox class="form-control" ID="txtJobCenter" runat="server" ReadOnly="true">
                                 </asp:TextBox>
-                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
@@ -152,7 +148,7 @@
                             <asp:TextBox class="form-control" ID="txtCost" runat="server" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Supplier</span>
@@ -166,7 +162,7 @@
 
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">รายละเอียดงาน</span>
@@ -182,16 +178,16 @@
                     </div>
                     <div id="jobdetail" class="card-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-lg-3 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">ปิด</span>
+                                    </div>
                                         <asp:DropDownList class="form-control" ID="cboCloseType" runat="server">
                                         </asp:DropDownList>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">วันเริ่มต้นประกัน</span>
@@ -199,7 +195,7 @@
                                     <asp:TextBox class="form-control" ID="txtBeginWarr" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">วันสิ้นสุดประกัน</span>
@@ -207,27 +203,27 @@
                                     <asp:TextBox class="form-control" ID="txtEndWarr" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">ชนิดงาน</span>
+                                    </div>
                                         <asp:DropDownList class="form-control" ID="cboCloseCategory" runat="server">
                                         </asp:DropDownList>
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-lg-3 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Invoice No</span>
-                                        <asp:TextBox class="form-control" ID="txtInvoiceNo" runat="server"></asp:TextBox>
                                     </div>
+                                        <asp:TextBox class="form-control" ID="txtInvoiceNo" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">วันที่ Invoice</span>
@@ -235,12 +231,12 @@
                                     <asp:TextBox class="form-control" ID="txtInvDate" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 mb-3">
                                 <div class="input-group sm-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">วันที่ปิดงาน</span>
-                                        <asp:TextBox class="form-control" ID="txtCloseDate" runat="server"></asp:TextBox>
                                     </div>
+                                        <asp:TextBox class="form-control" ID="txtCloseDate" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                         </div>

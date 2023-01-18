@@ -19,7 +19,7 @@
                     จัดการงาน (APP)
                 </ol>
                 <div class="row">
-                    <div class="col-12 mb-3">
+                    <div class="col-md12 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขที่เอกสาร</span>
@@ -36,7 +36,7 @@
                 </div>
                 <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable.Rows.Count > 0 Then%>
                 <div class="row">
-                    <div class="col-6 mb-3">
+                    <div class="col-lg-6 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ต้องการเปลี่ยนเป็นสถานะ</span>
@@ -45,7 +45,7 @@
                             <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" />
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ค่าใช้จ่าย</span>
@@ -54,7 +54,7 @@
                             <asp:Button ID="btnSavePrice" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" />
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 mb-3">
                         
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -67,7 +67,7 @@
                 </div>
                 <hr />
                 <div class="row notPrint" id="card_attatch" runat="server">
-                    <div class="col-md-12" id="card_comment" runat="server">
+                    <div class="col-lg-12  mb-3" id="card_comment" runat="server">
                         <div class="card shadow card_comment">
                             <div class="table-responsive">
                                 <div class="card-header">
