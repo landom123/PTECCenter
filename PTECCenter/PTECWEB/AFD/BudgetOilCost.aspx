@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="BudgetOilCost.aspx.vb" Inherits="PTECCENTER.BudgetOilCost" %>
+﻿<%@ Page Title="Budget" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="BudgetOilCost.aspx.vb" Inherits="PTECCENTER.BudgetOilCost" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
       <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
 </asp:Content>
@@ -17,13 +17,13 @@
                   </li>
                 </ol>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12 mb-3">
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" />  &nbsp;              
                     </div>
                 </div>
-                <p></p>
+                
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ปีงบประมาณ</span>
@@ -31,7 +31,7 @@
                           <asp:DropDownList class="form-control" ID="cboYear" runat="server"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ต้นทุน บาท/ลิตร</span>
@@ -41,7 +41,7 @@
                                 ControlToValidate="txtCost" ErrorMessage=" ใส่ตัวเลข" />                            
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่ครบกำหนดทำงบฯ</span>
