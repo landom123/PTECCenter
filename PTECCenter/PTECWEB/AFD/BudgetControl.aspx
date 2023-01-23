@@ -17,13 +17,12 @@
                   </li>
                 </ol>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" />  &nbsp;              
                     </div>
                 </div>
-                <p></p>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ปีงบประมาณ</span>
@@ -31,7 +30,7 @@
                           <asp:DropDownList class="form-control" ID="cboYear" runat="server"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่เริ่มทำงบฯ</span>
@@ -39,7 +38,7 @@
                             <asp:TextBox class="form-control" ID="txtbegindate" runat="server" ></asp:TextBox>                          
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่ครบกำหนดทำงบฯ</span>

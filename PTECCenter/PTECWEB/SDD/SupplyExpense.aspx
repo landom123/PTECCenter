@@ -6,7 +6,7 @@
             margin-bottom: 1rem;
         }
     </style>
-<!-- datetimepicker-->
+    <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -24,31 +24,31 @@
                 </ol>
 
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-md-8 mb-3">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-success" runat="server" Text=" Confirm " />
                         <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text=" Cancel " />
                     </div>
-                    <div class="col-4" style="text-align:right">
-                        <asp:Label ID="lblstatus"  class="btn btn-sm  btn-success" runat="server" Text="สถานะ"></asp:Label>
+                    <div class="col-md-4 mb-3 text-right">
+                        <asp:Label ID="lblstatus" class="btn btn-sm  btn-success" runat="server" Text="สถานะ"></asp:Label>
                     </div>
                 </div>
 
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขที่เอกสาร</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtDocNo" runat="server" ></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtDocNo" runat="server"></asp:TextBox>
                             <div class="input-group-append">
                                 <asp:Button ID="btnFind" class="btn btn-sm  btn-success" runat="server" Text=" Find " />
                             </div>
                         </div>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-lg-4 col-md-6">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่</span>
@@ -56,7 +56,7 @@
                             <asp:TextBox class="form-control" ID="txtDocDate" runat="server"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-lg-4 col-md-6">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ผู้บันทึก</span>
@@ -64,17 +64,14 @@
                             <asp:TextBox class="form-control" ID="txtCreateBy" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-lg-4 col-md-6">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Supplier</span>
-                                <asp:DropDownList class="form-control" ID="cboSupplier"
-                                    runat="server">
-                                </asp:DropDownList>
                             </div>
+                            <asp:DropDownList class="form-control" ID="cboSupplier"
+                                runat="server">
+                            </asp:DropDownList>
                         </div>
                     </div>
 
@@ -98,7 +95,7 @@
                                     <td><% =details.Rows(i).Item("saleorder") %></td>
                                     <td><% =details.Rows(i).Item("expense") %></td>
                                     <td><% =Double.Parse(details.Rows(i).Item("amount")).ToString("N02") %></td>
-                                    <td>                                        
+                                    <td>
                                         <asp:Button ID="btnDel" class="btn btn-sm  btn-danger" runat="server" Text=" - " />
                                     </td>
                                 </tr>
@@ -111,7 +108,7 @@
                                         <asp:DropDownList ID="cboExpense" class="form-control" runat="server"></asp:DropDownList>
                                     </td>
                                     <td>
-                                        <asp:TextBox class="form-control" ID="txtAmount" runat="server" ></asp:TextBox>
+                                        <asp:TextBox class="form-control" ID="txtAmount" runat="server"></asp:TextBox>
                                     </td>
                                     <td>
                                         <asp:Button ID="btnAdd" class="btn btn-sm  btn-success" runat="server" Text=" + " OnClientClick="validateData()" />
@@ -143,7 +140,7 @@
         <!-- /#wrapper -->
     </div>
 
-        <!-- datetimepicker ต้องไปทั้งชุด-->
+    <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
 

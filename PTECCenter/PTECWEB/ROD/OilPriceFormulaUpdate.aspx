@@ -20,7 +20,7 @@
                 </ol>
                 <p></p>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">สาขา</span>
@@ -28,7 +28,7 @@
                           <asp:label class="form-control" ID="lblBranch" runat="server"></asp:label>
                         </div>                        
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่เริ่มใช้</span>
@@ -36,7 +36,7 @@
                           <asp:textbox style="background-color:yellow" class="form-control" ID="txtbegindate" runat="server"></asp:textbox>
                         </div>                        
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่สิ้นสุด</span>
@@ -45,9 +45,9 @@
                         </div>                        
                     </div>
                 </div>
-                <br />
+                
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-6 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ผู้บันทึก</span>
@@ -55,7 +55,7 @@
                           <asp:label class="form-control" ID="lblcreateby" runat="server"></asp:label>
                         </div>                        
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-6 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่บันทึก</span>
@@ -64,9 +64,9 @@
                         </div>                        
                     </div>
                 </div>
-                <br />
+                
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-lg-4 col-md-6 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ส่วนต่าง สนพ</span>
@@ -74,7 +74,7 @@
                           <asp:textbox style="background-color:yellow" class="form-control" ID="txtdiffbkk" runat="server"></asp:textbox>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-4 col-md-6 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ภาษี</span>
@@ -84,14 +84,13 @@
                     </div>
 
                 </div>
-                <br />
+                
                 <div class="card"><!-- begin sale by meter -->
-                    <div class="card-header" style="background-color:royalblue;color:white">
+                    <div class="card-header mb-3" style="background-color:royalblue;color:white">
                             ส่วนเพิ่ม / ลด ราคา ตามพื้นที่ใกล้เคียง
                     </div> 
-                    <br />
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-4 mb-3">
                             <div class="input-group sm-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">B7</span>
@@ -99,7 +98,7 @@
                               <asp:textbox style="background-color:yellow" class="form-control" ID="txtb7" runat="server"></asp:textbox>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-4 mb-3">
                             <div class="input-group sm-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">B10</span>
@@ -107,7 +106,7 @@
                               <asp:textbox style="background-color:yellow" class="form-control" ID="txtb10" runat="server"></asp:textbox>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-4 mb-3">
                             <div class="input-group sm-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">Gas 91</span>
@@ -115,7 +114,7 @@
                               <asp:textbox style="background-color:yellow" class="form-control" ID="txtg91" runat="server"></asp:textbox>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-4 mb-3">
                             <div class="input-group sm-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">Gas 95</span>
@@ -123,10 +122,7 @@
                               <asp:textbox style="background-color:yellow" class="form-control" ID="txtg95" runat="server"></asp:textbox>
                             </div>
                         </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-4 mb-3">
                             <div class="input-group sm-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">E20</span>
@@ -134,7 +130,7 @@
                               <asp:textbox style="background-color:yellow" class="form-control" ID="txte20" runat="server"></asp:textbox>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-4 mb-3">
                             <div class="input-group sm-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">PADO</span>
@@ -142,7 +138,7 @@
                               <asp:textbox style="background-color:yellow" class="form-control" ID="txtpado" runat="server"></asp:textbox>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-4 mb-3">
                             <div class="input-group sm-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">PG95</span>
@@ -151,23 +147,15 @@
                             </div>
                         </div>
                     </div>
-                    <br />
+                    
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12 text-center">
                             <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="บันทึก" />&nbsp;   
                         </div>
                     </div>
                 </div>
 
             </div>            <!-- /.container-fluid -->
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                    <span>Copyright © Your Website 2019</span>
-                    </div>
-                </div>
-            </footer>
         </div>        <!-- end content-wrapper -->
 
 

@@ -22,13 +22,13 @@
                   </li>
                 </ol>
                 <div class="row">
-                    <div class="col-4">วันที่เริ่มต้น
+                    <div class="col-md-4 mb-3">วันที่เริ่มต้น
                         <asp:textbox class="form-control" ID="txtBegindate" runat="server" AutoPostBack="true"></asp:textbox>
                     </div>
-                    <div class="col-4">วันที่สิ้นสุด
+                    <div class="col-md-4 mb-3">วันที่สิ้นสุด
                         <asp:textbox class="form-control" ID="txtEnddate" runat="server" AutoPostBack="true"></asp:textbox>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <asp:Button class="btn btn-sm  btn-success" ID="btnFind" runat="server" Text="Find" />
                     </div>
                 </div> 

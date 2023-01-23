@@ -22,7 +22,7 @@
                 </ol>
                 <p></p>
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-lg-8 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่ปรับราคา</span>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-lg-4 mb-3">
                                         <div class="input-group sm-3">
                                           <div class="input-group-prepend">
                                             <span class="input-group-text">กะที่มีผล</span>
@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-8">
+                                    <div class="col-lg-8 mb-3">
                                         <div class="input-group sm-3">
                                             <div style="position:absolute;right:0;">
                                                 <asp:Button ID="btnsave" class="btn btn-sm  btn-success" runat="server" Text="บันทึกเปลี่ยนแปลงราคา" />&nbsp;

@@ -55,7 +55,7 @@
 
                               </asp:GridView>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-lg-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">เดือน ปี (yyyymm : 202106) </span>
@@ -63,7 +63,7 @@
                             <asp:textbox id="txtaddmonthly" class="form-control" runat="server" ></asp:textbox>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-lg-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">เลขที่ google sheet </span>
@@ -71,7 +71,7 @@
                             <asp:textbox id="txtaddsheetid" class="form-control" runat="server" ></asp:textbox>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-lg-4 mb-3">
                         <div class="input-group sm-3">
                             <asp:Button ID="btnadd" class="btn btn-sm  btn-success" runat="server"  Text="Add" />
                         </div>

@@ -22,21 +22,20 @@
                   </li>
                 </ol>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-md-6 mb-3">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-success" runat="server" Text=" Confirm " />
                     </div>
-                    <div class="col-6" style="text-align:right">
+                    <div class="col-md-6 mb-3" style="text-align: right">
                         <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text=" Cancel " OnClientClick="return cancel_data();"/>
                     </div>
                 </div> 
 
-                <br />
                 <div class="container">
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">วันที่ เวลา ราคามีผล</span>
@@ -44,7 +43,7 @@
                                 <asp:textbox class="form-control" ID="txtPriceDate" runat="server" AutoPostBack="true"></asp:textbox>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">สถานะ</span>
