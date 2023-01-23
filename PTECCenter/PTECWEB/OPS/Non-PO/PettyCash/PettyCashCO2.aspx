@@ -1541,7 +1541,7 @@ alert('else nonpo')
             $('#<%= row.ClientID%>').val(0);
             $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
             $('#<%= cboAccountCode.ClientID%>').val(0);
-            $('#<%= cboDep.ClientID%>').val(3); //3 = ROD
+            $('#<%= cboDep.ClientID%>').val(26); //3 = ROD , 26 = 101ROD
             $('#<%= cboBU.ClientID%>').val(1);
             <%--$('#<%= cboPP.ClientID%>').val(0);--%>
             $('#<%= cboPJ.ClientID%>').val(0);
