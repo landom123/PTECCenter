@@ -20,7 +20,7 @@
                 </ol>
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">วันที่</span>
@@ -28,7 +28,7 @@
                           <asp:TextBox class="form-control" ID="txtBegindate" runat="server"></asp:TextBox>                
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">ถึง วันที่</span>
