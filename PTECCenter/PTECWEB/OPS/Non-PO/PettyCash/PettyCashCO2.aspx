@@ -1524,10 +1524,10 @@ alert('else nonpo')
             <%--const dd = document.getElementById('<%= cboDep.ClientID%>');--%>
             if (accValue == "521290") {
                 //dd.selectedIndex = [...dd.options].findIndex(option => option.text === 'HRD');
-                $('#<%= cboDep.ClientID%>').val(5); //3 = HRD
+                $('#<%= cboDep.ClientID%>').val(22); //3 = HRD 22 = 101HDR
 
             } else {
-                $('#<%= cboDep.ClientID%>').val(3); //3 = ROD
+                $('#<%= cboDep.ClientID%>').val(26); //3 = ROD 26 =101ROD
             }
 
             $('.form-control').selectpicker('refresh');
