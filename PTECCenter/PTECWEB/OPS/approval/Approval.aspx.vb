@@ -105,7 +105,7 @@ Public Class WebForm1
                     Session("secid").ToString = "35"
                     ) And
                     (detailtable.Rows(0).Item("statusid") = 1) Then
-                        If Not (Session("secid").ToString = "2" And Session("secid").ToString = "35") Then
+                        If Not (Session("secid").ToString = "2") And Not (Session("secid").ToString = "35") Then
                             Session("status") = "write"
                         End If
 
