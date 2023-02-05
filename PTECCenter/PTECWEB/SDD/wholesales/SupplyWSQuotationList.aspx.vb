@@ -2,6 +2,8 @@
 Imports System.IO
 Imports ExcelDataReader
 Imports ClosedXML.Excel
+Imports System.Windows
+
 Public Class SupplyWSQuotationList
     Inherits System.Web.UI.Page
     Public menutable As DataTable
@@ -125,9 +127,16 @@ Public Class SupplyWSQuotationList
     End Sub
 
     Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
-        Dim begindate, enddate As String
-        begindate = Date.Parse(txtBegindate.Text).Year.ToString("0000") & Date.Parse(txtBegindate.Text).Month.ToString("00") & Date.Parse(txtBegindate.Text).Day.ToString("00")
-        enddate = Date.Parse(txtEnddate.Text).Year.ToString("0000") & Date.Parse(txtEnddate.Text).Month.ToString("00") & Date.Parse(txtEnddate.Text).Day.ToString("00")
-        FindData(begindate, enddate)
+        Try
+            Dim begindate, enddate As String
+            If txtBegindate.Text = "" Or IsDBNull(txtBegindate.Text) = True Then MessageBox.Show("กรุณาระบุวันที่เริ่มต้น") : Exit Sub
+            If txtEnddate.Text = "" Or IsDBNull(txtEnddate.Text) = True Then MessageBox.Show("กรุณาระบุวันที่สิ้นสุด") : Exit Sub
+            begindate = Date.Parse(txtBegindate.Text).Year.ToString("0000") & Date.Parse(txtBegindate.Text).Month.ToString("00") & Date.Parse(txtBegindate.Text).Day.ToString("00")
+            enddate = Date.Parse(txtEnddate.Text).Year.ToString("0000") & Date.Parse(txtEnddate.Text).Month.ToString("00") & Date.Parse(txtEnddate.Text).Day.ToString("00")
+            FindData(begindate, enddate)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
     End Sub
 End Class

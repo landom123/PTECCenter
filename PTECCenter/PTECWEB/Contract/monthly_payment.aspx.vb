@@ -13,7 +13,7 @@ Public Class monthly_payment
         usercode = Session("usercode")
         username = Session("username")
 
-        txtCalcDate.Attributes.Add("readonly", "readonly")
+        'txtCalcDate.Attributes.Add("readonly", "readonly")
 
 
 

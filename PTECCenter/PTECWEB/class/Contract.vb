@@ -682,6 +682,63 @@ Public Class Project
         Return result
     End Function
 
+    Public Function ListFind(Branch As String) As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Project_List_find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@Branch", SqlDbType.VarChar).Value = Branch
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
+
+    Public Function loadBranch() As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "sp_Get_Branch"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
     Public Function Save(projectno As String, branch As String, remark As String, salevolume As Integer, status As String, usercode As String) As DataTable
         Dim result As DataTable
 
@@ -796,7 +853,6 @@ Public Class Contract
 
         Return result
     End Function
-
     Public Function Save(projectno As String, agreetype As String,
                               agreeno As String, lawcontractno As String, agreedate As DateTime, agreeactivedate As DateTime,
                               usercode As String) As String
@@ -993,8 +1049,7 @@ Public Class Contract
         conn.Close()
 
         Return result
-    End Function
-    '
+    End Function    '
     Public Function Ag_Monthly_Payment_Calcuate(agreeid As Double, monthly As String) As DataSet
         'แสดงข้อมูลตารางค่าใช้จ่ายที่ต้องจ่ายในเดือน
         Dim result As New DataSet
@@ -1052,8 +1107,6 @@ Public Class Contract
 
         Return result
     End Function
-
-
     Public Function Ag_Status_list() As DataTable
         'แสดงข้อมูลตารางค่าใช้จ่ายทั้งหมดของสัญญา จนจบสัญญา
         Dim result As New DataTable
@@ -1083,4 +1136,36 @@ Public Class Contract
 
         Return result
     End Function
+End Class
+
+Public Class clsRequestContract
+
+    Public Function loadBranch() As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "sp_Get_Branch"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
 End Class

@@ -131,6 +131,87 @@ Partial Public Class contractinfo
     Protected WithEvents txtContractActiveDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''txtcontractPeriod control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtcontractPeriod As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtcontractPeriod2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtcontractPeriod2 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtBegindate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBegindate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtEndDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtRentalReg control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtRentalReg As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtBranch1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBranch1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtDays control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDays As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtRentPer control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtRentPer As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtPlant control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPlant As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''btnClient control.
     '''</summary>
     '''<remarks>

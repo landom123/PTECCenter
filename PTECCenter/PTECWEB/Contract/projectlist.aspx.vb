@@ -3,11 +3,17 @@
 Imports System.IO
 
 Imports ClosedXML.Excel
+Imports DocumentFormat.OpenXml.Wordprocessing
+Imports System.Windows
+
 Public Class projectlist
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public projecttable As DataTable = create()
     Public usercode, username
+
+    Dim dtBranch As New DataTable
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
 
@@ -45,11 +51,42 @@ Public Class projectlist
             If Not (Session("project") Is Nothing) Then
                 projecttable = Session("project")
                 BindData()
+
+
+                List()
+
+                Dim objprj As New Project
+                    dtBranch = objprj.loadBranch
+                    cboBranch.DataSource = dtBranch
+                    cboBranch.DataValueField = "branch_code"
+                    cboBranch.DataTextField = "branch_name"
+                    cboBranch.DataBind()
+
+
             Else
                 List()
+
+                Dim objprj As New Project
+                dtBranch = objprj.loadBranch
+                cboBranch.DataSource = dtBranch
+                cboBranch.DataValueField = "branch_code"
+                cboBranch.DataTextField = "branch_name"
+                cboBranch.DataBind()
+
             End If
         End If
 
+
+
+    End Sub
+
+    Private Sub SetCboContractType(obj As Object)
+        Dim ag As New Contract
+
+        obj.DataSource = ag.ContractTypeCbo()
+        obj.DataValueField = "agtypeid"
+        obj.DataTextField = "agtype"
+        obj.DataBind()
     End Sub
 
     Private Function create() As DataTable
@@ -81,7 +118,20 @@ Public Class projectlist
         projecttable = objprj.List()
         Session("project") = projecttable
         BindData()
+
     End Sub
+
+    Protected Sub ListFind(Branch As String)
+        'Dim InvoiceDate As String
+        Dim objprj As New Project
+
+        'InvoiceDate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
+        projecttable = objprj.ListFind(Branch)
+        Session("project") = projecttable
+        BindData()
+
+    End Sub
+
 
     Private Sub gvData_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvData.PageIndexChanging
         gvData.PageIndex = e.NewPageIndex
@@ -99,6 +149,35 @@ Public Class projectlist
     End Sub
 
     Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles btnRefresh.Click
-        List()
+        'List()
+
+        Try
+
+            If cboBranch.SelectedValue.ToUpper = "ALL" Then
+                List()
+            Else
+                ListFind(cboBranch.SelectedValue)
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
     End Sub
+
+    Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
+        Try
+
+            If cboBranch.SelectedValue.ToUpper = "ALL" Then
+                List()
+            Else
+                ListFind(cboBranch.SelectedValue)
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+
 End Class

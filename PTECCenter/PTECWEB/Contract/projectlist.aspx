@@ -33,6 +33,17 @@
                             <asp:Button ID="btnselectall" class="btn btn-sm  btn-success" runat="server" Text="Select All" />&nbsp;  
                             <asp:Button ID="btnunselect" class="btn btn-sm  btn-danger" runat="server" Text="Un Select All" />  
                     </div>--%>
+                               <div class="row">
+                                    <div class=" col-md-auto mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Filter Branch</span>
+                                                <asp:DropDownList ID="cboBranch" class="form-control" runat="server" AutoPostBack="true">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
 
                               <div class="table-responsive">
                                 <asp:GridView ID="gvData"  

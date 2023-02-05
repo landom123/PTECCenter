@@ -379,6 +379,35 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <%-- Add Jobtype Cate--%>
+
+                                <div class="col-md-2 mb-3">
+                                    <div class="input-group sm-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">หมวดงาน</span>
+                                            <asp:DropDownList ID="cboJobCate" class="form-control" runat="server" AutoPostBack="true">
+                                            </asp:DropDownList>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%-- --%>
+
+                                <%-- Add Jobtype Group--%>
+
+                                <div class="col-md-2 mb-3">
+                                    <div class="input-group sm-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">กลุ่มงาน</span>
+                                            <asp:DropDownList ID="cboJobGroup" class="form-control" runat="server" AutoPostBack="true">
+                                            </asp:DropDownList>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%-- --%>
+
                                 <div class="col-md-6 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">

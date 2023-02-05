@@ -27,11 +27,13 @@ Public Class clientinfo
             End If
             contractno = Session("contractno")
             clientno = Session("clientno")
+            lblContracttype.Text = Session("contracttype")
         Else
             contractno = Request.QueryString("contractno")
             clientno = Request.QueryString("clientno")
             projectno = Session("projectno")
 
+            lblContracttype.Text = Session("contracttype")
 
             Session("contractno") = contractno
             Session("clientno") = clientno

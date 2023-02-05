@@ -59,6 +59,15 @@ Partial Public Class clientinfo
     Protected WithEvents txtContractNo As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblContracttype control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblContracttype As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''lblStatus control.
     '''</summary>
     '''<remarks>
@@ -219,4 +228,49 @@ Partial Public Class clientinfo
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtPostcode As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtAddress1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtAddress1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtSubdistrict1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSubdistrict1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtDistrict1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDistrict1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtProvince1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtProvince1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtPostcode1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPostcode1 As Global.System.Web.UI.WebControls.TextBox
 End Class

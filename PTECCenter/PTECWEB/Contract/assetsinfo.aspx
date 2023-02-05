@@ -31,16 +31,44 @@
                 </div>
 
                 <div class="card-body">
-                <div class="row">
+                    <div class="row" style="padding-top: 0.2rem;">
                         <div class="col-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text">เลขที่สัญญา</span>
+                                    <span class="input-group-text">เลขที่สัญญา</span>
                                 </div>
                                 <asp:TextBox class="form-control" ID="txtContractNo" placeholder="please save first" ReadOnly="true" runat="server" ></asp:TextBox>    
 
                             </div>
+              <%--               <div class="input-group sm-3">
+                                <span class="input-group-text">
+                                  
+                                        สัญญาร่วมธุรกิจ &nbsp                                      
+                                            <asp:RadioButton ID="rdoplanBlank" runat="server" groupname= "fullarea" text=" ที่ดินเปล่า " Checked="true"/> &nbsp;&nbsp;
+                                            <asp:RadioButton ID="rdoplanNonBlank" runat="server" groupname= "fullarea" text=" พร้อมสิ่งปลูกสร้าง " />                                
+                                </span>
+                             </div>--%>
+
+
+                            <div class="col-15">
+                                <%--<legend> สัญญาร่วมธุรกิจ </legend>--%>
+                                 <div class="input-group sm-3">
+                                      <div class="input-group-prepend">
+                                            <span class="input-group-text" > สัญญาร่วมธุรกิจ &nbsp <asp:RadioButtonList ID="rdoplanBlank" runat="server" RepeatDirection="Horizontal">           
+                                                <asp:ListItem Text="ที่ดินเปล่า" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="พร้อมสิ่งปลูกสร้าง" Value="2"></asp:ListItem>
+                                                </asp:RadioButtonList>
+                <%--                               <div id="dvShowHide" style="display:none;">
+                                                    Bank Name :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="txtBankName" runat="server"></asp:TextBox><br />              
+                                                    Cheque Number: <asp:TextBox ID="txtChequeNumber" runat="server"></asp:TextBox>
+                                                </div>--%>
+                                            </span>
+                                     </div>
+                                </div>
+                            </div>
+
                         </div>
+
                         <div class="col-4">
 
                         </div>
@@ -56,94 +84,136 @@
                     </div>
 
                     <%-- input area --%>
-                    <div class="row">
-                        <div class="col-md-4">
-                            รหัสทรัพย์สิน
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">                           
                             <div class="input-group sm-3">
+                                 รหัสทรัพย์สิน &nbsp
                                 <asp:Textbox class="form-control" ID="txtAssetsNo" placeholder="please save first" runat="server" ReadOnly="true"></asp:Textbox>    
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            ประเภทที่ดิน
+                        <div class="col-md-3">                            
                             <div class="input-group sm-3">
+                                ประเภทที่ดิน &nbsp
                                 <asp:DropDownList class="form-control" ID="cboAssetType" runat="server"></asp:DropDownList>    
                             </div>
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            เลขที่โฉนด/เอกสารสิทธิ์
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">                            
                             <div class="input-group sm-3">
+                                เลขที่โฉนด/เอกสารสิทธิ์ &nbsp
                                 <asp:Textbox class="form-control" ID="txtLandno" runat="server"></asp:Textbox>    
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            เลขที่หน้าสำรวจ
+                        <div class="col-md-3">                            
                             <div class="input-group sm-3">
+                                เลขที่หน้าสำรวจ &nbsp
                                 <asp:Textbox class="form-control" ID="txtSurveyNo" runat="server"></asp:Textbox>  
                             </div>
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            ตำบล
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">                           
                             <div class="input-group sm-3">
+                                 ตำบล &nbsp
                                 <asp:Textbox class="form-control" ID="txtSubDistrict" runat="server"></asp:Textbox>    
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            อำเภอ
+                        <div class="col-md-3">                            
                             <div class="input-group sm-3">
+                                อำเภอ &nbsp
                                 <asp:Textbox class="form-control" ID="txtDistrict" runat="server"></asp:Textbox>  
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            จังหวัด
+                        <div class="col-md-3">                           
                             <div class="input-group sm-3">
+                                 จังหวัด &nbsp
                                 <asp:Textbox class="form-control" ID="txtProvince" runat="server"></asp:Textbox>  
                             </div>
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            ทั้งแปลง/แบ่งเช่า
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">
+                            ทั้งแปลง/แบ่งเช่า &nbsp
                             <div class="input-group sm-3">
                                 <asp:RadioButton ID="rdoFull" runat="server" groupname= "fullarea" text=" ทั้งแปลง " Checked="true"/> &nbsp;&nbsp;
                                 <asp:RadioButton ID="rdoPart" runat="server" groupname= "fullarea" text=" แบ่งเช่า " />
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            ไร่
+                        <div class="col-md-3">                           
                             <div class="input-group sm-3">
+                                 ไร่ &nbsp
                                 <asp:Textbox class="form-control" ID="txtRai" runat="server"></asp:Textbox>  
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            งาน
+                        <div class="col-md-3">                           
                             <div class="input-group sm-3">
+                                 งาน &nbsp
                                 <asp:Textbox class="form-control" ID="txtNgan" runat="server"></asp:Textbox>  
                             </div>
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            ตารางวา
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">                           
                             <div class="input-group sm-3">
+                                 ตารางวา &nbsp
                                 <asp:Textbox class="form-control" ID="txtWa" runat="server"></asp:Textbox>    
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            พิกัด GPS
+                        <div class="col-md-3">                           
                             <div class="input-group sm-3">
+                                 พิกัด GPS &nbsp
                                 <asp:Textbox class="form-control" ID="txtGPS" runat="server"></asp:Textbox>  
                             </div>
                         </div>
 
                     </div>
+
+                    <br />
+
+                                <div class="row" id="dvShowHide"  style="display:none;">
+                                     <div class="row" style="padding-top: 0.2rem;">
+                                        <div class="col-md-12">
+                                             <span class="input-group-text" style="background-color:green ;color:white" runat="server" > พร้อมสิ่งปลูกสร้าง </span>                                                   
+                                        </div>
+                                     </div>
+
+                                    <div class="row" style="padding-top: 0.2rem;">
+                                        <div class="col-md-4">                                            
+                                            <div class="input-group sm-3">
+                                                สิ่งปลูกสร้างเลขที่ &nbsp
+                                                <asp:Textbox class="form-control" ID="txtbuNo" runat="server"></asp:Textbox>    
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">                                            
+                                            <div class="input-group sm-3">
+                                                ตำบล &nbsp
+                                                <asp:Textbox class="form-control" ID="txtbuSubDistrict" runat="server"></asp:Textbox>    
+                                            </div>
+                                        </div>
+                                    </div>
+                             
+                                    <div class="row" style="padding-top: 0.2rem;">
+                                        <div class="col-md-4">                                           
+                                            <div class="input-group sm-3">
+                                                 อำเภอ &nbsp
+                                                <asp:Textbox class="form-control" ID="txtbuDistrict" runat="server"></asp:Textbox>  
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">                                           
+                                            <div class="input-group sm-3">
+                                                 จังหวัด &nbsp
+                                                <asp:Textbox class="form-control" ID="txtbuProvince" runat="server"></asp:Textbox>  
+                                            </div>
+                                        </div>    
+                                    </div>     
+                                </div>
+
+
                 </div>
 
 
@@ -193,6 +263,33 @@
                 'warning'
             )
         }
+    </script>
+
+  <script src="//code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#<%=rdoplanBlank.ClientID %>').click(function () {
+                var SelectedValue = $('#<%=rdoplanBlank.ClientID %> input[type=radio]:checked').val();
+
+                if (SelectedValue == 1) {
+                    //If cash is selected then hide the Div
+                    $('#dvShowHide').css("display", "none");
+                    //or you can simply use jQuery hide method to hide the Div as below:
+                    //$('#dvShowHide').hide();          
+                }
+                else if (SelectedValue == 2) {
+                    //If Cheque is selected then show the Div
+                    $('#dvShowHide').css("display", "block");
+                    //or you can simply use jQuery show method to show the Div as below:
+                    //$('#dvShowHide').show();
+                    //Clear textboxes
+                   // $('#<%=txtbuNo.ClientID %>').val('');
+                   // $('#<%=txtbuSubDistrict.ClientID %>').val('');
+                    //Set focus in bank name textbox
+                   // $('#<%=txtbuNo.ClientID %>').focus();
+                }
+            });
+        });
     </script>
 
 </asp:Content>

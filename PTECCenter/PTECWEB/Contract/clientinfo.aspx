@@ -31,147 +31,212 @@
                 </div>
 
                 <div class="card-body">
-                <div class="row">
-                        <div class="col-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text">เลขที่สัญญา</span>
+                    <div class="row">
+                            <div class="col-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">เลขที่สัญญา</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="txtContractNo" placeholder="please save first" ReadOnly="true" runat="server" ></asp:TextBox>    
+                                    <asp:Label class="form-control" ID="lblContracttype" style="background-color:darkgreen;color:white" runat="server" ></asp:Label>
                                 </div>
-                                <asp:TextBox class="form-control" ID="txtContractNo" placeholder="please save first" ReadOnly="true" runat="server" ></asp:TextBox>    
+                            </div>
 
+                            <div class="col-3">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">สถานะ</span>
+                                    </div>
+                                    <asp:Label class="form-control" ID="lblStatus" style="background-color:darkgreen;color:white" runat="server" ></asp:Label>    
+
+                                </div>
+                            </div>
+                    </div>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">                                
+                            <div class="input-group sm-3">
+                                รหัสคู่สัญญา &nbsp
+                                <asp:TextBox class="form-control" ID="txtClientNo" runat="server" ReadOnly="true"></asp:TextBox>
                             </div>
                         </div>
-                        <div class="col-4">
-
-                        </div>
-                        <div class="col-4">
+                        <div class="col-md-3">                                
                             <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text">สถานะ</span>
-                                </div>
-                                <asp:Label class="form-control" ID="lblStatus" style="background-color:darkgreen;color:white" runat="server" ></asp:Label>    
-
+                                วันที่สร้างรายการ &nbsp
+                                <asp:TextBox class="form-control" ID="txtCreateDate" runat="server" ReadOnly="True"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-4">                               
+                            <div class="input-group sm-3">
+                                 ผู้สร้างรายการ &nbsp
+                                <asp:TextBox class="form-control" ID="txtCreateBy" runat="server" ReadOnly="True"></asp:TextBox>
                             </div>
                         </div>
                     </div>
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4 ">
-                            รหัสคู่สัญญา
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtClientNo" runat="server" ReadOnly="true"></asp:TextBox>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-4 ">                                
+                            <div class="input-group sm-">
+                                ชื่อ-นามสกุล &nbsp
+                                <asp:TextBox class="form-control" ID="txtName" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-4">                                
+                            <div class="input-group sm-3">
+                                เลขที่่บัตรประจำตัวประชาชน &nbsp
+                                <asp:TextBox class="form-control" ID="txtCardID" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-2">                                
+                            <div class="input-group sm-3">
+                                เพศ &nbsp
+                                <asp:dropdownlist class="form-control" ID="cboSex" runat="server" ></asp:dropdownlist>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                            วันที่สร้างรายการ
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtCreateDate" runat="server" ReadOnly="True"></asp:TextBox>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-4 ">                                
+                            <div class="input-group sm-">
+                                ชื่อบริษัท &nbsp
+                                <asp:TextBox class="form-control" ID="txtCompany" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-2">                                
+                            <div class="input-group sm-3">
+                                วันเกิด &nbsp
+                                <asp:TextBox class="form-control" ID="txtBirthday" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">                                
+                            <div class="input-group sm-3">
+                                Mobile Phone &nbsp
+                                <asp:TextBox class="form-control" ID="txtMobile" runat="server" ></asp:TextBox>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                            ผู้สร้างรายการ
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtCreateBy" runat="server" ReadOnly="True"></asp:TextBox>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">                                
+                            <div class="input-group sm-2">
+                                Tel &nbsp
+                                <asp:TextBox class="form-control" ID="txtTel" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">                               
+                            <div class="input-group sm-2">
+                                 Email &nbsp
+                                <asp:TextBox class="form-control" ID="txtEmail" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">                              
+                            <div class="input-group sm-2">
+                                  Line &nbsp
+                                <asp:TextBox class="form-control" ID="txtLine" runat="server" ></asp:TextBox>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4 ">
-                            ชื่อ-นามสกุล
-                        <div class="input-group sm-">
-                            <asp:TextBox class="form-control" ID="txtName" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                            เลขที่่บัตรประจำตัวประชาชน
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtCardID" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                            เพศ
-                        <div class="input-group sm-3">
-                            <asp:dropdownlist class="form-control" ID="cboSex" runat="server" ></asp:dropdownlist>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4 ">
-                            ชื่อบริษัท
-                        <div class="input-group sm-">
-                            <asp:TextBox class="form-control" ID="txtCompany" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                            วันเกิด
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtBirthday" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                            Mobile Phone
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtMobile" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4 ">
-                            Tel
-                        <div class="input-group sm-">
-                            <asp:TextBox class="form-control" ID="txtTel" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                            Email
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtEmail" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                            Line
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtLine" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
+
                     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-12">
-                            ที่อยู่
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtAddress" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4">
-                            ตำบล/แขวง
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtSubdistrict" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                            อำเภอ/เขต
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtDistrict" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                            จังหวัด
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtProvince" runat="server" ></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4">
-                            รหัสไปรษณีย์
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtPostcode" runat="server" ></asp:TextBox>
+
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-12">
+                             <span class="input-group-text" style="background-color:green ;color:white" runat="server" > ที่อยู่ตามทะเบียนบ้าน</span>                                                   
                         </div>
                     </div>
 
-                </div>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-10">
+                          
+                            <div class="input-group sm-3">
+                                  ที่อยู่ &nbsp
+                                <asp:TextBox class="form-control" ID="txtAddress" runat="server" ></asp:TextBox>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">
+                           
+                            <div class="input-group sm-3">
+                                 ตำบล/แขวง &nbsp
+                                <asp:TextBox class="form-control" ID="txtSubdistrict" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                           
+                            <div class="input-group sm-3">
+                                 อำเภอ/เขต &nbsp
+                                <asp:TextBox class="form-control" ID="txtDistrict" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                             
+                            <div class="input-group sm-3">
+                                จังหวัด &nbsp
+                                <asp:TextBox class="form-control" ID="txtProvince" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">
+                           
+                            <div class="input-group sm-3">
+                                 รหัสไปรษณีย์ &nbsp
+                                <asp:TextBox class="form-control" ID="txtPostcode" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <%--<hr style="height:2px;border-width:0;color:gray;background-color:gray">--%>
+
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-12">
+                             <span class="input-group-text" style="background-color:green ;color:white" runat="server" > ที่อยู่ส่งเอกสาร</span>                                                   
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top: 1rem;">
+                        <div class="col-md-10">
+                          
+                            <div class="input-group sm-3">
+                                  ที่อยู่ &nbsp
+                                <asp:TextBox class="form-control" ID="txtAddress1" runat="server" ></asp:TextBox>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">
+                           
+                            <div class="input-group sm-3">
+                                 ตำบล/แขวง &nbsp
+                                <asp:TextBox class="form-control" ID="txtSubdistrict1" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                           
+                            <div class="input-group sm-3">
+                                 อำเภอ/เขต &nbsp
+                                <asp:TextBox class="form-control" ID="txtDistrict1" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                             
+                            <div class="input-group sm-3">
+                                จังหวัด &nbsp
+                                <asp:TextBox class="form-control" ID="txtProvince1" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 0.2rem;">
+                        <div class="col-md-3">
+                           
+                            <div class="input-group sm-3">
+                                 รหัสไปรษณีย์ &nbsp
+                                <asp:TextBox class="form-control" ID="txtPostcode1" runat="server" ></asp:TextBox>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
 
@@ -199,6 +264,10 @@
     <script type="text/javascript">
         jQuery('[id$=txtBirthday]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
+
+            lang: 'th',// แสดงภาษาไทย
+            yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
+
             timepicker: false,
             scrollInput: false,
             format:'d/m/Y'

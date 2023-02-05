@@ -2,6 +2,8 @@
 Imports System.IO
 Imports ExcelDataReader
 Imports ClosedXML.Excel
+Imports System.Windows
+
 Public Class SupplyWSQuotation
     Inherits System.Web.UI.Page
     Public menutable As DataTable
@@ -28,7 +30,9 @@ Public Class SupplyWSQuotation
         txtSaledate.Attributes.Add("autocomplete", "off")
         'Dim objsupplier As New Supplier
 
+
         If IsPostBack() Then
+
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
                 Session("menulist") = menutable
@@ -72,6 +76,7 @@ Public Class SupplyWSQuotation
             End If
 
         End If
+        'txtAdd.Text = 0
 
     End Sub
     Private Sub FindData(docno As String)
@@ -100,9 +105,9 @@ Public Class SupplyWSQuotation
         With mytable.Rows(0)
             lblDocNo.Text = .Item("docno")
             txtremark.Text = .Item("remark")
-            lblCommission.Text = .Item("comm_rate")
+            lblCommission.Text = IIf(IsDBNull(.Item("comm_rate")), "", .Item("comm_rate"))
             lblTTCost.Text = .Item("ttcost_rate")
-            lblNetCommission.Text = .Item("comm_amount")
+            lblNetCommission.Text = IIf(IsDBNull(.Item("comm_amount")), 0, .Item("comm_amount"))
             lblDistanct.Text = .Item("distance")
             lblNetTTCost.Text = .Item("ttcost")
             txtSaledate.Text = .Item("saledate")
@@ -149,22 +154,45 @@ Public Class SupplyWSQuotation
 
         'javaScript = "<script type='text/javascript'>msgalert('ยังไม่เสร็จ');</script>"
         'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+        Try
+            Dim product As Label = TryCast(sender.FindControl("lblproduct"), Label)
 
-        Dim product As Label = TryCast(sender.FindControl("lblproduct"), Label)
+            For Each row As DataRow In saleitemtable.Rows
 
-        For Each row As DataRow In saleitemtable.Rows
-            If product.Text = row.Item("product") Then
-                row.Delete()
-            End If
-        Next row
-        Session("saleitemtable") = saleitemtable
-        BindData(saleitemtable)
+                If product.Text = row.Item("product").ToString Then
+                    row.Delete()
+                    'saleitemtable.Rows.Remove(row)
+                    saleitemtable.AcceptChanges()
 
+                    Session("saleitemtable") = saleitemtable
+                    BindData(saleitemtable)
+
+                End If
+
+            Next row
+
+            Session("saleitemtable") = saleitemtable
+            BindData(saleitemtable)
+
+        Catch ex As Exception
+            'MessageBox.Show("ไม่พบรายการที่ต้องการลบ")
+            'MessageBox.Show(ex.Message)
+        End Try
     End Sub
     Private Sub BindData(mytable As DataTable)
+        'For j = 0 To mytable.Columns.Count - 1
+        '    If j = 1 Or j = 2 Or j = 5 Then
+        '        mytable.Columns(j).DataType = System.Type.GetType("System.Double")
+        '    End If
+
+        'Next
         gvSaleitem.DataSource = mytable
         gvSaleitem.DataBind()
+
+
+
     End Sub
+
 
     Private Sub BindDataImage(mytable As DataTable)
         gvImage.DataSource = mytable
@@ -274,16 +302,30 @@ Public Class SupplyWSQuotation
                 mytable = wsobj.Wholesales_Calc_Detail_for_Sale(pricedate, supplyid, product, customerid)
                 'lblPrice.Text = mytable.Rows(0).Item("price") + mytable.Rows(0).Item("gap")
                 lblDistanct.Text = mytable.Rows(0).Item("distance")
+                lblDistanct.Text = FormatNumber(lblDistanct.Text, 2)
                 lblTTCost.Text = Math.Round(mytable.Rows(0).Item("ttcost"), 2)
+                lblTTCost.Text = FormatNumber(lblTTCost.Text, 2)
                 lblCommission.Text = mytable.Rows(0).Item("commission")
+                lblCommission.Text = FormatNumber(lblCommission.Text, 2)
+
+                If IsNumeric(txtAdd.Text) = False Then
+                    txtAdd.Text = 0
+                End If
+
+                If IsNumeric(txtVolume.Text) = False Then
+                    txtVolume.Text = 0
+                    txtVolume.Text = CDbl(txtVolume.Text)
+                End If
 
                 Dim R As DataRow = saleitemtable.NewRow
                 R("product") = cboProduct.SelectedItem.Text
-                R("volume") = txtVolume.Text
-                R("price") = mytable.Rows(0).Item("price")
+                R("volume") = FormatNumber(CDbl(txtVolume.Text))
+                R("price") = FormatNumber(mytable.Rows(0).Item("price") + Math.Round(mytable.Rows(0).Item("ttcost"), 2) + mytable.Rows(0).Item("commission") + +CDbl(txtAdd.Text), 2)
                 R("terminalmarkup") = mytable.Rows(0).Item("terminalmarkup")
-                R("markup") = txtAdd.Text
-                R("total") = (mytable.Rows(0).Item("price") + Double.Parse(txtAdd.Text) + mytable.Rows(0).Item("terminalmarkup")) * Double.Parse(txtVolume.Text)
+                R("markup") = FormatNumber(CDbl(txtAdd.Text), 4)
+                'R("total") = FormatNumber((mytable.Rows(0).Item("price") + FormatNumber(CDbl(txtAdd.Text), 2) + mytable.Rows(0).Item("terminalmarkup")) * Double.Parse(txtVolume.Text), 2)
+
+                R("total") = FormatNumber((mytable.Rows(0).Item("price") + 0 + mytable.Rows(0).Item("terminalmarkup")) * Double.Parse(txtVolume.Text) , 2)
                 saleitemtable.Rows.Add(R)
 
                 Session("saleitemtable") = saleitemtable
@@ -337,13 +379,13 @@ error_handler:
         ttcost = Double.Parse(lblTTCost.Text)
 
         oilprice = volume * (price + added)
-        lblOilPrice.Text = oilprice.ToString("N02")
+        lblOilPrice.Text = FormatNumber(oilprice, 2)
         commnet = comm * volume
-        lblNetCommission.Text = commnet.ToString("N02")
+        lblNetCommission.Text = FormatNumber(commnet, 2)
         ttcostnet = ttcost * volume
-        lblNetTTCost.Text = ttcostnet.ToString("N02")
-        lblTotal.Text = (oilprice + commnet + ttcostnet).ToString("N02")
-        lblTotalPerLitre.Text = ((oilprice + commnet + ttcostnet) / volume).ToString("N02")
+        lblNetTTCost.Text = FormatNumber(ttcostnet, 2)
+        lblTotal.Text = FormatNumber((oilprice + commnet + ttcostnet), 2)
+        lblTotalPerLitre.Text = FormatNumber(((oilprice + commnet + ttcostnet) / volume), 2)
 
     End Sub
 
@@ -523,6 +565,7 @@ error_handler:
         'End Try
 
         Dim nettotal As Double
+
         Try
             nettotal = Convert.ToInt32(saleitemtable.Compute("SUM(total)", String.Empty))
         Catch ex As Exception
@@ -535,20 +578,22 @@ error_handler:
             volumetotal = 0
         End Try
 
-        Dim lbltotalfooter As Label
+        Dim lbltotalfooter As Label = Nothing
+
         Try
             lbltotalfooter = TryCast(gvSaleitem.FooterRow.FindControl("lblnettotal"), Label)
-            lbltotalfooter.Text = nettotal
+            lbltotalfooter.Text = FormatNumber(nettotal, 2)
         Catch ex As Exception
-            lbltotalfooter.Text = "0"
+            lbltotalfooter.Text = "0.00"
         End Try
 
-        Dim lblvolumetotal As Label
+        Dim lblvolumetotal As Label = Nothing
+
         Try
             lblvolumetotal = TryCast(gvSaleitem.FooterRow.FindControl("lblvolumetotal"), Label)
-            lblvolumetotal.Text = volumetotal
+            lblvolumetotal.Text = FormatNumber(volumetotal, 2)
         Catch ex As Exception
-            lblvolumetotal.Text = "0"
+            lblvolumetotal.Text = "0.00"
         End Try
 
 
@@ -556,7 +601,7 @@ error_handler:
         Try
             commissionrate = Double.Parse(lblCommission.Text)
         Catch ex As Exception
-            commissionrate = 0
+            commissionrate = 1
         End Try
         Try
             ttcostrate = Double.Parse(lblTTCost.Text)
@@ -564,7 +609,9 @@ error_handler:
             ttcostrate = 0
         End Try
         lblNetCommission.Text = (commissionrate * volumetotal).ToString("N02")
+        lblNetCommission.Text = FormatNumber(lblNetCommission.Text, 2)
         lblNetTTCost.Text = (ttcostrate * volumetotal).ToString("N02")
+        lblNetTTCost.Text = FormatNumber(lblNetTTCost.Text, 2)
 
         Try
             netcommission = Double.Parse(lblNetCommission.Text)
@@ -577,9 +624,10 @@ error_handler:
             netttcost = 0
         End Try
         lblOilPrice.Text = nettotal.ToString("N02")
-        lbltotal.Text = (nettotal + netcommission + netttcost).ToString("N02")
+        lblTotal.Text = (nettotal + netcommission + netttcost).ToString("N02")
+        lblTotal.Text = FormatNumber(lblTotal.Text, 2)
         lblTotalPerLitre.Text = ((nettotal + netcommission + netttcost) / volumetotal).ToString("N02")
-
+        lblTotalPerLitre.Text = FormatNumber(lblTotalPerLitre.Text, 2)
         'cbo.DataSource = mytable
         'cbo.DataTextField = "name"
         'cbo.DataValueField = "wsvendid"
@@ -679,5 +727,21 @@ error_handler:
         End Try
 
         'refresh imagetable
+    End Sub
+
+    Private Sub txtVolume_TextChanged(sender As Object, e As EventArgs) Handles txtVolume.TextChanged
+        If IsNumeric(txtVolume.Text) = True Then
+            txtVolume.Text = FormatNumber(txtVolume.Text, 2)
+        Else
+            txtVolume.Text = 0
+        End If
+    End Sub
+
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        'Response.Redirect("SupplyWSQuotationReport.aspx")
+        Dim s As String = "window.open('../OPS/Jobs_Report_JobForm.aspx?jobcode=" & Request.QueryString("jobno").ToString() & "&supplierid=0', '_blank');"
+
+        Page.ClientScript.RegisterStartupScript(Me.GetType(), "alertscript", s, True)
+
     End Sub
 End Class

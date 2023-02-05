@@ -2,6 +2,8 @@
 Imports System.IO
 Imports ExcelDataReader
 Imports ClosedXML.Excel
+Imports System.Diagnostics.Contracts
+
 Public Class SupplyWSPriceSet
     Inherits System.Web.UI.Page
     Public menutable As DataTable
@@ -447,4 +449,10 @@ endsub:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
         End If
     End Sub
+
+    Private Sub btnLastPrice_Click(sender As Object, e As EventArgs) Handles btnLastPrice.Click
+        Response.Redirect("SupplyWSLastPriceSet.aspx")
+    End Sub
+
+
 End Class

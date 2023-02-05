@@ -2,6 +2,7 @@
 Imports System.Net.Mail
 Imports Microsoft.Reporting.WebForms
 Imports System.Net
+Imports System.Windows
 
 <Serializable()>
 Public NotInheritable Class MyReportServerCredentials
@@ -145,6 +146,50 @@ Module global_module
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+
+    Public Sub SetCboJobCate(obj As Object, DepID As Integer)
+        Try
+            Dim job As New jobs
+
+            obj.DataSource = job.JobCate_List(DepID)
+            obj.DataValueField = "ID"
+            obj.DataTextField = "Catename"
+            obj.DataBind()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+    End Sub
+
+    Public Sub SetCboJobGroup(obj As Object, CateID As Integer)
+        Try
+            Dim job As New jobs
+
+            obj.DataSource = job.JobGroup_List(CateID)
+            obj.DataValueField = "ID"
+            obj.DataTextField = "Groupname"
+            obj.DataBind()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+    End Sub
+
+    Public Sub SetCboJobDescription(obj As Object, GroupID As Integer)
+        Try
+            Dim job As New jobs
+
+            obj.DataSource = job.JobDescription_List(GroupID)
+            obj.DataValueField = "ID"
+            obj.DataTextField = "Jobname"
+            obj.DataBind()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+    End Sub
+
+
     Public Sub SetCboJobTypeByDepID(obj As Object, depid As String)
         Dim job As New jobs
 

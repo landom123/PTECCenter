@@ -12,7 +12,7 @@ Public Class contractinfo
     Public flexibletable As DataTable = createFlex()
     Public paymenttable As DataTable = createPayment()
 
-    Public usercode, username, projectno, contractno As String
+    Public usercode, username, projectno, contractno, contracttype As String
     'Public projectid As Double = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
@@ -70,6 +70,8 @@ Public Class contractinfo
                 menutable = Session("menulist")
             End If
 
+            txtbranch.Text = Request.QueryString("branch")
+
             projectno = Request.QueryString("projectno")
             contractno = Request.QueryString("agreeno")
             Session("projectno") = projectno
@@ -81,6 +83,8 @@ Public Class contractinfo
             '    BindDataClient()
             'End If
         End If
+
+
     End Sub
     Private Sub Find(contractno As String)
         Dim objContract As New Contract
@@ -171,8 +175,12 @@ Public Class contractinfo
                 txtbranch.Text = .Rows(0).Item("branch")
                 txtContractNo.Text = .Rows(0).Item("agno")
                 txtLawContractNo.Text = .Rows(0).Item("LawContractNo")
-                txtContractDate.Text = .Rows(0).Item("agdate")
-                txtContractActiveDate.Text = .Rows(0).Item("agactivedate")
+                'txtContractDate.Text = .Rows(0).Item("agdate")
+                'txtContractActiveDate.Text = .Rows(0).Item("agactivedate")
+
+                txtContractDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agdate")))
+                txtContractActiveDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agactivedate")))
+
                 cboContractType.SelectedIndex = cboContractType.Items.IndexOf(cboContractType.Items.FindByText(.Rows(0).Item("agtype")))
                 SetButton(.Rows(0).Item("status"))
             End If
@@ -252,12 +260,12 @@ Public Class contractinfo
         Dim scriptKey As String
         Dim javaScript As String
 
-        'If String.IsNullOrEmpty(txtbranch.Text) Then
-        '    result = False
-        '    scriptKey = "UniqueKeyForThisScript"
-        '    javaScript = "alertWarning('003 : กรุณาระบุข้อมูลสาขา')"
-        '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        'End If
+        If String.IsNullOrEmpty(txtbranch.Text) Then
+            result = False
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = "alertWarning('003 : กรุณาระบุข้อมูลสาขา')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End If
         Return result
     End Function
 
@@ -273,16 +281,28 @@ Public Class contractinfo
         lawcontractno = txtLawContractNo.text
         contracttype = cboContractType.SelectedItem.Text
         Try
-            contractdate = Date.Parse(txtContractDate.Text)
+            'contractdate = Date.Parse(txtContractDate.Text)
+            contractdate = DateAdd(DateInterval.Year, -543, Date.Parse(txtContractDate.Text))
         Catch ex As Exception
-            contractdate = Date.Now
-            txtContractDate.Text = Date.Now.ToString
+            'contractdate = Date.Now
+            'txtContractDate.Text = Date.Now.ToString
+
+            contractdate = DateAdd(DateInterval.Year, -543, Date.Now)
+            txtContractDate.Text = DateAdd(DateInterval.Year, -543, Date.Now).ToString
+
         End Try
         Try
-            contractactivedate = Date.Parse(txtContractActiveDate.Text)
+            'contractactivedate = Date.Parse(txtContractActiveDate.Text)
+
+            contractactivedate = DateAdd(DateInterval.Year, -543, Date.Parse(txtContractActiveDate.Text))
+
         Catch ex As Exception
-            contractactivedate = Date.Now
-            txtContractActiveDate.Text = Date.Now.ToString
+            'contractactivedate = Date.Now
+            'txtContractActiveDate.Text = Date.Now.ToString
+
+            contractactivedate = DateAdd(DateInterval.Year, -543, Date.Now)
+            txtContractActiveDate.Text = DateAdd(DateInterval.Year, -543, Date.Now).ToString
+
         End Try
 
         Try
@@ -431,6 +451,10 @@ Public Class contractinfo
     Private Sub btnAssets_Click(sender As Object, e As EventArgs) Handles btnAssets.Click
 
         If chkagree() Then
+
+
+            assetsinfo.iBuconType = cboContractType.SelectedValue
+
             Response.Redirect("assetsinfo.aspx?contractno=" & contractno & "&assetsno=")
         End If
 
@@ -452,5 +476,9 @@ Public Class contractinfo
         If Not String.IsNullOrEmpty(txtContractNo.Text) Then
             Response.Redirect("estimate_payment_byContract.aspx?agreeno=" & txtContractNo.Text & "&projectno=" & projectno)
         End If
+    End Sub
+
+    Private Sub cbocontracttype_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboContractType.SelectedIndexChanged
+        Session(contracttype) = cboContractType.SelectedItem.Text
     End Sub
 End Class

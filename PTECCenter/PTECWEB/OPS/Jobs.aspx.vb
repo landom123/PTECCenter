@@ -1,6 +1,8 @@
 ﻿Imports CrystalDecisions.CrystalReports.Engine
 Imports CrystalDecisions.Shared
 Imports System.IO
+Imports System.Windows
+
 Public Class frmJobs
     Inherits System.Web.UI.Page
     Public objStatus As String
@@ -10,6 +12,9 @@ Public Class frmJobs
     Public owner As Integer
     Public branchid As Integer
     Public jobtypeid As Integer
+
+    Public jobcateid As Integer
+    Public jobgroupid As Integer
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objbranch As New Branch
@@ -63,7 +68,10 @@ Public Class frmJobs
             'SetCboBranch(cboBranch)
             'SetCboDepartment(cboDepartment)
             'SetCboSection(cboSection, cboDepartment.SelectedItem.Value)
+
             SetCboJobType(cboJobType, usercode)
+
+
             SetCboUnit(cboUnit)
             SetCboUsers(cboOwner)
             'Session("jobtype") = cboJobType.SelectedItem.Value
@@ -116,7 +124,7 @@ Public Class frmJobs
             result = objmenu.chkuser(usercode, "O001")
             If result = False Then
                 javaScript = "alertWarning('คุณไม่มีสิทธิ์ใช้งาน กรุณาติดต่อ Admin');"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript ,true)
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 Response.Redirect("~\default.aspx")
             End If
         Catch ex As Exception
@@ -784,8 +792,12 @@ endprocess:
     End Sub
 
     Private Sub cboDepForJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepForJobType.SelectedIndexChanged
-        cboJobType.SelectedIndex = -1
-        SetCboJobTypeByDepID(cboJobType, cboDepForJobType.SelectedItem.Value)
+
+        'cboJobType.SelectedIndex = -1
+        'SetCboJobTypeByDepID(cboJobType, cboDepForJobType.SelectedItem.Value)
+
+        SetCboJobCate(cboJobCate, cboDepForJobType.SelectedValue)
+
     End Sub
     Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
         If Not String.IsNullOrEmpty(cboBranch.SelectedItem.Value) Then
@@ -807,6 +819,10 @@ endprocess:
 
         depid = cboDepartment.SelectedItem.Value
         objsection.SetCboSection(cboSection, depid)
+
+
+        'SetCboJobCate(cboJobCate, cboDepartment.SelectedValue)
+
     End Sub
     Private Sub cboJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobType.SelectedIndexChanged
         Dim objpolicy As New Policy
@@ -823,4 +839,52 @@ endprocess:
             End If
         End If
     End Sub
+
+    Private Sub cboJobCate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobCate.SelectedIndexChanged
+        Try
+            'Dim objpolicy As New Policy
+
+            'jobcateid = cboJobCate.SelectedItem.Value
+            'objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobcateid)
+            'If jobtypeid = 1 Then
+            '    If Not cboBranch.SelectedItem.Value = "" Then
+            '        FindPositionInPump(cboBranch.SelectedItem.Value)
+            '    Else
+            '        Dim scriptKey As String = "alert"
+            '        Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
+            '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    End If
+            'End If
+
+            SetCboJobGroup(cboJobGroup, cboJobCate.SelectedValue)
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub cboJobGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobGroup.SelectedIndexChanged
+        Try
+            'Dim objpolicy As New Policy
+
+            'jobcateid = cboJobCate.SelectedItem.Value
+            'objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobcateid)
+            'If jobtypeid = 1 Then
+            '    If Not cboBranch.SelectedItem.Value = "" Then
+            '        FindPositionInPump(cboBranch.SelectedItem.Value)
+            '    Else
+            '        Dim scriptKey As String = "alert"
+            '        Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
+            '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    End If
+            'End If
+
+            SetCboJobDescription(cboJobType, cboJobGroup.SelectedValue)
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+
 End Class

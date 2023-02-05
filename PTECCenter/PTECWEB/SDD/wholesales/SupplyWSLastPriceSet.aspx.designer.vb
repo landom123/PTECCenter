@@ -11,41 +11,50 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class projectlist
+Partial Public Class SupplyWSLastPriceSet
 
     '''<summary>
-    '''btnNew control.
+    '''btnBack control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnBack As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnRefresh control.
+    '''txtBeginPriceDate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnRefresh As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents txtBeginPriceDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cboBranch control.
+    '''txtEndPriceDate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txtEndPriceDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''gvData control.
+    '''btnFind control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents gvData As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''gvPrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvPrice As Global.System.Web.UI.WebControls.GridView
 End Class

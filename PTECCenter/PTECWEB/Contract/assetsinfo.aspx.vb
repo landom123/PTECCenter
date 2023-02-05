@@ -1,12 +1,17 @@
 ﻿
 
+Imports System.Windows
+
 Public Class assetsinfo
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public usercode, username, assetsno, contractno, projectno As String
     Public clientid As Double = 0
+
+    Public Shared iBuconType As Integer
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim objTitleName As New titlename
+        Dim objTitleName As New TitleName
 
         usercode = Session("usercode")
         username = Session("username")
@@ -48,6 +53,13 @@ Public Class assetsinfo
                 SetButton("NEW")
             End If
 
+        End If
+
+
+        If iBuconType = 2 Then
+            rdoplanBlank.Visible = True
+        Else
+            rdoplanBlank.Visible = False
         End If
 
 
@@ -216,4 +228,6 @@ Public Class assetsinfo
         projectno = Session("projectno")
         Response.Redirect("contractinfo.aspx?agreeno=" & contractno & "&projectno=" & projectno)
     End Sub
+
+
 End Class

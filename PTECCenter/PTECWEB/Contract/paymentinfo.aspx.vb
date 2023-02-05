@@ -78,10 +78,10 @@ Public Class paymentinfo
             mytable = objpayment.Find(paymentid)
             ShowData(mytable)
         Catch ex As Exception
-            Dim err As String = ex.Message.ToString.Replace("'", "")
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            Dim javaScript As String = "alertWarning('" & err & "')"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            'Dim err As String = ex.Message.ToString.Replace("'", "")
+            'Dim scriptKey As String = "UniqueKeyForThisScript"
+            'Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
 
     End Sub

@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 Imports System.Web.Configuration
+Imports System.Windows
 Imports System.Xml
 
 Public Class wholesales
@@ -502,6 +503,37 @@ Public Class wholesales
 
         Return result
     End Function
+
+    Public Function Wholesales_LastPrice_Find(beginpricedate As String, endpricedate As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Wholesales_LastPrice_Find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@beginpricedate", SqlDbType.VarChar).Value = beginpricedate
+        cmd.Parameters.Add("@endpricedate", SqlDbType.VarChar).Value = endpricedate
+
+        Try
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+
+        conn.Close()
+
+        Return result
+    End Function
+
 
     Public Function Wholesales_Calc_Detail_for_Sale(pricedate As DateTime, supplyid As Double, product As String, customerid As Double) As DataTable
         Dim result As DataTable

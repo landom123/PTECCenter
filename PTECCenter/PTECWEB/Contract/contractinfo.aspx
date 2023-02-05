@@ -20,7 +20,7 @@
                   </li>
                 </ol>
                 <p></p>
-                <div class="row">
+                <div class="row"  style="padding-top: 0.2rem;">
                     <div class="col-6">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
@@ -32,8 +32,8 @@
                     </div>
                 </div>
                 <p></p>    
-                <div class="row">
-                    <div class="col-4">
+                <div class="row"  style="padding-top: 0.2rem;">
+                    <div class="col-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text">เลขที่โครงการ</span>
@@ -42,7 +42,7 @@
 
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text">รหัสสาขา</span>
@@ -51,7 +51,7 @@
 
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text">สถานะโครงการ</span>
@@ -62,7 +62,7 @@
                 </div>
                 <br />
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row"  style="padding-top: 0.2rem;">
                         <div class="col-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
@@ -82,7 +82,7 @@
                             </div>
                         </div>                        
                     </div>
-                    <div class="row">
+                    <div class="row"  style="padding-top: 0.2rem;">
                         <div class="col-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
@@ -91,7 +91,8 @@
                                 <asp:DropDownList class="form-control" ID="cboContractType"  runat="server" ></asp:DropDownList>    
                             </div>
                         </div>
-                        <div class="col-4">
+
+                        <div class="col-2">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่สัญญา</span>
@@ -100,7 +101,7 @@
 
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">วันที่สัญญามีผล</span>
@@ -110,7 +111,99 @@
                             </div>
                         </div>
                     </div>
+                  
+                     <div class="row"  style="padding-top: 0.2rem;">
+                        <div class="col-2">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">อายุสัญญา</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtcontractPeriod" style="background-color:white" runat="server"></asp:TextBox>   
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ปี</span>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="input-group sm-3">
+                                <asp:TextBox class="form-control" ID="txtcontractPeriod2" style="background-color:white" runat="server"></asp:TextBox>   
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">เดือน</span>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">สัญญามีผลวันที่</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtBegindate" style="background-color:white" runat="server"></asp:TextBox>    
+
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">ถึงวันที่</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtEndDate" style="background-color:white" runat="server" ></asp:TextBox>    
+
+                            </div>
+                        </div>
+
+                     </div>
+                        
+                   
+                    <div class="row"  style="padding-top: 0.2rem;">
+                        <div class="col-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">กำหนดจดทะเบียนเช่าสถานี ณ จังหวัด</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtRentalReg" style="background-color:white" runat="server"></asp:TextBox>                                                              
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">สาขา</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtBranch1" style="background-color:white" runat="server"></asp:TextBox>                                                              
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ภายใน</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtDays" style="background-color:white" runat="server"></asp:TextBox>  
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">วัน</span>
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ค่าเช่าปีล่ะ</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtRentPer" style="background-color:white" runat="server"></asp:TextBox>  
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">/</span>
+                                </div>                                
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">แปลง</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtPlant" style="background-color:white" runat="server"></asp:TextBox>  
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
+
                 <div class="card-body">
 <%--                    <div class="col-12 text-right">
                             <asp:Button ID="btnselectall" class="btn btn-sm  btn-success" runat="server" Text="Select All" />&nbsp;  
@@ -519,6 +612,8 @@
           </div>
         </div>
 
+
+
     </div>
     <!-- /#wrapper -->
 
@@ -529,6 +624,8 @@
     <script type="text/javascript">
         jQuery('[id$=txtContractActiveDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
+            lang: 'th',// แสดงภาษาไทย
+            yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ
             timepicker: false,
             scrollInput: false,
             format:'d/m/Y'
@@ -536,8 +633,13 @@
     </script>
 
     <script type="text/javascript">
+
         jQuery('[id$=txtContractDate]').datetimepicker({
+
             startDate: '+1971/05/01',//or 1986/12/08
+
+            lang: 'th',// แสดงภาษาไทย
+            yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'
@@ -591,5 +693,45 @@
                 return false;
         }
     </script>
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
+<%--    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#<%=rdoplanBlank.ClientID %>').click(function () {
+                var SelectedValue = $('#<%=rdoplanBlank.ClientID %> input[type=radio]:checked').val();
+
+                if (SelectedValue == 1) {
+                    //If cash is selected then hide the Div
+                    $('#dvShowHide').css("display", "none");
+                    //or you can simply use jQuery hide method to hide the Div as below:
+                    //$('#dvShowHide').hide();          
+                }
+                else if (SelectedValue == 2) {
+                    //If Cheque is selected then show the Div
+                    $('#dvShowHide').css("display", "block");
+                    //or you can simply use jQuery show method to show the Div as below:
+                    //$('#dvShowHide').show();
+                    //Clear textboxes
+                   // $('#<%=txtbuNo.ClientID %>').val('');
+                   // $('#<%=txtbuSubDistrict.ClientID %>').val('');
+                    //Set focus in bank name textbox
+                   // $('#<%=txtbuNo.ClientID %>').focus();
+                }
+            });
+        });
+    </script>--%>
+
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
+<script>
+
+    $(function () {
+        $("#tabs").tabs();
+    });
+
+</script>
+
+
 
 </asp:Content>

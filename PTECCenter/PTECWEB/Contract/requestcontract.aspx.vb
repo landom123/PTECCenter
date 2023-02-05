@@ -1,16 +1,21 @@
 ﻿
 
-Public Class fixibleinfo
+Public Class requestcontract
     Inherits System.Web.UI.Page
     Public menutable As DataTable
-    Public usercode, username, contractno As String
-    Public fixid As Double = 0
+    Public usercode, username, assetsno, contractno, projectno As String
+    Public clientid As Double = 0
+
+    Dim dtBranch As New DataTable
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim objTitleName As New titlename
+        Dim objTitleName As New TitleName
 
         usercode = Session("usercode")
         username = Session("username")
 
+        'txtBirthday.Attributes.Add("readonly", "readonly")
+
+        'Dim objsupplier As New Supplier
 
         If IsPostBack() Then
             If Session("menulist") Is Nothing Then
@@ -20,15 +25,23 @@ Public Class fixibleinfo
                 menutable = Session("menulist")
             End If
             contractno = Session("contractno")
-            fixid = Session("fixid")
+            assetsno = Session("assetsno")
+
+            'Dim objprj As New Project
+            'dtBranch = objprj.loadBranch
+            'cboBranch.DataSource = dtBranch
+            'cboBranch.DataValueField = "branch_code"
+            'cboBranch.DataTextField = "branch_name"
+            'cboBranch.DataBind()
+
+
         Else
             contractno = Request.QueryString("contractno")
-            fixid = Request.QueryString("fixid")
-            txtContractNo.Text = contractno
-            SetCboPaymentType(cboPaymentType)
+            assetsno = Request.QueryString("assetsno")
+
 
             Session("contractno") = contractno
-            Session("fixid") = fixid
+            Session("assetsno") = assetsno
 
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
@@ -37,15 +50,39 @@ Public Class fixibleinfo
                 menutable = Session("menulist")
             End If
 
-            If Not String.IsNullOrEmpty(fixid) Then
-                FindData(fixid)
+            If Not String.IsNullOrEmpty(assetsno) Then
+                FindData(assetsno)
             Else
-
+                txtdocuno.Text = contractno
                 SetButton("NEW")
             End If
 
+            Dim objprj As New Project
+            dtBranch = objprj.loadBranch
+            cboBranch.DataSource = dtBranch
+            cboBranch.DataValueField = "branch_code"
+            cboBranch.DataTextField = "branch_name"
+            cboBranch.DataBind()
+
+            SetCboContractType(cboContractType)
+
+            cboSex.Items.Add("Male")
+            cboSex.Items.Add("Female")
+
+            txtdocuno.Text = Request.QueryString("agreeno")
+
         End If
 
+
+    End Sub
+
+    Private Sub SetCboContractType(obj As Object)
+        Dim ag As New Contract
+
+        obj.DataSource = ag.ContractTypeCbo()
+        obj.DataValueField = "agtypeid"
+        obj.DataTextField = "agtype"
+        obj.DataBind()
     End Sub
 
     Public Sub SetButton(chkstatus As String)
@@ -70,81 +107,76 @@ Public Class fixibleinfo
 
         End Select
     End Sub
-    Private Sub FindData(fixid As Double)
+    Private Sub FindData(assetsno As String)
         Dim mytable As DataTable
-        Dim objfix As New Fixible
+        Dim objassets As New ContractAssets
         Try
-            mytable = objfix.Find(fixid)
+            mytable = objassets.Find(assetsno)
             ShowData(mytable)
         Catch ex As Exception
-            'Dim err As String = ex.Message.ToString.Replace("'", "")
-            'Dim scriptKey As String = "UniqueKeyForThisScript"
-            'Dim javaScript As String = "alertWarning('" & err & "')"
-            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
 
     End Sub
 
     Private Sub ShowData(mytable As DataTable)
         With mytable.Rows(0)
-            txtContractNo.Text = contractno
-            txtid.Text = .Item("fixid")
+            'If .Item("fullarea") = True Then
+            '    rdoFull.Checked = True
+            'Else
+            '    rdoPart.Checked = True
+            'End If
+            txtdocuno.Text = contractno
 
-            'cboPaymentType 
-            cboPaymentType.SelectedIndex = cboPaymentType.Items.IndexOf(cboPaymentType.Items.FindByText(.Item("paymenttype")))
-            If .Item("recuringtype") = "M" Then
-                rdoMonth.Checked = True
-            Else
-                rdoYear.Checked = True
-            End If
-            txtFrequency.Text = .Item("frequency")
-            txtBegindate.Text = .Item("begindate")
-            txtEnddate.Text = .Item("enddate")
-            txtDueDate.Text = .Item("duedate")
-            txtAmount.Text = .Item("amount")
-
-            fixid = .Item("fixid")
-            Session("fixid") = .Item("fixid")
-
+            'txtLandno.Text = .Item("landno")
+            'txtSurveyNo.Text = .Item("surveyno")
+            'txtSubDistrict.Text = .Item("subdistrict")
+            'txtDistrict.Text = .Item("district")
+            'txtProvince.Text = .Item("province")
+            'txtRai.Text = .Item("area_rai")
+            'txtNgan.Text = .Item("area_ngan")
+            'txtWa.Text = .Item("area_wa")
+            'txtGPS.Text = .Item("gps")
 
             SetButton(.Item("status"))
+
         End With
     End Sub
 
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Clear()
     End Sub
-
-    Private Sub SetCboPaymentType(obj As Object)
-        Dim payment As New Payment
-
-        obj.DataSource = payment.PaymentType_List()
-        obj.DataValueField = "paymenttypeid"
-        obj.DataTextField = "paymenttype"
-        obj.DataBind()
-    End Sub
-
     Private Sub Clear()
-        txtid.Text = ""
-        fixid = 0
-        Session("fixid") = 0
-        txtBegindate.Text = Date.Now.ToString
-        txtEnddate.Text = Date.Now.ToString
-        txtDueDate.Text = Date.Now.ToString
-        txtFrequency.Text = "0"
-        cboPaymentType.SelectedIndex = -1
-        rdoMonth.Checked = True
+
+        txtName.Text = ""
+        txtCardID.Text = ""
+        cboSex.SelectedIndex = 0
+        txtCompany.Text = ""
+        txtMobile.Text = ""
+        txtTel.Text = ""
+        txtEmail.Text = ""
+        txtLine.Text = ""
+        txtAddress.Text = ""
+        txtSubDistrict.Text = ""
+        txtDistrict.Text = ""
+        txtProvince.Text = ""
+        txtPostcode.Text = ""
+
         SetButton("New")
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-
+        'Dim assetsno As String
         Dim err, scriptKey, javaScript As String
+        err = ""
         If validateData() Then
             Try
-                fixid = Save()
-                txtid.Text = fixid
-                Session("fixid") = fixid
+                assetsno = Save()
+                'txtClientNo.Text = clientno
+                Session("assetsno") = assetsno
 
             Catch ex As Exception
                 err = ex.Message.ToString.Replace("'", "")
@@ -177,39 +209,21 @@ Public Class fixibleinfo
 
         Return result
     End Function
-    Private Function Save() As Double
-        Dim result As Double
-        Dim objfix As New Fixible
+    Private Function Save() As String
+        Dim result As String = Nothing
+        Dim objassets As New ContractAssets
 
-        Dim paymenttype, recuring As String
-        Dim amount As Double
-        Dim begindate, enddate, duedate As DateTime
-        Dim frequency As Integer
+        Dim subdistrict, district, province As String
 
+        subdistrict = txtSubDistrict.Text
+        district = txtDistrict.Text
+        province = txtProvince.Text
 
-        paymenttype = cboPaymentType.SelectedItem.Text
-        amount = Double.Parse(txtAmount.Text)
-        begindate = DateTime.Parse(txtBegindate.Text)
-        enddate = DateTime.Parse(txtEnddate.Text)
-        duedate = DateTime.Parse(txtDueDate.Text)
-        frequency = Integer.Parse(txtFrequency.Text)
-        If rdoMonth.Checked = True Then
-            recuring = "M"
-        Else
-            recuring = "Y"
-        End If
-
-
-        result = objfix.Save(contractno, fixid, paymenttype, recuring, frequency, begindate, enddate, duedate, amount, usercode)
-
-        txtid.Text = result.ToString
-        Session("fixid") = result
         Return result
     End Function
 
     Private Sub BtnContract_Click(sender As Object, e As EventArgs) Handles BtnContract.Click
-        Dim projectno As String = Session("projectno")
+        projectno = Session("projectno")
         Response.Redirect("contractinfo.aspx?agreeno=" & contractno & "&projectno=" & projectno)
     End Sub
-
 End Class

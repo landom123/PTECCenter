@@ -26,6 +26,7 @@
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-success" runat="server" Text=" Confirm " />
+                        <asp:Button ID="btnLastPrice" class="btn btn-sm  btn-success" runat="server" Text=" Last Price " />
                     </div>
                     <div class="col-md-6 mb-3" style="text-align: right">
                         <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text=" Cancel " OnClientClick="return cancel_data();"/>
@@ -35,19 +36,21 @@
                 <div class="container">
 
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-3">                            
+                                        
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">วันที่ เวลา ราคามีผล</span>
-                                </div>
+                                    <span class="input-group-text">วันที่ เวลา ราคามีผล </span>
+                                </div>     
                                 <asp:textbox class="form-control" ID="txtPriceDate" runat="server" AutoPostBack="true"></asp:textbox>
                             </div>
+                                <span class="input-group-text">(dd/mm/yyyy HH:mm)    </span>
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="input-group sm-3">
-                                <div class="input-group-prepend">
+                                <div class="input-group-prepend">                                   
                                     <span class="input-group-text">สถานะ</span>
-                                </div>
+                                </div>                               
                                 <asp:Label ID="lblstatus"  class="btn btn-sm  btn-danger" runat="server" ></asp:Label>
                             </div>
                         </div>

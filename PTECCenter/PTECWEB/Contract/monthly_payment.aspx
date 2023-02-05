@@ -20,7 +20,7 @@
                 </ol>
                 <p></p>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <asp:TextBox class="form-control" ID="txtCalcDate" runat="server" style="background-color:white"></asp:TextBox>
                     </div>
                     <div class="col-4">

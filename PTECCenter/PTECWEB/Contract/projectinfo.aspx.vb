@@ -378,6 +378,9 @@ Public Class projectinfo
 
     Private Sub btnNewAgree_Click(sender As Object, e As EventArgs) Handles btnNewAgree.Click
         projectno = txtprojectno.Text
-        Response.Redirect("contractinfo.aspx?projectno=" & projectno & "&agreeno=''")
+        'Response.Redirect("contractinfo.aspx?projectno=" & projectno & "&agreeno='' " & "&branch=" & txtbranch.Text & "")
+
+        Response.Redirect("contractinfo.aspx?projectno=" & projectno & "&agreeno='' &branch=" & txtbranch.Text & "")
+
     End Sub
 End Class

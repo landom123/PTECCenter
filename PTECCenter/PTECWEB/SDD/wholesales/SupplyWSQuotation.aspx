@@ -26,6 +26,7 @@
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text=" New " />
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" Save " />
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-success" runat="server" Text=" Confirm " />
+                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-success" runat="server" Text=" Print " />
                     </div>
                     <div class="col-6" style="text-align:right">
                         <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text=" Cancel " OnClientClick="return cancel_data();"/>
@@ -82,33 +83,7 @@
 
 
                     </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">ระยะทาง</span>
-                                </div>
-                                <asp:label class="form-control" ID="lblDistanct" runat="server" AutoPostBack="true"></asp:label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">ค่าขนส่ง/ลิตร</span>
-                                </div>
-                                <asp:label class="form-control" ID="lblTTCost" runat="server" AutoPostBack="true"></asp:label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">ค่าคอมมิสชั่น/ลิตร</span>
-                                </div>
-                                <asp:label class="form-control" ID="lblCommission" runat="server" AutoPostBack="true"></asp:label>
-                            </div>
-                        </div>
-                    </div>
+
                     <br />
                 <div class="container">
                     <div class="table-responsive">
@@ -136,33 +111,33 @@
 	                        </asp:TemplateField>	
 	                        <asp:TemplateField HeaderText="ลิตร">
 		                        <ItemTemplate>
-			                        <asp:Label id="lblvolume" runat="server" Text='<%#Eval("volume")%>'></asp:Label>
+			                      <asp:Label id="lblvolume" runat="server" Text='<%#Eval("volume", "{0:n0}")%>'></asp:Label>
 		                        </ItemTemplate>
                                <FooterTemplate>
-                                  <asp:Label id="lblvolumetotal" runat="server" Text=""></asp:Label>
+                                  <asp:Label id="lblvolumetotal" runat="server" Text="0"></asp:Label>
                                </FooterTemplate>
 	                        </asp:TemplateField>	           
 	                        <asp:TemplateField HeaderText="ราคา">
 		                        <ItemTemplate>
-			                        <asp:Label id="lblprice" runat="server" Text='<%#Eval("price")%>'></asp:Label>
+			                        <asp:Label id="lblprice" runat="server" Text='<%#Eval("price", "{0:n}")%>'></asp:Label>
 		                        </ItemTemplate>
 	                        </asp:TemplateField>	
-	                        <asp:TemplateField HeaderText="+ค่าคลัง">
+	                        <asp:TemplateField HeaderText="+ค่าคลัง"  Visible="false">
 		                        <ItemTemplate>
 			                        <asp:Label id="lblterminalmarkup" runat="server" Text='<%#Eval("terminalmarkup")%>'></asp:Label>
 		                        </ItemTemplate>
 	                        </asp:TemplateField>	                            
-	                        <asp:TemplateField HeaderText="Markup">
+	                        <asp:TemplateField HeaderText="Markup"  Visible="false">
 		                        <ItemTemplate>
 			                        <asp:Label id="lblmarkup" runat="server" Text='<%#Eval("markup")%>'></asp:Label>
 		                        </ItemTemplate>
 	                        </asp:TemplateField>	    
 	                        <asp:TemplateField HeaderText="รวม">
 		                        <ItemTemplate>
-			                        <asp:Label id="lbltotal" runat="server" Text='<%#Eval("total")%>'></asp:Label>
+			                        <asp:Label id="lbltotal" runat="server" Text='<%#Eval("total", "{0:n}")%>'></asp:Label>
 		                        </ItemTemplate>
                                <FooterTemplate>
-                                  <asp:Label id="lblnettotal" runat="server" Text=""></asp:Label>
+                                  <asp:Label id="lblnettotal" runat="server" Text="0"></asp:Label>
                                </FooterTemplate>
 	                        </asp:TemplateField>	      
 	                        <asp:TemplateField HeaderText="">
@@ -178,7 +153,7 @@
                 </div>
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">เลือกผลิตภัณฑ์</span>
@@ -186,7 +161,7 @@
                                 <asp:DropDownList class="form-control" ID="cboProduct" runat="server" AutoPostBack="true"></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">+ เพิ่ม</span>
@@ -194,7 +169,7 @@
                                 <asp:textbox class="form-control bg-warning text-dark" ID="txtAdd" runat="server" AutoPostBack="false" ></asp:textbox>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ปริมาณสั่งซื้อ (ลิตร)</span>
@@ -202,15 +177,43 @@
                                 <asp:textbox class="form-control bg-warning text-dark" ID="txtVolume"  runat="server" AutoPostBack="false"></asp:textbox>
                             </div>
                         </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12" style="text-align:right">
-                            <asp:Button ID="btnAddtoTable" class="btn btn-sm  btn-success" runat="server" Text="เพิ่มในตาราง" />  
+                        <div class="row">
+                            <div class="col-12" style="text-align:right">
+                                <asp:Button ID="btnAddtoTable" class="btn btn-sm  btn-success" runat="server" Text="เพิ่มในตาราง" />  
+                            </div>
                         </div>
                     </div>
+
+                    <br />
                     <div class="row">
+                        <div class="col-md-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ระยะทาง</span>
+                                </div>
+                                <asp:label class="form-control" ID="lblDistanct" runat="server" AutoPostBack="true"></asp:label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ค่าขนส่ง/ลิตร</span>
+                                </div>
+                                <asp:label class="form-control" ID="lblTTCost" runat="server" AutoPostBack="true"></asp:label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ค่าคอมมิสชั่น/ลิตร</span>
+                                </div>
+                                <asp:label class="form-control" ID="lblCommission" runat="server" AutoPostBack="true"></asp:label>
+                            </div>
+                        </div>
+                    </div>
+
+                     <br />
+                    <div class="row" runat="server" visible="false">
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
@@ -236,7 +239,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" runat="server" visible="false">
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
