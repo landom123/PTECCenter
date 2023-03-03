@@ -61,6 +61,33 @@ Public Class Supplier
         Return result
     End Function
 
+    Public Function list(comid As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "OPS_Mobile_List_Vender"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
     Public Function vendor_list(username As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -120,6 +147,15 @@ Public Class Supplier
         obj.DataSource = sup.list()
         obj.DataValueField = "supplierid"
         obj.DataTextField = "name"
+        obj.DataBind()
+
+    End Sub
+    Public Sub SetCboSupplierByComid(obj As Object, comid As String)
+        Dim sup As New Supplier
+
+        obj.DataSource = sup.list(comid)
+        obj.DataValueField = "vendor_code"
+        obj.DataTextField = "Vendor_Name"
         obj.DataBind()
 
     End Sub

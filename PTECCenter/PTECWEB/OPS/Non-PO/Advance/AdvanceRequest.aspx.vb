@@ -99,9 +99,9 @@ Public Class AdvanceRequest
                         PermissionOwner = chkPermissionNonPO(Request.QueryString("ADV"))
 
                         at = "วิ่งเส้น : " + PermissionOwner.Tables(0).Rows(0).Item("at").ToString
-                        approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString
-                        verifier = "ผู้ตรวจ : " '+ PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
-                        now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString '+ PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
+                        approver = "ผู้มีสิทธิอนุมัติ : " + PermissionOwner.Tables(0).Rows(0).Item("approver").ToString
+                        verifier = "ผู้ตรวจ : " + PermissionOwner.Tables(0).Rows(0).Item("verifier").ToString
+                        now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString + PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
                     End If
 
                     If (Session("usercode") = md_code Or
@@ -117,7 +117,7 @@ Public Class AdvanceRequest
 
 
                         For Each row As DataRow In PermissionOwner.Tables(0).Rows
-                            If row("status").ToString = "allowner" Then
+                            If row("status").ToString = "now" Then
                                 If row("approver").ToString.IndexOf("MD") > -1 Then
                                     If (md_code.IndexOf(Session("usercode")) > -1) Then
                                         approval = True
@@ -149,6 +149,33 @@ Public Class AdvanceRequest
                                 If row("approver").ToString.IndexOf("AM") > -1 Then
                                     If (am_code.IndexOf(Session("usercode")) > -1) Then
                                         approval = True
+                                        GoTo endprocess
+                                    End If
+                                End If
+
+                                If row("verifier").ToString.IndexOf("MD") > -1 Then
+                                    If (md_code.IndexOf(Session("usercode")) > -1) Then
+                                        verify = True
+                                        GoTo endprocess
+                                    End If
+                                ElseIf row("verifier").ToString.IndexOf("FM") > -1 Then
+                                    If (fm_code.IndexOf(Session("usercode")) > -1) Then
+                                        verify = True
+                                        GoTo endprocess
+                                    End If
+                                ElseIf row("verifier").ToString.IndexOf("DM") > -1 Then
+                                    If (dm_code.IndexOf(Session("usercode")) > -1) Then
+                                        verify = True
+                                        GoTo endprocess
+                                    End If
+                                ElseIf row("verifier").ToString.IndexOf("SM") > -1 Then
+                                    If (sm_code.IndexOf(Session("usercode")) > -1) Then
+                                        verify = True
+                                        GoTo endprocess
+                                    End If
+                                ElseIf row("verifier").ToString.IndexOf("AM") > -1 Then
+                                    If (am_code.IndexOf(Session("usercode")) > -1) Then
+                                        verify = True
                                         GoTo endprocess
                                     End If
                                 End If
@@ -453,6 +480,9 @@ endprocess:
             cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(.Item("comid")))
             cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(.Item("ownerid")))
 
+            txtVerifyby.Text = .Item("verifyby").ToString
+            txtVerifyDate.Text = .Item("Verifydate").ToString
+
             txtApprovalby.Text = .Item("approvalrqby").ToString
             txtApprovalDate.Text = .Item("approvalrqdate").ToString
 
@@ -729,6 +759,9 @@ endprocess:
 endprocess:
     End Sub
 
+
+
+
     Private Sub btnVerify_Click(sender As Object, e As EventArgs) Handles btnVerify.Click
         Dim objnonpo As New NonPO
 
@@ -959,4 +992,20 @@ endprocess:
         'updatehead()
     End Sub
 
+    Private Sub btnVerifyApproval_Click(sender As Object, e As EventArgs) Handles btnVerifyApproval.Click
+        Dim objnonpo As New NonPO
+
+        Try
+            objnonpo.NonPO_AdvanceRequest_VerifyApproval(Request.QueryString("ADV"), Session("usercode"))
+            Session("status") = "read"
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Approval fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
+endprocess:
+    End Sub
 End Class

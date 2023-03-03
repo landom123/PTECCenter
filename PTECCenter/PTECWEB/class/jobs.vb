@@ -200,15 +200,15 @@ Public Class jobs
         cmd.Parameters.Add("@jobno", SqlDbType.VarChar).Value = jobno
         cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
         cmd.Parameters.Add("@jobclosetypeid", SqlDbType.Int).Value = jobclosetypeid
-        cmd.Parameters.Add("@beginwarr", SqlDbType.DateTime).Value = Date.Parse(beginwarr)
-        cmd.Parameters.Add("@endwarr", SqlDbType.DateTime).Value = Date.Parse(endwarr)
+        cmd.Parameters.Add("@beginwarr", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(beginwarr), DBNull.Value, Date.Parse(beginwarr))
+        cmd.Parameters.Add("@endwarr", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(endwarr), DBNull.Value, Date.Parse(endwarr))
         'cmd.Parameters.Add("@partamt", SqlDbType.Money).Value = partamt
         'cmd.Parameters.Add("@laboramt", SqlDbType.Money).Value = laboramt
         'cmd.Parameters.Add("@travelamt", SqlDbType.Money).Value = travelamt
         cmd.Parameters.Add("@invoiceno", SqlDbType.VarChar).Value = InvoiceNo
-        cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = Date.Parse(Invoicedate)
+        cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(Invoicedate), DBNull.Value, Date.Parse(Invoicedate))
         cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = detail
-        cmd.Parameters.Add("@closedate", SqlDbType.DateTime).Value = Date.Parse(closedate)
+        cmd.Parameters.Add("@closedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(closedate), Now.ToString, Date.Parse(closedate))
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
         cmd.Parameters.Add("@jobclosecategoryid", SqlDbType.BigInt).Value = jobclosecategoryid
 
@@ -761,6 +761,7 @@ Public Class jobs
         cmd.Parameters.Add("@policyid", SqlDbType.Int).Value = policyid
         cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = duedate
         cmd.Parameters.Add("@details", SqlDbType.VarChar).Value = details
+        'cmd.Parameters.Add("@vendor_code", SqlDbType.VarChar).Value = vendor_code
         cmd.Parameters.Add("@updateby", SqlDbType.VarChar).Value = updateby
 
 
@@ -944,6 +945,41 @@ Public Class jobs
         cmd.Parameters.Add("@jobdetailid", SqlDbType.Int).Value = jobdetailid
         cmd.Parameters.Add("@price", SqlDbType.Money).Value = price
         cmd.Parameters.Add("@unit", SqlDbType.Int).Value = unit
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Cost_Save(jobscenterdtlid As Integer, jobdetailid As Integer, price As Double, unit As Integer,
+                              vat As Integer, tax As Integer, invoice As String, invoicedate As String, nobill As Boolean, incompletebill As Boolean,
+                              bu As Integer, pp As Integer, pj As Integer, usercode As String) As Boolean
+        Dim result As Boolean
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Cost_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobscenterdtlid", SqlDbType.Int).Value = jobscenterdtlid
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.Int).Value = jobdetailid
+        cmd.Parameters.Add("@price", SqlDbType.Money).Value = price
+        cmd.Parameters.Add("@unit", SqlDbType.Int).Value = unit
+        cmd.Parameters.Add("@bu", SqlDbType.Int).Value = bu
+        cmd.Parameters.Add("@pp", SqlDbType.Int).Value = pp
+        cmd.Parameters.Add("@pj", SqlDbType.Int).Value = pj
+        cmd.Parameters.Add("@vat_per", SqlDbType.Money).Value = vat
+        cmd.Parameters.Add("@tax_per", SqlDbType.Money).Value = tax
+        cmd.Parameters.Add("@invoice", SqlDbType.VarChar).Value = invoice
+        cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(invoicedate), DBNull.Value, DateTime.Parse(invoicedate))
+        cmd.Parameters.Add("@nobill", SqlDbType.Bit).Value = nobill
+        cmd.Parameters.Add("@incompletebill", SqlDbType.Bit).Value = incompletebill
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
 
         cmd.ExecuteNonQuery()
@@ -1285,6 +1321,86 @@ Public Class jobs
         adp.Fill(ds)
         result = ds
         conn.Close()
+        Return result
+    End Function
+
+    Public Function SaveRate(topic_id As String, value As String, type As String, jobsdetailid As Integer, user As String) As Integer
+        Dim result As Integer
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Rate_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@topic_id", SqlDbType.VarChar).Value = topic_id
+        cmd.Parameters.Add("@value", SqlDbType.VarChar).Value = value
+        cmd.Parameters.Add("@type", SqlDbType.VarChar).Value = type
+        cmd.Parameters.Add("@jobsdetailid", SqlDbType.Int).Value = jobsdetailid
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("id")
+        conn.Close()
+        Return result
+
+    End Function
+
+    Public Function UpdateDetail(jobno As String, jobdetailid As Double, jobTypeid As Integer, assCode As String,
+                                          supplierid As Integer, cost As Double, usercode As String, Optional closeTypeid As Integer = 1, Optional categoryid As Integer = 1) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Followup_update_detail_for_operator"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@jobTypeid", SqlDbType.BigInt).Value = jobTypeid
+        cmd.Parameters.Add("@assetcode", SqlDbType.VarChar).Value = assCode
+        cmd.Parameters.Add("@supplierid", SqlDbType.BigInt).Value = supplierid
+        cmd.Parameters.Add("@cost", SqlDbType.Money).Value = cost
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@closeTypeid", SqlDbType.BigInt).Value = closeTypeid
+        cmd.Parameters.Add("@categoryid", SqlDbType.BigInt).Value = categoryid
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function UpdateCloseTypeCategory(jobno As String, jobdetailid As Double, closeTypeid As Integer,
+                                          categoryid As Integer, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Followup_update_ClosetypeCategory_for_operator"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@closeTypeid", SqlDbType.BigInt).Value = closeTypeid
+        cmd.Parameters.Add("@categoryid", SqlDbType.BigInt).Value = categoryid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
         Return result
     End Function
 End Class

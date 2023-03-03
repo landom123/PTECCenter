@@ -165,6 +165,17 @@
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-lg-2 col-form-label">
+                                            <asp:Label ID="lbVerifyby" CssClass="form-label" AssociatedControlID="txtVerifyby" runat="server" Text="ผู้ตรวจสอบ" />
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <asp:TextBox class="form-control  text-success font-weight-bold" ID="txtVerifyby" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <asp:TextBox class="form-control  text-success font-weight-bold" ID="txtVerifyDate" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-2 col-form-label">
                                             <asp:Label ID="lbApprovalby" CssClass="form-label" AssociatedControlID="txtApprovalby" runat="server" Text="ผู้อนุมัติ" />
                                         </div>
                                         <div class="col-lg-5">
@@ -348,7 +359,9 @@
                                         <% If verify And detailtable.Rows(0).Item("statusrqid") = 3 Then%>
                                         <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันทำจ่าย" />
                                         <% End If %>
-
+                                        <% If verify And detailtable.Rows(0).Item("statusrqid") = 2 Then%>
+                                        <asp:Button ID="btnVerifyApproval" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" />
+                                        <% End If %>
                                     <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" />
 
                                     <% End If %>

@@ -182,7 +182,13 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cost">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
+                                        <div class="d-flex flex-column align-items-center" readonly="true">
+                                            <span runat="server" visible='<%#Eval("lockcost")%>'>
+                                                 <i class="fas fa-lock" visible='<%#Eval("lockcost")%>'></i>
+                                            </span>
+                                            <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
+                                        </div>
+
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Status">

@@ -158,6 +158,33 @@ Partial Public Class AdvanceRequest
     Protected WithEvents txtDocDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbVerifyby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbVerifyby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtVerifyby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtVerifyby As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtVerifyDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtVerifyDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lbApprovalby control.
     '''</summary>
     '''<remarks>
@@ -480,6 +507,15 @@ Partial Public Class AdvanceRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnVerify As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnVerifyApproval control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnVerifyApproval As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''btnDisApproval control.

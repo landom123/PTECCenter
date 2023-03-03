@@ -116,7 +116,9 @@ Public Class JobsList_test
         dt.Columns.Add("closedate", GetType(Date))
         dt.Columns.Add("detailFollow", GetType(String))
         dt.Columns.Add("cost", GetType(Double))
+        dt.Columns.Add("lockcost", GetType(Boolean))
         dt.Columns.Add("link", GetType(String))
+
 
         Return dt
     End Function

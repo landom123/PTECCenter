@@ -1,0 +1,82 @@
+﻿#content-wrapper {
+    background-color: #f0f2f5;
+}
+
+.container-fluid {
+    max-width: 1200px;
+}
+
+.collapse__all:after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    width: 12px;
+    height: 12px;
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat 0 0;
+    transition: transform .3s;
+}
+
+.collapsed:before {
+    background: transparent !important;
+}
+
+.collapsed:after {
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat 0 0;
+    transform: rotate(-90deg) !important;
+    transition: transform .3s;
+}
+
+.card-header {
+    padding: 0.3rem 1.25rem;
+}
+
+.collapse__all:before {
+    position: absolute;
+    top: 0;
+    left: 12px;
+    height: 43px;
+    width: 10px;
+    background: #CF3339;
+    content: "";
+    display: block;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.statusJOB {
+    margin: auto auto;
+    width: 15px !important;
+    height: 15px !important;
+    background: #9cf; /*เขียว:#00FF27 เหลือง:#FEBC2F แดง:#ee443b*/
+    border-radius: 50%;
+}
+
+.statusJOBName {
+    padding-left: 5px;
+    padding-right: 20px;
+    font-size: 12px;
+    align-self: center !important;
+}
+
+@media screen and (max-width: 768px) {
+
+
+    .statusJOB {
+        margin: auto auto;
+    }
+
+    .statusJOBName {
+        display: none;
+        /*padding-left: 15px;
+                padding-right: 15px;
+                text-align: center !important;*/
+    }
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;
+}

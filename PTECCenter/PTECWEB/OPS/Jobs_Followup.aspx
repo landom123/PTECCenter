@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Jobs_Followup.aspx.vb" Inherits="PTECCENTER.JobsFollowup" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        .input-group {
-            margin-bottom: 1rem;
-        }
-    </style>
+
+    <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/css/starRating.css")%>" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/css/Stepper.css")%>" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/css/Jobs.css")%>" rel="stylesheet">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
@@ -16,256 +16,851 @@
         <!-- begin content-wrapper ส่วนเนื้อหา-->
         <div id="content-wrapper">
             <div class="container-fluid">
-                <ol class="breadcrumb" style="background-color: deeppink; color: white">
-                    <li class="breadcrumb-item"><a href="JobsLists.aspx" class="btn btn-sm btn-danger">
-                        <i class="fa fa-tasks" aria-hidden="true"></i></a> ติดตามงาน (Job Follow up)
-                    </li>
-                </ol>
+                <div class="headJobs mb-3" style="background-color: #a32048; color: white; padding: 0.75rem 1rem; border-radius: 0.25rem;">
+                    <div class="row justify-content-between">
+                        <div class="col text-left align-self-center">
+                            ติดตามงาน (Job Follow up)
+                        </div>
+                        <div class="col text-right align-self-center">
+                            <div class="d-flex flex-column align-items-end" readonly="true">
+                                <asp:Label CssClass="approvalcode font-weight-bold" ID="lbjobscode" runat="server" Text=''></asp:Label>
+                                <a href="#" class="badge badgestatus_app shadow" id="badgeStatus" runat="server"></a>
+                            </div>
+                        </div>
+                        <div class="col d-none">
+                            <div id="demo2" style="color: navy; font-size: 10px;"></div>
+                            <div id="demo" style="color: navy; font-size: 10px;"></div>
+                        </div>
+                        <div class="col-auto text-right align-self-center">
+                            <a href="JobsLists.aspx" class="btn btn-sm btn-danger">
+                                <i class="fa fa-tasks" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="row">
-                    <div class="col-12">
+                <div class="row justify-content-between">
+                    <div class="col-auto mb-3">
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
-                        <% If maintable.Rows(0).Item("owner") > 0 Then %>
-
-                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />
-                        <% End if %>
                     </div>
+                    <div class="col-auto mb-3">
+                        <ul class="nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" id="gtContent1" href="#" title="ไปยังรายละเอียด">รายละเอียด</a>
+                                    <a class="dropdown-item" id="gtContent3" href="#" title="ไปยังSuppiler">Suppiler</a>
+                                    <a class="dropdown-item" id="gtContent4" href="#" title="ไปยังคะแนนการประเมิน">คะแนนการประเมิน</a>
+                                    <a class="dropdown-item" id="gtContent5" href="#" title="ไปยังเอกสารแนบ">เอกสารแนบ</a>
+                                    <a class="dropdown-item" id="gtContent6" href="#" title="ไปยังแสดงความคิดเห็น">แสดงความคิดเห็น</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
                 </div>
 
-                <div class="row" style="padding-top: 1rem;">
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">เลขที่เอกสาร</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtJobno" runat="server" ReadOnly="true"></asp:TextBox>
-                            <div class="input-group-append">
-                            </div>
+                <div id="accordion">
+                    <div class="card shadow mb-3">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link w-100 text-left collapse__all" id="detailJobs" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" autopostback="False">
+                                    รายละเอียดงาน
+                                </button>
+
+                            </h5>
                         </div>
 
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">วันที่แจ้ง</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtDocDate" runat="server" ReadOnly="True"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ผู้แจ้ง</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtOwner" runat="server" ReadOnly="True"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
+                        <div id="collapseOne" class="collapse multi-collapse show" aria-labelledby="headingOne">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col mb-3 text-left text-md-right">
+                                        <a href="#" id="btnEditDetail" runat="server" title="EditDetail" data-toggle="modal" data-target="#EditDetail"><i class="fas fa-pen"></i></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">เลขที่เอกสาร</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtJobno" runat="server" ReadOnly="true"></asp:TextBox>
+                                            <div class="input-group-append">
+                                            </div>
+                                        </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สาขา</span>
-                            </div>
-                                <asp:TextBox class="form-control" ID="txtBranch" runat="server" ReadOnly="True"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ฝ่าย</span>
-                            </div>
-                                <asp:TextBox class="form-control" ID="txtDepartment" runat="server" ReadOnly="True"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">แผนก</span>
-                            </div>
-                                <asp:TextBox class="form-control" ID="txtSection" runat="server" ReadOnly="True"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">วันที่แจ้ง</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtDocDate" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ผู้แจ้ง</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtOwner" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ประเภทงาน</span>
-                            </div>
-                                <asp:TextBox class="form-control" ID="txtJobType" runat="server" ReadOnly="true"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">รหัสทรัพย์สิน</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtAssetCode" runat="server" ReadOnly="true"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <asp:TextBox class="form-control" ID="txtAssetName" runat="server" ReadOnly="true"></asp:TextBox>
-                        </div>
-                    </div>
-                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">สาขา</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtBranch" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ฝ่าย</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtDepartment" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">แผนก</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtSection" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group sm-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">จำนวน</span>
-                            </div>
-                                <asp:TextBox class="form-control" ID="txtQuantity" runat="server" ReadOnly="true"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">หน่วย</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtUnit" runat="server" ReadOnly="true"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ประเภทหมวดราคา</span>
-                                <asp:DropDownList class="form-control" ID="cboJobCenter"
-                                    runat="server">
-                                </asp:DropDownList>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ประเภทงาน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtJobType" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">รหัสทรัพย์สิน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtAssetCode" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <asp:TextBox class="form-control" ID="txtAssetName" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtCost" runat="server"></asp:TextBox>
-                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
-                                ControlToValidate="txtCost" runat="server"
-                                ErrorMessage="ตัวเลขเท่านั้น"
-                                ValidationExpression="\d+.\d+"
-                                ForeColor="Red">
-                            </asp:RegularExpressionValidator>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Supplier</span>
-                                <asp:DropDownList class="form-control" ID="cboSupplier"
-                                    runat="server">
-                                </asp:DropDownList>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group sm-3">
-                            <% If maintable.Rows(0).Item("owner") > 0 And maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                            <asp:Button ID="btnUpdate" class="btn btn-sm  btn-success" runat="server" Text="Update Cost and Supplier" />
-                            <% End if %>
-                        </div>
-                    </div>
-                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">จำนวน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtQuantity" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">หน่วย</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtUnit" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Supplier</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtSupplier" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group sm-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">รายละเอียดงาน</span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtcosts" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3 ">
+                                        <div class="input-group sm-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ประเภทงานที่ซ่อม</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtCloseType" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ชนิดงาน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtCloseCategory" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">รายละเอียดงาน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtDetail" runat="server" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+
+                                        <table class="table table-sm table-bordered " id="dataTable">
+                                            <thead class="table-info">
+                                                <tr>
+                                                    <th class="text-center" style="width: 200px;">สถานะ</th>
+                                                    <th class="text-center" style="width: 300px;">รายละเอียด</th>
+                                                    <th class="text-center" style="width: 200px;">ผู้ปรับปรุง</th>
+                                                    <th class="text-center" style="width: 200px;">วันที่ปรับปรุง</th>
+                                                    <th class="text-center" style="width: 120px;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="background-color: #f7f7f7;">
+                                                <tr class="shadow-sm" style="background-color: white;" id="fromUpdateFollowup" runat="server">
+                                                    <td style="vertical-align: middle">
+                                                        <asp:DropDownList ID="cboStatus" class="form-control" runat="server"></asp:DropDownList>
+                                                    </td>
+                                                    <td style="vertical-align: middle">
+                                                        <asp:TextBox ID="txtDetailFollow" class="form-control" runat="server" TextMode="MultiLine" Rows="1" required></asp:TextBox>
+                                                    </td>
+                                                    <td style="vertical-align: middle">
+
+                                                        <asp:Label ID="lblCreateBy" class="form-control  text-truncate" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                    <td style="vertical-align: middle">
+
+                                                        <asp:Label ID="lblCreateDate" class="form-control  text-truncate" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                    <td style="vertical-align: middle">
+                                                        <div class="d-flex flex-column">
+                                                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " OnClientClick="validateData()" />
+                                                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" />
+                                                            <asp:Button ID="btnClose" class="btn btn-sm  btn-danger mt-1" runat="server" Text="ค่าใช้จ่าย" />
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                                <% For i = 0 To followuptable.Rows.Count - 1 %>
+                                                <tr>
+                                                    <td><% =followuptable.Rows(i).Item("statusname") %></td>
+                                                    <td><% =followuptable.Rows(i).Item("details") %></td>
+                                                    <td><% =followuptable.Rows(i).Item("createby") %></td>
+                                                    <td class="text-center"><% =followuptable.Rows(i).Item("createdate") %></td>
+                                                    <td class="text-center">
+                                                        <% If (i = 0) Then%>
+                                                        <%-- <asp:Label ID="lastStatus" CssClass="text-danger" runat="server" Text="(สถานะล่าสุด)" />--%>
+                                                        <div class="row justify-content-center align-items-center">
+                                                            <div class="col-md-auto">
+                                                                <div class="statusJOB" id="stGSM"></div>
+                                                            </div>
+                                                            <div class="col-md-auto statusJOBName">
+                                                                <span id="statusJOBName">Now</span>
+                                                            </div>
+                                                        </div>
+                                                        <%  End If %>
+                                                    </td>
+                                                </tr>
+                                                <% Next i %>
+                                            </tbody>
+                                        </table>
+                                        <%--   status,detail--%>
+                                    </div>
+                                </div>
+
                             </div>
-                            <asp:TextBox class="form-control" ID="txtDetail" runat="server" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
                         </div>
                     </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
-
-                        <table class="table table-bordered " id="dataTable">
-                            <thead class="table-info">
-                                <tr>
-                                    <th style="width: 200px;">สถานะ</th>
-                                    <th style="width: 300px;">รายละเอียด</th>
-                                    <th style="width: 200px;">ผู้ปรับปรุง</th>
-                                    <th style="width: 200px;">วันที่ปรับปรุง</th>
-                                    <th style="width: 120px;"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% For i = 0 To followuptable.Rows.Count - 1 %>
-                                <tr>
-                                    <td><% =followuptable.Rows(i).Item("statusname") %></td>
-                                    <td><% =followuptable.Rows(i).Item("details") %></td>
-                                    <td><% =followuptable.Rows(i).Item("createby") %></td>
-                                    <td><% =followuptable.Rows(i).Item("createdate") %></td>
-                                    <td>
-                                        <% If (i = 0) Then%>
-                                            <asp:Label ID="lastStatus" CssClass="text-danger" runat="server" Text="(สถานะล่าสุด)" />
-                                        <%  End If %>
-                                    </td>
-                                </tr>
-                                <% Next i %>
-                                <tr>
-                                    <td>
-                                        <asp:DropDownList ID="cboStatus" class="form-control" runat="server"></asp:DropDownList>
-                                    </td>
-                                    <td>
-                                        <asp:TextBox ID="txtDetailFollow" class="form-control" runat="server" TextMode="MultiLine" required></asp:TextBox>
-                                    </td>
-                                    <td>
-                                        <asp:Label ID="lblCreateBy" class="form-control" runat="server" Text=""></asp:Label>
-                                    </td>
-                                    <td>
-                                        <asp:Label ID="lblCreateDate" class="form-control" runat="server" Text=""></asp:Label>
-                                    </td>
-                                    <td>
+                    <div class="card shadow mb-3 d-none">
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link w-100 text-left collapse__all" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    ประเภทงานที่ซ่อม / ประกัน 
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse multi-collapse show" aria-labelledby="headingTwo">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
                                         <% If maintable.Rows(0).Item("owner") > 0 Then %>
-                                        <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " OnClientClick="validateData()" />
+                                        <!-- owner = operator -->
+                                        <asp:Button ID="btnEditClose" class="btn btn-sm  btn-secondary" runat="server" Text="Update" />
                                         <% End if %>
-                                        <asp:Button ID="btnClose" class="btn btn-sm  btn-danger" runat="server" Text="ค่าใช้จ่าย" />
-                                        <% ElseIf String.Equals(Session("username"), maintable.Rows(0).Item("createby")) Then %>
-                                        <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                                        <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" />
-                                        <% End if %>
-                                        <% End if %>
+                                    </div>
+                                </div>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <%--   status,detail--%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow mb-3">
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link w-100 text-left collapse__all" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Supplier 
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse multi-collapse show" aria-labelledby="headingThree">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <asp:Button ID="btnSentSupplier" class="btn btn-sm  btn-warning" runat="server" Text="Send" />
+                                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Print" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col overflow-auto">
+                                        <div class="md-stepper-horizontal orange">
+                                            <% For i = 0 To stepsuppilertable.Rows.Count - 1 %>
+                                            <div class="md-step <% If stepsuppilertable.Rows(i).Item("actived").ToString = "1" Then %>active<% else if stepsuppilertable.Rows(i).Item("actived").ToString = "2" %>doing<% End if %>">
+                                                <div class="md-step-circle"><span><%= stepsuppilertable.Rows(i).Item("stepid").ToString() %></span></div>
+                                                <div class="md-step-title"><%= stepsuppilertable.Rows(i).Item("steptitle").ToString() %></div>
+                                                <div class="md-step-optional"><%= stepsuppilertable.Rows(i).Item("stepdate").ToString() %></div>
+                                                <div class="md-step-bar-left"></div>
+                                                <div class="md-step-bar-right"></div>
+                                            </div>
+                                            <% Next i %>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow mb-3">
+                        <div class="card-header" id="headingFour">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link w-100 text-left collapse__all" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    คะแนนการประเมิน
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseFour" class="collapse multi-collapse show" aria-labelledby="headingFour">
+                            <div class="card-body">
+
+                                <!-- Rating -->
+                                <div class="rating__main">
+
+                                    <!-- rate__Service -->
+                                    <div class="rate__Service">
+
+                                        <!-- Rating totol -->
+                                        <div class="row w-50 m-auto align-items-center">
+                                            <div class="col-lg mb-3">
+                                                <div class="row">
+                                                    <div class="col mb-3 text-center">
+                                                        <h4>การประเมินโดยรวม (Suppiler)</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col mb-3 text-center">
+                                                        <h3 class="font-weight-bold"><span id="txtAvg_Service"></span></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col mb-3">
+                                                        <div id="p__all_Service" class="rating mx-auto">
+                                                            <span class="rating__result"></span>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg  mb-3">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>5</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="5star_Service" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>4</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="4star_Service" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>3</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="3star_Service" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>2</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="2star_Service" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>1</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="1star_Service" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end Rating totol -->
+
+                                        <!-- Rating table -->
+                                        <div class="row w-75 m-auto">
+                                            <div class="col-lg mb-3">
+                                                <table class="table  table-hover" id="myTableTopic_Service">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center" scope="col">หัวข้อประเมิน</th>
+                                                            <th class="text-center" scope="col">ระดับความพึงพอใจ</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% For i = 0 To assessmenttable.Rows.Count - 1 %>
+                                                        <% If assessmenttable.Rows(i).Item("TopicGroup_id").ToString() = "2" Then %>
+                                                        <tr>
+                                                            <td><%= assessmenttable.Rows(i).Item("topic_detail").ToString() %></td>
+                                                            <td>
+
+                                                                <% If assessmenttable.Rows(i).Item("Type").ToString() = "rate" Then %>
+                                                                <div id="<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" class="rating_Service rating mx-auto">
+                                                                    <span class="rating__result"></span>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                </div>
+                                                                <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" then %>
+
+                                                                <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                                                                <textarea class="form-control" id="txtOther_<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" rows="1"></textarea>
+                                                                <% Else %>
+                                                                <textarea class="form-control" id="txtOther_<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" rows="1" readonly><%= assessmenttable.Rows(i).Item("message").ToString() %></textarea>
+                                                                <% End if %>
+                                                                <% End if %>
+                                                            </td>
+                                                        </tr>
+                                                        <% End if %>
+                                                        <% Next i %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- end Rating table -->
+                                    </div>
+                                    <!-- end rate__Service -->
+
+
+                                    <hr />
+
+                                    <!-- rate__Operator -->
+                                    <div class="rate__Operator">
+                                        <!-- Rating totol -->
+                                        <div class="row w-50 m-auto align-items-center">
+                                            <div class="col-lg mb-3">
+                                                <div class="row">
+                                                    <div class="col mb-3 text-center">
+                                                        <h4>การประเมินโดยรวม (Operator)</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col mb-3 text-center">
+                                                        <h3 class="font-weight-bold"><span id="txtAvg_Operator"></span></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col mb-3">
+                                                        <div id="p__all_Operator" class="rating mx-auto">
+                                                            <span class="rating__result"></span>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star far fa-circle"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg  mb-3">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>5</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="5star_Operator" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>4</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="4star_Operator" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>3</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="3star_Operator" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>2</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="2star_Operator" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto">
+                                                        <span>1</span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <progress id="1star_Operator" value="0" max="10"></progress>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end Rating totol -->
+
+                                        <!-- Rating table -->
+                                        <div class="row w-75 m-auto">
+                                            <div class="col-lg mb-3">
+                                                <table class="table  table-hover" id="myTableTopic_Operator">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center" scope="col">หัวข้อประเมิน</th>
+                                                            <th class="text-center" scope="col">ระดับความพึงพอใจ</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% For i = 0 To assessmenttable.Rows.Count - 1 %>
+                                                        <% If assessmenttable.Rows(i).Item("TopicGroup_id").ToString() = "1" Then %>
+                                                        <tr>
+                                                            <td><%= assessmenttable.Rows(i).Item("topic_detail").ToString() %></td>
+                                                            <td>
+
+                                                                <% If assessmenttable.Rows(i).Item("Type").ToString() = "rate" Then %>
+                                                                <div id="<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" class="rating_Operator rating mx-auto">
+                                                                    <span class="rating__result"></span>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star far fa-circle"></i>
+                                                                </div>
+                                                                <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" then %>
+                                                                <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                                                                <textarea class="form-control" id="txtOther_<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" rows="1"></textarea>
+                                                                <% Else %>
+                                                                <textarea class="form-control" id="txtOther_<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" rows="1" readonly><%= assessmenttable.Rows(i).Item("message").ToString() %></textarea>
+                                                                <% End if %>
+                                                                <% End if %>
+                                                            </td>
+                                                        </tr>
+                                                        <% End if %>
+                                                        <% Next i %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- end Rating table -->
+
+                                    </div>
+                                    <!-- end rate__Operator -->
+                                </div>
+                                <!-- end Rating -->
+                                <div class="row">
+                                    <div class="col-12 mb-3 text-center">
+                                        <asp:Button ID="btnSubmitRate" class="btn btn-secondary" runat="server" Text="Send" autopostback="False" OnClientClick="validateRate(); " />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <hr />
+                </div>
+                <div class="row notPrint" id="card_attatch">
+                    <div class="col-md-6 mt-3">
+                        <div class="card shadow card_attatch">
+                            <div class="card-header">
+                                เอกสารแนบ
+                            </div>
+                            <div class="card-body attatchItems">
+                                <%--begin Attatch item--%>
+
+                                <% For i = 0 To AttachTable.Rows.Count - 1 %>
+                                <div class="row">
+                                    <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
+                                        <div class="col-auto">
+                                            <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                                <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
+
+                                            <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <%-- end Attatch item--%>
+                                <% Next i %>
+                            </div>
+                            <div class="card-footer">
+                                <div id="btnAddAttatch" runat="server">
+                                    <a onclick="addAttach()" id="btnAddNewAttatch" runat="server" class="text-primary" style="cursor: pointer; transition: .2s;">
+                                        <i class="fas fa-plus-circle"></i><span>&nbsp;แนบลิ้งเอกสาร</span></a>
+                                    <a href="#" id="btnAddAttatch2" runat="server" title="addAttach" data-toggle="modal" data-target="#chooseMyfile">เลือกจากคลังไฟล์...</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3" id="card_comment">
+                        <div class="card shadow card_comment">
+                            <div class="table-responsive">
+                                <div class="card-header">
+                                    แสดงความคิดเห็น
+                                </div>
+                                <div class="card-body comments">
+                                    <%--begin item--%>
+
+
+                                    <% For i = 0 To CommentTable.Rows.Count - 1 %>
+                                    <div class="comment-detail mb-2">
+
+                                        <div class="row">
+                                            <div class="col-auto font-weight-bolder" style="font-size: 1rem; display: flex; justify-content: flex-start; align-items: center;">
+                                                <%= CommentTable.Rows(i).Item("CreateBy").ToString() %>
+                                            </div>
+                                            <% If CommentTable.Rows(i).Item("CreateBy").ToString = Session("username").ToString Then %>
+                                            <div class="col-auto">
+                                                <a onclick="btnEditCommentClick('<%= CommentTable.Rows(i).Item("commentid").ToString() %>')" style="display: none;" class="btn btn-sm editComment">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>&nbsp;
+                                                    <a onclick="confirmDelete('<%= CommentTable.Rows(i).Item("commentid").ToString() %>','<%= Session("userid") %>')" class="btn btn-sm deleteComment">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                            </div>
+                                            <% End If %>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 text-muted" style="font-size: .75rem;">
+                                                <%= CommentTable.Rows(i).Item("CreateDate").ToString() %>
+                                            </div>
+                                        </div>
+                                        <div class="row commentDetail">
+                                            <div contenteditable="false" class="col-md-12 detailComment" id="<%= CommentTable.Rows(i).Item("commentid").ToString() %>" style="font-size: 1rem;" onblur="cancelEditComment(this,'<%= CommentTable.Rows(i).Item("commentdetail").ToString() %>');" onkeydown="checkEditcomment(this,event,'255','<%= CommentTable.Rows(i).Item("commentdetail").ToString() %>');">
+                                                <span>
+                                                    <%= CommentTable.Rows(i).Item("commentdetail").ToString() %>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%-- end detail row--%>
+                                    <% Next i %>
+                                </div>
+
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <asp:TextBox class="form-control bg-white" ID="txtComment" runat="server" Style="cursor: auto;" Rows="2" Columns="50" TextMode="MultiLine" onkeyup="stoppedTyping();" placeholder="Comment . ." value="" autocomplete="off"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-12">
+                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%-- end item--%>
+                        </div>
+                        <!-- end card-->
                     </div>
                 </div>
 
+
+                <a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top shadow" role="button"><i class="fas fa-chevron-up"></i></a>
             </div>
             <!-- end content-wrapper -->
 
 
             <!-- end เนื้อหาเว็บ -->
-
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2019</span>
-                    </div>
-                </div>
-            </footer>
         </div>
         <!-- /#wrapper -->
     </div>
+
+    <div class="modal fade bd-example-modal-lg" id="chooseMyfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">เลือกจากคลังไฟล์</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <asp:Label ID="lbcboMyfile" CssClass="form-label" AssociatedControlID="cboMyfile" runat="server" Text="ไฟล์ของฉัน" />
+                                <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboMyfile" runat="server" Text="*" />
+                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server" required></asp:DropDownList>
+                                <div class="invalid-feedback">กรุณาเลือกไฟล์</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="EditDetail" tabindex="-1" role="dialog" aria-labelledby="editDetailModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDetailModal">แก้ไข รายละเอียดงาน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ประเภทงาน</span>
+                                </div>
+                                <asp:DropDownList ID="cboJobType" class="form-control" runat="server" AutoPostBack="false">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ประเภทงานที่ซ่อม</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboCloseType" runat="server">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Supplier</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboSupplier"
+                                    runat="server">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ชนิดงาน</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboCloseCategory" runat="server">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 d-none">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ประเภทหมวดราคา</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboJobCenter"
+                                    runat="server">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">รหัสทรัพย์สิน</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtAsset" runat="server" placeholder="" autocomplete="off"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtCost" runat="server"></asp:TextBox>
+                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
+                                    ControlToValidate="txtCost" runat="server"
+                                    ErrorMessage="ตัวเลขเท่านั้น"
+                                    ValidationExpression="\d+.\d+"
+                                    ForeColor="Red">
+                                </asp:RegularExpressionValidator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="btnUpdate" class="btn btn-primary" runat="server" Text="Update" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/starRating.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/Jobs.js")%>"></script>
     <script type="text/javascript">
+
         function alertSuccess() {
             Swal.fire(
                 'สำเร็จ',
@@ -281,13 +876,193 @@
                 'warning'
             )
         }
-    </script>
-    <script type="text/javascript">
+
+
         $(document).ready(function () {
             $('.form-control').selectpicker({
+                noneSelectedText: '-',
                 liveSearch: true,
                 maxOptions: 1
             });
+
+            <% For i = 0 To assessmenttable.Rows.Count - 1 %>
+            let ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %> = getStarRating("<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>");
+                <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+            if (ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>) executeRating(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>);
+                <% else If assessmenttable.Rows(i).Item("rate") > 0 And maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then %>
+            executeRatingAvg(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>,<%= assessmenttable.Rows(i).Item("rate") %>);
+                <% End if %>
+            <% Next i %>
+            calProgressTotal("_Service");
+            calProgressTotal("_Operator");
+
         });
+        jQuery('[id$=cboStatus]').on('show.bs.dropdown', function () {
+            $('.table-responsive').css("overflow", "inherit");
+        });
+
+        jQuery('[id$=cboStatus]').on('hide.bs.dropdown', function () {
+            $('.table-responsive').css("overflow", "auto");
+        })
+        function chooseMyfile() {
+            validateData();
+
+            const url = $('#<%= cboMyfile.ClientID%>').val();
+            const description = $("#<%= cboMyfile.ClientID%> option:selected").text();
+            sentAddAttach(url, description)
+
+            return true;
+        }
+        function addAttach() {
+
+            Swal.fire({
+                title: 'แนบลิ้งเอกสาร',
+                html:
+                    '<input id="swal-input1" class="swal2-input" type="url" placeholder="URL">' +
+                    '<input id="swal-input2" class="swal2-input" placeholder="Description">',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                preConfirm: () => {
+                    if (!document.getElementById('swal-input1').value || !document.getElementById('swal-input2').value) {
+                        // Handle return value 
+                        if (!document.getElementById('swal-input1').value && document.getElementById('swal-input2').value) {
+                            Swal.showValidationMessage('URL missing')
+                        } else if (document.getElementById('swal-input1').value && !document.getElementById('swal-input2').value) {
+                            Swal.showValidationMessage('Description missing')
+                        } else {
+                            Swal.showValidationMessage('URL,Description missing')
+                        }
+                    } else {
+                        return [
+                            document.getElementById('swal-input1').value,
+                            document.getElementById('swal-input2').value
+                        ]
+                    }
+                },
+                confirmButtonText: 'Save',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = result.value[0];
+                    let description = result.value[1];
+                    //console.log(url, description);
+                    sentAddAttach(url, description)
+                }
+            })
+
+        }
+        function sentAddAttach(url, description) {
+            if (url.substring(0, 7) != 'http://' && url.substring(0, 8) != 'https://') {
+                url = 'http://' + url;
+            }
+            /*alert(url);*/
+            let msg = '<a href="' + url + '" target="_blank">' + description + '</a>'
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const nonpocode = urlParams.get('jobdetailid');
+            var user = "<% =Session("usercode").ToString %>";
+            var userid = <%= Session("userid") %>;
+            var params = "{'user': '" + user + "','url': '" + url + "','description': '" + description + "','nonpocode': '" + nonpocode + "'}";
+            //alert(params)
+            $.ajax({
+                type: "POST",
+                url: "Non-PO/Payment/Payment2.aspx/addAttach",
+                async: true,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+
+
+                    /*alertSuccessToast();*/
+                    if (msg.d) {
+                        if (!description) {
+                            description = 'Link';
+                        }
+                        /*__doPostBack('AttachTable', '')*/
+                        $('.attatchItems').append(
+                            '<div class="row">' +
+                            '<div class= "attatchItems-link-btndelete" id ="ATT' + msg.d + '" >' +
+                            '<div class="col-auto">' +
+                            '<a href="' + url + '" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">' +
+                            '<span>' + description + '</span></a>' +
+                            '<a onclick="removeAttach(' + msg.d + ',' + userid + ');" class="btn btn-sm pt-0 text-danger deletedetail">' +
+                            '<i class="fas fa-times"></i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                        alertSuccessToast('บันทึกเรียบร้อย' + description);
+                    } else {
+                        alertWarning('Add URL fail');
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+
+                    alertWarning('Add URL faila');
+
+                }
+            });
+
+        }
+
+
+        function validateRate() {
+            let cnt_null = 0
+            var params = "[";
+            <% For i = 0 To assessmenttable.Rows.Count - 1 %>
+                <% If assessmenttable.Rows(i).Item("Type").ToString() = "rate" Then %>
+            let ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %> = getStarRating("<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>");
+            console.log(<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>);
+            console.log(`ssss ${getRate(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>)}`);
+            if (getRate(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>) == 0) {
+                cnt_null++;
+            } else {
+                params = params + "{'topic_id': '<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>','value': '" + getRate(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>) + "','type': 'rate'},"
+            }
+                <% ElseIf assessmenttable.Rows(i).Item("Type").ToString() = "text" Then %>
+            let valText<%= assessmenttable.Rows(i).Item("topic_id").ToString() %> = document.getElementById("txtOther_" + "<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>").value
+            if (valText<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>) params = params + "{'topic_id': '<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>','value': '" + valText<%= assessmenttable.Rows(i).Item("topic_id").ToString() %> + "','type': 'text'},"
+                <% End if %>
+            <% Next i %>
+
+            if (cnt_null > 0) {
+                event.preventDefault();
+                event.stopPropagation();
+                alertWarning("กรุณาลงคะแนนประเมินให้ครบทุกหัวข้อ")
+                return false;
+            }
+            else {
+
+                console.log(params)
+                params = (params.substr(params.length - 1) === ",") ? params.substr(0, params.length - 1) + "]" : params + "]";
+                console.log(`new ${params}`)
+                var confirm_value = document.createElement("INPUT");
+                confirm_value.type = "hidden";
+                confirm_value.name = "confirm_value";
+
+                if (confirm("คุณต้องการจะบันทึกหรือไม่ ?")) {
+                    confirm_value.value = params;
+                }
+                else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                document.forms[0].appendChild(confirm_value);
+                return true;
+            }
+        }
+        function stoppedTyping() {
+            if (document.getElementById('<%= txtComment.ClientID%>').value.length > 0) {
+                document.getElementById('<%= btnSaveComment.ClientID%>').disabled = false;
+            } else {
+                document.getElementById('<%= btnSaveComment.ClientID%>').disabled = true;
+
+            }
+        }
     </script>
 </asp:Content>
