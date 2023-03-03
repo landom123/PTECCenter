@@ -1,9 +1,19 @@
 ﻿<%@ Page Title="OPS : จัดการใบแจ้งงาน" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Jobs.aspx.vb" Inherits="PTECCENTER.frmJobs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <script src="https://cdn.tiny.cloud/1/eivog24cbgm1fhi4pm2cg4pw1lp478mhyjjtxnzml4fi51pa/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <style>
+        #content-wrapper {
+            background-color: #f0f2f5;
+        }
+        .container-fluid {
+            max-width: 1200px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -135,7 +145,7 @@
 
                 <!-- DataTables Example -->
 
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header" style="background-color: navy; color: white">
                         <i class="fas fa-table"></i>
                         รายละเอียดงาน
@@ -369,6 +379,8 @@
 
                             <%-- begin free detail row--%>
                             <% If objStatus = "new" Or objStatus = "edit" Then %>
+                            <% If detailtable IsNot Nothing Then %>
+                            <% If detailtable.Rows.Count < 1 Then %>
                             <div class="row">
                                 <div class=" col-md-auto mb-3">
                                     <div class="input-group sm-3">
@@ -533,6 +545,8 @@
 
                             </div>
 
+                            <% End if %>
+                            <% End if %>
                             <% End if %>
                             <%-- end free detail row--%>
                         </div>

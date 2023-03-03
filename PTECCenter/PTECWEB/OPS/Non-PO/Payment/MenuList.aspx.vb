@@ -350,7 +350,7 @@ Public Class MenuList
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
-        searchjobslist()
+        'searchjobslist()
         If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
             searchjobslist()
         Else
