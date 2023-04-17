@@ -542,4 +542,22 @@ endprocess:
         FindJob(jobno, jobdetailid)
         setBtn()
     End Sub
+
+    Private Sub btnSentSupplier_Click(sender As Object, e As EventArgs) Handles btnSentSupplier.Click
+
+        Dim objjob As New jobs
+
+        Try
+            objjob.Jobs_Send_Supplier(jobno, jobdetailid, usercode)
+            flashData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('SaveComment fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+    End Sub
 End Class
