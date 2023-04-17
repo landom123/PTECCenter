@@ -74,7 +74,13 @@
             Session("comment_payment") = CommentTable
             Session("attatch_payment") = AttachTable
         Else
-
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "btnSave" Then
+                Dim argument As String = Request("__EVENTARGUMENT")
+                If argument = "Y" Then
+                    ManageNonPO()
+                End If
+            End If
             nonpodt = Session("maintable_payment")
             AttachTable = Session("attatch_payment")
             CommentTable = Session("comment_payment")
@@ -171,8 +177,7 @@ endprocess:
 endprocess:
     End Sub
 
-
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+    Private Sub ManageNonPO()
         Dim objnonpo As New NonPO
         Try
             objnonpo.ManageNonPO(Request.QueryString("NonpoCode"), cboStatusFollow.SelectedItem.Value, Session("usercode"))
@@ -187,4 +192,5 @@ endprocess:
         Response.Redirect("../Master/NonPOManage_PAY.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
+
 End Class

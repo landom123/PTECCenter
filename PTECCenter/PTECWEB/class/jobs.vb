@@ -1403,4 +1403,25 @@ Public Class jobs
 
         Return result
     End Function
+
+    Public Sub Jobs_Send_Supplier(jobno As String, jobdetailid As Double, usercode As String)
+        'Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        'Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Send_Supplier"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.Int).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+
+        cmd.ExecuteNonQuery()
+        conn.Close()
+
+    End Sub
 End Class
