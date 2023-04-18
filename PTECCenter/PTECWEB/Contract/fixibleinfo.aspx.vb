@@ -98,9 +98,14 @@ Public Class fixibleinfo
                 rdoYear.Checked = True
             End If
             txtFrequency.Text = .Item("frequency")
-            txtBegindate.Text = .Item("begindate")
-            txtEnddate.Text = .Item("enddate")
-            txtDueDate.Text = .Item("duedate")
+            'txtBegindate.Text = .Item("begindate")
+            'txtEnddate.Text = .Item("enddate")
+            'txtDueDate.Text = .Item("duedate")
+
+            txtBegindate.Text = DateAdd(DateInterval.Year, 543, CDate(.Item("begindate")))
+            txtEnddate.Text = DateAdd(DateInterval.Year, 543, CDate(.Item("enddate")))
+            txtDueDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Item("duedate")))
+
             txtAmount.Text = .Item("amount")
 
             fixid = .Item("fixid")
@@ -189,9 +194,10 @@ Public Class fixibleinfo
 
         paymenttype = cboPaymentType.SelectedItem.Text
         amount = Double.Parse(txtAmount.Text)
-        begindate = DateTime.Parse(txtBegindate.Text)
-        enddate = DateTime.Parse(txtEnddate.Text)
-        duedate = DateTime.Parse(txtDueDate.Text)
+        begindate = DateAdd(DateInterval.Year, -543, CDate(txtBegindate.Text))
+        enddate = DateAdd(DateInterval.Year, -543, CDate(txtEnddate.Text))
+        duedate = DateAdd(DateInterval.Year, -543, CDate(txtDueDate.Text))
+
         frequency = Integer.Parse(txtFrequency.Text)
         If rdoMonth.Checked = True Then
             recuring = "M"

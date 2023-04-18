@@ -125,6 +125,11 @@
 			                                    <asp:Label id="lble85price" runat="server" Text='<%#Eval("e85price")%>'></asp:Label>
 		                                    </ItemTemplate>
 	                                    </asp:TemplateField>
+	                                    <asp:TemplateField HeaderText="remark">
+		                                    <ItemTemplate>
+			                                    <asp:Label id="lblremark" runat="server" Text='<%#Eval("remark")%>'></asp:Label>
+		                                    </ItemTemplate>
+	                                    </asp:TemplateField>
                                     
 
                     </Columns>

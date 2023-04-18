@@ -126,7 +126,7 @@ Public Class SupplyWSLastPriceSet
         dt.Columns.Add("b5price", GetType(Double))
         dt.Columns.Add("b7price", GetType(Double))
         dt.Columns.Add("b10price", GetType(Double))
-
+        dt.Columns.Add("remark", GetType(String))
 
         Return dt
     End Function

@@ -25,6 +25,13 @@
         * {
             font-family:Arial;
         }
+
+        *, *:after, *:before {
+            transition: all .3s ease-out;
+            -webkit-transition: all .3s ease-out;
+            -moz-transition: all .3s ease-out;
+            -o-transition: all .3s ease-out;
+        }
     </style>
     <script type="text/javascript">
         function msgalert(msg) {

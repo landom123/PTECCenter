@@ -99,7 +99,8 @@ Public Class onetimeinfo
             txtContractNo.Text = contractno
             txtid.Text = .Item("onetimeid")
             txtAmount.Text = .Item("amount")
-            txtDueDate.Text = .Item("duedate")
+            'txtDueDate.Text = .Item("duedate")
+            txtDueDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Item("duedate")))
             txtRemark.Text = .Item("remark")
             cboPayment.SelectedIndex = cboPayment.Items.IndexOf(cboPayment.Items.FindByText(.Item("paymenttype")))
             If .Item("clientpaid") = True Then
@@ -129,7 +130,8 @@ Public Class onetimeinfo
         txtAmount.Text = "0"
         cboPayment.SelectedIndex = -1
         rdoClient.Checked = True
-        txtDueDate.Text = Date.Now.ToString
+        txtDueDate.Text = DateAdd(DateInterval.Year, 543, Date.Now)
+
         SetButton("New")
     End Sub
 
@@ -185,7 +187,9 @@ Public Class onetimeinfo
         Else
             clientpaid = 0
         End If
-        duedate = DateTime.Parse(txtDueDate.Text)
+        If txtDueDate.Text = "" Then txtDueDate.Text = "01/01/2500"
+
+        duedate = DateAdd(DateInterval.Year, -543, CDate(txtDueDate.Text)) 'DateTime.Parse(txtDueDate.Text)
 
         paymenttype = cboPayment.SelectedItem.Text
 

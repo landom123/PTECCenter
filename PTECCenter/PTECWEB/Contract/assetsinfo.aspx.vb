@@ -9,6 +9,7 @@ Public Class assetsinfo
     Public clientid As Double = 0
 
     Public Shared iBuconType As Integer
+    Public Shared BuconTypeName As String
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objTitleName As New TitleName
@@ -36,6 +37,8 @@ Public Class assetsinfo
 
             SetCboAssetType(cboAssetType)
 
+            txtContractType.Text = assetsinfo.BuconTypeName
+
             Session("contractno") = contractno
             Session("assetsno") = assetsno
 
@@ -56,11 +59,11 @@ Public Class assetsinfo
         End If
 
 
-        If iBuconType = 2 Then
-            rdoplanBlank.Visible = True
-        Else
-            rdoplanBlank.Visible = False
-        End If
+        'If iBuconType = 2 Then
+        '    rdoplanBlank.Visible = True
+        'Else
+        '    rdoplanBlank.Visible = False
+        'End If
 
 
     End Sub
@@ -129,6 +132,12 @@ Public Class assetsinfo
             txtNgan.Text = .Item("area_ngan")
             txtWa.Text = .Item("area_wa")
             txtGPS.Text = .Item("gps")
+
+            txtbuNo.Text = .Item("Address")
+            txtbuSubDistrict.Text = .Item("Subdistrict1")
+            txtbuDistrict.Text = .Item("District1")
+            txtbuProvince.Text = .Item("Province1")
+
             cboAssetType.SelectedIndex = cboAssetType.Items.IndexOf(cboAssetType.Items.FindByText(.Item("assetstype")))
             SetButton(.Item("status"))
 
@@ -203,6 +212,9 @@ Public Class assetsinfo
         Dim rai, ngan, fullarea As Integer
         Dim wa As Double
 
+        Dim RentType As Integer
+        Dim addrerss, subdistrict1, district1, province1 As String
+
         landno = txtLandno.Text
         surveyno = txtSurveyNo.Text
         subdistrict = txtSubDistrict.Text
@@ -212,6 +224,19 @@ Public Class assetsinfo
         rai = Integer.Parse(txtRai.Text)
         ngan = Integer.Parse(txtNgan.Text)
         wa = Double.Parse(txtWa.Text)
+
+
+        If rdoFull.Checked = True Then
+            RentType = 0
+        ElseIf rdoPart.Checked = True Then
+            RentType = 1
+        End If
+
+        addrerss = txtbuNo.Text
+        subdistrict1 = txtbuSubDistrict.Text
+        district1 = txtbuDistrict.Text
+        province1 = txtbuProvince.Text
+
         If rdoFull.Checked = True Then
             fullarea = 1
         Else
@@ -219,7 +244,7 @@ Public Class assetsinfo
         End If
 
         result = objassets.Save(contractno, assetsno, assetstype, landno, surveyno, subdistrict,
-                                district, province, rai, ngan, wa, gps, fullarea, usercode)
+                                district, province, rai, ngan, wa, gps, fullarea, usercode, RentType, addrerss, subdistrict1, district1, province1)
 
         Return result
     End Function

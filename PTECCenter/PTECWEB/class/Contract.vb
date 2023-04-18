@@ -1,12 +1,26 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Data
+Imports System.Data.SqlClient
 Imports System.Web.Configuration
+
+Imports DocumentFormat.OpenXml.Wordprocessing
+Imports System.Net
+Imports System.Reflection
+Imports System.Diagnostics.Contracts
+Imports System.Web.Http.Results
+Imports QRCoder.PayloadGenerator
+Imports DocumentFormat.OpenXml.Bibliography
+Imports DocumentFormat.OpenXml.Spreadsheet
+Imports System.Net.NetworkInformation
+Imports CrystalDecisions.Web
+
 Public Class Client
     Public Function Save(contractno As String, clientno As String, usercode As String,
                                      clientname As String, cardid As String, sex As String,
                                      companyname As String, birthday As DateTime, mobile As String,
                                      tel As String, email As String, line As String,
                                      address As String, subdistrict As String, district As String,
-                                     province As String, postcode As String) As String
+                                     province As String, postcode As String, address1 As String, subdistrict1 As String, district1 As String,
+                                     province1 As String, postcode1 As String) As String
         Dim result As String
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -36,9 +50,11 @@ Public Class Client
         cmd.Parameters.Add("@district", SqlDbType.VarChar).Value = district
         cmd.Parameters.Add("@province", SqlDbType.VarChar).Value = province
         cmd.Parameters.Add("@postcode", SqlDbType.VarChar).Value = postcode
-
-        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
-        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+        cmd.Parameters.Add("@Address1", SqlDbType.VarChar).Value = address1
+        cmd.Parameters.Add("@SubDistrict1", SqlDbType.VarChar).Value = subdistrict1
+        cmd.Parameters.Add("@District1", SqlDbType.VarChar).Value = district1
+        cmd.Parameters.Add("@Province1", SqlDbType.VarChar).Value = province1
+        cmd.Parameters.Add("@PostCode1", SqlDbType.VarChar).Value = postcode1
 
 
         adp.SelectCommand = cmd
@@ -526,7 +542,7 @@ Public Class ContractAssets
     Public Function Save(contractno As String, assetsno As String, assetstype As Integer,
                          landno As String, surveyno As String, subdistrict As String, district As String,
                          province As String, rai As Integer, ngan As Integer, wa As Double, gps As String,
-                          fullarea As Integer, usercode As String) As String
+                          fullarea As Integer, usercode As String, RentType As Integer, addrerss As String, subdistrict1 As String, district1 As String, province1 As String) As String
         Dim result As String
 
         Dim ds As New DataSet
@@ -553,7 +569,12 @@ Public Class ContractAssets
         cmd.Parameters.Add("@wa", SqlDbType.VarChar).Value = wa
         cmd.Parameters.Add("@gps", SqlDbType.VarChar).Value = gps
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
-        'cmd.Parameters.Add("@volume", SqlDbType.Int).Value = volume
+
+        cmd.Parameters.Add("@RentType", SqlDbType.Int).Value = RentType
+        cmd.Parameters.Add("@address", SqlDbType.VarChar).Value = addrerss
+        cmd.Parameters.Add("@subdistrict1", SqlDbType.VarChar).Value = subdistrict1
+        cmd.Parameters.Add("@district1", SqlDbType.VarChar).Value = district1
+        cmd.Parameters.Add("@province1", SqlDbType.VarChar).Value = province1
 
         adp.SelectCommand = cmd
         adp.Fill(ds)
@@ -739,6 +760,34 @@ Public Class Project
         Return result
     End Function
 
+    Public Function loadStatus(StatusType As Integer) As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "sp_Get_Status"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@StatusType", SqlDbType.Int).Value = StatusType
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
     Public Function Save(projectno As String, branch As String, remark As String, salevolume As Integer, status As String, usercode As String) As DataTable
         Dim result As DataTable
 
@@ -854,8 +903,9 @@ Public Class Contract
         Return result
     End Function
     Public Function Save(projectno As String, agreetype As String,
-                              agreeno As String, lawcontractno As String, agreedate As DateTime, agreeactivedate As DateTime,
-                              usercode As String) As String
+                              agreeno As String, lawcontractno As String, agreedate As DateTime, agreeactivedate As DateTime, usercode As String _
+                              , BeginDate As Date, EndDate As Date, ConperiodY As Integer, ConperiodM As Integer, ConperiodD As Integer, ConProvince As String _
+                              , Branch As String, DayDueDate As Integer, AreaPlot As Decimal, RentPer As Decimal) As String
         Dim result As String
         'Ag_AgreeSave
         'Credit_Balance_List_Createdate
@@ -877,10 +927,16 @@ Public Class Contract
         cmd.Parameters.Add("@agreeactivedate", SqlDbType.DateTime).Value = agreeactivedate
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
 
-        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
-        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
-        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
-
+        cmd.Parameters.Add("@BeginDate", SqlDbType.Date).Value = BeginDate
+        cmd.Parameters.Add("@EndDate", SqlDbType.Date).Value = EndDate
+        cmd.Parameters.Add("@ConperiodY", SqlDbType.Int).Value = ConperiodY
+        cmd.Parameters.Add("@ConperiodM", SqlDbType.Int).Value = ConperiodM
+        cmd.Parameters.Add("@ConperiodD", SqlDbType.Int).Value = ConperiodD
+        cmd.Parameters.Add("@ConProvince", SqlDbType.VarChar).Value = ConProvince
+        cmd.Parameters.Add("@Branch", SqlDbType.VarChar).Value = Branch
+        cmd.Parameters.Add("@DayDueDate", SqlDbType.Int).Value = DayDueDate
+        cmd.Parameters.Add("@AreaPlot", SqlDbType.Decimal).Value = AreaPlot
+        cmd.Parameters.Add("@RentPer", SqlDbType.Decimal).Value = RentPer
 
         adp.SelectCommand = cmd
         adp.Fill(ds)
@@ -1139,7 +1195,6 @@ Public Class Contract
 End Class
 
 Public Class clsRequestContract
-
     Public Function loadBranch() As DataTable
         Dim result As DataTable
 
@@ -1167,5 +1222,304 @@ Public Class clsRequestContract
 
         Return result
     End Function
+
+    Public Function AddRequest(DocuNo As String, Branch As String, ContractID As Integer, Begindate As Date, EndDate As Date, CustName As String, CardID As String, Gender As String _
+                                , Company As String, Mobile As String, Tel As String, Email As String, Line As String, StatusID As Integer, Address As String, SubDistrict As String _
+                                , District As String, Province As String, PostCode As String, CreateDate As DateTime, CreateBy As String) As String
+
+        Try
+            Dim result As String
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Add_Request"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@DocuNo", SqlDbType.VarChar).Value = DocuNo
+            cmd.Parameters.Add("@Branch", SqlDbType.VarChar).Value = Branch
+            cmd.Parameters.Add("@ContractID", SqlDbType.Int).Value = ContractID
+            cmd.Parameters.Add("@Begindate", SqlDbType.DateTime).Value = Begindate
+            cmd.Parameters.Add("@EndDate", SqlDbType.DateTime).Value = EndDate
+            cmd.Parameters.Add("@CustName", SqlDbType.VarChar).Value = CustName
+            cmd.Parameters.Add("@CardID", SqlDbType.VarChar).Value = CardID
+            cmd.Parameters.Add("@Gender", SqlDbType.VarChar).Value = Gender
+            cmd.Parameters.Add("@Company", SqlDbType.VarChar).Value = Company
+            cmd.Parameters.Add("@Mobile", SqlDbType.VarChar).Value = Mobile
+            cmd.Parameters.Add("@Tel", SqlDbType.VarChar).Value = Tel
+            cmd.Parameters.Add("@Email", SqlDbType.VarChar).Value = Email
+            cmd.Parameters.Add("@Line", SqlDbType.VarChar).Value = Line
+            cmd.Parameters.Add("@StatusID", SqlDbType.Int).Value = StatusID
+            cmd.Parameters.Add("@Address", SqlDbType.VarChar).Value = Address
+            cmd.Parameters.Add("@SubDistrict", SqlDbType.VarChar).Value = SubDistrict
+            cmd.Parameters.Add("@District", SqlDbType.VarChar).Value = District
+            cmd.Parameters.Add("@Province", SqlDbType.VarChar).Value = Province
+            cmd.Parameters.Add("@PostCode", SqlDbType.VarChar).Value = PostCode
+            cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = CreateDate
+            cmd.Parameters.Add("@CreateBy", SqlDbType.VarChar).Value = CreateBy
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            'result = ds.Tables(0)
+            result = ds.Tables(0).Rows(0).Item("TT_Request")
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function UpdateRequest(DocuNo As String, Branch As String, ContractID As Integer, Begindate As Date, EndDate As Date, CustName As String, CardID As String, Gender As String _
+                                , Company As String, Mobile As String, Tel As String, Email As String, Line As String, StatusID As Integer, Address As String, SubDistrict As String _
+                                , District As String, Province As String, PostCode As String, UpdateDate As DateTime, UpdateBy As String, iDocID As Integer) As String
+
+        Try
+            Dim result As String
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Update_Request"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@DocuNo", SqlDbType.VarChar).Value = DocuNo
+            cmd.Parameters.Add("@Branch", SqlDbType.VarChar).Value = Branch
+            cmd.Parameters.Add("@ContractID", SqlDbType.Int).Value = ContractID
+            cmd.Parameters.Add("@Begindate", SqlDbType.DateTime).Value = Begindate
+            cmd.Parameters.Add("@EndDate", SqlDbType.DateTime).Value = EndDate
+            cmd.Parameters.Add("@CustName", SqlDbType.VarChar).Value = CustName
+            cmd.Parameters.Add("@CardID", SqlDbType.VarChar).Value = CardID
+            cmd.Parameters.Add("@Gender", SqlDbType.VarChar).Value = Gender
+            cmd.Parameters.Add("@Company", SqlDbType.VarChar).Value = Company
+            cmd.Parameters.Add("@Mobile", SqlDbType.VarChar).Value = Mobile
+            cmd.Parameters.Add("@Tel", SqlDbType.VarChar).Value = Tel
+            cmd.Parameters.Add("@Email", SqlDbType.VarChar).Value = Email
+            cmd.Parameters.Add("@Line", SqlDbType.VarChar).Value = Line
+            cmd.Parameters.Add("@StatusID", SqlDbType.Int).Value = StatusID
+            cmd.Parameters.Add("@Address", SqlDbType.VarChar).Value = Address
+            cmd.Parameters.Add("@SubDistrict", SqlDbType.VarChar).Value = SubDistrict
+            cmd.Parameters.Add("@District", SqlDbType.VarChar).Value = District
+            cmd.Parameters.Add("@Province", SqlDbType.VarChar).Value = Province
+            cmd.Parameters.Add("@PostCode", SqlDbType.VarChar).Value = PostCode
+            cmd.Parameters.Add("@UpdateDate", SqlDbType.DateTime).Value = UpdateDate
+            cmd.Parameters.Add("@UpdateBy", SqlDbType.VarChar).Value = UpdateBy
+            cmd.Parameters.Add("@DocuID", SqlDbType.VarChar).Value = iDocID
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            'result = ds.Tables(0)
+            result = ds.Tables(0).Rows(0).Item("TT_Request")
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function UpdateStatusRequest(sStatus As String, iDocID As Integer, sProjectNo As String) As String
+
+        Try
+            Dim result As String
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Update_Status_Request"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@Status", SqlDbType.VarChar).Value = sStatus
+            cmd.Parameters.Add("@iDocID", SqlDbType.Int).Value = iDocID
+            cmd.Parameters.Add("@sProjectNo", SqlDbType.VarChar).Value = sProjectNo
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            'result = ds.Tables(0)
+            result = ds.Tables(0).Rows(0).Item("TT_Request")
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+    End Function
+
+
+    Public Function GetDocRun(iDocuType As Integer, iCondition As Integer) As String
+        Try
+            Dim Result As String = ""
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_get_DocuRun"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@DocType", SqlDbType.Int).Value = iDocuType
+            cmd.Parameters.Add("@bBool", SqlDbType.Int).Value = iCondition
+            cmd.Parameters.Add("@Format", SqlDbType.VarChar, 20)
+            cmd.Parameters("@Format").Direction = ParameterDirection.Output
+            cmd.ExecuteNonQuery()
+
+            Result = cmd.Parameters("@Format").Value.ToString()
+            conn.Close()
+
+            Return Result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return ""
+        End Try
+
+    End Function
+
+    Public Function FindRequest(sBeginDate As String, sEndDate As String, iStatus As Integer) As DataTable
+
+        Try
+            Dim result As DataTable
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_FindData_Request"
+            cmd.CommandType = CommandType.StoredProcedure
+
+
+            cmd.Parameters.Add("@CreateDatefr", SqlDbType.VarChar).Value = sBeginDate
+            cmd.Parameters.Add("@CreateDateto", SqlDbType.VarChar).Value = sEndDate
+            cmd.Parameters.Add("@iStatus", SqlDbType.Int).Value = iStatus
+
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            result = ds.Tables(0)
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+
+    End Function
+
+    Public Function loadRequestProject(ProjectNo As String) As DataTable
+
+        Try
+            Dim result As DataTable
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Get_RequestByProject"
+            cmd.CommandType = CommandType.StoredProcedure
+
+
+            cmd.Parameters.Add("@ProjectNo", SqlDbType.VarChar).Value = ProjectNo
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            result = ds.Tables(0)
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+
+    End Function
+
+    Public Function LoadRequest(iDocuID As Integer) As DataTable
+
+        Try
+            Dim result As DataTable
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_GetData_Request"
+            cmd.CommandType = CommandType.StoredProcedure
+
+
+            cmd.Parameters.Add("@DocuID", SqlDbType.VarChar).Value = iDocuID
+            'cmd.Parameters.Add("@CreateDateto", SqlDbType.VarChar).Value = sEndDate
+            'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            result = ds.Tables(0)
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+
+    End Function
+
 
 End Class
