@@ -116,7 +116,9 @@ Public Class JobsList_test
         dt.Columns.Add("closedate", GetType(Date))
         dt.Columns.Add("detailFollow", GetType(String))
         dt.Columns.Add("cost", GetType(Double))
+        dt.Columns.Add("lockcost", GetType(Boolean))
         dt.Columns.Add("link", GetType(String))
+
 
         Return dt
     End Function
@@ -184,7 +186,7 @@ Public Class JobsList_test
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 8
+        Dim statusAt As Integer = 9
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then

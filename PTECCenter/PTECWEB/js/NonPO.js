@@ -133,6 +133,50 @@ function chkAttach(elem, userid) {
 
 }
 
+function removeAttach(attachid, userid) {
+    Swal.fire({
+        title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',
+        text: "",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        allowOutsideClick: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var params = "{'attachid': '" + attachid + "','userid': '" + userid + "'}";
+            $.ajax({
+                type: "POST",
+                url: "/OPS/Non-PO/Payment/Payment2.aspx/deleteAttach",
+                async: true,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d == 'success') {
+                        swal.fire({
+                            title: "Deleted!",
+                            text: "",
+                            icon: "success",
+                            allowOutsideClick: false
+                        }).then(function () {
+                            const attitem = document.getElementById('ATT' + attachid);
+                            attitem.parentNode.removeChild(attitem);
+                        });
+                    } else {
+                        alertWarning('fail')
+                    }
+                },
+                error: function () {
+                    alertWarning('fail ee')
+                }
+            });
+        }
+    })
+
+    return false;
+}
 /*  ################## END Attach #################  */
 
 
@@ -229,50 +273,6 @@ function confirmDelete(commentID, userid) {
                 },
                 error: function () {
                     alertWarning('Delete Comment fail');
-                }
-            });
-        }
-    })
-
-    return false;
-}
-function removeAttach(attachid, userid) {
-    Swal.fire({
-        title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',
-        text: "",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes',
-        allowOutsideClick: false
-    }).then((result) => {
-        if (result.isConfirmed) {
-            var params = "{'attachid': '" + attachid + "','userid': '" + userid + "'}";
-            $.ajax({
-                type: "POST",
-                url: "/OPS/Non-PO/Payment/Payment2.aspx/deleteAttach",
-                async: true,
-                data: params,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    if (msg.d == 'success') {
-                        swal.fire({
-                            title: "Deleted!",
-                            text: "",
-                            icon: "success",
-                            allowOutsideClick: false
-                        }).then(function () {
-                            const attitem = document.getElementById('ATT' + attachid);
-                            attitem.parentNode.removeChild(attitem);
-                        });
-                    } else {
-                        alertWarning('fail')
-                    }
-                },
-                error: function () {
-                    alertWarning('fail ee')
                 }
             });
         }

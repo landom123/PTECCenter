@@ -336,7 +336,7 @@
                                         <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
                                         <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
                                         <% End If %>
-                                        <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And Session("secid").ToString = "2" Then%>
+                                        <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And (Session("secid").ToString = "2" Or Session("secid").ToString = "35") Then%>
                                         <% If detailtable.Rows(0).Item("statusid") = 8 Then%>
                                         <asp:Button ID="btnSupportKnowlange" class="btn btn-warning d-none" runat="server" Text="รับเรื่อง" />
                                         <% End If %>
