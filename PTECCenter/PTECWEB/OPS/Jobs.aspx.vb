@@ -63,6 +63,7 @@ Public Class frmJobs
             objdep.SetCboDepartmentforjobtype(cboDepForJobType)
             objsec.SetCboSection(cboSection, 0)
             objsupplier.SetCboSupplier(cboSupplier)
+            'objsupplier.SetCboSupplierByComid(cboSupplier, "1") '1 PURE
             'objdep.SetCboDepartment(cboDepartment, 0)
 
             'SetCboBranch(cboBranch)
@@ -223,6 +224,7 @@ Public Class frmJobs
         dt.Columns.Add("attatch", GetType(String))
         dt.Columns.Add("brand", GetType(String))
         dt.Columns.Add("model", GetType(String))
+        'dt.Columns.Add("vendor_code", GetType(String))
 
 
 
@@ -388,7 +390,6 @@ endprocess:
             Session("status") = "edit"
             objStatus = "edit"
             txtStatus.Text = "แจ้งงาน"
-            Response.Redirect("../OPS/jobs.aspx?jobno=" & jobno)
 
 
         Catch ex As Exception
@@ -396,7 +397,10 @@ endprocess:
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('save fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
+        Response.Redirect("../OPS/jobs.aspx?jobno=" & jobno)
+endprocess:
     End Sub
     'Private Sub SaveEdit()
     '    Dim job As New jobs
@@ -721,6 +725,7 @@ endprocess:
         row("attatch") = lblattatch.Text
         row("brand") = txtBrand.Text
         row("model") = txtModel.Text
+        'row("vendor_code") = ""
 
         detailtable.Rows.Add(row)
         'detailtable.Rows.Add(0, cboJobType.SelectedItem.Value, cboJobType.SelectedItem.Text, txtAssetCode.Text, txtAssetName.Text,

@@ -42,7 +42,7 @@
                                 <span class="input-group-text">ต้องการเปลี่ยนเป็นสถานะ</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
-                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm()" AutoPostBack="false" />
                         </div>
                     </div>
                 </div>
@@ -262,14 +262,20 @@
 
             validateData();
             console.log("insave");
-            var confirm_value = document.createElement("INPUT");
+            let confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
             if (confirm("คุณต้องการจะบันทึกหรือไม่ ?")) {
                 confirm_value.value = "Yes";
+                console.log("insave1");
+                __doPostBack('btnSave', 'Y');
             }
             else {
                 confirm_value.value = "No";
+                event.preventDefault();
+                event.stopPropagation();
+                console.log("insave2");
+
             }
             document.forms[0].appendChild(confirm_value);
             return true;

@@ -13,6 +13,15 @@
         .input-group {
             padding-top: 1rem;
         }
+        .statuscompany {
+            margin-top: 6.5px;
+            margin-right: -11px;
+            width: 15px !important;
+            height: 15px !important;
+            background: #FEBC2F; /*เขียว:#00FF27 เหลือง:#FEBC2F แดง:#ee443b*/
+            border-radius: 50%;
+            margin-bottom: 0.15rem !important;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -145,7 +154,7 @@
                             AllowPaging="true"
                             runat="server">
                             <Columns>
-                                <asp:TemplateField HeaderText="Code">
+                                <asp:TemplateField HeaderText="Job">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("jobcode")%>'></asp:Label>
                                     </ItemTemplate>
@@ -170,6 +179,14 @@
                                         <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("details")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Supplier" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <div class="d-flex flex-column align-items-center" readonly="true">
+                                            <a href="../OPS/jobs_followup.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" class="badge badgestatus_app" title="<%#Eval("companystatus")%>" target="_blank"><%#Eval("companystatus")%></a>
+                                            <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("company")%>'></asp:Label>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Last Update">
                                     <ItemTemplate>
                                         <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("lastupdate")%>'></asp:Label>
@@ -182,7 +199,13 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cost">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
+                                        <div class="d-flex flex-column align-items-center" readonly="true">
+                                            <span runat="server" visible='<%#Eval("lockcost")%>'>
+                                                 <i class="fas fa-lock" visible='<%#Eval("lockcost")%>'></i>
+                                            </span>
+                                            <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
+                                        </div>
+
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Status">
@@ -260,6 +283,25 @@
                 liveSearch: true,
                 maxOptions: 1
             });
+
+            const arrs_app = document.querySelectorAll('.badgestatus_app');
+
+            for (let i = 0; i < arrs_app.length; i++) {
+                let st_name = arrs_app[i].textContent;
+                switch (st_name) {
+                    case "ยกเลิกรายการ":
+                        arrs_app[i].style.backgroundColor = "LightGrey";
+                        arrs_app[i].style.color = "red";
+                        break;
+                    case "ดำเนินการเสร็จสิ้น":
+                        arrs_app[i].style.backgroundColor = "Gray";
+                        arrs_app[i].style.color = "#000";
+                        break;
+                    default:
+                        arrs_app[i].style.backgroundColor = "LightYellow";
+                        arrs_app[i].style.color = "red";
+                }
+            }
         });
 
     </script>

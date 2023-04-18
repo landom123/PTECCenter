@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class JobsFollowup
 
     '''<summary>
+    '''lbjobscode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbjobscode As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''badgeStatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents badgeStatus As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
     '''btnBack control.
     '''</summary>
     '''<remarks>
@@ -23,13 +41,13 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnBack As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnPrint control.
+    '''btnEditDetail control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnPrint As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnEditDetail As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
     '''txtJobno control.
@@ -131,49 +149,40 @@ Partial Public Class JobsFollowup
     Protected WithEvents txtUnit As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cboJobCenter control.
+    '''txtSupplier control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboJobCenter As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txtSupplier As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtCost control.
+    '''txtcosts control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCost As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtcosts As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''RegularExpressionValidator1 control.
+    '''txtCloseType control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
+    Protected WithEvents txtCloseType As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cboSupplier control.
+    '''txtCloseCategory control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboSupplier As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''btnUpdate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnUpdate As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents txtCloseCategory As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''txtDetail control.
@@ -185,13 +194,13 @@ Partial Public Class JobsFollowup
     Protected WithEvents txtDetail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lastStatus control.
+    '''fromUpdateFollowup control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lastStatus As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents fromUpdateFollowup As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
     '''cboStatus control.
@@ -239,6 +248,15 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnConfirm control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnClose control.
     '''</summary>
     '''<remarks>
@@ -248,11 +266,200 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnClose As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnConfirm control.
+    '''btnEditClose control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnEditClose As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnSentSupplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSentSupplier As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnPrint control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnPrint As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnSubmitRate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSubmitRate As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnAddAttatch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddAttatch As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''btnAddNewAttatch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddNewAttatch As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''btnAddAttatch2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddAttatch2 As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''txtComment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtComment As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnSaveComment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSaveComment As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lbcboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboMyfile As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbMandatorycboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbMandatorycboMyfile As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboMyfile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboMyfile As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''asd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents asd As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cboJobType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboJobType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboCloseType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboCloseType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboSupplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboSupplier As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboCloseCategory control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboCloseCategory As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboJobCenter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboJobCenter As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtAsset control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtAsset As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtCost control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCost As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''RegularExpressionValidator1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
+
+    '''<summary>
+    '''btnUpdate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdate As Global.System.Web.UI.WebControls.Button
 End Class
