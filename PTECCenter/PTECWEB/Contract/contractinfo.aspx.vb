@@ -13,6 +13,8 @@ Public Class contractinfo
     Public paymenttable As DataTable = createPayment()
 
     Public usercode, username, projectno, contractno, contracttype As String
+
+
     'Public projectid As Double = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
@@ -20,6 +22,9 @@ Public Class contractinfo
         txtContractDate.Attributes.Add("readonly", "readonly")
         txtContractActiveDate.Attributes.Add("readonly", "readonly")
         txtprojectno.Attributes.Add("readonly", "readonly")
+
+        'txtBegindate.Attributes.Add("readonly", "readonly")
+        'txtEndDate.Attributes.Add("readonly", "readonly")
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -71,6 +76,7 @@ Public Class contractinfo
             End If
 
             txtbranch.Text = Request.QueryString("branch")
+            txtBranch1.Text = Request.QueryString("branch")
 
             projectno = Request.QueryString("projectno")
             contractno = Request.QueryString("agreeno")
@@ -78,6 +84,10 @@ Public Class contractinfo
             Session("contractno") = contractno
             txtprojectno.Text = projectno
             Find(contractno)
+
+            If loadRequestProject() = False Then
+                Exit Sub
+            End If
             'If Not (Session("client") Is Nothing) Then
             '    clienttable = Session("client")
             '    BindDataClient()
@@ -132,6 +142,7 @@ Public Class contractinfo
             End Try
         End If
     End Sub
+
     Public Sub BindDataFlex()
         gvPaymentFlex.DataSource = flexibletable
         gvPaymentFlex.DataBind()
@@ -162,7 +173,6 @@ Public Class contractinfo
         gvOneTime.DataBind()
     End Sub
 
-
     Public Sub ViewContract(mydatatable As DataTable)
         With mydatatable
             If .Rows.Count = 0 Then
@@ -181,7 +191,19 @@ Public Class contractinfo
                 txtContractDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agdate")))
                 txtContractActiveDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agactivedate")))
 
+                txtBegindate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agdate")))
+                txtEndDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agactivedate")))
+
                 cboContractType.SelectedIndex = cboContractType.Items.IndexOf(cboContractType.Items.FindByText(.Rows(0).Item("agtype")))
+
+                txtcontractPeriod.Text = .Rows(0).Item("ConperiodY")
+                txtcontractPeriod2.Text = .Rows(0).Item("ConperiodM")
+                txtRentalReg.Text = .Rows(0).Item("ConProvince")
+                txtBranch1.Text = txtbranch.Text
+                txtDays.Text = .Rows(0).Item("DayDueDate")
+                txtRentPer.Text = .Rows(0).Item("RentPer")
+                txtPlant.Text = .Rows(0).Item("AreaPlot")
+
                 SetButton(.Rows(0).Item("status"))
             End If
 
@@ -232,6 +254,10 @@ Public Class contractinfo
         txtContractNo.Text = ""
         txtContractActiveDate.Text = Date.Now
         txtContractDate.Text = Date.Now
+
+        txtBegindate.Text = Date.Now
+        txtEndDate.Text = Date.Now
+
         cboContractType.SelectedIndex = -1
         contractno = ""
         'txtSaleVolume.Text = ""
@@ -275,6 +301,9 @@ Public Class contractinfo
         Dim chkerr As Integer = 0
 
         Dim contractdate, contractactivedate As DateTime
+
+        Dim dBeginDate, dEndDate As Date
+
         Dim objcontract As New Contract
         Dim contracttype, lawcontractno As String
 
@@ -283,12 +312,21 @@ Public Class contractinfo
         Try
             'contractdate = Date.Parse(txtContractDate.Text)
             contractdate = DateAdd(DateInterval.Year, -543, Date.Parse(txtContractDate.Text))
+
+            dBeginDate = DateAdd(DateInterval.Year, -543, Date.Parse(txtBegindate.Text))
+            dEndDate = DateAdd(DateInterval.Year, -543, Date.Parse(txtEndDate.Text))
+
         Catch ex As Exception
             'contractdate = Date.Now
             'txtContractDate.Text = Date.Now.ToString
 
             contractdate = DateAdd(DateInterval.Year, -543, Date.Now)
             txtContractDate.Text = DateAdd(DateInterval.Year, -543, Date.Now).ToString
+
+            dBeginDate = DateAdd(DateInterval.Year, -543, Date.Parse(txtBegindate.Text))
+            dEndDate = DateAdd(DateInterval.Year, -543, Date.Parse(txtEndDate.Text))
+            txtBegindate.Text = DateAdd(DateInterval.Year, -543, Date.Now).ToString
+            txtEndDate.Text = DateAdd(DateInterval.Year, -543, Date.Now).ToString
 
         End Try
         Try
@@ -306,7 +344,9 @@ Public Class contractinfo
         End Try
 
         Try
-            contractno = objcontract.Save(txtprojectno.Text, contracttype, txtContractNo.Text, lawcontractno, contractdate, contractactivedate, usercode)
+            contractno = objcontract.Save(txtprojectno.Text, contracttype, txtContractNo.Text, lawcontractno, contractdate, contractactivedate, usercode _
+                                          , dBeginDate, dEndDate, CInt(txtcontractPeriod.Text), CInt(txtcontractPeriod2.Text), 0 _
+                                          , txtRentalReg.Text, txtbranch.Text, CInt(txtDays.Text), CDbl(txtPlant.Text), CDbl(txtRentPer.Text))
             txtContractNo.Text = contractno
             Session("contractno") = contractno
             SetButton("บันทึก")
@@ -324,7 +364,6 @@ Public Class contractinfo
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End If
     End Sub
-
 
     Private Function createPayment() As DataTable
         Dim dt As New DataTable
@@ -368,8 +407,6 @@ Public Class contractinfo
 
         Return dt
     End Function
-
-
     Private Function createFix() As DataTable
         Dim dt As New DataTable
         dt.Columns.Add("fixid", GetType(Double))
@@ -385,7 +422,6 @@ Public Class contractinfo
 
         Return dt
     End Function
-
 
     Private Function createFlex() As DataTable
         Dim dt As New DataTable
@@ -416,7 +452,6 @@ Public Class contractinfo
 
         Return dt
     End Function
-
     Private Sub btnClient_Click(sender As Object, e As EventArgs) Handles btnClient.Click
         If chkagree() Then
             Response.Redirect("clientinfo.aspx?contractno=" & contractno & "&clientno=")
@@ -454,8 +489,9 @@ Public Class contractinfo
 
 
             assetsinfo.iBuconType = cboContractType.SelectedValue
+            assetsinfo.BuconTypeName = cboContractType.SelectedItem.ToString
 
-            Response.Redirect("assetsinfo.aspx?contractno=" & contractno & "&assetsno=")
+            Response.Redirect("assetsinfo.aspx?contractno=" & contractno & "&assetsno=" )
         End If
 
     End Sub
@@ -481,4 +517,35 @@ Public Class contractinfo
     Private Sub cbocontracttype_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboContractType.SelectedIndexChanged
         Session(contracttype) = cboContractType.SelectedItem.Text
     End Sub
+
+    Private Function loadRequestProject() As Boolean
+        Try
+            Dim objReq As New clsRequestContract
+            Dim dt As New DataTable
+
+            dt = objReq.loadRequestProject(txtprojectno.Text)
+
+            For Each dr As DataRow In dt.Rows
+                cboContractType.SelectedValue = dr("ContractID")
+                txtBegindate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                txtEndDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+
+                txtContractDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                txtContractActiveDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+            Next
+
+
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err '"alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
+
 End Class

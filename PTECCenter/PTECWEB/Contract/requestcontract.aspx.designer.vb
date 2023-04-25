@@ -50,6 +50,42 @@ Partial Public Class requestcontract
     Protected WithEvents BtnContract As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''txtBegindate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBegindate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtEnddate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtEnddate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnFind control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''gvData control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvData As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
     '''txtdocuno control.
     '''</summary>
     '''<remarks>
@@ -228,4 +264,22 @@ Partial Public Class requestcontract
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtPostcode As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtDocAction control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDocAction As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtDocIDAction control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDocIDAction As Global.System.Web.UI.WebControls.TextBox
 End Class

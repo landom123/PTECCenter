@@ -1,14 +1,18 @@
 ﻿
 
+Imports System.Globalization
+
 Public Class projectinfo
     Inherits System.Web.UI.Page
     Public menutable As DataTable
 
-    Public agreetable As DataTable = createagreetable()
+    Public agreetable As DataTable = CreateAgreeTable()
 
     Public usercode, username, projectno As String
     Public projectid As Double = 0
     Public salevolume As Integer = 0
+
+    Public requesttable As DataTable = createdataRequest()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
 
@@ -53,11 +57,14 @@ Public Class projectinfo
             End If
             If Not (Session("agree") Is Nothing) Then
 
-                    agreetable = Session("agree")
-                    BindData()
-                End If
-
+                agreetable = Session("agree")
+                BindData()
             End If
+
+
+            BindDataRequest()
+
+        End If
 
 
     End Sub
@@ -103,6 +110,24 @@ Public Class projectinfo
         gvData.DataBind()
 
     End Sub
+
+    Public Sub BindDataRequest()
+        gvRequest.DataSource = createdataRequest()
+        gvRequest.DataBind()
+    End Sub
+
+    Private Function createdataRequest() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("ID", GetType(Integer))
+        dt.Columns.Add("StatusID", GetType(Double))
+        dt.Columns.Add("DocuNo", GetType(String))
+        dt.Columns.Add("DocuType", GetType(String))
+        dt.Columns.Add("Status", GetType(String))
+        dt.Columns.Add("User", GetType(String))
+        Return dt
+    End Function
+
     Public Sub ViewProject(mydatatable As DataTable)
         With mydatatable
             If .Rows.Count = 0 Then
@@ -349,9 +374,16 @@ Public Class projectinfo
         Dim branch As String = txtbranch.Text
         Dim objprj As New Project
         Dim mytable As DataTable
+
+        Dim result As String = Nothing
+        Dim objReq As New clsRequestContract
+
         Try
             mytable = objprj.Save(txtprojectno.Text, txtbranch.Text, txtRemark.Text, salevolume, "SAVE", usercode)
             txtprojectno.Text = mytable.Rows(0).Item("projectno")
+
+            result = objReq.UpdateStatusRequest("A", CInt(txtDocID.Text), txtprojectno.Text)
+
             SetButton("SAVE")
         Catch ex As Exception
             Dim err As String = Strings.Replace(ex.Message, "'", "")
@@ -383,4 +415,70 @@ Public Class projectinfo
         Response.Redirect("contractinfo.aspx?projectno=" & projectno & "&agreeno='' &branch=" & txtbranch.Text & "")
 
     End Sub
+
+
+    Protected Sub OnRowDataBound(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs)
+        Try
+            If e.Row.RowType = DataControlRowType.DataRow Then
+                e.Row.Attributes("onclick") = Page.ClientScript.GetPostBackClientHyperlink(gvRequest, "Select$" & e.Row.RowIndex)
+                e.Row.Attributes("style") = "cursor:pointer"
+            End If
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
+    End Sub
+
+    Protected Sub OnSelectedIndexChanged(sender As Object, e As EventArgs)
+        Try
+            Dim index As Integer = gvRequest.SelectedRow.RowIndex
+            Dim iDocID As Integer = CInt(gvRequest.SelectedRow.Cells(9).Text)
+
+            'If loadRequest(iDocID) = False Then
+            '    Exit Sub
+            'End If
+            txtbranch.Text = gvRequest.SelectedRow.Cells(1).Text
+            txtRemark.Text = gvRequest.SelectedRow.Cells(0).Text & " : " & gvRequest.SelectedRow.Cells(2).Text
+            txtDocID.Text = gvRequest.SelectedRow.Cells(9).Text
+
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
+    End Sub
+
+    Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
+        Try
+            Dim objReq As New clsRequestContract
+            Dim dtinfo As New DateTimeFormatInfo
+            Dim dt As New DataTable
+
+            Dim dBegindate, dEnddate As Date
+
+            dBegindate = DateAdd(DateInterval.Year, -543, CDate(txtBegindate.Text))
+            dEnddate = DateAdd(DateInterval.Year, -543, CDate(txtEnddate.Text))
+
+            dt = objReq.FindRequest(dBegindate.ToString("yyyyMMdd", dtinfo), dEnddate.ToString("yyyyMMdd", dtinfo), 2)
+
+            gvRequest.DataSource = dt
+            gvRequest.DataBind()
+
+
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
 End Class

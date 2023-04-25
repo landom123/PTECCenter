@@ -137,7 +137,7 @@
                         <div class="col-2">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                <span class="input-group-text">สัญญามีผลวันที่</span>
+                                <span class="input-group-text">จากวันที่</span>
                                 </div>
                                 <asp:TextBox class="form-control" ID="txtBegindate" style="background-color:white" runat="server"></asp:TextBox>    
 
@@ -645,6 +645,35 @@
             format: 'd/m/Y'
         });
     </script>
+
+        <script type="text/javascript">
+
+            jQuery('[id$=txtBegindate]').datetimepicker({
+
+                startDate: '+1971/05/01',//or 1986/12/08
+
+                lang: 'th',// แสดงภาษาไทย
+                yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
+                timepicker: false,
+                scrollInput: false,
+                format: 'd/m/Y'
+            });
+        </script>
+
+        <script type="text/javascript">
+
+            jQuery('[id$=txtEndDate]').datetimepicker({
+
+                startDate: '+1971/05/01',//or 1986/12/08
+
+                lang: 'th',// แสดงภาษาไทย
+                yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
+                timepicker: false,
+                scrollInput: false,
+                format: 'd/m/Y'
+            });
+        </script>
+
     
     <script type="text/javascript">
         function alertSuccess() {

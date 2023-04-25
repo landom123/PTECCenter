@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" 
-    MasterPageFile="~/site.Master" CodeBehind="projectinfo.aspx.vb" Inherits="PTECCENTER.projectinfo" %>
+    MasterPageFile="~/site.Master" CodeBehind="projectinfo.aspx.vb" Inherits="PTECCENTER.projectinfo" EnableEventValidation = "false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">    
@@ -115,6 +115,71 @@
                         <asp:Button ID="btnApprove" class="btn btn-sm  btn-success" runat="server" Text=" Approve " />
                     </div>
                 </div>
+
+                 <%--<hr style="height:2px;border-width:0;color:gray;background-color:gray">--%>
+                <div class="card-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">วันที่</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="txtBegindate" style="background-color:white" runat="server"></asp:TextBox>    
+
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group sm-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">ถึงวันที่</span>
+                                    </div>
+                                    <asp:TextBox class="form-control" ID="txtEnddate" style="background-color:white" runat="server"></asp:TextBox>    
+
+                                </div>
+                            </div>
+                            <%--<div class="col-3">--%>
+                                <asp:Button ID="btnFind" class="btn btn-sm  btn-success" runat="server" Text=" Find " />
+                            <%--</div>--%>
+                        </div>
+                    <br />
+                        <div class="row">
+                            <div class="col-12">
+                                 <div class="table-responsive">
+   
+                                    <asp:GridView ID="gvRequest"  
+                                        class="table table-striped table-bordered" 
+                                        AllowSorting="True" 
+                                        allowpaging="false"
+                                        AutoGenerateColumns="false" 
+                                        emptydatatext=" test ไม่มีข้อมูล " 
+                                        OnRowDataBound="OnRowDataBound"
+                                         OnSelectedIndexChanged="OnSelectedIndexChanged"
+                                        runat="server" CssClass="table table-striped">
+                                        <HeaderStyle BackColor="#507CD1" Font-Bold="false" Font-size="Smaller" ForeColor="White" />
+                                        <AlternatingRowStyle BackColor="#CCCCFF" />
+
+                                          <Columns>	                                  
+                                              <asp:BoundField DataField="DocuNo" HeaderText="เลขที่เอกสาร"  />	                                 
+                                              <asp:BoundField DataField="Branch" HeaderText="สาขา"  />
+                                              <asp:BoundField DataField="AgType" HeaderText="ประเภทสัญญา"  />
+	                                          <asp:BoundField DataField="StatusName" HeaderText="สถานะ"  />
+	                                          <asp:BoundField DataField="Begindate" HeaderText="วันที่เริ่ม"  />
+	                                          <asp:BoundField DataField="EndDate" HeaderText="สิ้นสุดวันที่"  />
+                                              <asp:BoundField DataField="CustName" HeaderText="คู่สัญญา"  />
+	                                          <asp:BoundField DataField="CreateDate" HeaderText="วันที่ขอ"  />
+                                              <asp:BoundField DataField="CreateBy" HeaderText="ผู้ขอ"  />    
+                                              <asp:BoundField DataField="ID" HeaderText="ID"  />
+                                        </Columns>
+                                  </asp:GridView>
+                                               
+                                </div><!-- end Table คู่สัญญา-->   
+                            </div>
+                      
+
+                        </div>
+                </div>
+                 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
     <p></p>    
     <div class="row">
         <div class="col-4">
@@ -154,7 +219,7 @@
                 <span class="input-group-text">Note</span>
                 </div>
                 <asp:TextBox class="form-control" ID="txtRemark"  TextMode="MultiLine" runat="server"></asp:TextBox>    
-
+                <asp:TextBox  style="display:none" class="form-control" ID="txtDocID" runat="server" ></asp:TextBox>
             </div>
         </div>
     </div>
@@ -247,6 +312,34 @@
         });
     </script>
 
+
+        <script type="text/javascript">
+
+            jQuery('[id$=txtBegindate]').datetimepicker({
+
+                startDate: '+1971/05/01',//or 1986/12/08
+
+                lang: 'th',// แสดงภาษาไทย
+                yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
+                timepicker: false,
+                scrollInput: false,
+                format: 'd/m/Y'
+            });
+        </script>
+
+        <script type="text/javascript">
+
+            jQuery('[id$=txtEnddate]').datetimepicker({
+
+                startDate: '+1971/05/01',//or 1986/12/08
+
+                lang: 'th',// แสดงภาษาไทย
+                yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
+                timepicker: false,
+                scrollInput: false,
+                format: 'd/m/Y'
+            });
+        </script>
     
     <script type="text/javascript">
         function alertSuccess() {

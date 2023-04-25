@@ -126,6 +126,8 @@
     <script type="text/javascript">
         jQuery('[id$=txtDueDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
+            lang: 'th',// แสดงภาษาไทย
+            yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
             timepicker: false,
             scrollInput: false,
             format:'d/m/Y'

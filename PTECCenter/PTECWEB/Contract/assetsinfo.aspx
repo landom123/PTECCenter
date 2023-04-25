@@ -54,14 +54,14 @@
                                 <%--<legend> สัญญาร่วมธุรกิจ </legend>--%>
                                  <div class="input-group sm-3">
                                       <div class="input-group-prepend">
-                                            <span class="input-group-text" > สัญญาร่วมธุรกิจ &nbsp <asp:RadioButtonList ID="rdoplanBlank" runat="server" RepeatDirection="Horizontal">           
-                                                <asp:ListItem Text="ที่ดินเปล่า" Value="1"></asp:ListItem>
-                                                <asp:ListItem Text="พร้อมสิ่งปลูกสร้าง" Value="2"></asp:ListItem>
-                                                </asp:RadioButtonList>
-                <%--                               <div id="dvShowHide" style="display:none;">
-                                                    Bank Name :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="txtBankName" runat="server"></asp:TextBox><br />              
-                                                    Cheque Number: <asp:TextBox ID="txtChequeNumber" runat="server"></asp:TextBox>
-                                                </div>--%>
+                                            <span class="input-group-text" > สัญญาร่วมธุรกิจ &nbsp 
+
+                                 <%--               <asp:RadioButtonList ID="rdoplanBlank" runat="server" RepeatDirection="Horizontal">           
+                                                    <asp:ListItem Text="ที่ดินเปล่า" Value="1"></asp:ListItem>
+                                                    <asp:ListItem Text="พร้อมสิ่งปลูกสร้าง" Value="2"></asp:ListItem>
+                                                </asp:RadioButtonList>--%>
+
+                                                <asp:TextBox class="form-control" ID="txtContractType"  ReadOnly="true" runat="server" ></asp:TextBox>    
                                             </span>
                                      </div>
                                 </div>
@@ -175,30 +175,30 @@
 
                     <br />
 
-                                <div class="row" id="dvShowHide"  style="display:none;">
-                                     <div class="row" style="padding-top: 0.2rem;">
+                                <div class="row" id="dvShowHide"  >
+                                     <%--<div class="row" style="padding-top: 0.2rem;">--%>
                                         <div class="col-md-12">
                                              <span class="input-group-text" style="background-color:green ;color:white" runat="server" > พร้อมสิ่งปลูกสร้าง </span>                                                   
                                         </div>
-                                     </div>
+                                     <%--</div>--%>
 
-                                    <div class="row" style="padding-top: 0.2rem;">
-                                        <div class="col-md-4">                                            
+                                    <div class="row" style="padding-top: 0.5rem;">
+                                        <div class="col-md-3">                                            
                                             <div class="input-group sm-3">
                                                 สิ่งปลูกสร้างเลขที่ &nbsp
                                                 <asp:Textbox class="form-control" ID="txtbuNo" runat="server"></asp:Textbox>    
                                             </div>
                                         </div>
-                                        <div class="col-md-4">                                            
+                                        <div class="col-md-3">                                            
                                             <div class="input-group sm-3">
                                                 ตำบล &nbsp
                                                 <asp:Textbox class="form-control" ID="txtbuSubDistrict" runat="server"></asp:Textbox>    
                                             </div>
                                         </div>
-                                    </div>
+                                    <%--</div>--%>
                              
-                                    <div class="row" style="padding-top: 0.2rem;">
-                                        <div class="col-md-4">                                           
+                                    <%--<div class="row" style="padding-top: 0.5rem;">--%>
+                                        <div class="col-md-3">                                           
                                             <div class="input-group sm-3">
                                                  อำเภอ &nbsp
                                                 <asp:Textbox class="form-control" ID="txtbuDistrict" runat="server"></asp:Textbox>  
@@ -265,7 +265,7 @@
         }
     </script>
 
-  <script src="//code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
+<%--  <script src="//code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#<%=rdoplanBlank.ClientID %>').click(function () {
@@ -290,6 +290,6 @@
                 }
             });
         });
-    </script>
+    </script>--%>
 
 </asp:Content>

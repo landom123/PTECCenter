@@ -52,6 +52,11 @@ Public Class clientinfo
                 SetButton("NEW")
             End If
 
+            If loadRequestProject() = False Then
+                Exit Sub
+            End If
+
+
         End If
 
     End Sub
@@ -113,6 +118,13 @@ Public Class clientinfo
             txtDistrict.Text = .Item("district")
             txtProvince.Text = .Item("province")
             txtPostcode.Text = .Item("postcode")
+
+            txtAddress1.Text = .Item("address1")
+            txtSubdistrict1.Text = .Item("subdistrict1")
+            txtDistrict1.Text = .Item("district1")
+            txtProvince1.Text = .Item("province1")
+            txtPostcode1.Text = .Item("postcode1")
+
             SetButton(.Item("status"))
         End With
     End Sub
@@ -189,12 +201,16 @@ Public Class clientinfo
             companyname As String, birthday As DateTime, mobile As String,
             tel As String, email As String, line As String,
             address As String, subdistrict As String, district As String,
-            province As String, postcode As String
+            province As String, postcode As String,
+            address1 As String, subdistrict1 As String, district1 As String,
+            province1 As String, postcode1 As String
+
         clientno = txtClientNo.Text
         clientname = txtName.Text
         cardid = txtCardID.Text
         sex = Strings.Left(cboSex.Text, 1)
         companyname = txtCompany.Text
+        If txtBirthday.Text = "" Then txtBirthday.Text = "01/01/1900"
         birthday = DateTime.Parse(txtBirthday.Text)
         mobile = txtMobile.Text
         tel = txtTel.Text
@@ -206,12 +222,14 @@ Public Class clientinfo
         province = txtProvince.Text
         postcode = txtPostcode.Text
 
+        address1 = txtAddress1.Text
+        subdistrict1 = txtSubdistrict1.Text
+        district1 = txtDistrict1.Text
+        province1 = txtProvince1.Text
+        postcode1 = txtPostcode1.Text
 
-        result = client.Save(contractno, clientno, usercode, clientname, cardid, sex, companyname,
-birthday, mobile, tel, email, line, address, subdistrict, district, province, postcode)
-
-
-
+        result = client.Save(contractno, clientno, usercode, clientname, cardid, sex, companyname, birthday, mobile, tel, email, line _
+                             , address, subdistrict, district, province, postcode, address1, subdistrict1, district1, province1, postcode1)
 
         Return result
     End Function
@@ -219,4 +237,47 @@ birthday, mobile, tel, email, line, address, subdistrict, district, province, po
     Private Sub BtnContract_Click(sender As Object, e As EventArgs) Handles BtnContract.Click
         Response.Redirect("contractinfo.aspx?agreeno=" & contractno & "&projectno=" & projectno)
     End Sub
+
+    Private Function loadRequestProject() As Boolean
+        Try
+            Dim objReq As New clsRequestContract
+            Dim dt As New DataTable
+
+            dt = objReq.loadRequestProject(projectno)
+            If dt Is Nothing Then Return False
+            For Each dr As DataRow In dt.Rows
+
+                txtName.Text = dr("CustName")
+                txtCardID.Text = dr("CardID")
+                cboSex.Text = dr("Gender")
+                txtCompany.Text = dr("Company")
+                txtMobile.Text = dr("Mobile")
+                txtTel.Text = dr("Tel")
+                txtEmail.Text = dr("Email")
+                txtLine.Text = dr("Line")
+
+                txtAddress.Text = dr("Address")
+                txtAddress1.Text = dr("Address")
+                txtSubdistrict.Text = dr("SubDistrict")
+                txtSubdistrict1.Text = dr("SubDistrict")
+                txtDistrict.Text = dr("District")
+                txtDistrict1.Text = dr("District")
+                txtProvince.Text = dr("Province")
+                txtProvince1.Text = dr("Province")
+                txtPostcode.Text = dr("PostCode")
+                txtPostcode1.Text = dr("PostCode")
+            Next
+
+
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err '"alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
 End Class

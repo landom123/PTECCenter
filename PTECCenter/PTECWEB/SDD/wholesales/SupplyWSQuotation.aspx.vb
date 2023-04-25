@@ -325,7 +325,8 @@ Public Class SupplyWSQuotation
                 R("markup") = FormatNumber(CDbl(txtAdd.Text), 4)
                 'R("total") = FormatNumber((mytable.Rows(0).Item("price") + FormatNumber(CDbl(txtAdd.Text), 2) + mytable.Rows(0).Item("terminalmarkup")) * Double.Parse(txtVolume.Text), 2)
 
-                R("total") = FormatNumber((mytable.Rows(0).Item("price") + 0 + mytable.Rows(0).Item("terminalmarkup")) * Double.Parse(txtVolume.Text) , 2)
+                'R("total") = FormatNumber((mytable.Rows(0).Item("price") + 0 + mytable.Rows(0).Item("terminalmarkup")) * Double.Parse(txtVolume.Text), 2)
+                R("total") = FormatNumber((R("price") + 0 + mytable.Rows(0).Item("terminalmarkup")) * Double.Parse(txtVolume.Text), 2)
                 saleitemtable.Rows.Add(R)
 
                 Session("saleitemtable") = saleitemtable
@@ -449,11 +450,17 @@ error_handler:
         For Each row As DataRow In saleitemtable.Rows
             Try
                 If Not row.RowState = DataRowState.Deleted Then
-                    terminalmarkup = row.Item("terminalmarkup")
-                    product = row.Item("product")
-                    volume = row.Item("volume")
-                    price = row.Item("price")
-                    markup = row.Item("markup")
+                    'terminalmarkup = row.Item("terminalmarkup")
+                    'product = row.Item("product")
+                    'volume = row.Item("volume")
+                    'price = row.Item("price")
+                    'markup = row.Item("markup")
+                    terminalmarkup = IIf(IsDBNull(row("terminalmarkup")), 0, row("terminalmarkup"))
+                    product = IIf(IsDBNull(row("product")), 0, row("product"))
+                    volume = IIf(IsDBNull(row("volume")), 0, row("volume"))
+                    price = IIf(IsDBNull(row("price")), 0, row("price"))
+                    markup = IIf(IsDBNull(row("markup")), 0, row("markup"))
+
                     wsobj.Wholesales_Quotation_SaveDetail(docno, product, terminalmarkup, price, volume, markup)
                 End If
             Catch ex As Exception
@@ -624,9 +631,12 @@ error_handler:
             netttcost = 0
         End Try
         lblOilPrice.Text = nettotal.ToString("N02")
-        lblTotal.Text = (nettotal + netcommission + netttcost).ToString("N02")
+        'lblTotal.Text = (nettotal + netcommission + netttcost).ToString("N02")
+        lblTotal.Text = (nettotal).ToString("N02")
         lblTotal.Text = FormatNumber(lblTotal.Text, 2)
-        lblTotalPerLitre.Text = ((nettotal + netcommission + netttcost) / volumetotal).ToString("N02")
+
+        'lblTotalPerLitre.Text = ((nettotal + netcommission + netttcost) / volumetotal).ToString("N02")
+        lblTotalPerLitre.Text = (nettotal / volumetotal).ToString("N02")
         lblTotalPerLitre.Text = FormatNumber(lblTotalPerLitre.Text, 2)
         'cbo.DataSource = mytable
         'cbo.DataTextField = "name"

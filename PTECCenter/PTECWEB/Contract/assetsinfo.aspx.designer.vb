@@ -59,13 +59,13 @@ Partial Public Class assetsinfo
     Protected WithEvents txtContractNo As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''rdoplanBlank control.
+    '''txtContractType control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rdoplanBlank As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents txtContractType As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lblStatus control.

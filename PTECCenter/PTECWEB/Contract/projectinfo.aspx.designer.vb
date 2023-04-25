@@ -68,6 +68,42 @@ Partial Public Class projectinfo
     Protected WithEvents btnApprove As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''txtBegindate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBegindate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtEnddate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtEnddate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnFind control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''gvRequest control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvRequest As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
     '''txtprojectno control.
     '''</summary>
     '''<remarks>
@@ -111,6 +147,15 @@ Partial Public Class projectinfo
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtRemark As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtDocID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDocID As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''btnNewAgree control.
