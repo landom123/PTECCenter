@@ -95,13 +95,13 @@ Partial Public Class paymentinfo
     Protected WithEvents rdoCheque As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
-    '''txtBankCode control.
+    '''cboBank control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtBankCode As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboBank As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''txtBankbranchcode control.
@@ -138,4 +138,31 @@ Partial Public Class paymentinfo
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtAccountName As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboPayCust control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboPayCust As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboTaxCust control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboTaxCust As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''chkActive control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkActive As Global.System.Web.UI.WebControls.CheckBox
 End Class

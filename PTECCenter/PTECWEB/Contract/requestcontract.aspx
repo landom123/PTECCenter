@@ -1,8 +1,16 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" 
-    MasterPageFile="~/site.Master" CodeBehind="requestcontract.aspx.vb" Inherits="PTECCENTER.requestcontract" EnableEventValidation = "false" %>
+    MasterPageFile="~/site.Master" CodeBehind="requestcontract.aspx.vb" Inherits="PTECCENTER.requestcontract" EnableEventValidation = "false" Culture="th-TH"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
+    <%--<link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">--%>
+
+        <script type="text/javascript" src="jquery.js"></script>
+    <link href="assets/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+    <script type="text/javascript" src="bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
@@ -37,7 +45,7 @@
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">วันที่</span>
                                     </div>
-                                    <asp:TextBox class="form-control" ID="txtBegindate" style="background-color:white" runat="server"></asp:TextBox>    
+                                    <asp:TextBox class="form-control" name="txtBegindate" ID="txtBegindate" style="background-color:white" runat="server"></asp:TextBox>    
 
                                 </div>
                             </div>
@@ -338,6 +346,12 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
 
+
+    <link rel="stylesheet" href="jquery.datetimepicker.css"/>
+    <script src="/path/to/cdn/jquery.min.js"></script>
+<script src="jquery.datetimepicker.js"></script>
+
+
     <script type="text/javascript">
         jQuery('[id$=txtBirthday]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
@@ -350,19 +364,42 @@
         });
     </script>
 
-    <script type="text/javascript">
-        jQuery('[id$=txtBegindate]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08
+<%--        <script type="text/javascript">
 
-            lang: 'th',// แสดงภาษาไทย
-            yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
-    </script>
+            jQuery('[id$=txtBegindate]').datetimepicker({
 
-    <script type="text/javascript">
+                startDate: '+1971/05/01',//or 1986/12/08
+
+                lang: 'th',// แสดงภาษาไทย
+                yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
+                timepicker: false,
+                scrollInput: false,
+                format: 'd/m/Y'
+            });
+        </script>--%>
+
+ <script type="text/javascript">
+
+     $('#txtBegindate').datetimepicker({
+
+         lang: 'th',
+         i18n: {
+
+             th: { // Thai
+                 months: [
+                     'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+                 ],
+                 dayOfWeekShort: [
+                     'อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'
+                 ],
+                 dayOfWeek: ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์", "อาทิตย์"]
+             },
+
+         });
+
+ </script>
+
+   <script type="text/javascript">
         jQuery('[id$=txtEnddate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
 

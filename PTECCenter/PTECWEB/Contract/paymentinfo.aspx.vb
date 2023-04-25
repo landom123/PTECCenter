@@ -1,12 +1,16 @@
 ﻿
 
+Imports DocumentFormat.OpenXml.Wordprocessing
+
 Public Class paymentinfo
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public usercode, username, contractno, projectno As String
     Public paymentid As Double = 0
+
+    Dim objPay As New clsPayment
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim objTitleName As New titlename
+        Dim objTitleName As New TitleName
 
         usercode = Session("usercode")
         username = Session("username")
@@ -37,6 +41,14 @@ Public Class paymentinfo
                 Session("menulist") = menutable
             Else
                 menutable = Session("menulist")
+            End If
+
+            If loadBank() = False Then
+                Exit Sub
+            End If
+
+            If loadCustContract(Session("paymentid")) = False Then
+                Exit Sub
             End If
 
             If Not String.IsNullOrEmpty(paymentid) Then
@@ -90,14 +102,24 @@ Public Class paymentinfo
         With mytable.Rows(0)
             txtContractNo.Text = contractno
             txtid.Text = .Item("paymentid")
-            txtBankCode.Text = .Item("bankcode")
+            'txtBankCode.Text = .Item("bankcode")
+            cboBank.Text = .Item("bankcode")
             txtBankbranchcode.Text = .Item("bankbranchcode")
             txtBankbranchname.Text = .Item("bankbranchname")
             txtAccountNo.Text = .Item("accountno")
             txtAccountName.Text = .Item("accountname")
 
+            cboPayCust.Text = IIf(IsDBNull(.Item("PayCust")), "", .Item("PayCust"))
+            cboTaxCust.Text = IIf(IsDBNull(.Item("TaxCust")), "", .Item("TaxCust"))
+
             paymentid = .Item("paymentid")
             Session("paymentid") = .Item("paymentid")
+
+            If .Item("Active") = "Y" Then
+                chkActive.Checked = True
+            Else
+                chkActive.Checked = False
+            End If
 
             If .Item("paidtype") = "T" Then
                 rdoTrans.Checked = True
@@ -125,7 +147,8 @@ Public Class paymentinfo
         txtid.Text = ""
         paymentid = 0
         Session("paymentid") = 0
-        txtBankCode.Text = ""
+        'txtBankCode.Text = ""
+        cboBank.SelectedIndex = 0
         txtBankbranchcode.Text = ""
         txtBankbranchname.Text = ""
         txtAccountNo.Text = ""
@@ -178,22 +201,31 @@ Public Class paymentinfo
         Dim result As Double
         Dim objpayment As New PaymentContract
         Dim paidtype As String
-        Dim bankcode, bankbranchcode, bankbranchname, accountno, accountname As String
+        Dim bankcode, bankbranchcode, bankbranchname, accountno, accountname, sActive, sPayCust, sTaxCust As String
 
-        bankcode = txtBankCode.Text
+        'bankcode = txtBankCode.Text
+        bankcode = cboBank.Text
         bankbranchcode = txtBankbranchcode.Text
         bankbranchname = txtBankbranchname.Text
         accountno = txtAccountNo.Text
         accountname = txtAccountName.Text
+        sPayCust = cboPayCust.Text
+        sTaxCust = cboTaxCust.Text
+
         If rdoTrans.Checked = True Then
             paidtype = "T"
         Else
             paidtype = "C"
         End If
 
+        If chkActive.Checked = True Then
+            sActive = "Y"
+        Else
+            sActive = "N"
+        End If
 
         result = objpayment.Save(contractno, paymentid, paidtype, bankcode, bankbranchcode,
-                                 bankbranchname, accountno, accountname, usercode)
+                                 bankbranchname, accountno, accountname, usercode, sActive, sPayCust, sTaxCust)
 
         txtid.Text = result.ToString
         Session("paymentid") = result
@@ -202,5 +234,75 @@ Public Class paymentinfo
 
     Private Sub BtnContract_Click(sender As Object, e As EventArgs) Handles BtnContract.Click
         Response.Redirect("contractinfo.aspx?agreeno=" & contractno & "&projectno=" & projectno)
+    End Sub
+
+    Private Function loadBank() As Boolean
+        Try
+            Dim objReq As New clsRequestContract
+            Dim dt As New DataTable
+
+            dt = objPay.loadBank
+
+            cboBank.DataSource = dt
+            cboBank.DataValueField = "ID"
+            cboBank.DataTextField = "BankName"
+            cboBank.DataBind()
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err '"alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
+    Private Function loadCustContract(iAgID As Integer) As Boolean
+        Try
+            Dim objReq As New clsRequestContract
+            Dim dt, dt2 As New DataTable
+
+            dt = objPay.loadCustContract(iAgID)
+
+            cboPayCust.DataSource = dt
+            cboPayCust.DataValueField = "Name"
+            cboPayCust.DataTextField = "Name"
+            cboPayCust.DataBind()
+
+
+
+            dt2 = objPay.loadCustContract(iAgID)
+
+            cboTaxCust.DataSource = dt2
+            cboTaxCust.DataValueField = "Name"
+            cboTaxCust.DataTextField = "Name"
+            cboTaxCust.DataBind()
+
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err '"alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
+
+    Private Sub cboBank_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBank.SelectedIndexChanged
+        Try
+
+
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err '"alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
     End Sub
 End Class
