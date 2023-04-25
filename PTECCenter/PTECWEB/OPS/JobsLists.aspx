@@ -182,7 +182,7 @@
                                 <asp:TemplateField HeaderText="Supplier" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <div class="d-flex flex-column align-items-center" readonly="true">
-                                            <a href="../OPS/jobs_followup.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" class="badge badgestatus_app" title="<%#Eval("companystatus")%>" target="_blank"><%#Eval("companystatus")%></a>
+                                            <a href="../OPS/jobs_followup.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" class="badge badgestatus_app" title="ติดตามสถานะงาน" target="_blank"><%#Eval("companystatus")%></a>
                                             <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("company")%>'></asp:Label>
                                         </div>
                                     </ItemTemplate>
@@ -200,9 +200,11 @@
                                 <asp:TemplateField HeaderText="Cost">
                                     <ItemTemplate>
                                         <div class="d-flex flex-column align-items-center" readonly="true">
-                                            <span runat="server" visible='<%#Eval("lockcost")%>'>
-                                                 <i class="fas fa-lock" visible='<%#Eval("lockcost")%>'></i>
-                                            </span>
+                                            <a href="../OPS/jobs_Close.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" title="ดูค่าใช้จ่าย" style="color: darkgray;" target="_blank">
+                                                <span runat="server" visible='<%#Eval("lockcost")%>'>
+                                                     <i class="fas fa-lock" visible='<%#Eval("lockcost")%>'></i>
+                                                </span>
+                                            </a>
                                             <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
                                         </div>
 
