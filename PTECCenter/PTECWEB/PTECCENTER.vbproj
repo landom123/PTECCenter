@@ -14,7 +14,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>PTECCENTER</RootNamespace>
     <AssemblyName>PTECCENTER</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -1760,12 +1760,15 @@
     <Content Include="js\Sortable.js" />
     <Content Include="js\starRating.js" />
     <Content Include="js\Stepper.js" />
+    <Content Include="OPS\Jobs_MapsToNonPO.aspx" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
     <Content Include="OPS\approval\ApprovalAttach.aspx" />
     <Content Include="OPS\approval\ApprovalHOMenuList.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\approvalHO.aspx" />
+    <Content Include="OPS\reports\nac_sale.aspx" />
+    <Content Include="OPS\reports\nac.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
     <Content Include="OPS\FileUpload\FileUpload.aspx" />
     <Content Include="OPS\JobsLists.aspx" />
@@ -3694,6 +3697,13 @@
     <Compile Include="class\Users.vb" />
     <Compile Include="CrystalDecisions.vb" />
     <Compile Include="CrystalDecisions1.vb" />
+    <Compile Include="OPS\Jobs_MapsToNonPO.aspx.designer.vb">
+      <DependentUpon>Jobs_MapsToNonPO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Jobs_MapsToNonPO.aspx.vb">
+      <DependentUpon>Jobs_MapsToNonPO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="OPS\approval\Approval.aspx.designer.vb">
       <DependentUpon>Approval.aspx</DependentUpon>
     </Compile>
@@ -3734,6 +3744,20 @@
     </Compile>
     <Compile Include="OPS\approval\approvalHO.aspx.vb">
       <DependentUpon>approvalHO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\reports\nac_sale.aspx.designer.vb">
+      <DependentUpon>nac_sale.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\reports\nac_sale.aspx.vb">
+      <DependentUpon>nac_sale.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\reports\nac.aspx.designer.vb">
+      <DependentUpon>nac.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\reports\nac.aspx.vb">
+      <DependentUpon>nac.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\approval\WebForm5.aspx.designer.vb">

@@ -81,6 +81,21 @@ Public Class jobs
 
     End Sub
 
+    Public Sub SetJobCateList(obj As Object, depid As Integer)
+        obj.DataSource = Me.JobCate_List(depid)
+        obj.DataValueField = "CateCode"
+        obj.DataTextField = "CateName"
+        obj.DataBind()
+
+    End Sub
+
+    Public Sub SetJobItemList(obj As Object, catecode As String, groupcode As String)
+        obj.DataSource = Me.JobItem_List(catecode, groupcode)
+        obj.DataValueField = "itemcode"
+        obj.DataTextField = "text"
+        obj.DataBind()
+
+    End Sub
     Public Sub SetCboJobCenterDtlListByJobCenterID_GroupByJobCenterid(cboCost As DropDownList, jobcenterid As String)
 
         Dim dtcost As DataTable = JobCenterDtl_List(jobcenterid)
@@ -596,7 +611,7 @@ Public Class jobs
             Dim result As DataTable
             'Credit_Balance_List_Createdate
             Dim ds As New DataSet
-            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops_uat").ConnectionString)
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
             Dim cmd As New SqlCommand
             Dim adp As New SqlDataAdapter
 
@@ -629,7 +644,7 @@ Public Class jobs
             Dim result As DataTable
             'Credit_Balance_List_Createdate
             Dim ds As New DataSet
-            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops_uat").ConnectionString)
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
             Dim cmd As New SqlCommand
             Dim adp As New SqlDataAdapter
 
@@ -662,7 +677,7 @@ Public Class jobs
             Dim result As DataTable
             'Credit_Balance_List_Createdate
             Dim ds As New DataSet
-            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops_uat").ConnectionString)
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
             Dim cmd As New SqlCommand
             Dim adp As New SqlDataAdapter
 
@@ -688,7 +703,39 @@ Public Class jobs
         End Try
 
     End Function
+    Public Function JobItem_List(catecode As String, groupcode As String) As DataTable
 
+        Try
+            Dim result As DataTable
+            'Credit_Balance_List_Createdate
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "JobItem_List"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@catecode", SqlDbType.VarChar).Value = catecode
+            cmd.Parameters.Add("@groupcode", SqlDbType.VarChar).Value = groupcode
+            'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+            'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+            'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+            conn.Close()
+            Return result
+
+        Catch ex As Exception
+            Return Nothing
+        End Try
+
+    End Function
 
     Public Function JobType_List_By_Depid(depid As String) As DataTable
         Dim result As DataTable
@@ -1524,4 +1571,49 @@ Public Class jobs
         conn.Close()
 
     End Sub
+    Public Function UpdateDetailCateCode(jobno As String, jobdetailid As Double, CateCode As String, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Followup_update_CateCode_for_operator"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@catecode", SqlDbType.VarChar).Value = CateCode
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+
+    Public Function JobItem_Save(jobdetailid As Double, listitemcode As String, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "JobItem_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@listitemcode", SqlDbType.VarChar).Value = listitemcode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
 End Class

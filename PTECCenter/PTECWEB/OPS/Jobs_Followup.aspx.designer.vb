@@ -41,6 +41,15 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnBack As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cardone control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cardone As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''btnEditDetail control.
     '''</summary>
     '''<remarks>
@@ -266,13 +275,58 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnClose As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnEditClose control.
+    '''cardtwo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnEditClose As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents cardtwo As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''btnDataAnalyCategory control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnDataAnalyCategory As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''txtCateName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCateName As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnDataAnalyGroupType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnDataAnalyGroupType As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''txtItems control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtItems As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cardthree control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cardthree As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''btnSentSupplier control.
@@ -291,6 +345,15 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnPrint As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cardfour control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cardfour As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''btnSubmitRate control.
@@ -462,4 +525,49 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnUpdate As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cboJobCate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboJobCate As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''btnUpdateJobCateCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateJobCateCode As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cboJobItems control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboJobItems As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''emails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents emails As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+
+    '''<summary>
+    '''btnUpdateJobitems control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateJobitems As Global.System.Web.UI.WebControls.Button
 End Class

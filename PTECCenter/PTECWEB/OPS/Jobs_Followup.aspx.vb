@@ -106,9 +106,13 @@ Public Class JobsFollowup
                     If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then
                         btnSave.Enabled = True
                         btnEditDetail.Visible = True
-                    Else
+
+                        cardfour.Attributes.Add("style", "display:none;")
+                    Else '= ปิดงาน
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
+
+                        cardfour.Attributes.Remove("readonly")
                     End If
 
                     'Follow UP
@@ -117,13 +121,23 @@ Public Class JobsFollowup
                     'Supplier
                     btnSentSupplier.Visible = True
                     btnPrint.Visible = True
-                    If Not maintable.Rows(0).Item("supplierid") = 0 Then
-                        btnSentSupplier.Enabled = True
-                        btnPrint.Enabled = True
-                    Else
+                    If maintable.Rows(0).Item("supplierid") = 0 Then
                         btnSentSupplier.Enabled = False
                         btnPrint.Enabled = False
+                    Else
+                        btnSentSupplier.Enabled = True
+                        btnPrint.Enabled = True
+                        Dim rows() As DataRow = stepsuppilertable.Select("stepdate is not null")
+                        If rows.Count > 0 Then
+                            btnSentSupplier.Enabled = False
+                        End If
+
                     End If
+
+
+                    'Analy
+                    btnDataAnalyCategory.Visible = True
+                    btnDataAnalyGroupType.Visible = True
 
                     'Rating
                     btnSubmitRate.Visible = False
@@ -148,6 +162,11 @@ Public Class JobsFollowup
                     'Follow UP
                     fromUpdateFollowup.Visible = False
 
+
+                    'Analy
+                    btnDataAnalyCategory.Visible = False
+                    btnDataAnalyGroupType.Visible = False
+
                     'Supplier
                     btnSentSupplier.Visible = False
                     btnPrint.Visible = False
@@ -164,6 +183,11 @@ Public Class JobsFollowup
                     'Supplier
                     btnSentSupplier.Visible = False
                     btnPrint.Visible = False
+
+
+                    'Analy
+                    btnDataAnalyCategory.Visible = False
+                    btnDataAnalyGroupType.Visible = False
 
 
                     'Rating
@@ -277,6 +301,9 @@ Public Class JobsFollowup
 
     End Sub
     Private Sub showjobdata(mytable As DataTable)
+
+        Dim objjob As New jobs
+
         With mytable.Rows(0)
             txtDocDate.Text = .Item("jobdate")
             txtOwner.Text = .Item("jobowner")
@@ -306,6 +333,19 @@ Public Class JobsFollowup
 
             lbjobscode.Text = .Item("jobno")
             badgeStatus.InnerText = .Item("followup_status")
+
+
+            objjob.SetJobCateList(cboJobCate, .Item("depid_Jobtype"))
+
+            cboJobCate.SelectedIndex = cboJobCate.Items.IndexOf(cboJobCate.Items.FindByValue(.Item("catecode")))
+            txtCateName.Text = .Item("catename")
+
+            objjob.SetJobItemList(cboJobItems, cboJobCate.SelectedItem.Value.ToString, "")
+
+
+            cboJobItems.SelectedIndex = -1
+
+            txtItems.Text = .Item("itemsname")
         End With
     End Sub
 
@@ -494,29 +534,29 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
-    Private Sub btnEditClose_Click(sender As Object, e As EventArgs) Handles btnEditClose.Click
+    '    Private Sub btnEditClose_Click(sender As Object, e As EventArgs) Handles btnEditClose.Click
 
 
-        Dim closetypeid As Double = cboCloseType.SelectedItem.Value
-        Dim closecategory As Integer = cboCloseCategory.SelectedItem.Value
+    '        Dim closetypeid As Double = cboCloseType.SelectedItem.Value
+    '        Dim closecategory As Integer = cboCloseCategory.SelectedItem.Value
 
-        Dim objjob As New jobs
-        Try
-            'objjob.UpdateSupplierandCost(jobno, jobdetailid, jobCenter, supplierid, cost, usercode)
-            objjob.UpdateCloseTypeCategory(jobno, jobdetailid, closetypeid, closecategory, usercode)
-            flashData()
-        Catch ex As Exception
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('EditClose fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            GoTo endprocess
+    '        Dim objjob As New jobs
+    '        Try
+    '            'objjob.UpdateSupplierandCost(jobno, jobdetailid, jobCenter, supplierid, cost, usercode)
+    '            objjob.UpdateCloseTypeCategory(jobno, jobdetailid, closetypeid, closecategory, usercode)
+    '            flashData()
+    '        Catch ex As Exception
+    '            Dim scriptKey As String = "UniqueKeyForThisScript"
+    '            'Dim javaScript As String = "alert('" & ex.Message & "');"
+    '            Dim javaScript As String = "alertWarning('EditClose fail');"
+    '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '            GoTo endprocess
 
-        End Try
-        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+    '        End Try
+    '        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
 
-endprocess:
-    End Sub
+    'endprocess:
+    '    End Sub
 
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
 
@@ -554,6 +594,41 @@ endprocess:
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('SaveComment fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+    End Sub
+
+    Private Sub btnUpdateJobCateCode_Click(sender As Object, e As EventArgs) Handles btnUpdateJobCateCode.Click
+        Dim objjob As New jobs
+
+        Try
+            objjob.UpdateDetailCateCode(jobno, jobdetailid, cboJobCate.SelectedItem.Value, usercode)
+            flashData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('SaveCateCode fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+    End Sub
+
+    Private Sub btnUpdateJobitems_Click(sender As Object, e As EventArgs) Handles btnUpdateJobitems.Click
+
+        Dim objjob As New jobs
+
+        Try
+            objjob.JobItem_Save(jobdetailid, emails.Value.ToString, usercode)
+            flashData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Save Jobitems fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
