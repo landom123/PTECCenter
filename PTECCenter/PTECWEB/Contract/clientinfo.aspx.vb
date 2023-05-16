@@ -18,6 +18,10 @@ Public Class clientinfo
         cboSex.Items.Add("Female")
         'Dim objsupplier As New Supplier
 
+        'SetCboContractLand(cboContractLand)
+        'SetCboContractBuild(cboContractBu)
+        'SetCboContractDayRent(cboContractDayRent)
+
         If IsPostBack() Then
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
@@ -38,6 +42,9 @@ Public Class clientinfo
             Session("contractno") = contractno
             Session("clientno") = clientno
 
+
+
+
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
                 Session("menulist") = menutable
@@ -55,6 +62,7 @@ Public Class clientinfo
             If loadRequestProject() = False Then
                 Exit Sub
             End If
+
 
 
         End If
@@ -82,6 +90,30 @@ Public Class clientinfo
                 btnDel.Enabled = False
 
         End Select
+    End Sub
+
+    Private Sub SetCboContractLand(obj As Object)
+        Dim ag As New Contract
+        obj.DataSource = ag.loadContractLand(0)
+        obj.DataValueField = "ID"
+        obj.DataTextField = "LanName"
+        obj.DataBind()
+    End Sub
+
+    Private Sub SetCboContractBuild(obj As Object)
+        Dim ag As New Contract
+        obj.DataSource = ag.loadContractBuild(0, 0)
+        obj.DataValueField = "ID"
+        obj.DataTextField = "BuName"
+        obj.DataBind()
+    End Sub
+
+    Private Sub SetCboContractDayRent(obj As Object)
+        Dim ag As New Contract
+        obj.DataSource = ag.loadContractDayRent(0, 0, 0)
+        obj.DataValueField = "ID"
+        obj.DataTextField = "DrName"
+        obj.DataBind()
     End Sub
     Private Sub FindData(clientno As String)
         Dim mytable As DataTable

@@ -133,6 +133,37 @@
                         </div>
                     </div>
 
+<%--                <div class="row"  style="padding-top: 0.2rem;">
+                   
+                        <div class="col-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">ผู้จ่ายภาษีที่ดิน</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboContractLand"  runat="server" ></asp:DropDownList>    
+                            </div>
+                        </div>                   
+
+                        <div class="col-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">ผู้จ่ายภาษีสิ่งปลูกสร้าง</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboContractBu"  runat="server" ></asp:DropDownList>    
+                            </div>
+                        </div>
+                 
+                        <div class="col-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">การจ่ายเงินวันจดเช่า</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboContractDayRent"  runat="server" ></asp:DropDownList>    
+                            </div>
+                       </div>                                                       
+
+                </div>--%>
+
                     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
                     <div class="row" style="padding-top: 0.2rem;">

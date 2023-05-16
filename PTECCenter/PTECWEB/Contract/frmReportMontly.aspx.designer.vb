@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class monthly_payment
+Partial Public Class frmReportMontly
 
     '''<summary>
     '''txtCalcDate control.
@@ -41,20 +41,20 @@ Partial Public Class monthly_payment
     Protected WithEvents btnExport As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnReport control.
+    '''btnBack control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnReport As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnBack As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''gvPayment control.
+    '''tblData control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents gvPayment As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents tblData As Global.System.Web.UI.WebControls.Table
 End Class

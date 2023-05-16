@@ -266,7 +266,7 @@ Public Class PaymentContract
 
     Public Function Save(contractno As String, paymentid As Double, paidtype As String,
                          bankcode As String, bankbranchcode As String, bankbranchname As String,
-                         accountno As String, accountname As String, usercode As String, sActive As String, sPayCust As String, sTaxCust As String) As Double
+                         accountno As String, accountname As String, usercode As String, sActive As String, sPayCust As String, sTaxCust As String, sACCode As String) As Double
         Dim result As Double = 0
 
         Dim ds As New DataSet
@@ -291,7 +291,7 @@ Public Class PaymentContract
         cmd.Parameters.Add("@Active", SqlDbType.VarChar).Value = sActive
         cmd.Parameters.Add("@PayCust", SqlDbType.VarChar).Value = sPayCust
         cmd.Parameters.Add("@TaxCust", SqlDbType.VarChar).Value = sTaxCust
-        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+        cmd.Parameters.Add("@ACCode", SqlDbType.VarChar).Value = sACCode
 
         adp.SelectCommand = cmd
         adp.Fill(ds)
@@ -850,6 +850,36 @@ Public Class Contract
 
         Return result
     End Function
+
+    Public Function MonthlyPayment2(monthly As String) As DataTable
+        Dim result As DataTable
+
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Ag_MonthlyPayment2"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
     Public Function Find(contractno As String) As DataSet
         Dim result As DataSet
 
@@ -907,7 +937,7 @@ Public Class Contract
     Public Function Save(projectno As String, agreetype As String,
                               agreeno As String, lawcontractno As String, agreedate As DateTime, agreeactivedate As DateTime, usercode As String _
                               , BeginDate As Date, EndDate As Date, ConperiodY As Integer, ConperiodM As Integer, ConperiodD As Integer, ConProvince As String _
-                              , Branch As String, DayDueDate As Integer, AreaPlot As Decimal, RentPer As Decimal) As String
+                              , Branch As String, DayDueDate As Integer, AreaPlot As Decimal, RentPer As Decimal, ContractLandID As Integer, ContractBuID As Integer, ContractDrID As Integer) As String
         Dim result As String
         'Ag_AgreeSave
         'Credit_Balance_List_Createdate
@@ -939,6 +969,9 @@ Public Class Contract
         cmd.Parameters.Add("@DayDueDate", SqlDbType.Int).Value = DayDueDate
         cmd.Parameters.Add("@AreaPlot", SqlDbType.Decimal).Value = AreaPlot
         cmd.Parameters.Add("@RentPer", SqlDbType.Decimal).Value = RentPer
+        cmd.Parameters.Add("@ContractLandID", SqlDbType.Int).Value = ContractLandID
+        cmd.Parameters.Add("@ContractBuID", SqlDbType.Int).Value = ContractBuID
+        cmd.Parameters.Add("@ContractDrID", SqlDbType.Int).Value = ContractDrID
 
         adp.SelectCommand = cmd
         adp.Fill(ds)
@@ -1624,7 +1657,7 @@ Public Class clsPayment
 
     End Function
 
-    Public Function loadCustContract(iAgID As Integer) As DataTable
+    Public Function loadCustContract(iPayID As Integer) As DataTable
 
         Try
             Dim result As DataTable
@@ -1639,7 +1672,7 @@ Public Class clsPayment
             cmd.CommandText = "sp_Get_Cust_Contract"
             cmd.CommandType = CommandType.StoredProcedure
 
-            cmd.Parameters.Add("@AgID", SqlDbType.Int).Value = iAgID
+            cmd.Parameters.Add("@PayID", SqlDbType.Int).Value = iPayID
 
 
             adp.SelectCommand = cmd

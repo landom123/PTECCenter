@@ -213,6 +213,10 @@ Public Class contractinfo
                 txtRentPer.Text = .Rows(0).Item("RentPer")
                 txtPlant.Text = .Rows(0).Item("AreaPlot")
 
+                cboContractLand.SelectedValue = .Rows(0).Item("ContractLandID")
+                cboContractBu.SelectedValue = .Rows(0).Item("ContractBuID")
+                cboContractDayRent.SelectedValue = .Rows(0).Item("ContractDrID")
+
                 SetButton(.Rows(0).Item("status"))
             End If
 
@@ -337,8 +341,15 @@ Public Class contractinfo
         Dim objcontract As New Contract
         Dim contracttype, lawcontractno As String
 
-        lawcontractno = txtLawContractNo.text
+        Dim ContractLandID, ContractBuID, ContractDrID As Integer
+
+        lawcontractno = txtLawContractNo.Text
         contracttype = cboContractType.SelectedItem.Text
+
+        ContractLandID = CInt(cboContractLand.SelectedItem.Text)
+        ContractBuID = CInt(cboContractBu.SelectedItem.Text)
+        ContractDrID = CInt(cboContractDayRent.SelectedItem.Text)
+
         Try
             'contractdate = Date.Parse(txtContractDate.Text)
             contractdate = DateAdd(DateInterval.Year, -543, Date.Parse(txtContractDate.Text))
@@ -376,7 +387,7 @@ Public Class contractinfo
         Try
             contractno = objcontract.Save(txtprojectno.Text, contracttype, txtContractNo.Text, lawcontractno, contractdate, contractactivedate, usercode _
                                           , dBeginDate, dEndDate, CInt(txtcontractPeriod.Text), CInt(txtcontractPeriod2.Text), 0 _
-                                          , txtRentalReg.Text, txtbranch.Text, CInt(txtDays.Text), CDbl(txtPlant.Text), CDbl(txtRentPer.Text))
+                                          , txtRentalReg.Text, txtbranch.Text, CInt(txtDays.Text), CDbl(txtPlant.Text), CDbl(txtRentPer.Text), ContractLandID, ContractBuID, ContractDrID)
             txtContractNo.Text = contractno
             Session("contractno") = contractno
             SetButton("บันทึก")

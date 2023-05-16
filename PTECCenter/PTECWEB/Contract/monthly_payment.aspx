@@ -26,6 +26,7 @@
                     <div class="col-4">
                         <asp:Button ID="btnCalc" class="btn btn-sm  btn-primary" runat="server" Text=" คำนวน " />
                         <asp:Button ID="btnExport" class="btn btn-sm  btn-primary" runat="server" Text=" Export to excel " />
+                        <asp:Button ID="btnReport" class="btn btn-sm  btn-primary" runat="server" Text=" report " />
                     </div>
 
                 </div>
