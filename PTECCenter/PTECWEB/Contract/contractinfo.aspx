@@ -88,7 +88,7 @@
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">ประเภทสัญญา</span>
                                 </div>
-                                <asp:DropDownList class="form-control" ID="cboContractType"  runat="server" ></asp:DropDownList>    
+                                <asp:DropDownList class="form-control" ID="cboContractType"  runat="server" AutoPostBack="True" ></asp:DropDownList>    
                             </div>
                         </div>
 
@@ -187,20 +187,52 @@
                         <div class="col-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">ค่าเช่าปีล่ะ</span>
+                                    <%--<span class="input-group-text"><%#Session(contracttype)%>  ค่าเช่าเดือนล่ะ</span>--%>
+                                    <span > <asp:label class="form-control" ID="lblContractType" style="background-color:white" runat="server" Text="ค่าเช่าต่อเดือน"></asp:label>  </span>
                                 </div>
                                 <asp:TextBox class="form-control" ID="txtRentPer" style="background-color:white" runat="server"></asp:TextBox>  
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">/</span>
+                                    <span class="input-group-text" style='display: none;'>/</span>
                                 </div>                                
-                                <div class="input-group-prepend">
+                                <div class="input-group-prepend " style='display: none;' >
                                     <span class="input-group-text">แปลง</span>
                                 </div>
-                                <asp:TextBox class="form-control" ID="txtPlant" style="background-color:white" runat="server"></asp:TextBox>  
+                                <asp:TextBox class="form-control" ID="txtPlant" style="background-color:white; display: none;"  visible="true" runat="server" Text="1"></asp:TextBox>  
                             </div>
                         </div>
 
                     </div>
+
+                </div>
+
+                <div class="row">
+                   
+                        <div class="col-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">ผู้จ่ายภาษีที่ดิน</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboContractLand"  runat="server" ></asp:DropDownList>    
+                            </div>
+                        </div>                   
+
+                        <div class="col-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">ผู้จ่ายภาษีสิ่งปลูกสร้าง</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboContractBu"  runat="server" ></asp:DropDownList>    
+                            </div>
+                        </div>
+                 
+                        <div class="col-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">การจ่ายเงินวันจดเช่า</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboContractDayRent"  runat="server" ></asp:DropDownList>    
+                            </div>
+                       </div>                                                       
 
                 </div>
 

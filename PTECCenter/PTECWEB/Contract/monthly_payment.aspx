@@ -44,7 +44,17 @@
                                     <AlternatingRowStyle BackColor="#CCCCFF" />
 
                                       <Columns>
-	                                    <asp:TemplateField HeaderText="เลขที่สัญญา">
+                                        <asp:BoundField DataField="lawcontractno" HeaderText="เลขที่เอกสาร"  />
+                                        <asp:BoundField DataField="paymenttype" HeaderText="ประเภท"  />
+                                        <asp:BoundField DataField="duedate" HeaderText="กำหนดชำระ"  />
+                                        <asp:BoundField DataField="amount" HeaderText="จำนวนเงิน"  />
+                                        <asp:BoundField DataField="sale_volume" HeaderText="ยอดขายลิตร"  />
+
+                                        <asp:BoundField DataField="Branch" HeaderText="สาขา"  />
+                                        <asp:BoundField DataField="PaidType" HeaderText="ประเภทการจ่าย"  />
+                                        <asp:BoundField DataField="BankBranchName" HeaderText="ธนาคาร"  />
+                                    
+	                   <%--                 <asp:TemplateField HeaderText="เลขที่สัญญา">
 		                                    <ItemTemplate>
 			                                    <asp:Label id="lblagno" runat="server" Text='<%#Eval("lawcontractno")%>'></asp:Label>
 		                                    </ItemTemplate>
@@ -72,9 +82,8 @@
                                         <asp:TemplateField HeaderText="">
                                             <ItemTemplate>                          
                                                 <asp:HyperLink ID="HyperLink" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" data-toggle="tooltip" data-placement="right" title="View Detail"><i class="fa fa-eye" aria-hidden="true"></i></asp:HyperLink>
-
                                             </ItemTemplate>
-                                        </asp:TemplateField>
+                                        </asp:TemplateField>--%>
                                     </Columns>
                               </asp:GridView>
                                                

@@ -266,7 +266,7 @@ Public Class PaymentContract
 
     Public Function Save(contractno As String, paymentid As Double, paidtype As String,
                          bankcode As String, bankbranchcode As String, bankbranchname As String,
-                         accountno As String, accountname As String, usercode As String) As Double
+                         accountno As String, accountname As String, usercode As String, sActive As String, sPayCust As String, sTaxCust As String) As Double
         Dim result As Double = 0
 
         Dim ds As New DataSet
@@ -288,7 +288,9 @@ Public Class PaymentContract
         cmd.Parameters.Add("@accountno", SqlDbType.VarChar).Value = accountno
         cmd.Parameters.Add("@accountname", SqlDbType.VarChar).Value = accountname
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
-        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        cmd.Parameters.Add("@Active", SqlDbType.VarChar).Value = sActive
+        cmd.Parameters.Add("@PayCust", SqlDbType.VarChar).Value = sPayCust
+        cmd.Parameters.Add("@TaxCust", SqlDbType.VarChar).Value = sTaxCust
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
 
         adp.SelectCommand = cmd
@@ -1192,6 +1194,73 @@ Public Class Contract
 
         Return result
     End Function
+
+    Public Function loadContractLand(iConID As Integer) As DataTable
+        Dim result As New DataTable
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "sp_Get_ContractLand"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ConID", SqlDbType.Int).Value = iConID
+
+        adp.SelectCommand = cmd
+        adp.Fill(result)
+        'result = cmd.ExecuteNonQuery
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function loadContractBuild(iConID As Integer, iLand As Integer) As DataTable
+        Dim result As New DataTable
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "sp_Get_ContractBuild"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ConID", SqlDbType.Int).Value = iConID
+        cmd.Parameters.Add("@LanID", SqlDbType.Int).Value = iLand
+
+        adp.SelectCommand = cmd
+        adp.Fill(result)
+        'result = cmd.ExecuteNonQuery
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function loadContractDayRent(iConID As Integer, iLand As Integer, iBuID As Integer) As DataTable
+        Dim result As New DataTable
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "sp_Get_ContractDayRent"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@ConID", SqlDbType.Int).Value = iConID
+        cmd.Parameters.Add("@LanID", SqlDbType.Int).Value = iLand
+        cmd.Parameters.Add("@BuID", SqlDbType.Int).Value = iBuID
+
+        adp.SelectCommand = cmd
+        adp.Fill(result)
+        'result = cmd.ExecuteNonQuery
+        conn.Close()
+
+        Return result
+    End Function
+
 End Class
 
 Public Class clsRequestContract
@@ -1521,5 +1590,73 @@ Public Class clsRequestContract
 
     End Function
 
+End Class
+
+Public Class clsPayment
+    Public Function loadBank() As DataTable
+
+        Try
+            Dim result As DataTable
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Get_Bank"
+            cmd.CommandType = CommandType.StoredProcedure
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            result = ds.Tables(0)
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+
+    End Function
+
+    Public Function loadCustContract(iAgID As Integer) As DataTable
+
+        Try
+            Dim result As DataTable
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Get_Cust_Contract"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@AgID", SqlDbType.Int).Value = iAgID
+
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            result = ds.Tables(0)
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+
+    End Function
 
 End Class

@@ -194,6 +194,15 @@ Partial Public Class contractinfo
     Protected WithEvents txtDays As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblContractType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblContractType As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''txtRentPer control.
     '''</summary>
     '''<remarks>
@@ -210,6 +219,33 @@ Partial Public Class contractinfo
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtPlant As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboContractLand control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboContractLand As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboContractBu control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboContractBu As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboContractDayRent control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboContractDayRent As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''btnClient control.

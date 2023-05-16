@@ -31,79 +31,124 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row">
-                            <div class="col-4">
-                                <div class="input-group sm-3">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text">เลขที่สัญญา</span>
+                        <div class="row">
+                                <div class="col-4">
+                                    <div class="input-group sm-3">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">เลขที่สัญญา</span>
+                                        </div>
+                                        <asp:TextBox class="form-control" ID="txtContractNo" placeholder="please save first" ReadOnly="true" runat="server" ></asp:TextBox>    
+
                                     </div>
-                                    <asp:TextBox class="form-control" ID="txtContractNo" placeholder="please save first" ReadOnly="true" runat="server" ></asp:TextBox>    
+                                </div>
+                                <div class="col-4">
 
                                 </div>
-                            </div>
-                            <div class="col-4">
+                                <div class="col-4">
+                                    <div class="input-group sm-3">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">สถานะ</span>
+                                        </div>
+                                        <asp:Label class="form-control" ID="lblStatus" style="background-color:darkgreen;color:white" runat="server" ></asp:Label>    
 
-                            </div>
-                            <div class="col-4">
-                                <div class="input-group sm-3">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text">สถานะ</span>
                                     </div>
-                                    <asp:Label class="form-control" ID="lblStatus" style="background-color:darkgreen;color:white" runat="server" ></asp:Label>    
+                                </div>
+                            </div>
+                        <div class="row" style="padding-top: 1rem;">
+                            <div class="col-md-4 ">
+                                    ID
+                                <div class="input-group sm-3">
+                                    <asp:TextBox class="form-control" ID="txtid" runat="server" ReadOnly="true"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                    วิธีชำระ
+                                <div class="input-group sm-3">
+                                    <asp:RadioButton ID="rdoTrans" runat="server" groupname="paid" Checked="true"/>โอน&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rdoCheque" runat="server" groupname="paid"/>เช็ค
+                                </div>
+                            </div>
 
+                        </div>
+                        <div class="row" style="padding-top: 1rem;">
+                            <div class="col-md-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ธนาคาร</span>
+                                    <asp:DropDownList class="form-control" ID="cboBank"  runat="server" ></asp:DropDownList>  
+                                </div>                                                                
+                                <%--<div class="input-group sm-3">--%>
+                                    
+                                    <%--<asp:TextBox class="form-control" ID="txtBankCode" runat="server" ></asp:TextBox>--%>
+                                    
+                                <%--</div>--%>
+                            </div>
+                            <div class="col-md-4 ">
+                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">รหัสสาขา</span>
+                                     <asp:TextBox class="form-control" ID="txtBankbranchcode" runat="server" ></asp:TextBox>
+                                </div>          
+                          <%--      <div class="input-group sm-">
+                                    <asp:TextBox class="form-control" ID="txtBankbranchcode" runat="server" ></asp:TextBox>
+                                </div>--%>
+                            </div>
+                            <div class="col-md-4">
+                                   
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ชื่อสาขา</span>
+                                    <asp:TextBox class="form-control" ID="txtBankbranchname" runat="server" ></asp:TextBox>
+                                </div>  
+                              <%--     <div class="input-group sm-3">
+                                 <asp:TextBox class="form-control" ID="txtBankbranchname" runat="server" ></asp:TextBox>
+                                </div>--%>
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top: 1rem;">
+                            <div class="col-md-4 ">
+                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">เลขบัญชี</span>
+                                    <asp:TextBox class="form-control" ID="txtAccountNo" runat="server" ></asp:TextBox>
+                                </div>  
+                           <%--     <div class="input-group sm-">
+                                    <asp:TextBox class="form-control" ID="txtAccountNo" runat="server" ></asp:TextBox>
+                                </div>--%>
+                            </div>
+                            <div class="col-md-4 ">
+                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ชื่อบัญชี</span>
+                                    <asp:TextBox class="form-control" ID="txtAccountName" runat="server" ></asp:TextBox>
+                                </div>  
+                           <%--     <div class="input-group sm-">
+                                    <asp:TextBox class="form-control" ID="txtAccountName" runat="server" ></asp:TextBox>
+                                </div>--%>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 1rem;">
+                            <div class="col-md-4 ">                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">สั่งจ่าย</span>
+                                    <asp:DropDownList class="form-control" ID="cboPayCust" runat="server" ></asp:DropDownList>
+                                </div>                          
+                            </div>
+                            <div class="col-md-4 ">                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">หักภาษี ณ ที่จ่าย</span>
+                                    <asp:DropDownList class="form-control" ID="cboTaxCust" runat="server" ></asp:DropDownList>
+                                </div>                          
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 1rem;">
+                            <div class="col-md-4 ">                            
+                                <div class="input-group sm-">
+                                    <asp:checkbox class="checkbox" ID="chkActive" runat="server" text ="ใช้งาน"></asp:checkbox>
                                 </div>
                             </div>
                         </div>
-                    <div class="row" style="padding-top: 1rem;">
-                        <div class="col-md-4 ">
-                                ID
-                            <div class="input-group sm-3">
-                                <asp:TextBox class="form-control" ID="txtid" runat="server" ReadOnly="true"></asp:TextBox>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                                วิธีชำระ
-                            <div class="input-group sm-3">
-                                <asp:RadioButton ID="rdoTrans" runat="server" groupname="paid" Checked="true"/>โอน&nbsp;&nbsp;
-                                <asp:RadioButton ID="rdoCheque" runat="server" groupname="paid"/>เช็ค
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                                รหัสธนาคาร
-                            <div class="input-group sm-3">
-                                <asp:TextBox class="form-control" ID="txtBankCode" runat="server" ></asp:TextBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top: 1rem;">
-                        <div class="col-md-4 ">
-                                รหัสสาขา
-                            <div class="input-group sm-">
-                                <asp:TextBox class="form-control" ID="txtBankbranchcode" runat="server" ></asp:TextBox>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                                ชื่อสาขา
-                            <div class="input-group sm-3">
-                                <asp:TextBox class="form-control" ID="txtBankbranchname" runat="server" ></asp:TextBox>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row" style="padding-top: 1rem;">
-                        <div class="col-md-4 ">
-                                เลขบัญชี
-                            <div class="input-group sm-">
-                                <asp:TextBox class="form-control" ID="txtAccountNo" runat="server" ></asp:TextBox>
-                            </div>
-                        </div>
-                        <div class="col-md-4 ">
-                                ชื่อบัญชี
-                            <div class="input-group sm-">
-                                <asp:TextBox class="form-control" ID="txtAccountName" runat="server" ></asp:TextBox>
-                            </div>
-                        </div>
-                    </div>
              
                  </div>
 

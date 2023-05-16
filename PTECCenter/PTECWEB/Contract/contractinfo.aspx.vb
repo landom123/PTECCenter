@@ -19,12 +19,14 @@ Public Class contractinfo
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
 
-        txtContractDate.Attributes.Add("readonly", "readonly")
-        txtContractActiveDate.Attributes.Add("readonly", "readonly")
+        'txtContractDate.Attributes.Add("readonly", "readonly")
+        'txtContractActiveDate.Attributes.Add("readonly", "readonly")
         txtprojectno.Attributes.Add("readonly", "readonly")
 
         'txtBegindate.Attributes.Add("readonly", "readonly")
         'txtEndDate.Attributes.Add("readonly", "readonly")
+
+
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -68,6 +70,10 @@ Public Class contractinfo
 
             SetCboContractType(cboContractType)
 
+            SetCboContractLand(cboContractLand)
+            SetCboContractBuild(cboContractBu)
+            SetCboContractDayREnt(cboContractDayRent)
+
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
                 Session("menulist") = menutable
@@ -83,11 +89,14 @@ Public Class contractinfo
             Session("projectno") = projectno
             Session("contractno") = contractno
             txtprojectno.Text = projectno
-            Find(contractno)
 
             If loadRequestProject() = False Then
                 Exit Sub
             End If
+
+            Find(contractno)
+
+
             'If Not (Session("client") Is Nothing) Then
             '    clienttable = Session("client")
             '    BindDataClient()
@@ -191,10 +200,10 @@ Public Class contractinfo
                 txtContractDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agdate")))
                 txtContractActiveDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agactivedate")))
 
-                txtBegindate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agdate")))
-                txtEndDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("agactivedate")))
+                txtBegindate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("begindate")))
+                txtEndDate.Text = DateAdd(DateInterval.Year, 543, CDate(.Rows(0).Item("enddate")))
 
-                cboContractType.SelectedIndex = cboContractType.Items.IndexOf(cboContractType.Items.FindByText(.Rows(0).Item("agtype")))
+                cboContractType.SelectedValue = .Rows(0).Item("ID") 'cboContractType.Items.IndexOf(cboContractType.Items.FindByText(.Rows(0).Item("ID")))
 
                 txtcontractPeriod.Text = .Rows(0).Item("ConperiodY")
                 txtcontractPeriod2.Text = .Rows(0).Item("ConperiodM")
@@ -271,16 +280,37 @@ Public Class contractinfo
         End If
     End Sub
 
-
     Private Sub SetCboContractType(obj As Object)
         Dim ag As New Contract
-
         obj.DataSource = ag.ContractTypeCbo()
         obj.DataValueField = "agtypeid"
         obj.DataTextField = "agtype"
         obj.DataBind()
     End Sub
 
+    Private Sub SetCboContractLand(obj As Object)
+        Dim ag As New Contract
+        obj.DataSource = ag.loadContractLand(0)
+        obj.DataValueField = "ID"
+        obj.DataTextField = "LanName"
+        obj.DataBind()
+    End Sub
+
+    Private Sub SetCboContractBuild(obj As Object)
+        Dim ag As New Contract
+        obj.DataSource = ag.loadContractBuild(0, 0)
+        obj.DataValueField = "ID"
+        obj.DataTextField = "BuName"
+        obj.DataBind()
+    End Sub
+
+    Private Sub SetCboContractDayRent(obj As Object)
+        Dim ag As New Contract
+        obj.DataSource = ag.loadContractDayRent(0, 0, 0)
+        obj.DataValueField = "ID"
+        obj.DataTextField = "DrName"
+        obj.DataBind()
+    End Sub
     Private Function ValidateData() As Boolean
         Dim result As Boolean = True
         Dim scriptKey As String
@@ -483,6 +513,7 @@ Public Class contractinfo
 
         Return result
     End Function
+
     Private Sub btnAssets_Click(sender As Object, e As EventArgs) Handles btnAssets.Click
 
         If chkagree() Then
@@ -491,7 +522,7 @@ Public Class contractinfo
             assetsinfo.iBuconType = cboContractType.SelectedValue
             assetsinfo.BuconTypeName = cboContractType.SelectedItem.ToString
 
-            Response.Redirect("assetsinfo.aspx?contractno=" & contractno & "&assetsno=" )
+            Response.Redirect("assetsinfo.aspx?contractno=" & contractno & "&assetsno=")
         End If
 
     End Sub
@@ -516,6 +547,16 @@ Public Class contractinfo
 
     Private Sub cbocontracttype_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboContractType.SelectedIndexChanged
         Session(contracttype) = cboContractType.SelectedItem.Text
+
+        Dim objCon As New Contract
+
+        lblContractType.Text = cboContractType.SelectedItem.Text & " ต่อเดือน"
+
+        cboContractLand.DataSource = objCon.loadContractLand(cboContractType.SelectedValue)
+        cboContractLand.DataValueField = "ID"
+        cboContractLand.DataTextField = "LanName"
+        cboContractLand.DataBind()
+
     End Sub
 
     Private Function loadRequestProject() As Boolean
@@ -533,8 +574,6 @@ Public Class contractinfo
                 txtContractDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
                 txtContractActiveDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
             Next
-
-
 
             Return True
         Catch ex As Exception

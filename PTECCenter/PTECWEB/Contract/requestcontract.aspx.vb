@@ -422,6 +422,7 @@ Public Class requestcontract
                 txtDocIDAction.Text = dr("ID")
                 cboBranch.SelectedValue = dr("Branch")
                 cboStatus.SelectedValue = dr("StatusID")
+                cboContractType.SelectedValue = dr("ContractID")
                 'txtContractBeginDate.Text = CDate(dr("BeginDate"))
                 'txtContractEndDate.Text = CDate(dr("EndDate"))
 

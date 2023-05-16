@@ -43,6 +43,13 @@ Public Class monthly_payment
         Dim payment As New Contract
         Dim calcdate As String
 
+        If IsDate(txtCalcDate.Text) = False Then
+            Dim err As String = "กรุณาระบุวันที่"
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Exit Sub
+        End If
         calcdate = DateTime.Parse(txtCalcDate.Text).Year & DateTime.Parse(txtCalcDate.Text).Month.ToString("00")
         Session("calcdate") = calcdate
         Try
