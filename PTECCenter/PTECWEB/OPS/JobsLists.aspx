@@ -182,8 +182,8 @@
                                 <asp:TemplateField HeaderText="Supplier" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <div class="d-flex flex-column align-items-center" readonly="true">
-                                            <a href="../OPS/jobs_followup.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" class="badge badgestatus_app" title="ติดตามสถานะงาน" target="_blank"><%#Eval("companystatus")%></a>
-                                            <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("company")%>'></asp:Label>
+                                            <a href="../OPS/jobs_followup.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" class="badge badgestatus_app" title="ติดตามสถานะงาน" target="_blank"><%#Eval("supplierstatus")%></a>
+                                            <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("suppliername")%>'></asp:Label>
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -288,6 +288,7 @@
 
             const arrs_app = document.querySelectorAll('.badgestatus_app');
 
+            console.log(arrs_app);
             for (let i = 0; i < arrs_app.length; i++) {
                 let st_name = arrs_app[i].textContent;
                 switch (st_name) {

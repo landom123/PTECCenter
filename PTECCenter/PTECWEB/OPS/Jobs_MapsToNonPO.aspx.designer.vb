@@ -14,67 +14,13 @@ Option Explicit On
 Partial Public Class Jobs_MapsToNonPO
 
     '''<summary>
-    '''btnOpen control.
+    '''cboSupplier control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnOpen As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''btnSave control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnUpdate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnUpdate As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnConfirm control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnCancel control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnCancel As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnExport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnExport As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''txtHeadDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtHeadDetail As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboSupplier As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''lbHeadDetail control.
@@ -86,40 +32,22 @@ Partial Public Class Jobs_MapsToNonPO
     Protected WithEvents lbHeadDetail As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''badgestatus control.
+    '''btnJTN control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents badgestatus As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    Protected WithEvents btnJTN As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''statusnonpo control.
+    '''gvRemind control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents statusnonpo As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtApprovalHOcode control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtApprovalHOcode As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''gvData control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gvData As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents gvRemind As Global.System.Web.UI.WebControls.GridView
 
     '''<summary>
     '''hfCount control.
@@ -129,283 +57,4 @@ Partial Public Class Jobs_MapsToNonPO
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hfCount As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''groupFromAddDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents groupFromAddDetail As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''FileUpload1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
-
-    '''<summary>
-    '''btnFromAddDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnFromAddDetail As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''btnDelete control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnDelete As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''verifyby control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents verifyby As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''lbVerifyby control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbVerifyby As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbVerifyDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbVerifyDate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''approvalby control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents approvalby As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''lbApprovalby control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbApprovalby As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbApprovalDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbApprovalDate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''confirmby control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents confirmby As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''lbConfirmby control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbConfirmby As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbConfirmDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbConfirmDate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbCreateby control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbCreateby As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbCreateDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbCreateDate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbcboApproval control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbcboApproval As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbcboApprovalMandatory control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbcboApprovalMandatory As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cboApproval control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboApproval As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''lbcboBranch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbcboBranch As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbcboBranchMandatory control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbcboBranchMandatory As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cboBranch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''lbPrice control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbPrice As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtPrice control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtPrice As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lbDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbDetail As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbDetailMandatory control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbDetailMandatory As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtDetail As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''btnAddDetailsss control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnAddDetailsss As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''lbcboMyfile control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbcboMyfile As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lbMandatorycboMyfile control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbMandatorycboMyfile As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cboMyfile control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboMyfile As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''asd control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents asd As Global.System.Web.UI.WebControls.Button
 End Class

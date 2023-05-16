@@ -272,7 +272,7 @@ Public Class Assets
 
         Return result
     End Function
-    Public Sub SetCboAssets(obj As Object, branch As Integer, depid As Integer, secid As Integer)
+    Public Sub SetCboAssets(obj As Object, branch As Integer, Optional depid As Integer = 0, Optional secid As Integer = 0)
         obj.DataSource = Me.ComboList(branch, depid, secid)
         obj.DataValueField = "assetid"
         obj.DataTextField = "asset"

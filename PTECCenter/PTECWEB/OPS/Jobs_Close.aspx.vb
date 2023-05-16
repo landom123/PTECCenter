@@ -119,9 +119,22 @@ Public Class JobsClose
 
         If maintable IsNot Nothing Then
             If maintable.Rows.Count > 0 Then
+                If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then
+
+                    btnClose.Visible = False
+                    btnAddAttatch.Visible = True
+                Else '= ปิดงาน
+
+                    btnClose.Visible = True
+                    btnAddAttatch.Visible = False
+
+                    Dim scriptKey As String = "UniqueKeyForThisScript"
+                    Dim javaScript As String = "disbtndelete();"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                End If
                 If maintable.Rows(0).Item("lockcost") = False Then
                     FromAddDetail.Visible = True
-                    btnClose.Visible = True
+                    'btnClose.Visible = True
 
                     lockcost.Visible = False
                 Else

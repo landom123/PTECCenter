@@ -6,7 +6,12 @@
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
+
     <style>
+        html {
+            background-color: #f0f2f5 !important;
+        }
+
         .btn-light.disabled {
             border: 1px solid #ced4da;
             background-color: #e9ecef;
@@ -312,7 +317,7 @@
                                 </div>
 
 
-                                <div class="col-lg-3 mb-3">
+                                <div class="col-lg-3 mb-3 d-none">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">วันที่ปิดงาน</span>
@@ -354,7 +359,7 @@
                                 <div class="col-12 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">รายละเอียดปิดงาน</span>
+                                            <span class="input-group-text">รายละเอียดสำหรับ Payment</span>
                                         </div>
                                         <asp:TextBox class="form-control" ID="txtRemark" runat="server" TextMode="MultiLine"></asp:TextBox>
                                     </div>
@@ -1081,6 +1086,9 @@
                 document.getElementById('<%= btnSaveComment.ClientID%>').disabled = true;
 
             }
+        } 
+        function disbtndelete() {
+            $(".deletedetail").hide();
         }
     </script>
 </asp:Content>

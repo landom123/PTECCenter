@@ -167,6 +167,15 @@ Partial Public Class frmJobs
     Protected WithEvents cboPosition As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cboAsset control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboAsset As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''txtAssetCode control.
     '''</summary>
     '''<remarks>

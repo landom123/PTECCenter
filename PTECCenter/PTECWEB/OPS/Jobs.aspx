@@ -7,6 +7,10 @@
     <script src="https://cdn.tiny.cloud/1/eivog24cbgm1fhi4pm2cg4pw1lp478mhyjjtxnzml4fi51pa/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
     <style>
+        
+        html {
+            background-color: #f0f2f5 !important;
+        }
         #content-wrapper {
             background-color: #f0f2f5;
         }
@@ -443,8 +447,12 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">รหัสทรัพย์สิน</span>
                                         </div>
-                                        <asp:TextBox class="form-control" ID="txtAssetCode" runat="server" placeholder="FA_CO ..." autocomplete="off"></asp:TextBox>
-                                        <div class="input-group-append">
+                                        <asp:DropDownList class="selectpicker form-control" data-live-search="true" ID="cboAsset" AutoPostBack="True"
+                                            runat="server">
+                                        </asp:DropDownList> <%--  แก้ไข FA text box TO cbo--%>
+                                        
+                                        <asp:TextBox class="form-control d-none" ID="txtAssetCode" runat="server" placeholder="FA_CO ..." autocomplete="off"></asp:TextBox>
+                                        <div class="input-group-append d-none">
                                             <asp:Button ID="btnFind" class="btn btn-sm  btn-secondary" runat="server" Text="Find" />
                                         </div>
                                     </div>

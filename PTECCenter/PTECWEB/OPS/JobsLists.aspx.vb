@@ -204,13 +204,7 @@ Public Class JobsList_test
 
             ElseIf Data.Item("status") = "ผู้แจ้ง Confirm" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.GreenYellow
-            ElseIf Data.Item("status") = "กำลังดำเนินการ" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Pink
-            ElseIf Data.Item("status") = "แจ้ง Supplier" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Pink
-            ElseIf Data.Item("status") = "รออะไหล่/อุปกรณ์" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Pink
-            ElseIf Data.Item("status") = "รออนุมัติค่าใช้จ่าย" Then
+            Else
                 e.Row.Cells.Item(statusAt).BackColor = Color.Pink
             End If
         End If

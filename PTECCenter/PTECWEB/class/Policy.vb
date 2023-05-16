@@ -5,7 +5,7 @@ Public Class Policy
     Public Sub setComboPolicy(obj As Object)
         obj.datasource = Me.List("")
         obj.DataValueField = "policyid"
-        obj.DataTextField = "policy"
+        obj.DataTextField = "policyallname"
         obj.DataBind()
     End Sub
 

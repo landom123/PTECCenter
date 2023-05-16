@@ -389,7 +389,7 @@ Public Class NonPO
                                     .Rows(i).Item("vendorcode").ToString,
                                     .Rows(i).Item("invoice").ToString,
                                     .Rows(i).Item("taxid").ToString,
-                                    .Rows(i).Item("invoicedate"),
+                                    .Rows(i).Item("invoicedate").ToString,
                                     .Rows(i).Item("nobill"),
                                     .Rows(i).Item("incompletebill"),
                                     username)
