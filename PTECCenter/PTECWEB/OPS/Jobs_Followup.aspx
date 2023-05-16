@@ -6,6 +6,12 @@
     <link href="<%=Page.ResolveUrl("~/css/starRating.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/css/Stepper.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/css/Jobs.css")%>" rel="stylesheet">
+
+    <style>
+        html {
+            background-color: #f0f2f5 !important;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
@@ -154,12 +160,28 @@
                                     <div class="col-md-4 mb-3">
                                         <div class="input-group sm-4">
                                             <div class="input-group-prepend">
+                                                <span class="input-group-text">ระดับความเร่งด่วน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtPolicyName" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">กำหนดการ</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtPolicyDate" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3 d-none">
+                                        <div class="input-group sm-4">
+                                            <div class="input-group-prepend">
                                                 <span class="input-group-text">จำนวน</span>
                                             </div>
                                             <asp:TextBox class="form-control" ID="txtQuantity" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-4 mb-3 d-none">
                                         <div class="input-group sm-4">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">หน่วย</span>
@@ -341,7 +363,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <asp:Button ID="btnSentSupplier" class="btn btn-sm  btn-warning" runat="server" Text="Send" />
+                                        <asp:Button ID="btnSentSupplier" class="btn btn-sm  btn-warning" runat="server" Text="Send" OnClientClick="sendvendor()" />
                                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Print" />
                                     </div>
                                 </div>
@@ -377,6 +399,7 @@
                             <div class="card-body">
                                 <!-- Rating -->
                                 <div class="rating__main">
+                                <% If Not maintable.Rows(0).Item("supplierid") = 0 Then %>
                                     <!-- rate__Service -->
                                     <div class="rate__Service">
                                         <!-- Rating totol -->
@@ -476,7 +499,7 @@
                                                                     <i class="rating__star far fa-circle"></i>
                                                                     <i class="rating__star far fa-circle"></i>
                                                                 </div>
-                                                                <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" then %>
+                                                                <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" Then %>
 
                                                                 <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
                                                                 <textarea class="form-control" id="txtOther_<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" rows="1"></textarea>
@@ -495,7 +518,9 @@
                                         <!-- end Rating table -->
                                     </div>
                                     <!-- end rate__Service -->
+
                                     <hr />
+                                    <% End if %>
                                     <!-- rate__Operator -->
                                     <div class="rate__Operator">
                                         <!-- Rating totol -->
@@ -771,7 +796,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ประเภทงาน</span>
                                 </div>
-                                <asp:DropDownList ID="cboJobType" class="form-control" runat="server" AutoPostBack="false">
+                                <asp:DropDownList ID="cboJobType" class="form-control" runat="server" AutoPostBack="True">
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -784,6 +809,25 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ระดับความเร่งด่วน</span>
+                                </div>
+                                <asp:DropDownList ID="cboPolicy" class="form-control" runat="server" AutoPostBack="True">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">กำหนดการ</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtPolicyRequestdate" runat="server" placeholder="" autocomplete="off" ></asp:TextBox>
+                            </div>
+                        </div>
+
+
                         <div class="col-md-6 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
@@ -899,7 +943,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div id="email-html"></div>
-                            <input type="hidden" name="emails" id="emails" runat="server" />
+                            <input type="hidden" name="jobitems" id="jobitems" runat="server" />
                         </div>
                     </div>
                 </div>
@@ -917,7 +961,7 @@
     <script src="<%=Page.ResolveUrl("~/js/Jobs.js")%>"></script>
     <script type="text/javascript">
         var selected = [];
-
+        let modalShowID = '';
         function alertSuccess() {
             Swal.fire(
                 'สำเร็จ',
@@ -976,10 +1020,18 @@
             executeRatingAvg(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>,<%= assessmenttable.Rows(i).Item("rate") %>);
                 <% End if %>
             <% Next i %>
-            calProgressTotal("_Service");
+
+            <% If Not maintable.Rows(0).Item("supplierid") = 0 Then %>
+                calProgressTotal("_Service");
+            <% End if %>
             calProgressTotal("_Operator");
 
+           
+            if (modalShowID) { modalShow(modalShowID)}
         });
+        function modalShow(id) {
+            $(`#${id}`).modal('show');
+        }
         jQuery('[id$=cboStatus]').on('show.bs.dropdown', function () {
             $('.table-responsive').css("overflow", "inherit");
         });
@@ -1150,17 +1202,17 @@
         function postBack_updateJFU() {
             let active = $(".md-stepper-horizontal .active").length;
             let doing = $(".md-stepper-horizontal .doing").length;
-            if (active > 0 || doing > 0) {
-                alertWarning('ต้องการเปลี่ยนแปลง Suppiler ระหว่างดำเนินการอยู่ ใช่หรือไม่ ?');
-                event.preventDefault();
-                event.stopPropagation();
-                return 0;
-            }
+            //if (active > 0 || doing > 0) {
+            //    alertWarning('ต้องการเปลี่ยนแปลง Suppiler ระหว่างดำเนินการอยู่ ใช่หรือไม่ ?');
+            //    event.preventDefault();
+            //    event.stopPropagation();
+            //    return 0;
+            //}
         }
 
 
         function refreshDiv() {
-            $("#<%= emails.ClientID%>").val(selected.join(','));
+            $("#<%= jobitems.ClientID%>").val(selected.join(','));
         }
 
         function removeEmail(email) {
@@ -1170,5 +1222,45 @@
             }
             refreshDiv();
         }
+        function disbtndelete() {
+            $(".deletedetail").hide();
+        }
+
+        function sendvendor() {
+            alert(3);
+
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobcode = urlParams.get('jobno');
+            const dtlid = urlParams.get('jobdetailid');
+            var user = "<% =Session("usercode").ToString %>";
+            var params = `{"jobcode": ${jobcode},"dtlid": ${dtlid} ,"usercode" : "${user}"}`;
+            alert(params)
+            $.ajax({
+                type: "POST",
+                url: "http://vpnptec.dyndns.org:32001/api/STrack_responseFlex_AfterInsert",
+                await: true,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+
+                    alert('success');
+                    alertSuccessToast('ส่งงานเรียบร้อย');
+                    __doPostBack('sendvendor', '');
+
+                },
+                error: function (msg) {
+                    //console.log(msg);
+                    alert('error');
+                    alertWarning('Add URL faila');
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                }
+            });
+
+        }
+        
     </script>
 </asp:Content>

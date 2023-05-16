@@ -21,6 +21,7 @@ Public Class JobsFollowup
         Dim objjob As New jobs
         Dim objsupplier As New Supplier
         Dim attatch As New Attatch
+        Dim objpolicy As New Policy
 
         username = Session("username")
         usercode = Session("usercode")
@@ -98,7 +99,7 @@ Public Class JobsFollowup
     Private Sub setBtn()
         If maintable IsNot Nothing Then
             If maintable.Rows.Count > 0 Then
-                If maintable.Rows(0).Item("owner") > 0 Then
+                If maintable.Rows(0).Item("owner") > 0 Then 'กรณีเป็น Operator
 
                     'Detail
                     btnSave.Visible = True
@@ -107,12 +108,20 @@ Public Class JobsFollowup
                         btnSave.Enabled = True
                         btnEditDetail.Visible = True
 
-                        cardfour.Attributes.Add("style", "display:none;")
+                        cardfour.Attributes.Add("style", "display:none;") 'คะแนนการประเมิน
+
+                        btnAddAttatch.Visible = True
                     Else '= ปิดงาน
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
 
-                        cardfour.Attributes.Remove("readonly")
+                        cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
+
+                        btnAddAttatch.Visible = False
+
+                        Dim scriptKey As String = "UniqueKeyForThisScript"
+                        Dim javaScript As String = "disbtndelete();"
+                        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                     End If
 
                     'Follow UP
@@ -142,21 +151,40 @@ Public Class JobsFollowup
                     'Rating
                     btnSubmitRate.Visible = False
 
-                ElseIf String.Equals(Session("username"), maintable.Rows(0).Item("createby")) Then
+                ElseIf String.Equals(username, maintable.Rows(0).Item("jobowner")) Then 'กรณีเป็น เจ้าของงาน
                     'Detail
                     btnSave.Visible = False
                     btnConfirm.Visible = False
                     btnEditDetail.Visible = False
-                    If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then
-                        btnConfirm.Enabled = True
-
-                        'Rating
-                        btnSubmitRate.Visible = True
-                    Else
+                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
                         btnConfirm.Enabled = False
 
                         'Rating
                         btnSubmitRate.Visible = False
+
+                        btnAddAttatch.Visible = False
+
+                        Dim scriptKey As String = "UniqueKeyForThisScript"
+                        Dim javaScript As String = "disbtndelete();"
+                        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+
+                        cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
+
+                    ElseIf maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน" Then
+
+
+                        cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
+                    Else
+
+                        btnConfirm.Enabled = True
+
+                        'Rating
+                        btnSubmitRate.Visible = True
+
+                        btnAddAttatch.Visible = True
+
+                        cardfour.Attributes.Add("style", "display:none;") 'คะแนนการประเมิน
                     End If
 
                     'Follow UP
@@ -192,6 +220,13 @@ Public Class JobsFollowup
 
                     'Rating
                     btnSubmitRate.Visible = False
+
+
+                    btnAddAttatch.Visible = False
+
+                    Dim scriptKey As String = "UniqueKeyForThisScript"
+                    Dim javaScript As String = "disbtndelete();"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End If
             End If
         End If
@@ -303,6 +338,7 @@ Public Class JobsFollowup
     Private Sub showjobdata(mytable As DataTable)
 
         Dim objjob As New jobs
+        Dim objpolicy As New Policy
 
         With mytable.Rows(0)
             txtDocDate.Text = .Item("jobdate")
@@ -323,6 +359,15 @@ Public Class JobsFollowup
             cboSupplier.SelectedIndex = cboSupplier.Items.IndexOf(cboSupplier.Items.FindByValue(.Item("supplierid")))
             txtSupplier.Text = .Item("supplier")
             txtDetail.Text = .Item("details")
+
+            'policy modal
+            objpolicy.setComboPolicyByJobTypeID(cboPolicy, .Item("jobtypeid"))
+            cboPolicy.SelectedIndex = cboPolicy.Items.IndexOf(cboPolicy.Items.FindByValue(.Item("policyid")))
+            txtPolicyRequestdate.Text = .Item("requestdate")
+
+            'policy ที่โชว์ในรายละเอียดงาน
+            txtPolicyName.Text = .Item("policy")
+            txtPolicyDate.Text = .Item("requestdate")
 
             txtCloseType.Text = .Item("JobCloseType_name")
             txtCloseCategory.Text = .Item("CategoryName")
@@ -408,7 +453,7 @@ endprocess:
 
         If result = False Then
             Dim scriptKey As String = "alert"
-            Dim javaScript As String = "alertWarning('" + msg + "');"
+            Dim javaScript As String = "alertWarning('" + msg + "');modalShowID = 'EditDetail';"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End If
 
@@ -457,6 +502,9 @@ endprocess:
             Dim closetypeid As Double = cboCloseType.SelectedItem.Value
             Dim closecategory As Integer = cboCloseCategory.SelectedItem.Value
 
+            Dim policyid As Integer = cboPolicy.SelectedItem.Value
+            Dim policydate As String = txtPolicyRequestdate.Text
+
             Dim cost As Double
 
             Try
@@ -469,7 +517,7 @@ endprocess:
 
             Try
                 'objjob.UpdateSupplierandCost(jobno, jobdetailid, jobCenter, supplierid, cost, usercode)
-                objjob.UpdateDetail(jobno, jobdetailid, jobType, assCode, supplierid, cost, usercode, closetypeid, closecategory)
+                objjob.UpdateDetail(jobno, jobdetailid, jobType, assCode, supplierid, cost, usercode, policyid, policydate, closetypeid, closecategory)
                 flashData()
             Catch ex As Exception
                 Dim scriptKey As String = "UniqueKeyForThisScript"
@@ -487,8 +535,9 @@ endprocess:
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        Dim supplierid As Integer = maintable.Rows(0).Item("supplierid")
         Dim s As String = "window.open('../OPS/Jobs_Report_JobForm.aspx?jobcode=" & Request.QueryString("jobno").ToString() &
-    "&supplierid=" & cboSupplier.SelectedItem.Value &
+    "&supplierid=" & supplierid &
     " ', '_blank');"
 
         Page.ClientScript.RegisterStartupScript(Me.GetType(), "alertscript", s, True)
@@ -584,21 +633,7 @@ endprocess:
     End Sub
 
     Private Sub btnSentSupplier_Click(sender As Object, e As EventArgs) Handles btnSentSupplier.Click
-
-        Dim objjob As New jobs
-
-        Try
-            objjob.Jobs_Send_Supplier(jobno, jobdetailid, usercode)
-            flashData()
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('SaveComment fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            GoTo endprocess
-        End Try
-        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
-endprocess:
+        Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
     End Sub
 
     Private Sub btnUpdateJobCateCode_Click(sender As Object, e As EventArgs) Handles btnUpdateJobCateCode.Click
@@ -623,7 +658,7 @@ endprocess:
         Dim objjob As New jobs
 
         Try
-            objjob.JobItem_Save(jobdetailid, emails.Value.ToString, usercode)
+            objjob.JobItem_Save(jobdetailid, jobitems.Value.ToString, usercode)
             flashData()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -634,5 +669,53 @@ endprocess:
         End Try
         'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
 endprocess:
+    End Sub
+    Private Sub cboJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobType.SelectedIndexChanged
+        Dim objpolicy As New Policy
+        Dim jobtypeid As Integer
+
+        jobtypeid = cboJobType.SelectedItem.Value
+        objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobtypeid)
+
+        If maintable IsNot Nothing Then
+            If maintable.Rows.Count > 0 Then
+                With maintable.Rows(0)
+                    cboPolicy.SelectedIndex = cboPolicy.Items.IndexOf(cboPolicy.Items.FindByValue(.Item("policyid")))
+                End With
+            End If
+        End If
+
+        Dim scriptKey As String = "modalShow"
+        'Dim javaScript As String = "alert('" & ex.Message & "');"
+        Dim javaScript As String = "modalShowID = 'EditDetail';"
+        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+    End Sub
+    Private Function setDueDate(policyid As String) As Boolean
+        Dim objjobs As New jobs
+        Dim mydataset As DataSet
+        Try
+            If maintable IsNot Nothing Then
+                If maintable.Rows.Count > 0 Then
+                    With maintable.Rows(0)
+                        mydataset = objjobs.setDueDateByPolicyID(policyid, .Item("jobdate").ToString())
+                        txtPolicyRequestdate.Text = mydataset.Tables(0).Rows(0).Item("duedate")
+                    End With
+                End If
+            End If
+            Return True
+        Catch ex As Exception
+            txtPolicyRequestdate.Text = ""
+            Return False
+        End Try
+    End Function
+
+    Private Sub cboPolicy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboPolicy.SelectedIndexChanged
+        setDueDate(cboPolicy.SelectedItem.Value)
+
+        Dim scriptKey As String = "modalShow"
+        'Dim javaScript As String = "alert('" & ex.Message & "');"
+        Dim javaScript As String = "modalShowID = 'EditDetail';"
+        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
     End Sub
 End Class

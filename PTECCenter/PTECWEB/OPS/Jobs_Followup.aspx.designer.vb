@@ -140,6 +140,24 @@ Partial Public Class JobsFollowup
     Protected WithEvents txtAssetName As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''txtPolicyName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPolicyName As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtPolicyDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPolicyDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtQuantity control.
     '''</summary>
     '''<remarks>
@@ -464,6 +482,24 @@ Partial Public Class JobsFollowup
     Protected WithEvents cboCloseType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cboPolicy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboPolicy As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtPolicyRequestdate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPolicyRequestdate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''cboSupplier control.
     '''</summary>
     '''<remarks>
@@ -554,13 +590,13 @@ Partial Public Class JobsFollowup
     Protected WithEvents cboJobItems As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''emails control.
+    '''jobitems control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents emails As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+    Protected WithEvents jobitems As Global.System.Web.UI.HtmlControls.HtmlInputHidden
 
     '''<summary>
     '''btnUpdateJobitems control.

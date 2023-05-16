@@ -22,6 +22,7 @@ Public Class frmJobs
         Dim objsec As New Section
         Dim objsupplier As New Supplier
         Dim objpolicy As New Policy
+        Dim objAssets As New Assets
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -69,6 +70,7 @@ Public Class frmJobs
             'SetCboBranch(cboBranch)
             'SetCboDepartment(cboDepartment)
             'SetCboSection(cboSection, cboDepartment.SelectedItem.Value)
+            objAssets.SetCboAssets(cboAsset, 0)
 
             SetCboJobType(cboJobType, usercode)
 
@@ -527,6 +529,10 @@ endprocess:
     End Sub
 
     Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
+        FindAsset()
+    End Sub
+
+    Private Sub FindAsset()
         Dim ass As New Assets
         Dim mydataset As DataSet
         Try
@@ -808,12 +814,14 @@ endprocess:
         If Not String.IsNullOrEmpty(cboBranch.SelectedItem.Value) Then
             branchid = cboBranch.SelectedItem.Value
 
+            Dim objAssets As New Assets
             Dim objdep As New Department
             objdep.SetCboDepartment(cboDepartment, branchid)
 
             If cboJobType.SelectedItem.Value = 1 Then
                 FindPositionInPump(branchid)
             End If
+            objAssets.SetCboAssets(cboAsset, branchid)
         End If
 
     End Sub
@@ -843,6 +851,11 @@ endprocess:
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
         End If
+    End Sub
+
+    Private Sub cboAsset_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboAsset.SelectedIndexChanged
+        txtAssetCode.Text = cboAsset.SelectedItem.Text.ToString.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)(0).Trim()
+        FindAsset()
     End Sub
 
     'Private Sub cboJobCate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobCate.SelectedIndexChanged

@@ -68,6 +68,15 @@ Partial Public Class Payment2
     Protected WithEvents btnPrint As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''ref control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ref As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''lbcodeRef control.
     '''</summary>
     '''<remarks>
