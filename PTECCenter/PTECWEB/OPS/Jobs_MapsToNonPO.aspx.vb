@@ -48,6 +48,15 @@ Public Class Jobs_MapsToNonPO
             objsupplier.SetCboSupplier(cboSupplier)
         Else
 
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "searchCostCommited_list" Then
+
+                Dim argument As String = Request("__EVENTARGUMENT")
+                If argument = "focus" Then
+                    searchCostCommited_list()
+                End If
+
+            End If
 
         End If
 
@@ -78,7 +87,7 @@ Public Class Jobs_MapsToNonPO
         gvRemind.DataBind()
     End Sub
 
-    Private Sub searchCostCommited_list()
+    Public Sub searchCostCommited_list()
 
         Dim objjob As New jobs
         Dim detailtable As New DataTable
@@ -132,5 +141,36 @@ Public Class Jobs_MapsToNonPO
             Response.Redirect("../OPS/Non-PO/Payment/Payment2.aspx?f=JOB&code_ref=" + jyncode)
         End If
 endprocess:
+    End Sub
+
+    Private Sub gvRemind_RowCommand(sender As Object, e As GridViewCommandEventArgs) Handles gvRemind.RowCommand
+        If e.CommandName = "Select" Then
+            'Determine the RowIndex of the Row whose Button was clicked.
+            Dim rowIndex As Integer = Convert.ToInt32(e.CommandArgument)
+
+            'Reference the GridView Row.
+            Dim row As GridViewRow = gvRemind.Rows(rowIndex)
+
+            'Fetch value of Name.
+
+            Dim code As String = TryCast(row.FindControl("lbjobcode"), Label).Text
+            Dim dtlid As String = TryCast(row.FindControl("lbid"), Label).Text
+
+            'Fetch value of Country.
+            'Dim country As String = row.Cells(1).Text
+
+
+            Dim objjob As New jobs
+
+            objjob.UpdateUnlockCost(code, dtlid, usercode)
+
+            searchCostCommited_list()
+            Response.Write("<script>window.open ('jobs_Close.aspx?jobno=" + code + "&jobdetailid=" + dtlid + "','_blank');</script>")
+        End If
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+
+        searchCostCommited_list()
     End Sub
 End Class

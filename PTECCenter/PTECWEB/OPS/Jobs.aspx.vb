@@ -80,9 +80,10 @@ Public Class frmJobs
             'Session("jobtype") = cboJobType.SelectedItem.Value
 
             jobtypeid = cboJobType.SelectedItem.Value
-            objpolicy.setComboPolicyByJobTypeID(cboPolicy, cboJobType.SelectedItem.Value)
+            objpolicy.setComboPolicyByJobTypeID(cboPolicy, 0)
 
             If Not Request.QueryString("jobno") Is Nothing Then
+                'objpolicy.setComboPolicyByJobTypeID(cboPolicy, cboJobType.SelectedItem.Value)
                 'txtDocDate.Text = Now()
                 Session("jobno") = Request.QueryString("jobno")
                 txtJobno.Text = Session("jobno")
@@ -841,7 +842,7 @@ endprocess:
         Dim objpolicy As New Policy
 
         jobtypeid = cboJobType.SelectedItem.Value
-        objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobtypeid)
+        'objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobtypeid)
         If jobtypeid = 1 Then
             If Not cboBranch.SelectedItem.Value = "" Then
                 FindPositionInPump(cboBranch.SelectedItem.Value)

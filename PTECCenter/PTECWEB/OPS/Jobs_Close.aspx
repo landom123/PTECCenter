@@ -18,9 +18,10 @@
         }
 
         #dataTable td, th {
-            font-size: .9rem;
+            font-size: .8rem;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         /*####################### CSS FROM MODAL ########################*/
@@ -379,13 +380,13 @@
                                                         </td>
                                                     </tr>
                                                     <tr class="border border-dark border-right-0 border-left-0 text-info">
-                                                        <th scope="col">รายการ</th>
+                                                        <th scope="col" style="width: 250px !important;">รายการ</th>
+                                                        <th scope="col" style="width: 150px !important;">ราคากลาง/หน่วย</th>
                                                         <th scope="col" style="width: 150px !important;">จำนวน</th>
-                                                        <th scope="col" style="width: 150px !important;">ราคากลาง</th>
-                                                        <th scope="col" style="width: 150px !important;">ราคาต่อหน่วย</th>
-                                                        <th scope="col" style="width: 150px !important;">รวมเป็นเงิน</th>
-                                                        <th scope="col" style="width: 50px !important;">%VAT</th>
-                                                        <th scope="col" style="width: 50px !important;">%WHT</th>
+                                                        <th scope="col" style="width: 150px !important;">ราคา/หน่วย</th>
+                                                        <th scope="col" style="width: 50px !important;">VAT</th>
+                                                        <th scope="col" style="width: 50px !important;">(WHT)</th>
+                                                        <th scope="col" style="width: 150px !important;">รวมทั้งสิ้น</th>
                                                         <th scope="col" style="width: 50px !important;">Bill</th>
                                                         <%--<% If Not chkPAYMENT Then%>
                                                         <th scope="col"><a id="generatedPayment" class="btn-sm" style="color: red; font-size: 1rem; font-weight: bold;">
@@ -411,12 +412,12 @@
                                                                         ,'<%= costtable.Rows(i).Item("incompletebill").ToString() %>'
                                                                         );">
                                                         <td title="<% =costtable.Rows(i).Item("jobscenterdtlname") %>"><% =costtable.Rows(i).Item("jobscenterdtlname") %></td>
-                                                        <td class="text-center" title="<% =costtable.Rows(i).Item("jobcostunit") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("jobcostunit")) %></td>
                                                         <td class="text-right" title="<% =costtable.Rows(i).Item("jobscenterdtlprice") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("jobscenterdtlprice")) %></td>
+                                                        <td class="text-center" title="<% =costtable.Rows(i).Item("jobcostunit") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("jobcostunit")) %></td>
                                                         <td class="text-right" title="<% =costtable.Rows(i).Item("unitprice") %>" style="color:<%= if( ( costtable.Rows(i).Item("jobscenterdtlprice") < costtable.Rows(i).Item("amount")), "red", "black") %>;"><% =String.Format("{0:n}", costtable.Rows(i).Item("unitprice")) %></td>
-                                                        <td class="text-right" title="<% =costtable.Rows(i).Item("amount") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("amount")) %></td>
                                                         <td class="text-center" title="<% =costtable.Rows(i).Item("vat_per") %>"><% =costtable.Rows(i).Item("vat_per") %></td>
                                                         <td class="text-center" title="<% =costtable.Rows(i).Item("tax_per") %>"><% =costtable.Rows(i).Item("tax_per") %></td>
+                                                        <td class="text-right" title="<% =costtable.Rows(i).Item("amount") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("amount")) %></td>
                                                         <td class="text-center" title=""><%= if( (Not costtable.Rows(i).Item("nobill") And Not costtable.Rows(i).Item("incompletebill")), "", If(costtable.Rows(i).Item("nobill"), "N", "U")) %></td>
                                                         <% If maintable.Rows(0).Item("lockcost") = False Then %>
                                                         <td>
@@ -429,14 +430,14 @@
                                                     </tr>
                                                     <% End If %>
                                                     <% Next i %>
-                                                    <tr>
+                                                    <tr class="border border-dark border-right-0 border-left-0">
                                                         <th></th>
                                                         <th></th>
                                                         <th></th>
                                                         <th class="text-right"><% =cost %></th>
-                                                        <th class="text-right"><% =total %></th>
                                                         <th class="text-right"><% =vat %></th>
                                                         <th></th>
+                                                        <th class="text-right"><% =total %></th>
                                                     </tr>
                                                 </tbody>
 
@@ -491,7 +492,7 @@
                                 <div class="row">
                                     <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
                                         <div class="col-auto">
-                                            <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                            <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
                                                 <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
 
                                             <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
@@ -945,9 +946,9 @@
             $('.form-control').selectpicker('refresh');
 
             $('#<%= cboCost.ClientID%>').val(0);
-            $('#<%= cboBU.ClientID%>').val(0);
+            <%--$('#<%= cboBU.ClientID%>').val(0);
             $('#<%= cboPP.ClientID%>').val(0);
-            $('#<%= cboPJ.ClientID%>').val(0);
+            $('#<%= cboPJ.ClientID%>').val(0);--%>
 
             $('#<%= txtUnit.ClientID%>').val('1');
             $('#<%= txtPrice.ClientID%>').val('0');
@@ -955,10 +956,10 @@
             $('#<%= txtTax.ClientID%>').val('');
 
 
-            $('#<%= txtInvoiceNo.ClientID%>').val('');
+            <%--$('#<%= txtInvoiceNo.ClientID%>').val('');
             $('#<%= txtInvDate.ClientID%>').val('');
             $('#<%= chkNoBill.ClientID%>').prop('checked', false);
-            $('#<%= chkIncompleteBill.ClientID%>').prop('checked', false);
+            $('#<%= chkIncompleteBill.ClientID%>').prop('checked', false);--%>
 
             $('.form-control').selectpicker('refresh');
         }

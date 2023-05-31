@@ -45,7 +45,9 @@
                                         <asp:Label ID="lbHeadDetail" CssClass="form-label" runat="server" Text="" />
                                     </div>
                                     <div class="col mb-3">
+                                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="ค้นหารายการ" />
                                         <asp:Button ID="btnJTN" class="btn btn-sm  btn-secondary" runat="server" Text="ดูตัวอย่าง Payment" OnClientClick="sendID();" />
+                                        
                                         &nbsp;   
                                     </div>
                                 </div>
@@ -75,7 +77,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Job" HeaderStyle-CssClass="table-header " ItemStyle-HorizontalAlign="center">
                                                 <ItemTemplate>
-                                                    <%--<asp:Label ID="lbjobcode" runat="server" Text='<%#Eval("jobcode")%>'></asp:Label>--%>
+                                                    <asp:Label ID="lbjobcode" CssClass="d-none" runat="server" Text='<%#Eval("jobcode")%>'></asp:Label>
                                                     <a href="../OPS/jobs.aspx?jobno=<%#Eval("jobcode")%>" title="<%#Eval("jobcode")%>" target="_blank"><%#Eval("jobcode")%></a>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -99,6 +101,14 @@
                                                     <asp:Label ID="lbcost" runat="server" Text='<%#String.Format("{0:n2}", Eval("cost"))%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Unlock" HeaderStyle-CssClass="table-header" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton type="Button" runat="server" CommandName="Select" CommandArgument="<%# Container.DataItemIndex %>" OnClientClick="return ConfirmUnlock(this);" >
+                                                        <i class="fas fa-unlock-alt"></i>
+                                                    </asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            
                                         </Columns>
                                     </asp:GridView>
                                     <asp:HiddenField ID="hfCount" runat="server" Value="0" />
@@ -121,7 +131,10 @@
     <!-- /#wrapper -->
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <script type="text/javascript">
+        //$(window).focus(function () {
+        //    __doPostBack('searchCostCommited_list','focus')
 
+        //});
         $(document).ready(function () {
            
             $('.form-control').selectpicker({
@@ -129,6 +142,8 @@
                 liveSearch: true,
                 maxOptions: 1
             });
+
+            checkSelected()
         });
 
     </script>
@@ -204,6 +219,22 @@
                 }
             }
         }
+        function checkSelected() {
+            let inputList = $(".table tbody tr").find(':checkbox');
+            for (let i = 0; i < inputList.length; i++) {
+                if (inputList[i].type == "checkbox" ) {
+                    if (inputList[i].checked) {
+                        inputList[i].parentNode.parentNode.parentNode.classList.add("checked");
+
+                    }
+                    else {
+                        inputList[i].parentNode.parentNode.parentNode.classList.remove("checked");
+
+                    }
+                    //$cb.is(':checked') ? $(this).css('background-color', '#ececec') : $(this).css('background-color', '#ffffff');
+                }
+            }
+        }
         function getSeleted() {
             //console.log("xxx22");
             let textinputs = document.querySelectorAll('td input:checked');
@@ -240,14 +271,29 @@
         }
         
         $(".table tbody tr").click(function (e) {
-            if ($(e.target).is(':checkbox')) return; //ignore when click on the checkbox
 
+            //if ($(e.target).is(':button')) return; //ignore when click on the checkbox
+            //console.log(this)
             var $cb = $(this).find(':checkbox');
-            $cb.prop('checked', !$cb.is(':checked'));
+            if (!$(e.target).is(':checkbox')) {
+                $cb.prop('checked', !$cb.is(':checked'));
+            }
             $cb.is(':checked') ? $(this).addClass("checked") : $(this).removeClass("checked");
             Check_Click(this)
         });
-    
+        function ConfirmUnlock(elm) {
+
+            if (confirm("คุณต้องการจะปลดล็อกหรือไม่ ?")) {
+                return true;
+            }
+            else {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            return true;
+
+
+        }
         function Confirm() {
 
             console.log("insave");

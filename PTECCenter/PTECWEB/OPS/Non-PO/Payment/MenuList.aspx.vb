@@ -374,7 +374,7 @@ endprocess:
     End Function
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 10
+        Dim statusAt As Integer = 11
         Dim companyAt As Integer = 0
         Dim Data As DataRowView
         Data = e.Row.DataItem
