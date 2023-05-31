@@ -170,6 +170,7 @@ Public Class paymentinfo
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
 
         Dim err, scriptKey, javaScript As String
+        err = ""
         If validateData() Then
             Try
                 paymentid = Save()
@@ -193,7 +194,7 @@ Public Class paymentinfo
     Private Function validateData() As Boolean
         Dim result As Boolean = True
         Dim err, scriptKey, javaScript As String
-
+        err = ""
         'If String.IsNullOrEmpty(txtName.Text) Then
         '    result = False
         '    err = "กรุณาระบุชื่อ นามสกุล คู่สัญญา"

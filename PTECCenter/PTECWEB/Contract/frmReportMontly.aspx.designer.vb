@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class frmReportMontly
 
     '''<summary>
+    '''cboBranch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboPayDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboPayDate As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''txtCalcDate control.
     '''</summary>
     '''<remarks>

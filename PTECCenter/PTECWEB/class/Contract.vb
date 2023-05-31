@@ -762,6 +762,34 @@ Public Class Project
         Return result
     End Function
 
+    Public Function loadFilterPay() As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "sp_Get_Payfind"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = cmd.ExecuteNonQuery
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
     Public Function loadStatus(StatusType As Integer) As DataTable
         Dim result As DataTable
 
@@ -851,7 +879,7 @@ Public Class Contract
         Return result
     End Function
 
-    Public Function MonthlyPayment2(monthly As String) As DataTable
+    Public Function MonthlyPayment2(monthly As String, sBranch As String, iDueDate As Integer, sDueDate As String) As DataTable
         Dim result As DataTable
 
 
@@ -867,8 +895,9 @@ Public Class Contract
 
 
         cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
-        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
-        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+        cmd.Parameters.Add("@sBranch", SqlDbType.VarChar).Value = sBranch
+        cmd.Parameters.Add("@iDueDate", SqlDbType.Int).Value = iDueDate
+        cmd.Parameters.Add("@sDueDate", SqlDbType.VarChar).Value = sDueDate
 
 
         adp.SelectCommand = cmd
@@ -1053,32 +1082,32 @@ Public Class Contract
 
     End Sub
     Public Function saveAssets() As String
-        Dim result As String
+        Dim result As String = ""
 
         Return result
     End Function
     Public Function saveOnetime() As String
-        Dim result As String
+        Dim result As String = ""
 
         Return result
     End Function
     Public Function saveRecurringFix() As String
-        Dim result As String
+        Dim result As String = ""
 
         Return result
     End Function
     Public Function saveRecurringFlexible() As String
-        Dim result As String
+        Dim result As String = ""
 
         Return result
     End Function
     Public Function saveFinance() As String
-        Dim result As String
+        Dim result As String = ""
 
         Return result
     End Function
     Public Function saveOther() As String
-        Dim result As String
+        Dim result As String = ""
 
         Return result
     End Function

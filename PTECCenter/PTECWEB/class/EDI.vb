@@ -505,7 +505,7 @@ Public Class wholesales
     End Function
 
     Public Function Wholesales_LastPrice_Find(beginpricedate As String, endpricedate As String) As DataTable
-        Dim result As DataTable
+        Dim result As DataTable = Nothing
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
