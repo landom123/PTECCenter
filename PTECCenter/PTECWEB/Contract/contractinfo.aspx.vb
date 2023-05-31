@@ -346,9 +346,9 @@ Public Class contractinfo
         lawcontractno = txtLawContractNo.Text
         contracttype = cboContractType.SelectedItem.Text
 
-        ContractLandID = CInt(cboContractLand.SelectedItem.Text)
-        ContractBuID = CInt(cboContractBu.SelectedItem.Text)
-        ContractDrID = CInt(cboContractDayRent.SelectedItem.Text)
+        ContractLandID = CInt(cboContractLand.SelectedValue)
+        ContractBuID = CInt(cboContractBu.SelectedValue)
+        ContractDrID = CInt(cboContractDayRent.SelectedValue)
 
         Try
             'contractdate = Date.Parse(txtContractDate.Text)
