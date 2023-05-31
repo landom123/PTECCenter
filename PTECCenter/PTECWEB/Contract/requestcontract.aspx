@@ -2,14 +2,14 @@
     MasterPageFile="~/site.Master" CodeBehind="requestcontract.aspx.vb" Inherits="PTECCENTER.requestcontract" EnableEventValidation = "false" Culture="th-TH"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <%--<link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">--%>
+    <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
 
-        <script type="text/javascript" src="jquery.js"></script>
+     <%--   <script type="text/javascript" src="jquery.js"></script>
     <link href="assets/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
     <script type="text/javascript" src="bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
     <script type="text/javascript" src="bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
-
+--%>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -45,7 +45,7 @@
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">วันที่</span>
                                     </div>
-                                    <asp:TextBox class="form-control" name="txtBegindate" ID="txtBegindate" style="background-color:white" runat="server"></asp:TextBox>    
+                                    <asp:TextBox class="form-control" ID="txtBegindate" style="background-color:white" runat="server"></asp:TextBox>    
 
                                 </div>
                             </div>
@@ -211,57 +211,73 @@
                                     </div>
 
                                     <div class="row" style="padding-top: 1rem;">
-                                        <div class="col-md-3">
-                                                ชื่อ-นามสกุล
-                                            <div class="input-group sm-">
+                                        <div class="col-md-3">                                                
+                                            <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">ชื่อ-นามสกุล</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtName" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                                เลขที่่บัตรประจำตัวประชาชน
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">เลขที่่บัตรประจำตัวประชาชน</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtCardID" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                                เพศ
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">เพศ</span>
+                                                    </div>
                                                 <asp:dropdownlist class="form-control" ID="cboSex" runat="server" ></asp:dropdownlist>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row" style="padding-top: 1rem;">
-                                        <div class="col-md-3">
-                                                ชื่อบริษัท
-                                            <div class="input-group sm-">
+                                        <div class="col-md-3">                                                
+                                            <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">ชื่อบริษัท</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtCompany" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                                Mobile Phone
+                                        <div class="col-md-3">                                               
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Mobile Phone</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtMobile" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row" style="padding-top: 1rem;">
-                                        <div class="col-md-3">
-                                                Tel
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Tel</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtTel" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                                Email
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Email</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtEmail" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                                Line
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Line</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtLine" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
@@ -271,7 +287,7 @@
                                             <div class="col-3">
                                                 <div class="input-group sm-3">
                                                     <div class="input-group-prepend">
-                                                    <span class="input-group-text">สถานะ</span>
+                                                        <span class="input-group-text">สถานะ</span>
                                                     </div>
                                                     <asp:DropDownList class="form-control" ID="cboStatus"  runat="server" ></asp:DropDownList>    
                                                 </div>
@@ -280,37 +296,47 @@
 
                                     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
                                     <div class="row" style="padding-top: 1rem;">
-                                        <div class="col-md-12">
-                                                ที่อยู่
+                                        <div class="col-md-12">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">ที่อยู่</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtAddress" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row" style="padding-top: 1rem;">
-                                        <div class="col-md-3">
-                                                ตำบล/แขวง
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">ตำบล/แขวง</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtSubDistrict" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                                อำเภอ/เขต
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">อำเภอ/เขต</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtDistrict" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                                จังหวัด
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">จังหวัด</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtProvince" runat="server" ></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row" style="padding-top: 1rem;">
-                                        <div class="col-md-3">
-                                                รหัสไปรษณีย์
+                                        <div class="col-md-3">                                                
                                             <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">รหัสไปรษณีย์</span>
+                                                    </div>
                                                 <asp:TextBox class="form-control" ID="txtPostcode" runat="server" ></asp:TextBox>
                                             </div>
                                              <asp:TextBox  style="display:none" class="form-control" ID="txtDocAction" runat="server" ></asp:TextBox>
@@ -346,12 +372,6 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
 
-
-    <link rel="stylesheet" href="jquery.datetimepicker.css"/>
-    <script src="/path/to/cdn/jquery.min.js"></script>
-<script src="jquery.datetimepicker.js"></script>
-
-
     <script type="text/javascript">
         jQuery('[id$=txtBirthday]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
@@ -364,7 +384,7 @@
         });
     </script>
 
-<%--        <script type="text/javascript">
+        <script type="text/javascript">
 
             jQuery('[id$=txtBegindate]').datetimepicker({
 
@@ -376,28 +396,7 @@
                 scrollInput: false,
                 format: 'd/m/Y'
             });
-        </script>--%>
-
- <script type="text/javascript">
-
-     $('#txtBegindate').datetimepicker({
-
-         lang: 'th',
-         i18n: {
-
-             th: { // Thai
-                 months: [
-                     'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
-                 ],
-                 dayOfWeekShort: [
-                     'อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'
-                 ],
-                 dayOfWeek: ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์", "อาทิตย์"]
-             },
-
-         });
-
- </script>
+        </script>
 
    <script type="text/javascript">
         jQuery('[id$=txtEnddate]').datetimepicker({

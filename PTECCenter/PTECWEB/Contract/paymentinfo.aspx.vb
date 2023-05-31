@@ -26,6 +26,11 @@ Public Class paymentinfo
             contractno = Session("contractno")
             projectno = Session("projectno")
             paymentid = Session("paymentid")
+
+            'If loadCustContract(Session("paymentid")) = False Then
+            '    Exit Sub
+            'End If
+
         Else
             contractno = Request.QueryString("contractno")
             projectno = Request.QueryString("projectno")
@@ -47,9 +52,14 @@ Public Class paymentinfo
                 Exit Sub
             End If
 
-            If loadCustContract(Session("paymentid")) = False Then
+            'If loadCustContract(Session("paymentid")) = False Then
+            '    Exit Sub
+            'End If
+
+            If loadCustContract(paymentid) = False Then
                 Exit Sub
             End If
+
 
             If Not String.IsNullOrEmpty(paymentid) Then
                 FindData(paymentid)
@@ -108,9 +118,9 @@ Public Class paymentinfo
             txtBankbranchname.Text = .Item("bankbranchname")
             txtAccountNo.Text = .Item("accountno")
             txtAccountName.Text = .Item("accountname")
-
-            cboPayCust.Text = IIf(IsDBNull(.Item("PayCust")), "", .Item("PayCust"))
-            cboTaxCust.Text = IIf(IsDBNull(.Item("TaxCust")), "", .Item("TaxCust"))
+            txtACCode.Text = .Item("ACCode")
+            cboPayCust.SelectedValue = IIf(IsDBNull(.Item("PayCust")), "", .Item("PayCust"))
+            cboTaxCust.SelectedValue = IIf(IsDBNull(.Item("TaxCust")), "", .Item("TaxCust"))
 
             paymentid = .Item("paymentid")
             Session("paymentid") = .Item("paymentid")
@@ -201,7 +211,7 @@ Public Class paymentinfo
         Dim result As Double
         Dim objpayment As New PaymentContract
         Dim paidtype As String
-        Dim bankcode, bankbranchcode, bankbranchname, accountno, accountname, sActive, sPayCust, sTaxCust As String
+        Dim bankcode, bankbranchcode, bankbranchname, accountno, accountname, sActive, sPayCust, sTaxCust, sACCode As String
 
         'bankcode = txtBankCode.Text
         bankcode = cboBank.Text
@@ -209,8 +219,9 @@ Public Class paymentinfo
         bankbranchname = txtBankbranchname.Text
         accountno = txtAccountNo.Text
         accountname = txtAccountName.Text
-        sPayCust = cboPayCust.Text
-        sTaxCust = cboTaxCust.Text
+        sPayCust = cboPayCust.SelectedValue
+        sTaxCust = cboTaxCust.SelectedValue
+        sACCode = txtACCode.Text
 
         If rdoTrans.Checked = True Then
             paidtype = "T"
@@ -225,7 +236,7 @@ Public Class paymentinfo
         End If
 
         result = objpayment.Save(contractno, paymentid, paidtype, bankcode, bankbranchcode,
-                                 bankbranchname, accountno, accountname, usercode, sActive, sPayCust, sTaxCust)
+                                 bankbranchname, accountno, accountname, usercode, sActive, sPayCust, sTaxCust, sACCode)
 
         txtid.Text = result.ToString
         Session("paymentid") = result
@@ -259,12 +270,12 @@ Public Class paymentinfo
         End Try
     End Function
 
-    Private Function loadCustContract(iAgID As Integer) As Boolean
+    Private Function loadCustContract(iPayID As Integer) As Boolean
         Try
             Dim objReq As New clsRequestContract
             Dim dt, dt2 As New DataTable
 
-            dt = objPay.loadCustContract(iAgID)
+            dt = objPay.loadCustContract(iPayID)
 
             cboPayCust.DataSource = dt
             cboPayCust.DataValueField = "Name"
@@ -273,7 +284,7 @@ Public Class paymentinfo
 
 
 
-            dt2 = objPay.loadCustContract(iAgID)
+            dt2 = objPay.loadCustContract(iPayID)
 
             cboTaxCust.DataSource = dt2
             cboTaxCust.DataValueField = "Name"

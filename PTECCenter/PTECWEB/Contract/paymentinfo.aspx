@@ -128,16 +128,22 @@
                         </div>
 
                         <div class="row" style="padding-top: 1rem;">
-                            <div class="col-md-4 ">                                    
+                            <div class="col-md-3">                                    
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">สั่งจ่าย</span>
                                     <asp:DropDownList class="form-control" ID="cboPayCust" runat="server" ></asp:DropDownList>
                                 </div>                          
                             </div>
-                            <div class="col-md-4 ">                                    
+                            <div class="col-md-3">                                    
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">หักภาษี ณ ที่จ่าย</span>
                                     <asp:DropDownList class="form-control" ID="cboTaxCust" runat="server" ></asp:DropDownList>
+                                </div>                          
+                            </div>
+                            <div class="col-md-3">                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">A/C Code</span>
+                                     <asp:TextBox class="form-control" ID="txtACCode" runat="server" ></asp:TextBox>
                                 </div>                          
                             </div>
                         </div>

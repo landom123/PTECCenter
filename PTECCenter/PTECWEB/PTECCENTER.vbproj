@@ -210,6 +210,7 @@
     <Content Include="Contract\client_list.aspx" />
     <Content Include="Contract\clientinfo.aspx" />
     <Content Include="Contract\projectlist.aspx" />
+    <Content Include="Contract\frmReportMontly.aspx" />
     <Content Include="Contract\titlename.aspx" />
     <Content Include="ADMIN\JobsManageCost.aspx" />
     <Content Include="ADMIN\Questionnair.aspx" />
@@ -3588,6 +3589,13 @@
     </Compile>
     <Compile Include="Contract\projectlist.aspx.vb">
       <DependentUpon>projectlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\frmReportMontly.aspx.designer.vb">
+      <DependentUpon>frmReportMontly.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\frmReportMontly.aspx.vb">
+      <DependentUpon>frmReportMontly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Contract\titlename.aspx.designer.vb">
