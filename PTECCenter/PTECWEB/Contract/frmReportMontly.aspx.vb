@@ -16,24 +16,11 @@ Public Class frmReportMontly
 
         'Dim objsupplier As New Supplier
 
-        If IsPostBack() Then
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
-
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
         Else
-
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
-
-
+            menutable = Session("menulist")
         End If
 
     End Sub

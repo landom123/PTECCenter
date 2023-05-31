@@ -119,7 +119,7 @@ Public Class monthly_payment
         ExportTableToExcel(paymenttable, "pay_", calcdate & DateTime.Now.ToString("yyyyMMddhhmmss"))
     End Sub
 
-    Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
-        Response.Redirect("frmReportMontly.aspx")
-    End Sub
+    'Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
+    '    Response.Redirect("frmReportMontly.aspx")
+    'End Sub
 End Class
