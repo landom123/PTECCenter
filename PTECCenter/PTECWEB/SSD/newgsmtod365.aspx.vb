@@ -77,7 +77,14 @@ Public Class newgsmtod365
         Dim CloseDate As String
         Dim objgsm As New gsm
         CloseDate = txtCloseDate.Text.Substring(6, 4) & txtCloseDate.Text.Substring(3, 2) & txtCloseDate.Text.Substring(0, 2)
-        gsmtable = objgsm.NEWGSM_to_D365_byDate(cbobranch.SelectedItem.Value, CloseDate)
+        Try
+            gsmtable = objgsm.NEWGSM_to_D365_byDate(cbobranch.SelectedItem.Value, CloseDate)
+        Catch ex As Exception
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
         Session("newgsmtable") = gsmtable
         BindData()
     End Sub

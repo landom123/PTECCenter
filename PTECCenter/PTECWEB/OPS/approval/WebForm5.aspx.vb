@@ -67,6 +67,20 @@ Partial Class WebForm5
         ReportViewer1.ServerReport.ReportServerCredentials =
             New MyReportServerCredentials()
     End Sub
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function disAcceptByCode(ByVal jobcode As String, ByVal dtlid As String, ByVal message As String, ByVal user As String)
+
+        Try
+            Dim objjobs As New jobs
+
+            objjobs.Followup_Save(jobcode, dtlid, 16, message, user) '16 คือ ตรวจรับไม่สำเร็จ
+        Catch ex As Exception
+            Return "fail"
+        End Try
+        Return "success"
+
+    End Function
 End Class
 '<Serializable()>
 'Public NotInheritable Class MyReportServerCredentials

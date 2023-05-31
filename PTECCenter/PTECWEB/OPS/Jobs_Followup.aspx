@@ -264,7 +264,7 @@
                                                     <td style="vertical-align: middle">
                                                         <div class="d-flex flex-column">
                                                             <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " OnClientClick="validateData()" />
-                                                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" />
+                                                            <%--<asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" />--%>
                                                             <asp:Button ID="btnClose" class="btn btn-sm  btn-danger mt-1" runat="server" Text="ค่าใช้จ่าย" />
                                                         </div>
                                                     </td>
@@ -365,6 +365,7 @@
                                     <div class="col-12 mb-3">
                                         <asp:Button ID="btnSentSupplier" class="btn btn-sm  btn-warning" runat="server" Text="Send" OnClientClick="sendvendor()" />
                                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Print" />
+                                        <asp:Button ID="btnCancelSupplier" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" />
                                     </div>
                                 </div>
 
@@ -384,6 +385,18 @@
 
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">รายละเอียดการปฏิบัติงาน (ผู้รับเหมา)</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtEndComment" runat="server" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -641,7 +654,10 @@
                                 <!-- end Rating -->
                                 <div class="row">
                                     <div class="col-12 mb-3 text-center">
-                                        <asp:Button ID="btnSubmitRate" class="btn btn-secondary" runat="server" Text="Send" autopostback="False" OnClientClick="validateRate(); " />
+                                        <asp:Button ID="btnSubmitRate" class="btn btn-success" runat="server" Text="รับงาน" autopostback="False" OnClientClick="validateRate(); " />
+                                        <button runat="server" id="btndisAccept" name="btnEdit" onclick="return disAccept();" class="btn btn-danger">
+                                            ไม่รับงาน
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -661,7 +677,7 @@
                                 <div class="row">
                                     <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
                                         <div class="col-auto">
-                                            <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                            <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
                                                 <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
 
                                             <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
@@ -1027,7 +1043,18 @@
             calProgressTotal("_Operator");
 
            
-            if (modalShowID) { modalShow(modalShowID)}
+            if (modalShowID) { modalShow(modalShowID) }
+            const urlParams = new URLSearchParams(window.location.search);
+            const gotoContent = urlParams.get('g');
+            if (!gotoContent) {
+                <% If maintable IsNot Nothing Then %>
+                    <% If maintable.Rows.Count > 0 Then %>
+                        <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน" And statusnow = 4 Then %>
+                                checkStatusJob();
+                        <% End if %>
+                    <% End if %>
+                <% End if %>
+            }
         });
         function modalShow(id) {
             $(`#${id}`).modal('show');
@@ -1261,6 +1288,66 @@
             });
 
         }
-        
+        function disAccept() {
+
+            /*alert(GridView);*/
+
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobcode = urlParams.get('jobno');
+            const dtlid = urlParams.get('jobdetailid');
+             var usercode = "<%= Session("usercode")%>";
+
+             Swal.fire({
+                 input: 'textarea',
+                 inputLabel: 'ไม่รับงานเนื่องจาก',
+                 inputPlaceholder: 'ใส่ข้อความ . . .',
+                 inputAttributes: {
+                     'aria-label': 'ใส่ข้อความ.'
+                 },
+                 preConfirm: () => {
+                     if (!document.getElementById('swal2-input').value) {
+                         // Handle return value 
+                         Swal.showValidationMessage('First input missing')
+                     }
+                 },
+                 showCancelButton: true
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     alert('in');
+                     //var params = "{'approvalcode': '" + approvalcode + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
+
+                     var params = `{"jobcode" : "${jobcode}","dtlid" : "${dtlid}","message" : "${result.value}","user" : "${usercode}"}`;
+                     console.log(params);
+                     $.ajax({
+                         type: "POST",
+                         url: "../OPS/approval/WebForm5.aspx/disAcceptByCode",
+                         async: true,
+                         data: params,
+                         contentType: "application/json; charset=utf-8",
+                         dataType: "json",
+                         success: function (msg) {
+                             console.log(msg.d)
+                             if (msg.d) {
+                                 swal.fire({
+                                     title: "success!",
+                                     text: "",
+                                     icon: "success"
+                                 }).then(function () {
+                                     window.location.href = location.href;
+                                 });
+                             } else {
+                                 alertWarning('fail else')
+                             }
+                         },
+                         error: function () {
+                             alertWarning('fail e')
+                         }
+                     });
+                 }
+             })
+
+             return false;
+         }
     </script>
 </asp:Content>

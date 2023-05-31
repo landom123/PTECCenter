@@ -5,6 +5,7 @@ Public Class JobsFollowup
     Dim objStatus As String
     Dim jobno As String
     Dim jobdetailid As Integer
+    Public statusnow As Integer
     Public menutable As DataTable
     Public maintable As DataTable
     Public stepsuppilertable As DataTable
@@ -103,15 +104,8 @@ Public Class JobsFollowup
 
                     'Detail
                     btnSave.Visible = True
-                    btnConfirm.Visible = False
-                    If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then
-                        btnSave.Enabled = True
-                        btnEditDetail.Visible = True
-
-                        cardfour.Attributes.Add("style", "display:none;") 'คะแนนการประเมิน
-
-                        btnAddAttatch.Visible = True
-                    Else '= ปิดงาน
+                    'btnConfirm.Visible = False
+                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
 
@@ -122,6 +116,19 @@ Public Class JobsFollowup
                         Dim scriptKey As String = "UniqueKeyForThisScript"
                         Dim javaScript As String = "disbtndelete();"
                         ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+                    Else
+
+
+                        btnSave.Enabled = True
+                        btnEditDetail.Visible = True
+
+                        cardfour.Attributes.Add("style", "display:none;") 'คะแนนการประเมิน
+
+
+
+                        btnAddAttatch.Visible = True
+
                     End If
 
                     'Follow UP
@@ -130,15 +137,19 @@ Public Class JobsFollowup
                     'Supplier
                     btnSentSupplier.Visible = True
                     btnPrint.Visible = True
+                    btnCancelSupplier.Visible = True
                     If maintable.Rows(0).Item("supplierid") = 0 Then
                         btnSentSupplier.Enabled = False
                         btnPrint.Enabled = False
+                        btnCancelSupplier.Enabled = False
                     Else
                         btnSentSupplier.Enabled = True
                         btnPrint.Enabled = True
+                        btnCancelSupplier.Enabled = False
                         Dim rows() As DataRow = stepsuppilertable.Select("stepdate is not null")
                         If rows.Count > 0 Then
                             btnSentSupplier.Enabled = False
+                            btnCancelSupplier.Enabled = True
                         End If
 
                     End If
@@ -150,17 +161,31 @@ Public Class JobsFollowup
 
                     'Rating
                     btnSubmitRate.Visible = False
+                    btndisAccept.Visible = False
+                    If String.Equals(username, maintable.Rows(0).Item("jobowner")) Then
+                        If maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน" Then
+                            cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
+                            cardfour.Attributes.Remove("style")
+
+                            If statusnow = 4 Then
+                                btnSubmitRate.Visible = True
+                                btndisAccept.Visible = True
+                            End If
+                        End If
+                    End If
 
                 ElseIf String.Equals(username, maintable.Rows(0).Item("jobowner")) Then 'กรณีเป็น เจ้าของงาน
                     'Detail
                     btnSave.Visible = False
-                    btnConfirm.Visible = False
+                    'btnConfirm.Visible = False
                     btnEditDetail.Visible = False
-                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
-                        btnConfirm.Enabled = False
 
-                        'Rating
-                        btnSubmitRate.Visible = False
+
+                    'Rating
+                    btnSubmitRate.Visible = False
+                    btndisAccept.Visible = False
+                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
+                        'btnConfirm.Enabled = False
 
                         btnAddAttatch.Visible = False
 
@@ -175,12 +200,18 @@ Public Class JobsFollowup
 
 
                         cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
+                        cardfour.Attributes.Remove("style")
+
+                        If statusnow = 4 Then
+                            btnSubmitRate.Visible = True
+                            btndisAccept.Visible = True
+                        End If
                     Else
 
-                        btnConfirm.Enabled = True
+                        'btnConfirm.Enabled = True
 
-                        'Rating
-                        btnSubmitRate.Visible = True
+                        'btnSubmitRate.Visible = True
+                        'btndisAccept.Visible = True
 
                         btnAddAttatch.Visible = True
 
@@ -198,12 +229,13 @@ Public Class JobsFollowup
                     'Supplier
                     btnSentSupplier.Visible = False
                     btnPrint.Visible = False
+                    btnCancelSupplier.Visible = False
                 Else
                     'Detail
                     btnSave.Visible = False
-                    btnConfirm.Visible = False
+                    'btnConfirm.Visible = False
                     btnEditDetail.Visible = False
-                    btnConfirm.Enabled = False
+                    'btnConfirm.Enabled = False
 
                     'Follow UP
                     fromUpdateFollowup.Visible = False
@@ -211,6 +243,7 @@ Public Class JobsFollowup
                     'Supplier
                     btnSentSupplier.Visible = False
                     btnPrint.Visible = False
+                    btnCancelSupplier.Visible = False
 
 
                     'Analy
@@ -220,7 +253,7 @@ Public Class JobsFollowup
 
                     'Rating
                     btnSubmitRate.Visible = False
-
+                    btndisAccept.Visible = False
 
                     btnAddAttatch.Visible = False
 
@@ -318,6 +351,11 @@ Public Class JobsFollowup
             AttachTable = mydataset.Tables(4)
             CommentTable = mydataset.Tables(5)
 
+            If mydataset.Tables(6).Rows.Count > 0 Then
+                txtEndComment.Text = mydataset.Tables(6).Rows(0).Item("End_Comments")
+                statusnow = mydataset.Tables(6).Rows(0).Item("statusnow")
+            End If
+
             Session("maintable") = maintable
             Session("followuptable") = followuptable
             Session("stepsuppilertable") = stepsuppilertable
@@ -397,14 +435,18 @@ Public Class JobsFollowup
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If ValidateUpdate() Then
-            saveFollowup()
+
+            Dim statusid As Integer = cboStatus.SelectedItem.Value
+            Dim details As String = txtDetailFollow.Text
+
+            saveFollowup(statusid,details)
         End If
     End Sub
-    Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-        If ValidateUpdate() Then
-            saveFollowup()
-        End If
-    End Sub
+    'Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+    '    If ValidateUpdate() Then
+    '        saveFollowup()
+    '    End If
+    'End Sub
     Private Function ValidateUpdate() As Boolean
         Dim result As Boolean = True
         Dim msg As String = ""
@@ -459,9 +501,7 @@ endprocess:
 
         Return result
     End Function
-    Private Sub saveFollowup()
-        Dim statusid As Integer = cboStatus.SelectedItem.Value
-        Dim details As String = txtDetailFollow.Text
+    Private Sub saveFollowup(statusid As Integer, details As String)
 
         Dim objjob As New jobs
 
@@ -717,5 +757,22 @@ endprocess:
         'Dim javaScript As String = "alert('" & ex.Message & "');"
         Dim javaScript As String = "modalShowID = 'EditDetail';"
         ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    End Sub
+
+    Private Sub btnCancelSupplier_Click(sender As Object, e As EventArgs) Handles btnCancelSupplier.Click
+        Dim objjob As New jobs
+
+        Try
+            objjob.Jobs_Cancel_Supplier(jobno, jobdetailid, usercode)
+            flashData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('SaveCateCode fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
     End Sub
 End Class

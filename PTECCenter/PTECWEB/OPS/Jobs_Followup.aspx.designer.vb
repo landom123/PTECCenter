@@ -275,15 +275,6 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnConfirm control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnConfirm As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''btnClose control.
     '''</summary>
     '''<remarks>
@@ -365,6 +356,24 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnPrint As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnCancelSupplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCancelSupplier As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''txtEndComment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtEndComment As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''cardfour control.
     '''</summary>
     '''<remarks>
@@ -381,6 +390,15 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSubmitRate As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btndisAccept control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btndisAccept As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''btnAddAttatch control.

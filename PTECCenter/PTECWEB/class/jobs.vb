@@ -1694,4 +1694,72 @@ Public Class jobs
         conn.Close()
         Return result
     End Function
+
+    Public Function UpdateUnlockCost(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Unlock_Cost"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Jobs_DisAccept(jobno As String, dtlid As String, message As String, user As String)
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_DisAccept"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@dtlid", SqlDbType.VarChar).Value = dtlid
+        cmd.Parameters.Add("@message", SqlDbType.VarChar).Value = message
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Function
+
+    Public Function Jobs_Cancel_Supplier(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Cancel_Supplier"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
 End Class
