@@ -186,7 +186,7 @@ Public Class JobsList_test
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 9
+        Dim statusAt As Integer = 10
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -204,13 +204,9 @@ Public Class JobsList_test
 
             ElseIf Data.Item("status") = "ผู้แจ้ง Confirm" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.GreenYellow
-            ElseIf Data.Item("status") = "กำลังดำเนินการ" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Pink
-            ElseIf Data.Item("status") = "แจ้ง Supplier" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Pink
-            ElseIf Data.Item("status") = "รออะไหล่/อุปกรณ์" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Pink
-            ElseIf Data.Item("status") = "รออนุมัติค่าใช้จ่าย" Then
+            ElseIf Data.Item("status") = "ตรวจรับไม่สำเร็จ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
+            Else
                 e.Row.Cells.Item(statusAt).BackColor = Color.Pink
             End If
         End If

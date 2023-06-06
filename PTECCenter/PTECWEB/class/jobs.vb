@@ -81,6 +81,21 @@ Public Class jobs
 
     End Sub
 
+    Public Sub SetJobCateList(obj As Object, depid As Integer)
+        obj.DataSource = Me.JobCate_List(depid)
+        obj.DataValueField = "CateCode"
+        obj.DataTextField = "CateName"
+        obj.DataBind()
+
+    End Sub
+
+    Public Sub SetJobItemList(obj As Object, catecode As String, groupcode As String)
+        obj.DataSource = Me.JobItem_List(catecode, groupcode)
+        obj.DataValueField = "itemcode"
+        obj.DataTextField = "text"
+        obj.DataBind()
+
+    End Sub
     Public Sub SetCboJobCenterDtlListByJobCenterID_GroupByJobCenterid(cboCost As DropDownList, jobcenterid As String)
 
         Dim dtcost As DataTable = JobCenterDtl_List(jobcenterid)
@@ -596,7 +611,7 @@ Public Class jobs
             Dim result As DataTable
             'Credit_Balance_List_Createdate
             Dim ds As New DataSet
-            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops_uat").ConnectionString)
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
             Dim cmd As New SqlCommand
             Dim adp As New SqlDataAdapter
 
@@ -629,7 +644,7 @@ Public Class jobs
             Dim result As DataTable
             'Credit_Balance_List_Createdate
             Dim ds As New DataSet
-            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops_uat").ConnectionString)
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
             Dim cmd As New SqlCommand
             Dim adp As New SqlDataAdapter
 
@@ -662,7 +677,7 @@ Public Class jobs
             Dim result As DataTable
             'Credit_Balance_List_Createdate
             Dim ds As New DataSet
-            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops_uat").ConnectionString)
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
             Dim cmd As New SqlCommand
             Dim adp As New SqlDataAdapter
 
@@ -688,7 +703,39 @@ Public Class jobs
         End Try
 
     End Function
+    Public Function JobItem_List(catecode As String, groupcode As String) As DataTable
 
+        Try
+            Dim result As DataTable
+            'Credit_Balance_List_Createdate
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "JobItem_List"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@catecode", SqlDbType.VarChar).Value = catecode
+            cmd.Parameters.Add("@groupcode", SqlDbType.VarChar).Value = groupcode
+            'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+            'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+            'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            result = ds.Tables(0)
+            conn.Close()
+            Return result
+
+        Catch ex As Exception
+            Return Nothing
+        End Try
+
+    End Function
 
     Public Function JobType_List_By_Depid(depid As String) As DataTable
         Dim result As DataTable
@@ -1356,7 +1403,7 @@ Public Class jobs
         Return result
     End Function
 
-    Public Function setDueDateByPolicyID(policyid As String) As DataSet
+    Public Function setDueDateByPolicyID(policyid As String, Optional reqdate As String = Nothing) As DataSet
         Dim result As DataSet
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -1370,6 +1417,7 @@ Public Class jobs
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@policyid", SqlDbType.VarChar).Value = policyid
+        cmd.Parameters.Add("@reqdate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(reqdate), DBNull.Value, Date.Parse(reqdate))
 
 
         adp.SelectCommand = cmd
@@ -1452,7 +1500,8 @@ Public Class jobs
     End Function
 
     Public Function UpdateDetail(jobno As String, jobdetailid As Double, jobTypeid As Integer, assCode As String,
-                                          supplierid As Integer, cost As Double, usercode As String, Optional closeTypeid As Integer = 1, Optional categoryid As Integer = 1) As Boolean
+                                          supplierid As Integer, cost As Double, usercode As String, policyid As Double,
+                                  duedate As Object, Optional closeTypeid As Integer = 1, Optional categoryid As Integer = 1) As Boolean
         Dim result As Boolean
 
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -1470,6 +1519,8 @@ Public Class jobs
         cmd.Parameters.Add("@supplierid", SqlDbType.BigInt).Value = supplierid
         cmd.Parameters.Add("@cost", SqlDbType.Money).Value = cost
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@policyid", SqlDbType.Int).Value = policyid
+        cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(duedate), DBNull.Value, duedate)
         cmd.Parameters.Add("@closeTypeid", SqlDbType.BigInt).Value = closeTypeid
         cmd.Parameters.Add("@categoryid", SqlDbType.BigInt).Value = categoryid
 
@@ -1524,4 +1575,191 @@ Public Class jobs
         conn.Close()
 
     End Sub
+    Public Function UpdateDetailCateCode(jobno As String, jobdetailid As Double, CateCode As String, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Followup_update_CateCode_for_operator"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@catecode", SqlDbType.VarChar).Value = CateCode
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+
+    Public Function JobItem_Save(jobdetailid As Double, listitemcode As String, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "JobItem_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@listitemcode", SqlDbType.VarChar).Value = listitemcode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Jobs_CostCommited_list(supplierid As Integer) As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_CostCommited_list"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@supplierid", SqlDbType.VarChar).Value = supplierid
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        'cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Jobs_Get_RunningNO_JTN() As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Get_RunningNO_JTN"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = .Item("jobno")
+        'cmd.Parameters.Add("@jobdate", SqlDbType.DateTime).Value = DateTime.Parse(.Item("jobdate"))
+        '    cmd.Parameters.Add("@jobowner", SqlDbType.Int).Value = .Item("jobowner")
+        '    cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = .Item("branchid")
+        '    cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = .Item("depid")
+        '    cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = .Item("secid")
+        'cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Jobs_MapToNonPO_Save(jtncode As String, jobdetailid As Integer, usercode As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_MapToNonPO_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jtncode", SqlDbType.VarChar).Value = jtncode
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function UpdateUnlockCost(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Unlock_Cost"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Jobs_DisAccept(jobno As String, dtlid As String, message As String, user As String)
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_DisAccept"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@dtlid", SqlDbType.VarChar).Value = dtlid
+        cmd.Parameters.Add("@message", SqlDbType.VarChar).Value = message
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Function
+
+    Public Function Jobs_Cancel_Supplier(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Cancel_Supplier"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
 End Class

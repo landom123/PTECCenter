@@ -119,18 +119,55 @@ Public Class JobsClose
 
         If maintable IsNot Nothing Then
             If maintable.Rows.Count > 0 Then
-                If maintable.Rows(0).Item("lockcost") = False Then
+                If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then
                     FromAddDetail.Visible = True
-                    btnClose.Visible = True
+
+                    btnClose.Visible = False
+                    btnAddAttatch.Visible = True
 
                     lockcost.Visible = False
-                Else
-                    FromAddDetail.Visible = False
-                    btnClose.Visible = False
 
-                    lockcost.Visible = True
-                    lockcost.InnerHtml = "ล็อกค่าใช้จ่ายเรียบร้อยแล้ว"
+                    txtBeginWarr.ReadOnly = True
+                    txtEndWarr.ReadOnly = True
+
+                    'txtCloseDate.ReadOnly = True
+                    txtRemark.ReadOnly = True
+                Else '= ปิดงาน
+
+                    If maintable.Rows(0).Item("lockcost") = False Then
+                        FromAddDetail.Visible = True
+                        btnClose.Visible = True
+
+                        lockcost.Visible = False
+
+                        txtBeginWarr.ReadOnly = False
+                        txtEndWarr.ReadOnly = False
+
+                        'txtCloseDate.ReadOnly = False
+                        txtRemark.ReadOnly = False
+                    Else
+                        FromAddDetail.Visible = False
+                        btnClose.Visible = False
+
+                        lockcost.Visible = True
+                        lockcost.InnerHtml = "ล็อกค่าใช้จ่ายเรียบร้อยแล้ว"
+
+
+                        txtBeginWarr.ReadOnly = True
+                        txtEndWarr.ReadOnly = True
+
+                        'txtCloseDate.ReadOnly = True
+                        txtRemark.ReadOnly = True
+
+                        Dim scriptKey As String = "UniqueKeyForThisScript"
+                        Dim javaScript As String = "disbtndelete();"
+                        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                    End If
+
+                    btnAddAttatch.Visible = False
+
                 End If
+
             End If
         End If
 
@@ -238,44 +275,64 @@ Public Class JobsClose
         Response.Redirect("jobs_Followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
     End Sub
 
-    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        Dim objjob As New jobs
-        Dim jobclosetypeid As Integer
-        Dim jobclosecategoryid As Integer
-        Dim beginwarr, endwarr, invoicedate, closedate As String
-        Dim labor, part, travel As Double
-        Dim invoiceno, detail As String
+    Private Function ValidateClose() As Boolean
+        Dim result As Boolean = True
+        Dim msg As String = ""
 
-        jobclosetypeid = cboCloseType.SelectedItem.Value
-        jobclosecategoryid = cboCloseCategory.SelectedItem.Value
-        beginwarr = (txtBeginWarr.Text)
-        endwarr = (txtEndWarr.Text)
-        labor = 0.0
-        part = 0.0
-        travel = 0.0
-        invoiceno = txtInvoiceNo.Text
-        invoicedate = (txtInvDate.Text)
-        detail = txtRemark.Text
-        closedate = (txtCloseDate.Text)
-
-        Try
-            If objjob.JobCloseSave(jobno, jobdetailid, jobclosetypeid, beginwarr, endwarr,
-                                   part, labor, travel, invoiceno, invoicedate, detail, closedate, usercode, jobclosecategoryid) Then
-
-                'Response.Redirect("jobs_Close.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
-
-            End If
-            flashData()
-        Catch ex As Exception
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        If String.IsNullOrEmpty(txtRemark.Text.ToString()) Then
+            result = False
+            msg = "กรุณาใส่รายละเอียดสำหรับ Payment"
             GoTo endprocess
-        End Try
-        'Response.Redirect("jobs_Close.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
-endprocess:
+        End If
 
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End If
+
+        Return result
+    End Function
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        If ValidateClose() Then
+            Dim objjob As New jobs
+            Dim jobclosetypeid As Integer
+            Dim jobclosecategoryid As Integer
+            Dim beginwarr, endwarr, invoicedate, closedate As String
+            Dim labor, part, travel As Double
+            Dim invoiceno, detail As String
+
+            jobclosetypeid = cboCloseType.SelectedItem.Value
+            jobclosecategoryid = cboCloseCategory.SelectedItem.Value
+            beginwarr = (txtBeginWarr.Text)
+            endwarr = (txtEndWarr.Text)
+            labor = 0.0
+            part = 0.0
+            travel = 0.0
+            invoiceno = txtInvoiceNo.Text
+            invoicedate = (txtInvDate.Text)
+            detail = txtRemark.Text
+            closedate = (txtCloseDate.Text)
+
+            Try
+                If objjob.JobCloseSave(jobno, jobdetailid, jobclosetypeid, beginwarr, endwarr,
+                                       part, labor, travel, invoiceno, invoicedate, detail, closedate, usercode, jobclosecategoryid) Then
+
+                    'Response.Redirect("jobs_Close.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+
+                End If
+                flashData()
+            Catch ex As Exception
+                Dim scriptKey As String = "UniqueKeyForThisScript"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
+            'Response.Redirect("jobs_Close.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+        End If
     End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim objjob As New jobs

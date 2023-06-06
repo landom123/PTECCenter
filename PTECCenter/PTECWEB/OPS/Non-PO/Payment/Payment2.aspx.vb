@@ -241,6 +241,8 @@ endprocess:
                     codeRef.Text = Request.QueryString("code_ref").ToString
                     ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", Session("usercode").ToString)
                     head = ds.Tables(0)
+                    detailtable = ds.Tables(1)
+                    cboVendor.SelectedIndex = cboVendor.Items.IndexOf(cboVendor.Items.FindByValue(detailtable.Rows(0).Item("vendorcode").ToString))
                     sethead(head)
                 End If
             Else
@@ -285,6 +287,7 @@ endprocess:
         End If
         SetBtn(statusid, createby)
         'SetMenu()
+        hasRef()
         checkunsave()
     End Sub
     Private Sub chkuser(userid As Integer, nonpocode As String)
@@ -636,7 +639,14 @@ endprocess:
 
 
     'End Sub
-
+    Private Sub hasRef()
+        Dim txtcodeRef As String = codeRef.Text.ToString()
+        If String.IsNullOrEmpty(txtcodeRef) Then
+            ref.Visible = False
+        Else
+            ref.Visible = True
+        End If
+    End Sub
     Private Sub checkunsave()
         For i = 0 To detailtable.Rows.Count - 1
             If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then

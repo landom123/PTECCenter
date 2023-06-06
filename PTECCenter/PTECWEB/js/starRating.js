@@ -94,7 +94,7 @@ function calProgressTotal(className) {
     let elid;
     let cnt;
     const elrateLength = elrate.length;
-    //console.log(`className is ${className}`);
+    console.log(`className is ${className}`);
     let res = {};
     elrate.map((c) => {
         cnt = 0;
@@ -111,6 +111,8 @@ function calProgressTotal(className) {
     let totalselected = 0;
     resetProgressTotal(className)
     response.map((index) => {
+
+        console.log(`index is ${index}`);
         setProgressTotal(index + "star" + className, res[index], elrateLength);
 
         avg = parseInt(avg) + parseInt(index) * res[index];
@@ -129,7 +131,7 @@ function setProgressAvg(value = 0, className) {
 }
 
 function setProgressTotal(id, value = 0, max = 0) {
-    //console.log(`id is ${id}`);
+    console.log(`id is ${id}`);
 
     const pro = document.getElementById(id);
     pro.value = value;
@@ -137,6 +139,7 @@ function setProgressTotal(id, value = 0, max = 0) {
 }
 
 function resetProgressTotal(elid) {
+    console.log(`elid is ${elid}`);
     for (i = 1; i <= 5; ++i) setProgressTotal(i + "star"+elid, 0, 0);
 }
 
