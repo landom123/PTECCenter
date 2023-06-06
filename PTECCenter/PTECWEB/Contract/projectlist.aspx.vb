@@ -58,9 +58,9 @@ Public Class projectlist
                 Dim objprj As New Project
                     dtBranch = objprj.loadBranch
                     cboBranch.DataSource = dtBranch
-                    cboBranch.DataValueField = "branch_code"
-                    cboBranch.DataTextField = "branch_name"
-                    cboBranch.DataBind()
+                cboBranch.DataValueField = "BrCode"
+                cboBranch.DataTextField = "Brname"
+                cboBranch.DataBind()
 
 
             Else
@@ -69,8 +69,8 @@ Public Class projectlist
                 Dim objprj As New Project
                 dtBranch = objprj.loadBranch
                 cboBranch.DataSource = dtBranch
-                cboBranch.DataValueField = "branch_code"
-                cboBranch.DataTextField = "branch_name"
+                cboBranch.DataValueField = "BrCode"
+                cboBranch.DataTextField = "Brname"
                 cboBranch.DataBind()
 
             End If

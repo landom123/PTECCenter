@@ -19,7 +19,7 @@
                   </li>
                 </ol>
                 <p></p>
-                          <div class="input-group sm-3 row">
+                          <div class="card-body input-group sm-3">
 
                                <div class="input-group sm-3 row">
                                     <div class="col-md-auto mb-3">
@@ -28,12 +28,28 @@
                                                 <span class="input-group-text">เลือกสาขา</span>
                                                 <asp:DropDownList ID="cboBranch" class="form-control" runat="server" AutoPostBack="true">
                                                 </asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                               </div>
 
-                               <div class="row">
+                                                <span class="input-group-text">เลือก</span>
+                                                <asp:DropDownList ID="cboPayDate" class="form-control" runat="server" AutoPostBack="true">
+                                                </asp:DropDownList>
+
+                                                <div class="col-3">
+                                                    <asp:TextBox class="form-control" ID="txtCalcDate" runat="server" style="background-color:white"></asp:TextBox>                                    
+                                                </div>
+                                                <div class="col-4">
+                                                     <asp:Button ID="btnCalc" class="btn btn-sm  btn-primary" runat="server" Text=" คำนวน " />         
+                                                     <asp:Button ID="btnExport" class="btn btn-sm  btn-primary" runat="server" Text=" Export to excel " />                           
+                                                </div>
+
+                                                <div class="col-1">                                
+                                                     <asp:Button ID="btnBack" class="btn btn-sm  btn-success" runat="server" Text=" กลับ " />
+                                                </div>                                           
+
+                                            </div>
+                                        </div>                                  
+                                    </div>
+
+     <%--                          <div class="row">
                                     <div class="col-md-auto mb-3">
                                         <div class="input-group sm-3">
                                             <div class="input-group-prepend">
@@ -43,25 +59,21 @@
                                             </div>
                                         </div>
                                     </div>
-                               </div>
+                               </div>--%>
 
-                                <div class="col-3">
+<%--                                <div class="col-3">
                                     <asp:TextBox class="form-control" ID="txtCalcDate" runat="server" style="background-color:white"></asp:TextBox>                                    
                                 </div>
-                                <div class="col-sm-1">
-                                     <asp:Button ID="btnCalc" class="btn btn-sm  btn-primary" runat="server" Text=" คำนวน " />                                    
-                                </div>
-                                <div class="col-sm-1">
+                                <div class="col-2">
+                                     <asp:Button ID="btnCalc" class="btn btn-sm  btn-primary" runat="server" Text=" คำนวน " />         
                                      <asp:Button ID="btnExport" class="btn btn-sm  btn-primary" runat="server" Text=" Export to excel " />                           
                                 </div>
-                                                          
-                          </div>
-                          <div class="card-body">
-                                <div class="card-body col-12 text-right">
-                                    <%--    <asp:Button ID="btnselectall" class="btn btn-sm  btn-success" runat="server" Text="Select All" />&nbsp;  
-                                        <asp:Button ID="btnunselect" class="btn btn-sm  btn-danger" runat="server" Text="Un Select All" /> --%> 
+                                <div class="col-1">                                
                                      <asp:Button ID="btnBack" class="btn btn-sm  btn-success" runat="server" Text=" กลับ " />
                                 </div>
+                                           --%>               
+                          </div>
+                          <div class="card-body">
 
                               <div class="table-responsive">
  
@@ -70,34 +82,34 @@
                                                                 runat="server" GridLines="Both" cellspacing="0" cellpadding="5" border="1" OnPageIndexChanging="OnPageIndexChanging" PageSize="10">
                                                                     <asp:TableHeaderRow TableSection="TableHeader" runat="server">
                                                                         <%--<asp:TableHeaderCell  runat="server">Group</asp:TableHeaderCell>--%>
-                                                                        <asp:TableHeaderCell ColumnSpan="2" style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">สาขา</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell ColumnSpan="1" style='margin:0 auto; text-align:center; background-color:lightcyan;' runat="server">สัญญา</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:cadetblue;'  runat="server">A/C Code</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:moccasin;' runat="server">Purpose</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell ColumnSpan="3" style='margin:0 auto; text-align:center; background-color:greenyellow;' runat="server">Period</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell ColumnSpan="1" style='margin:0 auto; text-align:center; background-color:lightgray;' runat="server">อัตราค่าเช่า</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:lightcyan;' runat="server">ผู้ให้เช่า</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">สั่งจ่ายเช็ค</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:lightcyan;' runat="server">หักภาษี ณ ที่จ่ายในนาม</asp:TableHeaderCell>                                                                        
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">ธนาคาร</asp:TableHeaderCell> 
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:lightcyan;' runat="server">เลขที่บัญชี</asp:TableHeaderCell> 
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:lightgray;' runat="server">อัตราค่าเช่า</asp:TableHeaderCell> 
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:lightcyan;' runat="server">อัตราค่าเช่าร่วมธุรกิจ</asp:TableHeaderCell> 
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">ก่อนหักภาษี ณ ที่จ่าย</asp:TableHeaderCell> 
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:lightcyan;' runat="server">หักภาษี ณ ที่จ่าย 5%</asp:TableHeaderCell> 
-                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:whitesmoke;'  runat="server">ยอดเงินโอน</asp:TableHeaderCell> 
+                                                                        <asp:TableHeaderCell ColumnSpan="2" style='margin:0 auto; text-align:center; background-color:mediumslateblue;' runat="server">สาขา</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell ColumnSpan="1" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">สัญญา</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;'  runat="server">A/C Code</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">Purpose</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell ColumnSpan="3" style='margin:0 auto; text-align:center; background-color:mediumslateblue;' runat="server">Period</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell ColumnSpan="1" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">อัตราค่าเช่า</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">ผู้ให้เช่า</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">สั่งจ่ายเช็ค</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">หักภาษี ณ ที่จ่ายในนาม</asp:TableHeaderCell>                                                                        
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">ธนาคาร</asp:TableHeaderCell> 
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">เลขที่บัญชี</asp:TableHeaderCell> 
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">อัตราค่าเช่า</asp:TableHeaderCell> 
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">อัตราค่าเช่าร่วมธุรกิจ</asp:TableHeaderCell> 
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">ก่อนหักภาษี ณ ที่จ่าย</asp:TableHeaderCell> 
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">หักภาษี ณ ที่จ่าย 5%</asp:TableHeaderCell> 
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine;'  runat="server">ยอดเงินโอน</asp:TableHeaderCell> 
 
                                                                     </asp:TableHeaderRow>
                                                                     <asp:TableHeaderRow TableSection="TableHeader" runat="server">
-                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">สาขา</asp:TableHeaderCell>                                                                        
-                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">ชื่อสาขา</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:lightcyan;' runat="server">ชื่อสัญญา</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:mediumslateblue;' runat="server">สาขา</asp:TableHeaderCell>                                                                        
+                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:mediumslateblue;' runat="server">ชื่อสาขา</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' runat="server">ชื่อสัญญา</asp:TableHeaderCell>
                                                                         <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">A/C Code</asp:TableHeaderCell>--%>
                                                                         <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">Purpose</asp:TableHeaderCell>--%>
-                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:greenyellow;' runat="server">Begin</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:greenyellow;' runat="server">End</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:greenyellow;' runat="server">DueDate</asp:TableHeaderCell>
-                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:lightgray;' HorizontalAlign="Right" runat="server">รายเดือน</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:mediumslateblue;' runat="server">Begin</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:mediumslateblue;' runat="server">End</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:mediumslateblue;' runat="server">DueDate</asp:TableHeaderCell>
+                                                                        <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:mediumaquamarine;' HorizontalAlign="Right" runat="server">รายเดือน</asp:TableHeaderCell>
                                                                         <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">ผู้ให้เช่า</asp:TableHeaderCell>
                                                                         <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">สั่งจ่ายเช็ค</asp:TableHeaderCell>
                                                                         <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">หักภาษีในนาม</asp:TableHeaderCell>
