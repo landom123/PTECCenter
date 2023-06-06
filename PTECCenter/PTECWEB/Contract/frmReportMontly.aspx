@@ -1,5 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" 
-    MasterPageFile="~/site.Master" CodeBehind="frmReportMontly.aspx.vb" Inherits="PTECCENTER.frmReportMontly" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="frmReportMontly.aspx.vb" Inherits="PTECCENTER.frmReportMontly" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
@@ -7,11 +6,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
 
-    <!-- #include virtual ="/include/menu.inc" --> <!-- add side menu -->
+        <!-- #include virtual ="/include/menu.inc" -->
+        <!-- add side menu -->
 
         <!-- begin content-wrapper ส่วนเนื้อหา-->
         <div id="content-wrapper">
-            <div class="container-fluid">    
+            <div class="container-fluid">
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
@@ -108,37 +108,37 @@
                                                                         <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">ก่อนหักภาษี ณ ที่จ่าย</asp:TableHeaderCell>
                                                                         <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">หักภาษี ณ ที่จ่าย 5%</asp:TableHeaderCell>
                                                                         <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">ยอดเงินโอน</asp:TableHeaderCell>--%>
-                                                                        
-                                                                    </asp:TableHeaderRow>
-                                                                    <asp:TableRow style='margin:0 auto; text-align:right;' runat="server">
-                                                                        <%--<asp:TableCell runat="server">Group</asp:TableCell>--%>
-                                                                        <%--<asp:TableCell runat="server" ColumnSpan="2">bla bla</asp:TableCell>--%>
-                                                                       <%--<asp:TableCell runat="server">bla</asp:TableCell>--%>
-                                      
-                                                                    </asp:TableRow>
-                                                            <%--        <asp:TableRow TableSection="TableFooter" runat="server">
+                                </asp:TableHeaderRow>
+                                <asp:TableRow Style='margin: 0 auto; text-align: right;' runat="server">
+                                    <%--<asp:TableCell runat="server">Group</asp:TableCell>--%>
+                                    <%--<asp:TableCell runat="server" ColumnSpan="2">bla bla</asp:TableCell>--%>
+                                    <%--<asp:TableCell runat="server">bla</asp:TableCell>--%>
+                                </asp:TableRow>
+                                <%--        <asp:TableRow TableSection="TableFooter" runat="server">
                                                                         <asp:TableCell runat="server">bla bla</asp:TableCell>
                                                                         <asp:TableCell runat="server">bla bla</asp:TableCell>
                                                                         <asp:TableCell runat="server">bla bla</asp:TableCell>         
                                                                     </asp:TableRow>--%>
-                                                        </asp:Table>
-                                                    </div>
-                                 
-                                               
-                                    </div>
-                          </div>
+                            </asp:Table>
+                        </div>
 
 
-            </div>            <!-- /.container-fluid -->
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
             <!-- Sticky Footer -->
             <footer class="sticky-footer">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                    <span>Copyright © Your Website 2019</span>
+                        <span>Copyright © Your Website 2019</span>
                     </div>
                 </div>
             </footer>
-        </div>        <!-- end content-wrapper -->
+        </div>
+        <!-- end content-wrapper -->
 
 
         <!-- end เนื้อหาเว็บ -->
@@ -146,7 +146,7 @@
 
     </div>
     <!-- /#wrapper -->
-  <!-- datetimepicker ต้องไปทั้งชุด-->
+    <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
 
@@ -155,7 +155,7 @@
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
             scrollInput: false,
-            format:'d/m/Y'
+            format: 'd/m/Y'
         });
     </script>
 

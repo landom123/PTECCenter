@@ -148,7 +148,7 @@
                                         <div class="form-group">
                                             <asp:Label ID="lbCodeGSM" CssClass="form-label" AssociatedControlID="txtCost" runat="server" Text="ค่าใช้จ่ายที่ใช้จริง" />
                                             <asp:Label ID="lbCodeGSMMandatory" CssClass="text-danger" AssociatedControlID="txtCost" runat="server" Text="* (กรณีไม่มีค่าใช้จ่ายใส่ 0)" />
-                                            <asp:TextBox class="form-control" ID="txtCost" runat="server" type="number" min="0" required></asp:TextBox>
+                                            <asp:TextBox class="form-control" ID="txtCost" runat="server" type="number" step="0.01" min="0" required></asp:TextBox>
                                             <div class="invalid-feedback">กรุณาใส่ค่าใช้จ่ายตามบิล</div>
                                         </div>
                                     </div>
@@ -459,7 +459,7 @@
                 console.log("pre");
                 <% If Not Request.QueryString("approvalcode") Is Nothing Then%>
                     console.log("in1");
-                <% If detailtable.Rows(0).Item("list_depcode").ToString <> "ROD" Then%>
+                <% If detailtable.Rows(0).Item("list_depcode").ToString.IndexOf("ROD") < 0 Then%>
                     const price = <%=detailtable.Rows(0).Item("price") %> ;
                     const cost = document.getElementById("<%= txtCost.ClientID%>").value;
                     console.log(price)

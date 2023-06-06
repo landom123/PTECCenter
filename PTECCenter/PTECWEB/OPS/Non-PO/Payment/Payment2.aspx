@@ -187,7 +187,7 @@
 
                     </div>
                     <hr />
-                    <div class="ref d-none">
+                    <div class="ref" runat="server" id="ref">
                         <div class="row mb-3">
                             <div class="col-2 text-right">
                                 <asp:Label ID="lbcodeRef" CssClass="form-label" AssociatedControlID="codeRef" runat="server" Text="codeRef" />
@@ -717,7 +717,7 @@
                                         <% End If %>
                                         <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
                                             <div class="col-auto">
-                                                <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                                <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
                                                     <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
 
                                                 <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
@@ -1150,6 +1150,23 @@ alert('else nonpo')
                 }
 
             });
+
+            const coderef = hasRef()
+            //alert(coderef);
+            if (coderef) {
+                console.log(coderef.indexOf('JTN'))
+                if (coderef.indexOf('JTN') > -1) {
+                    <% If (Not Session("status_payment") = "account") Then%>
+                        $('#exampleModal .modal-footer .btn-primary').hide();
+                        $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
+                        $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
+                        disbtndelete();
+                        $('#<% =FromAddDetail.ClientID%>').hide();
+                    <% End If %>
+
+                }
+            }
+            
         });
         function Confirm() {
 
@@ -1548,6 +1565,7 @@ alert('else nonpo')
             <% End If %>
             <% End If %>
 
+            
 
 
         }
@@ -1887,5 +1905,11 @@ alert('else nonpo')
                 $box.prop("checked", false);
             }
         });
+        function hasRef() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const coderef = urlParams.get('code_ref') ?? $('#<%= codeRef.ClientID%>').val();
+            return coderef;
+        }
+
     </script>
 </asp:Content>

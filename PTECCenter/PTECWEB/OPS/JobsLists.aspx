@@ -164,6 +164,11 @@
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("branch")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="JobOwner">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("jobowner")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Date">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("jobdate")%>'></asp:Label>
@@ -182,30 +187,31 @@
                                 <asp:TemplateField HeaderText="Supplier" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <div class="d-flex flex-column align-items-center" readonly="true">
-                                            <a href="../OPS/jobs_followup.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" class="badge badgestatus_app" title="<%#Eval("companystatus")%>" target="_blank"><%#Eval("companystatus")%></a>
-                                            <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("company")%>'></asp:Label>
+                                            <a href="../OPS/jobs_followup.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" class="badge badgestatus_app" title="ติดตามสถานะงาน" target="_blank"><%#Eval("supplierstatus")%></a>
+                                            <asp:Label ID="lbsuppliername" runat="server" Text='<%#Eval("suppliername")%>'></asp:Label>
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Last Update">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("lastupdate")%>'></asp:Label>
+                                        <asp:Label ID="lblastupdate" runat="server" Text='<%#Eval("lastupdate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Update Detail">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("detailFollow")%>'></asp:Label>
+                                        <asp:Label ID="lbdetailFollow" runat="server" Text='<%#Eval("detailFollow")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cost">
                                     <ItemTemplate>
                                         <div class="d-flex flex-column align-items-center" readonly="true">
-                                            <span runat="server" visible='<%#Eval("lockcost")%>'>
-                                                 <i class="fas fa-lock" visible='<%#Eval("lockcost")%>'></i>
-                                            </span>
-                                            <asp:Label ID="lbldetails" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
+                                            <a href="../OPS/jobs_Close.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" title="ดูค่าใช้จ่าย"  target="_blank">
+                                                <span runat="server" visible='<%#Eval("lockcost")%>'>
+                                                    <i class="<%# If(Eval("lockstatus").ToString = "locked", "fas fa-lock text-muted", "fas fa-check-circle text-info") %>" visible='<%#Eval("lockcost")%>'></i>
+                                                </span>
+                                            </a>
+                                            <asp:Label ID="lbcost" runat="server" Text='<%#String.Format("{0:n}", Eval("cost"))%>'></asp:Label>
                                         </div>
-
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Status">
@@ -286,6 +292,7 @@
 
             const arrs_app = document.querySelectorAll('.badgestatus_app');
 
+            console.log(arrs_app);
             for (let i = 0; i < arrs_app.length; i++) {
                 let st_name = arrs_app[i].textContent;
                 switch (st_name) {

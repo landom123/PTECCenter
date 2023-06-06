@@ -22,6 +22,7 @@ Public Class frmJobs
         Dim objsec As New Section
         Dim objsupplier As New Supplier
         Dim objpolicy As New Policy
+        Dim objAssets As New Assets
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -69,6 +70,7 @@ Public Class frmJobs
             'SetCboBranch(cboBranch)
             'SetCboDepartment(cboDepartment)
             'SetCboSection(cboSection, cboDepartment.SelectedItem.Value)
+            objAssets.SetCboAssets(cboAsset, 0)
 
             SetCboJobType(cboJobType, usercode)
 
@@ -78,9 +80,10 @@ Public Class frmJobs
             'Session("jobtype") = cboJobType.SelectedItem.Value
 
             jobtypeid = cboJobType.SelectedItem.Value
-            objpolicy.setComboPolicyByJobTypeID(cboPolicy, cboJobType.SelectedItem.Value)
+            objpolicy.setComboPolicyByJobTypeID(cboPolicy, 0)
 
             If Not Request.QueryString("jobno") Is Nothing Then
+                'objpolicy.setComboPolicyByJobTypeID(cboPolicy, cboJobType.SelectedItem.Value)
                 'txtDocDate.Text = Now()
                 Session("jobno") = Request.QueryString("jobno")
                 txtJobno.Text = Session("jobno")
@@ -527,6 +530,10 @@ endprocess:
     End Sub
 
     Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
+        FindAsset()
+    End Sub
+
+    Private Sub FindAsset()
         Dim ass As New Assets
         Dim mydataset As DataSet
         Try
@@ -798,22 +805,24 @@ endprocess:
 
     Private Sub cboDepForJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepForJobType.SelectedIndexChanged
 
-        'cboJobType.SelectedIndex = -1
-        'SetCboJobTypeByDepID(cboJobType, cboDepForJobType.SelectedItem.Value)
+        cboJobType.SelectedIndex = -1
+        SetCboJobTypeByDepID(cboJobType, cboDepForJobType.SelectedItem.Value)
 
-        SetCboJobCate(cboJobCate, cboDepForJobType.SelectedValue)
+        'SetCboJobCate(cboJobCate, cboDepForJobType.SelectedValue)
 
     End Sub
     Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
         If Not String.IsNullOrEmpty(cboBranch.SelectedItem.Value) Then
             branchid = cboBranch.SelectedItem.Value
 
+            Dim objAssets As New Assets
             Dim objdep As New Department
             objdep.SetCboDepartment(cboDepartment, branchid)
 
             If cboJobType.SelectedItem.Value = 1 Then
                 FindPositionInPump(branchid)
             End If
+            objAssets.SetCboAssets(cboAsset, branchid)
         End If
 
     End Sub
@@ -833,7 +842,7 @@ endprocess:
         Dim objpolicy As New Policy
 
         jobtypeid = cboJobType.SelectedItem.Value
-        objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobtypeid)
+        'objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobtypeid)
         If jobtypeid = 1 Then
             If Not cboBranch.SelectedItem.Value = "" Then
                 FindPositionInPump(cboBranch.SelectedItem.Value)
@@ -845,51 +854,56 @@ endprocess:
         End If
     End Sub
 
-    Private Sub cboJobCate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobCate.SelectedIndexChanged
-        Try
-            'Dim objpolicy As New Policy
-
-            'jobcateid = cboJobCate.SelectedItem.Value
-            'objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobcateid)
-            'If jobtypeid = 1 Then
-            '    If Not cboBranch.SelectedItem.Value = "" Then
-            '        FindPositionInPump(cboBranch.SelectedItem.Value)
-            '    Else
-            '        Dim scriptKey As String = "alert"
-            '        Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
-            '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            '    End If
-            'End If
-
-            SetCboJobGroup(cboJobGroup, cboJobCate.SelectedValue)
-
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+    Private Sub cboAsset_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboAsset.SelectedIndexChanged
+        txtAssetCode.Text = cboAsset.SelectedItem.Text.ToString.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)(0).Trim()
+        FindAsset()
     End Sub
 
-    Private Sub cboJobGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobGroup.SelectedIndexChanged
-        Try
-            'Dim objpolicy As New Policy
+    'Private Sub cboJobCate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobCate.SelectedIndexChanged
+    '    Try
+    '        'Dim objpolicy As New Policy
 
-            'jobcateid = cboJobCate.SelectedItem.Value
-            'objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobcateid)
-            'If jobtypeid = 1 Then
-            '    If Not cboBranch.SelectedItem.Value = "" Then
-            '        FindPositionInPump(cboBranch.SelectedItem.Value)
-            '    Else
-            '        Dim scriptKey As String = "alert"
-            '        Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
-            '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            '    End If
-            'End If
+    '        'jobcateid = cboJobCate.SelectedItem.Value
+    '        'objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobcateid)
+    '        'If jobtypeid = 1 Then
+    '        '    If Not cboBranch.SelectedItem.Value = "" Then
+    '        '        FindPositionInPump(cboBranch.SelectedItem.Value)
+    '        '    Else
+    '        '        Dim scriptKey As String = "alert"
+    '        '        Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
+    '        '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '        '    End If
+    '        'End If
 
-            SetCboJobDescription(cboJobType, cboJobGroup.SelectedValue)
+    '        SetCboJobGroup(cboJobGroup, cboJobCate.SelectedValue)
 
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
+    '    Catch ex As Exception
+    '        MessageBox.Show(ex.Message)
+    '    End Try
+    'End Sub
+
+    'Private Sub cboJobGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobGroup.SelectedIndexChanged
+    '    Try
+    '        'Dim objpolicy As New Policy
+
+    '        'jobcateid = cboJobCate.SelectedItem.Value
+    '        'objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobcateid)
+    '        'If jobtypeid = 1 Then
+    '        '    If Not cboBranch.SelectedItem.Value = "" Then
+    '        '        FindPositionInPump(cboBranch.SelectedItem.Value)
+    '        '    Else
+    '        '        Dim scriptKey As String = "alert"
+    '        '        Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
+    '        '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '        '    End If
+    '        'End If
+
+    '        SetCboJobDescription(cboJobType, cboJobGroup.SelectedValue)
+
+    '    Catch ex As Exception
+    '        MessageBox.Show(ex.Message)
+    '    End Try
+    'End Sub
 
 
 End Class

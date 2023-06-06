@@ -2,44 +2,25 @@
 Imports System.IO
 Imports System.Security.Principal
 Imports Microsoft.Reporting.WebForms
-Partial Class WebForm5
+Partial Class nac_sale
     Inherits System.Web.UI.Page
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        SetReportParameters(Request.QueryString("approvalcode").ToString,
-                            Request.QueryString("branchid").ToString,
-                            Request.QueryString("groupid").ToString,
-                            Request.QueryString("categoryid").ToString,
-                            Request.QueryString("approvallistid").ToString,
-                            Request.QueryString("statusid").ToString,
-                            Request.QueryString("areaid").ToString,
-                            Request.QueryString("userid").ToString,
-                            Request.QueryString("startdate").ToString,
-                            Request.QueryString("enddate").ToString)
+        SetReportParameters(Request.QueryString("nac_code").ToString)
 
     End Sub
-    Private Sub SetReportParameters(approvalcode As String, branchid As String, groupid As String, categoryid As String, approvallistid As String, statusid As String,
-                                         areaid As String, userid As String, startdate As String, enddate As String)
+    Private Sub SetReportParameters(naccode As String)
         'Set Processing Mode
         ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote
         ' Set report server and report path
         ReportViewer1.ServerReport.ReportServerUrl =
            New Uri("http://ptecdba:8081/ReportServer")
         ReportViewer1.ServerReport.ReportPath =
-           "/OPS/rpt_Approval"
+           "/FA/NAC_SALE"
         Dim paramList As New Generic.List(Of ReportParameter)
         'Dim pInfo As ReportParameterInfoCollection
         'pInfo = ReportViewer1.ServerReport.GetParameters()
         'if you have report parameters - add them here
-        paramList.Add(New ReportParameter("categoryid", categoryid, True))
-        paramList.Add(New ReportParameter("groupid", groupid, True))
-        paramList.Add(New ReportParameter("approvallistid", approvallistid, True))
-        paramList.Add(New ReportParameter("statusid", statusid, True))
-        paramList.Add(New ReportParameter("areaid", areaid, True))
-        paramList.Add(New ReportParameter("userid", userid, True))
-        paramList.Add(New ReportParameter("startdate", startdate, True))
-        paramList.Add(New ReportParameter("enddate", enddate, True))
-        paramList.Add(New ReportParameter("approvalcode", approvalcode, True))
-        paramList.Add(New ReportParameter("branchid", branchid, True))
+        paramList.Add(New ReportParameter("nac_code", naccode, True))
         ReportViewer1.ServerReport.SetParameters(paramList)
         ' Process and render the report
         ReportViewer1.ServerReport.Refresh()
@@ -67,20 +48,6 @@ Partial Class WebForm5
         ReportViewer1.ServerReport.ReportServerCredentials =
             New MyReportServerCredentials()
     End Sub
-
-    <System.Web.Services.WebMethod>
-    Public Shared Function disAcceptByCode(ByVal jobcode As String, ByVal dtlid As String, ByVal message As String, ByVal user As String)
-
-        Try
-            Dim objjobs As New jobs
-
-            objjobs.Followup_Save(jobcode, dtlid, 16, message, user) '16 คือ ตรวจรับไม่สำเร็จ
-        Catch ex As Exception
-            Return "fail"
-        End Try
-        Return "success"
-
-    End Function
 End Class
 '<Serializable()>
 'Public NotInheritable Class MyReportServerCredentials

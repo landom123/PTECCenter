@@ -149,24 +149,6 @@ Partial Public Class frmJobs
     Protected WithEvents cboDepForJobType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cboJobCate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboJobCate As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboJobGroup control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboJobGroup As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''cboJobType control.
     '''</summary>
     '''<remarks>
@@ -183,6 +165,15 @@ Partial Public Class frmJobs
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboPosition As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboAsset control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboAsset As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''txtAssetCode control.

@@ -14,6 +14,25 @@ function alertWarning(massage) {
     )
 }
 
+function checkStatusJob() {
+    Swal.fire({
+        title: 'งานนี้ต้องการลงคะแนนประเมิน',
+        text: "คุณจะลงคะแนนประเมินเลยไหม ?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'ยังก่อน',
+        confirmButtonText: 'ไปกันเลย !'
+
+    }).then((result) => {
+        if (result.isConfirmed) {
+            location.replace(window.location.href +'&g=headingFour')
+        }
+    })
+    
+}
+
 function changeColorBadges() {
     const arrs_app = document?.querySelectorAll('.badgestatus_app');
     //console.log(arrs_app)
@@ -31,6 +50,10 @@ function changeColorBadges() {
             case "ยืนยันแจ้งงาน":
                 arrs_app[i].style.backgroundColor = "LightYellow";
                 break;
+            case "ตรวจรับไม่สำเร็จ":
+                arrs_app[i].style.backgroundColor = "IndianRed";
+                arrs_app[i].style.color = "black";
+                break;
             case "ปิดงาน":
                 arrs_app[i].style.backgroundColor = "Gray";
                 arrs_app[i].style.color = "black";
@@ -47,50 +70,41 @@ function changeColorBadges() {
         }
     }
 }
-
+function scrollToID(elid) {
+    document.querySelector(`#${elid}`).scrollIntoView({
+        behavior: 'smooth'
+    });
+}
 
 document.querySelector('#gtContent1')?.addEventListener('click', function (e) {
     e.preventDefault();
     $('#collapseOne').collapse('show');
-    document.querySelector('#headingOne').scrollIntoView({
-        behavior: 'smooth'
-    });
+    scrollToID('headingOne');
 });
 document.querySelector('#gtContent2')?.addEventListener('click', function (e) {
     e.preventDefault();
     $('#collapseTwo').collapse('show');
-    document.querySelector('#headingTwo').scrollIntoView({
-        behavior: 'smooth'
-    });
-
+    scrollToID('headingTwo');
 });
 document.querySelector('#gtContent3')?.addEventListener('click', function (e) {
     e.preventDefault();
     $('#collapseThree').collapse('show');
-    document.querySelector('#headingThree').scrollIntoView({
-        behavior: 'smooth'
-    });
+    scrollToID('headingThree');
 });
 document.querySelector('#gtContent4')?.addEventListener('click', function (e) {
     e.preventDefault();
     $('#collapseFour').collapse('show');
-    document.querySelector('#headingFour').scrollIntoView({
-        behavior: 'smooth'
-    });
-
+    scrollToID('headingFour');
 });
 document.querySelector('#gtContent5')?.addEventListener('click', function (e) {
     e.preventDefault();
-    document.querySelector('#card_attatch').scrollIntoView({
-        behavior: 'smooth'
-    });
+    scrollToID('card_attatch');
 });
 document.querySelector('#gtContent6')?.addEventListener('click', function (e) {
     e.preventDefault();
-    document.querySelector('#card_comment').scrollIntoView({
-        behavior: 'smooth'
-    });
+    scrollToID('card_comment');
 });
+
 
 $(document).ready(function () {
 
@@ -110,6 +124,12 @@ $(document).ready(function () {
         }, 400);
         return false;
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const gotoContent = urlParams.get('g');
+    if (gotoContent) {
+        scrollToID(gotoContent);
+    }
 });
 
 

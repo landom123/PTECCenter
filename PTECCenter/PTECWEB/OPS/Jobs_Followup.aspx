@@ -6,13 +6,17 @@
     <link href="<%=Page.ResolveUrl("~/css/starRating.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/css/Stepper.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/css/Jobs.css")%>" rel="stylesheet">
+
+    <style>
+        html {
+            background-color: #f0f2f5 !important;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
-
         <!-- #include virtual ="/include/menu.inc" -->
         <!-- add side menu -->
-
         <!-- begin content-wrapper ส่วนเนื้อหา-->
         <div id="content-wrapper">
             <div class="container-fluid">
@@ -37,7 +41,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row justify-content-between">
                     <div class="col-auto mb-3">
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
@@ -48,6 +51,7 @@
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" id="gtContent1" href="#" title="ไปยังรายละเอียด">รายละเอียด</a>
+                                    <a class="dropdown-item" id="gtContent2" href="#" title="ไปยังSuppiler">ข้อมูลสำหรับวิเคราะห์</a>
                                     <a class="dropdown-item" id="gtContent3" href="#" title="ไปยังSuppiler">Suppiler</a>
                                     <a class="dropdown-item" id="gtContent4" href="#" title="ไปยังคะแนนการประเมิน">คะแนนการประเมิน</a>
                                     <a class="dropdown-item" id="gtContent5" href="#" title="ไปยังเอกสารแนบ">เอกสารแนบ</a>
@@ -56,12 +60,9 @@
                             </li>
                         </ul>
                     </div>
-
-
                 </div>
-
                 <div id="accordion">
-                    <div class="card shadow mb-3">
+                    <div class="card shadow mb-3" id="cardone" runat="server">
                         <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
                                 <button class="btn btn-link w-100 text-left collapse__all" id="detailJobs" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" autopostback="False">
@@ -70,7 +71,6 @@
 
                             </h5>
                         </div>
-
                         <div id="collapseOne" class="collapse multi-collapse show" aria-labelledby="headingOne">
                             <div class="card-body">
                                 <div class="row">
@@ -88,7 +88,6 @@
                                             <div class="input-group-append">
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="input-group sm-3">
@@ -107,7 +106,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <div class="input-group sm-3">
@@ -158,9 +156,24 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ระดับความเร่งด่วน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtPolicyName" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">กำหนดการ</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtPolicyDate" runat="server" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3 d-none">
                                         <div class="input-group sm-4">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">จำนวน</span>
@@ -168,7 +181,7 @@
                                             <asp:TextBox class="form-control" ID="txtQuantity" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-4 mb-3 d-none">
                                         <div class="input-group sm-4">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">หน่วย</span>
@@ -186,7 +199,6 @@
                                     </div>
 
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <div class="input-group sm-4">
@@ -212,10 +224,7 @@
                                             <asp:TextBox class="form-control" ID="txtCloseCategory" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-
                                 </div>
-
-
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="input-group sm-3">
@@ -226,10 +235,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="card-body">
                                     <div class="table-responsive">
-
                                         <table class="table table-sm table-bordered " id="dataTable">
                                             <thead class="table-info">
                                                 <tr>
@@ -249,20 +256,17 @@
                                                         <asp:TextBox ID="txtDetailFollow" class="form-control" runat="server" TextMode="MultiLine" Rows="1" required></asp:TextBox>
                                                     </td>
                                                     <td style="vertical-align: middle">
-
                                                         <asp:Label ID="lblCreateBy" class="form-control  text-truncate" runat="server" Text=""></asp:Label>
                                                     </td>
                                                     <td style="vertical-align: middle">
-
                                                         <asp:Label ID="lblCreateDate" class="form-control  text-truncate" runat="server" Text=""></asp:Label>
                                                     </td>
                                                     <td style="vertical-align: middle">
                                                         <div class="d-flex flex-column">
                                                             <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " OnClientClick="validateData()" />
-                                                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" />
+                                                            <%--<asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" />--%>
                                                             <asp:Button ID="btnClose" class="btn btn-sm  btn-danger mt-1" runat="server" Text="ค่าใช้จ่าย" />
                                                         </div>
-
                                                     </td>
                                                 </tr>
                                                 <% For i = 0 To followuptable.Rows.Count - 1 %>
@@ -295,29 +299,59 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card shadow mb-3 d-none">
+                    <div class="card shadow mb-3" id="cardtwo" runat="server">
                         <div class="card-header" id="headingTwo">
                             <h5 class="mb-0">
                                 <button class="btn btn-link w-100 text-left collapse__all" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    ประเภทงานที่ซ่อม / ประกัน 
+                                    ข้อมูลสำหรับวิเคราะห์
                                 </button>
                             </h5>
                         </div>
                         <div id="collapseTwo" class="collapse multi-collapse show" aria-labelledby="headingTwo">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12 mb-3">
-                                        <% If maintable.Rows(0).Item("owner") > 0 Then %>
-                                        <!-- owner = operator -->
-                                        <asp:Button ID="btnEditClose" class="btn btn-sm  btn-secondary" runat="server" Text="Update" />
-                                        <% End if %>
+                                    <div class="col mb-3 text-left text-md-right">
+                                        <a href="#" id="btnDataAnalyCategory" runat="server" title="DataAnalyCategory" data-toggle="modal" data-target="#dataAnalyCategory"><i class="fas fa-pen"></i></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">หมวด</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtCateName" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3 text-left text-md-right">
+                                        <a href="#" id="btnDataAnalyGroupType" runat="server" title="DataAnalyGroupType" data-toggle="modal" data-target="#dataAnalyGroupType"><i class="fas fa-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <%-- <div class="col-md-12 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">กลุ่ม</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="TextBox2" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                    </div>--%>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ประเภท</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtItems" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                    <div class="card shadow mb-3">
+                    <div class="card shadow mb-3" id="cardthree" runat="server">
                         <div class="card-header" id="headingThree">
                             <h5 class="mb-0">
                                 <button class="btn btn-link w-100 text-left collapse__all" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -329,8 +363,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <asp:Button ID="btnSentSupplier" class="btn btn-sm  btn-warning" runat="server" Text="Send" />
+                                        <asp:Button ID="btnSentSupplier" class="btn btn-sm  btn-warning" runat="server" Text="Send" OnClientClick="sendvendor()" />
                                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Print" />
+                                        <asp:Button ID="btnCancelSupplier" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" />
                                     </div>
                                 </div>
 
@@ -350,10 +385,22 @@
 
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">รายละเอียดการปฏิบัติงาน (ผู้รับเหมา)</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtEndComment" runat="server" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                    <div class="card shadow mb-3">
+                    <div class="card shadow mb-3" id="cardfour" runat="server">
                         <div class="card-header" id="headingFour">
                             <h5 class="mb-0">
                                 <button class="btn btn-link w-100 text-left collapse__all" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
@@ -363,13 +410,11 @@
                         </div>
                         <div id="collapseFour" class="collapse multi-collapse show" aria-labelledby="headingFour">
                             <div class="card-body">
-
                                 <!-- Rating -->
                                 <div class="rating__main">
-
+                                <% If Not maintable.Rows(0).Item("supplierid") = 0 Then %>
                                     <!-- rate__Service -->
                                     <div class="rate__Service">
-
                                         <!-- Rating totol -->
                                         <div class="row w-50 m-auto align-items-center">
                                             <div class="col-lg mb-3">
@@ -396,7 +441,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="col-lg  mb-3">
                                                 <div class="row justify-content-center">
                                                     <div class="col-auto">
@@ -468,7 +512,7 @@
                                                                     <i class="rating__star far fa-circle"></i>
                                                                     <i class="rating__star far fa-circle"></i>
                                                                 </div>
-                                                                <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" then %>
+                                                                <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" Then %>
 
                                                                 <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
                                                                 <textarea class="form-control" id="txtOther_<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" rows="1"></textarea>
@@ -488,9 +532,8 @@
                                     </div>
                                     <!-- end rate__Service -->
 
-
                                     <hr />
-
+                                    <% End if %>
                                     <!-- rate__Operator -->
                                     <div class="rate__Operator">
                                         <!-- Rating totol -->
@@ -519,7 +562,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="col-lg  mb-3">
                                                 <div class="row justify-content-center">
                                                     <div class="col-auto">
@@ -564,7 +606,6 @@
                                             </div>
                                         </div>
                                         <!-- end Rating totol -->
-
                                         <!-- Rating table -->
                                         <div class="row w-75 m-auto">
                                             <div class="col-lg mb-3">
@@ -607,21 +648,21 @@
                                             </div>
                                         </div>
                                         <!-- end Rating table -->
-
                                     </div>
                                     <!-- end rate__Operator -->
                                 </div>
                                 <!-- end Rating -->
                                 <div class="row">
                                     <div class="col-12 mb-3 text-center">
-                                        <asp:Button ID="btnSubmitRate" class="btn btn-secondary" runat="server" Text="Send" autopostback="False" OnClientClick="validateRate(); " />
+                                        <asp:Button ID="btnSubmitRate" class="btn btn-success" runat="server" Text="รับงาน" autopostback="False" OnClientClick="validateRate(); " />
+                                        <button runat="server" id="btndisAccept" name="btnEdit" onclick="return disAccept();" class="btn btn-danger">
+                                            ไม่รับงาน
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                     <hr />
                 </div>
                 <div class="row notPrint" id="card_attatch">
@@ -632,19 +673,17 @@
                             </div>
                             <div class="card-body attatchItems">
                                 <%--begin Attatch item--%>
-
                                 <% For i = 0 To AttachTable.Rows.Count - 1 %>
                                 <div class="row">
                                     <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
                                         <div class="col-auto">
-                                            <a href="<%= AttachTable.Rows(i).Item("url").ToString() %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                            <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
                                                 <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
 
                                             <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
                                                 <i class="fas fa-times"></i>
                                             </a>
                                         </div>
-
                                     </div>
                                 </div>
                                 <%-- end Attatch item--%>
@@ -667,11 +706,8 @@
                                 </div>
                                 <div class="card-body comments">
                                     <%--begin item--%>
-
-
                                     <% For i = 0 To CommentTable.Rows.Count - 1 %>
                                     <div class="comment-detail mb-2">
-
                                         <div class="row">
                                             <div class="col-auto font-weight-bolder" style="font-size: 1rem; display: flex; justify-content: flex-start; align-items: center;">
                                                 <%= CommentTable.Rows(i).Item("CreateBy").ToString() %>
@@ -703,7 +739,6 @@
                                     <%-- end detail row--%>
                                     <% Next i %>
                                 </div>
-
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -724,13 +759,9 @@
                         <!-- end card-->
                     </div>
                 </div>
-
-
                 <a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top shadow" role="button"><i class="fas fa-chevron-up"></i></a>
             </div>
             <!-- end content-wrapper -->
-
-
             <!-- end เนื้อหาเว็บ -->
         </div>
         <!-- /#wrapper -->
@@ -781,7 +812,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ประเภทงาน</span>
                                 </div>
-                                <asp:DropDownList ID="cboJobType" class="form-control" runat="server" AutoPostBack="false">
+                                <asp:DropDownList ID="cboJobType" class="form-control" runat="server" AutoPostBack="True">
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -794,6 +825,25 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ระดับความเร่งด่วน</span>
+                                </div>
+                                <asp:DropDownList ID="cboPolicy" class="form-control" runat="server" AutoPostBack="True">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">กำหนดการ</span>
+                                </div>
+                                <asp:TextBox class="form-control" ID="txtPolicyRequestdate" runat="server" placeholder="" autocomplete="off" ></asp:TextBox>
+                            </div>
+                        </div>
+
+
                         <div class="col-md-6 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
@@ -850,7 +900,73 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnUpdate" class="btn btn-primary" runat="server" Text="Update" />
+                    <asp:Button ID="btnUpdate" class="btn btn-primary" runat="server" Text="Update" OnClientClick="postBack_updateJFU();" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg analy" id="dataAnalyCategory" tabindex="-1" role="dialog" aria-labelledby="dataAnalyCategoryModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dataAnalyCategoryModal">ข้อมูลสำหรับวิเคราะห์</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">หมวดงานที่ซ่อม</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboJobCate" runat="server">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="btnUpdateJobCateCode" class="btn btn-primary" runat="server" Text="Update" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg analy" id="dataAnalyGroupType" tabindex="-1" role="dialog" aria-labelledby="dataAnalyGroupTypeModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dataAnalyGroupTypeModal">ข้อมูลสำหรับวิเคราะห์</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <div class="input-group sm-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ประเภทงานที่ซ่อม</span>
+                                </div>
+                                <asp:DropDownList class="form-control cbomulti" ID="cboJobItems" runat="server" multiple>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="email-html"></div>
+                            <input type="hidden" name="jobitems" id="jobitems" runat="server" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="btnUpdateJobitems" class="btn btn-primary" runat="server" Text="Update" />
                 </div>
             </div>
         </div>
@@ -860,7 +976,8 @@
     <script src="<%=Page.ResolveUrl("~/js/starRating.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/Jobs.js")%>"></script>
     <script type="text/javascript">
-
+        var selected = [];
+        let modalShowID = '';
         function alertSuccess() {
             Swal.fire(
                 'สำเร็จ',
@@ -879,12 +996,38 @@
 
 
         $(document).ready(function () {
-            $('.form-control').selectpicker({
+            $('.form-control:not(.cbomulti)').selectpicker({
                 noneSelectedText: '-',
                 liveSearch: true,
                 maxOptions: 1
             });
 
+
+            $('.cbomulti').selectpicker({
+                noneSelectedText: '-',
+                liveSearch: true,
+                selectedTextFormat: 'count > 2',
+                maxOptions: 10
+            });
+
+            $('.cbomulti').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                //console.log(e.target.options[clickedIndex].value);
+                let valnow = e.target.options[clickedIndex].value;
+                if (e.target.options[clickedIndex].selected) {
+                    if (!selected.includes(valnow)) {
+                        selected.push(valnow);
+                        refreshDiv();
+                    }
+                } else {
+                    removeEmail(valnow);
+                    //console.log('un select');
+
+                }
+                //console.log(selected);
+
+            });
+
+            $('.form-control').selectpicker('refresh');
             <% For i = 0 To assessmenttable.Rows.Count - 1 %>
             let ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %> = getStarRating("<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>");
                 <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
@@ -893,10 +1036,29 @@
             executeRatingAvg(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>,<%= assessmenttable.Rows(i).Item("rate") %>);
                 <% End if %>
             <% Next i %>
-            calProgressTotal("_Service");
+
+            <% If Not maintable.Rows(0).Item("supplierid") = 0 Then %>
+                calProgressTotal("_Service");
+            <% End if %>
             calProgressTotal("_Operator");
 
+           
+            if (modalShowID) { modalShow(modalShowID) }
+            const urlParams = new URLSearchParams(window.location.search);
+            const gotoContent = urlParams.get('g');
+            if (!gotoContent) {
+                <% If maintable IsNot Nothing Then %>
+                    <% If maintable.Rows.Count > 0 Then %>
+                        <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน" And statusnow = 4 Then %>
+                                checkStatusJob();
+                        <% End if %>
+                    <% End if %>
+                <% End if %>
+            }
         });
+        function modalShow(id) {
+            $(`#${id}`).modal('show');
+        }
         jQuery('[id$=cboStatus]').on('show.bs.dropdown', function () {
             $('.table-responsive').css("overflow", "inherit");
         });
@@ -946,7 +1108,7 @@
                 if (result.isConfirmed) {
                     let url = result.value[0];
                     let description = result.value[1];
-                    //console.log(url, description);
+                    ////console.log(url, description);
                     sentAddAttach(url, description)
                 }
             })
@@ -1001,7 +1163,7 @@
 
                 },
                 error: function (msg) {
-                    console.log(msg);
+                    //console.log(msg);
 
                     alertWarning('Add URL faila');
 
@@ -1017,8 +1179,8 @@
             <% For i = 0 To assessmenttable.Rows.Count - 1 %>
                 <% If assessmenttable.Rows(i).Item("Type").ToString() = "rate" Then %>
             let ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %> = getStarRating("<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>");
-            console.log(<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>);
-            console.log(`ssss ${getRate(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>)}`);
+            //console.log(<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>);
+            //console.log(`ssss ${getRate(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>)}`);
             if (getRate(ratingStars<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>) == 0) {
                 cnt_null++;
             } else {
@@ -1038,9 +1200,9 @@
             }
             else {
 
-                console.log(params)
+                //console.log(params)
                 params = (params.substr(params.length - 1) === ",") ? params.substr(0, params.length - 1) + "]" : params + "]";
-                console.log(`new ${params}`)
+                //console.log(`new ${params}`)
                 var confirm_value = document.createElement("INPUT");
                 confirm_value.type = "hidden";
                 confirm_value.name = "confirm_value";
@@ -1064,5 +1226,128 @@
 
             }
         }
+        function postBack_updateJFU() {
+            let active = $(".md-stepper-horizontal .active").length;
+            let doing = $(".md-stepper-horizontal .doing").length;
+            //if (active > 0 || doing > 0) {
+            //    alertWarning('ต้องการเปลี่ยนแปลง Suppiler ระหว่างดำเนินการอยู่ ใช่หรือไม่ ?');
+            //    event.preventDefault();
+            //    event.stopPropagation();
+            //    return 0;
+            //}
+        }
+
+
+        function refreshDiv() {
+            $("#<%= jobitems.ClientID%>").val(selected.join(','));
+        }
+
+        function removeEmail(email) {
+            var index = selected.indexOf(email);
+            if (index !== -1) {
+                selected.splice(index, 1);
+            }
+            refreshDiv();
+        }
+        function disbtndelete() {
+            $(".deletedetail").hide();
+        }
+
+        function sendvendor() {
+            alert(3);
+
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobcode = urlParams.get('jobno');
+            const dtlid = urlParams.get('jobdetailid');
+            var user = "<% =Session("usercode").ToString %>";
+            var params = `{"jobcode": ${jobcode},"dtlid": ${dtlid} ,"usercode" : "${user}"}`;
+            alert(params)
+            $.ajax({
+                type: "POST",
+                url: "http://vpnptec.dyndns.org:32001/api/STrack_responseFlex_AfterInsert",
+                await: true,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+
+                    alert('success');
+                    alertSuccessToast('ส่งงานเรียบร้อย');
+                    __doPostBack('sendvendor', '');
+
+                },
+                error: function (msg) {
+                    //console.log(msg);
+                    alert('error');
+                    alertWarning('Add URL faila');
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                }
+            });
+
+        }
+        function disAccept() {
+
+            /*alert(GridView);*/
+
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobcode = urlParams.get('jobno');
+            const dtlid = urlParams.get('jobdetailid');
+             var usercode = "<%= Session("usercode")%>";
+
+             Swal.fire({
+                 input: 'textarea',
+                 inputLabel: 'ไม่รับงานเนื่องจาก',
+                 inputPlaceholder: 'ใส่ข้อความ . . .',
+                 inputAttributes: {
+                     'aria-label': 'ใส่ข้อความ.'
+                 },
+                 preConfirm: () => {
+                     if (!document.getElementById('swal2-input').value) {
+                         // Handle return value 
+                         Swal.showValidationMessage('First input missing')
+                     }
+                 },
+                 showCancelButton: true
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     alert('in');
+                     //var params = "{'approvalcode': '" + approvalcode + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
+
+                     var params = `{"jobcode" : "${jobcode}","dtlid" : "${dtlid}","message" : "${result.value}","user" : "${usercode}"}`;
+                     console.log(params);
+                     $.ajax({
+                         type: "POST",
+                         url: "../OPS/approval/WebForm5.aspx/disAcceptByCode",
+                         async: true,
+                         data: params,
+                         contentType: "application/json; charset=utf-8",
+                         dataType: "json",
+                         success: function (msg) {
+                             console.log(msg.d)
+                             if (msg.d) {
+                                 swal.fire({
+                                     title: "success!",
+                                     text: "",
+                                     icon: "success"
+                                 }).then(function () {
+                                     window.location.href = location.href;
+                                 });
+                             } else {
+                                 alertWarning('fail else')
+                             }
+                         },
+                         error: function () {
+                             alertWarning('fail e')
+                         }
+                     });
+                 }
+             })
+
+             return false;
+         }
     </script>
 </asp:Content>

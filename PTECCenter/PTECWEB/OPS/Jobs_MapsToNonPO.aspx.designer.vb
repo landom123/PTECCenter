@@ -11,50 +11,59 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class monthly_payment
+Partial Public Class Jobs_MapsToNonPO
 
     '''<summary>
-    '''txtCalcDate control.
+    '''cboSupplier control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCalcDate As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cboSupplier As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''btnCalc control.
+    '''lbHeadDetail control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnCalc As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lbHeadDetail As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''btnExport control.
+    '''btnSearch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnExport As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnSearch As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Button1 control.
+    '''btnJTN control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button1 As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents btnJTN As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''gvPayment control.
+    '''gvRemind control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents gvPayment As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents gvRemind As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''hfCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hfCount As Global.System.Web.UI.WebControls.HiddenField
 End Class
