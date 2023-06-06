@@ -1,4 +1,4 @@
-﻿
+﻿Imports System.Globalization
 
 Imports System.IO
 
@@ -8,6 +8,12 @@ Public Class frmReportMontly
     Public menutable, paymenttable As DataTable
 
     Public usercode, username
+
+    Dim dtBranch As New DataTable
+    Dim dtFilterPay As New DataTable
+
+    Dim dtinfo As DateTimeFormatInfo
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'Dim objTitleName As New TitleName
 
@@ -16,11 +22,39 @@ Public Class frmReportMontly
 
         'Dim objsupplier As New Supplier
 
-        If Session("menulist") Is Nothing Then
-            menutable = LoadMenu(usercode)
-            Session("menulist") = menutable
+        If IsPostBack() Then
+            If Session("menulist") Is Nothing Then
+                menutable = LoadMenu(usercode)
+                Session("menulist") = menutable
+            Else
+                menutable = Session("menulist")
+            End If
+
+
+
         Else
-            menutable = Session("menulist")
+
+            If Session("menulist") Is Nothing Then
+                menutable = LoadMenu(usercode)
+                Session("menulist") = menutable
+            Else
+                menutable = Session("menulist")
+            End If
+
+            Dim objprj As New Project
+            dtBranch = objprj.loadBranch
+            cboBranch.DataSource = dtBranch
+            cboBranch.DataValueField = "branch_code"
+            cboBranch.DataTextField = "branch_name"
+            cboBranch.DataBind()
+
+            Dim objFilter As New Project
+            dtFilterPay = objFilter.loadFilterPay
+            cboPayDate.DataSource = dtFilterPay
+            cboPayDate.DataValueField = "ID"
+            cboPayDate.DataTextField = "FilterPay"
+            cboPayDate.DataBind()
+
         End If
 
     End Sub
@@ -44,7 +78,7 @@ Public Class frmReportMontly
         calcdate = DateTime.Parse(txtCalcDate.Text).Year & DateTime.Parse(txtCalcDate.Text).Month.ToString("00")
         Session("calcdate") = calcdate
         Try
-            mytable = payment.MonthlyPayment2(calcdate)
+            mytable = payment.MonthlyPayment2(calcdate, cboBranch.SelectedValue, cboPayDate.SelectedValue, CDate(txtCalcDate.Text).ToString("yyyyMMdd", dtinfo))
             'gvPayment.DataSource = mytable
             paymenttable = mytable
             Session("paymenttable") = mytable
