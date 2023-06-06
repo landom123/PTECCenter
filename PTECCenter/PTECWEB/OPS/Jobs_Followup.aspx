@@ -374,7 +374,7 @@
                                         <div class="md-stepper-horizontal orange">
                                             <% For i = 0 To stepsuppilertable.Rows.Count - 1 %>
                                             <div class="md-step <% If stepsuppilertable.Rows(i).Item("actived").ToString = "1" Then %>active<% else if stepsuppilertable.Rows(i).Item("actived").ToString = "2" %>doing<% End if %>">
-                                                <div class="md-step-circle"><span><%= stepsuppilertable.Rows(i).Item("stepid").ToString() %></span></div>
+                                                <div class="md-step-circle"><span><%= stepsuppilertable.Rows(i).Item("rownumber").ToString() %></span></div>
                                                 <div class="md-step-title"><%= stepsuppilertable.Rows(i).Item("steptitle").ToString() %></div>
                                                 <div class="md-step-optional"><%= stepsuppilertable.Rows(i).Item("stepdate").ToString() %></div>
                                                 <div class="md-step-bar-left"></div>
@@ -416,11 +416,11 @@
                                     <!-- rate__Service -->
                                     <div class="rate__Service">
                                         <!-- Rating totol -->
-                                        <div class="row w-50 m-auto align-items-center">
+                                        <div class="row w-75 m-auto align-items-center justify-content-center">
                                             <div class="col-lg mb-3">
                                                 <div class="row">
                                                     <div class="col mb-3 text-center">
-                                                        <h4>การประเมินโดยรวม (Suppiler)</h4>
+                                                        <h4>การประเมินโดยรวม (ทีมช่าง)</h4>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -432,51 +432,66 @@
                                                     <div class="col mb-3">
                                                         <div id="p__all_Service" class="rating mx-auto">
                                                             <span class="rating__result"></span>
-                                                            <i class="rating__star far fa-circle"></i>
-                                                            <i class="rating__star far fa-circle"></i>
-                                                            <i class="rating__star far fa-circle"></i>
-                                                            <i class="rating__star far fa-circle"></i>
-                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg  mb-3">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>5</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>ดีมาก</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="5star_Service" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>4</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>ดี</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="4star_Service" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>3</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>ปานกลาง</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="3star_Service" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>2</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>พอใช้</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="2star_Service" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>1</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>ควรปรับปรุง</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="1star_Service" value="0" max="10"></progress>
@@ -489,7 +504,7 @@
                                         <!-- Rating table -->
                                         <div class="row w-75 m-auto">
                                             <div class="col-lg mb-3">
-                                                <table class="table  table-hover" id="myTableTopic_Service">
+                                                <table class="table " id="myTableTopic_Service">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center" scope="col">หัวข้อประเมิน</th>
@@ -506,11 +521,11 @@
                                                                 <% If assessmenttable.Rows(i).Item("Type").ToString() = "rate" Then %>
                                                                 <div id="<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" class="rating_Service rating mx-auto">
                                                                     <span class="rating__result"></span>
-                                                                    <i class="rating__star far fa-circle"></i>
-                                                                    <i class="rating__star far fa-circle"></i>
-                                                                    <i class="rating__star far fa-circle"></i>
-                                                                    <i class="rating__star far fa-circle"></i>
-                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
                                                                 </div>
                                                                 <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" Then %>
 
@@ -537,7 +552,7 @@
                                     <!-- rate__Operator -->
                                     <div class="rate__Operator">
                                         <!-- Rating totol -->
-                                        <div class="row w-50 m-auto align-items-center">
+                                        <div class="row w-75 m-auto align-items-center justify-content-center">
                                             <div class="col-lg mb-3">
                                                 <div class="row">
                                                     <div class="col mb-3 text-center">
@@ -553,51 +568,66 @@
                                                     <div class="col mb-3">
                                                         <div id="p__all_Operator" class="rating mx-auto">
                                                             <span class="rating__result"></span>
-                                                            <i class="rating__star far fa-circle"></i>
-                                                            <i class="rating__star far fa-circle"></i>
-                                                            <i class="rating__star far fa-circle"></i>
-                                                            <i class="rating__star far fa-circle"></i>
-                                                            <i class="rating__star far fa-circle"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
+                                                            <i class="rating__star fas fa-star bg-gray"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg  mb-3">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>5</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>ดีมาก</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="5star_Operator" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>4</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>ดี</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="4star_Operator" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>3</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>ปานกลาง</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="3star_Operator" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>2</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>พอใช้</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="2star_Operator" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-auto">
+                                                <div class="row font-weight-bold">
+                                                    <div class="col-1">
                                                         <span>1</span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <span>ควรปรับปรุง</span>
                                                     </div>
                                                     <div class="col-auto">
                                                         <progress id="1star_Operator" value="0" max="10"></progress>
@@ -609,7 +639,7 @@
                                         <!-- Rating table -->
                                         <div class="row w-75 m-auto">
                                             <div class="col-lg mb-3">
-                                                <table class="table  table-hover" id="myTableTopic_Operator">
+                                                <table class="table " id="myTableTopic_Operator">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center" scope="col">หัวข้อประเมิน</th>
@@ -626,11 +656,11 @@
                                                                 <% If assessmenttable.Rows(i).Item("Type").ToString() = "rate" Then %>
                                                                 <div id="<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" class="rating_Operator rating mx-auto">
                                                                     <span class="rating__result"></span>
-                                                                    <i class="rating__star far fa-circle"></i>
-                                                                    <i class="rating__star far fa-circle"></i>
-                                                                    <i class="rating__star far fa-circle"></i>
-                                                                    <i class="rating__star far fa-circle"></i>
-                                                                    <i class="rating__star far fa-circle"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
+                                                                    <i class="rating__star fas fa-star bg-gray"></i>
                                                                 </div>
                                                                 <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" then %>
                                                                 <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
@@ -1049,7 +1079,7 @@
             if (!gotoContent) {
                 <% If maintable IsNot Nothing Then %>
                     <% If maintable.Rows.Count > 0 Then %>
-                        <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน" And statusnow = 4 Then %>
+                        <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And (statusnow = 7) Then %>
                                 checkStatusJob();
                         <% End if %>
                     <% End if %>

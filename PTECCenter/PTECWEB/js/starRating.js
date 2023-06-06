@@ -12,7 +12,7 @@
 }
 
 function getRate(stars) {
-    const starClassUnactive = "rating__star far fa-circle";
+    const starClassUnactive = "rating__star fas fa-star bg-gray";
     //console.log("#########################" )
     //console.log(typeof stars)
     console.log(stars)
@@ -32,13 +32,13 @@ function getRate(stars) {
 
 function executeRating(stars) {
     const starClassActive = [
-        "rating__star fas fa-angry"
-        , "rating__star fas fa-frown"
-        , "rating__star fas fa-meh"
-        , "rating__star fas fa-smile"
-        , "rating__star fas fa-smile-beam"
+        "rating__star fas fa-star"
+        , "rating__star fas fa-star"
+        , "rating__star fas fa-star"
+        , "rating__star fas fa-star"
+        , "rating__star fas fa-star"
     ];
-    const starClassUnactive = "rating__star far fa-circle";
+    const starClassUnactive = "rating__star fas fa-star bg-gray";
     const starsLength = stars.length;
     let i, r;
     let totalRateid;
@@ -68,13 +68,13 @@ function executeRating(stars) {
 
 function executeRatingAvg(stars, avg = 0) {
     const starClassActive = [
-        "rating__star fas fa-angry"
-        , "rating__star fas fa-frown"
-        , "rating__star fas fa-meh"
-        , "rating__star fas fa-smile"
-        , "rating__star fas fa-smile-beam"
+        "rating__star fas fa-star"
+        , "rating__star fas fa-star"
+        , "rating__star fas fa-star"
+        , "rating__star fas fa-star"
+        , "rating__star fas fa-star"
     ];
-    const starClassUnactive = "rating__star far fa-circle";
+    const starClassUnactive = "rating__star fas fa-star bg-gray";
     const starsLength = stars.length;
     for (i = 0; i < starsLength; i++) (i < avg) ? stars[i].className = starClassActive[i] : stars[i].className = starClassUnactive
     //disableOnClickRating(stars);
@@ -87,7 +87,7 @@ function disableOnClickRating(stars) {
 }
 
 function calProgressTotal(className) {
-    const starClassUnactive = "rating__star far fa-circle";
+    const starClassUnactive = "rating__star fas fa-star bg-gray";
 
     const elrate = [...document.getElementsByClassName("rating"+className)];
     //elrate.shift();
