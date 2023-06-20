@@ -8,6 +8,7 @@ Public Class JobsFollowup
     Public statusnow As Integer
     Public menutable As DataTable
     Public maintable As DataTable
+    Public suppilertable As DataTable
     Public stepsuppilertable As DataTable
     Public assessmenttable As DataTable
     Public ratetable As DataTable
@@ -49,6 +50,7 @@ Public Class JobsFollowup
         If Not IsPostBack Then
             CommentTable = createtablecomment()
             AttachTable = createtableAttach()
+            suppilertable = createtablesuppiler()
             stepsuppilertable = createtablestepsuppiler()
             assessmenttable = createtableassessment()
             Clear()
@@ -56,6 +58,7 @@ Public Class JobsFollowup
             objjob.SetCboCloseType(cboCloseType)
             objjob.SetCboCloseCategory(cboCloseCategory)
             objsupplier.SetCboSupplier(cboSupplier)
+
             'objsupplier.SetCboSupplierByComid(cboVendor, "1") '1 PURE
             objjob.SetCboJobCenterList(cboJobCenter)
             SetCboJobType(cboJobType, usercode)
@@ -77,6 +80,7 @@ Public Class JobsFollowup
 
             Session("maintable") = maintable
             Session("followuptable") = followuptable
+            Session("suppilertable") = suppilertable
             Session("stepsuppilertable") = stepsuppilertable
             Session("assessmenttable") = assessmenttable
             Session("comment_jobdetail") = CommentTable
@@ -85,11 +89,19 @@ Public Class JobsFollowup
         Else
             followuptable = Session("followuptable")
             maintable = Session("maintable")
+            suppilertable = Session("suppilertable")
             stepsuppilertable = Session("stepsuppilertable")
             assessmenttable = Session("assessmenttable")
             CommentTable = Session("comment_jobdetail")
             AttachTable = Session("attatch_jobdetail")
 
+
+            showsuppilerdata(suppilertable)
+
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "flashData" Then
+                flashData()
+            End If
         End If
 
         setBtn()
@@ -105,9 +117,37 @@ Public Class JobsFollowup
                     'Detail
                     btnSave.Visible = True
                     'btnConfirm.Visible = False
+                    'Rating
+                    btnSubmitRate.Visible = False
+                    btndisAccept.Visible = False
+
                     If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
+
+
+                        'Supplier
+                        btnSentSupplier.Visible = False
+                        btnPrint.Visible = False
+                        btnBackStep.Visible = False
+                        btnNextStep.Visible = False
+                        btnCancelSupplier.Visible = False
+                        If Not maintable.Rows(0).Item("supplierid") = 0 Then
+                            Dim rows() As DataRow = stepsuppilertable.Select("stepdate is not null")
+                            If rows.Count > 0 Then
+                                If statusnow = 7 Then
+                                    btnCancelSupplier.Enabled = False
+                                    btnBackStep.Enabled = False
+                                    btnNextStep.Enabled = False
+                                Else
+                                    btnCancelSupplier.Visible = True
+                                    btnBackStep.Visible = True
+                                    btnNextStep.Visible = True
+                                End If
+                            End If
+                        End If
+
+
 
                         cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
 
@@ -117,62 +157,75 @@ Public Class JobsFollowup
                         Dim javaScript As String = "disbtndelete();"
                         ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
 
+
                     Else
-
-
                         btnSave.Enabled = True
                         btnEditDetail.Visible = True
 
+
+                        'Supplier
+                        btnSentSupplier.Visible = True
+                        btnPrint.Visible = True
+                        btnBackStep.Visible = True
+                        btnNextStep.Visible = True
+                        btnCancelSupplier.Visible = True
+                        If maintable.Rows(0).Item("supplierid") = 0 Then
+                            btnSentSupplier.Visible = False '
+                            btnPrint.Visible = False
+                            btnBackStep.Visible = False
+                            btnNextStep.Visible = False
+                            btnCancelSupplier.Visible = False
+                        Else
+                            btnSentSupplier.Visible = True '
+                            btnPrint.Visible = True
+                            btnBackStep.Visible = False
+                            btnNextStep.Visible = False
+                            btnCancelSupplier.Visible = False
+                            Dim rows() As DataRow = stepsuppilertable.Select("stepdate is not null")
+                            If rows.Count > 0 Then
+                                btnSentSupplier.Visible = False '
+                                If statusnow = 7 Then
+                                    btnCancelSupplier.Enabled = False
+                                    btnBackStep.Enabled = False
+                                    btnNextStep.Enabled = False
+                                Else
+                                    btnCancelSupplier.Visible = True
+                                    btnBackStep.Visible = True
+                                    btnNextStep.Visible = True
+                                End If
+                            End If
+
+                        End If
+
+
+
                         cardfour.Attributes.Add("style", "display:none;") 'คะแนนการประเมิน
 
-
-
                         btnAddAttatch.Visible = True
+
+                        If String.Equals(username, maintable.Rows(0).Item("jobowner")) Then
+                            'If maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน" Then
+
+                            If statusnow = 4 Then
+                                cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
+                                cardfour.Attributes.Remove("style")
+                                btnSubmitRate.Visible = True
+                                btndisAccept.Visible = True
+                            End If
+                            'End If
+                        End If
+
 
                     End If
 
                     'Follow UP
                     fromUpdateFollowup.Visible = True
 
-                    'Supplier
-                    btnSentSupplier.Visible = True
-                    btnPrint.Visible = True
-                    btnCancelSupplier.Visible = True
-                    If maintable.Rows(0).Item("supplierid") = 0 Then
-                        btnSentSupplier.Enabled = False
-                        btnPrint.Enabled = False
-                        btnCancelSupplier.Enabled = False
-                    Else
-                        btnSentSupplier.Enabled = True
-                        btnPrint.Enabled = True
-                        btnCancelSupplier.Enabled = False
-                        Dim rows() As DataRow = stepsuppilertable.Select("stepdate is not null")
-                        If rows.Count > 0 Then
-                            btnSentSupplier.Enabled = False
-                            btnCancelSupplier.Enabled = True
-                        End If
-
-                    End If
-
-
                     'Analy
                     btnDataAnalyCategory.Visible = True
                     btnDataAnalyGroupType.Visible = True
 
-                    'Rating
-                    btnSubmitRate.Visible = False
-                    btndisAccept.Visible = False
-                    If String.Equals(username, maintable.Rows(0).Item("jobowner")) Then
-                        'If maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน" Then
 
-                        If statusnow = 7 Then
-                            cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
-                            cardfour.Attributes.Remove("style")
-                            btnSubmitRate.Visible = True
-                            btndisAccept.Visible = True
-                        End If
-                        'End If
-                    End If
 
                 ElseIf String.Equals(username, maintable.Rows(0).Item("jobowner")) Then 'กรณีเป็น เจ้าของงาน
                     'Detail
@@ -197,7 +250,6 @@ Public Class JobsFollowup
                         cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
 
                     Else
-
                         'btnConfirm.Enabled = True
 
                         'btnSubmitRate.Visible = True
@@ -206,30 +258,33 @@ Public Class JobsFollowup
                         btnAddAttatch.Visible = True
 
                         cardfour.Attributes.Add("style", "display:none;") 'คะแนนการประเมิน
-                    End If
-                    If statusnow = 7 Then
 
-                        cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
-                        cardfour.Attributes.Remove("style")
-                        btnSubmitRate.Visible = True
-                        btndisAccept.Visible = True
+                        If statusnow = 4 Or maintable.Rows(0).Item("supplierid") = 0 Then
+
+                            cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
+                            cardfour.Attributes.Remove("style")
+                            btnSubmitRate.Visible = True
+                            btndisAccept.Visible = True
+                        End If
                     End If
 
                     'Follow UP
                     fromUpdateFollowup.Visible = False
 
 
-                    'Analy
-                    btnDataAnalyCategory.Visible = False
-                    btnDataAnalyGroupType.Visible = False
+                        'Analy
+                        btnDataAnalyCategory.Visible = False
+                        btnDataAnalyGroupType.Visible = False
 
-                    'Supplier
-                    btnSentSupplier.Visible = False
-                    btnPrint.Visible = False
-                    btnCancelSupplier.Visible = False
-                Else
-                    'Detail
-                    btnSave.Visible = False
+                        'Supplier
+                        btnSentSupplier.Visible = False
+                        btnPrint.Visible = False
+                        btnBackStep.Visible = False
+                        btnNextStep.Visible = False
+                        btnCancelSupplier.Visible = False
+                    Else
+                        'Detail
+                        btnSave.Visible = False
                     'btnConfirm.Visible = False
                     btnEditDetail.Visible = False
                     'btnConfirm.Enabled = False
@@ -240,6 +295,8 @@ Public Class JobsFollowup
                     'Supplier
                     btnSentSupplier.Visible = False
                     btnPrint.Visible = False
+                    btnBackStep.Visible = False
+                    btnNextStep.Visible = False
                     btnCancelSupplier.Visible = False
 
 
@@ -249,6 +306,13 @@ Public Class JobsFollowup
 
 
                     'Rating
+
+                    If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then
+                        cardfour.Attributes.Add("style", "display:none;") 'คะแนนการประเมิน
+                    Else
+                        cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
+                        cardfour.Attributes.Remove("style")
+                    End If
                     btnSubmitRate.Visible = False
                     btndisAccept.Visible = False
 
@@ -279,6 +343,18 @@ Public Class JobsFollowup
         dt.Columns.Add("createby", GetType(String))
         dt.Columns.Add("createdate", GetType(DateTime))
         dt.Columns.Add("username", GetType(String))
+
+        Return dt
+    End Function
+
+    Private Function createtablesuppiler() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("statusnow", GetType(Integer))
+        dt.Columns.Add("End_Comments", GetType(String))
+        dt.Columns.Add("BeginDate", GetType(String))
+        dt.Columns.Add("EndDate", GetType(String))
+
 
         Return dt
     End Function
@@ -347,18 +423,19 @@ Public Class JobsFollowup
             assessmenttable = mydataset.Tables(3)
             AttachTable = mydataset.Tables(4)
             CommentTable = mydataset.Tables(5)
+            suppilertable = mydataset.Tables(6)
+            showsuppilerdata(suppilertable)
 
-            If mydataset.Tables(6).Rows.Count > 0 Then
-                txtEndComment.Text = mydataset.Tables(6).Rows(0).Item("End_Comments")
-                statusnow = mydataset.Tables(6).Rows(0).Item("statusnow")
-            End If
+
 
             Session("maintable") = maintable
             Session("followuptable") = followuptable
+            Session("suppilertable") = suppilertable
             Session("stepsuppilertable") = stepsuppilertable
             Session("assessmenttable") = assessmenttable
             Session("comment_jobdetail") = CommentTable
             Session("attatch_jobdetail") = AttachTable
+
 
 
         Catch ex As Exception
@@ -372,64 +449,79 @@ Public Class JobsFollowup
     End Sub
     Private Sub showjobdata(mytable As DataTable)
 
-        Dim objjob As New jobs
+        If mytable.Rows.Count > 0 Then
+            Dim objjob As New jobs
         Dim objpolicy As New Policy
 
-        With mytable.Rows(0)
-            txtDocDate.Text = .Item("jobdate")
-            txtOwner.Text = .Item("jobowner")
-            txtBranch.Text = .Item("branch")
-            txtDepartment.Text = .Item("department")
-            txtSection.Text = .Item("section")
-            txtJobType.Text = .Item("jobtype")
-            cboJobType.SelectedIndex = cboJobType.Items.IndexOf(cboJobType.Items.FindByValue(.Item("jobtypeid")))
-            txtAssetCode.Text = .Item("assetcode")
-            txtAsset.Text = .Item("assetcode")
-            txtAssetName.Text = .Item("assetname")
-            txtQuantity.Text = .Item("quantity")
-            txtUnit.Text = .Item("unit")
-            txtCost.Text = .Item("cost")
-            txtcosts.Text = .Item("cost")
-            cboJobCenter.SelectedIndex = cboJobCenter.Items.IndexOf(cboJobCenter.Items.FindByValue(.Item("jobcenterid")))
-            cboSupplier.SelectedIndex = cboSupplier.Items.IndexOf(cboSupplier.Items.FindByValue(.Item("supplierid")))
-            txtSupplier.Text = .Item("supplier")
-            txtDetail.Text = .Item("details")
+            With mytable.Rows(0)
+                txtDocDate.Text = .Item("jobdate")
+                txtOwner.Text = .Item("jobowner")
+                txtBranch.Text = .Item("branch")
+                txtDepartment.Text = .Item("department")
+                txtSection.Text = .Item("section")
+                txtJobType.Text = .Item("jobtype")
+                cboJobType.SelectedIndex = cboJobType.Items.IndexOf(cboJobType.Items.FindByValue(.Item("jobtypeid")))
+                txtAssetCode.Text = .Item("assetcode")
+                txtAsset.Text = .Item("assetcode")
+                txtAssetName.Text = .Item("assetname")
+                txtQuantity.Text = .Item("quantity")
+                txtUnit.Text = .Item("unit")
+                txtCost.Text = .Item("cost")
+                txtcosts.Text = .Item("cost")
+                cboJobCenter.SelectedIndex = cboJobCenter.Items.IndexOf(cboJobCenter.Items.FindByValue(.Item("jobcenterid")))
+                cboSupplier.SelectedIndex = cboSupplier.Items.IndexOf(cboSupplier.Items.FindByValue(.Item("supplierid")))
+                txtSupplier.Text = .Item("supplier")
+                txtDetail.Text = .Item("details")
 
-            'policy modal
-            objpolicy.setComboPolicyByJobTypeID(cboPolicy, .Item("jobtypeid"))
-            cboPolicy.SelectedIndex = cboPolicy.Items.IndexOf(cboPolicy.Items.FindByValue(.Item("policyid")))
-            txtPolicyRequestdate.Text = .Item("requestdate")
+                'policy modal
+                objpolicy.setComboPolicyByJobTypeID(cboPolicy, .Item("jobtypeid"))
+                cboPolicy.SelectedIndex = cboPolicy.Items.IndexOf(cboPolicy.Items.FindByValue(.Item("policyid")))
+                txtPolicyRequestdate.Text = .Item("requestdate")
 
-            'policy ที่โชว์ในรายละเอียดงาน
-            txtPolicyName.Text = .Item("policy")
-            txtPolicyDate.Text = .Item("requestdate")
+                'policy ที่โชว์ในรายละเอียดงาน
+                txtPolicyName.Text = .Item("policy")
+                txtPolicyDate.Text = .Item("requestdate")
 
-            txtCloseType.Text = .Item("JobCloseType_name")
-            txtCloseCategory.Text = .Item("CategoryName")
-
-
-            cboCloseType.SelectedIndex = cboCloseType.Items.IndexOf(cboCloseType.Items.FindByValue(.Item("jobclosetypeid")))
-            cboCloseCategory.SelectedIndex = cboCloseCategory.Items.IndexOf(cboCloseCategory.Items.FindByValue(.Item("jobclosecategoryid")))
-
-            lbjobscode.Text = .Item("jobno")
-            badgeStatus.InnerText = .Item("followup_status")
+                txtCloseType.Text = .Item("JobCloseType_name")
+                txtCloseCategory.Text = .Item("CategoryName")
 
 
-            objjob.SetJobCateList(cboJobCate, .Item("depid_Jobtype"))
+                cboCloseType.SelectedIndex = cboCloseType.Items.IndexOf(cboCloseType.Items.FindByValue(.Item("jobclosetypeid")))
+                cboCloseCategory.SelectedIndex = cboCloseCategory.Items.IndexOf(cboCloseCategory.Items.FindByValue(.Item("jobclosecategoryid")))
 
-            cboJobCate.SelectedIndex = cboJobCate.Items.IndexOf(cboJobCate.Items.FindByValue(.Item("catecode")))
-            txtCateName.Text = .Item("catename")
-
-            objjob.SetJobItemList(cboJobItems, cboJobCate.SelectedItem.Value.ToString, "")
+                lbjobscode.Text = .Item("jobno")
+                badgeStatus.InnerText = .Item("followup_status")
 
 
-            cboJobItems.SelectedIndex = -1
+                objjob.SetJobCateList(cboJobCate, .Item("depid_Jobtype"))
 
-            txtItems.Text = .Item("itemsname")
-        End With
+                cboJobCate.SelectedIndex = cboJobCate.Items.IndexOf(cboJobCate.Items.FindByValue(.Item("catecode")))
+                txtCateName.Text = .Item("catename")
+
+                objjob.SetJobItemList(cboJobItems, cboJobCate.SelectedItem.Value.ToString, "")
+
+
+                cboJobItems.SelectedIndex = -1
+
+                txtItems.Text = .Item("itemsname")
+            End With
+        End If
     End Sub
 
-
+    Private Sub showsuppilerdata(mytable As DataTable)
+        If mytable.Rows.Count > 0 Then
+            With mytable.Rows(0)
+                txtstkCode.InnerText = .Item("stk_code")
+                txtCntSupplier.InnerText = "( " + .Item("cnt_supplier") + " คน )"
+                txtSuppilerCode.InnerText = .Item("vendorcode")
+                txtSuppilerName.InnerText = .Item("vendorname")
+                txtEndComment.Text = .Item("End_Comments")
+                statusnow = .Item("statusnow")
+                txtSupplierBeginDate.Text = .Item("BeginDate")
+                txtSupplierEndDate.Text = .Item("EndDate")
+            End With
+        End If
+    End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If ValidateUpdate() Then
 
@@ -610,8 +702,9 @@ endprocess:
                     rateid = objjob.SaveRate(topic_id, value, type, jobdetailid, usercode)
                 End If
             Next
-
+            objjob.Jobs_Supplier_FinishStep(jobno, jobdetailid, usercode)
             objjob.Followup_Save(jobno, jobdetailid, 10, "ลงคะแนนประเมินเสร็จสิ้น", usercode)
+            ClientScript.RegisterStartupScript(Me.GetType(), "Finish", "finishStep();", True)
             flashData()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -668,10 +761,10 @@ endprocess:
         FindJob(jobno, jobdetailid)
         setBtn()
     End Sub
-
-    Private Sub btnSentSupplier_Click(sender As Object, e As EventArgs) Handles btnSentSupplier.Click
-        Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
-    End Sub
+    'Private Sub btnSentSupplier_Click(sender As Object, e As EventArgs) Handles btnSentSupplier.ServerClick
+    '    'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+    '    flashData()
+    'End Sub
 
     Private Sub btnUpdateJobCateCode_Click(sender As Object, e As EventArgs) Handles btnUpdateJobCateCode.Click
         Dim objjob As New jobs
@@ -760,12 +853,85 @@ endprocess:
         Dim objjob As New jobs
 
         Try
-            objjob.Jobs_Cancel_Supplier(jobno, jobdetailid, usercode)
+            objjob.Jobs_Supplier_Cancel(jobno, jobdetailid, usercode)
             flashData()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('SaveCateCode fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+    End Sub
+
+    Private Sub btnBackStep_Click(sender As Object, e As EventArgs) Handles btnBackStep.Click
+        Dim objjob As New jobs
+
+        Try
+            objjob.Jobs_Supplier_BackStep(jobno, jobdetailid, usercode)
+            flashData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('BackStep fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+endprocess:
+    End Sub
+
+    Private Sub btnNextStep_Click(sender As Object, e As EventArgs) Handles btnNextStep.Click
+        If ValidateSuppilerStatus() Then
+            Dim objjob As New jobs
+
+            Try
+                objjob.Jobs_Supplier_NextStep(jobno, jobdetailid, usercode)
+                flashData()
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('NextStep fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
+            'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
+        End If
+endprocess:
+    End Sub
+
+    Private Function ValidateSuppilerStatus() As Boolean
+        Dim result As Boolean = True
+        'Dim msg As String = ""
+
+        If statusnow = 3 Then '3	กำลังดำเนินการ
+            result = False
+            GoTo endprocess
+        End If
+
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "modalShow"
+            Dim javaScript As String = "modalShowID = 'suppilerDetail';"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End If
+
+        Return result
+    End Function
+
+    Private Sub btnSuppilerSubmit_Click(sender As Object, e As EventArgs) Handles btnSuppilerSubmit.Click
+        Dim objjob As New jobs
+
+        Try
+            objjob.Jobs_Supplier_addDetails(jobno, jobdetailid, txtbegindate.Text, txtenddate.Text, txtSuppilerDetail.Text, usercode)
+            objjob.Followup_Save(jobno, jobdetailid, 15, "มีการกรอบรายละเอียดการปฏิบัติงานเข้ามา", usercode)
+            flashData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('BackStep fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try

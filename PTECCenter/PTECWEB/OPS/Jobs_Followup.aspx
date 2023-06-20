@@ -1,6 +1,9 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Jobs_Followup.aspx.vb" Inherits="PTECCENTER.JobsFollowup" %>
+﻿<%@ Page Title="Followup" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="Jobs_Followup.aspx.vb" Inherits="PTECCENTER.JobsFollowup" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <!-- datetimepicker-->
+    <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
 
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/css/starRating.css")%>" rel="stylesheet">
@@ -11,9 +14,14 @@
         html {
             background-color: #f0f2f5 !important;
         }
+        .divEditDetail {
+        font-size:1.5rem;
+        }
+        
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    
     <div id="wrapper">
         <!-- #include virtual ="/include/menu.inc" -->
         <!-- add side menu -->
@@ -74,8 +82,8 @@
                         <div id="collapseOne" class="collapse multi-collapse show" aria-labelledby="headingOne">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col mb-3 text-left text-md-right">
-                                        <a href="#" id="btnEditDetail" runat="server" title="EditDetail" data-toggle="modal" data-target="#EditDetail"><i class="fas fa-pen"></i></a>
+                                    <div class="col mb-3 text-left text-md-right divEditDetail" id="divEditDetail">
+                                        <a href="#" id="btnEditDetail" runat="server" title="EditDetail" data-toggle="modal" data-target="#EditDetail"><i class="fas fa-edit"></i></a>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -310,8 +318,8 @@
                         <div id="collapseTwo" class="collapse multi-collapse show" aria-labelledby="headingTwo">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col mb-3 text-left text-md-right">
-                                        <a href="#" id="btnDataAnalyCategory" runat="server" title="DataAnalyCategory" data-toggle="modal" data-target="#dataAnalyCategory"><i class="fas fa-pen"></i></a>
+                                    <div class="col mb-3 text-left text-md-right divEditDetail">
+                                        <a href="#" id="btnDataAnalyCategory" runat="server" title="DataAnalyCategory" data-toggle="modal" data-target="#dataAnalyCategory"><i class="fas fa-edit"></i></a>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -363,12 +371,28 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <asp:Button ID="btnSentSupplier" class="btn btn-sm  btn-warning" runat="server" Text="Send" OnClientClick="sendvendor()" />
+
+                                        <input type="button" value="Send" onclick="sendvendor()" id="btnSentSupplier" runat="server" class="btn btn-sm  btn-warning" />
                                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Print" />
+                                        <asp:Button ID="btnBackStep" class="btn btn-sm  btn-secondary" runat="server" Text="<" />
+                                        <asp:Button ID="btnNextStep" class="btn btn-sm  btn-secondary" runat="server" Text=">" />
                                         <asp:Button ID="btnCancelSupplier" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" />
+
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col text-left text-md-right">
+                                        <h3 id="txtstkCode" runat="server"></h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3 text-left text-md-right">
+                                        <span id="txtSuppilerCode" runat="server"></span>
+                                        <span id="txtSuppilerName" runat="server"></span>
+                                        <span id="txtCntSupplier" runat="server"></span>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col overflow-auto">
                                         <div class="md-stepper-horizontal orange">
@@ -383,6 +407,24 @@
                                             <% Next i %>
                                         </div>
 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">วันที่เริ่มต้นการปฏิบัติงาน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtSupplierBeginDate" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">วันที่สิ้นสุดการปฏิบัติงาน</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtSupplierEndDate" runat="server" ReadOnly="True"></asp:TextBox>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -412,7 +454,7 @@
                             <div class="card-body">
                                 <!-- Rating -->
                                 <div class="rating__main">
-                                <% If Not maintable.Rows(0).Item("supplierid") = 0 Then %>
+                                    <% If Not maintable.Rows(0).Item("supplierid") = 0 Then %>
                                     <!-- rate__Service -->
                                     <div class="rate__Service">
                                         <!-- Rating totol -->
@@ -507,8 +549,15 @@
                                                 <table class="table " id="myTableTopic_Service">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center" scope="col">หัวข้อประเมิน</th>
-                                                            <th class="text-center" scope="col">ระดับความพึงพอใจ</th>
+                                                            <th rowspan="2" class="text-center align-middle">หัวข้อประเมิน</th>
+                                                            <th colspan="5" class="text-center">ระดับความพึงพอใจ</th>
+                                                        </tr>
+                                                        <tr class="d-flex justify-content-center align-items-center border border-1" style="gap: 0.4em; border-top: 0px">
+                                                            <th class="border-top-0">1</th>
+                                                            <th class="border-top-0">2</th>
+                                                            <th class="border-top-0">3</th>
+                                                            <th class="border-top-0">4</th>
+                                                            <th class="border-top-0">5</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -642,8 +691,15 @@
                                                 <table class="table " id="myTableTopic_Operator">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center" scope="col">หัวข้อประเมิน</th>
-                                                            <th class="text-center" scope="col">ระดับความพึงพอใจ</th>
+                                                            <th rowspan="2" class="text-center align-middle">หัวข้อประเมิน</th>
+                                                            <th colspan="5" class="text-center">ระดับความพึงพอใจ</th>
+                                                        </tr>
+                                                        <tr class="d-flex justify-content-center align-items-center border border-1" style="gap: 0.4em; border-top: 0px">
+                                                            <th class="border-top-0">1</th>
+                                                            <th class="border-top-0">2</th>
+                                                            <th class="border-top-0">3</th>
+                                                            <th class="border-top-0">4</th>
+                                                            <th class="border-top-0">5</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -662,7 +718,7 @@
                                                                     <i class="rating__star fas fa-star bg-gray"></i>
                                                                     <i class="rating__star fas fa-star bg-gray"></i>
                                                                 </div>
-                                                                <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" then %>
+                                                                <% Else if assessmenttable.Rows(i).Item("Type").ToString() = "text" Then %>
                                                                 <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
                                                                 <textarea class="form-control" id="txtOther_<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" rows="1"></textarea>
                                                                 <% Else %>
@@ -685,6 +741,7 @@
                                 <div class="row">
                                     <div class="col-12 mb-3 text-center">
                                         <asp:Button ID="btnSubmitRate" class="btn btn-success" runat="server" Text="รับงาน" autopostback="False" OnClientClick="validateRate(); " />
+
                                         <button runat="server" id="btndisAccept" name="btnEdit" onclick="return disAccept();" class="btn btn-danger">
                                             ไม่รับงาน
                                         </button>
@@ -869,7 +926,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">กำหนดการ</span>
                                 </div>
-                                <asp:TextBox class="form-control" ID="txtPolicyRequestdate" runat="server" placeholder="" autocomplete="off" ></asp:TextBox>
+                                <asp:TextBox class="form-control" ID="txtPolicyRequestdate" runat="server" placeholder="" autocomplete="off"></asp:TextBox>
                             </div>
                         </div>
 
@@ -1001,13 +1058,70 @@
             </div>
         </div>
     </div>
+    <div class="modal fade bd-example-modal-lg" id="suppilerDetail" tabindex="-1" role="dialog" aria-labelledby="suppilerDetailModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="suppilerDetailModal">รายละเอียดการปฏิบัติงาน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <asp:Label ID="lbbegindate" CssClass="form-label" AssociatedControlID="txtbegindate" runat="server" Text="เริ่มต้นการปฏิบัติงาน" />
+                                <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtbegindate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <asp:Label ID="lbenddate" CssClass="form-label" AssociatedControlID="txtenddate" runat="server" Text="สิ้นสุดการปฏิบัติงาน" />
+                                <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtenddate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="lbDetail" CssClass="form-label" AssociatedControlID="txtDetail" runat="server" Text="รายละเอียดการปฏิบัติงาน" />
+                        <asp:TextBox class="form-control" ID="txtSuppilerDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" autocomplete="off"></asp:TextBox>
+                        <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="btnSuppilerSubmit" class="btn btn-primary" runat="server" Text="Save" />
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/starRating.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/Jobs.js")%>"></script>
+
+    <!-- datetimepicker ต้องไปทั้งชุด-->
+    <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
     <script type="text/javascript">
         var selected = [];
         let modalShowID = '';
+
+        jQuery('[id$=txtbegindate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: true,
+            scrollInput: false,
+            format: 'd/m/Y H:i'
+        });
+        jQuery('[id$=txtenddate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: true,
+            scrollInput: false,
+            format: 'd/m/Y H:i'
+        });
+
         function alertSuccess() {
             Swal.fire(
                 'สำเร็จ',
@@ -1024,8 +1138,9 @@
             )
         }
 
-
+       
         $(document).ready(function () {
+            
             $('.form-control:not(.cbomulti)').selectpicker({
                 noneSelectedText: '-',
                 liveSearch: true,
@@ -1068,19 +1183,19 @@
             <% Next i %>
 
             <% If Not maintable.Rows(0).Item("supplierid") = 0 Then %>
-                calProgressTotal("_Service");
+            calProgressTotal("_Service");
             <% End if %>
             calProgressTotal("_Operator");
 
-           
+
             if (modalShowID) { modalShow(modalShowID) }
             const urlParams = new URLSearchParams(window.location.search);
             const gotoContent = urlParams.get('g');
             if (!gotoContent) {
                 <% If maintable IsNot Nothing Then %>
                     <% If maintable.Rows.Count > 0 Then %>
-                        <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And (statusnow = 7) Then %>
-                                checkStatusJob();
+                        <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And (statusnow = 4) And maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                checkStatusJob();
                         <% End if %>
                     <% End if %>
                 <% End if %>
@@ -1283,8 +1398,93 @@
             $(".deletedetail").hide();
         }
 
+
+        <%--function postData(ajaxurl, params) {
+            return $.ajax({
+                type: "POST",
+                url: ajaxurl,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            });
+        };
+
+        async function sendvendorss() {
+
+            event.stopPropagation();
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const jobcode = urlParams.get('jobno');
+                const dtlid = urlParams.get('jobdetailid');
+                var user = "<% =Session("usercode").ToString %>";
+                var params = `{"jobcode": ${jobcode},"dtlid": ${dtlid} ,"usercode" : "${user}"}`;
+                await postData('http://vpnptec.dyndns.org:32001/api/STrack_responseFlex_AfterInsert', params).then((res) => {
+                    if (res.length > 0) {
+                        alert('success');
+                        alertSuccessToast('ส่งงานเรียบร้อย');
+                        __doPostBack('sendvendor', '');
+                    } 
+                });
+                console.log(res);
+                return true;
+            } catch (err) {
+                alertWarning(err);
+                event.preventDefault();
+                event.stopPropagation();
+
+                return false;
+            }
+
+        }--%>
+
         function sendvendor() {
-            alert(3);
+            Swal.fire({
+                title: 'คุุณต้องการจะงานไปยัง Supplier ใช่หรือไม่ ?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const jobcode = urlParams.get('jobno');
+                    const dtlid = urlParams.get('jobdetailid');
+                    var user = "<% =Session("usercode").ToString %>";
+                    var params = `{"jobcode": ${jobcode},"dtlid": ${dtlid} ,"usercode" : "${user}"}`;
+                    $.ajax({
+                        type: "POST",
+                        url: "http://vpnptec.dyndns.org:32001/api/STrack_responseFlex_AfterInsert",
+                        async: true,
+                        data: params,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            //alert(msg);
+                            swal.fire({
+                                title: "ส่งงานเรียบร้อย!",
+                                text: "",
+                                icon: "success",
+                                allowOutsideClick: false
+                            }).then(function () {
+                                __doPostBack('flashData', '');
+                            });
+                        },
+                        error: function () {
+                            alertWarning('fail ee')
+                        }
+                    });
+                }
+            })
+
+            return false;
+        }
+
+        function finishStep() {
+            //alert(3);
 
 
             const urlParams = new URLSearchParams(window.location.search);
@@ -1292,10 +1492,10 @@
             const dtlid = urlParams.get('jobdetailid');
             var user = "<% =Session("usercode").ToString %>";
             var params = `{"jobcode": ${jobcode},"dtlid": ${dtlid} ,"usercode" : "${user}"}`;
-            alert(params)
+            //alert(params)
             $.ajax({
                 type: "POST",
-                url: "http://vpnptec.dyndns.org:32001/api/STrack_responseFlex_AfterInsert",
+                url: "http://vpnptec.dyndns.org:32001/api/STrack_SuccessJob",
                 await: true,
                 data: params,
                 contentType: "application/json; charset=utf-8",
@@ -1304,7 +1504,7 @@
 
                     alert('success');
                     alertSuccessToast('ส่งงานเรียบร้อย');
-                    __doPostBack('sendvendor', '');
+                    __doPostBack('flashData', '');
 
                 },
                 error: function (msg) {
@@ -1318,6 +1518,7 @@
             });
 
         }
+
         function disAccept() {
 
             /*alert(GridView);*/
@@ -1326,58 +1527,59 @@
             const urlParams = new URLSearchParams(window.location.search);
             const jobcode = urlParams.get('jobno');
             const dtlid = urlParams.get('jobdetailid');
-             var usercode = "<%= Session("usercode")%>";
+            var usercode = "<%= Session("usercode")%>";
 
-             Swal.fire({
-                 input: 'textarea',
-                 inputLabel: 'ไม่รับงานเนื่องจาก',
-                 inputPlaceholder: 'ใส่ข้อความ . . .',
-                 inputAttributes: {
-                     'aria-label': 'ใส่ข้อความ.'
-                 },
-                 preConfirm: () => {
-                     if (!document.getElementById('swal2-input').value) {
-                         // Handle return value 
-                         Swal.showValidationMessage('First input missing')
-                     }
-                 },
-                 showCancelButton: true
-             }).then((result) => {
-                 if (result.isConfirmed) {
-                     alert('in');
-                     //var params = "{'approvalcode': '" + approvalcode + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
+            Swal.fire({
+                input: 'textarea',
+                inputLabel: 'ไม่รับงานเนื่องจาก',
+                inputPlaceholder: 'ใส่ข้อความ . . .',
+                inputAttributes: {
+                    'aria-label': 'ใส่ข้อความ.'
+                },
+                preConfirm: () => {
+                    if (!document.getElementById('swal2-input').value) {
+                        // Handle return value 
+                        Swal.showValidationMessage('First input missing')
+                    }
+                },
+                showCancelButton: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //alert('in');
+                    //var params = "{'approvalcode': '" + approvalcode + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
 
-                     var params = `{"jobcode" : "${jobcode}","dtlid" : "${dtlid}","message" : "${result.value}","user" : "${usercode}"}`;
-                     console.log(params);
-                     $.ajax({
-                         type: "POST",
-                         url: "../OPS/approval/WebForm5.aspx/disAcceptByCode",
-                         async: true,
-                         data: params,
-                         contentType: "application/json; charset=utf-8",
-                         dataType: "json",
-                         success: function (msg) {
-                             console.log(msg.d)
-                             if (msg.d) {
-                                 swal.fire({
-                                     title: "success!",
-                                     text: "",
-                                     icon: "success"
-                                 }).then(function () {
-                                     window.location.href = location.href;
-                                 });
-                             } else {
-                                 alertWarning('fail else')
-                             }
-                         },
-                         error: function () {
-                             alertWarning('fail e')
-                         }
-                     });
-                 }
-             })
+                    var params = `{"jobcode" : "${jobcode}","dtlid" : "${dtlid}","message" : "${result.value}","user" : "${usercode}"}`;
+                    console.log(params);
+                    $.ajax({
+                        type: "POST",
+                        url: "../OPS/approval/WebForm5.aspx/disAcceptByCode",
+                        async: true,
+                        data: params,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            console.log(msg.d)
+                            if (msg.d) {
+                                swal.fire({
+                                    title: "success!",
+                                    text: "",
+                                    icon: "success"
+                                }).then(function () {
+                                    window.location.href = location.href;
+                                });
+                            } else {
+                                alertWarning('fail else')
+                            }
+                        },
+                        error: function () {
+                            alertWarning('fail e')
+                        }
+                    });
+                }
+            })
 
-             return false;
-         }
+            return false;
+        }
+
     </script>
 </asp:Content>
