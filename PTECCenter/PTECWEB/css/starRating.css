@@ -28,7 +28,7 @@ tbody .rating {
     pointer-events: none;
 }
 .rating__star {
-    font-size: 2.8em;
+    font-size: 1.8em;
     cursor: pointer;
     color: #f0f2f5;
     transition: filter linear .3s;
@@ -66,4 +66,12 @@ tbody .rating__star {
 
 .fa-smile-beam {
     color: #0075ff;
+}
+
+.fa-star {
+    color: #ffc200;
+}
+
+.bg-gray {
+    color: #efefef !important;
 }

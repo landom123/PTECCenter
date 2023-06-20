@@ -647,6 +647,21 @@ End Class
 
 Public Class Project
 
+
+    Public Sub SetCboloadBranch(obj As Object)
+        obj.DataSource = Me.loadBranch()
+        obj.DataValueField = "branch_code"
+        obj.DataTextField = "branch_name"
+        obj.DataBind()
+
+    End Sub
+    Public Sub SetCboloadFilterPay(obj As Object)
+        obj.DataSource = Me.loadFilterPay()
+        obj.DataValueField = "ID"
+        obj.DataTextField = "FilterPay"
+        obj.DataBind()
+
+    End Sub
     Public Function Find(projectno As String) As DataSet
         Dim result As DataSet
 

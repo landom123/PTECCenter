@@ -1505,9 +1505,9 @@ endprocess:
                 row("cost") = cost
                 row("vat_per") = vat
                 row("tax_per") = tax
-                row("vat") = cost * vat / 100
-                row("tax") = cost * tax / 100
-                row("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
+                row("vat") = Decimal.Round(CDec((cost * vat / 100)), 2)
+                row("tax") = Decimal.Round(CDec((cost * tax / 100)), 2)
+                row("cost_total") = (cost + row("vat")) - (cost * row("tax"))
                 row("detail") = detail
                 row("vendorname") = vendorname
                 row("vendorcode") = vendorcode
@@ -1536,9 +1536,9 @@ endprocess:
                     .Item("cost") = cost
                     .Item("vat_per") = vat
                     .Item("tax_per") = tax
-                    .Item("vat") = cost * vat / 100
-                    .Item("tax") = cost * tax / 100
-                    .Item("cost_total") = (cost + cost * vat / 100) - cost * tax / 100
+                    .Item("vat") = Decimal.Round(CDec((cost * vat / 100)), 2)
+                    .Item("tax") = Decimal.Round(CDec((cost * tax / 100)), 2)
+                    .Item("cost_total") = (cost + .Item("vat")) - cost * .Item("tax")
                     .Item("detail") = detail
                     .Item("vendorname") = vendorname
                     .Item("vendorcode") = vendorcode
@@ -2024,7 +2024,7 @@ endprocess:
                 row("tax_per") = tax
                 row("vat") = FormatNumber(cost * vat / 100, 2)
                 row("tax") = FormatNumber(cost * tax / 100, 2)
-                row("cost_total") = FormatNumber((cost + cost * vat / 100) - cost * tax / 100, 2)
+                row("cost_total") = FormatNumber((cost + FormatNumber(cost * vat / 100, 2)) - FormatNumber(cost * tax / 100, 2), 2)
                 row("detail") = detail
                 row("vendorname") = vendorname
                 row("vendorcode") = vendorcode
@@ -2056,7 +2056,7 @@ endprocess:
                     .Item("tax_per") = tax
                     .Item("vat") = FormatNumber(cost * vat / 100, 2)
                     .Item("tax") = FormatNumber(cost * tax / 100, 2)
-                    .Item("cost_total") = FormatNumber((cost + cost * vat / 100) - cost * tax / 100, 2)
+                    .Item("cost_total") = FormatNumber((cost + FormatNumber(cost * vat / 100, 2)) - FormatNumber(cost * tax / 100, 2), 2)
                     .Item("detail") = detail
                     .Item("vendorname") = vendorname
                     .Item("vendorcode") = vendorcode

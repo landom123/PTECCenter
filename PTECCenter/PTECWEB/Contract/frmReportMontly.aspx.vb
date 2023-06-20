@@ -20,42 +20,25 @@ Public Class frmReportMontly
         usercode = Session("usercode")
         username = Session("username")
 
+
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
+        Else
+            menutable = Session("menulist")
+        End If
+
         'Dim objsupplier As New Supplier
 
-        If IsPostBack() Then
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
+        If Not IsPostBack() Then
 
-
-
-        Else
-
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
-
-            Dim objprj As New Project
-            dtBranch = objprj.loadBranch
-            cboBranch.DataSource = dtBranch
-            cboBranch.DataValueField = "Brcode"
-            cboBranch.DataTextField = "Brname"
-            cboBranch.DataBind()
-
-
-
-            Dim objFilter As New Project
-            dtFilterPay = objFilter.loadFilterPay
-            cboPayDate.DataSource = dtFilterPay
-            cboPayDate.DataValueField = "ID"
-            cboPayDate.DataTextField = "FilterPay"
-            cboPayDate.DataBind()
+            Dim objprj As New Projec
+            objprj.SetCboloadBranch(cboBranch)
+            objprj.SetCboloadFilterPay(cboPayDate)
 
         End If
 

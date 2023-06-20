@@ -169,6 +169,14 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
+        $(document).ready(function () {
+            $('.form-control').selectpicker({
+                noneSelectedText: '-',
+                liveSearch: true,
+                maxOptions: 1
+            });
+
+        });
     </script>
 
 
