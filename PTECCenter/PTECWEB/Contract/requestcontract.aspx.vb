@@ -1,9 +1,5 @@
 ﻿Imports System.Globalization
-Imports System.Reflection.Emit
-Imports System.Runtime.CompilerServices
-Imports System.Windows
 Imports System.Windows.Controls
-Imports DocumentFormat.OpenXml.EMMA
 Imports DocumentFormat.OpenXml.Spreadsheet
 
 Public Class requestcontract
@@ -112,6 +108,7 @@ Public Class requestcontract
         gvData.DataSource = clienttable
         gvData.DataBind()
     End Sub
+
     Private Sub Clear()
         Dim objReq As New clsRequestContract
         txtName.Text = ""
@@ -157,6 +154,7 @@ Public Class requestcontract
 
         Return result
     End Function
+
     Private Function Save() As String
 
         Dim dtinfo As New DateTimeFormatInfo
@@ -198,10 +196,10 @@ Public Class requestcontract
             txtdocuno.Text = objReq.GetDocRun(1, 1)
             DocuNo = txtdocuno.Text
             result = objReq.AddRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
-                                , District, Province, PostCode, CreateDate, CreateBy, RegistryTo)
+                                , District, Province, PostCode, CreateDate, CreateBy, RegistryTo, contractno)
         ElseIf txtDocAction.Text = "EDIT" Then
             result = objReq.UpdateRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
-                                , District, Province, PostCode, CreateDate, CreateBy, CInt(txtDocIDAction.Text), RegistryTo)
+                                , District, Province, PostCode, CreateDate, CreateBy, CInt(txtDocIDAction.Text), RegistryTo, contractno)
         End If
 
         txtDocIDAction.Text = 0
@@ -296,7 +294,7 @@ Public Class requestcontract
             Dim result As String = Nothing
             Dim objReq As New clsRequestContract
 
-            Dim DocuNo, Branch, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, Address, SubDistrict, District, Province, PostCode, CreateBy, RegistryTo As String
+            Dim DocuNo, Branch, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, Address, SubDistrict, District, Province, PostCode, CreateBy, RegistryTo, ContractNo As String
             Dim ContractID, StatusID As Integer
             Dim dContractBegindate, dContractEndDate, CreateDate As Date
 
@@ -390,15 +388,16 @@ Public Class requestcontract
             'CreateBy = usercode
             DocuNo = txtdocuno.Text
             RegistryTo = txtRentalReg.Text
+            ContractNo = txtContractNo.Text
 
             If txtDocAction.Text = "NEW" Then
                 txtdocuno.Text = objReq.GetDocRun(1, 1)
                 DocuNo = txtdocuno.Text
                 result = objReq.AddRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
-                                , District, Province, PostCode, CreateDate, CreateBy, RegistryTo)
+                                , District, Province, PostCode, CreateDate, CreateBy, RegistryTo, ContractNo)
             ElseIf txtDocAction.Text = "EDIT" Then
                 result = objReq.UpdateRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
-                                , District, Province, PostCode, CreateDate, CreateBy, CInt(txtDocIDAction.Text), RegistryTo)
+                                , District, Province, PostCode, CreateDate, CreateBy, CInt(txtDocIDAction.Text), RegistryTo, ContractNo)
             End If
 
 
@@ -413,6 +412,7 @@ Public Class requestcontract
         End Try
 
     End Function
+
     Private Function AddContractPersonal() As Boolean
         Try
             Dim err, scriptKey, javaScript As String
@@ -511,6 +511,7 @@ Public Class requestcontract
             Return False
         End Try
     End Function
+
     Private Function loadContractPer() As Boolean
         Try
             Dim dt As New DataTable
@@ -554,7 +555,7 @@ Public Class requestcontract
             err = ex.Message
             scriptKey = "UniqueKeyForThisScript"
             javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             Return False
         End Try
     End Function
@@ -1078,10 +1079,21 @@ Public Class requestcontract
         End Try
     End Function
 
+    Private Sub SetCboAssetType(obj As Object)
+        Dim asset As New ContractAssets
+
+        obj.DataSource = asset.AssetsType_Cbo
+        obj.DataValueField = "assetstypeid"
+        obj.DataTextField = "assetstype"
+        obj.DataBind()
+    End Sub
+
 #End Region
+
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Clear()
     End Sub
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objTitleName As New TitleName
         usercode = Session("usercode")
@@ -1128,6 +1140,8 @@ Public Class requestcontract
             SetCboContractLand(cboContractLand)
             SetCboContractBuild(cboContractBu)
             SetCboContractDayRent(cboContractDayRent)
+
+            SetCboAssetType(cboAssetType)
 
 
             If loadBank() = False Then
@@ -1480,7 +1494,6 @@ Public Class requestcontract
 
     End Sub
 
-
     Private Sub btnAddBranch_Click(sender As Object, e As EventArgs) Handles btnAddBranch.Click
         Try
             Dim err, scriptKey, javaScript As String
@@ -1627,6 +1640,10 @@ Public Class requestcontract
                 Exit Sub
             End If
 
+            If loadContractFix() = False Then
+                Exit Sub
+            End If
+
 
 
         Catch ex As Exception
@@ -1646,6 +1663,9 @@ Public Class requestcontract
                 Exit Sub
             End If
 
+            If loadContractPayment() = False Then
+                Exit Sub
+            End If
 
 
         Catch ex As Exception
@@ -1656,4 +1676,19 @@ Public Class requestcontract
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+
+    Protected Sub Menu1_MenuItemClick(ByVal sender As Object,
+              ByVal e As MenuEventArgs) Handles Menu1.MenuItemClick
+        MultiView1.ActiveViewIndex = Int32.Parse(e.Item.Value)
+        Dim i As Integer
+        'Make the selected menu item reflect the correct imageurl
+        For i = 0 To Menu1.Items.Count - 1
+            If i = e.Item.Value Then
+                Menu1.Items(i).ImageUrl = "selectedtab.gif"
+            Else
+                Menu1.Items(i).ImageUrl = "unselectedtab.gif"
+            End If
+        Next
+    End Sub
+
 End Class

@@ -344,7 +344,7 @@ Partial Public Class JobsFollowup
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnSentSupplier As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnSentSupplier As Global.System.Web.UI.HtmlControls.HtmlInputButton
 
     '''<summary>
     '''btnPrint control.
@@ -356,6 +356,24 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnPrint As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnBackStep control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnBackStep As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnNextStep control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnNextStep As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnCancelSupplier control.
     '''</summary>
     '''<remarks>
@@ -363,6 +381,60 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnCancelSupplier As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''txtstkCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtstkCode As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''txtSuppilerCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSuppilerCode As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''txtSuppilerName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSuppilerName As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''txtCntSupplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCntSupplier As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''txtSupplierBeginDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSupplierBeginDate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtSupplierEndDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSupplierEndDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''txtEndComment control.
@@ -624,4 +696,67 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnUpdateJobitems As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lbbegindate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbbegindate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtbegindate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtbegindate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbenddate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbenddate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtenddate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtenddate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbDetail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbDetail As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSuppilerDetail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSuppilerDetail As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnSuppilerSubmit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSuppilerSubmit As Global.System.Web.UI.WebControls.Button
 End Class

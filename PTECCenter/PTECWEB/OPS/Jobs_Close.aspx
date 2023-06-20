@@ -381,12 +381,13 @@
                                                     </tr>
                                                     <tr class="border border-dark border-right-0 border-left-0 text-info">
                                                         <th scope="col" style="width: 250px !important;">รายการ</th>
-                                                        <th scope="col" style="width: 150px !important;">ราคากลาง/หน่วย</th>
-                                                        <th scope="col" style="width: 150px !important;">จำนวน</th>
-                                                        <th scope="col" style="width: 150px !important;">ราคา/หน่วย</th>
+                                                        <th scope="col" style="width: 100px !important;">ราคากลาง/หน่วย</th>
+                                                        <th scope="col" style="width: 100px !important;">จำนวน</th>
+                                                        <th scope="col" style="width: 100px !important;">ราคา/หน่วย</th>
+                                                        <th scope="col" style="width: 100px !important;">รวมก่อน VAT</th>
                                                         <th scope="col" style="width: 50px !important;">VAT</th>
                                                         <th scope="col" style="width: 50px !important;">(WHT)</th>
-                                                        <th scope="col" style="width: 150px !important;">รวมทั้งสิ้น</th>
+                                                        <th scope="col" style="width: 100px !important;">รวมทั้งสิ้น</th>
                                                         <th scope="col" style="width: 50px !important;">Bill</th>
                                                         <%--<% If Not chkPAYMENT Then%>
                                                         <th scope="col"><a id="generatedPayment" class="btn-sm" style="color: red; font-size: 1rem; font-weight: bold;">
@@ -413,10 +414,11 @@
                                                                         );">
                                                         <td title="<% =costtable.Rows(i).Item("jobscenterdtlname") %>"><% =costtable.Rows(i).Item("jobscenterdtlname") %></td>
                                                         <td class="text-right" title="<% =costtable.Rows(i).Item("jobscenterdtlprice") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("jobscenterdtlprice")) %></td>
-                                                        <td class="text-center" title="<% =costtable.Rows(i).Item("jobcostunit") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("jobcostunit")) %></td>
+                                                        <td class="text-center" title="<% =costtable.Rows(i).Item("jobcostunit") %>"><% =costtable.Rows(i).Item("jobcostunit") %></td>
                                                         <td class="text-right" title="<% =costtable.Rows(i).Item("unitprice") %>" style="color:<%= if( ( costtable.Rows(i).Item("jobscenterdtlprice") < costtable.Rows(i).Item("amount")), "red", "black") %>;"><% =String.Format("{0:n}", costtable.Rows(i).Item("unitprice")) %></td>
-                                                        <td class="text-center" title="<% =costtable.Rows(i).Item("vat_per") %>"><% =costtable.Rows(i).Item("vat_per") %></td>
-                                                        <td class="text-center" title="<% =costtable.Rows(i).Item("tax_per") %>"><% =costtable.Rows(i).Item("tax_per") %></td>
+                                                        <td class="text-right" title="<% =costtable.Rows(i).Item("vat_per") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("unitprice") * costtable.Rows(i).Item("jobcostunit")) %></td>
+                                                        <td class="text-right" title="<% =costtable.Rows(i).Item("vat_per") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("unitprice") * costtable.Rows(i).Item("vat_per") / 100) %></td>
+                                                        <td class="text-right" title="<% =costtable.Rows(i).Item("tax_per") %>">(<% =String.Format("{0:n}", costtable.Rows(i).Item("unitprice") * costtable.Rows(i).Item("tax_per") / 100)%>)</td>
                                                         <td class="text-right" title="<% =costtable.Rows(i).Item("amount") %>"><% =String.Format("{0:n}", costtable.Rows(i).Item("amount")) %></td>
                                                         <td class="text-center" title=""><%= if( (Not costtable.Rows(i).Item("nobill") And Not costtable.Rows(i).Item("incompletebill")), "", If(costtable.Rows(i).Item("nobill"), "N", "U")) %></td>
                                                         <% If maintable.Rows(0).Item("lockcost") = False Then %>
@@ -431,6 +433,7 @@
                                                     <% End If %>
                                                     <% Next i %>
                                                     <tr class="border border-dark border-right-0 border-left-0">
+                                                        <th></th>
                                                         <th></th>
                                                         <th></th>
                                                         <th></th>
@@ -953,7 +956,7 @@
             $('#<%= txtUnit.ClientID%>').val('1');
             $('#<%= txtPrice.ClientID%>').val('0');
             $('#<%= txtVat.ClientID%>').val('7');
-            $('#<%= txtTax.ClientID%>').val('');
+            //$('#<%= txtTax.ClientID%>').val('');
 
 
             <%--$('#<%= txtInvoiceNo.ClientID%>').val('');

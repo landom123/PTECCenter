@@ -647,6 +647,21 @@ End Class
 
 Public Class Project
 
+
+    Public Sub SetCboloadBranch(obj As Object)
+        obj.DataSource = Me.loadBranch()
+        obj.DataValueField = "brcode"
+        obj.DataTextField = "brname"
+        obj.DataBind()
+
+    End Sub
+    Public Sub SetCboloadFilterPay(obj As Object)
+        obj.DataSource = Me.loadFilterPay()
+        obj.DataValueField = "ID"
+        obj.DataTextField = "FilterPay"
+        obj.DataBind()
+
+    End Sub
     Public Function Find(projectno As String) As DataSet
         Dim result As DataSet
 
@@ -1427,7 +1442,7 @@ Public Class clsRequestContract
     End Function
     Public Function AddRequest(DocuNo As String, Branch As String, ContractID As Integer, Begindate As Date, EndDate As Date, CustName As String, CardID As String, Gender As String _
                                 , Company As String, Mobile As String, Tel As String, Email As String, Line As String, StatusID As Integer, Address As String, SubDistrict As String _
-                                , District As String, Province As String, PostCode As String, CreateDate As DateTime, CreateBy As String, RegistryTo As String) As String
+                                , District As String, Province As String, PostCode As String, CreateDate As DateTime, CreateBy As String, RegistryTo As String, ContractNo As String) As String
 
         Try
             Dim result As String
@@ -1465,6 +1480,7 @@ Public Class clsRequestContract
             cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = CreateDate
             cmd.Parameters.Add("@CreateBy", SqlDbType.VarChar).Value = CreateBy
             cmd.Parameters.Add("@RegistryTo", SqlDbType.VarChar).Value = RegistryTo
+            cmd.Parameters.Add("@ContractNo", SqlDbType.VarChar).Value = ContractNo
 
             adp.SelectCommand = cmd
             adp.Fill(ds)
@@ -1533,7 +1549,7 @@ Public Class clsRequestContract
     End Function
     Public Function UpdateRequest(DocuNo As String, Branch As String, ContractID As Integer, Begindate As Date, EndDate As Date, CustName As String, CardID As String, Gender As String _
                                 , Company As String, Mobile As String, Tel As String, Email As String, Line As String, StatusID As Integer, Address As String, SubDistrict As String _
-                                , District As String, Province As String, PostCode As String, UpdateDate As DateTime, UpdateBy As String, iDocID As Integer, RegistryTo As String) As String
+                                , District As String, Province As String, PostCode As String, UpdateDate As DateTime, UpdateBy As String, iDocID As Integer, RegistryTo As String, ContractNo As String) As String
 
         Try
             Dim result As String
@@ -1572,6 +1588,8 @@ Public Class clsRequestContract
             cmd.Parameters.Add("@UpdateBy", SqlDbType.VarChar).Value = UpdateBy
             cmd.Parameters.Add("@DocuID", SqlDbType.VarChar).Value = iDocID
             cmd.Parameters.Add("@RegistryTo", SqlDbType.VarChar).Value = RegistryTo
+            cmd.Parameters.Add("@ContractNo", SqlDbType.VarChar).Value = ContractNo
+
 
             adp.SelectCommand = cmd
             adp.Fill(ds)
