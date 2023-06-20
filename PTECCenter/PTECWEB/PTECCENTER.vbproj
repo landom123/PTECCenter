@@ -14,7 +14,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>PTECCENTER</RootNamespace>
     <AssemblyName>PTECCENTER</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />

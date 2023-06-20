@@ -36,7 +36,7 @@ Public Class frmReportMontly
 
         If Not IsPostBack() Then
 
-            Dim objprj As New Projec
+            Dim objprj As New Project
             objprj.SetCboloadBranch(cboBranch)
             objprj.SetCboloadFilterPay(cboPayDate)
 
