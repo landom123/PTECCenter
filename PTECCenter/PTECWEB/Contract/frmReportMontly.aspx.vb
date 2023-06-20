@@ -36,7 +36,7 @@ Public Class frmReportMontly
 
         If Not IsPostBack() Then
 
-            Dim objprj As New Project
+            Dim objprj As New Projec
             objprj.SetCboloadBranch(cboBranch)
             objprj.SetCboloadFilterPay(cboPayDate)
 
@@ -64,6 +64,8 @@ Public Class frmReportMontly
         Session("calcdate") = calcdate
         Try
             mytable = payment.MonthlyPayment2(calcdate, cboBranch.SelectedValue, cboPayDate.SelectedValue, CDate(txtCalcDate.Text).ToString("yyyyMMdd", dtinfo))
+
+            'mytable = payment.MonthlyPaymentFix(CDate(txtCalcDate.Text).ToString("yyyyMMdd", dtinfo),'20230630')
             'gvPayment.DataSource = mytable
             paymenttable = mytable
             Session("paymenttable") = mytable
@@ -84,10 +86,10 @@ Public Class frmReportMontly
                 For i = 0 To numcells - 1
                     c = New TableCell()
                     'c.Controls.Add(New LiteralControl("row " & j & ", cell " & i))
-                    If IsNumeric(mytable.Rows(j).Item(i).ToString) = False Then
-                        c.Controls.Add(New LiteralControl(mytable.Rows(j).Item(i).ToString))
-                    Else
+                    If IsNumeric(mytable.Rows(j).Item(i).ToString) = True And mytable.Columns(i).ColumnName <> "ACCode" And mytable.Columns(i).ColumnName <> "AccountNo" Then
                         c.Controls.Add(New LiteralControl(FormatNumber(mytable.Rows(j).Item(i).ToString, 2)))
+                    Else
+                        c.Controls.Add(New LiteralControl(mytable.Rows(j).Item(i).ToString))
                     End If
 
                     r.Cells.Add(c)

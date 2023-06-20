@@ -563,7 +563,8 @@ Public Class contractinfo
 
         lblContractType.Text = cboContractType.SelectedItem.Text & " ต่อเดือน"
 
-        cboContractLand.DataSource = objCon.loadContractLand(cboContractType.SelectedValue)
+        'cboContractLand.DataSource = objCon.loadContractLand(cboContractType.SelectedValue)
+        cboContractLand.DataSource = objCon.loadContractLand(0)
         cboContractLand.DataValueField = "ID"
         cboContractLand.DataTextField = "LanName"
         cboContractLand.DataBind()
