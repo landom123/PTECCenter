@@ -650,8 +650,8 @@ Public Class Project
 
     Public Sub SetCboloadBranch(obj As Object)
         obj.DataSource = Me.loadBranch()
-        obj.DataValueField = "branch_code"
-        obj.DataTextField = "branch_name"
+        obj.DataValueField = "brcode"
+        obj.DataTextField = "brname"
         obj.DataBind()
 
     End Sub
