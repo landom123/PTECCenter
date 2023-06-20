@@ -32,6 +32,42 @@
             -moz-transition: all .3s ease-out;
             -o-transition: all .3s ease-out;
         }
+        .loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -100px;
+            z-index: 9999;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
     <script type="text/javascript">
         function msgalert(msg) {
@@ -75,7 +111,7 @@
                 </ul>
             </div>
         </nav>
-
+        <div class="loader" id="loader"></div>
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
         </asp:ScriptManager>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
@@ -166,8 +202,20 @@
             title: massage
         })
     }
-
+    //window.onload = (event) => {
+    //    $('#loader').show();
+    //    console.log('window.onload');
+    //};
+    
     $(document).ready(function () {
+        //console.log('ready');
+        $('#loader').hide();
+        $(document).ajaxStart(function () {
+            $("#loader").show();
+        });
+        $(document).ajaxComplete(function () {
+            $("#loader").hide();
+        });
         console.log($('#navbarSupportedContent').length);
         if ($('#navbarSupportedContent').length)         // use this if you are using class to check
         {

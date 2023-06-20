@@ -87,7 +87,9 @@ function CheckNumber(Number) {
 }
 
 function calCostTotal(cost, vat, tax) {
-    return (cost + (cost * (vat / 100))) - (cost * (tax / 100));
+    const c_Vat = calVat(cost, vat).toFixed(2);
+    const c_Tax = calTax(cost, tax).toFixed(2);
+    return cost + parseFloat(c_Vat) - parseFloat(c_Tax);
 }
 
 

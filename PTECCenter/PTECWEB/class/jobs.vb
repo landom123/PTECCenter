@@ -1563,7 +1563,7 @@ Public Class jobs
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Jobs_Send_Supplier"
+        cmd.CommandText = "Jobs_Supplier_Send"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
@@ -1741,7 +1741,7 @@ Public Class jobs
         'Return result
     End Function
 
-    Public Function Jobs_Cancel_Supplier(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+    Public Function Jobs_Supplier_Cancel(jobno As String, jobdetailid As Double, usercode As String) As Boolean
         Dim result As Boolean
 
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -1749,7 +1749,97 @@ Public Class jobs
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Jobs_Cancel_Supplier"
+        cmd.CommandText = "Jobs_Supplier_Cancel"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+
+    Public Function Jobs_Supplier_BackStep(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Supplier_BackStep"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Jobs_Supplier_NextStep(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Supplier_NextStep"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Jobs_Supplier_addDetails(jobno As String, jobdetailid As Double, begindate As String, enddate As String, detail As String, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Supplier_addDetails"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@begindate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(begindate), DBNull.Value, Date.Parse(begindate))
+        cmd.Parameters.Add("@enddate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(enddate), DBNull.Value, Date.Parse(enddate))
+        cmd.Parameters.Add("@detail", SqlDbType.VarChar).Value = detail
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Jobs_Supplier_FinishStep(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Supplier_FinishStep"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
