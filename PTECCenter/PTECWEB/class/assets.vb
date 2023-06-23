@@ -279,4 +279,30 @@ Public Class Assets
         obj.DataBind()
 
     End Sub
+    Public Sub SetCboVendorByName(cboAsset As DropDownList, branch As Integer, Optional depid As Integer = 0, Optional secid As Integer = 0)
+
+        Dim dt As DataTable = ComboList(branch, depid, secid)
+        cboAsset.Items.Clear()
+        Dim cnt_dt = dt.Rows.Count
+        For i As Integer = 0 To cnt_dt - 1
+            Dim asset As String
+            Dim assetid As String
+            Dim SerialNo As String
+            With dt.Rows(i)
+                asset = .Item("asset").ToString
+                assetid = .Item("assetid").ToString
+                SerialNo = .Item("SerialNo").ToString
+            End With
+            Dim item As ListItem = New ListItem(asset, assetid)
+            'If Not String.IsNullOrEmpty(dt.Rows(i).Item("Vendor_Code").ToString) Then
+            'End If
+            item.Attributes("data-subtext") = SerialNo
+            'If Not String.IsNullOrEmpty(dt.Rows(i).Item("taxidno").ToString) Then
+            'End If
+
+            cboAsset.Items.Add(item)
+
+        Next
+
+    End Sub
 End Class

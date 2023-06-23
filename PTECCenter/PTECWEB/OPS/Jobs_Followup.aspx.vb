@@ -5,6 +5,7 @@ Public Class JobsFollowup
     Dim objStatus As String
     Dim jobno As String
     Dim jobdetailid As Integer
+    Public cntSupplier As Integer
     Public statusnow As Integer
     Public menutable As DataTable
     Public maintable As DataTable
@@ -519,6 +520,8 @@ Public Class JobsFollowup
                 statusnow = .Item("statusnow")
                 txtSupplierBeginDate.Text = .Item("BeginDate")
                 txtSupplierEndDate.Text = .Item("EndDate")
+
+                cntSupplier = .Item("cnt_supplier")
             End With
         End If
     End Sub
