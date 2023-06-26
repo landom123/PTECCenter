@@ -275,22 +275,13 @@ Partial Public Class frmJobs
     Protected WithEvents lblattatch As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''FileUpload1 control.
+    '''btnDataAnalyGroupType control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
-
-    '''<summary>
-    '''btnUpload control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnUpload As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnDataAnalyGroupType As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
     '''txtJobDetail control.
@@ -309,4 +300,31 @@ Partial Public Class frmJobs
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnAddDetail As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''FileUpload1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''jobitems control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents jobitems As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+
+    '''<summary>
+    '''btnUpload control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpload As Global.System.Web.UI.WebControls.Button
 End Class
