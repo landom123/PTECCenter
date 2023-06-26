@@ -70,7 +70,8 @@ Public Class frmJobs
             'SetCboBranch(cboBranch)
             'SetCboDepartment(cboDepartment)
             'SetCboSection(cboSection, cboDepartment.SelectedItem.Value)
-            objAssets.SetCboAssets(cboAsset, 0)
+            'objAssets.SetCboAssets(cboAsset, 0)
+            objAssets.SetCboVendorByName(cboAsset, 0)
 
             SetCboJobType(cboJobType, usercode)
 
@@ -359,7 +360,7 @@ Public Class frmJobs
         End If
         If detailtable.Rows.Count = 0 Then
             result = False
-            msg = "กรุณา เพิ่มรายละเอียดงาน ในการแจ้ง"
+            msg = "กรุณาเพิ่มรายการย่อย โดยกดปุ่ม + ด้านล่าง"
             GoTo endprocess
         End If
 
@@ -447,17 +448,17 @@ endprocess:
                 GoTo endprocess
             End If
         End If
-        If Not cboPolicy.SelectedItem.Value = 0 Then
-            If String.IsNullOrEmpty(txtDueDate.Text) Then
-                result = False
-                msg = "กรุณาระบุวันที่ต้องการ"
-                GoTo endprocess
-            End If
-        End If
         If String.IsNullOrEmpty(txtJobDetail.Text) Then
             result = False
             msg = "กรุณาระบุรายละเอียด"
             GoTo endprocess
+        End If
+        If cboPolicy.SelectedItem.Value = 0 Then
+            ' If String.IsNullOrEmpty(txtDueDate.Text) Then
+            result = False
+            msg = "กรุณาเลือก ความเร่งด่วน"
+            GoTo endprocess
+            'End If
         End If
 
 
@@ -822,7 +823,7 @@ endprocess:
             If cboJobType.SelectedItem.Value = 1 Then
                 FindPositionInPump(branchid)
             End If
-            objAssets.SetCboAssets(cboAsset, branchid)
+            objAssets.SetCboVendorByName(cboAsset, 0)
         End If
 
     End Sub

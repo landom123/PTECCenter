@@ -266,6 +266,10 @@ Public Class requestcontract
                 Return False
             End If
 
+            If loadContractAsset() = False Then
+                Return False
+            End If
+
             If loadContractFix() = False Then
                 Return False
             End If
@@ -426,7 +430,7 @@ Public Class requestcontract
             End If
 
             If txtCardID.Text = "" Then
-                err = "กรุณาตรวจสอย เลขที่บัตรประชาชน "
+                err = "กรุณาตรวจสอบ เลขที่บัตรประชาชน "
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('Error')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
@@ -434,7 +438,7 @@ Public Class requestcontract
             End If
 
             If txtTaxID.Text = "" Then
-                err = "กรุณาตรวจสอย เลขที่ผู้เสียภาษี "
+                err = "กรุณาตรวจสอบ เลขที่ผู้เสียภาษี "
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('Error')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
@@ -442,7 +446,7 @@ Public Class requestcontract
             End If
 
             If txtAddress.Text = "" Then
-                err = "กรุณาตรวจสอย ที่อยู่ "
+                err = "กรุณาตรวจสอบ ที่อยู่ "
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('Error')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
@@ -450,7 +454,7 @@ Public Class requestcontract
             End If
 
             If txtSubDistrict.Text = "" Then
-                err = "กรุณาตรวจสอย ที่ยู่ตำบล "
+                err = "กรุณาตรวจสอบ ที่ยู่ตำบล "
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('Error')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
@@ -458,7 +462,7 @@ Public Class requestcontract
             End If
 
             If txtDistrict.Text = "" Then
-                err = "กรุณาตรวจสอย ที่อยู่อำเภอ "
+                err = "กรุณาตรวจสอบ ที่อยู่อำเภอ "
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('Error')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
@@ -466,7 +470,7 @@ Public Class requestcontract
             End If
 
             If txtProvince.Text = "" Then
-                err = "กรุณาตรวจสอย ที่อยู่จังหวัด "
+                err = "กรุณาตรวจสอบ ที่อยู่จังหวัด "
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('Error')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
@@ -474,7 +478,7 @@ Public Class requestcontract
             End If
 
             If txtPostcode.Text = "" Then
-                err = "กรุณาตรวจสอย รหัสไปรษณีย์ "
+                err = "กรุณาตรวจสอบ รหัสไปรษณีย์ "
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('Error')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
@@ -487,6 +491,14 @@ Public Class requestcontract
 
             If objCo.AddContractPerson(txtdocuno.Text, 1, txtName.Text, txtCardID.Text, txtTaxID.Text, cboSex.SelectedValue, txtAddress.Text, txtSubDistrict.Text, txtDistrict.Text, txtProvince.Text _
                                        , txtPostcode.Text, txtTel.Text, txtLine.Text, txtEmail.Text, usercode) = False Then
+                Return False
+            End If
+
+            If AddContractPersonalSend() = False Then
+                Return False
+            End If
+
+            If AddContractPersonalContract() = False Then
                 Return False
             End If
 
@@ -512,14 +524,88 @@ Public Class requestcontract
         End Try
     End Function
 
+    Private Function AddContractPersonalSend() As Boolean
+        Try
+
+            If objCo.AddContractPersonSendAddr(txtdocuno.Text, txtSendAddr.Text, txtSendSubdistrict.Text, txtSendDistrict.Text, txtSendProvince.Text _
+                                       , txtSendPostCode.Text, txtSendTel.Text, usercode) = False Then
+                Return False
+            End If
+
+
+            txtSendAddr.Text = ""
+            txtSendSubdistrict.Text = ""
+            txtSendDistrict.Text = ""
+            txtSendProvince.Text = ""
+            txtSendPostCode.Text = ""
+            txtSendTel.Text = ""
+
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
+    Private Function AddContractPersonalContract() As Boolean
+        Try
+
+            If objCo.AddContractPersonContract(txtdocuno.Text, txtContractPer.Text, TxtRelationPer.Text, txtContractTelPer.Text, usercode) = False Then
+                Return False
+            End If
+
+
+            txtContractPer.Text = ""
+            TxtRelationPer.Text = ""
+            txtContractTelPer.Text = ""
+
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
     Private Function loadContractPer() As Boolean
         Try
             Dim dt As New DataTable
+            Dim dtSend As New DataTable
+            Dim dtCon As New DataTable
 
             dt = objCo.loadContractPersaonal(txtdocuno.Text)
 
             gvContractPer.DataSource = dt
             gvContractPer.DataBind()
+
+            dtSend = objCo.loadContractPersaonalSendAddr(txtdocuno.Text)
+
+            For Each dr As DataRow In dtSend.Rows
+                txtSendAddr.Text = dr("Addr")
+                txtSendSubdistrict.Text = dr("SubDistrict")
+                txtSendDistrict.Text = dr("District")
+                txtSendProvince.Text = dr("Province")
+                txtSendPostCode.Text = dr("PostCode")
+                txtSendTel.Text = dr("Tel")
+            Next
+
+
+            dtCon = objCo.loadContractPersaonalContract(txtdocuno.Text)
+            For Each dr As DataRow In dtCon.Rows
+                txtContractPer.Text = dr("ContractName")
+                TxtRelationPer.Text = dr("Relation")
+                txtContractTelPer.Text = dr("Tel")
+
+            Next
 
             'Dim numrows As Integer
             'Dim numcells As Integer
@@ -674,6 +760,51 @@ Public Class requestcontract
                 Return False
             End If
 
+            If AddContractCompanySend() = False Then
+                Return False
+            End If
+
+            If AddContractCompanyContract() = False Then
+                Return False
+            End If
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
+    Private Function AddContractCompanySend() As Boolean
+        Try
+
+            If objCo.AddContractCompanySend(txtdocuno.Text, txtComAddrSend.Text, txtComSubdistrictSend.Text, txtComDistrictSend.Text, txtComProvinceSend.Text _
+                                            , txtComPostCodeSend.Text, txtComTelSend.Text, usercode) = False Then
+                Return False
+            End If
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
+    Private Function AddContractCompanyContract() As Boolean
+        Try
+
+            If objCo.AddContractCompanyContract(txtdocuno.Text, txtComContractCom.Text, txtComRelation.Text, txtComTelCom.Text) = False Then
+                Return False
+            End If
+
             Return True
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
@@ -688,11 +819,35 @@ Public Class requestcontract
     Private Function loadContractCompany() As Boolean
         Try
             Dim dt As New DataTable
+            Dim dtSend As DataTable
+            Dim dtCom As DataTable
 
             dt = objCo.loadContractCompany(txtdocuno.Text)
 
             gvContractCompanyPer.DataSource = dt
             gvContractCompanyPer.DataBind()
+
+
+            dtSend = objCo.loadContractCompanySend(txtdocuno.Text)
+
+            For Each dr As DataRow In dtSend.Rows
+                txtComAddrSend.Text = dr("Addr")
+                txtComSubdistrictSend.Text = dr("SubDistrict")
+                txtComDistrictSend.Text = dr("District")
+                txtComProvinceSend.Text = dr("Province")
+                txtComPostCodeSend.Text = dr("PostCode")
+                txtComTelSend.Text = dr("Tel")
+            Next
+
+
+            dtCom = objCo.loadContractCompanyContract(txtdocuno.Text)
+            For Each dr As DataRow In dtCom.Rows
+                txtComContractCom.Text = dr("ContractName")
+                txtComRelation.Text = dr("Relation")
+                txtComTelCom.Text = dr("Tel")
+
+            Next
+
 
             'Dim numrows As Integer
             'Dim numcells As Integer
@@ -884,6 +1039,27 @@ Public Class requestcontract
             '    tblContractFix.Rows.Add(r)
             'Next j
 
+
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
+    Private Function loadContractAsset() As Boolean
+        Try
+            Dim dt As New DataTable
+
+            dt = objCo.loadAsset(txtdocuno.Text)
+
+            gvAsset.DataSource = dt
+            gvAsset.DataBind()
 
 
             Return True
@@ -1587,6 +1763,15 @@ Public Class requestcontract
             If loadContractPer() = False Then
                 Exit Sub
             End If
+
+            'If AddContractPersonalSend() = False Then
+            '    Exit Sub
+            'End If
+
+            'If AddContractPersonalContract() = False Then
+            '    Exit Sub
+            'End If
+
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
             err = ex.Message
@@ -1607,6 +1792,7 @@ Public Class requestcontract
             If loadContractCompany() = False Then
                 Exit Sub
             End If
+
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
             err = ex.Message
@@ -1690,5 +1876,45 @@ Public Class requestcontract
             End If
         Next
     End Sub
+
+    Private Sub btnAddTypeAsset_Click(sender As Object, e As EventArgs) Handles btnAddTypeAsset.Click
+        Try
+            If objCo.AddAssetType(txtAssetType.Text) = False Then
+                Exit Sub
+            End If
+
+            SetCboAssetType(cboAssetType)
+
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnAddasset_Click(sender As Object, e As EventArgs) Handles btnAddasset.Click
+        Try
+            If objCo.AddContractAsset(txtdocuno.Text, txtLandno.Text, cboAssetType.SelectedValue, txtSurveyNo.Text, txtAssetAddr.Text, txtAssetSubdistrict.Text _
+                                      , txtAssetDistrict.Text, txtAssetProvince.Text, txtAssPostCode.Text, txtAssetDocno.Text, txtAssetSurvey.Text, CDbl(txtRai.Text) _
+                                      , CDbl(txtNgan.Text), CDbl(txtWa.Text), CDbl(txtRai1.Text), CDbl(txtNgan1.Text), CDbl(txtWa1.Text) _
+                                      , txtbuNo.Text, CDbl(txtRai2.Text), CDbl(txtNgan2.Text), CDbl(txtWa2.Text), txtAssetRemark.Text, txtAssetRemark2.Text, usercode) = False Then
+                Exit Sub
+            End If
+
+            If loadContractAsset() = False Then
+                Exit Sub
+            End If
+
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
 
 End Class

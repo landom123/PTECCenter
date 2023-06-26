@@ -81,22 +81,27 @@
                                                     <a href="../OPS/jobs.aspx?jobno=<%#Eval("jobcode")%>" title="<%#Eval("jobcode")%>" target="_blank"><%#Eval("jobcode")%></a>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="branch" HeaderStyle-CssClass="table-header " ItemStyle-HorizontalAlign="center">
+                                            <asp:TemplateField HeaderText="Branch" HeaderStyle-CssClass="table-header " ItemStyle-HorizontalAlign="center">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("branch")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="approval" HeaderStyle-CssClass="table-header " ItemStyle-HorizontalAlign="center">
+                                            <asp:TemplateField HeaderText="Type" HeaderStyle-CssClass="table-header " ItemStyle-HorizontalAlign="center">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lbapproval" runat="server" Text='<%#Eval("jobtype")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="approval" HeaderStyle-CssClass="table-header ">
+                                            <asp:TemplateField HeaderText="Detail" HeaderStyle-CssClass="table-header ">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lbdetail" runat="server" Text='<%#Eval("details")%>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="cost" HeaderStyle-CssClass="table-header " ItemStyle-HorizontalAlign="Right">
+                                            <asp:TemplateField HeaderText="DetailPayment" HeaderStyle-CssClass="table-header ">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("detailpayment")%>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Cost" HeaderStyle-CssClass="table-header " ItemStyle-HorizontalAlign="Right">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lbcost" runat="server" Text='<%#String.Format("{0:n2}", Eval("cost"))%>'></asp:Label>
                                                 </ItemTemplate>

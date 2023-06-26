@@ -77,11 +77,12 @@ Public Class frmReportMontly
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             Exit Sub
         End If
+
         dcalcdate = DateAdd(DateInterval.Year, -543, CDate(txtCalcDate.Text)) 'DateTime.Parse(txtDueDate.Text)
-        calcdate = DateTime.Parse(dcalcdate.ToString).Year & DateTime.Parse(dcalcdate.ToString).Month.ToString("00")
+        calcdate = DateTime.Parse(dcalcdate).Year & DateTime.Parse(dcalcdate).Month.ToString("00")
         Session("calcdate") = calcdate
         Try
-            mytable = payment.MonthlyPayment2(calcdate, cboBranch.SelectedValue, cboPayDate.SelectedValue, CDate(txtCalcDate.Text).ToString("yyyyMMdd", dtinfo))
+            mytable = payment.MonthlyPayment2(calcdate, cboBranch.SelectedValue, cboPayDate.SelectedValue, dcalcdate.ToString("yyyyMMdd", dtinfo))
 
             'mytable = payment.MonthlyPaymentFix(CDate(txtCalcDate.Text).ToString("yyyyMMdd", dtinfo),'20230630')
             'gvPayment.DataSource = mytable
@@ -104,7 +105,8 @@ Public Class frmReportMontly
                 For i = 0 To numcells - 1
                     c = New TableCell()
                     'c.Controls.Add(New LiteralControl("row " & j & ", cell " & i))
-                    If IsNumeric(mytable.Rows(j).Item(i).ToString) = True And mytable.Columns(i).ColumnName <> "ACCode" And mytable.Columns(i).ColumnName <> "AccountNo" Then
+                    If IsNumeric(mytable.Rows(j).Item(i).ToString) = True And mytable.Columns(i).ColumnName <> "ACCode" _
+                        And mytable.Columns(i).ColumnName <> "AccountNo" And mytable.Columns(i).ColumnName <> "VendorTax" Then
                         c.Controls.Add(New LiteralControl(FormatNumber(mytable.Rows(j).Item(i).ToString, 2)))
                     Else
                         c.Controls.Add(New LiteralControl(mytable.Rows(j).Item(i).ToString))
