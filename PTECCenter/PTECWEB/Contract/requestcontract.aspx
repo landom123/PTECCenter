@@ -454,6 +454,7 @@
                                                 <asp:MenuItem  Text=" ช่องทางการชำระเงิน " Value="3"></asp:MenuItem>
                                                 <asp:MenuItem  Text=" ร่วมแนบ2 " Value="5"></asp:MenuItem>
                                                 <asp:MenuItem  Text=" ร่วมแนบ3 " Value="6"></asp:MenuItem>
+                                                <asp:MenuItem  Text=" ร่วมแนบ4 " Value="7"></asp:MenuItem>
                                             </Items>
                                      
                                         </asp:Menu>
@@ -1510,18 +1511,20 @@
                                                                         <div class="input-group sm-col-2" >   
                                                                             <span class="input-group-text">โฉนดที่ดินเลขที่</span>
                                                                             <span class="input-group-text">เลขที่สัญญา   PTEC-SDD- 2566- 001</span>
+                                                                           
                                                                         </div>
                                                                       
-                                                                            <div class="row col-md-2" style="padding-top: 1rem;">
-                                                                               บันทึกต่อท้ายสัญญา
-                                                                            </div>
-                                                                            
-                                                                            <div class="row col-md-8" style="padding-top: 1rem;">
+                                                                            <div class="row col-md-8" style="padding-top: 1rem;">                                                                                
+                                                                              <span  class="span" >  บันทึกต่อท้ายสัญญา	</span> <br />
                                                                                 	          บันทึกต่อท้ายสัญญานี้ถือเป็นส่วนหนึ่งของสัญญาเลขที่ เลขที่สัญญา เลขที่สัญญา .......... ระหว่างบริษัท เพียวพลังงานไทย จำกัด (บริษัท ) <br />
                                                                                                 และ.......... ( ผู้ร่วมธุรกิจ) เพื่อบันทึกรายการทรัพย์สินของผู้ร่วมธุรกิจ ดังนี้ 	<br />
                                                                                                 ที่ดินตามสัญญาร่วมธุรกิจ ตั้งอยู่ที่  .........................	
-                                                                                              
                                                                             </div>
+                                                                            
+                                                                            <%--<div class="row col-md-8" style="padding-top: 1rem;">--%>
+
+                                                                                              
+                                                                            <%--</div>--%>
 
                                                                         
                                                                         <%--<span class="input-group-text">บันทึกต่อท้ายสัญญา</span>--%>
@@ -1732,7 +1735,7 @@
                                                                         </div>
                                                                       
                                                                             <div class="row" style="padding-top: 1rem;">
-                                                                                ธุรกิจร่วมการประกอบการค้า		
+                                                                                ธุรกิจร่วมการประกอบการค้า		<br />
                                                                                 (ที่ผู้ร่วมธุรกิจประสงค์จะดำเนินการ)			
 
                                                                             </div>
@@ -1758,19 +1761,26 @@
                                                                                                     <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
                                                                                                     <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>                                                             
                                                                                                     <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:lightskyblue;' runat="server">จำนวน</asp:TableHeaderCell>--%>                                                       
-                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server">(ตรม.)</asp:TableHeaderCell>
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
                                                                                                    
-                                                                                                </asp:TableHeaderRow>                                                                                                                                                                                         
+                                                                                                </asp:TableHeaderRow>    
+                                                                                                <asp:TableHeaderRow runat="server">
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>                                                             
+                                                                                                    <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:lightskyblue;' runat="server">จำนวน</asp:TableHeaderCell>--%>                                                       
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
+                                                                                                   
+                                                                                                </asp:TableHeaderRow>                                                                                                   
 
                                                                                             </asp:Table>
 
                                                                                         </div>
 
                                                                                         <div class="row">
-                                                                                            หมายเหตุ	
-	                                                                                            หากผู้ร่วมธุรกิจ ไม่สามารถเปิดดำเนินการธุรกิจดังกล่าวได้ภายใน 1 ปี นับจากวันที่ทำสัญญานี้
-                                                                                            ผู้ร่วมธุรกิจจะยอมให้สิทธินั้นตกแก่บริษัทหรือตัวแทน ดำเนินการตามที่บริษัทเห็นสมควร	
-
+                                                                                         
+                                                                                            <span  class="span" >  หมายเหตุ	</span><br />
+	                                                                                            หากผู้ร่วมธุรกิจ ไม่สามารถเปิดดำเนินการธุรกิจดังกล่าวได้ภายใน 1 ปี นับจากวันที่ทำสัญญานี้ <br />
+                                                                                             ผู้ร่วมธุรกิจจะยอมให้สิทธินั้นตกแก่บริษัทหรือตัวแทน ดำเนินการตามที่บริษัทเห็นสมควร	
                                                                                         </div>
                                                                                    </div>
                                        
@@ -1778,7 +1788,7 @@
                                                                     </div>
                                                                                                                                                                       
                                                                             <div class="row" style="padding-top: 1rem;">
-                                                                                ธุรกิจร่วมการประกอบการค้า		
+                                                                                ธุรกิจร่วมการประกอบการค้า		<br />
                                                                                 (ที่ผู้ร่วมธุรกิจดำเนินการ)		
 
                                                                             </div>
@@ -1803,17 +1813,26 @@
                                                                                                     <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
                                                                                                     <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>                                                             
                                                                                                     <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:lightskyblue;' runat="server">จำนวน</asp:TableHeaderCell>--%>                                                       
-                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server">(ตรม.)</asp:TableHeaderCell>
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
                                                                                                    
-                                                                                                </asp:TableHeaderRow>                                                                                                                                                                                         
+                                                                                                </asp:TableHeaderRow>  
+                                                                                                
+                                                                                                <asp:TableHeaderRow runat="server">
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>                                                             
+                                                                                                    <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:lightskyblue;' runat="server">จำนวน</asp:TableHeaderCell>--%>                                                       
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
+                                                                                                   
+                                                                                                </asp:TableHeaderRow>   
 
                                                                                             </asp:Table>
 
                                                                                         </div>
 
                                                                                         <div class="row">
-                                                                                            หมายเหตุ	
-	                                                                                            หากผู้ร่วมธุรกิจ หยุดประกอบธุรกิจข้างต้นต่อเนื่องครบ 1 ปี ให้ถือว่าผู้ร่วมธุรกิจไม่ประสงค์
+                                                                                            	
+                                                                                            <span  class="span" >  หมายเหตุ	</span><br />
+	                                                                                            หากผู้ร่วมธุรกิจ หยุดประกอบธุรกิจข้างต้นต่อเนื่องครบ 1 ปี ให้ถือว่าผู้ร่วมธุรกิจไม่ประสงค์ <br />
                                                                                             จะประกอบธุรกิจนั้นอีกต่อไปและให้สิทธินั้นตกแก่บริษัทหรือมอบให้ผู้อื่นดำเนินการตามที่บริษัท เห็นสมควร	
 
                                                                                         </div>
@@ -1823,7 +1842,65 @@
                                                                     </div>
 
                                             </asp:View>
+                                            <asp:View ID="Tab8" runat="server" >
 
+                                                                        <div class="input-group sm-col-2" >   
+                                                                            <span class="input-group-text">เอกสารแนบท้าย 4  </span>
+                                                                            <span class="input-group-text">เลขที่สัญญา  ................</span>
+                                                                        </div>
+                                                                      
+                                                                            <div class="row" style="padding-top: 1rem;">
+                                                                                    ค่าตอบแทนแก่ผู้ร่วมธุรกิจ		
+
+                                                                            </div>
+
+                                                                                    <div class="table-responsive">
+ 
+                                                                                        <div class="table-responsive" runat="server" >
+                                                                                            <asp:Table id="Table3" class="table table-bordered table-condensed table-hover pnlstudentDetails" style='font-family:Tahoma, Courier, monospace; font-size:8pt;' 
+                                                                                                                    runat="server" GridLines="Both" cellspacing="0" cellpadding="5" border="1" OnPageIndexChanging="OnPageIndexChanging" PageSize="10">
+                                                                                                <asp:TableHeaderRow TableSection="TableHeader" runat="server">
+                                                                                                <asp:TableHeaderCell RowSpan="2" style='margin:0 auto; text-align:center; background-color:white;' runat="server">ลำดับ</asp:TableHeaderCell>
+                                                                                                <asp:TableHeaderCell RowSpan="2" style='margin:0 auto; text-align:center; background-color:white;' runat="server">อัตราค่าตอบ</asp:TableHeaderCell>
+                                                                                                <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server">จำนวนเงิน((บาท))</asp:TableHeaderCell>
+                                                          
+                                                                                                </asp:TableHeaderRow>
+                                                                                                <asp:TableHeaderRow runat="server">
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>                                                             
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>                                                       
+                                                                                                    <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server">(ตรม.)</asp:TableHeaderCell>--%>
+                                                                                                   
+                                                                                                </asp:TableHeaderRow>     
+                                                                                                <asp:TableHeaderRow runat="server">
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>                                                             
+                                                                                                    <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server"></asp:TableHeaderCell>                                                       
+                                                                                                    <%--<asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server">(ตรม.)</asp:TableHeaderCell>--%>
+                                                                                                   
+                                                                                                </asp:TableHeaderRow>                                                                                                  
+
+                                                                                            </asp:Table>
+
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                             <span  class="span" >   เงื่อนไขการจ่ายค่าตอบแทนร่วมธุรกิจ	</span><br />
+                                                                                                (1).  	ค่าตอบแทนร่วมธุรกิจกำหนดจ่ายปีละ 1 ครั้งโดยที่ปลอดค่าร่วมธุรกิจและค่าเช่า.......   (....... ถึง 30 ...... )	<br />
+	                                                                                                ค่าร่วมธุรกิจล่วงหน้า ชำระในวันที่จดทะเบียนเช่า แล้วเสร็จ	<br />
+                                                                                                กรณีรายเดือน	ค่าตอบแทนร่วมธุรกิจต่อเดือน [ .......... ถึง ......] ของแต่ละเดือน ชำระ ภายในวันที่ 15  ของเดือนนั้น ๆ โดยเริ่มตั้งแต่ เดือน .... ..... เป็นต้นไป 	<br />
+	                                                                                                ค่าตอบแทนร่วมธุรกิจต่อปี [.......... ถึง ......] ของแต่ละปี ชำระ ภายในวันที่ 15 .... ของปีนั้น ๆ 	<br />
+                                                                                                (2).  	บริษัทฯ จะทำการโอนค่าตอบแทนร่วมธุรกิจ โดยจ่ายให้   .............. โดยผู้ร่วมธุรกิจ	<br />
+                                                                                                 ยินยอมให้บริษัทฯ จ่ายค่าตอบแทนดังกล่าวผ่านบัญชี ............... สาขา...........  จังหวัด............ ประเภทบัญชี .......... 		<br />
+                                                                                                 เลขที่บัญชี .............  โดยให้ถือเอาใบโอนเงินผ่านธนาคารดังกล่าว เป็นการชำระหนี้โดยถูกต้อง ครบถ้วนจากบริษัทฯแล้ว		<br />
+                                                                                                (3).	ผู้ร่วมธุรกิจ ยินยอมให้บริษัทฯ ดำเนินการหักภาษี ณ ที่จ่าย ตามที่กฎหมายกำหนดไว้จนครบถ้วนทุกครั้งที่มีการจ่าย  	<br />
+                                                                                                 ค่าตอบแทนให้  ผู้ร่วมธุรกิจ 		
+
+
+                                                                                        </div>
+                                                                                   </div>
+
+                                            </asp:View>
                                         </asp:MultiView>
 
 

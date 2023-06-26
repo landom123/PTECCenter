@@ -70,6 +70,7 @@ Public Class Jobs_MapsToNonPO
         dt.Columns.Add("jobdetailid", GetType(Integer))
         dt.Columns.Add("jobtype", GetType(String))
         dt.Columns.Add("details", GetType(String))
+        dt.Columns.Add("detailpayment", GetType(String))
         dt.Columns.Add("branch", GetType(String))
         dt.Columns.Add("cost", GetType(Double))
 
