@@ -1599,7 +1599,7 @@
     <Content Include="datetimepicker\jquery.datetimepicker.css" />
     <Content Include="datetimepicker\jquery.datetimepicker.full.js" />
     <Content Include="datetimepicker\jquery.datetimepicker.full.min.js" />
-    <Content Include="datetimepicker\jquery.datetimepicker.js" />
+    <Content Include="datetimepicker\build\jquery.datetimepicker.js" />
     <Content Include="datetimepicker\jquery.datetimepicker.min.css" />
     <Content Include="datetimepicker\jquery.datetimepicker.min.js" />
     <Content Include="datetimepicker\jquery.js" />
