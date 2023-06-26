@@ -37,6 +37,22 @@ Public Class frmReportMontly
         If Not IsPostBack() Then
 
             Dim objprj As New Project
+            ''<<<<<<<<< Temporary merge branch 1
+            dtBranch = objprj.loadBranch
+            cboBranch.DataSource = dtBranch
+            cboBranch.DataValueField = "Brcode"
+            cboBranch.DataTextField = "Brname"
+            cboBranch.DataBind()
+
+
+
+            Dim objFilter As New Project
+            dtFilterPay = objFilter.loadFilterPay
+            cboPayDate.DataSource = dtFilterPay
+            cboPayDate.DataValueField = "ID"
+            cboPayDate.DataTextField = "FilterPay"
+            cboPayDate.DataBind()
+            '=========
             objprj.SetCboloadBranch(cboBranch)
             objprj.SetCboloadFilterPay(cboPayDate)
 
@@ -52,6 +68,7 @@ Public Class frmReportMontly
         Dim mytable As DataTable
         Dim payment As New Contract
         Dim calcdate As String
+        Dim dcalcdate As Date
 
         If IsDate(txtCalcDate.Text) = False Then
             Dim err As String = "กรุณาระบุวันที่"
@@ -60,10 +77,12 @@ Public Class frmReportMontly
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             Exit Sub
         End If
-        calcdate = DateTime.Parse(txtCalcDate.Text).Year & DateTime.Parse(txtCalcDate.Text).Month.ToString("00")
+
+        dcalcdate = DateAdd(DateInterval.Year, -543, CDate(txtCalcDate.Text)) 'DateTime.Parse(txtDueDate.Text)
+        calcdate = DateTime.Parse(dcalcdate.ToString).Year & DateTime.Parse(dcalcdate.ToString).Month.ToString("00")
         Session("calcdate") = calcdate
         Try
-            mytable = payment.MonthlyPayment2(calcdate, cboBranch.SelectedValue, cboPayDate.SelectedValue, CDate(txtCalcDate.Text).ToString("yyyyMMdd", dtinfo))
+            mytable = payment.MonthlyPayment2(calcdate, cboBranch.SelectedValue, cboPayDate.SelectedValue, CDate(dcalcdate).ToString("yyyyMMdd", dtinfo))
 
             'mytable = payment.MonthlyPaymentFix(CDate(txtCalcDate.Text).ToString("yyyyMMdd", dtinfo),'20230630')
             'gvPayment.DataSource = mytable
@@ -86,7 +105,8 @@ Public Class frmReportMontly
                 For i = 0 To numcells - 1
                     c = New TableCell()
                     'c.Controls.Add(New LiteralControl("row " & j & ", cell " & i))
-                    If IsNumeric(mytable.Rows(j).Item(i).ToString) = True And mytable.Columns(i).ColumnName <> "ACCode" And mytable.Columns(i).ColumnName <> "AccountNo" Then
+                    If IsNumeric(mytable.Rows(j).Item(i).ToString) = True And mytable.Columns(i).ColumnName <> "ACCode" _
+                        And mytable.Columns(i).ColumnName <> "AccountNo" And mytable.Columns(i).ColumnName <> "VendorTax" Then
                         c.Controls.Add(New LiteralControl(FormatNumber(mytable.Rows(j).Item(i).ToString, 2)))
                     Else
                         c.Controls.Add(New LiteralControl(mytable.Rows(j).Item(i).ToString))

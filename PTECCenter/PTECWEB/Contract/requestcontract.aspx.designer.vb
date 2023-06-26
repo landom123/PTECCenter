@@ -1695,4 +1695,22 @@ Partial Public Class requestcontract
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Table2 As Global.System.Web.UI.WebControls.Table
+
+    '''<summary>
+    '''Tab8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Tab8 As Global.System.Web.UI.WebControls.View
+
+    '''<summary>
+    '''Table3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Table3 As Global.System.Web.UI.WebControls.Table
 End Class

@@ -95,6 +95,7 @@
                                                                         <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine; width :auto;' runat="server">เลขที่บัญชี</asp:TableHeaderCell> 
                                                                         <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine; width :auto;' runat="server">อัตราค่าเช่า</asp:TableHeaderCell> 
                                                                         <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine; width :auto;' runat="server">อัตราค่าเช่าร่วมธุรกิจ</asp:TableHeaderCell> 
+                                                                        <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine; width :auto;' runat="server">Tax Vendor</asp:TableHeaderCell> 
                                                                         <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine; width :auto;' runat="server">ก่อนหักภาษี ณ ที่จ่าย</asp:TableHeaderCell> 
                                                                         <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine; width :auto;' runat="server">หักภาษี ณ ที่จ่าย 5%</asp:TableHeaderCell> 
                                                                         <asp:TableHeaderCell ColumnSpan="1" RowSpan="2" style='margin:0 auto; text-align:center; background-color:mediumaquamarine; width :auto;'  runat="server">ยอดเงินโอน</asp:TableHeaderCell> 
@@ -161,14 +162,25 @@
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.js")%>"></script>
 
     <script type="text/javascript">
         jQuery('[id$=txtCalcDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
+            lang: 'th',// แสดงภาษาไทย
+            yearOffset: 543,// ใช้ปี พ.ศ. บวก 543 เพิ่มเข้าไปในปี ค.ศ  
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'
+           
         });
+
+        //$("#txtCalcDate").datetimepicker({
+        //    timepicker: false,
+        //    lang: 'th'  // แสดงภาษาไทย
+            
+        //});
+
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
@@ -178,6 +190,5 @@
 
         });
     </script>
-
 
 </asp:Content>
