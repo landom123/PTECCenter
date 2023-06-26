@@ -1547,19 +1547,25 @@
                 if (result.isConfirmed) {
                     //alert('in');
                     //var params = "{'approvalcode': '" + approvalcode + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
+                    let url = "../OPS/approval/WebForm5.aspx/disAcceptByCode";
+                    const cntSupplier = <%= cntSupplier %>??0;
+                    url = (cntSupplier > 0) ? "http://vpnptec.dyndns.org:32001/api/STK_unCompletedBy_User":"../OPS/approval/WebForm5.aspx/disAcceptByCode";
 
+                    //alert(url);
                     var params = `{"jobcode" : "${jobcode}","dtlid" : "${dtlid}","message" : "${result.value}","user" : "${usercode}"}`;
                     console.log(params);
                     $.ajax({
                         type: "POST",
-                        url: "../OPS/approval/WebForm5.aspx/disAcceptByCode",
+                        url: url,
                         async: true,
                         data: params,
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
-                            console.log(msg.d)
-                            if (msg.d) {
+                            console.log(msg);
+                            let res = msg.d ?? msg.message ?? msg;
+                            console.log(res);
+                            if (res) {
                                 swal.fire({
                                     title: "success!",
                                     text: "",
@@ -1568,7 +1574,8 @@
                                     window.location.href = location.href;
                                 });
                             } else {
-                                alertWarning('fail else')
+                                event.preventDefault();
+                                alertWarning('fail else');
                             }
                         },
                         error: function () {

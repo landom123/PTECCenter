@@ -21,7 +21,7 @@
             font-size: .8rem;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            width:100%;
         }
 
         /*####################### CSS FROM MODAL ########################*/

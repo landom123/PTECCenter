@@ -37,22 +37,6 @@ Public Class frmReportMontly
         If Not IsPostBack() Then
 
             Dim objprj As New Project
-            ''<<<<<<<<< Temporary merge branch 1
-            dtBranch = objprj.loadBranch
-            cboBranch.DataSource = dtBranch
-            cboBranch.DataValueField = "Brcode"
-            cboBranch.DataTextField = "Brname"
-            cboBranch.DataBind()
-
-
-
-            Dim objFilter As New Project
-            dtFilterPay = objFilter.loadFilterPay
-            cboPayDate.DataSource = dtFilterPay
-            cboPayDate.DataValueField = "ID"
-            cboPayDate.DataTextField = "FilterPay"
-            cboPayDate.DataBind()
-            '=========
             objprj.SetCboloadBranch(cboBranch)
             objprj.SetCboloadFilterPay(cboPayDate)
 
