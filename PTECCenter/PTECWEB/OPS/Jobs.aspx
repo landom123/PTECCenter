@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="row" >
+                    <div class="row">
                         <div class="col-md-4 mb-3">
                             <div class="input-group sm-3 shadow-sm">
                                 <div class="input-group-prepend w-100">
@@ -335,7 +335,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-lg-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text">ความเร่งด่วน</span>
@@ -343,7 +343,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-lg-4 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text">วันที่ต้องการ</span>
@@ -545,7 +545,8 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend w-100">
-                                            <span class="input-group-text">ความเร่งด่วน</span>
+                                            <span class="input-group-text">ความเร่งด่วน<h5 class="text-danger m-0">&nbsp;*&nbsp;</h5>
+                                            </span>
                                             <asp:DropDownList class="form-control" ID="cboPolicy"
                                                 runat="server" AutoPostBack="True" Style="width: 100%">
                                             </asp:DropDownList>
@@ -568,8 +569,7 @@
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text">เอกสารแนบ</span>
                                             <asp:Label ID="lblattatch" class="form-control" runat="server" Text=""></asp:Label>
-                                            <asp:FileUpload ID="FileUpload1" class="btn btn-sm  btn-secondary files" runat="server" text="เลือกไฟล์ " accept="image/*,.pdf" />
-                                            <asp:Button ID="btnUpload" class="btn btn-sm  btn-secondary" runat="server" Text="upload" />
+                                            <a href="#" id="btnDataAnalyGroupType" runat="server" title="DataAnalyGroupType" data-toggle="modal" data-target="#uploadfile"><i class="fas fa-plus"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -579,7 +579,9 @@
                                 <div class="col-md-10 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend w-100">
-                                            <span class="input-group-text">รายละเอียดงาน</span>
+                                            <span class="input-group-text">รายละเอียดงาน<h5 class="text-danger m-0">&nbsp;*&nbsp;</h5>
+                                            </span>
+
                                             <%--eivog24cbgm1fhi4pm2cg4pw1lp478mhyjjtxnzml4fi51pa--%>
                                             <asp:TextBox class="form-control" ID="txtJobDetail" runat="server" TextMode="MultiLine" autocomplete="off"></asp:TextBox>
                                         </div>
@@ -618,6 +620,36 @@
     </div>
     <!-- /#wrapper -->
 
+    <div class="modal fade bd-example-modal-lg analy" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="uploadfileModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadfileModal">กรุณาเลือกไฟล์และกดปุ่มตกลง</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <asp:FileUpload ID="FileUpload1" class="btn btn-sm  btn-secondary files" runat="server" text="เลือกไฟล์ " accept="image/*,.pdf" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="email-html"></div>
+                            <input type="hidden" name="jobitems" id="jobitems" runat="server" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                    <asp:Button ID="btnUpload" class="btn btn-primary" runat="server" Text="upload" />
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
