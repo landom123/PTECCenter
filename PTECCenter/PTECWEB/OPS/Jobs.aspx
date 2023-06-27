@@ -566,10 +566,12 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="input-group sm-3">
-                                        <div class="input-group-prepend w-100">
+                                        <div class="input-group-prepend">
                                             <span class="input-group-text">เอกสารแนบ</span>
-                                            <asp:Label ID="lblattatch" class="form-control" runat="server" Text=""></asp:Label>
-                                            <a href="#" id="btnDataAnalyGroupType" runat="server" title="DataAnalyGroupType" data-toggle="modal" data-target="#uploadfile"><i class="fas fa-plus"></i></a>
+                                        </div>
+                                        <asp:Label ID="lblattatch" class="form-control" runat="server" Text=""></asp:Label>
+                                        <div class="input-group-append">
+                                            <a href="#" id="btnUploadfile" class="btn btn-outline-info" runat="server" title="uploadfile" data-toggle="modal" data-target="#uploadfile"><i class="fas fa-paperclip"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -589,7 +591,7 @@
                                 </div>
 
                                 <div class="col-md-2 mb-3 d-flex justify-content-center align-items-center">
-                                    <asp:Button ID="btnAddDetail" class="btn btn-sm  btn-primary" runat="server" Text=" + " OnClientClick="validateData()" />&nbsp;
+                                    <asp:Button ID="btnAddDetail" class="btn btn-sm  btn-info" runat="server" Text=" + " OnClientClick="validateData()" />&nbsp;
                                 </div>
 
                             </div>
@@ -612,10 +614,10 @@
             <!-- Sticky Footer -->
 
         </div>
-        <!-- end content-wrapper -->
+    <!-- end content-wrapper -->
 
 
-        <!-- end เนื้อหาเว็บ -->
+    <!-- end เนื้อหาเว็บ -->
 
     </div>
     <!-- /#wrapper -->
@@ -624,7 +626,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="uploadfileModal">กรุณาเลือกไฟล์และกดปุ่มตกลง</h5>
+                    <h5 class="modal-title" id="uploadfileModal">กรุณาเลือกไฟล์และกดปุ่มอัปโหลด</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

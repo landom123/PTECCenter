@@ -275,13 +275,13 @@ Partial Public Class frmJobs
     Protected WithEvents lblattatch As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''btnDataAnalyGroupType control.
+    '''btnUploadfile control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnDataAnalyGroupType As Global.System.Web.UI.HtmlControls.HtmlAnchor
+    Protected WithEvents btnUploadfile As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
     '''txtJobDetail control.
