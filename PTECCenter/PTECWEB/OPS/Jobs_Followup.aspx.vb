@@ -207,7 +207,7 @@ Public Class JobsFollowup
                         If String.Equals(username, maintable.Rows(0).Item("jobowner")) Then
                             'If maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน" Then
 
-                            If statusnow = 4 Then
+                            If statusnow = 4 Or maintable.Rows(0).Item("supplierid") = 0 Then
                                 cardfour.Attributes.Remove("readonly") 'คะแนนการประเมิน
                                 cardfour.Attributes.Remove("style")
                                 btnSubmitRate.Visible = True
