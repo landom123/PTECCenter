@@ -322,6 +322,45 @@
 
 <!---->
 
+<!---->
+
+    <div class="modal fade" id="ModalAssetType" tabindex="-1" role="dialog" aria-labelledby="ModalAssetLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalAssetLabel">ประเภททรัพย์สิน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--  ##############  Detail ############### -->
+                    <input type="hidden" class="form-control" id="Hidden1" value="0" runat="server">
+                    <input type="hidden" class="form-control" id="Hidden2" value="0" runat="server">
+                    <input type="hidden" class="form-control" id="hidden3" value="0" runat="server">
+                    <div class="form-group d-none">
+                        <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtdocdate" runat="server" Text="วันที่เอกสาร" />
+                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="TextBox41" runat="server" autocomplete="off"></asp:TextBox>
+                    </div>
+        
+                        <div class="form-group">     
+                                   <asp:Label ID="lblAssetType"  Class="control-label" AssociatedControlID="lblAssetType" runat="server" Text="ประเภททรัพย์สิน" />
+                                   <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtAssetType" runat="server" autocomplete="off"></asp:TextBox>   
+                                                  
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" data-dismiss="modal">Close</button>              
+                    <asp:Button ID="btnAddTypeAsset" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text="Save" OnClientClick="AddNew();" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!---->
+
 
                 <div class="card-body" style="background-color:white ">
 
@@ -375,6 +414,12 @@
                                                     <span class="input-group-text" runat="server">ประเภทสัญญา</span>
                                                     </div>
                                                     <asp:DropDownList class="form-control" ID="cboContractType"  runat="server" ></asp:DropDownList>    
+                                                </div>
+                                                <div class="input-group sm-3" runat="server">
+                                                    <div class="input-group-prepend" runat="server">
+                                                    <span class="input-group-text" runat="server">ประเภทสัญญา</span>
+                                                    </div>
+                                                    <asp:DropDownList class="form-control" ID="DropDownList1"  runat="server" ></asp:DropDownList>    
                                                 </div>
                                             </div>
 
@@ -452,6 +497,7 @@
                                                 <asp:MenuItem  Text=" ทรัพย์สิน " Value="4"></asp:MenuItem>
                                                 <asp:MenuItem  Text=" เงือนไขค่าสัญญา(จ่ายแบบคงที่) " Value="2"></asp:MenuItem>
                                                 <asp:MenuItem  Text=" ช่องทางการชำระเงิน " Value="3"></asp:MenuItem>
+                                                <asp:MenuItem  Text=" ร่วมแนบ1 " Value="8"></asp:MenuItem>
                                                 <asp:MenuItem  Text=" ร่วมแนบ2 " Value="5"></asp:MenuItem>
                                                 <asp:MenuItem  Text=" ร่วมแนบ3 " Value="6"></asp:MenuItem>
                                                 <asp:MenuItem  Text=" ร่วมแนบ4 " Value="7"></asp:MenuItem>
@@ -467,7 +513,7 @@
 
                                                             <!---->
 
-                                                                    <div class="list-group-item list-group-item-light" >
+                                                                    <div class="list-group-item list-group-item-light"  runat="server">
                                                                                       <div class="row" style="padding-top: 1rem; " runat="server">
                                                                                             <span class="span" style="color:blue" runat="server">
                                                                                               คู่สัญญา(บุคคลธรรมดา)
@@ -487,7 +533,7 @@
                                                                                             <div class="col-md-3" runat="server">                                                
                                                                                                 <div class="input-group sm-3" runat="server" >
                                                                                                         <div class="input-group-prepend" runat="server">
-                                                                                                            <span class="input-group-text" >* เลขที่่บัตรประจำตัวประชาชน</span>
+                                                                                                            <span class="input-group-text"  runat="server" >* เลขที่่บัตรประจำตัวประชาชน</span>
                                                                                                         </div>
                                                                                                     <asp:TextBox class="form-control" ID="txtCardID" runat="server" ></asp:TextBox>
                                                                                                 </div>
@@ -504,7 +550,7 @@
 
                                                                                             <div class="col-md-3" runat="server">                                                 
                                                                                                 <div class="input-group sm-3" runat="server">
-                                                                                                        <div class="input-group-prepend" >
+                                                                                                        <div class="input-group-prepend"  runat="server">
                                                                                                             <span class="input-group-text" runat="server">เพศ</span>
                                                                                                         </div>
                                                                                                     <asp:dropdownlist class="form-control" ID="cboSex" runat="server" ></asp:dropdownlist>
@@ -551,7 +597,7 @@
                                                                                                 <div class="col-md-3" runat="server">                                                
                                                                                                     <div class="input-group sm-3" runat="server"> 
                                                                                                             <div class="input-group-prepend" runat="server">
-                                                                                                                <span class="input-group-text ">* รหัสไปรษณีย์</span>
+                                                                                                                <span class="input-group-text "  runat="server">* รหัสไปรษณีย์</span>
                                                                                                             </div>
                                                                                                         <asp:TextBox class="form-control" ID="txtPostcode" runat="server" ></asp:TextBox>
                                                                                                     </div>
@@ -580,53 +626,124 @@
                                                                                                 <div class="col-md-3" runat="server" style="padding-top: 1rem;">                                                
                                                                                                     <div class="input-group sm-3" runat="server">
                                                                                                             <div class="input-group-prepend" runat="server">
-                                                                                                                <span class="input-group-text">e-Mail</span>
+                                                                                                                <span class="input-group-text"  runat="server">e-Mail</span>
                                                                                                             </div>
                                                                                                         <asp:TextBox class="form-control" ID="txtPerEmail" runat="server" ></asp:TextBox>
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                         </div>
-                                                                                      <div class="row col-md-3" style="padding-top: 1rem;">
+
+
+                                                                                              <div class="row col-sm-3 span2" style="padding-top: 1rem;" runat="server">
+                                                                                               <%--     <span class="span2" style="color:blue" runat="server">--%>
+                                                                                                      ที่อยู่ส่งเอกสาร
+                                                                                                    <%--</span>--%>
+                                                                                              </div>
+
+                                                                                        <div class="row" style="padding-top: 1rem;" runat="server">                                       
+                                                                                                <div class="col-md-12" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server"> 
+                                                                                                                <span class="input-group-text" runat="server">ที่อยู่</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtSendAddr" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                        </div>
+
+                                                                                        <div class="row" style="padding-top: 1rem;">
+                                                                                                                                                                        
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">ตำบล/แขวง</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtSendSubdistrict" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">อำเภอ/เขต</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtSendDistrict" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" >
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">จังหวัด</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtSendProvince" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                       
+                                       
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server"> 
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text ">รหัสไปรษณีย์</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtSendPostCode" runat="server" ></asp:TextBox>
+                                                                                                    </div>                                                                             
+                                                                                                </div>
+                                      
+                                                                                                <div class="col-md-3" runat="server" style="padding-top: 1rem;">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">เบอร์โทร</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtSendTel" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                        
+                                                                                        </div>
+
+                                                                                              <div class="row col-sm-3 span2" style="padding-top: 1rem;" runat="server">
+                                                                                               <%--     <span class="span2" style="color:blue" runat="server">--%>
+                                                                                                      ผู้ติดต่อ
+                                                                                                    <%--</span>--%>
+                                                                                              </div>
+
+                                                                                        <div class="row" style="padding-top: 1rem;">
+
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">ผู้ติดต่อ</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtContractPer" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">ความสัมพันธ์</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="TxtRelationPer" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" >
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">เบอร์โทร</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtContractTelPer" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                        </div>
+
+                                                                                      <div class="row col-md-3" style="padding-top: 1rem;"  runat="server">
                                                                                         <asp:Button ID="btnAddPerCon" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" เพิ่มคู่สัญญา " />
                                                                                         <asp:Button ID="btnEditPerCon" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" แก้คู่สัญญา " />
                                                                                       </div>
-                                                    <%--                                  <div class="row" style="padding-top: 1rem;">
-                                                                                            <div class="table-responsive">
- 
-                                                                                                <div class="table-responsive" runat="server" >
-                                                                                                    <asp:Table id="tblContractPer" class="table table-bordered table-condensed table-hover pnlstudentDetails" style='font-family:Tahoma, Courier, monospace; font-size:8pt;' 
-                                                                                                                            runat="server" GridLines="Both" cellspacing="0" cellpadding="5" border="1" PageSize="10" >
-                                                                                                        <asp:TableHeaderRow TableSection="TableHeader" runat="server">
-                                                                                                            <asp:TableHeaderCell ColumnSpan="2" style='margin:0 auto; text-align:center; background-color:lightskyblue;' runat="server">คู่สัญญา</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell ColumnSpan="6" style='margin:0 auto; text-align:center; background-color:yellowgreen;' runat="server">ที่อยู่</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell colspan="3" style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">ติดต่อ</asp:TableHeaderCell>
-                                                                                                        </asp:TableHeaderRow>
-                                                                                                        <asp:TableHeaderRow runat="server">
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:lightskyblue;' runat="server">ชื่อ-สกุล"</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:lightskyblue;' runat="server">เลขที่บัตรประชาชน</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:yellowgreen;' runat="server">เลขที่</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:yellowgreen;' runat="server">ที่อยุ่</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:yellowgreen;' runat="server">ตำบล</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:yellowgreen;' runat="server">อำเภอ</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:yellowgreen;' runat="server">จังหวัด</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:yellowgreen;' runat="server">ไปรษณีย์</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">โทร</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">Line</asp:TableHeaderCell>
-                                                                                                            <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:whitesmoke;' runat="server">E-Mail</asp:TableHeaderCell>
-                                                                                                        </asp:TableHeaderRow>
-                                           
-                                                                                                    </asp:Table>
-
-                                                                                                </div>
-                                                                                           </div>
-                                                                                    </div>--%>
-
 
                                                                                     <!---->
                                                                                                     <div class="card-body">
 
-                                                                                                        <div class="table-responsive">
+                                                                                                        <div class="table-responsive"  runat="server">
                                                                                                             <asp:GridView ID="gvContractPer"
                                                                                                                 class="table table-striped table-bordered"
                                                                                                                 AllowSorting="True"
@@ -663,8 +780,7 @@
 
                                                                                                     </div>
                                                                                     <!---->
-                                                                        <%--, , , , , , , , , , ,,--%>
-                                
+                                                                                                      
                                                                             </div>
 
                                                             <!---->
@@ -679,21 +795,21 @@
 
                                             </asp:View>
                                             <asp:View ID="Tab2" runat="server">
-                                                <table width="100%"  cellpadding="0" cellspacing="0">
+                                                <table width="100%"  cellpadding="0" cellspacing="0"  runat="server">
                                                     <tr valign="top">
-                                                        <td class="TabArea" style="width: 100%"> 
+                                                        <td class="TabArea" style="width: 100%"  runat="server"> 
 
                                                                   <div class="row" style="padding-top: 1rem; " runat="server">
                                                                         <span class="span" style="color:blue" runat="server">
                                                                           คู่สัญญา(นิติบุคคล)
                                                                         </span>
                                                                   </div>
-                                                                  <div class="card-body" style="background-color:silver  ">
-                                                                      <div class="row" style="padding-top: 1rem;">
-                                                                            <div class="col-md-3">                                                
-                                                                                <div class="input-group sm-3">
-                                                                                        <div class="input-group-prepend">
-                                                                                            <span class="input-group-text">* ชื่อบริษัท</span>
+                                                                  <div class="card-body" style="background-color:silver  "  runat="server">
+                                                                      <div class="row" style="padding-top: 1rem;"  runat="server">
+                                                                            <div class="col-md-3"  runat="server">                                                
+                                                                                <div class="input-group sm-3"  runat="server">
+                                                                                        <div class="input-group-prepend"  runat="server">
+                                                                                            <span class="input-group-text"  runat="server">* ชื่อบริษัท</span>
                                                                                         </div>
                                                                                     <asp:TextBox class="form-control" ID="txtCompany" runat="server" ></asp:TextBox>
                                                                                 </div>
@@ -730,19 +846,19 @@
                                                                                     <asp:TextBox class="form-control" ID="txtProvinceCom" runat="server" ></asp:TextBox>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-2" style="padding-top: 1rem;">                                               
-                                                                                <div class="input-group sm-2">
-                                                                                        <div class="input-group-prepend">
-                                                                                            <span class="input-group-text">* ไปรษณีย์</span>
+                                                                            <div class="col-md-2" style="padding-top: 1rem;"  runat="server">                                               
+                                                                                <div class="input-group sm-2"  runat="server">
+                                                                                        <div class="input-group-prepend"  runat="server">
+                                                                                            <span class="input-group-text"  runat="server">* ไปรษณีย์</span>
                                                                                         </div>
                                                                                     <asp:TextBox class="form-control" ID="txtPostCodeCom" runat="server" ></asp:TextBox>
                                                                                 </div>
                                                                             </div>                                       
 
-                                                                            <div class="col-md-3" style="padding-top: 1rem;">                                               
-                                                                                <div class="input-group sm-3">
-                                                                                        <div class="input-group-prepend">
-                                                                                            <span class="input-group-text">Mobile Phone</span>
+                                                                            <div class="col-md-3" style="padding-top: 1rem;"  runat="server">                                               
+                                                                                <div class="input-group sm-3"  runat="server">
+                                                                                        <div class="input-group-prepend"  runat="server">
+                                                                                            <span class="input-group-text"  runat="server">Mobile Phone</span>
                                                                                         </div>
                                                                                     <asp:TextBox class="form-control" ID="txtMobile" runat="server" ></asp:TextBox>
                                                                                 </div>
@@ -752,7 +868,7 @@
 
 
                                                                   <!---->
-                                                <div class="list-group-item list-group-item-light" >
+                                                <div class="list-group-item list-group-item-light"  runat="server">
                                                                         <div class="col-md-3" runat="server"> 
                                                                               <div class="row" style="padding-top: 1rem; " runat="server">
                                                                                     <span class="span2" style="color:blue" runat="server">
@@ -799,7 +915,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="row" style="padding-top: 1rem;">  
+                                                                    <div class="row" style="padding-top: 1rem;"  runat="server">  
                                                                             <div class="col-md-2" runat="server">                                                
                                                                                 <div class="input-group sm-2" runat="server">
                                                                                         <div class="input-group-prepend" runat="server">
@@ -840,9 +956,7 @@
                                                                                             <span class="input-group-text ">* รหัสไปรษณีย์</span>
                                                                                         </div>
                                                                                     <asp:TextBox class="form-control" ID="txtPostCodeComPer" runat="server" ></asp:TextBox>
-                                                                                </div>
-                                                                                 <asp:TextBox  style="display:none" class="form-control" ID="TextBox8" runat="server" ></asp:TextBox>
-                                                                                 <asp:TextBox  style="display:none" class="form-control" ID="TextBox9" runat="server" ></asp:TextBox>
+                                                                                </div>                                                                              
                                                                             </div>
                                       
                                                                             <div class="col-md-2" runat="server" style="padding-top: 1rem;">                                                
@@ -873,6 +987,108 @@
                                                                             </div>
 
                                                                     </div>
+
+                                                                                        <div class="row col-sm-3 span2" style="padding-top: 1rem;" runat="server">
+                                                                                               <%--     <span class="span2" style="color:blue" runat="server">--%>
+                                                                                                      ที่อยู่ส่งเอกสาร
+                                                                                                    <%--</span>--%>
+                                                                                        </div>
+
+                                                                                        <div class="row" style="padding-top: 1rem;" runat="server">                                       
+                                                                                                <div class="col-md-12" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server"> 
+                                                                                                                <span class="input-group-text" runat="server">ที่อยู่</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComAddrSend" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                        </div>
+
+                                                                                        <div class="row" style="padding-top: 1rem;"  runat="server">
+                                                                                                                                                                        
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">ตำบล/แขวง</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComSubdistrictSend" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">อำเภอ/เขต</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComDistrictSend" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" >
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">จังหวัด</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComProvinceSend" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                       
+                                       
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server"> 
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text ">รหัสไปรษณีย์</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComPostCodeSend" runat="server" ></asp:TextBox>
+                                                                                                    </div>                                                                             
+                                                                                                </div>
+                                      
+                                                                                                <div class="col-md-3" runat="server" style="padding-top: 1rem;">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">เบอร์โทร</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComTelSend" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                        
+                                                                                        </div>
+
+                                                                                              <div class="row col-sm-3 span2" style="padding-top: 1rem;" runat="server">
+                                                                                               <%--     <span class="span2" style="color:blue" runat="server">--%>
+                                                                                                      ผู้ติดต่อ
+                                                                                                    <%--</span>--%>
+                                                                                              </div>
+
+                                                                                        <div class="row" style="padding-top: 1rem;"  runat="server">
+
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">ผู้ติดต่อ</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComContractCom" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" runat="server">
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">ความสัมพันธ์</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComRelation" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-3" runat="server">                                                
+                                                                                                    <div class="input-group sm-3" >
+                                                                                                            <div class="input-group-prepend" runat="server">
+                                                                                                                <span class="input-group-text" runat="server">เบอร์โทร</span>
+                                                                                                            </div>
+                                                                                                        <asp:TextBox class="form-control" ID="txtComTelCom" runat="server" ></asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                        </div>
+
+
 
                                                                   <!---->
                                                                   <div class="row col-md-3" style="padding-top: 1rem;">
@@ -981,7 +1197,7 @@
                                             <asp:View ID="Tab3" runat="server">
                                                 <table width="100%"  cellpadding="0" cellspacing="0">
                                                     <tr valign="top">                           
-                                                        <td class="TabArea" style="width: 100%"
+                                                        <td class="TabArea" style="width: 100%">
 
                                                                     <div class="col-md-3" runat="server"> 
                                                                           <div class="row" style="padding-top: 1rem; " runat="server">
@@ -1361,132 +1577,264 @@
 
                                                                         <%-- input area --%>
                                                                         <div class="row" style="padding-top: 0.2rem;">
-                                                                            <div class="col-md-3">                           
-                                                                                <div class="input-group sm-3">
-                                                                                     รหัสทรัพย์สิน &nbsp
-                                                                                    <asp:Textbox class="form-control" ID="txtAssetsNo" placeholder="please save first" runat="server" ReadOnly="true"></asp:Textbox>    
+                                                                            <div class="col-md-3" runat="server" >                           
+                                                                                <div class="input-group-prepend" runat="server">                                                                                     
+                                                                                    <span class="input-group-text">รหัสทรัพย์สิน</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetsNo" placeholder="please save first" runat="server" ReadOnly="true"></asp:Textbox>   
+                                                                                
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-3">                            
-                                                                                <div class="input-group sm-3">
-                                                                                    ประเภทที่ดิน &nbsp
-                                                                                    <asp:DropDownList class="form-control" ID="cboAssetType" runat="server"></asp:DropDownList>    
-                                                                                </div>
-                                                                            </div>
+                                                                                                                                      
 
+                                                                            <div class="col-md-3" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">
+                                                                                    <span class="input-group-text">ประเภททรัพย์สิน</span>
+                                                                                    <asp:DropDownList class="form-control" ID="cboAssetType" runat="server"></asp:DropDownList>  
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                                    <div class="row" runat="server">
+                                                                                         <button type="button" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" id="btnAddAssetType" runat="server" 
+                                                                                                                    data-toggle="modal" data-target="#ModalAssetType" data-backdrop="static" data-keyboard="false" data-whatever="new">เพิ่มประเภท</button>
+                                                                                    </div> 
                                                                         </div>
-                                                                        <div class="row" style="padding-top: 0.2rem;">
-                                                                            <div class="col-md-3">                            
-                                                                                <div class="input-group sm-3">
-                                                                                    เลขที่โฉนด/เอกสารสิทธิ์ &nbsp
+
+                                                                        <div class="row col-sm-3 span2" style="padding-top: 1rem;" runat="server">
+                                                                                               <%--     <span class="span2" style="color:blue" runat="server">--%>
+                                                                                 เนื้อที่ทั้งหมด
+                                                                                                    <%--</span>--%>
+                                                                        </div>
+
+                                                                        <div class="row" style="padding-top: 0.2rem;" runat="server">
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">                                                                                   
+                                                                                    <span class="input-group-text">เลขที่โฉนด/เอกสารสิทธิ์</span>
                                                                                     <asp:Textbox class="form-control" ID="txtLandno" runat="server"></asp:Textbox>    
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-3">                            
-                                                                                <div class="input-group sm-3">
-                                                                                    เลขที่หน้าสำรวจ &nbsp
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">เลขที่หน้าสำรวจ</span>
                                                                                     <asp:Textbox class="form-control" ID="txtSurveyNo" runat="server"></asp:Textbox>  
                                                                                 </div>
                                                                             </div>
 
                                                                         </div>
-                                                                        <div class="row" style="padding-top: 0.2rem;">
-                                                                            <div class="col-md-3">                           
-                                                                                <div class="input-group sm-3">
-                                                                                     ตำบล &nbsp
-                                                                                    <asp:Textbox class="form-control" ID="Textbox2" runat="server"></asp:Textbox>    
+                                                                        <div class="row" style="padding-top: 0.2rem;" runat="server">
+
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">ที่อยู่</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetAddr" runat="server"></asp:Textbox>    
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-3">                            
-                                                                                <div class="input-group sm-3">
-                                                                                    อำเภอ &nbsp
-                                                                                    <asp:Textbox class="form-control" ID="Textbox3" runat="server"></asp:Textbox>  
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">ตำบล</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetSubdistrict" runat="server"></asp:Textbox>    
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-3">                           
-                                                                                <div class="input-group sm-3">
-                                                                                     จังหวัด &nbsp
-                                                                                    <asp:Textbox class="form-control" ID="Textbox4" runat="server"></asp:Textbox>  
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">อำเภอ</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetDistrict" runat="server"></asp:Textbox>  
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">จังหวัด</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetProvince" runat="server"></asp:Textbox>  
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">
+                                                                                    <span class="input-group-text">ไปรษณีย์</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssPostCode" runat="server"></asp:Textbox>  
+                                                                                </div>
+                                                                            </div> 
 
                                                                         </div>
-                                                                        <div class="row" style="padding-top: 0.2rem;">
-                                                                            <div class="col-md-3">
-                                                                                ทั้งแปลง/แบ่งเช่า &nbsp
-                                                                                <div class="input-group sm-3">
-                                                                                    <asp:RadioButton ID="rdoFull" runat="server" groupname= "fullarea" text=" ทั้งแปลง " Checked="true"/> &nbsp;&nbsp;
-                                                                                    <asp:RadioButton ID="rdoPart" runat="server" groupname= "fullarea" text=" แบ่งเช่า " />
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-3">                           
-                                                                                <div class="input-group sm-3">
-                                                                                     ไร่ &nbsp
+                                                                        <div class="row" style="padding-top: 0.2rem;" runat="server">
+
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">                                                                                     
+                                                                                    <span class="input-group-text">ไร่</span>
                                                                                     <asp:Textbox class="form-control" ID="txtRai" runat="server"></asp:Textbox>  
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-3">                           
-                                                                                <div class="input-group sm-3">
-                                                                                     งาน &nbsp
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">   
+                                                                                    <span class="input-group-text">งาน</span>
                                                                                     <asp:Textbox class="form-control" ID="txtNgan" runat="server"></asp:Textbox>  
+                                                                                </div>
+                                                                            </div>                                                                                                                                                  
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">   
+                                                                                    <span class="input-group-text">ตารางวา</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtWa" runat="server"></asp:Textbox>    
+                                                                                </div>
+                                                                            </div>                                                                           
+                                                                        </div>
+
+                                                                        <div class="row col-sm-3 span2" style="padding-top: 1rem;" runat="server">
+                                                                                               <%--     <span class="span2" style="color:blue" runat="server">--%>
+                                                                                 แบ่งเช่าบางส่วน
+                                                                                                    <%--</span>--%>
+                                                                        </div>
+
+                                                                        <div class="row" style="padding-top: 0.2rem;" runat="server">
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">                                                                                   
+                                                                                    <span class="input-group-text">เลขที่โฉนด/เอกสารสิทธิ์</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetDocno" runat="server"></asp:Textbox>    
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">เลขที่หน้าสำรวจ</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetSurvey" runat="server"></asp:Textbox>  
                                                                                 </div>
                                                                             </div>
 
                                                                         </div>
-                                                                        <div class="row" style="padding-top: 0.2rem;">
-                                                                            <div class="col-md-3">                           
-                                                                                <div class="input-group sm-3">
-                                                                                     ตารางวา &nbsp
-                                                                                    <asp:Textbox class="form-control" ID="txtWa" runat="server"></asp:Textbox>    
+<%--                                                                        <div class="row" style="padding-top: 0.2rem;" runat="server">
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">ตำบล</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetSubdistrict1" runat="server"></asp:Textbox>    
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-3">                           
-                                                                                <div class="input-group sm-3">
-                                                                                     พิกัด GPS &nbsp
-                                                                                    <asp:Textbox class="form-control" ID="txtGPS" runat="server"></asp:Textbox>  
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">อำเภอ</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetDistrict1" runat="server"></asp:Textbox>  
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server"> 
+                                                                                    <span class="input-group-text">จังหวัด</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAssetProvince1" runat="server"></asp:Textbox>  
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">
+                                                                                    <span class="input-group-text">ไปรษณีย์</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtAss" runat="server"></asp:Textbox>  
+                                                                                </div>
+                                                                            </div> 
 
+                                                                        </div>--%>
+                                                                        <div class="row" style="padding-top: 0.2rem;" runat="server">
+
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">                                                                                     
+                                                                                    <span class="input-group-text">ไร่</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtRai1" runat="server"></asp:Textbox>  
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">   
+                                                                                    <span class="input-group-text">งาน</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtNgan1" runat="server"></asp:Textbox>  
+                                                                                </div>
+                                                                            </div>                                                                                                                                                  
+                                                                            <div class="col-md-2" runat="server">                            
+                                                                                <div class="input-group-prepend" runat="server">   
+                                                                                    <span class="input-group-text">ตารางวา</span>
+                                                                                    <asp:Textbox class="form-control" ID="txtWa1" runat="server"></asp:Textbox>    
+                                                                                </div>
+                                                                            </div>                                                                           
                                                                         </div>
 
                                                                         <br />
+                                                                                        <div class="row col-sm-3 span2" style="padding-top: 1rem;" runat="server">                                                                                                               
+                                                                                                 เช่าสิ่งปลูกสร้าง                                                                                                                 
+                                                                                        </div>
 
-                                                                                    <div class="row" id="dvShowHide"  >
-                                                                                         <%--<div class="row" style="padding-top: 0.2rem;">--%>
-                                                                                            <div class="col-md-12">
-                                                                                                 <span class="input-group-text" style="background-color:green ;color:white" runat="server" > พร้อมสิ่งปลูกสร้าง </span>                                                   
-                                                                                            </div>
-                                                                                         <%--</div>--%>
-
+                                                                                    <div class="row" style="padding-top: 0.2rem;" runat="server">
+                                                                            
                                                                                         <div class="row" style="padding-top: 0.5rem;">
-                                                                                            <div class="col-md-3">                                            
-                                                                                                <div class="input-group sm-3">
-                                                                                                    สิ่งปลูกสร้างเลขที่ &nbsp
+                                                                                            <div class="col-md-4" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">  
+                                                                                                    <span class="input-group-text">สิ่งปลูกสร้างเลขที่</span>
                                                                                                     <asp:Textbox class="form-control" ID="txtbuNo" runat="server"></asp:Textbox>    
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="col-md-3">                                            
-                                                                                                <div class="input-group sm-3">
-                                                                                                    ตำบล &nbsp
+
+                                                                                            <div class="col-md-2" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">                                                                                     
+                                                                                                    <span class="input-group-text">ไร่</span>
+                                                                                                    <asp:Textbox class="form-control" ID="txtRai2" runat="server"></asp:Textbox>  
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-2" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">   
+                                                                                                    <span class="input-group-text">งาน</span>
+                                                                                                    <asp:Textbox class="form-control" ID="txtNgan2" runat="server"></asp:Textbox>  
+                                                                                                </div>
+                                                                                            </div>                                                                                                                                                  
+                                                                                            <div class="col-md-2" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">   
+                                                                                                    <span class="input-group-text">ตารางวา</span>
+                                                                                                    <asp:Textbox class="form-control" ID="txtWa2" runat="server"></asp:Textbox>    
+                                                                                                </div>
+                                                                                            </div> 
+
+                                                                                  <%--          <div class="col-md-2" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">
+                                                                                                    <span class="input-group-text">ตำบล</span>
                                                                                                     <asp:Textbox class="form-control" ID="txtbuSubDistrict" runat="server"></asp:Textbox>    
                                                                                                 </div>
                                                                                             </div>
-                                                                                        <%--</div>--%>
-                             
-                                                                                        <%--<div class="row" style="padding-top: 0.5rem;">--%>
-                                                                                            <div class="col-md-3">                                           
-                                                                                                <div class="input-group sm-3">
-                                                                                                     อำเภอ &nbsp
+                                                                            
+                                                                                            <div class="col-md-2" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">
+                                                                                                    <span class="input-group-text">อำเภอ</span>
                                                                                                     <asp:Textbox class="form-control" ID="txtbuDistrict" runat="server"></asp:Textbox>  
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="col-md-3">                                           
-                                                                                                <div class="input-group sm-3">
-                                                                                                     จังหวัด &nbsp
+                                                                                            <div class="col-md-2" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">
+                                                                                                    <span class="input-group-text">จังหวัด</span>
                                                                                                     <asp:Textbox class="form-control" ID="txtbuProvince" runat="server"></asp:Textbox>  
                                                                                                 </div>
                                                                                             </div>    
+                                                                                            <div class="col-md-2" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">
+                                                                                                    <span class="input-group-text">ไปรษณีย์</span>
+                                                                                                    <asp:Textbox class="form-control" ID="txtbuPostCode" runat="server"></asp:Textbox>  
+                                                                                                </div>
+                                                                                            </div> --%>
+                                                                                            <div class="col-md-4" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">  
+                                                                                                    <span class="input-group-text">หมายเหตุ</span>
+                                                                                                    <asp:Textbox class="form-control" ID="txtAssetRemark" runat="server"></asp:Textbox>    
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-4" runat="server">                            
+                                                                                                <div class="input-group-prepend" runat="server">  
+                                                                                                    <span class="input-group-text">หมายเหตุ2</span>
+                                                                                                    <asp:Textbox class="form-control" ID="txtAssetRemark2" runat="server"></asp:Textbox>    
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>     
+                                                                                    </div>
+
+                                                                                    <div class="row" style="padding-top: 0.2rem;" runat="server">
+                                                                                        <div class="col-md-4" runat="server">
+                                                                                            <INPUT id="File4" type="file" runat="server" NAME="oFile">
+                                                                                            <asp:button id="Button4" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:Panel ID="Panel4" Visible="False" Runat="server">
+                                                                                                <asp:Label id="Label5" Runat="server"></asp:Label>
+                                                                                            </asp:Panel>
+                                                                                        </div>
+                                                                                        <div class="col-md-4" runat="server">
+                                                                                            <INPUT id="File5" type="file" runat="server" NAME="oFile">
+                                                                                            <asp:button id="Button5" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:Panel ID="Panel5" Visible="False" Runat="server">
+                                                                                                <asp:Label id="Label6" Runat="server"></asp:Label>
+                                                                                            </asp:Panel>
+                                                                                        </div>
                                                                                     </div>
 
 
@@ -1497,6 +1845,56 @@
                                                                         <asp:Button ID="btnEditasset" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" แก้ไขทรัพย์สิน " />
                                                                       </div>
 
+                                                                                    <div class="row" style="padding-top: 1rem;">
+
+                                                                                        <div class="table-responsive">
+                                                                                            <asp:GridView ID="gvAsset"
+                                                                                                class="table table-striped table-bordered"
+                                                                                                AllowSorting="True"
+                                                                                                AllowPaging="false"
+                                                                                                AutoGenerateColumns="false"
+                                                                                                EmptyDataText=" ไม่มีข้อมูล "                                     
+                                                                                                OnRowDataBound="OnRowDataBoundPayment"
+                                                                                                OnSelectedIndexChanged="OnSelectedIndexChangedPayment"
+                                                                                                runat="server" CssClass="table table-striped">
+                                                                                                <HeaderStyle BackColor="#507CD1" Font-Bold="false" Font-Size="Smaller" ForeColor="White" />
+                                                                                                <AlternatingRowStyle BackColor="#CCCCFF" />
+
+                                                                                                <Columns>                                                             
+                                                                                                    <asp:BoundField DataField="DocNo" HeaderText="DocNo" />
+                                                                                                    <asp:BoundField DataField="AsstypeID" HeaderText="AsstypeID" />
+                                                                                                    <asp:BoundField DataField="ServayNo" HeaderText="ServayNo" />
+                                                                                                    <asp:BoundField DataField="Addr" HeaderText="Addr" />
+                                                                                                    <asp:BoundField DataField="SubDistrict" HeaderText="SubDistrict" />
+                                                                                                    <asp:BoundField DataField="District" HeaderText="District" />
+                                                                                                    <asp:BoundField DataField="Province" HeaderText="Province" />                                                               
+                                                                                                    <asp:BoundField DataField="PostCode" HeaderText="PostCode" />
+                                                                                                    <asp:BoundField DataField="RoadTo" HeaderText="RoadTo" />
+                                                                                                    <asp:BoundField DataField="Area" HeaderText="Area" />
+                                                                                                    <asp:BoundField DataField="Farm" HeaderText="Farm" />
+                                                                                                    <asp:BoundField DataField="Squarewah" HeaderText="Squarewah" />
+                                                                                                    <asp:BoundField DataField="Lanno" HeaderText="Lanno" />
+                                                                                                    <asp:BoundField DataField="Area1" HeaderText="Area1" />
+                                                                                                    <asp:BoundField DataField="Farm1" HeaderText="Farm1" />
+                                                                                                    <asp:BoundField DataField="Squarewah1" HeaderText="Squarewah1" />
+                                                                                                    <asp:BoundField DataField="Buno" HeaderText="Buno" />
+                                                                                                    <asp:BoundField DataField="Area2" HeaderText="Area2" />
+                                                                                                    <asp:BoundField DataField="Farm2" HeaderText="Farm2" />
+                                                                                                    <asp:BoundField DataField="Squarewah2" HeaderText="Squarewah2" />
+                                                                                                    <asp:BoundField DataField="Remark" HeaderText="Remark" />
+                                                                                                    <asp:BoundField DataField="Remark1" HeaderText="Remark1" />
+                                                                                                    <asp:BoundField DataField="pic1" HeaderText="pic1" />
+                                                                                                    <asp:BoundField DataField="pic2" HeaderText="pic2" />
+                                                                                                    <asp:BoundField DataField="ID" HeaderText="ID" />
+                                                                                                    <asp:BoundField DataField="ItemNo" HeaderText="ItemNo" />
+                                                                                                </Columns>
+                                                                                            </asp:GridView>
+
+                                                                                        </div>
+                                                                                        <!-- end Table payment-->
+
+                                                                                    </div>
+                                                          
 
                                                         </td>
                                                     </tr>
@@ -1850,8 +2248,7 @@
                                                                         </div>
                                                                       
                                                                             <div class="row" style="padding-top: 1rem;">
-                                                                                    ค่าตอบแทนแก่ผู้ร่วมธุรกิจ		
-
+                                                                                    ค่าตอบแทนแก่ผู้ร่วมธุรกิจ	
                                                                             </div>
 
                                                                                     <div class="table-responsive">
@@ -1862,7 +2259,7 @@
                                                                                                 <asp:TableHeaderRow TableSection="TableHeader" runat="server">
                                                                                                 <asp:TableHeaderCell RowSpan="2" style='margin:0 auto; text-align:center; background-color:white;' runat="server">ลำดับ</asp:TableHeaderCell>
                                                                                                 <asp:TableHeaderCell RowSpan="2" style='margin:0 auto; text-align:center; background-color:white;' runat="server">อัตราค่าตอบ</asp:TableHeaderCell>
-                                                                                                <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server">จำนวนเงิน((บาท))</asp:TableHeaderCell>
+                                                                                                <asp:TableHeaderCell style='margin:0 auto; text-align:center; background-color:white;' runat="server">จำนวนเงิน((บาท)</asp:TableHeaderCell>
                                                           
                                                                                                 </asp:TableHeaderRow>
                                                                                                 <asp:TableHeaderRow runat="server">
@@ -1886,7 +2283,7 @@
 
                                                                                         <div class="row">
                                                                                              <span  class="span" >   เงื่อนไขการจ่ายค่าตอบแทนร่วมธุรกิจ	</span><br />
-                                                                                                (1).  	ค่าตอบแทนร่วมธุรกิจกำหนดจ่ายปีละ 1 ครั้งโดยที่ปลอดค่าร่วมธุรกิจและค่าเช่า.......   (....... ถึง 30 ...... )	<br />
+                                                                                                (1).  	ค่าตอบแทนร่วมธุรกิจกำหนดจ่ายปีละ 1 ครั้งโดยที่ปลอดค่าร่วมธุรกิจและค่าเช่า.......   (......... ถึง ........ )	<br />
 	                                                                                                ค่าร่วมธุรกิจล่วงหน้า ชำระในวันที่จดทะเบียนเช่า แล้วเสร็จ	<br />
                                                                                                 กรณีรายเดือน	ค่าตอบแทนร่วมธุรกิจต่อเดือน [ .......... ถึง ......] ของแต่ละเดือน ชำระ ภายในวันที่ 15  ของเดือนนั้น ๆ โดยเริ่มตั้งแต่ เดือน .... ..... เป็นต้นไป 	<br />
 	                                                                                                ค่าตอบแทนร่วมธุรกิจต่อปี [.......... ถึง ......] ของแต่ละปี ชำระ ภายในวันที่ 15 .... ของปีนั้น ๆ 	<br />
@@ -1901,6 +2298,35 @@
                                                                                    </div>
 
                                             </asp:View>
+
+                                            <asp:View ID="Tab9" runat="server">
+                                                    <div class="input-group sm-col-2" >   
+                                                        <span class="input-group-text">เอกสารแนบท้าย 1  </span>
+                                                                           
+                                                    </div>
+                                                                      
+
+                                             <%--       <div class="input-group sm-3">
+                                                        <asp:RadioButton ID="rdoFull" runat="server" groupname= "fullarea" text=" สัญญาร่วมธุรกิจ+เช่า " Checked="true"/> &nbsp;&nbsp;
+                                                        <asp:RadioButton ID="rdoPart" runat="server" groupname= "fullarea" text=" สัญญาเช่า " />
+                                                    </div>--%>
+
+                                            <%--        <div class="col-4">
+                                           
+                                                                <div class="input-group sm-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">สัญญา</span>
+                                                                    </div>
+                                                                    <asp:DropDownList class="form-control" ID="DropDownList2"  runat="server" ></asp:DropDownList>    
+                                                                </div>
+                                           
+                                                    </div>--%>
+
+                                            </asp:View>
+                                            <asp:View ID="Tab10" runat="server">
+
+                                            </asp:View>
+                              
                                         </asp:MultiView>
 
 
