@@ -79,7 +79,7 @@ Public Class frmReportMontly
         End If
 
         dcalcdate = DateAdd(DateInterval.Year, -543, CDate(txtCalcDate.Text)) 'DateTime.Parse(txtDueDate.Text)
-        calcdate = DateTime.Parse(dcalcdate).Year & DateTime.Parse(dcalcdate).Month.ToString("00")
+        calcdate = dcalcdate.Year & dcalcdate.Month.ToString("00")
         Session("calcdate") = calcdate
         Try
             mytable = payment.MonthlyPayment2(calcdate, cboBranch.SelectedValue, cboPayDate.SelectedValue, dcalcdate.ToString("yyyyMMdd", dtinfo))
