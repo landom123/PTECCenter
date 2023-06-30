@@ -466,7 +466,7 @@ Public Class projectinfo
             dBegindate = DateAdd(DateInterval.Year, -543, CDate(txtBegindate.Text))
             dEnddate = DateAdd(DateInterval.Year, -543, CDate(txtEnddate.Text))
 
-            dt = objReq.FindRequest(dBegindate.ToString("yyyyMMdd", dtinfo), dEnddate.ToString("yyyyMMdd", dtinfo), 2)
+            dt = objReq.FindRequest(dBegindate.ToString("yyyyMMdd", dtinfo), dEnddate.ToString("yyyyMMdd", dtinfo), 2, "", "")
 
             gvRequest.DataSource = dt
             gvRequest.DataBind()

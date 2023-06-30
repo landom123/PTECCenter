@@ -233,7 +233,7 @@ Public Class contractinfo
                 btnSave.Enabled = True
                 'btnNewAgree.Enabled = True
                 btnNew.Enabled = True
-                btnDel.Enabled = False
+                'btnDel.Enabled = False
 
                 btnAssets.Enabled = True
                 btnFlexible.Enabled = True
@@ -247,7 +247,7 @@ Public Class contractinfo
                 btnSave.Enabled = False
                 'btnNewAgree.Enabled = True
                 btnNew.Enabled = False
-                btnDel.Enabled = False
+                'btnDel.Enabled = False
 
                 btnAssets.Enabled = False
                 btnFlexible.Enabled = False
@@ -255,6 +255,7 @@ Public Class contractinfo
                 btnFix.Enabled = False
                 btnPayment.Enabled = False
         End Select
+        btnDel.Enabled = True
     End Sub
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         NewData()

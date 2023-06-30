@@ -198,6 +198,7 @@
     <Content Include="404.html" />
     <Content Include="ADMIN\VendorManage.aspx" />
     <Content Include="Contract\requestcontract.aspx" />
+    <Content Include="Contract\requestcontract2.aspx" />
     <Content Include="Contract\assetsinfo.aspx" />
     <Content Include="Contract\estimate_payment_byContract.aspx" />
     <Content Include="Contract\flexibleinfo.aspx" />
@@ -211,7 +212,9 @@
     <Content Include="Contract\clientinfo.aspx" />
     <Content Include="Contract\projectlist.aspx" />
     <Content Include="Contract\frmReportMontly.aspx" />
-    <Content Include="Contract\titlename.aspx" />
+    <Content Include="Contract\request2.aspx" />
+    <Content Include="Contract\rptComtract.aspx" />
+    <Content Include="Contract\requesteditcontract.aspx" />
     <Content Include="ADMIN\JobsManageCost.aspx" />
     <Content Include="ADMIN\Questionnair.aspx" />
     <Content Include="ADMIN\JobsManageStatus.aspx" />
@@ -3507,6 +3510,13 @@
       <DependentUpon>requestcontract.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Contract\requestcontract2.aspx.designer.vb">
+      <DependentUpon>requestcontract2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\requestcontract2.aspx.vb">
+      <DependentUpon>requestcontract2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Contract\assetsinfo.aspx.designer.vb">
       <DependentUpon>assetsinfo.aspx</DependentUpon>
     </Compile>
@@ -3598,11 +3608,25 @@
       <DependentUpon>frmReportMontly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Contract\titlename.aspx.designer.vb">
-      <DependentUpon>titlename.aspx</DependentUpon>
+    <Compile Include="Contract\request2.aspx.designer.vb">
+      <DependentUpon>request2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Contract\titlename.aspx.vb">
-      <DependentUpon>titlename.aspx</DependentUpon>
+    <Compile Include="Contract\request2.aspx.vb">
+      <DependentUpon>request2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\rptComtract.aspx.designer.vb">
+      <DependentUpon>rptComtract.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\rptComtract.aspx.vb">
+      <DependentUpon>rptComtract.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contract\requesteditcontract.aspx.designer.vb">
+      <DependentUpon>requesteditcontract.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\requesteditcontract.aspx.vb">
+      <DependentUpon>requesteditcontract.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ADMIN\JobsManageCost.aspx.designer.vb">
