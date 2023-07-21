@@ -1748,6 +1748,8 @@
     <Content Include="fileupload\src\thirdparty\react\Fileuploader.js" />
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
+    <Content Include="HRD\KPI\KPIsEdit.aspx" />
+    <Content Include="HRD\KPI\KPIsList.aspx" />
     <Content Include="icon\BranchSeller.svg" />
     <Content Include="icon\logoSAP.svg" />
     <Content Include="icon\Logo_pure.png" />
@@ -1822,6 +1824,7 @@
     <Content Include="SDD\wholesales\SupplyWSQuotation.aspx" />
     <Content Include="SDD\wholesales\SupplyImportWSPrice.aspx" />
     <Content Include="SSD\DeducttoNEWGSM.aspx" />
+    <Content Include="SSD\Rpt_Customer_bal_all_Branch.aspx" />
     <Content Include="SSD\Rpt_Customer_bal.aspx" />
     <Content Include="SSD\newgsm_billingnote01_cover.aspx" />
     <Content Include="SSD\newgsm_billingnote03_detail.aspx" />
@@ -3498,6 +3501,7 @@
       <DependentUpon>VendorManage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="class\Kpi.vb" />
     <Compile Include="class\NTI.vb" />
     <Compile Include="class\Company.vb" />
     <Compile Include="Contract\requestcontract.aspx.designer.vb">
@@ -3705,6 +3709,20 @@
     <Compile Include="class\Users.vb" />
     <Compile Include="CrystalDecisions.vb" />
     <Compile Include="CrystalDecisions1.vb" />
+    <Compile Include="HRD\KPI\KPIsEdit.aspx.designer.vb">
+      <DependentUpon>KPIsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsEdit.aspx.vb">
+      <DependentUpon>KPIsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsList.aspx.designer.vb">
+      <DependentUpon>KPIsList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsList.aspx.vb">
+      <DependentUpon>KPIsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="OPS\Jobs_MapsToNonPO.aspx.designer.vb">
       <DependentUpon>Jobs_MapsToNonPO.aspx</DependentUpon>
     </Compile>
@@ -4109,6 +4127,13 @@
     </Compile>
     <Compile Include="SSD\DeducttoNEWGSM.aspx.vb">
       <DependentUpon>DeducttoNEWGSM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\Rpt_Customer_bal_all_Branch.aspx.designer.vb">
+      <DependentUpon>Rpt_Customer_bal_all_Branch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\Rpt_Customer_bal_all_Branch.aspx.vb">
+      <DependentUpon>Rpt_Customer_bal_all_Branch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SSD\Rpt_Customer_bal.aspx.designer.vb">

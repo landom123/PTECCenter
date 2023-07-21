@@ -216,7 +216,7 @@
         $(document).ajaxComplete(function () {
             $("#loader").hide();
         });
-        console.log($('#navbarSupportedContent').length);
+        //console.log($('#navbarSupportedContent').length);
         if ($('#navbarSupportedContent').length)         // use this if you are using class to check
         {
             $('#btnMenu').show();
