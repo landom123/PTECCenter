@@ -1524,6 +1524,13 @@ pre {
   background-color: #343a40;
   border-color: #454d55; }
 
+
+.table .thead-blue th {
+    color: #fff;
+    background-color: #0a299f;
+    border-color: #505050;
+}
+
 .table .thead-light th {
   color: #495057;
   background-color: #e9ecef;
@@ -4198,6 +4205,11 @@ input[type="button"].btn-block {
     outline: 0;
     -webkit-box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
     box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); }
+
+.badge-blue {
+    color: #fff;
+    background-color: #0a299f;
+}
 
 .jumbotron {
   padding: 2rem 1rem;
