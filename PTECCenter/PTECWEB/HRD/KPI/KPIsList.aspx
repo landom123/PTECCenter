@@ -6,6 +6,10 @@
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <style>
+        
+        .container {
+            font-size:.8rem;
+        }
         .card-advancerequest {
             max-width: 960px;
         }
@@ -67,6 +71,12 @@
             float: right;
             margin-left: 5px;
         }
+
+        .table__inner > thead {
+            font-size:.8rem;
+        }.table__inner > tbody {
+            font-size:.75rem;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -75,9 +85,9 @@
 
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
-            <div id="content-wrapper">
+            <div id="content-wrapper" style="min-height: 600px;">
                 <div class="container">
-                    <div class="row">
+                    <%--<div class="row">
                         <div class="col text-left align-self-center">
                             Performance Update : KPIs & Competency
                         </div>
@@ -86,13 +96,12 @@
                             <a href="AdvanceMenuList.aspx" class="btn btn-sm btn-danger ">
                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                         </div>
-                    </div>
-
+                    </div>--%>
                     <div class="row align-items-center justify-content-center">
-                        <div class="col-lg-auto  text-center">
+                        <div class="col-lg-auto mb-3 text-center">
                             <img runat="server" id="logo" class="logopure" src="#" alt="logopure" width="500" height="600">
                         </div>
-                        <div class="col-lg-auto company">
+                        <div class="col-lg-auto mb-3 company">
                             <div class="row company-th">
                                 <div class="col text-center">
                                     <h3 runat="server" id="company_th">บริษัท เพียวพลังงานไทย จำกัด</h3>
@@ -105,10 +114,92 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12">
+
+                            <%--<asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />--%>&nbsp;
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
+                        <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
+                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
+                        </div>
+                    </div>
+
+                    <%-- <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>--%>
+
+                    <div class="row">
+                        <div class="col-auto" style="margin-left: auto;">
+                            <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server">
+                            <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server">
+                            <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">สังกัด</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">เจ้าของ KPI</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboCreateby" runat="server" readonly="true"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 HO">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ฝ่าย</span>
+                                </div>
+                                <asp:DropDownList ID="cboDepartment" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 HO">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">แผนก</span>
+                                </div>
+                                <asp:DropDownList ID="cboSection" class="form-control" runat="server"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 CO">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ประเภทสาขา</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 CO">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">สาขา</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3 HO">
+                            <asp:Label ID="note" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'แผนก' จะเปลี่ยนไปตาม 'ฝ่าย' ที่เลือก )" />
+                        </div>
+                        <div class="col-md-12 mb-3 CO">
+                            <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'สาขา' จะเปลี่ยนไปตาม 'ประเภทสาขา' ที่เลือก )" />
+                        </div>
+                    </div>
+                   
                     <!------------------------------------------------------------------------>
-                    <div class="mb-3">
 
                         <%--begin item--%>
+                        <% If AllKpi IsNot Nothing Then%>
                         <%  Dim tempowner As String = "" %>
                         <%  Dim temp As String = "" %>
                         <%  Dim cnt_child As Integer = 0 %>
@@ -117,7 +208,7 @@
 
                         <div class="row">
                             <div class="col">
-                                <h1><%= AllKpi.Tables(0).Rows(k).Item("ownercode").ToString%></h1>
+                                <h4><%= AllKpi.Tables(0).Rows(k).Item("ownercode").ToString%></h4>
                             </div>
                         </div>
 
@@ -125,7 +216,7 @@
                         <div class="row">
                             <div class="col table-responsive-xl">
 
-                                <table class="table table-sm shadow-sm">
+                                <table class="table table-sm shadow-sm table__header">
                                     <thead class="thead-blue ">
                                         <tr>
                                             <th class="text-center align-middle" rowspan="2">Ratio</th>
@@ -171,12 +262,12 @@
                                         <tr>
                                             <td colspan="12" class="hiddenRow">
                                                 <div class="accordian-body collapse" id="<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>">
-                                                    <table class="table table-hover">
+                                                    <table class="table table-hover table__inner">
                                                         <thead class="thead-light">
                                                             <tr class="info text-center">
-                                                                <th>
-
-                                                                    <a href="KPIsEdit.aspx?Kpi_Code=<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>"  title="EditDetail" ><i class="fas fa-edit"></i></a>
+                                                                <th class="text-nowrap align-middle">
+                                                                    <a href="KPIsOverview.aspx?uc=<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>" title="Overview"><i class="fas fa-chart-pie "></i></a>&nbsp;&nbsp;
+                                                                    <a href="KPIsEdit.aspx?Kpi_Code=<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>" title="EditDetail"><i class="fas fa-edit"></i></a>
                                                                 </th>
                                                                 <th>แผนงาน (เป้าหมาย/เดือน)</th>
                                                                 <th>ผลตามแผน</th>
@@ -194,8 +285,9 @@
 
                                                                 <td>
                                                                     <span class="badge badge-blue"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
+
                                                                 <td class="text-left pl-5"><%= AllKpi.Tables(2).Rows(j).Item("actiontitle").ToString %></td>
-                                                                <td class="text-left">
+                                                                <td>
                                                                     <% If AllKpi.Tables(2).Rows(j).Item("actionmonthly").ToString = "1" Then %>
                                                                         <span class="badge badge-success">ตามแผนที่กำหนด</span>
 
@@ -206,7 +298,7 @@
                                                                 <td class="text-left"><%= AllKpi.Tables(2).Rows(j).Item("actiontitleresult").ToString %></td>
                                                                 <td><%= AllKpi.Tables(2).Rows(j).Item("actionrateowner").ToString %></td>
                                                                 <td><%= AllKpi.Tables(2).Rows(j).Item("actionratehead").ToString %></td>
-                                                                <td><%= AllKpi.Tables(2).Rows(j).Item("actionfeedback").ToString %></td>
+                                                                <td class="text-left"><%= AllKpi.Tables(2).Rows(j).Item("actionfeedback").ToString %></td>
                                                             </tr>
 
                                                             <% End if %>
@@ -239,8 +331,8 @@
 
 
 
+                        <% End if %>
                         <%-- end item--%>
-                    </div>
                     <!------------------------------------------------------------------------>
                 </div>
 
@@ -396,12 +488,15 @@
         });
         $(document).ready(function () {
             $('.form-control').selectpicker({
+                noneSelectedText: '-',
                 liveSearch: true,
                 maxOptions: 1
             });
 
 
             $('.form-control').selectpicker('refresh');
+
+            checkCOorHO();
         });
         function btnEditDetailClick(ele) {
             console.log(ele);
@@ -410,5 +505,46 @@
 
             return false;
         }
+        function checkCOorHO() {
+            if ($("#" + "<%= chkHO.ClientID.ToString %>").is(":checked")) {
+                $(".HO").show();
+                $(".CO").hide();
+            } else if ($("#" + "<%= chkCO.ClientID.ToString %>").is(":checked")) {
+                $(".CO").show();
+                $(".HO").hide();
+            } else {
+                $(".CO").hide();
+                $(".HO").hide();
+
+            }
+
+        }
+        $("input:checkbox").on('click', function () {
+            // in the handler, 'this' refers to the box clicked on
+            console.log(this);
+            var $box = $(this);
+            console.log($box.is(":checked"));
+            if ($box.is(":checked")) {
+                // the name of the box is retrieved using the .attr() method
+                // as it is assumed and expected to be immutable
+                var group = "input:checkbox";
+                // the checked state of the group/box on the other hand will change
+                // and the current value is retrieved using .prop() method
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+
+            } else {
+
+                $box.prop("checked", true);
+                //$box.prop("checked", false);
+            }
+
+            checkCOorHO();
+        });
+        $('.noEnterSubmit').keypress(function (e) {
+            if (e.which == 13) return false;
+            //or...
+            if (e.which == 13) e.preventDefault();
+        });
     </script>
 </asp:Content>
