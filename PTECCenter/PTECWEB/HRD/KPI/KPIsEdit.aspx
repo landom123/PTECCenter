@@ -6,6 +6,9 @@
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <style>
+         .container {
+            font-size:.8rem;
+        }
         .card-advancerequest {
             max-width: 960px;
         }
@@ -86,15 +89,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col text-left align-self-center">
-                            <a href="KPIsList.aspx" class="btn btn-sm btn-danger">Back</a>
-
                         </div>
                         <div class="col-auto text-right align-self-center">
-                            <a href="AdvanceMenuList.aspx" class="btn btn-sm btn-danger ">
+                            <a href="KPIsList.aspx" class="btn btn-sm btn-danger ">
                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col">
                             Performance Update : KPIs & Competency
 
@@ -119,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="foram">
+                    <div class="foram mb-3">
                         <div class="row">
                             ข้อมูลหลังบ้าน
                         </div>
@@ -138,15 +139,14 @@
 
                         <div class="row">
                             <div class="col">
-                                <h1>
+                                <h4>
                                     <% If Not Request.QueryString("Kpi_Code") Is Nothing And AllKpi IsNot Nothing Then%>
                                     <%= AllKpi.Tables(0).Rows(0).Item("ownercode").ToString() %>
-                                    <% End If%></h1>
+                                    <% End If%></h4>
                             </div>
                         </div>
 
 
-                        <hr />
                         <div class="row">
                             <div class="col table-responsive-xl">
 
