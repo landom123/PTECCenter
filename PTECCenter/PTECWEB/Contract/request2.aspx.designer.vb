@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class requestcontract
+Partial Public Class request2
 
     '''<summary>
     '''btnNew control.
@@ -32,49 +32,22 @@ Partial Public Class requestcontract
     Protected WithEvents btnReEdit As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnReNote control.
+    '''btnBack control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnReNote As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnBack As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnRefresh control.
+    '''txtdocuno control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnRefresh As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''txtBegindate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtBegindate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''txtEnddate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtEnddate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cboStatus control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboStatus As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txtdocuno As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''txtContractno control.
@@ -86,15 +59,6 @@ Partial Public Class requestcontract
     Protected WithEvents txtContractno As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''txtVendor control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtVendor As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''btnFind control.
     '''</summary>
     '''<remarks>
@@ -102,6 +66,60 @@ Partial Public Class requestcontract
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnFind As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lblVendor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblVendor As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblBeginDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblBeginDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblEndDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblEndDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblConTractType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblConTractType As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblContractGroup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblContractGroup As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDetail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDetail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''gvData control.

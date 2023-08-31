@@ -1,12 +1,14 @@
 ﻿
 
+Imports DocumentFormat.OpenXml.Presentation
+
 Public Class fixibleinfo
     Inherits System.Web.UI.Page
     Public menutable As DataTable
     Public usercode, username, contractno As String
     Public fixid As Double = 0
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim objTitleName As New titlename
+        Dim objTitleName As New TitleName
 
         usercode = Session("usercode")
         username = Session("username")
@@ -58,7 +60,7 @@ Public Class fixibleinfo
                 btnSave.Enabled = True
                 'btnNewAgree.Enabled = True
                 btnNew.Enabled = True
-                btnDel.Enabled = False
+                'btnDel.Enabled = False
 
             Case "ยืนยัน(รออนุมัติ)", "ยกเลิก", "อนุมัติ", "Reject"
                 lblStatus.ForeColor = System.Drawing.Color.White
@@ -66,9 +68,12 @@ Public Class fixibleinfo
                 btnSave.Enabled = False
                 'btnNewAgree.Enabled = True
                 btnNew.Enabled = False
-                btnDel.Enabled = False
+                'btnDel.Enabled = False
 
         End Select
+
+        'btnDel.Enabled = True
+
     End Sub
     Private Sub FindData(fixid As Double)
         Dim mytable As DataTable
@@ -205,7 +210,6 @@ Public Class fixibleinfo
             recuring = "Y"
         End If
 
-
         result = objfix.Save(contractno, fixid, paymenttype, recuring, frequency, begindate, enddate, duedate, amount, usercode)
 
         txtid.Text = result.ToString
@@ -218,4 +222,20 @@ Public Class fixibleinfo
         Response.Redirect("contractinfo.aspx?agreeno=" & contractno & "&projectno=" & projectno)
     End Sub
 
+    Private Sub btnDel_Click(sender As Object, e As EventArgs) Handles btnDel.Click
+
+    End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Try
+            Dim objfix As New Fixible
+
+            If objfix.fixibleDel(Session("fixid")) = False Then
+                Exit Sub
+            End If
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class
