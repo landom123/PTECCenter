@@ -2440,7 +2440,8 @@ Public Class clsRequestContract
                                      , DueDate As Date, FineAmnt As String, PerformanceIns As String, ConditionIns As String, ConditionAmnt As String _
                                      , Remark As String, Remark1 As String, Remark2 As String, Remark3 As String, Remark4 As String _
                                      , chkEndDate As Integer, chkDueDate As Integer, PayInsurance As Decimal, PayBefore As Decimal, PayFine As Decimal _
-                                     , PayWater As Decimal, PayElectrict As Decimal, PayCenter As Decimal, RoomNum As Decimal, AddrLocation As String) As Boolean
+                                     , PayWater As Decimal, PayElectrict As Decimal, PayCenter As Decimal, RoomNum As Decimal, AddrLocation As String _
+                                     , DueDay As String, RentPerMonth As Decimal) As Boolean
 
         Try
 
@@ -2490,7 +2491,8 @@ Public Class clsRequestContract
             cmd.Parameters.Add("@PayCenter", SqlDbType.Decimal).Value = PayCenter
             cmd.Parameters.Add("@RoomNum", SqlDbType.Decimal).Value = RoomNum
             cmd.Parameters.Add("@AddrLocation", SqlDbType.VarChar).Value = AddrLocation
-
+            cmd.Parameters.Add("@DueDay", SqlDbType.VarChar).Value = DueDay
+            cmd.Parameters.Add("@RentPerMonth", SqlDbType.Decimal).Value = RentPerMonth
 
             adp.SelectCommand = cmd
             adp.Fill(ds)

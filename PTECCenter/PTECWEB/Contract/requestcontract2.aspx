@@ -3491,7 +3491,7 @@
                                                                         <div class="input-group-prepend">
                                                                              <span class="input-group-text">ค่าเช่าต่อเดือน</span>
                                                                         </div>
-                                                                        <asp:TextBox class="form-control" ID="TextBox2" runat="server" style="text-align:right"></asp:TextBox>
+                                                                        <asp:TextBox class="form-control" ID="txtRentPerMonthOth" runat="server" style="text-align:right"></asp:TextBox>
                                                                     </div>
                                                                </div>                                                         
                                             

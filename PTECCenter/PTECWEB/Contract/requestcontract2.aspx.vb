@@ -1868,6 +1868,9 @@ Public Class requestcontract2
                 txtRoomNumOth.Text = CInt(dr("RoomNum"))
                 txtAddrOther.Text = dr("AddrLocation")
 
+                txtDueDateOth.Text = dr("DueDay")
+                txtRentPerMonthOth.Text = FormatNumber(CDbl(dr("RentPerMonth")), 2)
+
                 If disableTab(cboMainContact.SelectedValue) = False Then
                     Return False
                 End If
@@ -3483,9 +3486,9 @@ Public Class requestcontract2
             Dim CompanyID, chkEndDate, chkDueDate, RoomNum As Integer
             Dim DocDate, BeginDate, EndDate, DueDate As Date
             Dim Customerparty, Customerparty1, Customerparty2, Addr, Contact, Branch, Amount, Period, FineAmnt, PerformanceIns, ConditionIns, ConditionAmnt _
-                                     , Remark, Remark1, Remark2, Remark3, Remark4, AddrLocation As String
+                                     , Remark, Remark1, Remark2, Remark3, Remark4, AddrLocation, DueDay As String
 
-            Dim PayInsurance, PayBefore, PayFine, PayWater, PayElectrict, PayCenter As Decimal
+            Dim PayInsurance, PayBefore, PayFine, PayWater, PayElectrict, PayCenter, RentPerMonth As Decimal
 
             'dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
             'dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
@@ -3577,11 +3580,17 @@ Public Class requestcontract2
                 RoomNum = 0
             End If
 
+            If IsNumeric(txtRentPerMonthOth.Text) = True Then
+                RentPerMonth = CDbl(txtRentPerMonthOth.Text)
+            Else
+                RentPerMonth = 0
+            End If
             AddrLocation = txtAddrOther.Text
+            DueDay = txtDueDateOth.Text
 
             If objCo.AddContractOther(txtdocuno.Text, CompanyID, DocDate, Customerparty, Customerparty1, Customerparty2, Addr, Contact, Branch, Amount, [Period], BeginDate, EndDate, DueDate, FineAmnt, PerformanceIns _
                                 , ConditionIns, ConditionAmnt, Remark, Remark1, Remark2, Remark3, Remark4, chkEndDate, chkDueDate, PayInsurance, PayBefore _
-                                , PayFine, PayWater, PayElectrict, PayCenter, RoomNum, AddrLocation) = False Then
+                                , PayFine, PayWater, PayElectrict, PayCenter, RoomNum, AddrLocation, DueDay, RentPerMonth) = False Then
                 Exit Sub
             End If
 
