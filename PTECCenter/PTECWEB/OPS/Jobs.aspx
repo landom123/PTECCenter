@@ -163,7 +163,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="jobdetail" class="card-body px-5">
+                    <div id="jobdetail" class="card-body px-md-5 px-2">
 
 
 
@@ -195,7 +195,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 ">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text">ตำแหน่งตู้จ่าย</span>
@@ -447,7 +447,7 @@
                                 </div>
                             </div>
                             <% If cboJobType.SelectedItem.Value = "1" Then %>
-                            <div class="row">
+                            <div class="row d-none">
                                 <div class="col-md-6 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend w-100">

@@ -25,8 +25,10 @@ Public Class KPIsList
     Dim sm_code As String
     Dim am_code As String
 
-    Public account_code As String = ""
+    Public operator_code As String = ""
+    Public adm_code As String = ""
 
+    Public criteria As DataTable = createCriteria()
     Public itemtable As DataTable
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -57,13 +59,20 @@ Public Class KPIsList
         company_th.InnerText = "บริษัท เพียวพลังงานไทย จำกัด"
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
+
+        operator_code = objKpi.KPIPermisstion("KPI", "OP")
+        adm_code = objKpi.KPIPermisstion("KPI", "A")
+
         If Not IsPostBack() Then
 
             objcompany.SetCboCompany(cboCompany, 0)
             objbranch.SetComboBranchGroup(cboBranchGroup)
             objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-            objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objdep.SetCboDepartmentByMode(cboDepartment, 0, "actived")
+            cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
+            objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
+
+
 
             cboCompany.SelectedIndex = 1
             If Session("positionid") = "10" Then
@@ -73,7 +82,27 @@ Public Class KPIsList
             End If
             SetCboUsers(cboCreateby)
 
-            'searchKpilist()
+            '------------------------------------
+            If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+                If Not Session("criteria_kpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_kpi")
+                    BindCriteria(criteria)
+                    searchKpilist()
+                Else
+
+                    searchKpilist()
+                End If
+            Else
+                If Not Session("criteria_kpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_kpi")
+                    BindCriteria(criteria)
+                    searchKpilist_owner()
+                Else
+                    searchKpilist_owner()
+                End If
+
+            End If
+
 
 
             Session("kpilist_allkpi") = AllKpi
@@ -83,13 +112,44 @@ Public Class KPIsList
         End If
 
     End Sub
+    Private Function createCriteria() As DataTable
+        Dim dt As New DataTable
 
+        dt.Columns.Add("cboCompany", GetType(String))
+        dt.Columns.Add("cboCreateby", GetType(String))
+        dt.Columns.Add("cboDepartment", GetType(String))
+        dt.Columns.Add("cboSection", GetType(String))
+        dt.Columns.Add("cboBranchGroup", GetType(String))
+        dt.Columns.Add("cboBranch", GetType(String))
+        dt.Columns.Add("chkCO", GetType(Boolean))
+        dt.Columns.Add("chkHO", GetType(Boolean))
+
+        Return dt
+    End Function
+
+    Private Sub BindCriteria(criteria As DataTable)
+        If criteria.Rows.Count > 0 Then
+
+            Dim objsec As New Section
+
+            cboCompany.SelectedValue = criteria.Rows(0).Item("cboCompany")
+            cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
+            cboDepartment.SelectedValue = criteria.Rows(0).Item("cboDepartment")
+            objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
+            cboSection.SelectedValue = criteria.Rows(0).Item("cboSection")
+            cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
+            cboBranch.SelectedValue = criteria.Rows(0).Item("cboBranch")
+
+            chkCO.Checked = criteria.Rows(0).Item("chkCO")
+            chkHO.Checked = criteria.Rows(0).Item("chkHO")
+        End If
+    End Sub
     Private Sub searchKpilist()
 
         Dim objKpi As New Kpi
         Try
             If chkCO.Checked Then
-                AllKpi = objKpi.Kpi_Find_Follow("",
+                AllKpi = objKpi.Kpi_List_For_Operator("",
                                                       "",
                                                         cboCompany.SelectedItem.Value.ToString,
                                                         cboBranchGroup.SelectedItem.Value.ToString,
@@ -98,7 +158,7 @@ Public Class KPIsList
                                                         Session("userid").ToString,
                                                         "CO")
             ElseIf chkHO.Checked Then
-                AllKpi = objKpi.Kpi_Find_Follow(cboDepartment.SelectedItem.Value.ToString,
+                AllKpi = objKpi.Kpi_List_For_Operator(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
                                                         cboCompany.SelectedItem.Value.ToString,
                                                       "",
@@ -108,7 +168,7 @@ Public Class KPIsList
                                                     "HO")
             End If
 
-
+            setCriteria()
             Session("kpilist_allkpi") = AllKpi
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -117,35 +177,86 @@ Public Class KPIsList
         End Try
     End Sub
 
+
+    Private Sub searchKpilist_owner()
+        Dim objKpi As New Kpi
+        Try
+            If chkCO.Checked Then
+                AllKpi = objKpi.Kpi_List_For_Owner("",
+                                                        "",
+                                                        "",
+                                                        cboBranchGroup.SelectedItem.Value.ToString,
+                                                        cboBranch.SelectedItem.Value.ToString,
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        Session("userid").ToString,
+                                                        "CO")
+            ElseIf chkHO.Checked Then
+                AllKpi = objKpi.Kpi_List_For_Owner(cboDepartment.SelectedItem.Value.ToString,
+                                                        cboSection.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        "",
+                                                      "",
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        Session("userid").ToString,
+                                                    "HO")
+            End If
+
+            setCriteria()
+            Session("kpilist_allkpi") = AllKpi
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('search fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
-        searchKpilist()
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+            searchKpilist()
+        Else
+            searchKpilist_owner()
+        End If
     End Sub
 
-
+    Private Sub setCriteria()
+        'criteria = createCriteria()
+        If criteria IsNot Nothing Then
+            criteria.Rows.Clear()
+        End If
+        criteria.Rows.Add(
+                          (cboCompany.SelectedItem.Value),
+                          cboCreateby.SelectedItem.Value.ToString,
+                          (cboDepartment.SelectedItem.Value),
+                          (cboSection.SelectedItem.Value),
+                          (cboBranchGroup.SelectedItem.Value),
+                          (cboBranch.SelectedItem.Value),
+                            chkCO.Checked,
+                          chkHO.Checked)
+        Session("criteria_kpi") = criteria
+    End Sub
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
         Dim objbranch As New Branch
 
         cboDepartment.SelectedIndex = -1
         cboSection.SelectedIndex = -1
-        cboCompany.SelectedIndex = -1
+        cboCompany.SelectedIndex = 1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
         cboCreateby.SelectedIndex = -1
         If AllKpi IsNot Nothing Then
             AllKpi.Clear()
         End If
-        'If criteria IsNot Nothing Then
-        '    criteria.Rows.Clear()
-        'End If
+        If criteria IsNot Nothing Then
+            criteria.Rows.Clear()
+        End If
         Session("kpilist_allkpi") = AllKpi
-        'Session("criteria_clearadvlist") = criteria
+        Session("criteria_kpi") = criteria
 
 
         Dim depid As Integer
         Dim objsection As New Section
 
         depid = cboDepartment.SelectedItem.Value
-        objsection.SetCboSection_seccode(cboSection, depid)
+        objsection.SetCboSectionCodeNameByMode(cboSection, depid, "actived")
         objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
 
     End Sub
@@ -163,6 +274,6 @@ Public Class KPIsList
         Dim objsection As New Section
 
         depid = cboDepartment.SelectedItem.Value
-        objsection.SetCboSection_seccode(cboSection, depid)
+        objsection.SetCboSectionCodeNameByMode(cboSection, depid, "actived")
     End Sub
 End Class

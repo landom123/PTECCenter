@@ -77,6 +77,13 @@
             background-color: #dddddd;
             opacity: 1;
         }
+        tr .form-control,tr .filter-option-inner-inner {
+            font-size: .75rem;
+        }
+        .badge-blue {
+            font-size: .65rem;
+        }
+
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -122,7 +129,7 @@
                     </div>
                     <div class="foram mb-3">
                         <div class="row">
-                            ข้อมูลหลังบ้าน
+                            ข้อมูลหลังบ้าน <%=OPT %>
                         </div>
                         <div class="row">
                             <%=allOwner %>
@@ -194,17 +201,52 @@
                                             </td>
 
                                         </tr>
+                                        <% If AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
+                                        <tr class=" text-center">
+                                            <td>
+                                                <asp:DropDownList class="form-control" ID="cboRatio" runat="server"></asp:DropDownList>
+                                            </td>
+                                            <td>
+                                                <textarea rows="2" cols="30" class="form-control" name="actiontitle" id="txtKpititle" runat="server"></textarea>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox class="form-control" type="input" ID="txtWeight" runat="server"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox class="form-control" type="input" ID="txtUnit" runat="server"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox class="form-control" type="input" ID="txtlv5" runat="server"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox class="form-control" type="input" ID="txtlv4" runat="server"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox class="form-control" type="input" ID="txtlv3" runat="server"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox class="form-control" type="input" ID="txtlv2" runat="server"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox class="form-control" type="input" ID="txtlv1" runat="server"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:Button ID="btnUpdateKPI" class="btn btn-sm  btn-warning" runat="server" Text="UpdateKPI" />
+                                            </td>
+
+                                        </tr>
+                                        <% End If %>
                                         <tr>
                                             <td colspan="12" class="hiddenRow">
                                                 <div class="accordian-body " id="<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>">
-                                                    <table class="table">
+                                                    <table class="table table-sm table-hover">
                                                         <thead class="thead-light">
                                                             <tr class="info text-center">
                                                                 <th></th>
-                                                                <th>แผนงาน (เป้าหมาย/เดือน)</th>
+                                                                <th>แผนงาน / เป้าหมาย</th>
                                                                 <th>ผลตามแผน</th>
                                                                 <th>ผลการปฏิบัติงาน</th>
-                                                                <th>ตนเองประเมิน</th>
+                                                                <th>พนักงานประเมิน</th>
                                                                 <th class="approval">หัวหน้าประเมิน</th>
                                                                 <th class="approval">รายละเอียดการประเมิน</th>
                                                                 <th></th>
@@ -219,7 +261,7 @@
                                                             <% For j = 0 To AllKpi.Tables(1).Rows.Count - 1 %>
                                                             <% cnt_child = cnt_child + 1 %>
                                                             <% If AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(1).Rows(j).Item("actionkpi_code").ToString Then %>
-                                                            <tr class="text-center" id="actionid_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" data-datenow="<%= AllKpi.Tables(0).Rows(i).Item("datenow").ToString %>"
+                                                            <tr class="text-center" id="actionid_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" data-datenow="<%= AllKpi.Tables(0).Rows(i).Item("datenow").ToString %>" data-opt="<%= AllKpi.Tables(0).Rows(i).Item("operatortype").ToString %>"
                                                                 data-empuppercode="<%= AllKpi.Tables(1).Rows(j).Item("actionempuppercode").ToString %>"
                                                                 data-ownercode="<%= AllKpi.Tables(1).Rows(j).Item("actionownercode").ToString %>"
                                                                 data-usercode="<%= Session("usercode").ToString %>"
@@ -229,20 +271,27 @@
                                                                 data-approvalend="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %>">
                                                                 <td><span class="badge badge-blue"><%= AllKpi.Tables(1).Rows(j).Item("actionmonth").ToString %></span>
                                                                 </td>
-                                                                <td class="text-left"><%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %></td>
+                                                                <td class="text-left">
+                                                                    <% If (String.IsNullOrEmpty(AllKpi.Tables(0).Rows(0).Item("operatortype").ToString)) Then%>
+                                                                        <span name="actiontitle" ><%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %></span>
+                                                                    <% ElseIf AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
+                                                                        <textarea rows="2" cols="40" class="form-control" name="actiontitle" id="actiontitle_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>"><%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %></textarea>
+                                                                    <% End If %>
+                                                                </td>
 
 
                                                                 <td>
                                                                     <select class="form-control" name="actionmonthly" id="actionmonthly_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>">
                                                                         <option value="0">-</option>
-                                                                        <option value="1" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "1" Then %>selected="selected" <% End if %>>ตามแผนที่กำหนด</option>
-                                                                        <option value="2" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "2" Then %>selected="selected" <% End if %>>ช้ากว่าแผนที่กำหนด</option>
+                                                                        <option value="2" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "3" Then %>selected="selected" <% End if %>>เร็วกว่าแผน</option>
+                                                                        <option value="1" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "1" Then %>selected="selected" <% End if %>>ตามแผน</option>
+                                                                        <option value="2" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "2" Then %>selected="selected" <% End if %>>ช้ากว่าแผน</option>
                                                                     </select>
                                                                     <%--<%= AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString %></td>--%>
 
 
                                                                 <td class="text-left">
-                                                                    <input class="form-control" type="text" name="actiontitleresult" value="<%= AllKpi.Tables(1).Rows(j).Item("actiontitleresult").ToString %>" autocomplete="off" id="actiontitleresult_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" />
+                                                                    <textarea class="form-control" rows="2" cols="40" name="actiontitleresult" autocomplete="off" id="actiontitleresult_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" /><%= AllKpi.Tables(1).Rows(j).Item("actiontitleresult").ToString %></textarea>
                                                                     <%--<%= AllKpi.Tables(1).Rows(j).Item("actiontitleresult").ToString %>--%>
 
                                                                 </td>
@@ -314,7 +363,8 @@
                     <!------------------------------------------------------------------------>
                     <div class="row">
                         <div class="col">
-                            <input type="button" value="Update" onclick="update();" id="btnUpdate" runat="server" class="btn btn-sm  btn-warning" />
+                                <input type="button" value="Update" onclick="update();" id="btnUpdate" runat="server" class="btn btn-sm  btn-warning" />
+                                <input type="button" value="UpdateOP" onclick="updateOP();" id="btnUpdateOP" runat="server" class="btn btn-sm  btn-warning" />  
                         </div>
 
                     </div>
@@ -339,21 +389,24 @@
         });
         $(document).ready(function () {
             $('.form-control').selectpicker({
+                noneSelectedText: '-',
                 liveSearch: true,
                 maxOptions: 1
             });
-
 
             $('.form-control').selectpicker('refresh');
 
             $('[data-toggle="tooltip"]').tooltip()
 
             let elemActionmonthly = document.getElementsByName("actionmonthly");
+            let elemActiontitle = document.getElementsByName("actiontitle");
             let elemActiontitleresult = document.getElementsByName("actiontitleresult");
             let elemActionrateowner = document.getElementsByName("actionrateowner");
             let elemActionratehead = document.getElementsByName("actionratehead");
             let elemActionFeedback = document.getElementsByName("actionfeedback");
 
+            //console.log(elemActiontitle);
+            //console.log(elemActiontitle[4].value);
             //console.log(elemActionmonthly);
             //console.log(elemActiontitleresult);
             //console.log(elemActionrateowner);
@@ -363,6 +416,7 @@
             for (let i = 0; i < elemActionmonthly.length; i++) {
                 params.push({
                     "actionid": elemActionmonthly[i].id.split("_")[1],
+                    "actiontitle": elemActiontitle[i].value,
                     "actionmonthlyid": elemActionmonthly[i].id,
                     "actionmonthly": elemActionmonthly[i].value,
                     "actiontitleresultid": elemActiontitleresult[i].id,
@@ -386,6 +440,7 @@
 
                 const empuppercode = row.getAttribute("data-empuppercode");
                 const ownercode = row.getAttribute("data-ownercode");
+                const opt = row.getAttribute("data-opt");
                 const usercode = row.getAttribute("data-usercode");
 
                 const [day0, month0, year0] = datenow.split('/');
@@ -401,13 +456,13 @@
                 const astart = new Date(+year3, month3 - 1, +day3);
                 const aend = new Date(+year4, month4 - 1, +day4);
 
-                //console.log(date);
+                //alert(opt);
                 //console.log(estart);
                 //console.log(empuppercode);
                 //console.log(ownercode);
                 //console.log(ownercode.indexOf(usercode));
 
-                if (ownercode.indexOf(usercode) > -1) { // เจ้าของ KPI
+                if (ownercode.indexOf(usercode) > -1 && !opt) { // เจ้าของ KPI
                     console.log('เจ้าของ KPI');
 
                     if (!(date >= estart && date <= eend)) {
@@ -420,7 +475,7 @@
 
                     elemActionratehead[i].disabled = true;
                     elemActionFeedback[i].disabled = true;
-                } else if (empuppercode.indexOf(usercode) > -1) { // empupper เจ้าของ KPI
+                } else if (empuppercode.indexOf(usercode) > -1 && !opt) { // empupper เจ้าของ KPI
                     console.log('empupper เจ้าของ KPI');
 
                     if (!(date > estart && date < eend)) {
@@ -436,8 +491,9 @@
                         elemActionratehead[i].disabled = true;
                         elemActionFeedback[i].disabled = true;
                     }
-                } else {
-
+                } else if (!opt) {
+                    console.log('555555555555555')
+                    elemActiontitle[i].disabled = true;
                     elemActionmonthly[i].disabled = true;
                     elemActiontitleresult[i].disabled = true;
                     elemActionrateowner[i].disabled = true;
@@ -445,8 +501,7 @@
                     elemActionratehead[i].disabled = true;
                     elemActionFeedback[i].disabled = true;
 
-                    $('#btnUpdate').hide();
-                    console.log('else');
+                    //$('#btnUpdate').hide();
                 }
 
 
@@ -459,6 +514,7 @@
 
         function getValueUnDisabled() {
             let elemActionmonthly = document.getElementsByName("actionmonthly");
+            let elemActiontitle = document.getElementsByName("actiontitle");
             let elemActiontitleresult = document.getElementsByName("actiontitleresult");
             let elemActionrateowner = document.getElementsByName("actionrateowner");
             let elemActionratehead = document.getElementsByName("actionratehead");
@@ -472,6 +528,7 @@
             for (let i = 0; i < elemActionmonthly.length; i++) {
                 params.push({
                     "actionid": elemActionmonthly[i].id.split("_")[1],
+                    "actiontitle": elemActiontitle[i].value,
                     "actionmonthlyid": elemActionmonthly[i].id,
                     "actionmonthly": elemActionmonthly[i].value,
                     "actiontitleresultid": elemActiontitleresult[i].id,
@@ -522,11 +579,12 @@
 
         function getValue() {
             let elemActionmonthly = document.getElementsByName("actionmonthly");
+            let elemActiontitle = document.getElementsByName("actiontitle");
             let elemActiontitleresult = document.getElementsByName("actiontitleresult");
             let elemActionrateowner = document.getElementsByName("actionrateowner");
             let elemActionratehead = document.getElementsByName("actionratehead");
             let elemActionFeedback = document.getElementsByName("actionfeedback");
-            console.log(elemActionmonthly);
+            console.log(elemActionmonthly[1]);
             //console.log(elemActiontitleresult);
             //console.log(elemActionrateowner);
 
@@ -535,6 +593,7 @@
             for (let i = 0; i < elemActionmonthly.length; i++) {
                 params.push({
                     "actionid": elemActionmonthly[i].id.split("_")[1],
+                    "actiontitle": elemActiontitle[i].value,
                     "actionmonthlyid": elemActionmonthly[i].id,
                     "actionmonthly": elemActionmonthly[i].value,
                     "actiontitleresultid": elemActiontitleresult[i].id,
@@ -545,8 +604,39 @@
                     "actionratehead": elemActionratehead[i].value,
                     "actionfeedbackid": elemActionFeedback[i].id,
                     "actionfeedback": elemActionFeedback[i].value
-
                 });
+
+                let row = elemActionmonthly[i].parentElement.parentElement.parentElement;
+                let datenow = row.getAttribute("data-datenow");
+                let editstart = row.getAttribute("data-editstart");
+                let editend = row.getAttribute("data-editend");
+                let approvalstart = row.getAttribute("data-approvalstart");
+                let approvalend = row.getAttribute("data-approvalend");
+
+                const [day0, month0, year0] = datenow.split('/');
+                const [day1, month1, year1] = editstart.split('/');
+                const [day2, month2, year2] = editend.split('/');
+                const [day3, month3, year3] = approvalstart.split('/');
+                const [day4, month4, year4] = approvalend.split('/');
+
+
+                const date = new Date(+year0, month0 - 1, +day0);
+                const estart = new Date(+year1, month1 - 1, +day1);
+                const eend = new Date(+year2, month2 - 1, +day2);
+                const astart = new Date(+year3, month3 - 1, +day3);
+                const aend = new Date(+year4, month4 - 1, +day4);
+
+                console.log(date);
+                //console.log(estart);
+                //console.log(eend);
+                //console.log(astart);
+                //console.log(aend);
+
+                //if (!(date >= estart && date <= eend)) {
+
+                //    console.log('in');
+                //    params.pop()
+                //}
             }
 
             return params;
@@ -562,6 +652,33 @@
             confirm_value.value = params;
             document.forms[0].appendChild(confirm_value);
             return true;
+        }
+
+        function updateOP() {
+            let param = getValue();
+            const params = JSON.stringify(param);
+            console.log(params);
+            let confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            confirm_value.value = params;
+            document.forms[0].appendChild(confirm_value);
+            return true;
+        }
+        function alertSuccess() {
+            Swal.fire(
+                'สำเร็จ',
+                '',
+                'success'
+            )
+        }
+
+        function alertWarning(massage) {
+            Swal.fire(
+                massage,
+                '',
+                'warning'
+            )
         }
     </script>
 </asp:Content>

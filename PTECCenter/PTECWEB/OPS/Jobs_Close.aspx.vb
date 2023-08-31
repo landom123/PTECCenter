@@ -336,6 +336,7 @@ endprocess:
     End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim objjob As New jobs
+        Dim costid As Integer = hiddenAdvancedetailid.Value
         Dim jobscenterdtlid As Integer = cboCost.SelectedItem.Value
         Dim price As Double
         Dim unit As Integer
@@ -372,7 +373,7 @@ endprocess:
 
         If Not jobscenterdtlid = 0 Then
             Try
-                objjob.Cost_Save(jobscenterdtlid, jobdetailid, price, unit, vat, tax, invoice, invoicedate, nobill, incompletebill, buid, ppid, pjid, usercode)
+                objjob.Cost_Save(jobscenterdtlid, jobdetailid, price, unit, vat, tax, invoice, invoicedate, nobill, incompletebill, buid, ppid, pjid, usercode, costid)
                 FindJob(jobno, jobdetailid)
                 Clear()
             Catch ex As Exception

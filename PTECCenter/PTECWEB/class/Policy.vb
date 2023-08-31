@@ -15,6 +15,12 @@ Public Class Policy
         obj.DataTextField = "policyallname"
         obj.DataBind()
     End Sub
+    Public Sub setComboPolicyByJobTypeID_VA(obj As Object, jobtypeid As String)
+        obj.datasource = Me.List(jobtypeid)
+        obj.DataValueField = "policyid"
+        obj.DataTextField = "policyallname"
+        obj.DataBind()
+    End Sub
     Public Function List(jobtypeid As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate

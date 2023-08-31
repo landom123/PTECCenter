@@ -320,6 +320,15 @@ Partial Public Class JobsClose
     Protected WithEvents btnSaveComment As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''hiddenAdvancedetailid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hiddenAdvancedetailid As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+
+    '''<summary>
     '''lbcboCost control.
     '''</summary>
     '''<remarks>
