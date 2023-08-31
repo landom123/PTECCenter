@@ -579,7 +579,7 @@ Public Class jobs
         conn.Close()
         Return result
     End Function
-    Public Function JobType_List(usercode As String) As DataTable
+    Public Function JobType_List(usercode As String, Optional mode As String = "all") As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -593,6 +593,7 @@ Public Class jobs
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@mode", SqlDbType.VarChar).Value = mode
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
@@ -1102,7 +1103,7 @@ Public Class jobs
 
     Public Function Cost_Save(jobscenterdtlid As Integer, jobdetailid As Integer, price As Double, unit As Integer,
                               vat As Integer, tax As Integer, invoice As String, invoicedate As String, nobill As Boolean, incompletebill As Boolean,
-                              bu As Integer, pp As Integer, pj As Integer, usercode As String) As Boolean
+                              bu As Integer, pp As Integer, pj As Integer, usercode As String, costid As Integer) As Boolean
         Dim result As Boolean
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -1114,6 +1115,7 @@ Public Class jobs
         cmd.CommandText = "Jobs_Cost_Save"
         cmd.CommandType = CommandType.StoredProcedure
 
+        cmd.Parameters.Add("@costid", SqlDbType.Int).Value = costid
         cmd.Parameters.Add("@jobscenterdtlid", SqlDbType.Int).Value = jobscenterdtlid
         cmd.Parameters.Add("@jobdetailid", SqlDbType.Int).Value = jobdetailid
         cmd.Parameters.Add("@price", SqlDbType.Money).Value = price

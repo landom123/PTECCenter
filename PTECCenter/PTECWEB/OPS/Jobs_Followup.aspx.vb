@@ -18,6 +18,7 @@ Public Class JobsFollowup
 
     Public followuptable As DataTable = CreateFollowup()
     Dim usercode, username As String
+    Public allOperator As String
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'Session("username") = "PAB"
@@ -62,21 +63,21 @@ Public Class JobsFollowup
 
             'objsupplier.SetCboSupplierByComid(cboVendor, "1") '1 PURE
             objjob.SetCboJobCenterList(cboJobCenter)
-            SetCboJobType(cboJobType, usercode)
+            SetCboJobType(cboJobType, usercode, "actived")
             attatch.SetCboMyfile(cboMyfile, Session("userid"))
             FindJob(jobno, jobdetailid)
             If maintable.Rows(0).Item("owner") > 0 Then
                 objjob.SetCboJobStatusList(cboStatus)
-            Else
-                Dim dt As New DataTable
+                'Else
+                '    Dim dt As New DataTable
 
-                dt.Columns.Add("statusid", GetType(Integer))
-                dt.Columns.Add("name", GetType(String))
-                dt.Rows.Add(11, "confirm")
-                cboStatus.DataSource = dt
-                cboStatus.DataValueField = ("statusid")
-                cboStatus.DataTextField = ("name")
-                cboStatus.DataBind()
+                '    dt.Columns.Add("statusid", GetType(Integer))
+                '    dt.Columns.Add("name", GetType(String))
+                '    dt.Rows.Add(11, "confirm")
+                '    cboStatus.DataSource = dt
+                '    cboStatus.DataValueField = ("statusid")
+                '    cboStatus.DataTextField = ("name")
+                '    cboStatus.DataBind()
             End If
 
             Session("maintable") = maintable
@@ -425,6 +426,7 @@ Public Class JobsFollowup
             AttachTable = mydataset.Tables(4)
             CommentTable = mydataset.Tables(5)
             suppilertable = mydataset.Tables(6)
+            txtallOperator.Text = mydataset.Tables(7).Rows(0).Item("alloperator")
             showsuppilerdata(suppilertable)
 
 

@@ -399,7 +399,8 @@
                                                 <tbody class="border border-dark border-right-0 border-left-0">
                                                     <% For i = 0 To costtable.Rows.Count %>
                                                     <% If i < costtable.Rows.Count Then%>
-                                                    <tr ondblclick="btnEditDetailClick('<%= costtable.Rows(i).Item("JobsCenterDtlID").ToString() %>'
+                                                    <tr ondblclick="btnEditDetailClick('<%= costtable.Rows(i).Item("jobcostid").ToString() %>'
+                                                                        ,'<%= costtable.Rows(i).Item("JobsCenterDtlID").ToString() %>'
                                                                         ,'<%= costtable.Rows(i).Item("bu").ToString() %>'
                                                                         ,'<%= costtable.Rows(i).Item("pp").ToString() %>'
                                                                         ,'<%= costtable.Rows(i).Item("pj").ToString() %>'
@@ -599,6 +600,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
                     <div class="form-group">
                         <asp:Label ID="lbcboCost" CssClass="form-label" AssociatedControlID="cboCost" runat="server" Text="รหัสบัญชี" />
                         <asp:Label ID="lbcboCostMandatory" CssClass="text-danger" AssociatedControlID="cboCost" runat="server" Text="*" />
@@ -893,7 +895,7 @@
             let element = document.getElementById(id);
             element.value = valueToSelect;
         }
-        function btnEditDetailClick(accountcodeid, buid, ppid, pjid, unit, cost, vat, tax, invoice, invoicedate, NoBill, IncompleteBill) {
+        function btnEditDetailClick(costid,accountcodeid, buid, ppid, pjid, unit, cost, vat, tax, invoice, invoicedate, NoBill, IncompleteBill) {
             console.log(accountcodeid);
             console.log(buid);
             console.log(ppid);
@@ -923,6 +925,8 @@
             vendor.value = value; --%>
 
             <%-- $('#<%= txtVendor.ClientID%>').val(vendorcode);--%>
+
+            $('#<%= hiddenAdvancedetailid.ClientID%>').val(costid);
             $('#<%= txtCostUnit.ClientID%>').val(unit);
             $('#<%= txtPrice.ClientID%>').val(cost);
             $('#<%= txtVat.ClientID%>').val(vat);
@@ -935,12 +939,13 @@
             $('.form-control').selectpicker('refresh');
             /*__doPostBack('setFromDetail', $(row).attr('name'));
 */
-
+             <% If maintable.Rows(0).Item("lockcost") = True Then %>
             $('#exampleModal .modal-footer #btnAddDetail').hide();
             $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
             $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
 
             $('#<%= btnSave.ClientID%>').hide();
+            <% End If %>
 
         }
 
@@ -948,6 +953,7 @@
 
             $('.form-control').selectpicker('refresh');
 
+            $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
             $('#<%= cboCost.ClientID%>').val(0);
             <%--$('#<%= cboBU.ClientID%>').val(0);
             $('#<%= cboPP.ClientID%>').val(0);
@@ -956,7 +962,7 @@
             $('#<%= txtUnit.ClientID%>').val('1');
             $('#<%= txtPrice.ClientID%>').val('0');
             $('#<%= txtVat.ClientID%>').val('7');
-            //$('#<%= txtTax.ClientID%>').val('');
+            $('#<%= txtTax.ClientID%>').val('3');
 
 
             <%--$('#<%= txtInvoiceNo.ClientID%>').val('');

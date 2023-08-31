@@ -138,10 +138,10 @@ Module global_module
 
     End Sub
 
-    Public Sub SetCboJobType(obj As Object, usercode As String)
+    Public Sub SetCboJobType(obj As Object, usercode As String, Optional mode As String = "all")
         Dim job As New jobs
 
-        obj.DataSource = job.JobType_List(usercode)
+        obj.DataSource = job.JobType_List(usercode, mode)
         obj.DataValueField = "jobtypeid"
         obj.DataTextField = "name"
         obj.DataBind()

@@ -53,6 +53,9 @@
                     <div class="col-auto mb-3">
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
                     </div>
+                    <div class="col  mb-3">
+                        <asp:Label ID="txtallOperator" runat="server" ReadOnly="True"></asp:Label>
+                    </div>
                     <div class="col-auto mb-3">
                         <ul class="nav">
                             <li class="nav-item dropdown">
@@ -243,7 +246,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body">
+                                <div class="mb-3">
                                     <div class="table-responsive">
                                         <table class="table table-sm table-bordered " id="dataTable">
                                             <thead class="table-info">

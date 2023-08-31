@@ -26,6 +26,13 @@ Public Class Department
         obj.DataBind()
 
     End Sub
+    Public Sub SetCboDepartmentByMode(obj As Object, branch As Integer, modelist As String)
+        obj.DataSource = Me.List(branch, modelist)
+        obj.DataValueField = "depid"
+        obj.DataTextField = "name"
+        obj.DataBind()
+
+    End Sub
     Public Sub SetCboDepartmentforjobtype(obj As Object)
         obj.DataSource = Me.List_forjobtype()
         obj.DataValueField = "depid"
@@ -61,7 +68,7 @@ Public Class Department
         Return result
     End Function
 
-    Public Function List(branch As Integer) As DataTable
+    Public Function List(branch As Integer, Optional modelist As String = "all") As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -75,6 +82,7 @@ Public Class Department
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branch
+        cmd.Parameters.Add("@modelist", SqlDbType.VarChar).Value = modelist
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
@@ -87,8 +95,6 @@ Public Class Department
 
         Return result
     End Function
-
-
 
 
 End Class

@@ -7,8 +7,9 @@
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <style>
         .container {
-            font-size:.8rem;
+            font-size: .8rem;
         }
+
         .card-advancerequest {
             max-width: 960px;
         }
@@ -54,18 +55,20 @@
 
         tr[aria-expanded="true"] {
             color: #fff;
-            background-color: #176c97;
+            background-color: #5992af;
         }
 
-        tr[aria-expanded="false"] > td:last-child:after {
-            content: '\002B';
+       tr[aria-expanded="false"] > td:last-child:after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
             font-weight: bold;
             float: right;
             margin-left: 5px;
         }
 
         tr[aria-expanded="true"] > td:last-child:after {
-            content: "\2212";
+            content: "\f106";
+            font-family: 'Font Awesome 5 Free';
             font-weight: bold;
             float: right;
             margin-left: 5px;
@@ -103,15 +106,21 @@
             color: #fff !important;
             background-color: #b8a27b !important;
         }
+
         .text-lightgray {
-            
             color: #b5b5b5 !important;
         }
-        .table__inner > thead {
-            font-size:.8rem;
+
+        table {
+            padding: 10px;
         }
+
+        .table__inner > thead {
+            font-size: .8rem;
+        }
+
         .table__inner > tbody {
-            font-size:.75rem;
+            font-size: .75rem;
         }
     </style>
 </asp:Content>
@@ -169,120 +178,146 @@
                     </div>
                     <div class="row">
                         <div class="col mb-3 table-responsive-xl">
+                            <div class=" ">
+                                <%--begin item--%>
+                                <%  Dim tempType As String = "" %>
+                                <%  Dim tempowner As String = "" %>
+                                <%  Dim temp As String = "" %>
+                                <%  Dim cnt_child As Integer = 0 %>
+                                <table class="table table-sm table-hover shadow-sm table__header">
+                                    <thead class="thead-blue ">
+                                        <tr>
+                                            <th class="text-center align-middle" rowspan="2"><span class="p-1">ประเภท</span></th>
+                                            <th class="text-center align-middle" rowspan="2"><span class="p-1">ผู้ดูแล</span></th>
+                                            <th class="text-center align-middle" rowspan="2"><span class="p-1">หัวข้อ KPIs</span></th>
+                                            <th class="text-center align-middle" rowspan="2"><span class="p-1">Ratio Company</span></th>
+                                            <th class="text-center align-middle" rowspan="2"><span class="p-1">Ratio KPI</span></th>
+                                            <th class="text-center align-middle" rowspan="2"><span class="p-1">หน่วย</span></th>
+                                            <th class="text-center align-middle" colspan="5"><span class="p-1">ระดับประเมิน</span></th>
+                                            <th class="text-center align-middle" rowspan="2"><span class="p-1">% ผลการดำเนินการ</span></th>
+                                            <th class="text-center align-middle" rowspan="2"><span class="p-1"></span></th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center align-middle"><span class="p-1">5</span></th>
+                                            <th class="text-center align-middle"><span class="p-1">4</span></th>
+                                            <th class="text-center align-middle"><span class="p-1">3</span></th>
+                                            <th class="text-center align-middle"><span class="p-1">2</span></th>
+                                            <th class="text-center align-middle"><span class="p-1">1</span></th>
+                                        </tr>
+                                    </thead>
 
-                            <%--begin item--%>
-                            <%  Dim tempowner As String = "" %>
-                            <%  Dim temp As String = "" %>
-                            <%  Dim cnt_child As Integer = 0 %>
-                            <table class="table table-sm shadow-sm table__header">
-                                <thead class="thead-blue ">
-                                    <tr>
-                                        <th class="text-center align-middle" rowspan="2">ประเภท</th>
-                                        <th class="text-center align-middle" rowspan="2">ผู้ดูแล</th>
-                                        <th class="text-center align-middle" rowspan="2">หัวข้อ KPIs</th>
-                                        <th class="text-center align-middle" rowspan="2">น้ำหนัก (ย่อย)</th>
-                                        <th class="text-center align-middle" rowspan="2">น้ำหนัก (หลัก)</th>
-                                        <th class="text-center align-middle" rowspan="2">หน่วย</th>
-                                        <th class="text-center align-middle" colspan="5">ระดับประเมิน</th>
-                                        <th class="text-center align-middle" rowspan="2">% ผลการดำเนินการ</th>
-                                        <th class="text-center align-middle" rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center align-middle">5</th>
-                                        <th class="text-center align-middle">4</th>
-                                        <th class="text-center align-middle">3</th>
-                                        <th class="text-center align-middle">2</th>
-                                        <th class="text-center align-middle">1</th>
-                                    </tr>
-                                </thead>
+                                    <tbody>
 
-                                <tbody>
-
-                                    <% For i = 0 To AllKpi.Tables(0).Rows.Count - 1 %>
-                                    <% If not AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString = temp Then %>
+                                        <% For i = 0 To AllKpi.Tables(0).Rows.Count - 1 %>
+                                        <% If not AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString = temp And AllKpi.Tables(0).Rows(i).Item("OverviewWeight").ToString <> "0" Then %>
 
 
-                                    <tr data-toggle="collapse" data-target="#<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>" class="accordion-toggle text-center" aria-expanded="false">
-                                        <td class="text-left"><%= AllKpi.Tables(0).Rows(i).Item("CategoryName").ToString %></td>
-                                        <td><%= AllKpi.Tables(0).Rows(i).Item("ownercode").ToString %></td>
-                                        <td class="text-left"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></td>
-                                        <td class="font-weight-bold text-lightgray"><%= AllKpi.Tables(0).Rows(i).Item("Weight").ToString %></td>
-                                        <td class="font-weight-bold text-muted"><%= AllKpi.Tables(0).Rows(i).Item("OverviewWeight").ToString %></td>
-                                        <td><%= AllKpi.Tables(0).Rows(i).Item("Unit").ToString %></td>
-                                        <td><%= AllKpi.Tables(0).Rows(i).Item("Lv5").ToString %></td>
-                                        <td><%= AllKpi.Tables(0).Rows(i).Item("Lv4").ToString %></td>
-                                        <td><%= AllKpi.Tables(0).Rows(i).Item("Lv3").ToString %></td>
-                                        <td><%= AllKpi.Tables(0).Rows(i).Item("Lv2").ToString %></td>
-                                        <td><%= AllKpi.Tables(0).Rows(i).Item("Lv1").ToString %></td>
-                                        <td>
-                                            <div class="light-grey">
-                                                <div class="<%= AllKpi.Tables(0).Rows(i).Item("color_progress").ToString %> text-center" style="width: <%= AllKpi.Tables(0).Rows(i).Item("percent_progress").ToString %>%"><%= AllKpi.Tables(0).Rows(i).Item("percent_progress").ToString %>%</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <%-- <button type="button" class="btn btn-sm btn-danger">
+                                        <tr data-toggle="collapse" data-target="#<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>" class="accordion-toggle text-center" aria-expanded="false">
+                                            <td class="text-left"><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("CategoryName").ToString %></span></td>
+                                            <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("ownercode").ToString %></span></td>
+                                            <td><span class="p-1 text-left"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></span></td>
+
+                                            <!---------------------------------------------------------------------------------------------------------------------------------->
+                                            <td>
+                                                <span class="p-1 font-weight-bold text-muted">
+                                                    <% If AllKpi.Tables(0).Rows(i).Item("CategoryName").ToString <> tempType Then %>
+                                                        <%= AllKpi.Tables(0).Rows(i).Item("OverviewWeight").ToString %>
+                                                    <% End if %>
+                                                </span>
+
+                                            </td>
+
+                                            <td class="font-weight-bold text-lightgray"><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("Weight").ToString %></span></td>
+                                            <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("Unit").ToString %></span></td>
+                                            <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("Lv5").ToString %></span></td>
+                                            <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("Lv4").ToString %></span></td>
+                                            <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("Lv3").ToString %></span></td>
+                                            <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("Lv2").ToString %></span></td>
+                                            <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("Lv1").ToString %></span></td>
+                                            <td>
+                                                <div class="light-grey">
+                                                    <div class="<%= AllKpi.Tables(0).Rows(i).Item("color_progress").ToString %> text-center" style="width: <%= AllKpi.Tables(0).Rows(i).Item("percent_progress").ToString %>%"><%= AllKpi.Tables(0).Rows(i).Item("percent_progress").ToString %>%</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <%-- <button type="button" class="btn btn-sm btn-danger">
                                                     <i class="far fa-bell"></i><span class="badge badge-danger">4</span>
                                                 </button>--%>
-                                        </td>
+                                            </td>
 
-                                    </tr>
-                                    <tr>
-                                        <td colspan="12" class="hiddenRow">
-                                            <div class="accordian-body collapse" id="<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>">
-                                                <table class="table table-hover table__inner">
-                                                    <thead class="thead-light">
-                                                        <tr class="info text-center">
-                                                            <th>
-                                                                <% If Session("usercode").ToString.IndexOf(AllKpi.Tables(0).Rows(i).Item("ownercode")) > 0 Then%>
-                                                                <a href="KPIsEdit.aspx?Kpi_Code=<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>" title="EditDetail"><i class="fas fa-edit"></i></a>
-                                                                <% End If%>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="12" class="hiddenRow">
+                                                <div class="accordian-body collapse" id="<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>">
+                                                    <table class="table table-hover table__inner">
+                                                        <thead class="thead-light">
+                                                            <tr class="info text-center">
+                                                                <th>
+                                                                    <span class="p-1">
+                                                                        <% If Session("usercode").ToString.IndexOf(AllKpi.Tables(0).Rows(i).Item("ownercode")) > 0 Then%>
+                                                                        <a href="KPIsEdit.aspx?Kpi_Code=<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>" title="EditDetail"><i class="fas fa-edit"></i></a>
+                                                                        <% End If%>
+                                                                    </span>
+                                                                </th>
+                                                                <th><span class="p-1">แผนงาน / เป้าหมาย</span></th>
+                                                                <th><span class="p-1">ผลตามแผน</span></th>
+                                                                <th><span class="p-1">ผลการปฏิบัติงาน</span></th>
+                                                                <th><span class="p-1">พนักงานประเมิน</span></th>
+                                                                <th><span class="p-1">หัวหน้าประเมิน</span></th>
+                                                                <th><span class="p-1">ฟีดแบค</span></th>
+                                                            </tr>
+                                                        </thead>
 
-                                                            </th>
-                                                            <th>แผนงาน (เป้าหมาย/เดือน)</th>
-                                                            <th>ผลตามแผน</th>
-                                                            <th>ผลการปฏิบัติงาน</th>
-                                                            <th>ตนเองประเมิน</th>
-                                                            <th>หัวหน้าประเมิน</th>
-                                                            <th>Feedback</th>
-                                                        </tr>
-                                                    </thead>
+                                                        <tbody>
+                                                            <% For j = 0 To AllKpi.Tables(1).Rows.Count - 1 %>
+                                                            <% If AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(1).Rows(j).Item("actionkpi_code").ToString Then %>
+                                                            <tr class="text-center">
 
-                                                    <tbody>
-                                                        <% For j = 0 To AllKpi.Tables(1).Rows.Count - 1 %>
-                                                        <% If AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(1).Rows(j).Item("actionkpi_code").ToString Then %>
-                                                        <tr class="text-center">
+                                                                <td>
+                                                                    <span class="badge badge-blue">
+                                                                        <%= AllKpi.Tables(1).Rows(j).Item("actionmonth").ToString %>
+                                                                    </span>
+                                                                </td>
+                                                                <td class="text-left">
+                                                                    <span class="p-1 text-left ">
+                                                                        <%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %>
+                                                                    </span>
 
-                                                            <td>
-                                                                <span class="badge badge-blue"><%= AllKpi.Tables(1).Rows(j).Item("actionmonth").ToString %></span></td>
-                                                            <td class="text-left pl-5"><%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %></td>
-                                                            <td>
-                                                                <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "1" Then %>
-                                                                <span class="badge badge-success">ตามแผนที่กำหนด</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="p-1">
+                                                                        <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "1" Then %>
+                                                                        <span class="badge badge-success">ตามแผน</span>
 
-                                                                <% else If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "2" Then %>
-                                                                <span class="badge badge-danger">ช้ากว่าแผนที่กำหนด</span>
-                                                                <% End if %>
-                                                            </td>
-                                                            <td class="text-left"><%= AllKpi.Tables(1).Rows(j).Item("actiontitleresult").ToString %></td>
-                                                            <td><%= AllKpi.Tables(1).Rows(j).Item("actionrateowner").ToString %></td>
-                                                            <td><%= AllKpi.Tables(1).Rows(j).Item("actionratehead").ToString %></td>
-                                                            <td class="text-left"><%= AllKpi.Tables(1).Rows(j).Item("actionfeedback").ToString %></td>
-                                                        </tr>
+                                                                        <% else If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "2" Then %>
+                                                                        <span class="badge badge-danger">ช้ากว่าแผน</span>
+                                                                        <% else If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "3" Then %>
+                                                                        <span class="badge badge-danger">เร็วกว่าแผน</span>
+                                                                        <% End if %>
+                                                                    </span>
+                                                                </td>
+                                                                <td class="text-left"><span class="p-1"><%= AllKpi.Tables(1).Rows(j).Item("actiontitleresult").ToString %></span></td>
+                                                                <td><span class="p-1"><%= AllKpi.Tables(1).Rows(j).Item("actionrateowner").ToString %></span></td>
+                                                                <td><span class="p-1"><%= AllKpi.Tables(1).Rows(j).Item("actionratehead").ToString %></span></td>
+                                                                <td class="text-left"><span class="p-1"><%= AllKpi.Tables(1).Rows(j).Item("actionfeedback").ToString %></span></td>
+                                                            </tr>
 
-                                                        <% End if %>
-                                                        <% Next j %>
-                                                    </tbody>
-                                                </table>
+                                                            <% End if %>
+                                                            <% Next j %>
+                                                        </tbody>
+                                                    </table>
 
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <% End if %>
-                                    <% temp = AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <% End if %>
+                                        <% tempType = AllKpi.Tables(0).Rows(i).Item("CategoryName").ToString %>
+                                        <% temp = AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>
 
-                                    <% Next i %>
-                                </tbody>
-                            </table>
+                                        <% Next i %>
+                                    </tbody>
+                                </table>
+                            </div>
 
                         </div>
                     </div>
@@ -309,6 +344,7 @@
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
     <script type="text/javascript">
         jQuery('[id$=txtDuedate]').datetimepicker({
@@ -325,31 +361,90 @@
 
 
             $('.form-control').selectpicker('refresh');
-            let dataChart =[]
+            let dataChart = []
             <% If Not Request.QueryString("uc") Is Nothing And AllKpi IsNot Nothing Then%>
             <% For j = 0 To AllKpi.Tables(2).Rows.Count - 1 %>
             dataChart.push(<%= AllKpi.Tables(2).Rows(j).Item("Weight").ToString %>);
             <% Next j %>
              <% End If%>
 
+            const newArr = [
+                {
+                    label: 'Corporate',
+                    data: dataChart[0],
+                    backgroundColor: '#ffbd3d'
+                },
+                {
+                    label: 'Department',
+                    data: dataChart[1],
+                    backgroundColor: '#6690c7'
+                },
+                {
+                    label: 'Section',
+                    data: dataChart[2],
+                    backgroundColor: '#67c487'
+                },
+                {
+                    label: 'Individual',
+                    data: dataChart[3],
+                    backgroundColor: '#b8a27b'
+                },
+                {
+                    label: 'Competency',
+                    data: dataChart[4],
+                    backgroundColor: '#d6037c'
+                }
+            ]
+
+            //---
+
+
+
             console.log(dataChart);
             const ctx = document.getElementById('myChart');
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Corporate', 'Department', 'Section', 'Individual', 'Competency'],
+                    //labels: ['Corporate', 'Department', 'Section', 'Individual', 'Competency'],
+                    labels: newArr.filter((fill) => fill.data > 0).map((res) => res.label),
                     datasets: [{
-                        data: dataChart,
+
+                        label: 'คำนวนเป็น(%)',
+                        data: newArr.filter((fill) => fill.data > 0).map((res) => res.data),
                         borderWidth: 3,
-                        backgroundColor: ['#ffbd3d', '#67c487', '#6690c7', '#b8a27b', '#d6037c'],
-                    }]
-                }, options: {
-                    parsing: {
-                        key: 'nested.value'
-                    }
+                        backgroundColor: newArr.filter((fill) => fill.data > 0).map((res) => res.backgroundColor),
+                    }],
+
+                }, plugins: [ChartDataLabels], options: {
+                    plugins: {
+                        datalabels: {
+                            color: '#343a40',
+                            formatter: function (value) {
+                                return Math.round(value) + '%';
+                            },
+                            font: {
+                                weight: 'bold',
+                                size: 14,
+                            }
+                        },
+                        legend: {
+                            rtl: true,
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                usePointStyle: true
+                            },
+                        }
+
+                    },
+
                 }
+
+
             });
         });
+
+
         function btnEditDetailClick(ele) {
             console.log(ele);
             event.preventDefault();

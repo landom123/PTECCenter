@@ -22,6 +22,7 @@ Public Class KPIsEdit
     Public verifier As String
     Public now_action As String
     Public now_date As String
+    Public OPT As String = ""
 
     Dim md_code As String
     Dim fm_code As String
@@ -30,13 +31,14 @@ Public Class KPIsEdit
     Dim am_code As String
 
 
-    Public account_code As String = ""
+    Public operator_code As String = ""
+    Public operatordt As DataTable
 
     Public itemtable As DataTable
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        'Dim objKpi As New Kpi
+        Dim objKpi As New Kpi
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -58,45 +60,67 @@ Public Class KPIsEdit
         company_th.InnerText = "บริษัท เพียวพลังงานไทย จำกัด"
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
+
         If Not IsPostBack() Then
+            objKpi.SetCboRatioType(cboRatio)
             If Not Request.QueryString("Kpi_Code") Is Nothing Then
                 findKpi()
-
-                If AllKpi IsNot Nothing Then
-                    If AllKpi.Tables(1).Rows.Count > 0 Then
-                        chkuser(AllKpi.Tables(1).Rows(0).Item("actionownerid"))
-                        now_action = AllKpi.Tables(1).Rows(0).Item("actionempuppercode").ToString
-                    End If
-                    If AllKpi.Tables(1).Rows.Count > 0 Then
-                        now_date = AllKpi.Tables(0).Rows(0).Item("datenow").ToString
-                    End If
-                End If
-
             End If
 
             Session("AllKpi") = AllKpi
         Else
 
             AllKpi = Session("AllKpi")
+
         End If
 
         SetBtn(AllKpi)
     End Sub
     Private Sub SetBtn(ds As DataSet)
-        If AllKpi.Tables(1).Rows.Count > 0 Then
-            btnUpdate.Visible = True
+        If AllKpi IsNot Nothing Then
+            If AllKpi.Tables(1).Rows.Count > 0 Then
+                chkuser(AllKpi.Tables(1).Rows(0).Item("actionownerid"))
+                now_action = AllKpi.Tables(1).Rows(0).Item("actionempuppercode").ToString
 
+            End If
+
+            If AllKpi.Tables(0).Rows.Count > 0 Then
+                now_date = AllKpi.Tables(0).Rows(0).Item("datenow").ToString
+                If (String.IsNullOrEmpty(AllKpi.Tables(0).Rows(0).Item("operatortype").ToString)) Then
+                    btnUpdate.Visible = True
+                    btnUpdateOP.Visible = False
+                ElseIf AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then
+                    btnUpdate.Visible = False
+                    btnUpdateOP.Visible = True
+
+                    OPT = "(Admin)"
+
+                ElseIf AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "OP" Then
+                    OPT = "(Operator)"
+                End If
+            End If
         Else
-
             btnUpdate.Visible = False
+            btnUpdateOP.Visible = False
         End If
+
     End Sub
     Private Sub findKpi()
         Dim objkpi As New Kpi
         Try
 
 
-            AllKpi = objKpi.Kpi_Find_by_code(Request.QueryString("Kpi_Code").ToString)
+            AllKpi = objkpi.Kpi_Find_by_code(Request.QueryString("Kpi_Code").ToString, Session("usercode"))
+
+            cboRatio.SelectedIndex = If(AllKpi.Tables(0).Rows(0).Item("category_id"), AllKpi.Tables(0).Rows(0).Item("category_id"), -1)
+            txtKpititle.InnerText = AllKpi.Tables(0).Rows(0).Item("Title").ToString
+            txtWeight.Text = AllKpi.Tables(0).Rows(0).Item("Weight").ToString
+            txtUnit.Text = AllKpi.Tables(0).Rows(0).Item("Unit").ToString
+            txtlv5.Text = AllKpi.Tables(0).Rows(0).Item("Lv5").ToString
+            txtlv4.Text = AllKpi.Tables(0).Rows(0).Item("Lv4").ToString
+            txtlv3.Text = AllKpi.Tables(0).Rows(0).Item("Lv3").ToString
+            txtlv2.Text = AllKpi.Tables(0).Rows(0).Item("Lv2").ToString
+            txtlv1.Text = AllKpi.Tables(0).Rows(0).Item("Lv1").ToString
             '-- table 0 = Head
             '-- table 1 = main
             '-- table 2 = detail
@@ -110,8 +134,7 @@ Public Class KPIsEdit
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
-    Private Sub btnUpdate_ServerClick(sender As Object, e As EventArgs) Handles btnUpdate.ServerClick
-
+    Private Sub update()
         Dim res As String = Request.Form("confirm_value")
         res = res.Replace("[", "")
         res = res.Replace("]", "")
@@ -143,13 +166,20 @@ Public Class KPIsEdit
 
                 Dim objkpi As New Kpi
                 Dim id As String
-                If (AllKpi.Tables(1).Rows(1).Item("actionempuppercode").ToString.IndexOf(Session("usercode")) > -1) Then
-                    id = objkpi.SaverateHeadToActionplan(actionid, actionratehead, actionfeedback, Session("usercode"))
-                Else
-                    id = objkpi.SaveDetailToActionplan(actionid, actionmonthly, actiontitleresult, actionrateowner, Session("usercode"))
+                If (String.IsNullOrEmpty(AllKpi.Tables(0).Rows(0).Item("operatortype").ToString)) Then
+                    If (AllKpi.Tables(1).Rows(1).Item("actionempuppercode").ToString.IndexOf(Session("usercode")) > -1) Then
+                        id = objkpi.SaverateHeadToActionplan(actionid, actionratehead, actionfeedback, Session("usercode"))
+                    Else
+                        id = objkpi.SaveDetailToActionplan(actionid, actionmonthly, actiontitleresult, actionrateowner, Session("usercode"))
+                    End If
+                ElseIf AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then
+
+                    Dim actiontitle As String = json("actiontitle").Trim
+                    id = objkpi.SaveDetailToActionplanOP(actionid, actiontitle, actionmonthly, actiontitleresult, actionrateowner, actionratehead, actionfeedback, Session("usercode"))
+
                 End If
-                findKpi()
             Next
+            findKpi()
 
 
         Catch ex As Exception
@@ -158,6 +188,9 @@ Public Class KPIsEdit
             Dim javaScript As String = "alertWarning('adddetail fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+    End Sub
+    Private Sub btnUpdate_ServerClick(sender As Object, e As EventArgs) Handles btnUpdate.ServerClick
+        update()
     End Sub
 
 
@@ -179,5 +212,26 @@ Public Class KPIsEdit
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
 
+    End Sub
+
+    Private Sub btnUpdateOP_ServerClick(sender As Object, e As EventArgs) Handles btnUpdateOP.ServerClick
+        update()
+    End Sub
+
+    Private Sub btnUpdateKPI_Click(sender As Object, e As EventArgs) Handles btnUpdateKPI.Click
+        Dim objKpi As New Kpi
+
+        Try
+            objKpi.Kpi_HeadOP_Save(Request.QueryString("Kpi_Code"), cboRatio.SelectedItem.Value, txtKpititle.InnerText, txtWeight.Text, txtUnit.Text, txtlv5.Text, txtlv4.Text, txtlv3.Text, txtlv2.Text, txtlv1.Text, Session("usercode"))
+            'findKpi()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('cancel fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../KPI/KPIsEdit.aspx?Kpi_Code=" & Request.QueryString("Kpi_Code"))
+endprocess:
     End Sub
 End Class

@@ -41,6 +41,96 @@ Partial Public Class KPIsEdit
     Protected WithEvents company_en As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
+    '''cboRatio control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboRatio As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtKpititle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtKpititle As Global.System.Web.UI.HtmlControls.HtmlTextArea
+
+    '''<summary>
+    '''txtWeight control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtWeight As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtUnit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtUnit As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtlv5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtlv5 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtlv4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtlv4 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtlv3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtlv3 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtlv2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtlv2 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtlv1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtlv1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''btnUpdateKPI control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateKPI As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnUpdate control.
     '''</summary>
     '''<remarks>
@@ -48,4 +138,13 @@ Partial Public Class KPIsEdit
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnUpdate As Global.System.Web.UI.HtmlControls.HtmlInputButton
+
+    '''<summary>
+    '''btnUpdateOP control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateOP As Global.System.Web.UI.HtmlControls.HtmlInputButton
 End Class
