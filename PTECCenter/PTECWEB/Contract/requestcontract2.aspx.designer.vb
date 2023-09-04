@@ -536,6 +536,15 @@ Partial Public Class requestcontract2
     Protected WithEvents cboSex As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''chkOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkOwner As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''txtAddress control.
     '''</summary>
     '''<remarks>
@@ -1481,6 +1490,24 @@ Partial Public Class requestcontract2
     Protected WithEvents txtWa As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''btnAddAssetMain control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddAssetMain As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''gvAssetMain control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvAssetMain As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
     '''txtAssetDocno control.
     '''</summary>
     '''<remarks>
@@ -1551,6 +1578,24 @@ Partial Public Class requestcontract2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gvSublet As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''TextBox1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TextBox1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''TextBox2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TextBox2 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''txtbuNo control.
@@ -2768,15 +2813,6 @@ Partial Public Class requestcontract2
     Protected WithEvents btnAddPowerBook As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnEditPowerBook control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnEditPowerBook As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''Tab21 control.
     '''</summary>
     '''<remarks>
@@ -3119,13 +3155,13 @@ Partial Public Class requestcontract2
     Protected WithEvents txtEmailNonOil As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''TextBox3 control.
+    '''txtNonOilRemark control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents TextBox3 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtNonOilRemark As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''btnAddNonOil control.
@@ -3135,15 +3171,6 @@ Partial Public Class requestcontract2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnAddNonOil As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''btnEditNonOil control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnEditNonOil As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''gvPayTypeNonOil control.

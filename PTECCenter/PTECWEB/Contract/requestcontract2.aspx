@@ -522,12 +522,24 @@
                                                                                                 </div>
                                                                                             </div>
 
+                                                                                       </div>
+
+                                                                                       <div class="row" style="padding-top: 0.2rem;" runat="server">  
                                                                                             <div class="col-md-3" runat="server">                                                 
                                                                                                 <div class="input-group sm-3" runat="server">
                                                                                                         <div class="input-group-prepend"  runat="server">
                                                                                                             <span class="input-group-text" runat="server">เพศ</span>
                                                                                                         </div>
                                                                                                     <asp:dropdownlist class="form-control" ID="cboSex" runat="server" ></asp:dropdownlist>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-2" runat="server">                                                 
+                                                                                                <div class="input-group sm-2" runat="server">
+                                                                                                        <div class="input-group-prepend"  runat="server">
+                                                                                                            <%--<span class="input-group-text" runat="server">เป็นเจ้าของที่ดิน</span>--%>
+                                                                                                            <asp:checkbox class="input-group-text" ID="chkOwner" runat="server" text="เป็นเจ้าของที่ดิน" ></asp:checkbox>
+                                                                                                        </div>
+                                                                                                    
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1651,7 +1663,53 @@
                                                                                     <span class="input-group-text">ตารางวา</span>
                                                                                 </div>
                                                                             </div>     
-                                                                            
+                                                                            <asp:Button ID="btnAddAssetMain" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" เพิ่มรายการ " />
+
+                                                                        </div>
+
+                                                                        <div class="card-body">
+
+                                                                                    <div class="row" style="padding-top: 0.2rem;">
+
+                                                                                        <div class="table-responsive">
+                                                                                            <asp:GridView ID="gvAssetMain"
+                                                                                                style="text-align:center;width: 50%;height:10%"
+                                                                                                class="table table-striped table-bordered"
+                                                                                                AllowSorting="True"
+                                                                                                AllowPaging="false"
+                                                                                                AutoGenerateColumns="false"
+                                                                                                EmptyDataText=" ไม่มีข้อมูล "                                     
+                                                                                                OnRowDataBound="OnRowDataBound_AssetMain"                                                                                                
+                                                                                                OnSelectedIndexChanged="OnSelectedIndexChanged_AssetMain"                                                                                               
+                                                                                                runat="server" CssClass="table table-striped">
+                                                                                                <HeaderStyle BackColor="#507CD1" Font-Bold="false" Font-Size="Smaller" ForeColor="White" />
+                                                                                                <AlternatingRowStyle BackColor="#CCCCFF" />
+
+                                                                                                <Columns>                                                             
+                                                                                                    <asp:BoundField DataField="ItemNo" HeaderText="#" />
+                                                                                                    <asp:BoundField DataField="DocNo" HeaderText="เลขที่โฉนด" />
+                                                                                                    <asp:BoundField DataField="ServayNo" HeaderText="เลขหน้าสำรวจ" />
+                                                                                                    <asp:BoundField DataField="Landno" HeaderText="เลขหน้าที่ดิน" />
+                                                                                                    <asp:BoundField DataField="Rai" ItemStyle-HorizontalAlign="Right"  HeaderText="ไร่" />
+                                                                                                    <asp:BoundField DataField="Ngan" ItemStyle-HorizontalAlign="Right"  HeaderText="งาน" />
+                                                                                                    <asp:BoundField DataField="Wa" ItemStyle-HorizontalAlign ="Right"  HeaderText="ตารางวา" />
+
+                                                                                                    <asp:BoundField DataField="Addr" HeaderText="เลขที่" />   
+                                                                                                    <asp:BoundField DataField="SubDistrict" HeaderText="ตำบล/แขวง" />   
+                                                                                                    <asp:BoundField DataField="District" HeaderText="อำเภอ/เขต" />   
+                                                                                                    <asp:BoundField DataField="Province" HeaderText="จังหวัด" />   
+                                                                                                    <asp:BoundField DataField="PostCode" HeaderText="ไปรษณีย์" />                                                               
+                                                                                                                                                                            
+                                                                                                    <asp:BoundField DataField="ID" HeaderText="ID" />
+                                                                                                    <asp:BoundField DataField="ItemNo" HeaderText="ItemNo" />                                                                                        
+                                                                                                    <asp:BoundField DataField="AssetID" HeaderText="AssetID" />
+
+                                                                                                </Columns>
+                                                                                                                                                                                       
+                                                                                            </asp:GridView>
+                                                                                     
+                                                                                        </div>
+                                                                                    </div>
 
                                                                         </div>
 
@@ -1702,7 +1760,7 @@
                                                                                 </div>                                                                              
                                                                                 <asp:Button ID="btnAddAssetSublet" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" เพิ่มรายการแบ่งเช่า " />
                                                                             </div>
-                                                                
+                                                                                                                                                
                                                                         <div class="card-body">
 
                                                                                     <div class="row" style="padding-top: 0.2rem;">
@@ -1741,6 +1799,28 @@
                                                                                     </div>
 
                                                                         </div>
+
+                                                                            <div class="row col-sm-3 span2" style="padding-top: 0.2rem;" runat="server">
+                                                                                  พยาน
+                                                                           </div>
+                                                                           <div class="row" style="padding-top: 0.2rem;" runat="server">
+                                                                                  <div class="col-md-3" runat="server" style="padding-top: 1rem;">                                                
+                                                                                         <div class="input-group sm-3" runat="server">
+                                                                                                <div class="input-group-prepend" runat="server">
+                                                                                                      <span class="input-group-text"  runat="server">พยานคนที่ 1</span>
+                                                                                                </div>
+                                                                                                <asp:TextBox class="form-control" ID="TextBox1" runat="server" ></asp:TextBox>
+                                                                                        </div>
+                                                                                  </div>
+                                                                                  <div class="col-md-3" runat="server" style="padding-top: 1rem;">                                                
+                                                                                        <div class="input-group sm-3" runat="server">
+                                                                                               <div class="input-group-prepend" runat="server">
+                                                                                                     <span class="input-group-text"  runat="server">พยานคนที่ 2</span>
+                                                                                               </div>
+                                                                                               <asp:TextBox class="form-control" ID="TextBox2" runat="server" ></asp:TextBox>
+                                                                                        </div>
+                                                                                  </div>                                                                                            
+                                                                           </div>
 
                                                                         <br />
                                                                                    <div class="row col-sm-3 span2" style="padding-top: 0.2rem;" runat="server">                                                                                                               
@@ -2907,8 +2987,8 @@
                                                             </div>
                                                    </div>
                                                     <div class="row col-md-3" style="padding-top: 0.2rem;"  runat="server">
-                                                         <asp:Button ID="btnAddPowerBook" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" เพิ่มสัญญา " />
-                                                         <asp:Button ID="btnEditPowerBook" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" แก้สัญญา " />
+                                                         <asp:Button ID="btnAddPowerBook" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" บันทึกสัญญา " />
+                                                         <%--<asp:Button ID="btnEditPowerBook" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" แก้สัญญา " />--%>
                                                     </div>
                                                 
                                             </asp:View>      
@@ -3271,13 +3351,13 @@
                                                                       <div class="input-group-prepend" runat="server">
                                                                            <span class="input-group-text" > อื่นๆ </span>
                                                                       </div>
-                                                                      <asp:TextBox class="form-control" ID="TextBox3" runat="server" ></asp:TextBox>
+                                                                      <asp:TextBox class="form-control" ID="txtNonOilRemark" runat="server" ></asp:TextBox>
                                                                  </div>
                                                             </div>
                                                    </div>
                                                     <div class="row col-md-3" style="padding-top: 0.2rem;"  runat="server">
-                                                         <asp:Button ID="btnAddNonOil" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" เพิ่มสัญญา Non Oil " />
-                                                         <asp:Button ID="btnEditNonOil" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" แก้สัญญา Non Oil" />
+                                                         <asp:Button ID="btnAddNonOil" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" บันทึกสัญญา Non Oil " />
+                                                         <%--<asp:Button ID="btnEditNonOil" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" แก้สัญญา Non Oil" />--%>
                                                     </div>
 
                                                    <div class="row col-sm-10 span2" style="padding-top: 0.2rem;" runat="server">

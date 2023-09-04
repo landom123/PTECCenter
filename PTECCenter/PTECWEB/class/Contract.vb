@@ -2395,6 +2395,54 @@ Public Class clsRequestContract
 
     End Function
 
+    Public Function AddContractAssetMain(sDocNo As String, DocNo As String, LandNo As String, AssetID As Integer, ServayNo As String, Addr As String, SubDistrict As String _
+                                         , District As String, Province As String, PostCode As String, Rai As Integer, Ngan As Integer, Wa As Decimal, ItemNo As Integer) As Boolean
+
+        Try
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+            'Dim imgCon As New ImageConverter()
+            'Dim imgCon2 As New ImageConverter()
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Add_AssetMain"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@sDocNo", SqlDbType.NVarChar).Value = sDocNo
+            cmd.Parameters.Add("@sDocNo2", SqlDbType.NVarChar).Value = DocNo
+            cmd.Parameters.Add("@LandNo", SqlDbType.NVarChar).Value = LandNo
+            cmd.Parameters.Add("@AssetID", SqlDbType.Int).Value = AssetID
+            cmd.Parameters.Add("@ServayNo", SqlDbType.NVarChar).Value = ServayNo
+            cmd.Parameters.Add("@Addr", SqlDbType.NVarChar).Value = Addr
+            cmd.Parameters.Add("@SubDistrict", SqlDbType.NVarChar).Value = SubDistrict
+            cmd.Parameters.Add("@District", SqlDbType.NVarChar).Value = District
+            cmd.Parameters.Add("@Province", SqlDbType.NVarChar).Value = Province
+
+            cmd.Parameters.Add("@PostCode", SqlDbType.NVarChar).Value = PostCode
+            cmd.Parameters.Add("@Rai", SqlDbType.Int).Value = Rai
+            cmd.Parameters.Add("@Ngan", SqlDbType.Int).Value = Ngan
+            cmd.Parameters.Add("@Wa", SqlDbType.Decimal).Value = Wa
+            cmd.Parameters.Add("@iItemNo2", SqlDbType.Int).Value = ItemNo
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            conn.Close()
+
+            Return True
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+
+    End Function
+
     Public Function AddContractAssetSublet(sDocNo As String, DeedNo As String, SurveyNo As String, LandNo As String, Rai As Integer, Ngan As Integer _
                                            , Wa As Integer, LongRoad As String) As Boolean
 
@@ -2421,6 +2469,7 @@ Public Class clsRequestContract
             cmd.Parameters.Add("@Wa", SqlDbType.Int).Value = Wa
             cmd.Parameters.Add("@LongRoad", SqlDbType.NVarChar).Value = LongRoad
 
+
             adp.SelectCommand = cmd
             adp.Fill(ds)
             conn.Close()
@@ -2435,6 +2484,7 @@ Public Class clsRequestContract
         End Try
 
     End Function
+
     Public Function AddContractOther(sDocNo As String, CompanyID As Integer, DocDate As Date, Customerparty As String, Customerparty1 As String, Customerparty2 As String _
                                      , Addr As String, Contact As String, Branch As String, Amount As String, Period As String, BeginDate As Date, EndDate As Date _
                                      , DueDate As Date, FineAmnt As String, PerformanceIns As String, ConditionIns As String, ConditionAmnt As String _
@@ -2704,6 +2754,38 @@ Public Class clsRequestContract
         End Try
     End Function
 
+    Public Function loadAsset2(sDocNo As String) As DataTable
+        Try
+            Dim result As DataTable
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Get_TT_Asset2"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@sDocNo", SqlDbType.VarChar).Value = sDocNo
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            result = ds.Tables(0)
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+    End Function
+
     Public Function loadAsset_ItemNo(sDocNo As String, iItemNo As Integer) As DataTable
         Try
             Dim result As DataTable
@@ -2736,7 +2818,7 @@ Public Class clsRequestContract
             Return Nothing
         End Try
     End Function
-    Public Function loadAssetSublet(sDocNo As String) As DataTable
+    Public Function loadAssetSublet(sDocNo As String, DocNo As String) As DataTable
         Try
             Dim result As DataTable
 
@@ -2748,6 +2830,39 @@ Public Class clsRequestContract
             conn.Open()
             cmd.Connection = conn
             cmd.CommandText = "sp_Get_AssetSublet"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@sDocNo", SqlDbType.VarChar).Value = sDocNo
+            cmd.Parameters.Add("@DocNo", SqlDbType.VarChar).Value = DocNo
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            result = ds.Tables(0)
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function loadAssetMain(sDocNo As String) As DataTable
+        Try
+            Dim result As DataTable
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Get_AssetMain"
             cmd.CommandType = CommandType.StoredProcedure
 
             cmd.Parameters.Add("@sDocNo", SqlDbType.VarChar).Value = sDocNo
@@ -2767,7 +2882,6 @@ Public Class clsRequestContract
             Return Nothing
         End Try
     End Function
-
     Public Function loadMainContract() As DataTable
         Try
             Dim result As DataTable
@@ -3067,7 +3181,7 @@ Public Class clsRequestContract
 
     Public Function AddPowerBook(sDocNo As String, ContractTypeID As Integer, DueDate As Date, DocDate As Date, Empfr As String, Empto As String, Witness1 As String _
                                  , Witness2 As String, Obj1 As String, Obj2 As String, Obj3 As String, Oth1 As String, Oth2 As String, Oth3 As String _
-                                 , CreateBy As String, CompanyID As Integer, Empto2 As String, Empto3 As String, BrCode As String, Addr As String, Contact As String) As Boolean
+                                 , CreateBy As String, CompanyID As Integer, Empto2 As String, Empto3 As String, BrCode As String, Addr As String, Contact As String, ItemNo As Integer) As Boolean
 
         Try
 
@@ -3103,6 +3217,7 @@ Public Class clsRequestContract
             cmd.Parameters.Add("@BrCode", SqlDbType.NVarChar).Value = BrCode
             cmd.Parameters.Add("@Addr", SqlDbType.NVarChar).Value = Addr
             cmd.Parameters.Add("@Contact", SqlDbType.NVarChar).Value = Contact
+            cmd.Parameters.Add("@ItemNo", SqlDbType.Int).Value = ItemNo
 
             adp.SelectCommand = cmd
             adp.Fill(ds)
@@ -3472,7 +3587,7 @@ Public Class clsRequestContract
                                       , CustName As String, CardID As String, TaxID As String, Addr As String, SubDistrict As String, District As String, Province As String _
                                       , PostCode As String, Contact As String, Tel As String, Line As String, Email As String, PayService As Decimal, PayInsurance As Decimal _
                                       , PayWater As Decimal, PayElectrict As Decimal, PayCenter As Decimal, PayGarbag As Decimal, PayLabel As Decimal, PayOther As Decimal _
-                                      , RemarkOther As String, WideLong As String) As Boolean
+                                      , RemarkOther As String, WideLong As String, ItemNo As Integer, Remark As String, GroupConID_SubItem As Integer) As Boolean
 
         Try
 
@@ -3510,7 +3625,6 @@ Public Class clsRequestContract
             cmd.Parameters.Add("@Tel", SqlDbType.NVarChar).Value = Tel
             cmd.Parameters.Add("@Line", SqlDbType.NVarChar).Value = Line
             cmd.Parameters.Add("@Email", SqlDbType.NVarChar).Value = Email
-
             cmd.Parameters.Add("@PayService", SqlDbType.Decimal).Value = PayService
             cmd.Parameters.Add("@PayInsurance", SqlDbType.Decimal).Value = PayInsurance
             cmd.Parameters.Add("@PayWater", SqlDbType.Decimal).Value = PayWater
@@ -3520,8 +3634,10 @@ Public Class clsRequestContract
             cmd.Parameters.Add("@PayLabel", SqlDbType.Decimal).Value = PayLabel
             cmd.Parameters.Add("@PayOther", SqlDbType.Decimal).Value = PayOther
             cmd.Parameters.Add("@RemarkOther", SqlDbType.NVarChar).Value = RemarkOther
-
             cmd.Parameters.Add("@WideLong", SqlDbType.NVarChar).Value = WideLong
+            cmd.Parameters.Add("@ItemNo2", SqlDbType.Int).Value = ItemNo
+            cmd.Parameters.Add("@Remark", SqlDbType.NVarChar).Value = Remark
+            cmd.Parameters.Add("@GroupConID_SubItem", SqlDbType.Int).Value = GroupConID_SubItem
 
             adp.SelectCommand = cmd
             adp.Fill(ds)
