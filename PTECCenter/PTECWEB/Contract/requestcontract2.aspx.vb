@@ -289,8 +289,124 @@ Public Class requestcontract2
         gvAsset.DataSource = Nothing
         gvAsset.DataBind()
 
+        'PowerBook
+        cboCompany.SelectedIndex = 0
+        cboContractType.SelectedIndex = 0
+        txtIssueDateBook.Text = ""
+        txtDocDateBook.Text = ""
+        txtEmpfr.Text = ""
+        txtEmpto.Text = ""
+        txtWitness1.Text = ""
+        txtWitness2.Text = ""
+        txtObj1.Text = ""
+        txtObj2.Text = ""
+        txtObj3.Text = ""
+        txtOth1.Text = ""
+        txtOth2.Text = ""
+        txtOth3.Text = ""
+        txtEmpto2.Text = ""
+        txtEmpto3.Text = ""
+        txtBrCodePowerBook.Text = ""
+        txtAddrPowerBook.Text = ""
+        txtContactPowerBook.Text = ""
+
+        'contract Other
+
+        cboCompany.SelectedIndex =
+        lblCompany4.Text = ""
+        cboContractType.SelectedIndex = 0
+        lblContractType4.Text = ""
+        txtCustomerparty.Text = ""
+        txtCustomerparty1.Text = ""
+        txtCustomerparty2.Text = ""
+        txtAddr4.Text = ""
+        txtContact4.Text = ""
+        txtBranchContract4.Text = ""
+        txtAmount4.Text = ""
+        txtPeriod.Text = ""
+        txtStartDate.Text = ""
+        txtBeginDate4.Text = ""
+        txtFineAmnt4.Text = ""
+        txtPerformanceIns.Text = ""
+        txtConditionIns.Text = ""
+        txtConditionAmnt.Text = ""
+        txtRemark4.Text = ""
+        txtRemark41.Text = ""
+        txtRemark42.Text = ""
+        txtRemark43.Text = ""
+        txtEndDate4.Text = ""
+        chkEndDate4.Checked = False
+        txtDueDate4.Text = ""
+        chkDueDate4.Checked = False
+        txtPayInsuranceOth.Text = 0
+        txtPayBeforeOth.Text = 0
+        txtPayFineOth.Text = 0
+        txtPayWaterOth.Text = 0
+        txtPayElectricOth.Text = 0
+        txtPayCenterOth.Text = 0
+        txtRoomNumOth.Text = 0
+        txtAddrOther.Text = ""
+
+        txtDueDateOth.Text = ""
+        txtRentPerMonthOth.Text = 0
+
+        'contractnonOil
+        lblContractTypeNonOil.Text = ""
+        rdoMonthNonOil.Checked = False
+        rdoYearNonOil.Checked = False
+        rdoOnceNonOil.Checked = False
+        rdoFreeNonOil.Checked = False
+        txtFrequencyNonOil.Text = ""
+        txtDueDateNonOil.Text = ""
+        txtBeginDateNonOil.Text = ""
+        txtEndDateNonOil.Text = ""
+        txtSizeNonOil.Text = ""
+        txtRoomNumberNonOil.Text = ""
+        txtBusinessTypeNonOil.Text = ""
+        txtCustNameNonOil.Text = ""
+        txtIDCardNonOil.Text = ""
+        txtTaxIDNonOil.Text = ""
+        txtHomeIDNonOil.Text = ""
+        txtSubDistrictNonOil.Text = ""
+        txtDistrictNonOil.Text = ""
+        txtProvinceNonOil.Text = ""
+        txtPostCodeNonOil.Text = ""
+        txtContactNonOil.Text = ""
+        txtTelNonOil.Text = ""
+        txtLineNonOil.Text = ""
+        txtEmailNonOil.Text = ""
+        txtPayNonOilService.Text = 0
+        txtPayNonOilInsurance.Text = 0
+        txtPayNonOilWater.Text = 0
+        txtPqyNonOilElectrice.Text = 0
+        txtPayNonOilCenter.Text = 0
+        txtPayNonOilGarbag.Text = 0
+        txtPayNonOilLabel.Text = 0
+        txtPayNonOilRemarkOther.Text = 0
+        txtNonOilRemarkOther.Text = ""
+        txtNonOilRemarkOther.Text = ""
+        Session("ItemNoNonOil") = 0
+
+        'contractRentJoin
+        txtLandno.Text = ""
+        txtSurveyNo.Text = ""
+        txtLandNo2.Text = ""
+        txtAssetAddr.Text = ""
+        txtAssetSubdistrict.Text = ""
+        txtAssetDistrict.Text = ""
+        txtAssetProvince.Text = ""
+        txtAssPostCode.Text = ""
+        txtRai.Text = 0
+        txtNgan.Text = 0
+        txtWa.Text = 0.00
+        cboAssetType.SelectedIndex = 0
+        Session("ItemRentJoin") = 0
 
 
+
+
+
+        Session("ItemNo") = 0
 
         txtDocAction.Text = "NEW"
         txtdocuno.Text = objReq.GetDocRun(1, 0)
@@ -330,8 +446,19 @@ Public Class requestcontract2
         ContractID = cboContractType.SelectedValue
         GroupConID = cboMainContact.SelectedValue
         GroupConID_SubItem = cboContractType.SelectedValue
-        dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
-        dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
+
+        If IsDate(txtContractBeginDate.Text) = True Then
+            dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
+        Else
+            dContractBegindate = "1900-01-01"
+        End If
+
+        If IsDate(txtContractEndDate.Text) = True Then
+            dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
+        Else
+            dContractEndDate = "1900-01-01"
+        End If
+
         CustName = txtName.Text
         CardID = txtCardID.Text
         Gender = cboSex.Text
@@ -358,15 +485,19 @@ Public Class requestcontract2
         If txtDocAction.Text = "NEW" Then
             txtdocuno.Text = objReq.GetDocRun(1, 1)
             DocuNo = txtdocuno.Text
-            result = objReq.AddRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
-                                , District, Province, PostCode, CreateDate, CreateBy, PeriodYear, PeriodMonth, RegistryTo, contractno, GroupConID, GroupConID_SubItem, CompanyID)
-        ElseIf txtDocAction.Text = "EDIT" Then
-            result = objReq.UpdateRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
-                                , District, Province, PostCode, CreateDate, CreateBy, CInt(txtDocIDAction.Text), RegistryTo, contractno, GroupConID, GroupConID_SubItem, PeriodYear, PeriodMonth, CompanyID)
+            '    result = objReq.AddRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
+            '                        , District, Province, PostCode, CreateDate, CreateBy, PeriodYear, PeriodMonth, RegistryTo, contractno, GroupConID, GroupConID_SubItem, CompanyID)
+
+            'ElseIf txtDocAction.Text = "EDIT" Then
+            '    result = objReq.UpdateRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
+            '                        , District, Province, PostCode, CreateDate, CreateBy, CInt(txtDocIDAction.Text), RegistryTo, contractno, GroupConID, GroupConID_SubItem, PeriodYear, PeriodMonth, CompanyID)
         End If
 
-        txtDocIDAction.Text = 0
-        txtDocAction.Text = "NEW"
+        result = objReq.AddRequest(DocuNo, Branch, ContractID, dContractBegindate, dContractEndDate, CustName, CardID, Gender, Company, Mobile, Tel, Email, Line, StatusID, Address, SubDistrict _
+                                , District, Province, PostCode, CreateDate, CreateBy, PeriodYear, PeriodMonth, RegistryTo, contractno, GroupConID, GroupConID_SubItem, CompanyID)
+
+        'txtDocIDAction.Text = 0
+        'txtDocAction.Text = "NEW"
         'Clear()
 
         If disableTab(cboMainContact.SelectedValue) = False Then
@@ -413,11 +544,21 @@ Public Class requestcontract2
                 'txtContractBeginDate.Text = CDate(dr("BeginDate"))
                 'txtContractEndDate.Text = CDate(dr("EndDate"))
 
-                txtContractBeginDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
-                txtContractEndDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+                If IsDate(dr("BeginDate")) = True Then
+                    txtContractBeginDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                    Session("BeginDate") = txtContractBeginDate.Text
+                Else
+                    txtContractBeginDate.Text = ""
+                    Session("BeginDate") = ""
+                End If
 
-                Session("BeginDate") = txtContractBeginDate.Text
-                Session("EndDate") = txtContractEndDate.Text
+                If IsDate(dr("EndDate")) = True Then
+                    txtContractEndDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+                    Session("EndDate") = txtContractEndDate.Text
+                Else
+                    txtContractEndDate.Text = ""
+                    Session("EndDate") = ""
+                End If
 
                 txtName.Text = dr("CustName")
                 txtCardID.Text = dr("CardID")
@@ -445,7 +586,9 @@ Public Class requestcontract2
 
                 txtDocAction.Text = "EDIT"
             Next
+
             Session("sDocNo") = txtdocuno.Text
+
             If loadContractPer() = False Then
                 Return False
             End If
@@ -466,6 +609,9 @@ Public Class requestcontract2
                 Return False
             End If
 
+            If loadContractAssetMain() = False Then
+                Return False
+            End If
             If loadContractAssetSublet() = False Then
                 Return False
             End If
@@ -1308,6 +1454,7 @@ Public Class requestcontract2
     Private Function loadContractAsset() As Boolean
         Try
             Dim dt As New DataTable
+            Dim dt2 As New DataTable
             Dim iRow As Integer = 0
 
             dt = objCo.loadAsset(txtdocuno.Text)
@@ -1315,22 +1462,23 @@ Public Class requestcontract2
             gvAsset.DataSource = dt
             gvAsset.DataBind()
 
+            dt2 = objCo.loadAsset2(txtdocuno.Text)
 
-            For Each dr As DataRow In dt.Rows
+            For Each dr As DataRow In dt2.Rows
                 Select Case iRow
                     Case 0
                         txtAtt2DocNo1.Text = dr("DocNo")
                         txtAtt2No1.Text = dr("ServayNo")
-                        txtAtt2RoadTo.Text = dr("RoadTo")
-                        txtAtt2Rai1.Text = dr("Area")
-                        txtAtt2Ngan1.Text = dr("Farm")
-                        txtAtt2Wa1.Text = dr("Squarewah")
+                        txtAtt2RoadTo.Text = dr("LongRoad")
+                        txtAtt2Rai1.Text = dr("Rai")
+                        txtAtt2Ngan1.Text = dr("Ngan")
+                        txtAtt2Wa1.Text = dr("Wa")
                         txtAtt2Remark1.Text = dr("Remark")
                         txtAtt2Remark11.Text = dr("Remark1")
 
-                        txtAtt2Rai11.Text = dr("Area")
-                        txtAtt2Ngan11.Text = dr("Farm")
-                        txtAtt2Wa11.Text = dr("Squarewah")
+                        txtAtt2Rai11.Text = dr("RaiS")
+                        txtAtt2Ngan11.Text = dr("NganS")
+                        txtAtt2Wa11.Text = dr("WaS")
 
                         txtAtt2Rai12.Text = "0"
                         txtAtt2Ngan12.Text = "0"
@@ -1344,21 +1492,27 @@ Public Class requestcontract2
                         txtAtt2Ngan14.Text = "0"
                         txtAtt2Wa14.Text = "0.00"
 
-                        image3.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic1"))
-                        image4.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
+                        If IIf(IsDBNull(dr("pic1")), "", dr("pic1")) <> "" Then
+                            image3.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic1"))
+                        End If
+                        If IIf(IsDBNull(dr("pic1")), "", dr("pic2")) <> "" Then
+                            image4.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
+                        End If
+
+
                     Case 1
                         txtAtt2DocNo2.Text = dr("DocNo")
                         txtAtt2No2.Text = dr("ServayNo")
-                        txtAtt2RoadTo2.Text = dr("RoadTo")
-                        txtAtt2Rai2.Text = dr("Area")
-                        txtAtt2Ngan2.Text = dr("Farm")
-                        txtAtt2Wa2.Text = dr("Squarewah")
+                        txtAtt2RoadTo2.Text = dr("LongRoad")
+                        txtAtt2Rai2.Text = dr("Rai")
+                        txtAtt2Ngan2.Text = dr("Ngan")
+                        txtAtt2Wa2.Text = dr("Wa")
                         txtAtt2Remark2.Text = dr("Remark")
                         txtAtt2Remark22.Text = dr("Remark1")
 
-                        txtAtt2Rai21.Text = dr("Area")
-                        txtAtt2Ngan21.Text = dr("Farm")
-                        txtAtt2Wa21.Text = dr("Squarewah")
+                        txtAtt2Rai21.Text = dr("RaiS")
+                        txtAtt2Ngan21.Text = dr("NganS")
+                        txtAtt2Wa21.Text = dr("WaS")
 
                         txtAtt2Rai22.Text = "0"
                         txtAtt2Ngan22.Text = "0"
@@ -1372,12 +1526,77 @@ Public Class requestcontract2
                         txtAtt2Ngan24.Text = "0"
                         txtAtt2Wa24.Text = "0.00"
 
-                        image5.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic1"))
-                        image6.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
+
+                        If IIf(IsDBNull(dr("pic1")), "", dr("pic1")) <> "" Then
+                            image5.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic1"))
+                        End If
+                        If IIf(IsDBNull(dr("pic1")), "", dr("pic2")) <> "" Then
+                            image6.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
+                        End If
                 End Select
                 iRow += 1
             Next
 
+
+            Return True
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
+
+    Private Function loadContractAssetMain() As Boolean
+        Try
+            Dim dt As New DataTable
+            Dim iRow As Integer = 0
+
+            dt = objCo.loadAssetMain(txtdocuno.Text)
+
+            gvAssetMain.DataSource = dt
+            gvAssetMain.DataBind()
+
+            'For Each dr As DataRow In dt.Rows
+            '    Select Case CInt(dr("ItemNo"))
+            '        Case 0
+
+            '        Case 1
+            '            txtAtt2DocNo2.Text = dr("Wa")
+            '            txtAtt2No2.Text = dr("SurveyNo")
+
+            '            txtAtt2Rai12.Text = dr("Rai")
+            '            txtAtt2Ngan12.Text = dr("Ngan")
+            '            txtAtt2Wa12.Text = dr("Wa")
+
+            '            txtAtt2Rai22.Text = dr("Rai")
+            '            txtAtt2Ngan22.Text = dr("Ngan")
+            '            txtAtt2Wa22.Text = dr("Ngan")
+            '        Case 2
+            '            txtAtt2Rai13.Text = dr("Rai")
+            '            txtAtt2Ngan13.Text = dr("Ngan")
+            '            txtAtt2Wa13.Text = dr("Wa")
+
+
+            '            txtAtt2Rai23.Text = dr("Rai")
+            '            txtAtt2Ngan23.Text = dr("Ngan")
+            '            txtAtt2Wa23.Text = dr("Wa")
+
+            '        Case 3
+            '            txtAtt2Rai14.Text = dr("Rai")
+            '            txtAtt2Ngan14.Text = dr("Ngan")
+            '            txtAtt2Wa14.Text = dr("Wa")
+
+            '            txtAtt2Rai24.Text = dr("Rai")
+            '            txtAtt2Ngan24.Text = dr("Ngan")
+            '            txtAtt2Wa24.Text = dr("Wa")
+            '        Case 99
+
+            '    End Select
+            '    iRow += 1
+            'Next
 
             Return True
         Catch ex As Exception
@@ -1395,7 +1614,7 @@ Public Class requestcontract2
             Dim dt As New DataTable
             Dim iRow As Integer = 0
 
-            dt = objCo.loadAssetSublet(txtdocuno.Text)
+            dt = objCo.loadAssetSublet(txtdocuno.Text, txtAssetDocno.Text)
 
             gvSublet.DataSource = dt
             gvSublet.DataBind()
@@ -1419,7 +1638,6 @@ Public Class requestcontract2
                         txtAtt2Rai13.Text = dr("Rai")
                         txtAtt2Ngan13.Text = dr("Ngan")
                         txtAtt2Wa13.Text = dr("Wa")
-
 
                         txtAtt2Rai23.Text = dr("Rai")
                         txtAtt2Ngan23.Text = dr("Ngan")
@@ -1829,9 +2047,21 @@ Public Class requestcontract2
                 txtBranchContract4.Text = dr("Branch")
                 txtAmount4.Text = dr("Amount")
                 txtPeriod.Text = dr("Period")
-                txtStartDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
-                txtBeginDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
 
+
+                'txtBeginDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+
+                If IsDate(dr("DocDate")) = True Then
+                    txtStartDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
+                Else
+                    txtStartDate.Text = ""
+                End If
+
+                If IsDate(dr("BeginDate")) = True Then
+                    txtBeginDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                Else
+                    txtBeginDate4.Text = ""
+                End If
 
                 txtFineAmnt4.Text = dr("FineAmnt")
                 txtPerformanceIns.Text = dr("PerformanceIns")
@@ -1845,19 +2075,28 @@ Public Class requestcontract2
 
                 If dr("chkEndDate") = 1 Then
                     chkEndDate4.Checked = True
-                    txtEndDate4.Text = ""
                 Else
-                    txtEndDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
                     chkEndDate4.Checked = False
+                End If
+
+                If IsDate(dr("EndDate")) = True Then
+                    txtEndDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+                Else
+                    txtEndDate4.Text = ""
                 End If
 
                 If dr("chkEndDate") = 1 Then
                     chkDueDate4.Checked = True
-                    txtDueDate4.Text = ""
                 Else
-                    txtDueDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
                     chkDueDate4.Checked = False
                 End If
+
+                If IsDate(dr("DueDate")) = True Then
+                    txtDueDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
+                Else
+                    txtDueDate4.Text = ""
+                End If
+
 
                 txtPayInsuranceOth.Text = FormatNumber(CDbl(dr("PayInsurance")), 2)
                 txtPayBeforeOth.Text = FormatNumber(CDbl(dr("PayBefore")), 2)
@@ -1905,8 +2144,20 @@ Public Class requestcontract2
                 cboContractType.SelectedValue = dr("ContractTypeID")
                 lblContractBook.Text = cboContractType.SelectedItem.Text
 
-                txtIssueDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
-                txtDocDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
+                'txtIssueDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
+                'txtDocDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
+
+                If IsDate(dr("DueDate")) = True Then
+                    txtIssueDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
+                Else
+                    txtIssueDateBook.Text = ""
+                End If
+
+                If IsDate(dr("DocDate")) = True Then
+                    txtDocDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
+                Else
+                    txtDocDateBook.Text = ""
+                End If
 
                 txtEmpfr.Text = dr("Empfr")
                 txtEmpto.Text = dr("Empto")
@@ -1924,6 +2175,7 @@ Public Class requestcontract2
                 txtBrCodePowerBook.Text = dr("BrCode")
                 txtAddrPowerBook.Text = dr("Addr")
                 'CreateBy = usercode
+                Session("ItemNo") = dr("ItemNo")
 
                 If disableTab(cboMainContact.SelectedValue) = False Then
                     Return False
@@ -2204,13 +2456,7 @@ Public Class requestcontract2
             cboCompany.DataTextField = "ComName"
             cboCompany.DataBind()
 
-            'dtStatus = objprj.loadStatus(1)
-            'cboStatus.DataSource = dtStatus
-            'cboStatus.DataValueField = "ID"
-            'cboStatus.DataTextField = "StatusName"
-            'cboStatus.DataBind()
-
-            'SetCboContractType(cboContractType)
+            Session("ItemNo") = 0
 
             cboSex.Items.Add("Male")
             cboSex.Items.Add("Female")
@@ -2429,6 +2675,59 @@ Public Class requestcontract2
             err = ex.Message
             scriptKey = "UniqueKeyForThisScript"
             javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
+    End Sub
+
+    Protected Sub OnRowDataBound_AssetMain(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs)
+        Try
+            If e.Row.RowType = DataControlRowType.DataRow Then
+                e.Row.Attributes("onclick") = Page.ClientScript.GetPostBackClientHyperlink(gvAssetMain, "Select$" & e.Row.RowIndex)
+                e.Row.Attributes("style") = "cursor:pointer"
+            End If
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
+    End Sub
+
+    Protected Sub OnSelectedIndexChanged_AssetMain(sender As Object, e As EventArgs)
+        Try
+            Dim dt As New DataTable
+            Dim index As Integer = gvAssetMain.SelectedRow.RowIndex
+            Dim iDocID As Integer = CInt(gvAssetMain.SelectedRow.Cells(12).Text)
+            Dim iItemNo As Integer = CInt(gvAssetMain.SelectedRow.Cells(13).Text)
+            Session("ItemRentJoin") = iItemNo
+
+            txtLandno.Text = gvAssetMain.SelectedRow.Cells(1).Text
+            txtSurveyNo.Text = gvAssetMain.SelectedRow.Cells(2).Text
+            txtLandNo2.Text = gvAssetMain.SelectedRow.Cells(3).Text
+            txtAssetAddr.Text = gvAssetMain.SelectedRow.Cells(7).Text
+            txtAssetSubdistrict.Text = gvAssetMain.SelectedRow.Cells(8).Text
+            txtAssetDistrict.Text = gvAssetMain.SelectedRow.Cells(9).Text
+            txtAssetProvince.Text = gvAssetMain.SelectedRow.Cells(10).Text
+            txtAssPostCode.Text = gvAssetMain.SelectedRow.Cells(11).Text
+            txtRai.Text = gvAssetMain.SelectedRow.Cells(4).Text
+            txtNgan.Text = gvAssetMain.SelectedRow.Cells(5).Text
+            txtWa.Text = FormatNumber(CDbl(gvAssetMain.SelectedRow.Cells(6).Text), 2)
+            cboAssetType.SelectedIndex = gvAssetMain.SelectedRow.Cells(14).Text
+
+
+            dt = objCo.loadAssetSublet(txtdocuno.Text, gvAssetMain.SelectedRow.Cells(1).Text)
+
+            gvSublet.DataSource = dt
+            gvSublet.DataBind()
+
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
 
@@ -2744,19 +3043,48 @@ Public Class requestcontract2
                 Select Case CInt(dr("PayRound"))
                     Case 1
                         rdoMonthNonOil.Checked = True
+                        rdoYearNonOil.Checked = False
+                        rdoOnceNonOil.Checked = False
+                        rdoFreeNonOil.Checked = False
                     Case 2
+                        rdoMonthNonOil.Checked = False
                         rdoYearNonOil.Checked = True
+                        rdoOnceNonOil.Checked = False
+                        rdoFreeNonOil.Checked = False
                     Case 3
+                        rdoMonthNonOil.Checked = False
+                        rdoYearNonOil.Checked = False
                         rdoOnceNonOil.Checked = True
+                        rdoFreeNonOil.Checked = False
                     Case 4
+                        rdoMonthNonOil.Checked = False
+                        rdoYearNonOil.Checked = False
+                        rdoOnceNonOil.Checked = False
                         rdoFreeNonOil.Checked = True
                 End Select
 
                 txtFrequencyNonOil.Text = dr("Frequency")
-                txtDueDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("DueDate")))
-                txtBeginDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("BeginDate")))
-                txtEndDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("EndDate")))
+
+                If IsDate(dr("DueDate")) = True Then
+                    txtDueDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("DueDate")))
+                Else
+                    txtDueDateNonOil.Text = ""
+                End If
+
+                If IsDate(dr("BeginDate")) = True Then
+                    txtBeginDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("BeginDate")))
+                Else
+                    txtBeginDateNonOil.Text = ""
+                End If
+
+                If IsDate(dr("EndDate")) = True Then
+                    txtEndDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("EndDate")))
+                Else
+                    txtEndDateNonOil.Text = ""
+                End If
+
                 txtSizeNonOil.Text = dr("Size")
+                txtNonOilWide.Text = dr("WideLong")
                 txtRoomNumberNonOil.Text = dr("RoomNum")
                 txtBusinessTypeNonOil.Text = dr("BusinessType")
                 txtCustNameNonOil.Text = dr("CustName")
@@ -2780,18 +3108,13 @@ Public Class requestcontract2
                 txtPayNonOilLabel.Text = FormatNumber(CDbl(dr("PayLabel")), 2)
                 txtPayNonOilRemarkOther.Text = FormatNumber(CDbl(dr("PayOther")), 2)
                 txtNonOilRemarkOther.Text = dr("RemarkOther")
+                txtNonOilRemark.Text = dr("Remark")
+                cboContractType.SelectedValue = dr("GroupConID_SubItem")
             Next
 
-
-            txtLandno.Text = gvAsset.SelectedRow.Cells(0).Text
-            txtWa2.Text = FormatNumber(CDbl(gvAsset.SelectedRow.Cells(19).Text), 2)
-            cboAssetType.SelectedValue = CInt(gvAsset.SelectedRow.Cells(1).Text)
-            'Select Case CInt(gvPayment.SelectedRow.Cells(10).Text)
-            '    Case 1
-            '        rdoTrans.Checked = True
-            '    Case 2
-            '        rdoCheque.Checked = True
-            'End Select
+            If disableTab(cboMainContact.SelectedValue) = False Then
+                Exit Sub
+            End If
 
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
@@ -3490,11 +3813,37 @@ Public Class requestcontract2
 
             Dim PayInsurance, PayBefore, PayFine, PayWater, PayElectrict, PayCenter, RentPerMonth As Decimal
 
-            'dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
-            'dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
+            Dim err, scriptKey, javaScript As String
+            err = ""
+            If validateData() Then
+                Try
+                    assetsno = Save()
+                    'txtClientNo.Text = clientno
+                    Session("assetsno") = assetsno
+
+                Catch ex As Exception
+                    err = ex.Message.ToString.Replace("'", "")
+                    scriptKey = "UniqueKeyForThisScript"
+                    javaScript = "alertWarning('" & err & "')"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                End Try
+
+                If String.IsNullOrEmpty(err) Then
+                    scriptKey = "UniqueKeyForThisScript"
+                    javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                End If
+            End If
 
             CompanyID = cboCompany.SelectedValue
-            DocDate = Now.Date ' DateAdd(DateInterval.Year, -543, CDate(txtdocdate.Text))
+            'DocDate = Now.Date ' DateAdd(DateInterval.Year, -543, CDate(txtdocdate.Text))
+
+            If IsDate(txtStartDate.Text) = True Then
+                DocDate = DateAdd(DateInterval.Year, -543, CDate(txtStartDate.Text))
+            Else
+                DocDate = "1900-01-01"
+            End If
+
             Customerparty = txtCustomerparty.Text
             Customerparty1 = txtCustomerparty1.Text
             Customerparty2 = txtCustomerparty2.Text
@@ -3503,17 +3852,25 @@ Public Class requestcontract2
             Branch = txtBranchContract4.Text
             Amount = txtAmount4.Text
             Period = txtPeriod.Text
-            BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDate4.Text))
-            If chkEndDate4.Checked = True Then
-                EndDate = Now.Date
+
+            'BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDate4.Text))
+
+            If IsDate(txtBeginDate4.Text) = True Then
+                BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDate4.Text))
             Else
-                EndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDate4.Text))
+                BeginDate = "1900-01-01"
             End If
 
-            If chkDueDate4.Checked = True Then
-                DueDate = Now.Date
+            If IsDate(txtEndDate4.Text) = True Then
+                EndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDate4.Text))
             Else
+                EndDate = "1900-01-01"
+            End If
+
+            If IsDate(txtDueDate4.Text) = True Then
                 DueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDate4.Text))
+            Else
+                DueDate = "1900-01-01"
             End If
 
             FineAmnt = txtFineAmnt4.Text
@@ -3595,7 +3952,17 @@ Public Class requestcontract2
             End If
 
 
-            'Clear()
+            Clear()
+
+            Dim message As String = "Save Successfully."
+            Dim sb As New System.Text.StringBuilder()
+            sb.Append("<script type = 'text/javascript'>")
+            sb.Append("window.onload=function(){")
+            sb.Append("alert('")
+            sb.Append(message)
+            sb.Append("')};")
+            sb.Append("</script>")
+            ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", sb.ToString())
 
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
@@ -3616,15 +3983,49 @@ Public Class requestcontract2
     Private Sub btnAddPowerBook_Click(sender As Object, e As EventArgs) Handles btnAddPowerBook.Click
         Try
             Dim DueDate, DocDate As Date
-            Dim ContractTypeID, CompanyID As Integer
+            Dim ContractTypeID, CompanyID, ItemNo As Integer
             Dim Empfr, Empto, Witness1, Witness2, Obj1, Obj2, Obj3, Oth1, Oth2, Oth3, CreateBy, Empto2, Empto3, BrCode, Addr, Contact As String
 
-            '         ID, ContractTypeID, DueDate, DocDate, Empfr, Empto, Witness1, Witness2, Obj1, Obj2, Obj3, Oth1, Oth2, Oth3, Status, CreateBy, CreateDate
+            Dim err, scriptKey, javaScript As String
+            err = ""
+            If validateData() Then
+                Try
+                    assetsno = Save()
+                    'txtClientNo.Text = clientno
+                    Session("assetsno") = assetsno
+
+                Catch ex As Exception
+                    err = ex.Message.ToString.Replace("'", "")
+                    scriptKey = "UniqueKeyForThisScript"
+                    javaScript = "alertWarning('" & err & "')"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                End Try
+
+                If String.IsNullOrEmpty(err) Then
+                    scriptKey = "UniqueKeyForThisScript"
+                    javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                End If
+            End If
 
             CompanyID = cboCompany.SelectedValue
             ContractTypeID = cboContractType.SelectedValue
-            DueDate = DateAdd(DateInterval.Year, -543, CDate(txtIssueDateBook.Text))
-            DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateBook.Text))
+            'DueDate = DateAdd(DateInterval.Year, -543, CDate(txtIssueDateBook.Text))
+            'DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateBook.Text))
+
+            If IsDate(txtIssueDateBook.Text) = True Then
+                DueDate = DateAdd(DateInterval.Year, -543, CDate(txtIssueDateBook.Text))
+            Else
+                DueDate = "1900-01-01"
+            End If
+
+            If IsDate(txtDocDateBook.Text) = True Then
+                DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateBook.Text))
+            Else
+                DocDate = "1900-01-01"
+            End If
+
+
             Empfr = txtEmpfr.Text
             Empto = txtEmpto.Text
             Witness1 = txtWitness1.Text
@@ -3641,12 +4042,22 @@ Public Class requestcontract2
             BrCode = txtBrCodePowerBook.Text
             Addr = txtAddrPowerBook.Text
             Contact = txtContactPowerBook.Text
-
+            ItemNo = Session("ItemNo")
             If objCo.AddPowerBook(txtdocuno.Text, ContractTypeID, DueDate, DocDate, Empfr, Empto, Witness1, Witness2, Obj1, Obj2, Obj3, Oth1, Oth2, Oth3 _
-                                 , CreateBy, CompanyID, Empto2, Empto3, BrCode, Addr, Contact) = False Then
+                                 , CreateBy, CompanyID, Empto2, Empto3, BrCode, Addr, Contact, ItemNo) = False Then
                 Exit Sub
             End If
-            'Clear()
+            Clear()
+
+            Dim message As String = "Save Successfully."
+            Dim sb As New System.Text.StringBuilder()
+            sb.Append("<script type = 'text/javascript'>")
+            sb.Append("window.onload=function(){")
+            sb.Append("alert('")
+            sb.Append(message)
+            sb.Append("')};")
+            sb.Append("</script>")
+            ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", sb.ToString())
 
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
@@ -3746,9 +4157,10 @@ Public Class requestcontract2
 
     Private Sub btnAddNonOil_Click(sender As Object, e As EventArgs) Handles btnAddNonOil.Click
         Try
-            Dim iPayRound As Integer
+            Dim iPayRound, ItemNo As Integer
             Dim dDueDate, dBeginDate, dEndDate As Date
-
+            Dim err, scriptKey, javaScript As String
+            err = ""
             If rdoMonthNonOil.Checked = True Then
                 iPayRound = 1
             End If
@@ -3766,74 +4178,125 @@ Public Class requestcontract2
             End If
 
             If IsNumeric(CDbl(txtPayNonOilService.Text)) = False Then
-                Dim err, scriptKey, javaScript As String
                 err = "Input Numeric only"
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
             If IsNumeric(CDbl(txtPayNonOilInsurance.Text)) = False Then
-                Dim err, scriptKey, javaScript As String
                 err = "Input Numeric only"
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
             If IsNumeric(CDbl(txtPayNonOilWater.Text)) = False Then
-                Dim err, scriptKey, javaScript As String
                 err = "Input Numeric only"
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
             If IsNumeric(CDbl(txtPqyNonOilElectrice.Text)) = False Then
-                Dim err, scriptKey, javaScript As String
                 err = "Input Numeric only"
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
             If IsNumeric(CDbl(txtPayNonOilCenter.Text)) = False Then
-                Dim err, scriptKey, javaScript As String
                 err = "Input Numeric only"
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
             If IsNumeric(CDbl(txtPayNonOilGarbag.Text)) = False Then
-                Dim err, scriptKey, javaScript As String
                 err = "Input Numeric only"
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
             If IsNumeric(CDbl(txtPayNonOilLabel.Text)) = False Then
-                Dim err, scriptKey, javaScript As String
                 err = "Input Numeric only"
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
             If IsNumeric(CDbl(txtPayNonOilRemarkOther.Text)) = False Then
-                Dim err, scriptKey, javaScript As String
                 err = "Input Numeric only"
                 scriptKey = "UniqueKeyForThisScript"
                 javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
 
-            dDueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDateNonOil.Text))
-            dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
-            dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
+            If IsDate(txtDueDateNonOil.Text) = True Then
+                dDueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDateNonOil.Text))
+            Else
+                dDueDate = "1900-01-01"
+            End If
 
-            If objCo.AddContractNonOil(txtdocuno.Text, lblContractTypeNonOil.Text, 0, 0 _
+            If IsDate(txtBeginDateNonOil.Text) = True Then
+                dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
+            Else
+                dBeginDate = "1900-01-01"
+            End If
+
+            If IsDate(txtEndDateNonOil.Text) = True Then
+                dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
+            Else
+                dEndDate = "1900-01-01"
+            End If
+
+            If Session("ItemNoNonOil") IsNot Nothing Then
+                ItemNo = Session("ItemNoNonOil")
+            Else
+                ItemNo = 0
+            End If
+
+
+            If validateData() Then
+                Try
+                    assetsno = Save()
+                    'txtClientNo.Text = clientno
+                    Session("assetsno") = assetsno
+
+                Catch ex As Exception
+                    err = ex.Message.ToString.Replace("'", "")
+                    scriptKey = "UniqueKeyForThisScript"
+                    javaScript = "alertWarning('" & err & "')"
+                    ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+                End Try
+
+                If String.IsNullOrEmpty(err) Then
+                    scriptKey = "UniqueKeyForThisScript"
+                    javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                End If
+            End If
+
+
+            If objCo.AddContractNonOil(txtdocuno.Text, lblContractTypeNonOil.Text, 0, 20 _
                                        , iPayRound, CInt(txtFrequencyNonOil.Text), dDueDate, dBeginDate, dEndDate, txtSizeNonOil.Text, txtRoomNumberNonOil.Text _
                                        , txtBusinessTypeNonOil.Text, "", txtCustNameNonOil.Text, txtIDCardNonOil.Text, txtTaxIDNonOil.Text _
                                        , txtHomeIDNonOil.Text, txtSubDistrictNonOil.Text, txtDistrictNonOil.Text, txtProvinceNonOil.Text, txtPostCodeNonOil.Text _
                                        , txtContactNonOil.Text, txtTelNonOil.Text, txtLineNonOil.Text, txtEmailNonOil.Text _
                                        , CDbl(txtPayNonOilService.Text), CDbl(txtPayNonOilInsurance.Text), CDbl(txtPayNonOilWater.Text) _
                                        , CDbl(txtPqyNonOilElectrice.Text), CDbl(txtPayNonOilCenter.Text), CDbl(txtPayNonOilGarbag.Text) _
-                                       , CDbl(txtPayNonOilLabel.Text), CDbl(txtPayNonOilRemarkOther.Text), txtNonOilRemarkOther.Text, txtNonOilWide.Text) = False Then
+                                       , CDbl(txtPayNonOilLabel.Text), CDbl(txtPayNonOilRemarkOther.Text), txtNonOilRemarkOther.Text _
+                                       , txtNonOilWide.Text, ItemNo, txtNonOilRemark.Text, cboContractType.SelectedValue) = False Then
+                Exit Sub
+            End If
+
+            Clear()
+
+            Dim message As String = "Save Successfully."
+            Dim sb As New System.Text.StringBuilder()
+            sb.Append("<script type = 'text/javascript'>")
+            sb.Append("window.onload=function(){")
+            sb.Append("alert('")
+            sb.Append(message)
+            sb.Append("')};")
+            sb.Append("</script>")
+            ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", sb.ToString())
+
+            If loadContractNonOil() = False Then
                 Exit Sub
             End If
 
@@ -3878,7 +4341,52 @@ Public Class requestcontract2
     Private Sub btnAddAssetSublet_Click(sender As Object, e As EventArgs) Handles btnAddAssetSublet.Click
         Try
 
-            If objCo.AddContractAssetSublet(txtdocuno.Text, txtAssetDocno.Text, txtAssetSurvey.Text, "", txtRai1.Text, txtNgan1.Text, txtWa1.Text, txtRoadTo.Text) = False Then
+            Dim iItemNo As Integer = 0
+
+            'If Session("ItemRentJoin") <> 0 Then
+            '    iItemNo = Session("ItemRentJoin")
+            'End If
+
+            If objCo.AddContractAssetSublet(txtdocuno.Text, txtAssetDocno.Text, txtAssetSurvey.Text, "", txtRai1.Text _
+                                            , txtNgan1.Text, txtWa1.Text, txtRoadTo.Text) = False Then
+                Exit Sub
+            End If
+
+            'If loadContractAssetMain() = False Then
+            '    Exit Sub
+            'End If
+
+            If loadContractAssetSublet() = False Then
+                Exit Sub
+            End If
+
+
+
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnAddAssetMain_Click(sender As Object, e As EventArgs) Handles btnAddAssetMain.Click
+        Try
+
+            Dim iItemNo As Integer = 0
+
+            If Session("ItemRentJoin") IsNot Nothing Then
+                iItemNo = Session("ItemRentJoin")
+            End If
+
+            If objCo.AddContractAssetMain(txtdocuno.Text, txtLandno.Text, txtLandNo2.Text, cboAssetType.SelectedValue, txtSurveyNo.Text, txtAssetAddr.Text _
+                                          , txtAssetSubdistrict.Text, txtAssetDistrict.Text, txtAssetProvince.Text, txtAssPostCode.Text _
+                                          , txtRai.Text, txtNgan.Text, txtWa.Text, iItemNo) = False Then
+                Exit Sub
+            End If
+
+            If loadContractAssetMain() = False Then
                 Exit Sub
             End If
 
