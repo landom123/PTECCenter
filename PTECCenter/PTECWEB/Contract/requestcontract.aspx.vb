@@ -60,8 +60,6 @@ Public Class requestcontract
 
         End If
 
-
-
     End Sub
 
 
@@ -94,7 +92,8 @@ Public Class requestcontract
         Try
             Dim index As Integer = gvData.SelectedRow.RowIndex
             Dim sDocno As String = gvData.SelectedRow.Cells(0).Text
-            Dim iDocID As String = gvData.SelectedRow.Cells(10).Text
+            'Dim iDocID As String = gvData.SelectedRow.Cells(10).Text
+            Dim iDocID As String = gvData.SelectedRow.Cells(11).Text
 
             Session("DocNo") = sDocno
             Session("iDocID") = iDocID
