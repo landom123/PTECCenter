@@ -807,7 +807,7 @@ endprocess:
     Private Sub cboDepForJobType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepForJobType.SelectedIndexChanged
 
         cboJobType.SelectedIndex = -1
-        SetCboJobTypeByDepID(cboJobType, cboDepForJobType.SelectedItem.Value)
+        SetCboJobTypeByDepID(cboJobType, cboDepForJobType.SelectedItem.Value, "actived")
 
         'SetCboJobCate(cboJobCate, cboDepForJobType.SelectedValue)
 

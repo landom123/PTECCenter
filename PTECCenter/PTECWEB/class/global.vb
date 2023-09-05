@@ -190,10 +190,10 @@ Module global_module
     End Sub
 
 
-    Public Sub SetCboJobTypeByDepID(obj As Object, depid As String)
+    Public Sub SetCboJobTypeByDepID(obj As Object, depid As String, Optional mode As String = "all")
         Dim job As New jobs
 
-        obj.DataSource = job.JobType_List_By_Depid(depid)
+        obj.DataSource = job.JobType_List_By_Depid(depid, mode)
         obj.DataValueField = "jobtypeid"
         obj.DataTextField = "name"
         obj.DataBind()

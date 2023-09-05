@@ -164,7 +164,22 @@
                                     <asp:DropDownList class="form-control" ID="cboCreateby" runat="server" readonly="true"></asp:DropDownList>
                                 </div>
                             </div>
-
+                            <div class="col-md-3 mb-3 HO">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ratio Type</span>
+                                    </div>
+                                    <asp:DropDownList ID="cboRatio" class="form-control" runat="server"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3 HO">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Position</span>
+                                    </div>
+                                    <asp:DropDownList ID="cboPosition" class="form-control" runat="server" ></asp:DropDownList>
+                                </div>
+                            </div>
                             <% 'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                             <div class="col-md-3 mb-3 HO">
                                 <div class="input-group">
@@ -213,6 +228,14 @@
                     </div>
 
                     <!------------------------------------------------------------------------>
+
+                    <div class="rol">
+                        <div class="col">
+                            <h4>ทั้งหมด <% =cntdt%> รายการ</h4>
+                            <h4>จำนวน <% =cntkpi%> ข้อ</h4>
+
+                        </div>
+                    </div>
 
                     <%--begin item--%>
                     <% If AllKpi IsNot Nothing Then%>

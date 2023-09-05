@@ -418,7 +418,8 @@
                 }, plugins: [ChartDataLabels], options: {
                     plugins: {
                         datalabels: {
-                            color: '#343a40',
+                            //color: '#343a40',
+                            color: '#fff',
                             formatter: function (value) {
                                 return Math.round(value) + '%';
                             },

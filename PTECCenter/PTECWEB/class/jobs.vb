@@ -738,7 +738,7 @@ Public Class jobs
 
     End Function
 
-    Public Function JobType_List_By_Depid(depid As String) As DataTable
+    Public Function JobType_List_By_Depid(depid As String, Optional mode As String = "all") As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -752,6 +752,7 @@ Public Class jobs
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@mode", SqlDbType.VarChar).Value = mode
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype

@@ -64,7 +64,7 @@ Public Class Kpi
         conn.Close()
         Return result
     End Function
-    Public Function Kpi_List_For_Operator(depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, userid As String, category As String) As DataSet
+    Public Function Kpi_List_For_Operator(depid As String, secid As String, comid As String, ratioid As String, positionid As String, branchgroupid As String, branchid As String, createbyid As String, userid As String, category As String) As DataSet
         Dim result As DataSet
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -82,6 +82,8 @@ Public Class Kpi
         cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
         cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
         cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
+        cmd.Parameters.Add("@ratioid", SqlDbType.VarChar).Value = ratioid
+        cmd.Parameters.Add("@positionid", SqlDbType.VarChar).Value = positionid
         cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
         cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
         cmd.Parameters.Add("@createbyid", SqlDbType.VarChar).Value = createbyid
