@@ -25,6 +25,9 @@ Public Class KPIsList
     Dim sm_code As String
     Dim am_code As String
 
+    Public cntdt As Integer
+    Public cntkpi As Integer
+
     Public operator_code As String = ""
     Public adm_code As String = ""
 
@@ -33,6 +36,7 @@ Public Class KPIsList
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
+        Dim objposition As New Position
         Dim objbranch As New Branch
         Dim objKpi As New Kpi
         Dim objdep As New Department
@@ -65,6 +69,8 @@ Public Class KPIsList
 
         If Not IsPostBack() Then
 
+            objposition.SetCboPositionCode(cboPosition)
+            objKpi.SetCboRatioType(cboRatio)
             objcompany.SetCboCompany(cboCompany, 0)
             objbranch.SetComboBranchGroup(cboBranchGroup)
             objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
@@ -152,6 +158,8 @@ Public Class KPIsList
                 AllKpi = objKpi.Kpi_List_For_Operator("",
                                                       "",
                                                         cboCompany.SelectedItem.Value.ToString,
+                                                        "",
+                                                        "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         cboCreateby.SelectedItem.Value.ToString,
@@ -161,6 +169,8 @@ Public Class KPIsList
                 AllKpi = objKpi.Kpi_List_For_Operator(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
                                                         cboCompany.SelectedItem.Value.ToString,
+                                                        cboRatio.SelectedItem.Value.ToString,
+                                                        cboPosition.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
                                                         cboCreateby.SelectedItem.Value.ToString,
@@ -231,6 +241,9 @@ Public Class KPIsList
                           (cboBranch.SelectedItem.Value),
                             chkCO.Checked,
                           chkHO.Checked)
+
+        cntdt = AllKpi.Tables(0).Rows.Count
+        cntkpi = AllKpi.Tables(1).Rows.Count
         Session("criteria_kpi") = criteria
     End Sub
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click

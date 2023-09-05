@@ -122,6 +122,24 @@ Partial Public Class KPIsList
     Protected WithEvents cboCreateby As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cboRatio control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboRatio As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboPosition control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboPosition As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cboDepartment control.
     '''</summary>
     '''<remarks>
