@@ -14,6 +14,12 @@ Public Class Branch
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+    Public Sub SetComboBranchByManagerCardid(obj As Object, cardid As String)
+        obj.DataSource = Me.Branch_List_By_ManagerCardid(cardid)
+        obj.DataValueField = "branchid"
+        obj.DataTextField = "name"
+        obj.DataBind()
+    End Sub
     Public Sub SetComboBranchGroup(obj As Object)
         obj.datasource = Me.ListGroup()
         obj.DataValueField = "branchgroupid"
@@ -33,6 +39,40 @@ Public Class Branch
         obj.DataBind()
     End Sub
 
+    Public Sub SetCboBranchManager(obj As Object)
+        obj.DataSource = Me.BranchManager_List()
+        obj.DataValueField = "Managerid"
+        obj.DataTextField = "nameforcbo"
+        obj.DataBind()
+
+    End Sub
+
+    Public Function BranchManager_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "BranchManager_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
     Public Function PermissionRemove(usercode As String, branchid As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -168,6 +208,32 @@ Public Class Branch
 
         Return result
     End Function
+    Public Function Branch_List_By_ManagerCardid(cardid As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Branch_List_By_ManagerCardid"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@cardid", SqlDbType.VarChar).Value = cardid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
     Public Function BranchListAll() As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -234,6 +300,31 @@ Public Class Branch
         result = ds.Tables(0)
         conn.Close()
 
+        Return result
+    End Function
+
+    Public Function Manager_Login(managerid As String, cardid As String) As DataTable
+        Dim result As DataTable
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Manager_Login"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@managerid", SqlDbType.Int).Value = managerid
+        cmd.Parameters.Add("@cardid", SqlDbType.VarChar).Value = cardid
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
         Return result
     End Function
 End Class

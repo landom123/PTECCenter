@@ -31,6 +31,9 @@ Public Class KPIsEdit
     Dim am_code As String
 
 
+    Public managername As String
+
+
     Public operator_code As String = ""
     Public operatordt As DataTable
 
@@ -60,6 +63,11 @@ Public Class KPIsEdit
         company_th.InnerText = "บริษัท เพียวพลังงานไทย จำกัด"
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
+        Try
+            managername = Session("managername")
+        Catch ex As Exception
+            managername = Nothing
+        End Try
 
         If Not IsPostBack() Then
             objKpi.SetCboRatioType(cboRatio)

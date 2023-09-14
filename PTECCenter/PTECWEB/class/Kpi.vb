@@ -2,8 +2,6 @@
 Imports System.Web.Configuration
 
 Public Class Kpi
-
-
     Public Sub SetCboRatioType(obj As Object)
         obj.DataSource = Me.RatioType_List()
         obj.DataValueField = "category_id"
@@ -11,8 +9,6 @@ Public Class Kpi
         obj.DataBind()
 
     End Sub
-
-
     Public Function RatioType_List() As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -97,7 +93,7 @@ Public Class Kpi
         Return result
     End Function
 
-    Public Function Kpi_List_For_Owner(depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, userid As String, category As String) As DataSet
+    Public Function Kpi_List_For_Owner(depid As String, secid As String, comid As String, ratioid As String, positionid As String, branchgroupid As String, branchid As String, createbyid As String, userid As String, category As String) As DataSet
         Dim result As DataSet
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -114,11 +110,39 @@ Public Class Kpi
         cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
         cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
         cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
+        cmd.Parameters.Add("@ratioid", SqlDbType.VarChar).Value = ratioid
+        cmd.Parameters.Add("@positionid", SqlDbType.VarChar).Value = positionid
         cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
         cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
         cmd.Parameters.Add("@createbyid", SqlDbType.VarChar).Value = createbyid
         cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Kpi_List_For_Branch(managerid As String, cardid As String, branchid As String, userid As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_List_For_Branch"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@managerid", SqlDbType.VarChar).Value = managerid
+        cmd.Parameters.Add("@cardid", SqlDbType.VarChar).Value = cardid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
 
         adp.SelectCommand = cmd
         adp.Fill(ds)
@@ -294,4 +318,27 @@ Public Class Kpi
         conn.Close()
         'Return result
     End Sub
+
+
+    Public Function deleteHeadbyKPICode(kpicode As String, user As String) As Boolean
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_HeadOP_Del"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@kpicode", SqlDbType.VarChar).Value = kpicode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+        Return result
+    End Function
 End Class

@@ -6,7 +6,7 @@
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <style>
-         .container {
+         .content-wrapper {
             font-size:.8rem;
         }
         .card-advancerequest {
@@ -93,7 +93,7 @@
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper">
-                <div class="container">
+                <div class="px-5">
                     <div class="row">
                         <div class="col text-left align-self-center">
                         </div>
@@ -127,7 +127,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="foram mb-3">
+                    <div class="foram mb-3 px-lg-5">
                         <div class="row">
                             ข้อมูลหลังบ้าน <%=OPT %>
                         </div>
@@ -243,6 +243,7 @@
                                                         <thead class="thead-light">
                                                             <tr class="info text-center">
                                                                 <th></th>
+                                                                <th>เจ้าของงาน</th>
                                                                 <th>แผนงาน / เป้าหมาย</th>
                                                                 <th>ผลตามแผน</th>
                                                                 <th>ผลการปฏิบัติงาน</th>
@@ -264,12 +265,16 @@
                                                             <tr class="text-center" id="actionid_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" data-datenow="<%= AllKpi.Tables(0).Rows(i).Item("datenow").ToString %>" data-opt="<%= AllKpi.Tables(0).Rows(i).Item("operatortype").ToString %>"
                                                                 data-empuppercode="<%= AllKpi.Tables(1).Rows(j).Item("actionempuppercode").ToString %>"
                                                                 data-ownercode="<%= AllKpi.Tables(1).Rows(j).Item("actionownercode").ToString %>"
+                                                                data-ownername="<%= AllKpi.Tables(1).Rows(j).Item("NameOwner").ToString %>"
                                                                 data-usercode="<%= Session("usercode").ToString %>"
+                                                                data-username="<%= Session("username").ToString %>"
+                                                                data-managername="<%= managername %>"
                                                                 data-editstart="<%= AllKpi.Tables(1).Rows(j).Item("actionedit_begindate").ToString %>"
                                                                 data-editend="<%= AllKpi.Tables(1).Rows(j).Item("actionedit_enddate").ToString %>"
                                                                 data-approvalstart="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_begindate").ToString %>"
                                                                 data-approvalend="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %>">
                                                                 <td><span class="badge badge-blue"><%= AllKpi.Tables(1).Rows(j).Item("actionmonth").ToString %></span>
+                                                                <td><span><%= AllKpi.Tables(1).Rows(j).Item("NameOwner").ToString %></span>
                                                                 </td>
                                                                 <td class="text-left">
                                                                     <% If (String.IsNullOrEmpty(AllKpi.Tables(0).Rows(0).Item("operatortype").ToString)) Then%>
@@ -440,8 +445,12 @@
 
                 const empuppercode = row.getAttribute("data-empuppercode");
                 const ownercode = row.getAttribute("data-ownercode");
+                const ownername = row.getAttribute("data-ownername");
                 const opt = row.getAttribute("data-opt");
                 const usercode = row.getAttribute("data-usercode");
+                const username = row.getAttribute("data-username");
+                const managername = row.getAttribute("data-managername") || username;
+                
 
                 const [day0, month0, year0] = datenow.split('/');
                 const [day1, month1, year1] = editstart.split('/');
@@ -457,12 +466,15 @@
                 const aend = new Date(+year4, month4 - 1, +day4);
 
                 //alert(opt);
-                //console.log(estart);
+                console.log(ownername.indexOf(managername || usercode));
+                console.log(ownername);
+                console.log(managername);
+                console.log(usercode);
                 //console.log(empuppercode);
                 //console.log(ownercode);
                 //console.log(ownercode.indexOf(usercode));
 
-                if (ownercode.indexOf(usercode) > -1 && !opt) { // เจ้าของ KPI
+                if ((ownername.indexOf(managername) > -1) && !opt) { // เจ้าของ KPI
                     console.log('เจ้าของ KPI');
 
                     if (!(date >= estart && date <= eend)) {
@@ -500,8 +512,15 @@
 
                     elemActionratehead[i].disabled = true;
                     elemActionFeedback[i].disabled = true;
-
                     //$('#btnUpdate').hide();
+                }
+
+                if (!(ownername == managername) && !(empuppercode==usercode) && !opt) {
+                    console.log('66666666666')
+                    row.hidden=true;
+                } else {
+
+                    console.log('77777777777777')
                 }
 
 
