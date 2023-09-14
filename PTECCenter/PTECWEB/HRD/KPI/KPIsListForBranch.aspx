@@ -1,4 +1,4 @@
-﻿<%@ Page Title="KPIsList" Language="vb" AutoEventWireup="true" MasterPageFile="~/site.Master" CodeBehind="KPIsList.aspx.vb" Inherits="PTECCENTER.KPIsList" %>
+﻿<%@ Page Title="KPIsListForBranch" Language="vb" AutoEventWireup="true" MasterPageFile="~/site.Master" CodeBehind="KPIsListForBranch.aspx.vb" Inherits="PTECCENTER.KPIsListForBranch" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -125,111 +125,56 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 mb-3">
 
                                 <%--<asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />--%>&nbsp;
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
-                        <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
-                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
-                            <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
+                            <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />
+                                &nbsp;
+                            <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />
+                                &nbsp;
+                            <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />
+                                &nbsp;
                             </div>
                         </div>
 
                         <%-- <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>--%>
 
+
                         <div class="row">
-                            <div class="col-auto" style="margin-left: auto;">
-                                <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server">
-                                <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
+                            <div class="col-md mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">รายชื่อผู้จัดการ (สาขาที่ดูแล) </span>
+                                    </div>
+                                    <asp:DropDownList class="form-control" ID="cboBranchManager" runat="server" AutoPostBack="false"></asp:DropDownList>
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server">
-                                <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
+                            <div class="col-md mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">รหัส</span>
+                                    </div>
+                                    <asp:TextBox ID="txtCardID" type="input" runat="server" autocomplete="off" MaxLength="4" />
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md mb-3 ">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">สังกัด</span>
-                                    </div>
-                                    <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Employee KPIs</span>
-                                    </div>
-                                    <asp:DropDownList class="form-control" ID="cboCreateby" runat="server" readonly="true"></asp:DropDownList>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3 HO">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Ratio Type</span>
-                                    </div>
-                                    <asp:DropDownList ID="cboRatio" class="form-control" runat="server"></asp:DropDownList>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3 HO">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Position</span>
-                                    </div>
-                                    <asp:DropDownList ID="cboPosition" class="form-control" runat="server" ></asp:DropDownList>
-                                </div>
-                            </div>
-                            <% 'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
-                            <div class="col-md-3 mb-3 HO">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">ฝ่าย</span>
-                                    </div>
-                                    <asp:DropDownList ID="cboDepartment" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3 HO">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">แผนก</span>
-                                    </div>
-                                    <asp:DropDownList ID="cboSection" class="form-control" runat="server"></asp:DropDownList>
-                                </div>
-                            </div>
-
-                            <%--<% End If %>--%>
-                            <div class="col-md-3 mb-3 CO">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">ประเภทสาขา</span>
-                                    </div>
-                                    <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3 CO">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">สาขา</span>
+                                        <span class="input-group-text">สาขาที่ดูแล</span>
                                     </div>
                                     <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12 mb-3 HO">
-                                <asp:Label ID="note" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'แผนก' จะเปลี่ยนไปตาม 'ฝ่าย' ที่เลือก )" />
-                            </div>
-                            <div class="col-md-12 mb-3 CO">
-                                <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'สาขา' จะเปลี่ยนไปตาม 'ประเภทสาขา' ที่เลือก )" />
+                            <div class="col-md mb-3 ">
                             </div>
                         </div>
                     </div>
 
                     <!------------------------------------------------------------------------>
 
-                   
+
 
                     <%--begin item--%>
                     <% If AllKpi IsNot Nothing Then%>
@@ -311,15 +256,16 @@
                                                         <tr class="info text-center">
                                                             <th class="text-nowrap align-middle">
                                                                 <span class="p-1">
-                                                                <a href="KPIsOverview.aspx?uc=<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>" title="Overview"><i class="fas fa-chart-pie color__purple"></i></a>&nbsp;&nbsp;
+                                                                    <a href="KPIsOverview.aspx?uc=<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>" title="Overview"><i class="fas fa-chart-pie color__purple"></i></a>&nbsp;&nbsp;
                                                                     <a href="KPIsEdit.aspx?Kpi_Code=<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>" title="EditDetail"><i class="fas fa-edit color__purple"></i></a>
                                                                 </span>
                                                                 <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Then%>
-                                                                    <a onclick="confirmDeletedetail('<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString() %>')" >
-                                                                        <i class="fas fa-times"></i>
-                                                                    </a>
+                                                                <a onclick="confirmDeletedetail('<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString() %>')">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
                                                                 <% End If %>
                                                             </th>
+                                                            <th><span class="p-1">เจ้าของงาน</span></th>
                                                             <th><span class="p-1">แผนงาน / เป้าหมาย</span></th>
                                                             <th><span class="p-1">ผลตามแผน</span></th>
                                                             <th><span class="p-1">ผลการปฏิบัติงาน</span></th>
@@ -334,12 +280,9 @@
                                                         <% If AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(2).Rows(j).Item("actionkpi_code").ToString Then %>
                                                         <tr class="text-center">
 
-                                                            <td>
-                                                                <span class="badge badge-blue"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
-
-                                                            <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+                                                            <td><span class="badge badge-blue"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
                                                             <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("NameOwner").ToString %></span></td>
-                                                            <% End If %>
+
                                                             <td class="text-left pl-5"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actiontitle").ToString %></span></td>
                                                             <td>
                                                                 <span class="p-1">
@@ -393,11 +336,12 @@
                     <%-- end item--%>
                     <div class="rol">
                         <div class="col">
-                            <h5>ทั้งหมด <% =cntdt%> คน</h5>
+                            <h5>ทั้งหมด <% =cntdt%> สาขา</h5>
                             <h5>จำนวน <% =cntkpi%> ข้อ</h5>
 
                         </div>
                     </div>
+                    <%--<embed src="http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_230100391.pdf" width="100%" height="1000rem" />--%>
                     <!------------------------------------------------------------------------>
                 </div>
 
@@ -405,139 +349,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">รายละเอียดรายการ</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!--  ##############  Detail ############### -->
-                    <input type="hidden" class="form-control" id="row" value="0" runat="server">
-                    <input type="hidden" class="form-control" id="nextrow" value="0" runat="server">
-                    <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
-                    <div class="form-group">
-                        <asp:Label ID="lbcboAccountCode" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="ผลตามแผน" />
-                        <asp:Label ID="lbcboAccountCodeMandatory" CssClass="text-danger" AssociatedControlID="cboAccountCode" runat="server" Text="*" />
-                        <asp:DropDownList class="form-control" ID="cboAccountCode" runat="server" onchange="setdetail(this);"></asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbDetail" CssClass="form-label" AssociatedControlID="txtDetail" runat="server" Text="รายละเอียด" />
-                        <asp:TextBox class="form-control" ID="txtDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" autocomplete="off"></asp:TextBox>
-                        <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
-                    </div>
-                    <%-- <div class="form-group">
-                        <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="Department" />
-                        <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
-                    </div>--%>
-                    <%-- <div class="form-group">
-                        <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
-                        <asp:DropDownList class="form-control" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
-                        <asp:TextBox class="form-control" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
-                    </div>--%>
-                    <div class="form-group">
-                        <asp:Label ID="lbBU" CssClass="form-label" AssociatedControlID="cboBU" runat="server" Text="Business Unit" />
-                        <asp:DropDownList class="form-control" ID="cboBU" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbPP" CssClass="form-label" AssociatedControlID="cboPP" runat="server" Text="Purpose" />
-                        <asp:DropDownList class="form-control" ID="cboPP" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbPJ" CssClass="form-label" AssociatedControlID="cboPJ" runat="server" Text="Project - ( PM / OilLoss / Capex )" />
-                        <asp:DropDownList class="form-control" ID="cboPJ" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน (ก่อน VAT)" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onchange="calculate();"></asp:TextBox>
-                        <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
-                    </div>
-                    <div class="row flex-nowrap">
-                        <div class="form-group ">
-                            <div class="row justify-content-between mr-0 ml-0">
-                                <div class="col text-left align-self-center">
-                                    <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT (%)" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
-                            </div>
-                            <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
-                        </div>
-                        <div class="form-group ">
-                            <div class="col">
-                                <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="WHT (%)" />
-                            </div>
-                            <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
-                                <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <%--<div class="form-group">
-                        <asp:Label ID="lbVat" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" Text="0"'></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbTax" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="TAX" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" Text="0"'></asp:TextBox>
-                    </div>--%>
-
-                    <div class="form-group" style="display: none;">
-                        <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
-                        <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="showCost">
-                        <p class="text-muted" id="p_vat"></p>
-                        <p class="text-muted" id="p_tax"></p>
-                        <p class="text-muted" id="p_cost"></p>
-                    </div>
-                    <!--  ############## End Detail ############### -->
-                    <hr />
-                    <h3>ใบแจ้งหนี้ / ใบส่งของ / ใบกำกับ</h3>
-                    <div class="form-group">
-                        <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Document no." />
-                            </div>
-                            <div class="col gropincompletebill">
-                                <div class="row flex-nowrap form-group">
-                                    <div class="pr-4" style="color: #0f66c4;">
-                                        <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
-                                        <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
-                                    </div>
-                                    <div class="pl-4" style="color: #0f66c4;">
-                                        <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
-                                        <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Document date" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" />
-
-                </div>
-            </div>
-        </div>
-    </div>
     <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
@@ -561,58 +372,16 @@
 
             $('.form-control').selectpicker('refresh');
 
-            checkCOorHO();
+            //checkCOorHO();
         });
-        function btnEditDetailClick(ele) {
-            console.log(ele);
-            event.preventDefault();
-            $('#exampleModal').modal('show');
 
-            return false;
-        }
-        function checkCOorHO() {
-            if ($("#" + "<%= chkHO.ClientID.ToString %>").is(":checked")) {
-                $(".HO").show();
-                $(".CO").hide();
-            } else if ($("#" + "<%= chkCO.ClientID.ToString %>").is(":checked")) {
-                $(".CO").show();
-                $(".HO").hide();
-            } else {
-                $(".CO").hide();
-                $(".HO").hide();
-
-            }
-
-        }
-        $("input:checkbox").on('click', function () {
-            // in the handler, 'this' refers to the box clicked on
-            console.log(this);
-            var $box = $(this);
-            console.log($box.is(":checked"));
-            if ($box.is(":checked")) {
-                // the name of the box is retrieved using the .attr() method
-                // as it is assumed and expected to be immutable
-                var group = "input:checkbox";
-                // the checked state of the group/box on the other hand will change
-                // and the current value is retrieved using .prop() method
-                $(group).prop("checked", false);
-                $box.prop("checked", true);
-
-            } else {
-
-                $box.prop("checked", true);
-                //$box.prop("checked", false);
-            }
-
-            checkCOorHO();
-        });
         $('.noEnterSubmit').keypress(function (e) {
             if (e.which == 13) return false;
             //or...
             if (e.which == 13) e.preventDefault();
         });
 
-        function confirmDeletedetail(kpicode) {
+        <%--function confirmDeletedetail(kpicode) {
             Swal.fire({
                 title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',
                 text: "",
@@ -633,6 +402,21 @@
             })
 
             return false;
+        }--%>
+        function alertSuccess() {
+            Swal.fire(
+                'สำเร็จ',
+                '',
+                'success'
+            )
+        }
+
+        function alertWarning(massage) {
+            Swal.fire(
+                massage,
+                '',
+                'warning'
+            )
         }
     </script>
 </asp:Content>
