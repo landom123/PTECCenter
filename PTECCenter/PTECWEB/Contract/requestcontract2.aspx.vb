@@ -2628,6 +2628,7 @@ Public Class requestcontract2
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
 
+
     End Sub
 
     Protected Sub OnSelectedIndexChangedContractFix(sender As Object, e As EventArgs)
