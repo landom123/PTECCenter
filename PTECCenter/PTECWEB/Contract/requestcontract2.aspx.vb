@@ -4335,14 +4335,12 @@ Public Class requestcontract2
             ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", sb.ToString())
 
             If loadContractNonOil() = False Then
-
                 Exit Sub
             End If
 
             If loadContractNonOil() = False Then
                 Exit Sub
             End If
-
             Clear()
 
             Dim message As String = "Save Successfully."
