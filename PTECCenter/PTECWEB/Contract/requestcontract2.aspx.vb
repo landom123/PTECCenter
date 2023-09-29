@@ -2680,21 +2680,21 @@ Public Class requestcontract2
 
     End Sub
 
-    Protected Sub OnRowDataBound_AssetMain(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs)
-        Try
-            If e.Row.RowType = DataControlRowType.DataRow Then
-                e.Row.Attributes("onclick") = Page.ClientScript.GetPostBackClientHyperlink(gvAssetMain, "Select$" & e.Row.RowIndex)
-                e.Row.Attributes("style") = "cursor:pointer"
-            End If
-        Catch ex As Exception
-            Dim err, scriptKey, javaScript As String
-            err = ex.Message
-            scriptKey = "UniqueKeyForThisScript"
-            javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+    'Protected Sub OnRowDataBound_AssetMain(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs)
+    '    Try
+    '        If e.Row.RowType = DataControlRowType.DataRow Then
+    '            e.Row.Attributes("onclick") = Page.ClientScript.GetPostBackClientHyperlink(gvAssetMain, "Select$" & e.Row.RowIndex)
+    '            e.Row.Attributes("style") = "cursor:pointer"
+    '        End If
+    '    Catch ex As Exception
+    '        Dim err, scriptKey, javaScript As String
+    '        err = ex.Message
+    '        scriptKey = "UniqueKeyForThisScript"
+    '        javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '    End Try
 
-    End Sub
+    'End Sub
 
     Protected Sub OnRowDataBound_AssetMain(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs)
         Try
