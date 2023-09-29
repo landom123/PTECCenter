@@ -25,7 +25,12 @@ Public Class KPIsOverview
     Dim sm_code As String
     Dim am_code As String
 
+    Public totalRatio As Double = 0
+
+    Public nameowner As String = ""
     Public account_code As String = ""
+    Public operator_code As String = ""
+    Public adm_code As String = ""
 
     Public itemtable As DataTable
     Public detailtable As DataTable '= createtable()
@@ -53,10 +58,27 @@ Public Class KPIsOverview
         company_th.InnerText = "บริษัท เพียวพลังงานไทย จำกัด"
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
-        'AllKpi = objKpi.Kpi_Find_Overview(1, Session("usercode"))
+
+        Try
+            Dim usernamebycode As String = ""
+            Dim objuser As New Users
+            Dim dt As DataTable
+
+            dt = objuser.Find("", "", Request.QueryString("uc"))
+            usernamebycode = dt.Rows(0).Item("name").ToString
+
+            nameowner = If(Session("managername") IsNot Nothing, Session("managername"), usernamebycode)
+        Catch ex As Exception
+            nameowner = ""
+        End Try
+
+
+        operator_code = objKpi.KPIPermisstion("KPI", "OP")
+        adm_code = objKpi.KPIPermisstion("KPI", "A")
         If Not IsPostBack() Then
             If Not Request.QueryString("uc") Is Nothing Then
-                AllKpi = objKpi.Kpi_Find_Overview(1, Request.QueryString("uc").ToString)
+
+                AllKpi = objKpi.Kpi_Find_Overview(1, Request.QueryString("uc").ToString, nameowner)
 
                 'If AllKpi IsNot Nothing Then
                 '    If AllKpi.Tables(1).Rows.Count > 0 Then
@@ -79,4 +101,21 @@ Public Class KPIsOverview
 
     End Sub
 
+    Private Sub KPIsOverview_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        Try
+            Dim fruitGroups = AllKpi.Tables(0).AsEnumerable().GroupBy(Function(row) row.Field(Of String)("CategoryName"))
+
+            Dim tableResult As New DataTable
+
+            tableResult.Columns.Add("key", GetType(String))
+            tableResult.Columns.Add("overviewweight", GetType(Double))
+            For Each grp In fruitGroups
+                tableResult.Rows.Add(grp.Key, grp.First().Field(Of Double)("OverviewWeight"))
+            Next
+
+            totalRatio = Convert.ToDouble(tableResult.Compute("SUM(overviewweight)", String.Empty))
+        Catch ex As Exception
+            totalRatio = 0
+        End Try
+    End Sub
 End Class

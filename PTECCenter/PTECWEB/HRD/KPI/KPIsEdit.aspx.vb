@@ -31,6 +31,9 @@ Public Class KPIsEdit
     Dim am_code As String
 
 
+    Public managername As String
+
+
     Public operator_code As String = ""
     Public operatordt As DataTable
 
@@ -38,6 +41,7 @@ Public Class KPIsEdit
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
+        Dim objUser As New Users
         Dim objKpi As New Kpi
 
         If Session("usercode") Is Nothing Then
@@ -60,9 +64,16 @@ Public Class KPIsEdit
         company_th.InnerText = "บริษัท เพียวพลังงานไทย จำกัด"
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
+        Try
+            managername = Session("managername")
+        Catch ex As Exception
+            managername = Nothing
+        End Try
 
         If Not IsPostBack() Then
+            objUser.SetcboUserName(cboUserName)
             objKpi.SetCboRatioType(cboRatio)
+            SetCboUsers(cboOwnerKPI)
             If Not Request.QueryString("Kpi_Code") Is Nothing Then
                 findKpi()
             End If
@@ -113,6 +124,7 @@ Public Class KPIsEdit
             AllKpi = objkpi.Kpi_Find_by_code(Request.QueryString("Kpi_Code").ToString, Session("usercode"))
 
             cboRatio.SelectedIndex = If(AllKpi.Tables(0).Rows(0).Item("category_id"), AllKpi.Tables(0).Rows(0).Item("category_id"), -1)
+            cboOwnerKPI.SelectedIndex = cboOwnerKPI.Items.IndexOf(cboOwnerKPI.Items.FindByValue(AllKpi.Tables(0).Rows(0).Item("ownerid").ToString))
             txtKpititle.InnerText = AllKpi.Tables(0).Rows(0).Item("Title").ToString
             txtWeight.Text = AllKpi.Tables(0).Rows(0).Item("Weight").ToString
             txtUnit.Text = AllKpi.Tables(0).Rows(0).Item("Unit").ToString
@@ -222,7 +234,25 @@ Public Class KPIsEdit
         Dim objKpi As New Kpi
 
         Try
-            objKpi.Kpi_HeadOP_Save(Request.QueryString("Kpi_Code"), cboRatio.SelectedItem.Value, txtKpititle.InnerText, txtWeight.Text, txtUnit.Text, txtlv5.Text, txtlv4.Text, txtlv3.Text, txtlv2.Text, txtlv1.Text, Session("usercode"))
+            objKpi.Kpi_HeadOP_Save(Request.QueryString("Kpi_Code"), cboOwnerKPI.SelectedItem.Value, cboRatio.SelectedItem.Value, txtKpititle.InnerText, txtWeight.Text, txtUnit.Text, txtlv5.Text, txtlv4.Text, txtlv3.Text, txtlv2.Text, txtlv1.Text, Session("usercode"))
+            'findKpi()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('cancel fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../KPI/KPIsEdit.aspx?Kpi_Code=" & Request.QueryString("Kpi_Code"))
+endprocess:
+    End Sub
+
+    Private Sub btnUpdateOwnerAP_Click(sender As Object, e As EventArgs) Handles btnUpdateOwnerAP.Click
+        Dim objKpi As New Kpi
+
+        Try
+            objKpi.UpdateOwnerActionPlan(hiddenAdvancedetailid.Value.ToString, cboUserName.SelectedItem.Value, Session("usercode"))
+            hiddenAdvancedetailid.Value = 0
             'findKpi()
         Catch ex As Exception
             Dim scriptKey As String = "alert"

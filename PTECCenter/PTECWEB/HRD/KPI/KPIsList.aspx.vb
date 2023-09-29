@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Web.Script.Serialization
 
 Public Class KPIsList
     Inherits System.Web.UI.Page
@@ -25,6 +26,9 @@ Public Class KPIsList
     Dim sm_code As String
     Dim am_code As String
 
+    Public cntdt As Integer
+    Public cntkpi As Integer
+
     Public operator_code As String = ""
     Public adm_code As String = ""
 
@@ -33,6 +37,7 @@ Public Class KPIsList
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
+        Dim objposition As New Position
         Dim objbranch As New Branch
         Dim objKpi As New Kpi
         Dim objdep As New Department
@@ -60,11 +65,18 @@ Public Class KPIsList
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
 
+        If Session("positionid") = "10" Then
+            Response.Redirect("KPIsListForBranch.aspx")
+        End If
+
+
         operator_code = objKpi.KPIPermisstion("KPI", "OP")
         adm_code = objKpi.KPIPermisstion("KPI", "A")
 
         If Not IsPostBack() Then
 
+            objposition.SetCboPositionCode(cboPosition)
+            objKpi.SetCboRatioType(cboRatio)
             objcompany.SetCboCompany(cboCompany, 0)
             objbranch.SetComboBranchGroup(cboBranchGroup)
             objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
@@ -83,32 +95,21 @@ Public Class KPIsList
             SetCboUsers(cboCreateby)
 
             '------------------------------------
-            If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
-                If Not Session("criteria_kpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                    criteria = Session("criteria_kpi")
-                    BindCriteria(criteria)
-                    searchKpilist()
-                Else
-
-                    searchKpilist()
-                End If
-            Else
-                If Not Session("criteria_kpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                    criteria = Session("criteria_kpi")
-                    BindCriteria(criteria)
-                    searchKpilist_owner()
-                Else
-                    searchKpilist_owner()
-                End If
-
-            End If
-
+            find()
 
 
             Session("kpilist_allkpi") = AllKpi
         Else
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "deletehead" Then
+                Dim argument As String = Request("__EVENTARGUMENT")
+                Dim jss As New JavaScriptSerializer
+                Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(argument)
+                deleteHead(json("kpicode"), json("user"))
+            End If
 
             AllKpi = Session("kpilist_allkpi")
+
         End If
 
     End Sub
@@ -117,6 +118,8 @@ Public Class KPIsList
 
         dt.Columns.Add("cboCompany", GetType(String))
         dt.Columns.Add("cboCreateby", GetType(String))
+        dt.Columns.Add("cboRatio", GetType(String))
+        dt.Columns.Add("cboPosition", GetType(String))
         dt.Columns.Add("cboDepartment", GetType(String))
         dt.Columns.Add("cboSection", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
@@ -134,6 +137,8 @@ Public Class KPIsList
 
             cboCompany.SelectedValue = criteria.Rows(0).Item("cboCompany")
             cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
+            cboRatio.SelectedValue = criteria.Rows(0).Item("cboRatio")
+            cboPosition.SelectedValue = criteria.Rows(0).Item("cboPosition")
             cboDepartment.SelectedValue = criteria.Rows(0).Item("cboDepartment")
             objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
             cboSection.SelectedValue = criteria.Rows(0).Item("cboSection")
@@ -152,6 +157,8 @@ Public Class KPIsList
                 AllKpi = objKpi.Kpi_List_For_Operator("",
                                                       "",
                                                         cboCompany.SelectedItem.Value.ToString,
+                                                        "",
+                                                        "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         cboCreateby.SelectedItem.Value.ToString,
@@ -161,6 +168,8 @@ Public Class KPIsList
                 AllKpi = objKpi.Kpi_List_For_Operator(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
                                                         cboCompany.SelectedItem.Value.ToString,
+                                                        cboRatio.SelectedItem.Value.ToString,
+                                                        cboPosition.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
                                                         cboCreateby.SelectedItem.Value.ToString,
@@ -185,6 +194,8 @@ Public Class KPIsList
                 AllKpi = objKpi.Kpi_List_For_Owner("",
                                                         "",
                                                         "",
+                                                        "",
+                                                        "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         cboCreateby.SelectedItem.Value.ToString,
@@ -194,6 +205,8 @@ Public Class KPIsList
                 AllKpi = objKpi.Kpi_List_For_Owner(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
                                                         cboCompany.SelectedItem.Value.ToString,
+                                                        cboRatio.SelectedItem.Value.ToString,
+                                                        cboPosition.SelectedItem.Value.ToString,
                                                         "",
                                                       "",
                                                         cboCreateby.SelectedItem.Value.ToString,
@@ -225,12 +238,17 @@ Public Class KPIsList
         criteria.Rows.Add(
                           (cboCompany.SelectedItem.Value),
                           cboCreateby.SelectedItem.Value.ToString,
+                        cboRatio.SelectedItem.Value.ToString,
+                        cboPosition.SelectedItem.Value.ToString,
                           (cboDepartment.SelectedItem.Value),
                           (cboSection.SelectedItem.Value),
                           (cboBranchGroup.SelectedItem.Value),
                           (cboBranch.SelectedItem.Value),
                             chkCO.Checked,
                           chkHO.Checked)
+
+        cntdt = AllKpi.Tables(0).Rows.Count
+        cntkpi = AllKpi.Tables(1).Rows.Count
         Session("criteria_kpi") = criteria
     End Sub
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
@@ -239,6 +257,8 @@ Public Class KPIsList
         cboDepartment.SelectedIndex = -1
         cboSection.SelectedIndex = -1
         cboCompany.SelectedIndex = 1
+        cboRatio.SelectedIndex = -1
+        cboPosition.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
         cboCreateby.SelectedIndex = -1
@@ -275,5 +295,40 @@ Public Class KPIsList
 
         depid = cboDepartment.SelectedItem.Value
         objsection.SetCboSectionCodeNameByMode(cboSection, depid, "actived")
+    End Sub
+    Private Sub find()
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+            If Not Session("criteria_kpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                criteria = Session("criteria_kpi")
+                BindCriteria(criteria)
+                searchKpilist()
+            Else
+
+                searchKpilist()
+            End If
+        Else
+            If Not Session("criteria_kpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                criteria = Session("criteria_kpi")
+                BindCriteria(criteria)
+                searchKpilist_owner()
+            Else
+                searchKpilist_owner()
+            End If
+
+        End If
+    End Sub
+
+    Private Sub deleteHead(kpicode As String, user As String)
+        Dim objKpi As New Kpi
+
+        Try
+            objKpi.deleteHeadbyKPICode(kpicode, user)
+            find()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('find fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
     End Sub
 End Class
