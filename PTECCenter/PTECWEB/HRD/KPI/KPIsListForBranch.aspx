@@ -58,8 +58,7 @@
         }
 
         tr[aria-expanded="true"] {
-            color: #fff;
-            background-color: #5992af;
+            background-color: #8d9eb7;
         }
 
         tr[aria-expanded="false"] > td:last-child:after {
@@ -271,7 +270,7 @@
                                                             <th><span class="p-1">ผลการปฏิบัติงาน</span></th>
                                                             <th><span class="p-1">พนักงานประเมิน</span></th>
                                                             <th><span class="p-1">หัวหน้าประเมิน</span></th>
-                                                            <th><span class="p-1">ฟีดแบค</span></th>
+                                                            <th><span class="p-1">Feedback</span></th>
                                                         </tr>
                                                     </thead>
 
@@ -297,8 +296,8 @@
                                                                 </span>
                                                             </td>
                                                             <td class="text-left"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actiontitleresult").ToString %></span></td>
-                                                            <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionrateowner").ToString %></span></td>
-                                                            <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionratehead").ToString %></span></td>
+                                                            <td><span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionrateowner"), Integer) < 3), "text-danger", "text-success"), "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionrateowner").ToString %></span></td>
+                                                            <td><span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionratehead"), Integer) < 3), "text-danger", "text-success"), "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionratehead").ToString %></span></td>
                                                             <td class="text-left"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionfeedback").ToString %></span></td>
                                                         </tr>
 

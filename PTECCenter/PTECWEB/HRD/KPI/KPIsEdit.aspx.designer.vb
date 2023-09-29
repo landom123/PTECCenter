@@ -41,6 +41,15 @@ Partial Public Class KPIsEdit
     Protected WithEvents company_en As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
+    '''cboOwnerKPI control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboOwnerKPI As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cboRatio control.
     '''</summary>
     '''<remarks>
@@ -147,4 +156,40 @@ Partial Public Class KPIsEdit
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnUpdateOP As Global.System.Web.UI.HtmlControls.HtmlInputButton
+
+    '''<summary>
+    '''hiddenAdvancedetailid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hiddenAdvancedetailid As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+
+    '''<summary>
+    '''lbUserName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbUserName As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboUserName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboUserName As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''btnUpdateOwnerAP control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateOwnerAP As Global.System.Web.UI.WebControls.Button
 End Class

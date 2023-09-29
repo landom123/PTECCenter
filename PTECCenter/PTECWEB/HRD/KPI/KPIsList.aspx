@@ -58,8 +58,7 @@
         }
 
         tr[aria-expanded="true"] {
-            color: #fff;
-            background-color: #5992af;
+            background-color: #8d9eb7;
         }
 
         tr[aria-expanded="false"] > td:last-child:after {
@@ -84,6 +83,21 @@
 
         .table__inner > tbody {
             font-size: .75rem;
+        }
+        .border__solid {
+            border: solid !important;
+            border-color: red !important;
+        } 
+        tr>.text__rateowner::after {
+          content: "ยังไม่ลงคะแนน";
+          color:red;
+        }
+        tr>.text__rateheader::after {
+          content: "ยังไม่ลงคะแนน";
+          color:red;
+        }
+        .goEdit {
+          cursor: pointer;
         }
     </style>
 </asp:Content>
@@ -254,8 +268,9 @@
                                     <tr>
 
                                         <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Then%>
-                                        <th class="text-center align-middle" rowspan="2"><span class="p-1">Dep.</span></th>
-                                        <th class="text-center align-middle" rowspan="2"><span class="p-1">Sec.</span></th>
+                                        <th class="text-center align-middle text-info" rowspan="2"><span class="p-1">CODE</span></th>
+                                        <th class="text-center align-middle text-info" rowspan="2"><span class="p-1">Dep.</span></th>
+                                        <th class="text-center align-middle text-info" rowspan="2"><span class="p-1">Sec.</span></th>
                                         <% End If %>
                                         <th class="text-center align-middle" rowspan="2"><span class="p-1">Ratio</span></th>
                                         <th class="text-center align-middle" rowspan="2" style="width: 500px !important;"><span class="p-1">หัวข้อ KPIs</span></th>
@@ -282,6 +297,7 @@
 
                                     <tr data-toggle="collapse" data-target="#<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>" class="accordion-toggle text-center" aria-expanded="false">
                                         <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+                                        <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %></span></td>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("depcode").ToString %></span></td>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("seccode").ToString %></span></td>
                                         <% End If %>
@@ -295,18 +311,20 @@
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Lv2").ToString %></span></td>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Lv1").ToString %></span></td>
                                         <td>
+                                            <% If AllKpi.Tables(1).Rows(i).Item("countnotify") > 0 Then %>
                                             <span class="p-1">
-                                                <%-- <button type="button" class="btn btn-sm btn-danger">
-                                                    <i class="far fa-bell"></i><span class="badge badge-danger">4</span>
-                                                </button>--%>
+                                                 <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="<%= AllKpi.Tables(1).Rows(i).Item("notifytitle").ToString %>">
+                                                    <i class="far fa-bell"></i><span class="badge badge-danger"><%= AllKpi.Tables(1).Rows(i).Item("countnotify").ToString %></span>
+                                                </button>
                                             </span>
+                                            <% End If %>
                                         </td>
 
                                     </tr>
                                     <tr>
                                         <td colspan="12" class="hiddenRow">
                                             <div class="accordian-body collapse" id="<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>">
-                                                <table class="table table-hover table__inner">
+                                                <table class="table table-hover table__inner" style="border-spacing: 5px;">
                                                     <thead class="thead-light">
                                                         <tr class="info text-center">
                                                             <th class="text-nowrap align-middle">
@@ -320,12 +338,17 @@
                                                                     </a>
                                                                 <% End If %>
                                                             </th>
+
+                                                            <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+                                                            <th><span class="p-1">เจ้าของ kpi</span></th>
+
+                                                            <% End If %>
                                                             <th><span class="p-1">แผนงาน / เป้าหมาย</span></th>
                                                             <th><span class="p-1">ผลตามแผน</span></th>
                                                             <th><span class="p-1">ผลการปฏิบัติงาน</span></th>
                                                             <th><span class="p-1">พนักงานประเมิน</span></th>
                                                             <th><span class="p-1">หัวหน้าประเมิน</span></th>
-                                                            <th><span class="p-1">ฟีดแบค</span></th>
+                                                            <th><span class="p-1">Feedback</span></th>
                                                         </tr>
                                                     </thead>
 
@@ -333,11 +356,8 @@
                                                         <% For j = 0 To AllKpi.Tables(2).Rows.Count - 1 %>
                                                         <% If AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(2).Rows(j).Item("actionkpi_code").ToString Then %>
                                                         <tr class="text-center">
-
-                                                            <td>
-                                                                <span class="badge badge-blue"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
-
-                                                            <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+                                                            <td><span class="badge badge-blue <%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1, "border__solid", "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
+                                                            <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                                                             <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("NameOwner").ToString %></span></td>
                                                             <% End If %>
                                                             <td class="text-left pl-5"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actiontitle").ToString %></span></td>
@@ -354,8 +374,13 @@
                                                                 </span>
                                                             </td>
                                                             <td class="text-left"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actiontitleresult").ToString %></span></td>
-                                                            <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionrateowner").ToString %></span></td>
-                                                            <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionratehead").ToString %></span></td>
+                                                            
+                                                            <td class="<%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And (adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Or AllKpi.Tables(0).Rows(k).Item("ownercode").ToString = Session("usercode").ToString), "border__solid text__rateowner goEdit", "") %>">
+                                                                <span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionrateowner"), Integer) < 3), "text-danger", "text-success"), "") %> "><%= AllKpi.Tables(2).Rows(j).Item("actionrateowner").ToString %></span>
+                                                            </td>
+                                                            <td class="<%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer And (adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Or AllKpi.Tables(1).Rows(i).Item("empuppercode").ToString = Session("usercode").ToString), "border__solid text__rateheader goEdit", "") %>">
+                                                                <span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionratehead"), Integer) < 3), "text-danger", "text-success"), "") %> "><%= AllKpi.Tables(2).Rows(j).Item("actionratehead").ToString %></span>
+                                                            </td>
                                                             <td class="text-left"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionfeedback").ToString %></span></td>
                                                         </tr>
 
@@ -559,10 +584,27 @@
             });
 
 
+            $('[data-toggle="tooltip"]').tooltip();
             $('.form-control').selectpicker('refresh');
 
             checkCOorHO();
+
+            var elements = document.getElementsByClassName("goEdit");
+
+           
+
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].addEventListener('click', myFunction, false);
+            }
         });
+        var myFunction = function () {
+            console.log(this);
+            const elemid = this.parentElement.parentElement.parentElement.parentElement.id;
+            console.log(elemid);
+            
+            window.location.href = `KPIsEdit.aspx?Kpi_Code=${elemid}`;
+
+        };
         function btnEditDetailClick(ele) {
             console.log(ele);
             event.preventDefault();

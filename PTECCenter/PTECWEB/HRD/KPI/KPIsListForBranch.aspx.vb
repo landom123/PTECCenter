@@ -202,7 +202,7 @@ Public Class KPIsListForBranch
                 GoTo endprocess
             Else
             End If
-            If cboBranch.Items.Count < 1 Then
+            If cboBranch.Items.Count <= 1 Then
                 objbranch.SetComboBranchByManagerCardid(cboBranch, txtCardID.Text)
             End If
         End If

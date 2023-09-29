@@ -1,6 +1,31 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Web.Configuration
 Public Class Users
+    Public Sub SetcboUserName(cboUserName As DropDownList)
+
+        Dim dt As DataTable = UserName_List()
+        cboUserName.Items.Clear()
+        Dim cnt_dt = dt.Rows.Count
+        For i As Integer = 0 To cnt_dt - 1
+            Dim name As String
+            Dim branchname As String
+            With dt.Rows(i)
+                name = .Item("name").ToString
+                branchname = .Item("branchname").ToString
+            End With
+            Dim item As ListItem = New ListItem(name, name)
+            'If Not String.IsNullOrEmpty(dt.Rows(i).Item("Vendor_Code").ToString) Then
+            'End If
+            item.Attributes("data-subtext") = branchname
+
+            'If Not String.IsNullOrEmpty(dt.Rows(i).Item("taxidno").ToString) Then
+            'End If
+
+            cboUserName.Items.Add(item)
+
+        Next
+
+    End Sub
 
     Public Function Login(usercode As String, password As String) As DataTable
         Dim result As DataTable
@@ -316,6 +341,32 @@ Public Class Users
         adp.SelectCommand = cmd
         adp.Fill(ds)
         result = ds.Tables(0).Rows(0).Item("D365Code")
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function UserName_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "UserName_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
         conn.Close()
         Return result
     End Function
