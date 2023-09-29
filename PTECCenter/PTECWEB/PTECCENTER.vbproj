@@ -1752,6 +1752,7 @@
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
     <Content Include="HRD\KPI\KPIsEdit.aspx" />
+    <Content Include="HRD\KPI\KPIsListForBranch.aspx" />
     <Content Include="HRD\KPI\KPIsOverview.aspx" />
     <Content Include="HRD\KPI\KPIsList.aspx" />
     <Content Include="icon\BranchSeller.svg" />
@@ -3739,6 +3740,13 @@
     </Compile>
     <Compile Include="HRD\KPI\KPIsEdit.aspx.vb">
       <DependentUpon>KPIsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsListForBranch.aspx.designer.vb">
+      <DependentUpon>KPIsListForBranch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsListForBranch.aspx.vb">
+      <DependentUpon>KPIsListForBranch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="HRD\KPI\KPIsOverview.aspx.designer.vb">

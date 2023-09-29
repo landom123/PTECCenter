@@ -2831,6 +2831,7 @@ Partial Public Class requestcontract2
     Protected WithEvents Panel1 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+
     '''Label1 control.
     '''</summary>
     '''<remarks>
@@ -2885,6 +2886,7 @@ Partial Public Class requestcontract2
     Protected WithEvents btnAddPowerBook As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+
     '''Tab21 control.
     '''</summary>
     '''<remarks>
@@ -3281,6 +3283,7 @@ Partial Public Class requestcontract2
     Protected WithEvents FileUpload4 As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
+
     '''Button4 control.
     '''</summary>
     '''<remarks>
@@ -3317,6 +3320,7 @@ Partial Public Class requestcontract2
     Protected WithEvents btnAddNonOil As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+
     '''gvPayTypeNonOil control.
     '''</summary>
     '''<remarks>

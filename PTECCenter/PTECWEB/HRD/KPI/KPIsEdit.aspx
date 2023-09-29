@@ -6,7 +6,7 @@
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <style>
-         .container {
+         .content-wrapper {
             font-size:.8rem;
         }
         .card-advancerequest {
@@ -83,7 +83,10 @@
         .badge-blue {
             font-size: .65rem;
         }
-
+        .border__solid {
+            border: solid !important;
+            border-color: red !important;
+        } 
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -93,7 +96,7 @@
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper">
-                <div class="container">
+                <div class="px-5">
                     <div class="row">
                         <div class="col text-left align-self-center">
                         </div>
@@ -127,7 +130,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="foram mb-3">
+                    <div class="foram mb-3 px-lg-5">
                         <div class="row">
                             ข้อมูลหลังบ้าน <%=OPT %>
                         </div>
@@ -160,6 +163,12 @@
                                 <table class="table table-sm shadow-sm">
                                     <thead class="thead-blue ">
                                         <tr>
+
+                                            <% If Not Request.QueryString("Kpi_Code") Is Nothing And AllKpi IsNot Nothing Then%>
+                                            <% If AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
+                                            <th class="text-center align-middle" rowspan="2">OwnerKPI</th>
+                                            <% End If %>
+                                            <% End If %>
                                             <th class="text-center align-middle" rowspan="2">Ratio</th>
                                             <th class="text-center align-middle" rowspan="2">หัวข้อ KPIs</th>
                                             <th class="text-center align-middle" rowspan="2">น้ำหนัก</th>
@@ -185,6 +194,9 @@
                                         <% If not AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString = temp Then %>
 
                                         <tr class=" text-center">
+                                            <% If AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
+                                            <td><%= AllKpi.Tables(0).Rows(i).Item("ownercode").ToString %></td>
+                                            <% End If %>
                                             <td><%= AllKpi.Tables(0).Rows(i).Item("CategoryName").ToString %></td>
                                             <td class="text-left"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></td>
                                             <td><%= AllKpi.Tables(0).Rows(i).Item("Weight").ToString %></td>
@@ -203,6 +215,9 @@
                                         </tr>
                                         <% If AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
                                         <tr class=" text-center">
+                                            <td>
+                                                <asp:DropDownList class="form-control" ID="cboOwnerKPI" runat="server"></asp:DropDownList>
+                                            </td>
                                             <td>
                                                 <asp:DropDownList class="form-control" ID="cboRatio" runat="server"></asp:DropDownList>
                                             </td>
@@ -243,12 +258,13 @@
                                                         <thead class="thead-light">
                                                             <tr class="info text-center">
                                                                 <th></th>
+                                                                <th>เจ้าของงาน</th>
                                                                 <th>แผนงาน / เป้าหมาย</th>
                                                                 <th>ผลตามแผน</th>
                                                                 <th>ผลการปฏิบัติงาน</th>
                                                                 <th>พนักงานประเมิน</th>
                                                                 <th class="approval">หัวหน้าประเมิน</th>
-                                                                <th class="approval">รายละเอียดการประเมิน</th>
+                                                                <th class="approval">Feedback</th>
                                                                 <th></th>
                                                                 <%--<th>หัวหน้าประเมิน</th>
                                                                 <th>Feedback</th>--%>
@@ -264,12 +280,22 @@
                                                             <tr class="text-center" id="actionid_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" data-datenow="<%= AllKpi.Tables(0).Rows(i).Item("datenow").ToString %>" data-opt="<%= AllKpi.Tables(0).Rows(i).Item("operatortype").ToString %>"
                                                                 data-empuppercode="<%= AllKpi.Tables(1).Rows(j).Item("actionempuppercode").ToString %>"
                                                                 data-ownercode="<%= AllKpi.Tables(1).Rows(j).Item("actionownercode").ToString %>"
+                                                                data-ownername="<%= AllKpi.Tables(1).Rows(j).Item("NameOwner").ToString %>"
                                                                 data-usercode="<%= Session("usercode").ToString %>"
+                                                                data-username="<%= Session("username").ToString %>"
+                                                                data-managername="<%= managername %>"
                                                                 data-editstart="<%= AllKpi.Tables(1).Rows(j).Item("actionedit_begindate").ToString %>"
                                                                 data-editend="<%= AllKpi.Tables(1).Rows(j).Item("actionedit_enddate").ToString %>"
                                                                 data-approvalstart="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_begindate").ToString %>"
                                                                 data-approvalend="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %>">
-                                                                <td><span class="badge badge-blue"><%= AllKpi.Tables(1).Rows(j).Item("actionmonth").ToString %></span>
+                                                                <td><span class="badge badge-blue <%= If(AllKpi.Tables(1).Rows(j).Item("nowMonths") = 1, "border__solid", "") %>"><%= AllKpi.Tables(1).Rows(j).Item("actionmonth").ToString %></span>
+                                                                <td>
+                                                                    <span><%= AllKpi.Tables(1).Rows(j).Item("NameOwner").ToString %></span>
+
+                                                                    <% If AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
+                                                                    <a runat="server" class="text-primary" style="cursor: pointer; transition: .2s;" onclick="btnEditOwnerActionplan(this)">
+                                                                        <i class="fas fa-edit"></i></a>
+                                                                    <% End If %>
                                                                 </td>
                                                                 <td class="text-left">
                                                                     <% If (String.IsNullOrEmpty(AllKpi.Tables(0).Rows(0).Item("operatortype").ToString)) Then%>
@@ -374,6 +400,31 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_report" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel_report">รายชื่อเจ้าของงาน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
+                    <div class="form-group">
+                        <asp:Label ID="lbUserName" CssClass="form-label" AssociatedControlID="cboUserName" runat="server" Text="UserName" />
+                        <asp:DropDownList class="form-control" ID="cboUserName" runat="server"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+
+                    <asp:Button ID="btnUpdateOwnerAP" class="btn btn-primary" runat="server" Text="Update" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
@@ -387,6 +438,7 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
+       
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
@@ -440,8 +492,12 @@
 
                 const empuppercode = row.getAttribute("data-empuppercode");
                 const ownercode = row.getAttribute("data-ownercode");
+                const ownername = row.getAttribute("data-ownername");
                 const opt = row.getAttribute("data-opt");
                 const usercode = row.getAttribute("data-usercode");
+                const username = row.getAttribute("data-username");
+                const managername = row.getAttribute("data-managername") || username;
+                
 
                 const [day0, month0, year0] = datenow.split('/');
                 const [day1, month1, year1] = editstart.split('/');
@@ -457,12 +513,15 @@
                 const aend = new Date(+year4, month4 - 1, +day4);
 
                 //alert(opt);
-                //console.log(estart);
+                console.log(ownername.indexOf(managername || usercode));
+                console.log(ownername);
+                console.log(managername);
+                console.log(usercode);
                 //console.log(empuppercode);
                 //console.log(ownercode);
                 //console.log(ownercode.indexOf(usercode));
 
-                if (ownercode.indexOf(usercode) > -1 && !opt) { // เจ้าของ KPI
+                if ((ownername.indexOf(managername) > -1) && !opt) { // เจ้าของ KPI
                     console.log('เจ้าของ KPI');
 
                     if (!(date >= estart && date <= eend)) {
@@ -500,8 +559,15 @@
 
                     elemActionratehead[i].disabled = true;
                     elemActionFeedback[i].disabled = true;
-
                     //$('#btnUpdate').hide();
+                }
+
+                if (!(ownername == managername) && !(empuppercode==usercode) && !opt) {
+                    console.log('66666666666')
+                    row.hidden=true;
+                } else {
+
+                    console.log('77777777777777')
                 }
 
 
@@ -509,7 +575,6 @@
 
 
             $('.form-control').selectpicker('refresh');
-
         });
 
         function getValueUnDisabled() {
@@ -679,6 +744,26 @@
                 '',
                 'warning'
             )
+        }
+        function selectElement(id, valueToSelect) {
+            let element = document.getElementById(id);
+            element.value = valueToSelect;
+        }
+        function btnEditOwnerActionplan(elem) {
+            const parent = elem.parentElement
+            const tr = parent.parentElement
+
+            let ownername = tr.getAttribute("data-ownername");
+            let apid = tr.id.split("_")[1];
+            //selectElement()
+            const usernamelist = '<%= cboUserName.ClientID%>';
+            selectElement(usernamelist, ownername);
+            $('#<%= hiddenAdvancedetailid.ClientID%>').val(apid);
+
+
+            $('.form-control').selectpicker('refresh');
+            $('#exampleModal').modal('show');
+
         }
     </script>
 </asp:Content>
