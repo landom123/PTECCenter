@@ -232,7 +232,7 @@ Public Class requestcontract2
         gvContractCompanyPer.DataBind()
 
         'condition
-        cboPayType.SelectedIndex = 0
+        'cboPayType.SelectedIndex = 0
         txtAmountFix.Text = ""
         txtFrequencyFix.Text = ""
         txtDueDateFix.Text = ""
@@ -403,8 +403,7 @@ Public Class requestcontract2
         Session("ItemRentJoin") = 0
 
 
-
-
+        Session("ItemNo") = 0
 
         Session("ItemNo") = 0
 
@@ -2696,6 +2695,22 @@ Public Class requestcontract2
 
     End Sub
 
+    Protected Sub OnRowDataBound_AssetMain(sender As Object, e As System.Web.UI.WebControls.GridViewRowEventArgs)
+        Try
+            If e.Row.RowType = DataControlRowType.DataRow Then
+                e.Row.Attributes("onclick") = Page.ClientScript.GetPostBackClientHyperlink(gvAssetMain, "Select$" & e.Row.RowIndex)
+                e.Row.Attributes("style") = "cursor:pointer"
+            End If
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = "alertSuccess('บันทึกข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
+    End Sub
+
     Protected Sub OnSelectedIndexChanged_AssetMain(sender As Object, e As EventArgs)
         Try
             Dim dt As New DataTable
@@ -4232,6 +4247,26 @@ Public Class requestcontract2
                 dDueDate = "1900-01-01"
             End If
 
+
+            If IsDate(txtBeginDateNonOil.Text) = True Then
+                dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
+            Else
+                dBeginDate = "1900-01-01"
+            End If
+
+            If IsDate(txtEndDateNonOil.Text) = True Then
+                dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
+            Else
+                dEndDate = "1900-01-01"
+            End If
+
+            If Session("ItemNoNonOil") IsNot Nothing Then
+                ItemNo = Session("ItemNoNonOil")
+            Else
+                ItemNo = 0
+            End If
+
+
             If IsDate(txtBeginDateNonOil.Text) = True Then
                 dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
             Else
@@ -4261,7 +4296,9 @@ Public Class requestcontract2
                     err = ex.Message.ToString.Replace("'", "")
                     scriptKey = "UniqueKeyForThisScript"
                     javaScript = "alertWarning('" & err & "')"
-                    ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
                 End Try
 
                 If String.IsNullOrEmpty(err) Then
@@ -4280,7 +4317,8 @@ Public Class requestcontract2
                                        , CDbl(txtPayNonOilService.Text), CDbl(txtPayNonOilInsurance.Text), CDbl(txtPayNonOilWater.Text) _
                                        , CDbl(txtPqyNonOilElectrice.Text), CDbl(txtPayNonOilCenter.Text), CDbl(txtPayNonOilGarbag.Text) _
                                        , CDbl(txtPayNonOilLabel.Text), CDbl(txtPayNonOilRemarkOther.Text), txtNonOilRemarkOther.Text _
-                                       , txtNonOilWide.Text, ItemNo, txtNonOilRemark.Text, cboContractType.SelectedValue) = False Then
+                                      , txtNonOilWide.Text, ItemNo, txtNonOilRemark.Text, cboContractType.SelectedValue) = False Then
+
                 Exit Sub
             End If
 
@@ -4297,8 +4335,27 @@ Public Class requestcontract2
             ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", sb.ToString())
 
             If loadContractNonOil() = False Then
+
                 Exit Sub
             End If
+
+            If loadContractNonOil() = False Then
+                Exit Sub
+            End If
+
+            Clear()
+
+            Dim message As String = "Save Successfully."
+            Dim sb As New System.Text.StringBuilder()
+            sb.Append("<script type = 'text/javascript'>")
+            sb.Append("window.onload=function(){")
+            sb.Append("alert('")
+            sb.Append(message)
+            sb.Append("')};")
+            sb.Append("</script>")
+            ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", sb.ToString())
+
+
 
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String

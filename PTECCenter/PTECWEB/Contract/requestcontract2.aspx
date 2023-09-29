@@ -2986,6 +2986,26 @@
                                                                   </div>
                                                             </div>
                                                    </div>
+
+                                                   <div class="row" style="padding-top: 0.2rem;" runat="server">
+                                                         <div class="col-md-4" runat="server">
+                                                                                            <%--<INPUT id="File4" type="file" runat="server" NAME="oFile">--%>
+                                                                                            <asp:FileUpload id="FileUpload1" runat="server"></asp:FileUpload>
+                                                                                            <asp:button id="Button1" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:Panel ID="Panel1" Visible="False" Runat="server">
+                                                                                                <asp:Label id="Label1" Runat="server"></asp:Label>
+                                                                                            </asp:Panel>
+                                                                                        </div>
+                                                         <div class="col-md-4" runat="server">
+                                                                                           <%-- <INPUT id="File5" type="file" runat="server" NAME="oFile">--%>
+                                                                                            <asp:FileUpload id="FileUpload2" runat="server"></asp:FileUpload>
+                                                                                            <asp:button id="Button2" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:Panel ID="Panel2" Visible="False" Runat="server">
+                                                                                                <asp:Label id="Label2" Runat="server"></asp:Label>
+                                                                                            </asp:Panel>
+                                                        </div>       
+                                                   </div>
+
                                                     <div class="row col-md-3" style="padding-top: 0.2rem;"  runat="server">
                                                          <asp:Button ID="btnAddPowerBook" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" บันทึกสัญญา " />
                                                          <%--<asp:Button ID="btnEditPowerBook" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" แก้สัญญา " />--%>
@@ -3059,7 +3079,7 @@
                                                                <div class="col-2">
                                                                     <div class="input-group sm-2">
                                                                           <div class="input-group-prepend">
-                                                                                <span class="input-group-text">ค่าประปา</span>
+                                                                                <span class="input-group-text">ค่าประปา/หน่วย</span>
                                                                           </div>
                                                                           <asp:TextBox class="form-control" ID="txtPayNonOilWater" runat="server" style="text-align:right"></asp:TextBox>
                                                                    </div>
@@ -3067,7 +3087,7 @@
                                                                <div class="col-2">
                                                                     <div class="input-group sm-2">
                                                                           <div class="input-group-prepend">
-                                                                                <span class="input-group-text">ค่าไฟฟ้า</span>
+                                                                                <span class="input-group-text">ค่าไฟฟ้า/หน่วย</span>
                                                                           </div>
                                                                           <asp:TextBox class="form-control" ID="txtPqyNonOilElectrice" runat="server" style="text-align:right"></asp:TextBox>
                                                                    </div>
@@ -3355,6 +3375,26 @@
                                                                  </div>
                                                             </div>
                                                    </div>
+
+                                                   <div class="row" style="padding-top: 0.2rem;" runat="server">
+                                                         <div class="col-md-4" runat="server">
+                                                                                            <%--<INPUT id="File4" type="file" runat="server" NAME="oFile">--%>
+                                                                                            <asp:FileUpload id="FileUpload3" runat="server"></asp:FileUpload>
+                                                                                            <asp:button id="Button3" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:Panel ID="Panel3" Visible="False" Runat="server">
+                                                                                                <asp:Label id="Label3" Runat="server"></asp:Label>
+                                                                                            </asp:Panel>
+                                                                                        </div>
+                                                         <div class="col-md-4" runat="server">
+                                                                                           <%-- <INPUT id="File5" type="file" runat="server" NAME="oFile">--%>
+                                                                                            <asp:FileUpload id="FileUpload4" runat="server"></asp:FileUpload>
+                                                                                            <asp:button id="Button4" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:Panel ID="Panel6" Visible="False" Runat="server">
+                                                                                                <asp:Label id="Label7" Runat="server"></asp:Label>
+                                                                                            </asp:Panel>
+                                                        </div>       
+                                                   </div>
+
                                                     <div class="row col-md-3" style="padding-top: 0.2rem;"  runat="server">
                                                          <asp:Button ID="btnAddNonOil" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" บันทึกสัญญา Non Oil " />
                                                          <%--<asp:Button ID="btnEditNonOil" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" แก้สัญญา Non Oil" />--%>
@@ -3545,7 +3585,7 @@
                                                                <div class="col-2">
                                                                     <div class="input-group sm-2">
                                                                         <div class="input-group-prepend">
-                                                                             <span class="input-group-text">ค่าน้ำ</span>
+                                                                             <span class="input-group-text">ค่าน้ำ/หน่วย</span>
                                                                         </div>
                                                                         <asp:TextBox class="form-control" ID="txtPayWaterOth" runat="server" style="text-align:right"></asp:TextBox>
                                                                     </div>
@@ -3553,7 +3593,7 @@
                                                                <div class="col-2">
                                                                     <div class="input-group sm-2">
                                                                         <div class="input-group-prepend">
-                                                                             <span class="input-group-text">ค่าไฟ</span>
+                                                                             <span class="input-group-text">ค่าไฟ/หน่วย</span>
                                                                         </div>
                                                                         <asp:TextBox class="form-control" ID="txtPayElectricOth" runat="server" style="text-align:right"></asp:TextBox>
                                                                     </div>

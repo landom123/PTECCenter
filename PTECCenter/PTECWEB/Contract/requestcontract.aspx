@@ -112,9 +112,14 @@
 			                                        <asp:Label id="lblBranch" runat="server" Text='<%#Eval("Branch")%>'></asp:Label>
 		                                        </ItemTemplate>
 	                                        </asp:TemplateField>
-	                                        <asp:TemplateField HeaderText="ประเภทสัญญา">
+	                                        <asp:TemplateField HeaderText="กลุ่มสัญญา">
 		                                        <ItemTemplate>
 			                                        <asp:Label id="lblContactType" runat="server" Text='<%#Eval("AgType")%>'></asp:Label>
+		                                        </ItemTemplate>
+	                                        </asp:TemplateField>
+	                                        <asp:TemplateField HeaderText="ประเภทสัญญา">
+		                                        <ItemTemplate>
+			                                        <asp:Label id="lblContactType" runat="server" Text='<%#Eval("SubConName")%>'></asp:Label>
 		                                        </ItemTemplate>
 	                                        </asp:TemplateField>
 	                                        <asp:TemplateField HeaderText="สถานะ">
