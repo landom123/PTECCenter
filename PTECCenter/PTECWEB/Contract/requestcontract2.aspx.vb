@@ -4338,20 +4338,20 @@ Public Class requestcontract2
                 Exit Sub
             End If
 
-            If loadContractNonOil() = False Then
-                Exit Sub
-            End If
-            Clear()
+            'If loadContractNonOil() = False Then
+            '    Exit Sub
+            'End If
+            'Clear()
 
-            Dim message As String = "Save Successfully."
-            Dim sb As New System.Text.StringBuilder()
-            sb.Append("<script type = 'text/javascript'>")
-            sb.Append("window.onload=function(){")
-            sb.Append("alert('")
-            sb.Append(message)
-            sb.Append("')};")
-            sb.Append("</script>")
-            ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", sb.ToString())
+            'Dim message As String = "Save Successfully."
+            'Dim sb As New System.Text.StringBuilder()
+            'sb.Append("<script type = 'text/javascript'>")
+            'sb.Append("window.onload=function(){")
+            'sb.Append("alert('")
+            'sb.Append(message)
+            'sb.Append("')};")
+            'sb.Append("</script>")
+            'ClientScript.RegisterClientScriptBlock(Me.GetType(), "alert", sb.ToString())
 
 
 

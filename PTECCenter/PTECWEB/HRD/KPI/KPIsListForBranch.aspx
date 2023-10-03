@@ -58,7 +58,7 @@
         }
 
         tr[aria-expanded="true"] {
-            background-color: #8d9eb7;
+            background-color: #eaedef;
         }
 
         tr[aria-expanded="false"] > td:last-child:after {
