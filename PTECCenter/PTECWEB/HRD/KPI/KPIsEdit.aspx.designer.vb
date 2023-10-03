@@ -146,7 +146,7 @@ Partial Public Class KPIsEdit
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnUpdate As Global.System.Web.UI.HtmlControls.HtmlInputButton
+    Protected WithEvents btnUpdate As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''btnUpdateOP control.
@@ -155,7 +155,7 @@ Partial Public Class KPIsEdit
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnUpdateOP As Global.System.Web.UI.HtmlControls.HtmlInputButton
+    Protected WithEvents btnUpdateOP As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''hiddenAdvancedetailid control.
@@ -192,4 +192,31 @@ Partial Public Class KPIsEdit
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnUpdateOwnerAP As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''hiddenActionplanid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hiddenActionplanid As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+
+    '''<summary>
+    '''txtPlan control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPlan As Global.System.Web.UI.HtmlControls.HtmlTextArea
+
+    '''<summary>
+    '''btnUpdateTitle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUpdateTitle As Global.System.Web.UI.WebControls.Button
 End Class

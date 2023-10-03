@@ -6,9 +6,10 @@
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <style>
-         .content-wrapper {
-            font-size:.8rem;
+        .content-wrapper {
+            font-size: .8rem;
         }
+
         .card-advancerequest {
             max-width: 960px;
         }
@@ -65,8 +66,8 @@
             float: right;
             margin-left: 5px;
         }
+
         .tooltip-inner {
-            
             max-width: 230px;
         }
         /*.approval {
@@ -77,16 +78,60 @@
             background-color: #dddddd;
             opacity: 1;
         }
-        tr .form-control,tr .filter-option-inner-inner {
+
+        tr .form-control, tr .filter-option-inner-inner {
             font-size: .75rem;
         }
+
         .badge-blue {
             font-size: .65rem;
         }
+
         .border__solid {
             border: solid !important;
             border-color: red !important;
-        } 
+        }
+
+        .actiontitle:hover::after, .actionrateowner:hover::after, .actionratehead:hover::after {
+            position: absolute;
+            z-index: 999;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            content: attr(data-content);
+            color: #ff7474 !important;
+            font-size: 0.65rem;
+            transition: .55s ease-in-out;
+        }
+
+        .row__ap td:first-child::after {
+            position: absolute;
+            z-index: 999;
+            display: block;
+            content: attr(data-content);
+            color: #ff0000 !important;
+            font-size: 0.75rem;
+        }
+
+        .footer__page {
+            position: fixed;
+            bottom: 0;
+            background-color: #e9ecef;
+            height: 65px;
+            z-index: 999;
+        }
+
+            .footer__page .footer__btn::after {
+                position: absolute;
+                content: '';
+                top: 10px;
+                margin-left:50px;
+                z-index:999;
+                padding: 8px 8px;
+                border-radius: 50%;
+                background-color: red;
+            }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -277,31 +322,37 @@
                                                             <% For j = 0 To AllKpi.Tables(1).Rows.Count - 1 %>
                                                             <% cnt_child = cnt_child + 1 %>
                                                             <% If AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(1).Rows(j).Item("actionkpi_code").ToString Then %>
-                                                            <tr class="text-center" id="actionid_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" data-datenow="<%= AllKpi.Tables(0).Rows(i).Item("datenow").ToString %>" data-opt="<%= AllKpi.Tables(0).Rows(i).Item("operatortype").ToString %>"
+                                                            <tr class="text-center row__ap" id="actionid_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" onchange="change(this);" data-datenow="<%= AllKpi.Tables(0).Rows(i).Item("datenow").ToString %>" data-opt="<%= AllKpi.Tables(0).Rows(i).Item("operatortype").ToString %>"
                                                                 data-empuppercode="<%= AllKpi.Tables(1).Rows(j).Item("actionempuppercode").ToString %>"
                                                                 data-ownercode="<%= AllKpi.Tables(1).Rows(j).Item("actionownercode").ToString %>"
                                                                 data-ownername="<%= AllKpi.Tables(1).Rows(j).Item("NameOwner").ToString %>"
                                                                 data-usercode="<%= Session("usercode").ToString %>"
                                                                 data-username="<%= Session("username").ToString %>"
                                                                 data-managername="<%= managername %>"
+                                                                data-title="<%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %>"
+                                                                data-titledate="<%= AllKpi.Tables(1).Rows(j).Item("actiontitle_date").ToString %>"
                                                                 data-editstart="<%= AllKpi.Tables(1).Rows(j).Item("actionedit_begindate").ToString %>"
                                                                 data-editend="<%= AllKpi.Tables(1).Rows(j).Item("actionedit_enddate").ToString %>"
+                                                                data-rateownerdate="<%= AllKpi.Tables(1).Rows(j).Item("actionrateowner_date").ToString %>"
+                                                                data-rateheaddate="<%= AllKpi.Tables(1).Rows(j).Item("actionratehead_date").ToString %>"
                                                                 data-approvalstart="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_begindate").ToString %>"
                                                                 data-approvalend="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %>">
                                                                 <td><span class="badge badge-blue <%= If(AllKpi.Tables(1).Rows(j).Item("nowMonths") = 1, "border__solid", "") %>"><%= AllKpi.Tables(1).Rows(j).Item("actionmonth").ToString %></span>
                                                                 <td>
-                                                                    <span><%= AllKpi.Tables(1).Rows(j).Item("NameOwner").ToString %></span>
 
                                                                     <% If AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
                                                                     <a runat="server" class="text-primary" style="cursor: pointer; transition: .2s;" onclick="btnEditOwnerActionplan(this)">
                                                                         <i class="fas fa-edit"></i></a>
                                                                     <% End If %>
+                                                                    <span><%= AllKpi.Tables(1).Rows(j).Item("NameOwner").ToString %></span>
                                                                 </td>
-                                                                <td class="text-left">
+                                                                <td class="text-left actiontitle" data-content="<%= AllKpi.Tables(1).Rows(j).Item("actiontitle_date").ToString %>">
                                                                     <% If (String.IsNullOrEmpty(AllKpi.Tables(0).Rows(0).Item("operatortype").ToString)) Then%>
-                                                                        <span name="actiontitle" ><%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %></span>
+                                                                    <a runat="server" name="actiontitleBtn" class="text-primary" style="cursor: pointer; transition: .2s;" onclick="btnEditplan(this)" hidden>
+                                                                        <i class="fas fa-edit"></i></a>
+                                                                    <span name="actiontitle"><%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %></span>
                                                                     <% ElseIf AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
-                                                                        <textarea rows="2" cols="40" class="form-control" name="actiontitle" id="actiontitle_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>"><%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %></textarea>
+                                                                    <textarea rows="2" cols="40" class="form-control" name="actiontitle" id="actiontitle_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>"><%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %></textarea>
                                                                     <% End If %>
                                                                 </td>
 
@@ -309,7 +360,7 @@
                                                                 <td>
                                                                     <select class="form-control" name="actionmonthly" id="actionmonthly_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>">
                                                                         <option value="0">-</option>
-                                                                        <option value="2" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "3" Then %>selected="selected" <% End if %>>เร็วกว่าแผน</option>
+                                                                        <option value="3" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "3" Then %>selected="selected" <% End if %>>เร็วกว่าแผน</option>
                                                                         <option value="1" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "1" Then %>selected="selected" <% End if %>>ตามแผน</option>
                                                                         <option value="2" <% If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "2" Then %>selected="selected" <% End if %>>ช้ากว่าแผน</option>
                                                                     </select>
@@ -321,7 +372,7 @@
                                                                     <%--<%= AllKpi.Tables(1).Rows(j).Item("actiontitleresult").ToString %>--%>
 
                                                                 </td>
-                                                                <td>
+                                                                <td class="actionrateowner" data-content="<%= AllKpi.Tables(1).Rows(j).Item("actionrateowner_date").ToString %>">
                                                                     <select class="form-control" name="actionrateowner" id="actionrateowner_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>">
                                                                         <option value="">-</option>
                                                                         <option value="5" <% If AllKpi.Tables(1).Rows(j).Item("actionrateowner").ToString = "5" Then %>selected="selected" <% End if %>>5</option>
@@ -333,7 +384,7 @@
                                                                     </select>
                                                                     <%--<%= AllKpi.Tables(1).Rows(j).Item("actionrateowner").ToString %>--%>
                                                                 </td>
-                                                                <td class="approval">
+                                                                <td class="approval actionratehead" data-content="<%= AllKpi.Tables(1).Rows(j).Item("actionratehead_date").ToString %>">
                                                                     <select class="form-control" name="actionratehead" id="actionratehead_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>">
                                                                         <option value="">-</option>
                                                                         <option value="5" <% If AllKpi.Tables(1).Rows(j).Item("actionratehead").ToString = "5" Then %>selected="selected" <% End if %>>5</option>
@@ -389,8 +440,6 @@
                     <!------------------------------------------------------------------------>
                     <div class="row">
                         <div class="col">
-                                <input type="button" value="Update" onclick="update();" id="btnUpdate" runat="server" class="btn btn-sm  btn-warning" />
-                                <input type="button" value="UpdateOP" onclick="updateOP();" id="btnUpdateOP" runat="server" class="btn btn-sm  btn-warning" />  
                         </div>
 
                     </div>
@@ -399,6 +448,10 @@
 
             </div>
         </div>
+    </div>
+    <div class="w-100 footer__page d-flex justify-content-center align-items-center">
+        <asp:Button type="button" OnClientClick="return update();" ID="btnUpdate" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save"></asp:Button>
+        <asp:Button type="button" OnClientClick="return updateOP();" ID="btnUpdateOP" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save"></asp:Button>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_report" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -425,6 +478,28 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModalPlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalPlanLabel_report" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalPlanLabel_report">แผนงานในเดือน </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="hiddenActionplanid" value="0" runat="server">
+                    <textarea rows="2" cols="40" class="form-control" name="actiontitle" id="txtPlan" runat="server"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+
+                    <asp:Button ID="btnUpdateTitle" class="btn btn-primary" runat="server" Text="Update" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
@@ -438,7 +513,7 @@
             scrollInput: false,
             format: 'd/m/Y'
         });
-       
+
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
@@ -451,11 +526,13 @@
             $('[data-toggle="tooltip"]').tooltip()
 
             let elemActionmonthly = document.getElementsByName("actionmonthly");
+            let elemActiontitleBtn = document.getElementsByName("actiontitleBtn");
             let elemActiontitle = document.getElementsByName("actiontitle");
             let elemActiontitleresult = document.getElementsByName("actiontitleresult");
             let elemActionrateowner = document.getElementsByName("actionrateowner");
             let elemActionratehead = document.getElementsByName("actionratehead");
             let elemActionFeedback = document.getElementsByName("actionfeedback");
+
 
             //console.log(elemActiontitle);
             //console.log(elemActiontitle[4].value);
@@ -497,7 +574,9 @@
                 const usercode = row.getAttribute("data-usercode");
                 const username = row.getAttribute("data-username");
                 const managername = row.getAttribute("data-managername") || username;
-                
+
+                //--------------------------------------------------
+
 
                 const [day0, month0, year0] = datenow.split('/');
                 const [day1, month1, year1] = editstart.split('/');
@@ -513,10 +592,10 @@
                 const aend = new Date(+year4, month4 - 1, +day4);
 
                 //alert(opt);
-                console.log(ownername.indexOf(managername || usercode));
+                /*console.log(ownername.indexOf(managername || usercode));
                 console.log(ownername);
                 console.log(managername);
-                console.log(usercode);
+                console.log(usercode);*/
                 //console.log(empuppercode);
                 //console.log(ownercode);
                 //console.log(ownercode.indexOf(usercode));
@@ -524,12 +603,31 @@
                 if ((ownername.indexOf(managername) > -1) && !opt) { // เจ้าของ KPI
                     console.log('เจ้าของ KPI');
 
+                    console.log(date);
+                    console.log(estart);
                     if (!(date >= estart && date <= eend)) {
                         console.log(`#${row.id}`);
                         row.style.backgroundColor = "#f2f3f4";
                         elemActionmonthly[i].disabled = true;
                         elemActiontitleresult[i].disabled = true;
                         elemActionrateowner[i].disabled = true;
+                    } else {
+                        elemActionmonthly[i].disabled = (elemActionmonthly[i].value && elemActionmonthly[i].value > 0) ? true : false;
+                        elemActiontitleresult[i].disabled = (elemActiontitleresult[i].value) ? true : false;
+                        elemActionrateowner[i].disabled = (elemActionrateowner[i].value) ? true : false;
+
+                        if (elemActionratehead[i].value && elemActionratehead[i].value > 0) {
+                            elemActionmonthly[i].disabled = true;
+                            elemActiontitleresult[i].disabled = true;
+                            elemActionrateowner[i].disabled = true;
+                        }
+
+                    }
+
+                    if (date >= eend) { // edit title after period
+                        elemActiontitleBtn[i].hidden = true;
+                    } else {
+                        elemActiontitleBtn[i].hidden = false;
                     }
 
                     elemActionratehead[i].disabled = true;
@@ -547,11 +645,18 @@
                     elemActionrateowner[i].disabled = true;
 
                     if (!(date > astart && date < aend)) {
+
                         elemActionratehead[i].disabled = true;
                         elemActionFeedback[i].disabled = true;
+                    } else if (!elemActionrateowner[i].value) {
+                        elemActionratehead[i].disabled = true;
+                        elemActionFeedback[i].disabled = true;
+                        //} if ((date > astart && date < aend) && (elemActionrateowner[i].value) && !(elemActionratehead[i].value)) {
+                        //    elemActionratehead[i].classList.add("border__solid");
                     }
+
                 } else if (!opt) {
-                    console.log('555555555555555')
+                    //console.log('555555555555555')
                     elemActiontitle[i].disabled = true;
                     elemActionmonthly[i].disabled = true;
                     elemActiontitleresult[i].disabled = true;
@@ -562,12 +667,12 @@
                     //$('#btnUpdate').hide();
                 }
 
-                if (!(ownername == managername) && !(empuppercode==usercode) && !opt) {
-                    console.log('66666666666')
-                    row.hidden=true;
+                if (!(ownername == managername) && !(empuppercode == usercode) && !opt) {
+                    //console.log('66666666666')
+                    row.hidden = true;
                 } else {
 
-                    console.log('77777777777777')
+                    //console.log('77777777777777')
                 }
 
 
@@ -639,6 +744,7 @@
                 }
             }
 
+            params.sort((firstItem, secondItem) => firstItem.actionrateowner - secondItem.actionrateowner);
             return params;
         }
 
@@ -703,32 +809,51 @@
                 //    params.pop()
                 //}
             }
-
+            params.sort((firstItem, secondItem) => firstItem.actionrateowner - secondItem.actionrateowner);
             return params;
         }
 
         function update() {
-            let param = getValueUnDisabled();
-            const params = JSON.stringify(param);
-            console.log(params);
-            let confirm_value = document.createElement("INPUT");
-            confirm_value.type = "hidden";
-            confirm_value.name = "confirm_value";
-            confirm_value.value = params;
-            document.forms[0].appendChild(confirm_value);
-            return true;
+
+
+            let text = "คุณต้องการบันทึกรายการหรือไม่ ?";
+            if (confirm(text)) {
+                let param = getValueUnDisabled();
+                const params = JSON.stringify(param);
+                console.log(params);
+                let confirm_value = document.createElement("INPUT");
+                confirm_value.type = "hidden";
+                confirm_value.name = "confirm_value";
+                confirm_value.value = params;
+                document.forms[0].appendChild(confirm_value);
+                return true;
+            } else {
+                event.preventDefault();
+                event.stopPropagation();
+
+                return false;
+            }
         }
 
         function updateOP() {
-            let param = getValue();
-            const params = JSON.stringify(param);
-            console.log(params);
-            let confirm_value = document.createElement("INPUT");
-            confirm_value.type = "hidden";
-            confirm_value.name = "confirm_value";
-            confirm_value.value = params;
-            document.forms[0].appendChild(confirm_value);
-            return true;
+
+            let text = "คุณต้องการบันทึกรายการหรือไม่ ?";
+            if (confirm(text)) {
+
+                let param = getValue();
+                const params = JSON.stringify(param);
+                console.log(params);
+                let confirm_value = document.createElement("INPUT");
+                confirm_value.type = "hidden";
+                confirm_value.name = "confirm_value";
+                confirm_value.value = params;
+                document.forms[0].appendChild(confirm_value);
+                return true;
+            } else {
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
         }
         function alertSuccess() {
             Swal.fire(
@@ -764,6 +889,39 @@
             $('.form-control').selectpicker('refresh');
             $('#exampleModal').modal('show');
 
+        }
+        function btnEditplan(elem) {
+            const parent = elem.parentElement
+            const tr = parent.parentElement
+
+            let ownername = tr.getAttribute("data-ownername");
+            let title = tr.getAttribute("data-title");
+            let apid = tr.id.split("_")[1];
+
+            console.log(title)
+            console.log(ownername)
+            console.log(apid)
+
+            $('#<%= txtPlan.ClientID%>').val(title);
+
+            $('#<%= hiddenActionplanid.ClientID%>').val(apid);
+
+
+            $('#exampleModalPlan').modal('show');
+
+        }
+        function change(elem) {
+            elem.firstElementChild.setAttribute("data-content", "ยังไม่ได้บันทึก");
+            elem.backgroundColor = "#d8d8d8 !important";
+
+
+            let elements = document.getElementsByClassName("btnUpdate");
+            console.log(elements)
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].classList.add("footer__btn");
+                $(elements[i]).before("<span class=\"footer__btn\"></span>");
+
+            }
         }
     </script>
 </asp:Content>

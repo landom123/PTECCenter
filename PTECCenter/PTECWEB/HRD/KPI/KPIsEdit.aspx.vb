@@ -201,10 +201,13 @@ Public Class KPIsEdit
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
-    Private Sub btnUpdate_ServerClick(sender As Object, e As EventArgs) Handles btnUpdate.ServerClick
+    Private Sub btnUpdate_ServerClick(sender As Object, e As EventArgs) Handles btnUpdate.Click
         update()
     End Sub
 
+    Private Sub btnUpdateOP_ServerClick(sender As Object, e As EventArgs) Handles btnUpdateOP.Click
+        update()
+    End Sub
 
     Private Sub chkuser(userid As Integer)
         Dim objuser As New Users
@@ -226,9 +229,6 @@ Public Class KPIsEdit
 
     End Sub
 
-    Private Sub btnUpdateOP_ServerClick(sender As Object, e As EventArgs) Handles btnUpdateOP.ServerClick
-        update()
-    End Sub
 
     Private Sub btnUpdateKPI_Click(sender As Object, e As EventArgs) Handles btnUpdateKPI.Click
         Dim objKpi As New Kpi
@@ -253,6 +253,23 @@ endprocess:
         Try
             objKpi.UpdateOwnerActionPlan(hiddenAdvancedetailid.Value.ToString, cboUserName.SelectedItem.Value, Session("usercode"))
             hiddenAdvancedetailid.Value = 0
+            'findKpi()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('cancel fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../KPI/KPIsEdit.aspx?Kpi_Code=" & Request.QueryString("Kpi_Code"))
+endprocess:
+    End Sub
+    Private Sub btnUpdateTitle_Click(sender As Object, e As EventArgs) Handles btnUpdateTitle.Click
+        Dim objKpi As New Kpi
+
+        Try
+            objKpi.Kpi_ActionPlanTitle_Save(hiddenActionplanid.Value.ToString, txtPlan.InnerText.ToString, Session("usercode"))
+            hiddenActionplanid.Value = 0
             'findKpi()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
