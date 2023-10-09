@@ -120,12 +120,10 @@ Public Class KPIsEdit
                         If (String.IsNullOrEmpty(AllKpi.Tables(0).Rows(0).Item("operatortype").ToString)) Then
                             btnUpdate.Visible = True
                             btnUpdateOP.Visible = False
-                            If (ownername.IndexOf(managernameBranch) > -1 Or ownername.IndexOf(username) > -1 Or ownername.IndexOf(usercode) > -1) Then
-                                chkKpiComplete.Visible = True
-                                lbchkKpiComplete.Visible = True
-                            Else
-                                chkKpiComplete.Visible = False
-                                lbchkKpiComplete.Visible = False
+                            chkKpiComplete.Visible = True
+                            lbchkKpiComplete.Visible = True
+                            If (now_action.IndexOf(usercode) > -1) Then
+                                chkKpiComplete.Disabled = True
                             End If
                         End If
                     Else
