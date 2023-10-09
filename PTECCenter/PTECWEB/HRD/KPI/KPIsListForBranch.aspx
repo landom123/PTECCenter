@@ -58,7 +58,7 @@
         }
 
         tr[aria-expanded="true"] {
-            background-color: #8d9eb7;
+            background-color: #eaedef;
         }
 
         tr[aria-expanded="false"] > td:last-child:after {
@@ -264,6 +264,7 @@
                                                                 </a>
                                                                 <% End If %>
                                                             </th>
+                                                            <th><span class="p-1">เลขสาขา</span></th>
                                                             <th><span class="p-1">เจ้าของงาน</span></th>
                                                             <th><span class="p-1">แผนงาน / เป้าหมาย</span></th>
                                                             <th><span class="p-1">ผลตามแผน</span></th>
@@ -278,9 +279,9 @@
                                                         <% For j = 0 To AllKpi.Tables(2).Rows.Count - 1 %>
                                                         <% If AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(2).Rows(j).Item("actionkpi_code").ToString Then %>
                                                         <tr class="text-center">
-
                                                             <td><span class="badge badge-blue"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
-                                                            <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("NameOwner").ToString %></span></td>
+                                                            <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionbranch").ToString %></span></td>
+                                                            <td><span class=""><%= AllKpi.Tables(2).Rows(j).Item("NameOwner").ToString %></span></td>
 
                                                             <td class="text-left pl-5"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actiontitle").ToString %></span></td>
                                                             <td>

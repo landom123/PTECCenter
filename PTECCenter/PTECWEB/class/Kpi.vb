@@ -242,7 +242,7 @@ Public Class Kpi
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Kpi_ActionPlanOP_Save"
+        cmd.CommandText = "Kpi_OP_ActionPlan_Save"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@actionid", SqlDbType.VarChar).Value = actionid
@@ -333,7 +333,7 @@ Public Class Kpi
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Kpi_HeadOP_Del"
+        cmd.CommandText = "Kpi_OP_Head_Del"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@kpicode", SqlDbType.VarChar).Value = kpicode
@@ -369,4 +369,53 @@ Public Class Kpi
         Return result
 
     End Function
+
+    Public Function Kpi_ActionPlanTitle_Save(actionid As String, title As String, user As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_ActionPlanTitle_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@actionid", SqlDbType.VarChar).Value = actionid
+        cmd.Parameters.Add("@actiontitle", SqlDbType.VarChar).Value = title
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+
+    End Function
+
+    Public Sub Kpi_Complete_Save(code As String, chk As Boolean, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Complete_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@kpicode", SqlDbType.VarChar).Value = code
+        cmd.Parameters.Add("@chk", SqlDbType.Bit).Value = chk
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
 End Class
