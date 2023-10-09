@@ -114,23 +114,58 @@
             font-size: 0.75rem;
         }
 
+        .visible {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 2s linear;
+        }
+
+        .hidden {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 2s, opacity 2s linear;
+        }
+
+
         .footer__page {
             position: fixed;
             bottom: 0;
             background-color: #e9ecef;
             height: 65px;
             z-index: 999;
+            visibility: hidden;
+            opacity: 0;
+            transition: height 1s;
         }
+
+            .footer__page:has(.footer__btn) {
+                visibility: visible;
+                opacity: 1;
+            }
 
             .footer__page .footer__btn::after {
                 position: absolute;
                 content: '';
                 top: 10px;
-                margin-left:50px;
-                z-index:999;
+                margin-left: 50px;
+                z-index: 999;
                 padding: 8px 8px;
                 border-radius: 50%;
                 background-color: red;
+            }
+            .kpicompleted {
+                width: 1000px;
+                overflow-x: auto;
+                overflow-y: visible;
+                padding: 0;
+                margin-right: auto;
+                margin-left: auto;
+            }
+            .kpicompleted input {
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
             }
     </style>
 </asp:Content>
@@ -198,6 +233,11 @@
                                     <% If Not Request.QueryString("Kpi_Code") Is Nothing And AllKpi IsNot Nothing Then%>
                                     <%= AllKpi.Tables(0).Rows(0).Item("ownercode").ToString() %>
                                     <% End If%></h4>
+                            </div>
+                            <div class="col">
+                                <div class="col kpicompleted text-right align-self-center" style="display: none; ">
+                                    <asp:TextBox class="btn btn-success" ID="txtUnsave" runat="server" ReadOnly="true">Completed</asp:TextBox>
+                                </div>
                             </div>
                         </div>
 
@@ -291,7 +331,7 @@
                                                 <asp:TextBox class="form-control" type="input" ID="txtlv1" runat="server"></asp:TextBox>
                                             </td>
                                             <td>
-                                                <asp:Button ID="btnUpdateKPI" class="btn btn-sm  btn-warning" runat="server" Text="UpdateKPI" />
+                                                <asp:Button ID="btnUpdateKPI" class="btn btn-sm  btn-warning btnupdatekpi" runat="server" Text="UpdateKPI" />
                                             </td>
 
                                         </tr>
@@ -439,7 +479,13 @@
                     </div>
                     <!------------------------------------------------------------------------>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-1">
+                        </div>
+                        <div class="col text-muted ">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="chkKpiComplete" runat="server">
+                                <asp:Label ID="lbchkKpiComplete" CssClass="form-check-label" AssociatedControlID="chkKpiComplete" runat="server" Text="กรณีที่ KPIs ของท่านดำเนินการเสร็จเรียบร้อยแล้ว กรุณาติ๊กเครื่องหมายถูกเพื่อปิดการแจ้งเตือน KPIs ในเดือนถัดไป" />
+                            </div>
                         </div>
 
                     </div>
@@ -449,9 +495,11 @@
             </div>
         </div>
     </div>
-    <div class="w-100 footer__page d-flex justify-content-center align-items-center">
-        <asp:Button type="button" OnClientClick="return update();" ID="btnUpdate" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save"></asp:Button>
-        <asp:Button type="button" OnClientClick="return updateOP();" ID="btnUpdateOP" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save"></asp:Button>
+    <div class="footer__page w-100 ">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <asp:Button type="button" OnClientClick="return update();" ID="btnUpdate" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save"></asp:Button>
+            <asp:Button type="button" OnClientClick="return updateOP();" ID="btnUpdateOP" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save"></asp:Button>
+        </div>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_report" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -520,7 +568,9 @@
                 liveSearch: true,
                 maxOptions: 1
             });
+            console.log('START');
 
+            $('.footer__page').hide();
             $('.form-control').selectpicker('refresh');
 
             $('[data-toggle="tooltip"]').tooltip()
@@ -603,8 +653,6 @@
                 if ((ownername.indexOf(managername) > -1) && !opt) { // เจ้าของ KPI
                     console.log('เจ้าของ KPI');
 
-                    console.log(date);
-                    console.log(estart);
                     if (!(date >= estart && date <= eend)) {
                         console.log(`#${row.id}`);
                         row.style.backgroundColor = "#f2f3f4";
@@ -627,7 +675,13 @@
                     if (date >= eend) { // edit title after period
                         elemActiontitleBtn[i].hidden = true;
                     } else {
-                        elemActiontitleBtn[i].hidden = false;
+                        if (elemActionrateowner[i].value && elemActionmonthly[i].value && elemActiontitleresult[i].value) {
+                            elemActiontitleBtn[i].hidden = true;
+                        } else {
+
+                            elemActiontitleBtn[i].hidden = false;
+
+                        }
                     }
 
                     elemActionratehead[i].disabled = true;
@@ -679,6 +733,7 @@
             }
 
 
+            checkComplete();
             $('.form-control').selectpicker('refresh');
         });
 
@@ -912,9 +967,11 @@
         }
         function change(elem) {
             elem.firstElementChild.setAttribute("data-content", "ยังไม่ได้บันทึก");
-            elem.backgroundColor = "#d8d8d8 !important";
-
-
+            showUnsave()
+            $('.footer__page').show();
+        }
+        
+        function showUnsave() {
             let elements = document.getElementsByClassName("btnUpdate");
             console.log(elements)
             for (var i = 0; i < elements.length; i++) {
@@ -923,5 +980,26 @@
 
             }
         }
+        function checkComplete() {
+
+            if ($('#<%= chkKpiComplete.ClientID%>').is(":checked")) {
+                $(".kpicompleted").show();
+
+                $('table a,.btnupdatekpi').hide();
+                $('.badge-blue').removeClass("border__solid");
+                $('.row__ap').css("background-color", "#f2f3f4");
+                $('.row__ap textarea').attr('readonly', true);
+                $('.form-control ').attr('disabled', true);
+
+            } else {
+                $(".kpicompleted").hide();
+            }
+
+        }
+        $('#<%= chkKpiComplete.ClientID%>').on('change', function () {
+            //checkComplete(); //show unsave
+            showUnsave()
+            $('.footer__page').show();
+        });
     </script>
 </asp:Content>

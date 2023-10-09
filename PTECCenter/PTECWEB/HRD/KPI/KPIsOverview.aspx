@@ -217,7 +217,11 @@
                                             <tr data-toggle="collapse" data-target="#<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>" class="accordion-toggle text-center" aria-expanded="false">
                                                 <td class="text-left"><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("CategoryName").ToString %></span></td>
                                                 <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("ownercode").ToString %></span></td>
-                                                <td><span class="p-1 text-left"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></span></td>
+                                                <td><span class="p-1 text-left"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></span>
+                                                    <% If AllKpi.Tables(0).Rows(i).Item("complete") Then %>
+                                                    <span class="badge badge-success" title="<%= AllKpi.Tables(0).Rows(i).Item("completedate").ToString %>">Complete</span>
+                                                    <% End if %>
+                                                </td>
 
                                                 <!---------------------------------------------------------------------------------------------------------------------------------->
                                                 <td>

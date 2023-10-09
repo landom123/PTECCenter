@@ -41,6 +41,15 @@ Partial Public Class KPIsEdit
     Protected WithEvents company_en As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
+    '''txtUnsave control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtUnsave As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''cboOwnerKPI control.
     '''</summary>
     '''<remarks>
@@ -138,6 +147,24 @@ Partial Public Class KPIsEdit
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnUpdateKPI As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''chkKpiComplete control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkKpiComplete As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
+
+    '''<summary>
+    '''lbchkKpiComplete control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbchkKpiComplete As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''btnUpdate control.
