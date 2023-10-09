@@ -154,7 +154,6 @@
                 background-color: red;
             }
             .kpicompleted {
-                width: 1000px;
                 overflow-x: auto;
                 overflow-y: visible;
                 padding: 0;
@@ -235,7 +234,7 @@
                                     <% End If%></h4>
                             </div>
                             <div class="col">
-                                <div class="col kpicompleted text-right align-self-center" style="display: none; ">
+                                <div class="col w-100 kpicompleted text-right align-self-center" style="display: none; ">
                                     <asp:TextBox class="btn btn-success" ID="txtUnsave" runat="server" ReadOnly="true">Completed</asp:TextBox>
                                 </div>
                             </div>
