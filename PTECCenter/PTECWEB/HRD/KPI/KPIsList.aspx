@@ -302,7 +302,12 @@
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("seccode").ToString %></span></td>
                                         <% End If %>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("CategoryName").ToString %></span></td>
-                                        <td class="text-left"><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Title").ToString %></span></td>
+                                        <td class="text-left"><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Title").ToString %></span>
+                                            <% If AllKpi.Tables(1).Rows(i).Item("complete") Then %>
+                                            <span class="badge badge-success" title="<%= AllKpi.Tables(1).Rows(i).Item("completedate").ToString %>">Complete</span>
+                                            <% End if %>
+
+                                        </td>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Weight").ToString %></span></td>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Unit").ToString %></span></td>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Lv5").ToString %></span></td>
@@ -356,7 +361,7 @@
                                                         <% For j = 0 To AllKpi.Tables(2).Rows.Count - 1 %>
                                                         <% If AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(2).Rows(j).Item("actionkpi_code").ToString Then %>
                                                         <tr class="text-center">
-                                                            <td><span class="badge badge-blue <%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1, "border__solid", "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
+                                                            <td><span class="badge badge-blue <%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And (Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer), "border__solid", "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
                                                             <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                                                             <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("NameOwner").ToString %></span></td>
                                                             <% End If %>
@@ -577,6 +582,7 @@
             format: 'd/m/Y'
         });
         $(document).ready(function () {
+                console.log(document)
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
                 liveSearch: true,
