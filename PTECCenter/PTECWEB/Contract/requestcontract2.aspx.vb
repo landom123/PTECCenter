@@ -3479,6 +3479,113 @@ Public Class requestcontract2
         'Response.Redirect(Request.Url.AbsoluteUri)
     End Sub
 
+    Protected Sub UploadPicOth()
+
+        Dim iID As Integer
+        'Dim iItem As Integer
+        Dim bytes As Byte()
+        Dim bytes2 As Byte()
+
+        iID = Session("IDOth")
+        'iItem = Session("ItemNoOth")
+
+        Using br As BinaryReader = New BinaryReader(FileUpload5.PostedFile.InputStream)
+            bytes = br.ReadBytes(FileUpload5.PostedFile.ContentLength)
+        End Using
+
+        Using br2 As BinaryReader = New BinaryReader(FileUpload6.PostedFile.InputStream)
+            bytes2 = br2.ReadBytes(FileUpload6.PostedFile.ContentLength)
+        End Using
+
+
+        Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
+        Using conn As SqlConnection = New SqlConnection(constr)
+            Dim sql As String = "Update TT_ContractOth SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID "
+            Using cmd As SqlCommand = New SqlCommand(sql, conn)
+                cmd.Parameters.AddWithValue("@pic1", bytes)
+                cmd.Parameters.AddWithValue("@pic2", bytes2)
+                cmd.Parameters.AddWithValue("@iID", iID)
+                conn.Open()
+                cmd.ExecuteNonQuery()
+                conn.Close()
+            End Using
+        End Using
+
+        'Response.Redirect(Request.Url.AbsoluteUri)
+    End Sub
+
+    Protected Sub UploadPicPowerBook()
+
+        Dim iID As Integer
+        Dim iItem As Integer
+        Dim bytes As Byte()
+        Dim bytes2 As Byte()
+
+        iID = Session("IDPower")
+        iItem = Session("ItemNoPower")
+
+        Using br As BinaryReader = New BinaryReader(FileUpload1.PostedFile.InputStream)
+            bytes = br.ReadBytes(FileUpload1.PostedFile.ContentLength)
+        End Using
+
+        Using br2 As BinaryReader = New BinaryReader(FileUpload2.PostedFile.InputStream)
+            bytes2 = br2.ReadBytes(FileUpload2.PostedFile.ContentLength)
+        End Using
+
+
+        Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
+        Using conn As SqlConnection = New SqlConnection(constr)
+            Dim sql As String = "Update TT_PowerBook SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@iItem"
+            Using cmd As SqlCommand = New SqlCommand(sql, conn)
+                cmd.Parameters.AddWithValue("@pic1", bytes)
+                cmd.Parameters.AddWithValue("@pic2", bytes2)
+                cmd.Parameters.AddWithValue("@iID", iID)
+                cmd.Parameters.AddWithValue("@ItemNo", iItem)
+                conn.Open()
+                cmd.ExecuteNonQuery()
+                conn.Close()
+            End Using
+        End Using
+
+        'Response.Redirect(Request.Url.AbsoluteUri)
+    End Sub
+
+    Protected Sub UploadPicNonOil()
+
+        Dim iID As Integer
+        Dim iItem As Integer
+        Dim bytes As Byte()
+        Dim bytes2 As Byte()
+
+        iID = Session("IDNonOil")
+        iItem = Session("ItemNoPower")
+
+        Using br As BinaryReader = New BinaryReader(FileUpload3.PostedFile.InputStream)
+            bytes = br.ReadBytes(FileUpload3.PostedFile.ContentLength)
+        End Using
+
+        Using br2 As BinaryReader = New BinaryReader(FileUpload4.PostedFile.InputStream)
+            bytes2 = br2.ReadBytes(FileUpload4.PostedFile.ContentLength)
+        End Using
+
+
+        Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
+        Using conn As SqlConnection = New SqlConnection(constr)
+            Dim sql As String = "Update TT_ContractNonOil SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@iItem"
+            Using cmd As SqlCommand = New SqlCommand(sql, conn)
+                cmd.Parameters.AddWithValue("@pic1", bytes)
+                cmd.Parameters.AddWithValue("@pic2", bytes2)
+                cmd.Parameters.AddWithValue("@iID", iID)
+                cmd.Parameters.AddWithValue("@ItemNo", iItem)
+                conn.Open()
+                cmd.ExecuteNonQuery()
+                conn.Close()
+            End Using
+        End Using
+
+        'Response.Redirect(Request.Url.AbsoluteUri)
+    End Sub
+
     Private Sub btnUpload1_Click(sender As Object, e As EventArgs) Handles btnUpload1.Click
         Try
 
@@ -3968,6 +4075,20 @@ Public Class requestcontract2
             End If
 
 
+            Dim dtOth As New DataTable
+            dtOth = objCo.loadContractOth(txtdocuno.Text)
+
+            For Each dr As DataRow In dtOth.Rows
+                Session("IDOth") = dr("ID")
+            Next
+            'Session("IDOth") = iDocID
+            'Session("ItemNoOth") = iItemNo
+
+            'iID = Session("IDOth")
+            'iItem = Session("ItemNoOth")
+
+            UploadPicOth()
+
             Clear()
 
             Dim message As String = "Save Successfully."
@@ -4063,6 +4184,19 @@ Public Class requestcontract2
                                  , CreateBy, CompanyID, Empto2, Empto3, BrCode, Addr, Contact, ItemNo) = False Then
                 Exit Sub
             End If
+
+            Dim dtPower As New DataTable
+
+            dtPower = objCo.loadContractPowerBook(txtdocuno.Text)
+
+            For Each dr As DataRow In dtPower.Rows
+                Session("IDPower") = dr("ID")
+                Session("ItemNoPower") = dr("ItemNO")
+            Next
+
+            UploadPicPowerBook()
+
+
             Clear()
 
             Dim message As String = "Save Successfully."
@@ -4323,6 +4457,17 @@ Public Class requestcontract2
                 Exit Sub
             End If
 
+            Dim dtNon As New DataTable
+
+            dtNon = objCo.loadContractNonOil2(txtdocuno.Text)
+
+            For Each dr As DataRow In dtNon.Rows
+                Session("IDNonOil") = dr("ID")
+                Session("ItemNoPower") = dr("ItemNo")
+            Next
+
+            UploadPicNonOil()
+
             Clear()
 
             Dim message As String = "Save Successfully."
@@ -4440,6 +4585,133 @@ Public Class requestcontract2
 
 
 
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnUploadPicOth1_Click(sender As Object, e As EventArgs) Handles btnUploadPicOth1.Click
+        Try
+            Dim folderPath As String = Server.MapPath("~/Files/")
+
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
+
+
+            FileUpload5.SaveAs(folderPath & Path.GetFileName(FileUpload5.FileName))
+            image7.ImageUrl = "~/Files/" + FileUpload5.FileName
+            image7.ImageAlign = ImageAlign.Middle
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
+    End Sub
+
+    Private Sub btnUploadPicOth2_Click(sender As Object, e As EventArgs) Handles btnUploadPicOth2.Click
+        Try
+            Dim folderPath As String = Server.MapPath("~/Files/")
+
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
+
+
+            FileUpload6.SaveAs(folderPath & Path.GetFileName(FileUpload6.FileName))
+            image8.ImageUrl = "~/Files/" + FileUpload6.FileName
+            image8.ImageAlign = ImageAlign.Middle
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnUploadPicPower1_Click(sender As Object, e As EventArgs) Handles btnUploadPicPower1.Click
+        Try
+            Dim folderPath As String = Server.MapPath("~/Files/")
+
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
+
+
+            FileUpload1.SaveAs(folderPath & Path.GetFileName(FileUpload1.FileName))
+            image9.ImageUrl = "~/Files/" + FileUpload1.FileName
+            image9.ImageAlign = ImageAlign.Middle
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnUploadPicPower2_Click(sender As Object, e As EventArgs) Handles btnUploadPicPower2.Click
+        Try
+            Dim folderPath As String = Server.MapPath("~/Files/")
+
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
+
+
+            FileUpload2.SaveAs(folderPath & Path.GetFileName(FileUpload2.FileName))
+            image10.ImageUrl = "~/Files/" + FileUpload2.FileName
+            image10.ImageAlign = ImageAlign.Middle
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnUploadPicNon1_Click(sender As Object, e As EventArgs) Handles btnUploadPicNon1.Click
+        Try
+            Dim folderPath As String = Server.MapPath("~/Files/")
+
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
+
+
+            FileUpload3.SaveAs(folderPath & Path.GetFileName(FileUpload3.FileName))
+            image11.ImageUrl = "~/Files/" + FileUpload3.FileName
+            image11.ImageAlign = ImageAlign.Middle
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnUploadPicNon2_Click(sender As Object, e As EventArgs) Handles btnUploadPicNon2.Click
+        Try
+            Dim folderPath As String = Server.MapPath("~/Files/")
+
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
+
+
+            FileUpload4.SaveAs(folderPath & Path.GetFileName(FileUpload4.FileName))
+            image12.ImageUrl = "~/Files/" + FileUpload4.FileName
+            image12.ImageAlign = ImageAlign.Middle
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
             err = ex.Message
