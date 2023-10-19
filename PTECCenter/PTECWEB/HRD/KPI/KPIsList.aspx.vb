@@ -94,6 +94,7 @@ Public Class KPIsList
             End If
             SetCboUsers(cboCreateby)
 
+            cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
             '------------------------------------
             find()
 
