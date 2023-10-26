@@ -15,6 +15,7 @@ Public Class JobsList_test
         Dim objbranch As New Branch
         Dim objdep As New Department
         Dim objjob As New jobs
+        Dim objsup As New Supplier
         Dim usercode As String
         usercode = Session("usercode")
 
@@ -39,6 +40,7 @@ Public Class JobsList_test
                 txtStartDate.Attributes.Add("readonly", "readonly")
                 txtEndDate.Attributes.Add("readonly", "readonly")
 
+                objsup.SetCboSupplier(cboSuppiler)
                 objbranch.SetComboBranchGroup(cboBranchGroup)
                 objbranch.SetComboBranch(cboBranch, "")
                 objjob.SetCboJobStatusListForReport(cboStatusFollow)
@@ -98,6 +100,7 @@ Public Class JobsList_test
                             cboBranch.SelectedItem.Value,
                             txtStartDate.Text.Trim(),
                             txtEndDate.Text.Trim(),
+                            cboSuppiler.SelectedItem.Value,
                             gvRemind.PageIndex)
         Session("criteria_Job") = criteria
     End Sub
@@ -134,6 +137,7 @@ Public Class JobsList_test
         dt.Columns.Add("cboBranch", GetType(String))
         dt.Columns.Add("txtStartDate", GetType(String))
         dt.Columns.Add("txtEndDate", GetType(String))
+        dt.Columns.Add("cboSuppiler", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
 
         Return dt
@@ -150,6 +154,7 @@ Public Class JobsList_test
             cboJobType.SelectedValue = criteria.Rows(0).Item("cboJobType")
             cboStatusFollow.SelectedValue = criteria.Rows(0).Item("cboStatusFollow")
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
+            cboSuppiler.SelectedValue = criteria.Rows(0).Item("cboSuppiler")
             Dim objbranch As New Branch
             cboBranch.SelectedIndex = -1
             objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
@@ -173,7 +178,8 @@ Public Class JobsList_test
                                                         cboBranchGroup.SelectedItem.Value,
                                                         cboBranch.SelectedItem.Value,
                                                         txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim())
+                                                        txtEndDate.Text.Trim(),
+                                                        cboSuppiler.SelectedItem.Value)
 
             Session("joblist") = itemtable
             BindData()
@@ -274,6 +280,7 @@ Public Class JobsList_test
         cboStatusFollow.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
+        cboSuppiler.SelectedIndex = -1
         itemtable.Rows.Clear()
         criteria.Rows.Clear()
         Session("joblist") = itemtable

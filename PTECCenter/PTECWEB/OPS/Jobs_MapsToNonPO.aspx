@@ -14,6 +14,7 @@
         
         .checked {
             background-color: #ececec;
+            opacity:1 !important; 
         }
 
         .table-header {
@@ -21,7 +22,22 @@
             color: #f15a24;
             text-align: center;
         }
-
+        .__show:after{ 
+            content: '\f06e';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: bold;
+        }
+        .__hide:after{ 
+            content: '\f070';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: bold;
+        }
+        .opacity-75 {
+            opacity:0.75;
+        }
+        .opacity-50 {
+            opacity:0.50;
+        }
 
     </style>
    
@@ -46,8 +62,13 @@
                                     </div>
                                     <div class="col mb-3">
                                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="ค้นหารายการ" />
+                                        &nbsp;   
+                                        &nbsp;   
                                         <asp:Button ID="btnJTN" class="btn btn-sm  btn-secondary" runat="server" Text="ดูตัวอย่าง Payment" OnClientClick="sendID();" />
-                                        
+                                        &nbsp;   
+                                        &nbsp;   
+                                        <asp:CheckBox ID="chkvisible" runat="server" Text="ดูรายการทั้งหมด" AutoPostBack="true"></asp:CheckBox>
+
                                         &nbsp;   
                                     </div>
                                 </div>
@@ -113,13 +134,16 @@
                                                     </asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            
+                                            <asp:TemplateField HeaderText="" HeaderStyle-CssClass="table-header" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton type="Button" runat="server" CssClass='<%#Eval("visiblestatus")%>' CommandName="visible" CommandArgument="<%# Container.DataItemIndex %>">
+                                                    </asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
                                     <asp:HiddenField ID="hfCount" runat="server" Value="0" />
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -297,6 +321,22 @@
             }
             return true;
 
+
+        }
+        function toggleEye(elm) {
+
+            var x = elm.parentNode.parentNode;
+            if (x.style.display === "none") {
+                //x.style.display = "block";
+                elm.classList.remove('__hide');
+                elm.classList.add('__show');
+
+            } else {
+                //x.style.display = "none";
+                x.classList.remove('checked');
+                elm.classList.remove('__show');
+                elm.classList.add('__hide');
+            }
 
         }
         function Confirm() {
