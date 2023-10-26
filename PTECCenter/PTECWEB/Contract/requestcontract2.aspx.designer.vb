@@ -2813,13 +2813,13 @@ Partial Public Class requestcontract2
     Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-    '''Button1 control.
+    '''btnUploadPicPower1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnUploadPicPower1 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Panel1 control.
@@ -2831,7 +2831,6 @@ Partial Public Class requestcontract2
     Protected WithEvents Panel1 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-
     '''Label1 control.
     '''</summary>
     '''<remarks>
@@ -2850,13 +2849,13 @@ Partial Public Class requestcontract2
     Protected WithEvents FileUpload2 As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-    '''Button2 control.
+    '''btnUploadPicPower2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button2 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnUploadPicPower2 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Panel2 control.
@@ -2877,6 +2876,24 @@ Partial Public Class requestcontract2
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''image9 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents image9 As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''image10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents image10 As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''btnAddPowerBook control.
     '''</summary>
     '''<remarks>
@@ -2886,7 +2903,6 @@ Partial Public Class requestcontract2
     Protected WithEvents btnAddPowerBook As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-
     '''Tab21 control.
     '''</summary>
     '''<remarks>
@@ -3247,13 +3263,13 @@ Partial Public Class requestcontract2
     Protected WithEvents FileUpload3 As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-    '''Button3 control.
+    '''btnUploadPicNon1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button3 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnUploadPicNon1 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Panel3 control.
@@ -3283,14 +3299,13 @@ Partial Public Class requestcontract2
     Protected WithEvents FileUpload4 As Global.System.Web.UI.WebControls.FileUpload
 
     '''<summary>
-
-    '''Button4 control.
+    '''btnUploadPicNon2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button4 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnUploadPicNon2 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Panel6 control.
@@ -3311,6 +3326,24 @@ Partial Public Class requestcontract2
     Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''image11 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents image11 As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''image12 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents image12 As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''btnAddNonOil control.
     '''</summary>
     '''<remarks>
@@ -3320,7 +3353,6 @@ Partial Public Class requestcontract2
     Protected WithEvents btnAddNonOil As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-
     '''gvPayTypeNonOil control.
     '''</summary>
     '''<remarks>
@@ -3670,6 +3702,96 @@ Partial Public Class requestcontract2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtRemark43 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''FileUpload5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileUpload5 As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''btnUploadPicOth1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUploadPicOth1 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Panel7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Panel7 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''FileUpload6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FileUpload6 As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''btnUploadPicOth2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnUploadPicOth2 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Panel8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Panel8 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label9 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label9 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''image7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents image7 As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''image8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents image8 As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
     '''btnAddContractOth control.

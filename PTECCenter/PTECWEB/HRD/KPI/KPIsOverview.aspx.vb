@@ -76,20 +76,16 @@ Public Class KPIsOverview
         operator_code = objKpi.KPIPermisstion("KPI", "OP")
         adm_code = objKpi.KPIPermisstion("KPI", "A")
         If Not IsPostBack() Then
-            If Not Request.QueryString("uc") Is Nothing Then
-
-                AllKpi = objKpi.Kpi_Find_Overview(1, Request.QueryString("uc").ToString, nameowner)
-
-                'If AllKpi IsNot Nothing Then
-                '    If AllKpi.Tables(1).Rows.Count > 0 Then
-                '        chkuser(AllKpi.Tables(1).Rows(0).Item("actionownerid"))
-                '        now_action = AllKpi.Tables(1).Rows(0).Item("actionempuppercode").ToString
-                '    End If
-                '    If AllKpi.Tables(1).Rows.Count > 0 Then
-                '        now_date = AllKpi.Tables(0).Rows(0).Item("datenow").ToString
-                '    End If
-                'End If
-
+            If Not Request.QueryString("p") Is Nothing Then 'preriod
+                If Not Request.QueryString("t") Is Nothing Then 'type user
+                    If Not Request.QueryString("uc") Is Nothing Then
+                        If Request.QueryString("t").ToString.ToUpper = "HO" Then
+                            AllKpi = objKpi.Kpi_Find_Overview(Request.QueryString("p").ToString, nameowner, Request.QueryString("uc").ToString)
+                        ElseIf Request.QueryString("t").ToString.ToUpper = "CO" Then
+                            AllKpi = objKpi.Kpi_Find_Overview_For_Branch(Request.QueryString("p").ToString, Request.QueryString("uc").ToString, Session("usercode"))
+                        End If
+                    End If
+                End If
             End If
 
             Session("Overview_AllKpi") = AllKpi

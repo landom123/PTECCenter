@@ -36,7 +36,7 @@ Public Class Kpi
         Return result
     End Function
 
-    Public Function Kpi_Find_Overview(preriodid As Integer, user As String, nameowner As String) As DataSet
+    Public Function Kpi_Find_Overview(preriodid As Integer, nameowner As String, user As String) As DataSet
         Dim result As DataSet
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -51,8 +51,8 @@ Public Class Kpi
 
 
         cmd.Parameters.Add("@preriodid", SqlDbType.Int).Value = preriodid
-        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
         cmd.Parameters.Add("@nameowner", SqlDbType.VarChar).Value = nameowner
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
 
 
 
@@ -62,7 +62,8 @@ Public Class Kpi
         conn.Close()
         Return result
     End Function
-    Public Function Kpi_List_For_Operator(depid As String, secid As String, comid As String, ratioid As String, positionid As String, branchgroupid As String, branchid As String, createbyid As String, userid As String, category As String) As DataSet
+
+    Public Function Kpi_Find_Overview_For_Branch(preriodid As Integer, nameowner As String, user As String) As DataSet
         Dim result As DataSet
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -72,7 +73,33 @@ Public Class Kpi
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Kpi_List_For_Operator"
+        cmd.CommandText = "Kpi_Find_Overview_For_Branch"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@preriodid", SqlDbType.Int).Value = preriodid
+        cmd.Parameters.Add("@nameowner", SqlDbType.VarChar).Value = nameowner
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = user
+
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+    Public Function Kpi_List_For_Operator(depid As String, secid As String, comid As String, ratioid As String, positionid As String, branchgroupid As String, branchid As String, createbyid As String, userid As String, category As String, preriodid As String, managerid As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_List_For_Operator_debug"
         cmd.CommandType = CommandType.StoredProcedure
 
 
@@ -87,6 +114,8 @@ Public Class Kpi
         cmd.Parameters.Add("@createbyid", SqlDbType.VarChar).Value = createbyid
         cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+        cmd.Parameters.Add("@preriodid", SqlDbType.VarChar).Value = preriodid
+        cmd.Parameters.Add("@managerid", SqlDbType.VarChar).Value = managerid
 
         adp.SelectCommand = cmd
         adp.Fill(ds)

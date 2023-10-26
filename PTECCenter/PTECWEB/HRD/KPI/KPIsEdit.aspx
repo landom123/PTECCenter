@@ -572,7 +572,8 @@
             $('.footer__page').hide();
             $('.form-control').selectpicker('refresh');
 
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
+
 
             let elemActionmonthly = document.getElementsByName("actionmonthly");
             let elemActiontitleBtn = document.getElementsByName("actiontitleBtn");
@@ -659,14 +660,19 @@
                         elemActiontitleresult[i].disabled = true;
                         elemActionrateowner[i].disabled = true;
                     } else {
-                        elemActionmonthly[i].disabled = (elemActionmonthly[i].value && elemActionmonthly[i].value > 0) ? true : false;
-                        elemActiontitleresult[i].disabled = (elemActiontitleresult[i].value) ? true : false;
-                        elemActionrateowner[i].disabled = (elemActionrateowner[i].value) ? true : false;
 
-                        if (elemActionratehead[i].value && elemActionratehead[i].value > 0) {
+                        //elemActionmonthly[i].disabled = (elemActionmonthly[i].value && elemActionmonthly[i].value > 0) ? true : false;
+                        //elemActiontitleresult[i].disabled = (elemActiontitleresult[i].value) ? true : false;
+                        //elemActionrateowner[i].disabled = (elemActionrateowner[i].value) ? true : false;
+
+                        if (elemActionratehead[i].value && elemActionratehead[i].value >= 0) {
                             elemActionmonthly[i].disabled = true;
                             elemActiontitleresult[i].disabled = true;
                             elemActionrateowner[i].disabled = true;
+
+
+                            row.style.backgroundColor = "#f2f3f4";
+
                         }
 
                     }
@@ -727,12 +733,16 @@
 
                     //console.log('77777777777777')
                 }
-
-
+                if (!(empuppercode == usercode)) {
+                    console.log('8888888888')
+                    checkComplete();
+                } else {
+                    $(".kpicompleted").show(); //show card status
+                    console.log('9999999')
+                }
             }
 
-
-            checkComplete();
+            
             $('.form-control').selectpicker('refresh');
         });
 

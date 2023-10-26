@@ -3680,6 +3680,30 @@ Public Class clsRequestContract
         Return result
     End Function
 
+    Public Function loadContractNonOil2(sDocNo As String) As DataTable
+        'แสดงข้อมูลตารางค่าใช้จ่ายทั้งหมดของสัญญา จนจบสัญญา
+        Dim result As New DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "sp_Get_ContractNonOil"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@sDocNo", SqlDbType.VarChar).Value = sDocNo
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
     Public Function loadContractRequestEdit(sDocNo As String) As DataTable
         'แสดงข้อมูลตารางค่าใช้จ่ายทั้งหมดของสัญญา จนจบสัญญา
         Dim result As New DataTable
