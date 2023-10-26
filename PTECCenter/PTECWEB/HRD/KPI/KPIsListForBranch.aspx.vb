@@ -105,14 +105,13 @@ Public Class KPIsListForBranch
 
             Session("kpilistbranch_allkpi") = AllKpi
         Else
-            'Dim target = Request.Form("__EVENTTARGET")
-            'If target = "deletehead" Then
-            '    Dim argument As String = Request("__EVENTARGUMENT")
-            '    Dim jss As New JavaScriptSerializer
-            '    Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(argument)
-            '    deleteHead(json("kpicode"), json("user"))
-            'End If
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "overview" Then
 
+                Dim argument As String = Request("__EVENTARGUMENT")
+                Dim typeuser As String = "CO"
+                Response.Redirect("KPIsOverview.aspx?p=1&t=" & typeuser & "&uc=" & argument)
+            End If
 
             AllKpi = Session("kpilistbranch_allkpi")
 

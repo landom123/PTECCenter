@@ -158,6 +158,15 @@ Partial Public Class KPIsList
     Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cboBranchManager control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboBranchManager As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cboBranchGroup control.
     '''</summary>
     '''<remarks>

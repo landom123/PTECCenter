@@ -165,12 +165,12 @@
                             <div class="col-md-3 mb-3">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">สังกัด</span>
+                                        <span class="input-group-text">Company</span>
                                     </div>
                                     <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
                                 </div>
                             </div>
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-3 mb-3 HO">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Employee KPIs</span>
@@ -191,14 +191,14 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Position</span>
                                     </div>
-                                    <asp:DropDownList ID="cboPosition" class="form-control" runat="server" ></asp:DropDownList>
+                                    <asp:DropDownList ID="cboPosition" class="form-control" runat="server"></asp:DropDownList>
                                 </div>
                             </div>
                             <% 'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                             <div class="col-md-3 mb-3 HO">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">ฝ่าย</span>
+                                        <span class="input-group-text">Dep.</span>
                                     </div>
                                     <asp:DropDownList ID="cboDepartment" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
                                 </div>
@@ -206,7 +206,7 @@
                             <div class="col-md-3 mb-3 HO">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">แผนก</span>
+                                        <span class="input-group-text">Sec.</span>
                                     </div>
                                     <asp:DropDownList ID="cboSection" class="form-control" runat="server"></asp:DropDownList>
                                 </div>
@@ -216,7 +216,15 @@
                             <div class="col-md-3 mb-3 CO">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">ประเภทสาขา</span>
+                                        <span class="input-group-text">Manager</span>
+                                    </div>
+                                    <asp:DropDownList class="form-control" ID="cboBranchManager" runat="server" AutoPostBack="false"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3 CO">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">BranchType</span>
                                     </div>
                                     <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
                                 </div>
@@ -224,7 +232,7 @@
                             <div class="col-md-3 mb-3 CO">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">สาขา</span>
+                                        <span class="input-group-text">Branch</span>
                                     </div>
                                     <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
                                 </div>
@@ -243,7 +251,7 @@
 
                     <!------------------------------------------------------------------------>
 
-                   
+
 
                     <%--begin item--%>
                     <% If AllKpi IsNot Nothing Then%>
@@ -318,7 +326,7 @@
                                         <td>
                                             <% If AllKpi.Tables(1).Rows(i).Item("countnotify") > 0 Then %>
                                             <span class="p-1">
-                                                 <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="<%= AllKpi.Tables(1).Rows(i).Item("notifytitle").ToString %>">
+                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="<%= AllKpi.Tables(1).Rows(i).Item("notifytitle").ToString %>">
                                                     <i class="far fa-bell"></i><span class="badge badge-danger"><%= AllKpi.Tables(1).Rows(i).Item("countnotify").ToString %></span>
                                                 </button>
                                             </span>
@@ -334,16 +342,21 @@
                                                         <tr class="info text-center">
                                                             <th class="text-nowrap align-middle">
                                                                 <span class="p-1">
-                                                                <a href="KPIsOverview.aspx?uc=<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>" title="Overview"><i class="fas fa-chart-pie color__purple"></i></a>&nbsp;&nbsp;
-                                                                    <a href="KPIsEdit.aspx?Kpi_Code=<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>" title="EditDetail"><i class="fas fa-edit color__purple"></i></a>
+
+                                                                    <a href="javascript:__doPostBack('overview','<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>');" title="Overview"><i class="fas fa-chart-pie color__purple"></i></a>&nbsp;&nbsp;
+                                                                <%--<a href="KPIsOverview.aspx?uc=<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>" title="Overview"><i class="fas fa-chart-pie color__purple"></i></a>--%>&nbsp;&nbsp;
+                                                                    <a href="KPIsEdit.aspx?Kpi_Code=<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>" title="EditDetail"><i class="fas fa-edit color__purple"></i></a>&nbsp;&nbsp;
                                                                 </span>
                                                                 <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Then%>
-                                                                    <a onclick="confirmDeletedetail('<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString() %>')" >
-                                                                        <i class="fas fa-times"></i>
-                                                                    </a>
+                                                                <a onclick="confirmDeletedetail('<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString() %>')">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
                                                                 <% End If %>
                                                             </th>
+                                                            <% If chkCO.Checked Then %>
+                                                            <th><span class="p-1">เลขสาขา</span></th>
 
+                                                            <% End If %>
                                                             <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                                                             <th><span class="p-1">เจ้าของ kpi</span></th>
 
@@ -362,6 +375,10 @@
                                                         <% If AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(2).Rows(j).Item("actionkpi_code").ToString Then %>
                                                         <tr class="text-center">
                                                             <td><span class="badge badge-blue <%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And AllKpi.Tables(1).Rows(i).Item("complete") = 0 And (Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer), "border__solid", "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
+                                                            <% If chkCO.Checked Then %>
+                                                            <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionbranch").ToString %></span></td>
+
+                                                            <% End If %>
                                                             <% If adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                                                             <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("NameOwner").ToString %></span></td>
                                                             <% End If %>
@@ -379,11 +396,11 @@
                                                                 </span>
                                                             </td>
                                                             <td class="text-left"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actiontitleresult").ToString %></span></td>
-                                                            
+
                                                             <td class="<%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And AllKpi.Tables(1).Rows(i).Item("complete") = 0 And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And (adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Or AllKpi.Tables(0).Rows(k).Item("ownercode").ToString = Session("usercode").ToString), "border__solid text__rateowner goEdit", "") %>">
                                                                 <span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionrateowner"), Integer) < 3), "text-danger", "text-success"), "") %> "><%= AllKpi.Tables(2).Rows(j).Item("actionrateowner").ToString %></span>
                                                             </td>
-                                                            <td class="<%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And AllKpi.Tables(1).Rows(i).Item("complete") = 0 And TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer And (adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Or AllKpi.Tables(1).Rows(i).Item("empuppercode").ToString = Session("usercode").ToString), "border__solid text__rateheader goEdit", "") %>">
+                                                            <td class="<%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer And (adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Or AllKpi.Tables(1).Rows(i).Item("empuppercode").ToString = Session("usercode").ToString), "border__solid text__rateheader goEdit", "") %>">
                                                                 <span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionratehead"), Integer) < 3), "text-danger", "text-success"), "") %> "><%= AllKpi.Tables(2).Rows(j).Item("actionratehead").ToString %></span>
                                                             </td>
                                                             <td class="text-left"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionfeedback").ToString %></span></td>
