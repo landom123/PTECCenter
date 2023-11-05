@@ -391,7 +391,7 @@
                                                                     <% else If AllKpi.Tables(2).Rows(j).Item("actionmonthly").ToString = "2" Then %>
                                                                     <span class="badge badge-danger">ช้ากว่าแผน</span>
                                                                     <% else If AllKpi.Tables(2).Rows(j).Item("actionmonthly").ToString = "3" Then %>
-                                                                    <span class="badge badge-danger">เร็วกว่าแผน</span>
+                                                                    <span class="badge badge-primary">เร็วกว่าแผน</span>
                                                                     <% End if %>
                                                                 </span>
                                                             </td>

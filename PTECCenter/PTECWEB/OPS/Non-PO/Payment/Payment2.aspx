@@ -195,6 +195,11 @@
                             <div class="col-7">
                                 <asp:TextBox class="form-control font-weight-bold" ID="codeRef" runat="server" ReadOnly="True"></asp:TextBox>
                             </div>
+                            <div>
+                                <button type="button" class="close d-none" aria-label="Close" runat="server" id="BtnCancelCodeRef">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                         </div>
                         <%--<div class="row mb-3">
                         <div class="col-2 text-right">
@@ -561,7 +566,7 @@
                                     <!--  total -->
 
                                     <tr>
-                                        <td rowspan="5" colspan="15" style="width: 600px !important; vertical-align: text-top; color: #065ca9 !important; font-size: .8rem; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
+                                        <td rowspan="6" colspan="15" style="width: 600px !important; vertical-align: text-top; color: #065ca9 !important; font-size: .8rem; border-right-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
                                             <div class="gropincompletebill">
                                                 <p class="text-break mb-0">
                                                     <br />
@@ -607,6 +612,13 @@
                                             </h6>
                                         </td>
                                         <td colspan="5" style="width: 200px !important; text-align: right; padding-right: 5px; border-left-width: 0px; border-top-width: 0px;" id="total_tax"><%= total_tax %></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="width: 160px !important; text-align: right; padding-right: 5px; border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px;">
+                                            <h6>Purecard
+                                            </h6>
+                                        </td>
+                                        <td colspan="5" style="width: 200px !important; text-align: right; padding-right: 5px; border-left-width: 0px; border-top-width: 0px;" id="total_purecard"><%= total_purecard %><span class="d-none" runat="server" id="lbTotal_purecard"></span></td>
                                     </tr>
                                     <tr>
 
@@ -838,6 +850,28 @@
         <% End If %>
         <% End If %>
     </div>
+  
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel2">เลือกรายการ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    <asp:ListBox class="cbomulti" runat="server" ID="multiSelect" SelectionMode="multiple" data-selected-text-format="count">
+                    </asp:ListBox>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btnAddDetailsFromSmartBill" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" />
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -852,6 +886,11 @@
                     <input type="hidden" class="form-control" id="row" value="0" runat="server">
                     <input type="hidden" class="form-control" id="nextrow" value="0" runat="server">
                     <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
+                    <div class="row">
+                        <div class="col d-flex flex-row-reverse">
+                            <a href="#" runat="server" id="btnAddRef" data-target="#exampleModalToggle2" data-toggle="modal" data-dismiss="modal" data-backdrop="static" data-keyboard="false">เลือกจากรายการ..</a>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <asp:Label ID="lbcboAccountCode" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="รหัสบัญชี" />
                         <asp:Label ID="lbcboAccountCodeMandatory" CssClass="text-danger" AssociatedControlID="cboAccountCode" runat="server" Text="*" />
@@ -1109,6 +1148,12 @@
                 liveSearch: true,
                 maxOptions: 1
             });
+
+            $('.cbomulti').selectpicker({
+                noneSelectedText: '-',
+                liveSearch: true
+            });
+
 
             $('.form-control').selectpicker('refresh');
 
@@ -1679,6 +1724,10 @@ alert('else nonpo')
         //    });
 
         //}
+        $('#<%= codeRef.ClientID%>').on('change', function () {
+            cntdetail = 1; //show unsave
+            checkUnSave(); //show unsave
+        });
         $('#<%= cboVendor.ClientID%>').on('change', function () {
             cntdetail = 1; //show unsave
             checkUnSave(); //show unsave
