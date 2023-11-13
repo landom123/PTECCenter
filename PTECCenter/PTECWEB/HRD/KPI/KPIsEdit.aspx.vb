@@ -41,6 +41,7 @@ Public Class KPIsEdit
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
+        Dim objbranch As New Branch
         Dim objUser As New Users
         Dim objKpi As New Kpi
 
@@ -74,6 +75,7 @@ Public Class KPIsEdit
 
         If Not IsPostBack() Then
             objUser.SetcboUserName(cboUserName)
+            objbranch.SetComboBranch(cboBranch, "")
             objKpi.SetCboRatioType(cboRatio)
             SetCboUsers(cboOwnerKPI)
             If Not Request.QueryString("Kpi_Code") Is Nothing Then
@@ -120,12 +122,10 @@ Public Class KPIsEdit
                         If (String.IsNullOrEmpty(AllKpi.Tables(0).Rows(0).Item("operatortype").ToString)) Then
                             btnUpdate.Visible = True
                             btnUpdateOP.Visible = False
-                            If (ownername.IndexOf(managernameBranch) > -1 Or ownername.IndexOf(username) > -1 Or ownername.IndexOf(usercode) > -1) Then
-                                chkKpiComplete.Visible = True
-                                lbchkKpiComplete.Visible = True
-                            Else
-                                chkKpiComplete.Visible = False
-                                lbchkKpiComplete.Visible = False
+                            chkKpiComplete.Visible = True
+                            lbchkKpiComplete.Visible = True
+                            If (now_action.IndexOf(usercode) > -1) Then
+                                chkKpiComplete.Disabled = True
                             End If
                         End If
                     Else
@@ -308,6 +308,24 @@ endprocess:
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('cancel fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../KPI/KPIsEdit.aspx?Kpi_Code=" & Request.QueryString("Kpi_Code"))
+endprocess:
+    End Sub
+
+    Private Sub btnUpdateOwnerBranch_Click(sender As Object, e As EventArgs) Handles btnUpdateOwnerBranch.Click
+        Dim objKpi As New Kpi
+
+        Try
+            objKpi.UpdateOwnerBranch(hiddenbranchid.Value.ToString, cboBranch.SelectedItem.Value, Session("usercode"))
+            hiddenbranchid.Value = 0
+            'findKpi()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('UpdateOwnerBranch fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try

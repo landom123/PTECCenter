@@ -3578,7 +3578,9 @@ Public Class requestcontract2
         Dim bytes2 As Byte()
 
         iID = Session("IDNonOil")
+
         iItem = Session("ItemNoNonOil")
+
 
         Using br As BinaryReader = New BinaryReader(FileUpload3.PostedFile.InputStream)
             bytes = br.ReadBytes(FileUpload3.PostedFile.ContentLength)
@@ -4496,6 +4498,7 @@ Public Class requestcontract2
             For Each dr As DataRow In dtNon.Rows
                 Session("IDNonOil") = dr("ID")
                 Session("ItemNoNonOil") = dr("ItemNo")
+
             Next
 
             UploadPicNonOil()
@@ -4516,9 +4519,11 @@ Public Class requestcontract2
                 Exit Sub
             End If
 
+
             'If loadContractNonOil() = False Then
             '    Exit Sub
             'End If
+
             Clear()
 
         Catch ex As Exception

@@ -167,7 +167,7 @@ Public Class jobs
 
 
     Public Function JobList_For_Operator(jobcode As String, depid As String, jobtypeid As String, statusfollowid As String,
-                                         branchgroupid As String, branchid As String, startdate As String, enddate As String) As DataTable
+                                         branchgroupid As String, branchid As String, startdate As String, enddate As String, suppilerid As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -189,6 +189,7 @@ Public Class jobs
         cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
         cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
         cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@suppilerid", SqlDbType.VarChar).Value = suppilerid
 
 
 
@@ -1624,7 +1625,7 @@ Public Class jobs
         Return result
     End Function
 
-    Public Function Jobs_CostCommited_list(supplierid As Integer) As DataTable
+    Public Function Jobs_CostCommited_list(supplierid As Integer, visibleall As Boolean) As DataTable
         Dim result As DataTable
 
         Dim ds As New DataSet
@@ -1638,6 +1639,7 @@ Public Class jobs
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@supplierid", SqlDbType.VarChar).Value = supplierid
+        cmd.Parameters.Add("@visibleall", SqlDbType.Bit).Value = visibleall
 
         adp.SelectCommand = cmd
         adp.Fill(ds)
@@ -1843,6 +1845,28 @@ Public Class jobs
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "Jobs_Supplier_FinishStep"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function Costvisible(jobno As String, jobdetailid As Double, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Visible_Cost"
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno

@@ -83,6 +83,7 @@ Public Class KPIsList
             objdep.SetCboDepartmentByMode(cboDepartment, 0, "actived")
             cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
             objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
+            objbranch.SetCboBranchManager(cboBranchManager)
 
 
 
@@ -107,7 +108,18 @@ Public Class KPIsList
                 Dim jss As New JavaScriptSerializer
                 Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(argument)
                 deleteHead(json("kpicode"), json("user"))
+            ElseIf target = "overview" Then
+
+                Dim argument As String = Request("__EVENTARGUMENT")
+                Dim typeuser As String = ""
+                If chkCO.Checked Then
+                    typeuser = "CO"
+                ElseIf chkHO.Checked Then
+                    typeuser = "HO"
+                End If
+                Response.Redirect("KPIsOverview.aspx?p=1&t=" & typeuser & "&uc=" & argument)
             End If
+
 
             AllKpi = Session("kpilist_allkpi")
 
@@ -162,9 +174,11 @@ Public Class KPIsList
                                                         "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
-                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        "",
                                                         Session("userid").ToString,
-                                                        "CO")
+                                                        "CO",
+                                                        1,
+                                                        cboBranchManager.SelectedItem.Value.ToString)
             ElseIf chkHO.Checked Then
                 AllKpi = objKpi.Kpi_List_For_Operator(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
@@ -175,7 +189,9 @@ Public Class KPIsList
                                                       "",
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
-                                                    "HO")
+                                                        "HO",
+                                                        1,
+                                                        "")
             End If
 
             setCriteria()

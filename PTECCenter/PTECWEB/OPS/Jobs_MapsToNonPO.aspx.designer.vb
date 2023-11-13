@@ -50,6 +50,15 @@ Partial Public Class Jobs_MapsToNonPO
     Protected WithEvents btnJTN As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''chkvisible control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkvisible As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''gvRemind control.
     '''</summary>
     '''<remarks>

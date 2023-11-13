@@ -155,6 +155,8 @@ Public Class requestcontract
             dBegindate = CDate(txtBegindate.Text)
             dEnddate = CDate(txtEnddate.Text)
 
+
+
             dt = objReq.FindRequest(dBegindate.ToString("yyyyMMdd", dtinfo), dEnddate.ToString("yyyyMMdd", dtinfo), 1, txtVendor.Text, txtContractno.Text)
 
             gvData.DataSource = dt

@@ -217,7 +217,7 @@
                                             <tr data-toggle="collapse" data-target="#<%= AllKpi.Tables(0).Rows(i).Item("Kpi_Code").ToString %>" class="accordion-toggle text-center" aria-expanded="false">
                                                 <td class="text-left"><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("CategoryName").ToString %></span></td>
                                                 <td><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("ownercode").ToString %></span></td>
-                                                <td><span class="p-1 text-left"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></span>
+                                                <td class="text-left"><span class="p-1"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></span>
                                                     <% If AllKpi.Tables(0).Rows(i).Item("complete") Then %>
                                                     <span class="badge badge-success" title="<%= AllKpi.Tables(0).Rows(i).Item("completedate").ToString %>">Complete</span>
                                                     <% End if %>
@@ -301,7 +301,7 @@
                                                                             <% else If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "2" Then %>
                                                                             <span class="badge badge-danger">ช้ากว่าแผน</span>
                                                                             <% else If AllKpi.Tables(1).Rows(j).Item("actionmonthly").ToString = "3" Then %>
-                                                                            <span class="badge badge-danger">เร็วกว่าแผน</span>
+                                                                            <span class="badge badge-primary">เร็วกว่าแผน</span>
                                                                             <% End if %>
                                                                         </span>
                                                                     </td>

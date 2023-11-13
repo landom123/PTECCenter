@@ -68,7 +68,7 @@
         }
 
         .tooltip-inner {
-            max-width: 230px;
+            max-width: 250px;
         }
         /*.approval {
             display:none;
@@ -92,7 +92,7 @@
             border-color: red !important;
         }
 
-        .actiontitle:hover::after, .actionrateowner:hover::after, .actionratehead:hover::after {
+        .showUpdateDate:hover::after,.actiontitle:hover::after, .actionrateowner:hover::after, .actionratehead:hover::after {
             position: absolute;
             z-index: 999;
             display: block;
@@ -154,7 +154,6 @@
                 background-color: red;
             }
             .kpicompleted {
-                width: 1000px;
                 overflow-x: auto;
                 overflow-y: visible;
                 padding: 0;
@@ -235,7 +234,7 @@
                                     <% End If%></h4>
                             </div>
                             <div class="col">
-                                <div class="col kpicompleted text-right align-self-center" style="display: none; ">
+                                <div class="col w-100 kpicompleted text-right align-self-center" style="display: none; ">
                                     <asp:TextBox class="btn btn-success" ID="txtUnsave" runat="server" ReadOnly="true">Completed</asp:TextBox>
                                 </div>
                             </div>
@@ -343,6 +342,7 @@
                                                         <thead class="thead-light">
                                                             <tr class="info text-center">
                                                                 <th></th>
+                                                                <th>เลขสาขา</th>
                                                                 <th>เจ้าของงาน</th>
                                                                 <th>แผนงาน / เป้าหมาย</th>
                                                                 <th>ผลตามแผน</th>
@@ -366,20 +366,31 @@
                                                                 data-empuppercode="<%= AllKpi.Tables(1).Rows(j).Item("actionempuppercode").ToString %>"
                                                                 data-ownercode="<%= AllKpi.Tables(1).Rows(j).Item("actionownercode").ToString %>"
                                                                 data-ownername="<%= AllKpi.Tables(1).Rows(j).Item("NameOwner").ToString %>"
+                                                                data-ownerbranch="<%= AllKpi.Tables(1).Rows(j).Item("actionbranchid").ToString %>"
                                                                 data-usercode="<%= Session("usercode").ToString %>"
                                                                 data-username="<%= Session("username").ToString %>"
                                                                 data-managername="<%= managername %>"
                                                                 data-title="<%= AllKpi.Tables(1).Rows(j).Item("actiontitle").ToString %>"
-                                                                data-titledate="<%= AllKpi.Tables(1).Rows(j).Item("actiontitle_date").ToString %>"
+                                                                data-titlestart="<%= AllKpi.Tables(1).Rows(j).Item("actiontitle_begindate").ToString %>"
+                                                                data-titleend="<%= AllKpi.Tables(1).Rows(j).Item("actiontitle_enddate").ToString %>"
                                                                 data-editstart="<%= AllKpi.Tables(1).Rows(j).Item("actionedit_begindate").ToString %>"
                                                                 data-editend="<%= AllKpi.Tables(1).Rows(j).Item("actionedit_enddate").ToString %>"
-                                                                data-rateownerdate="<%= AllKpi.Tables(1).Rows(j).Item("actionrateowner_date").ToString %>"
-                                                                data-rateheaddate="<%= AllKpi.Tables(1).Rows(j).Item("actionratehead_date").ToString %>"
                                                                 data-approvalstart="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_begindate").ToString %>"
-                                                                data-approvalend="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %>">
+                                                                data-approvalend="<%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %>"
+                                                                data-nameownerstart="<%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_begindate").ToString %>"
+                                                                data-nameownerend="<%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_enddate").ToString %>"
+                                                                data-ownerbranchstart="<%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_begindate").ToString %>"
+                                                                data-ownerbranchend="<%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_enddate").ToString %>">
                                                                 <td><span class="badge badge-blue <%= If(AllKpi.Tables(1).Rows(j).Item("nowMonths") = 1, "border__solid", "") %>"><%= AllKpi.Tables(1).Rows(j).Item("actionmonth").ToString %></span>
-                                                                <td>
+                                                                <td class="showUpdateDate" data-content="<%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_updatedate").ToString %>">
+                                                                    <!--------------------------เลขสาขา------------------------------->
+                                                                    <a runat="server" class="text-primary" name="actionbranchBtn" style="cursor: pointer; transition: .2s;" onclick="btnEditOwnerBranch(this)">
+                                                                        <i class="fas fa-edit"></i></a>
+                                                                    <span><%= AllKpi.Tables(1).Rows(j).Item("actionbranchname").ToString %></span>
 
+                                                                </td>
+                                                                <td class="showUpdateDate" data-content="<%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_updatedate").ToString %>">
+                                                                    <!--------------------------เจ้าของงาน------------------------------->
                                                                     <% If AllKpi.Tables(0).Rows(0).Item("operatortype").ToString = "A" Then %>
                                                                     <a runat="server" class="text-primary" style="cursor: pointer; transition: .2s;" onclick="btnEditOwnerActionplan(this)">
                                                                         <i class="fas fa-edit"></i></a>
@@ -439,8 +450,9 @@
                                                                     <input class="form-control" type="text" name="actionfeedback" value="<%= AllKpi.Tables(1).Rows(j).Item("actionfeedback").ToString %>" id="actionfeedback_<%= AllKpi.Tables(1).Rows(j).Item("actionid").ToString %>" />
                                                                 </td>
                                                                 <td>
-                                                                    <span class="text-muted" data-toggle="tooltip" data-placement="top" title="แก้ไข : <%= AllKpi.Tables(1).Rows(j).Item("actionedit_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionedit_enddate").ToString %>
-                                                                        อนุมัติ : <%= AllKpi.Tables(1).Rows(j).Item("actionapproval_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %>"><i class="fas fa-info-circle"></i></span>
+                                                                    <span class="text-muted" data-toggle="tooltip" data-placement="top" data-html="true"
+                                                                        title="<span>สาขา : <%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_enddate").ToString %></span><br /><span>เจ้าของ : <%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_enddate").ToString %></span><br /><span>แผนงาน : <%= AllKpi.Tables(1).Rows(j).Item("actiontitle_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actiontitle_enddate").ToString %></span><br /><span>แก้ไข : <%= AllKpi.Tables(1).Rows(j).Item("actionedit_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionedit_enddate").ToString %></span><br /><span>อนุมัติ : <%= AllKpi.Tables(1).Rows(j).Item("actionapproval_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %></span>">
+                                                                        <i class="fas fa-info-circle"></i></span>
                                                                 </td>
                                                             </tr>
 
@@ -526,6 +538,31 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModalBranch" tabindex="-1" role="dialog" aria-labelledby="exampleModalBranch_report" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalBranch_report">สาขา</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="hiddenbranchid" value="0" runat="server">
+                    <div class="form-group">
+                        <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="UserName" />
+                        <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+
+                    <asp:Button ID="btnUpdateOwnerBranch" class="btn btn-primary" runat="server" Text="Update" />
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="exampleModalPlan" tabindex="-1" role="dialog" aria-labelledby="exampleModalPlanLabel_report" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -568,14 +605,16 @@
                 liveSearch: true,
                 maxOptions: 1
             });
-            console.log('START');
+           //console.log('START');
 
             $('.footer__page').hide();
             $('.form-control').selectpicker('refresh');
 
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
+
 
             let elemActionmonthly = document.getElementsByName("actionmonthly");
+            let elemActionbranchBtn = document.getElementsByName("actionbranchBtn");
             let elemActiontitleBtn = document.getElementsByName("actiontitleBtn");
             let elemActiontitle = document.getElementsByName("actiontitle");
             let elemActiontitleresult = document.getElementsByName("actiontitleresult");
@@ -583,6 +622,7 @@
             let elemActionratehead = document.getElementsByName("actionratehead");
             let elemActionFeedback = document.getElementsByName("actionfeedback");
 
+           
 
             //console.log(elemActiontitle);
             //console.log(elemActiontitle[4].value);
@@ -615,6 +655,13 @@
                 const editend = row.getAttribute("data-editend");
                 const approvalstart = row.getAttribute("data-approvalstart");
                 const approvalend = row.getAttribute("data-approvalend");
+                const nameownerstart = row.getAttribute("data-nameownerstart");
+                const nameownerend = row.getAttribute("data-nameownerend");
+                const ownerbranchstart = row.getAttribute("data-ownerbranchstart");
+                const ownerbranchend = row.getAttribute("data-ownerbranchend");
+                const titlestart = row.getAttribute("data-titlestart");
+                const titleend = row.getAttribute("data-titleend");
+                const ownerbranch = row.getAttribute("data-ownerbranch");
                 //--------------------------------------------------
 
                 const empuppercode = row.getAttribute("data-empuppercode");
@@ -633,6 +680,12 @@
                 const [day2, month2, year2] = editend.split('/');
                 const [day3, month3, year3] = approvalstart.split('/');
                 const [day4, month4, year4] = approvalend.split('/');
+                const [day5, month5, year5] = nameownerstart.split('/');
+                const [day6, month6, year6] = nameownerend.split('/');
+                const [day7, month7, year7] = ownerbranchstart.split('/');
+                const [day8, month8, year8] = ownerbranchend.split('/');
+                const [day9, month9, year9] = titlestart.split('/');
+                const [day10, month10, year10] = titleend.split('/');
 
 
                 const date = new Date(+year0, month0 - 1, +day0);
@@ -640,6 +693,12 @@
                 const eend = new Date(+year2, month2 - 1, +day2);
                 const astart = new Date(+year3, month3 - 1, +day3);
                 const aend = new Date(+year4, month4 - 1, +day4);
+                const namestart = new Date(+year5, month5 - 1, +day5);
+                const nameend = new Date(+year6, month6 - 1, +day6);
+                const branchstart = new Date(+year7, month7 - 1, +day7);
+                const branchend = new Date(+year8, month8 - 1, +day8);
+                const tstart = new Date(+year9, month9 - 1, +day9);
+                const tend = new Date(+year10, month10 - 1, +day10);
 
                 //alert(opt);
                 /*console.log(ownername.indexOf(managername || usercode));
@@ -653,39 +712,47 @@
                 if ((ownername.indexOf(managername) > -1) && !opt) { // เจ้าของ KPI
                     console.log('เจ้าของ KPI');
 
-                    if (!(date >= estart && date <= eend)) {
-                        console.log(`#${row.id}`);
+                    if (!(date >= estart && date <= eend)) { //เช็คอยู่ในช่วง edit ผลตามแผน ,ผลการปฏิบัติงาน , พนักงานประเมิน
                         row.style.backgroundColor = "#f2f3f4";
                         elemActionmonthly[i].disabled = true;
                         elemActiontitleresult[i].disabled = true;
                         elemActionrateowner[i].disabled = true;
                     } else {
-                        elemActionmonthly[i].disabled = (elemActionmonthly[i].value && elemActionmonthly[i].value > 0) ? true : false;
-                        elemActiontitleresult[i].disabled = (elemActiontitleresult[i].value) ? true : false;
-                        elemActionrateowner[i].disabled = (elemActionrateowner[i].value) ? true : false;
-
-                        if (elemActionratehead[i].value && elemActionratehead[i].value > 0) {
+                        //elemActionmonthly[i].disabled = (elemActionmonthly[i].value && elemActionmonthly[i].value > 0) ? true : false;
+                        //elemActiontitleresult[i].disabled = (elemActiontitleresult[i].value) ? true : false;
+                        //elemActionrateowner[i].disabled = (elemActionrateowner[i].value) ? true : false;
+                        if (elemActionratehead[i].value && elemActionratehead[i].value >= 0) {
                             elemActionmonthly[i].disabled = true;
                             elemActiontitleresult[i].disabled = true;
                             elemActionrateowner[i].disabled = true;
-                        }
 
+                            row.style.backgroundColor = "#f2f3f4";
+                        }
                     }
 
-                    if (date >= eend) { // edit title after period
+
+                    if (!(date >= branchstart && date <= branchend)) { //แผนงาน / เป้าหมาย
+                        elemActionbranchBtn[i].hidden = true;
+                    } else {
+                        elemActionbranchBtn[i].hidden = (ownerbranch == 901) ? true:false;
+                    }
+
+                    console.log(`ownerbranch is ${ownerbranch}`);
+                    //console.log(`tstart is ${tstart}`);
+                    //console.log(`tend is ${tend}`);
+                    if (!(date >= tstart && date <= tend)) { //แผนงาน / เป้าหมาย
                         elemActiontitleBtn[i].hidden = true;
                     } else {
                         if (elemActionrateowner[i].value && elemActionmonthly[i].value && elemActiontitleresult[i].value) {
                             elemActiontitleBtn[i].hidden = true;
                         } else {
-
                             elemActiontitleBtn[i].hidden = false;
-
                         }
                     }
 
                     elemActionratehead[i].disabled = true;
                     elemActionFeedback[i].disabled = true;
+
                 } else if (empuppercode.indexOf(usercode) > -1 && !opt) { // empupper เจ้าของ KPI
                     console.log('empupper เจ้าของ KPI');
 
@@ -697,6 +764,7 @@
                     elemActionmonthly[i].disabled = true;
                     elemActiontitleresult[i].disabled = true;
                     elemActionrateowner[i].disabled = true;
+                    elemActionbranchBtn[i].hidden = true;
 
                     if (!(date > astart && date < aend)) {
 
@@ -711,6 +779,7 @@
 
                 } else if (!opt) {
                     //console.log('555555555555555')
+                    elemActiontitleBtn[i].hidden = true;
                     elemActiontitle[i].disabled = true;
                     elemActionmonthly[i].disabled = true;
                     elemActiontitleresult[i].disabled = true;
@@ -718,6 +787,13 @@
 
                     elemActionratehead[i].disabled = true;
                     elemActionFeedback[i].disabled = true;
+
+                    $('table a,.btnupdatekpi').hide();
+                    $('.badge-blue').removeClass("border__solid");
+                    $('.row__ap').css("background-color", "#f2f3f4");
+                    $('.row__ap textarea').attr('readonly', true);
+                    $('.form-control ,.form-check-input').attr('disabled', true);
+
                     //$('#btnUpdate').hide();
                 }
 
@@ -728,12 +804,16 @@
 
                     //console.log('77777777777777')
                 }
-
-
+                if (!(empuppercode == usercode)) {
+                    //console.log('8888888888')
+                    checkComplete();
+                } else {
+                    $(".kpicompleted").show(); //show card status
+                    //console.log('9999999')
+                }
             }
 
-
-            checkComplete();
+            
             $('.form-control').selectpicker('refresh');
         });
 
@@ -875,7 +955,7 @@
             if (confirm(text)) {
                 let param = getValueUnDisabled();
                 const params = JSON.stringify(param);
-                console.log(params);
+                //console.log(params);
                 let confirm_value = document.createElement("INPUT");
                 confirm_value.type = "hidden";
                 confirm_value.name = "confirm_value";
@@ -897,7 +977,7 @@
 
                 let param = getValue();
                 const params = JSON.stringify(param);
-                console.log(params);
+                //console.log(params);
                 let confirm_value = document.createElement("INPUT");
                 confirm_value.type = "hidden";
                 confirm_value.name = "confirm_value";
@@ -945,6 +1025,22 @@
             $('#exampleModal').modal('show');
 
         }
+        function btnEditOwnerBranch(elem) {
+            const parent = elem.parentElement
+            const tr = parent.parentElement
+
+            let ownerbranch = tr.getAttribute("data-ownerbranch");
+            let apid = tr.id.split("_")[1];
+            //selectElement()
+            const usernamelist = '<%= cboBranch.ClientID%>';
+            selectElement(usernamelist, ownerbranch);
+            $('#<%= hiddenbranchid.ClientID%>').val(apid);
+
+
+            $('.form-control').selectpicker('refresh');
+            $('#exampleModalBranch').modal('show');
+
+        }
         function btnEditplan(elem) {
             const parent = elem.parentElement
             const tr = parent.parentElement
@@ -953,9 +1049,9 @@
             let title = tr.getAttribute("data-title");
             let apid = tr.id.split("_")[1];
 
-            console.log(title)
-            console.log(ownername)
-            console.log(apid)
+            //console.log(title)
+            //console.log(ownername)
+            //console.log(apid)
 
             $('#<%= txtPlan.ClientID%>').val(title);
 
@@ -973,7 +1069,7 @@
         
         function showUnsave() {
             let elements = document.getElementsByClassName("btnUpdate");
-            console.log(elements)
+            //console.log(elements)
             for (var i = 0; i < elements.length; i++) {
                 elements[i].classList.add("footer__btn");
                 $(elements[i]).before("<span class=\"footer__btn\"></span>");

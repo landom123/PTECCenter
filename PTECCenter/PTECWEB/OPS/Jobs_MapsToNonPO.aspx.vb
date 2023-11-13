@@ -1,4 +1,5 @@
-﻿Imports Newtonsoft.Json
+﻿Imports System.Drawing
+Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
 Public Class Jobs_MapsToNonPO
@@ -73,6 +74,8 @@ Public Class Jobs_MapsToNonPO
         dt.Columns.Add("detailpayment", GetType(String))
         dt.Columns.Add("branch", GetType(String))
         dt.Columns.Add("cost", GetType(Double))
+        dt.Columns.Add("visiblestatus", GetType(String))
+
 
 
         Return dt
@@ -95,7 +98,7 @@ Public Class Jobs_MapsToNonPO
         Try
 
 
-            itemtable = objjob.Jobs_CostCommited_list(cboSupplier.SelectedItem.Value)
+            itemtable = objjob.Jobs_CostCommited_list(cboSupplier.SelectedItem.Value, chkvisible.Checked)
 
             Session("joblist") = itemtable
             BindData()
@@ -167,11 +170,51 @@ endprocess:
 
             searchCostCommited_list()
             Response.Write("<script>window.open ('jobs_Close.aspx?jobno=" + code + "&jobdetailid=" + dtlid + "','_blank');</script>")
+        ElseIf e.CommandName = "visible" Then
+            Dim a As String
+            'Determine the RowIndex of the Row whose Button was clicked.
+            Dim rowIndex As Integer = Convert.ToInt32(e.CommandArgument)
+
+            'Reference the GridView Row.
+            Dim row As GridViewRow = gvRemind.Rows(rowIndex)
+
+            'Fetch value of Name.
+
+            Dim code As String = TryCast(row.FindControl("lbjobcode"), Label).Text
+            Dim dtlid As String = TryCast(row.FindControl("lbid"), Label).Text
+
+            'Fetch value of Country.
+            'Dim country As String = row.Cells(1).Text
+
+
+            Dim objjob As New jobs
+
+            objjob.Costvisible(code, dtlid, usercode)
+
+            searchCostCommited_list()
         End If
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
 
         searchCostCommited_list()
+    End Sub
+
+    Private Sub chkvisible_CheckedChanged(sender As Object, e As EventArgs) Handles chkvisible.CheckedChanged
+
+        searchCostCommited_list()
+    End Sub
+
+    Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
+        Dim Data As DataRowView
+        Data = e.Row.DataItem
+        If Data Is Nothing Then
+            Return
+        End If
+        If (e.Row.RowType = DataControlRowType.DataRow) Then
+            If Data.Item("visiblestatus") = "__hide" Then
+                e.Row.CssClass = "opacity-50"
+            End If
+        End If
     End Sub
 End Class

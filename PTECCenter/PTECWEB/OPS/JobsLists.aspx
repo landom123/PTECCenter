@@ -109,6 +109,14 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-group-prepend">
+                                <span class="input-group-text">Suppiler</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboSuppiler" runat="server"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่วันที่</span>
                             </div>
                             <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>

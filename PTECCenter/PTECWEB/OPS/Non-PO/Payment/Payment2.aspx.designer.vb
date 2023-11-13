@@ -95,6 +95,15 @@ Partial Public Class Payment2
     Protected WithEvents codeRef As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''BtnCancelCodeRef control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents BtnCancelCodeRef As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''lbtxtremark control.
     '''</summary>
     '''<remarks>
@@ -617,6 +626,15 @@ Partial Public Class Payment2
     Protected WithEvents btnFromAddDetail As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''lbTotal_purecard control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbTotal_purecard As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''btnApproval control.
     '''</summary>
     '''<remarks>
@@ -752,6 +770,24 @@ Partial Public Class Payment2
     Protected WithEvents btnFNS_Rec_Doc As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''multiSelect control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents multiSelect As Global.System.Web.UI.WebControls.ListBox
+
+    '''<summary>
+    '''btnAddDetailsFromSmartBill control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddDetailsFromSmartBill As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''row control.
     '''</summary>
     '''<remarks>
@@ -777,6 +813,15 @@ Partial Public Class Payment2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hiddenAdvancedetailid As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+
+    '''<summary>
+    '''btnAddRef control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddRef As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
     '''lbcboAccountCode control.
