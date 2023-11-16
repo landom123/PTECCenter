@@ -137,7 +137,6 @@ Public Class requestcontract2
         Return dt
     End Function
 
-
     Private Sub Clear()
         Dim objReq As New clsRequestContract
         txtName.Text = ""
@@ -544,7 +543,8 @@ Public Class requestcontract2
                 'txtContractEndDate.Text = CDate(dr("EndDate"))
 
                 If IsDate(dr("BeginDate")) = True Then
-                    txtContractBeginDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                    'txtContractBeginDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                    txtContractBeginDate.Text = CDate(dr("BeginDate"))
                     Session("BeginDate") = txtContractBeginDate.Text
                 Else
                     txtContractBeginDate.Text = ""
@@ -552,7 +552,8 @@ Public Class requestcontract2
                 End If
 
                 If IsDate(dr("EndDate")) = True Then
-                    txtContractEndDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+                    'txtContractEndDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+                    txtContractEndDate.Text = CDate(dr("EndDate"))
                     Session("EndDate") = txtContractEndDate.Text
                 Else
                     txtContractEndDate.Text = ""
@@ -582,6 +583,20 @@ Public Class requestcontract2
                 Session("Registryto") = dr("Registryto")
                 txtRentalReg.Text = dr("Registryto")
                 txtContractNo.Text = dr("ContractNo")
+
+                lblStatus.Text = dr("StatusName")
+
+                If dr("StatusID") = 4 Then
+                    btnSave.Enabled = False
+                    btnApprove.Enabled = False
+                Else
+                    btnSave.Enabled = True
+                    btnApprove.Enabled = True
+                End If
+
+                If usercode = "PWO" And dr("StatusID") <> 4 Then
+                    btnApprove.Enabled = True
+                End If
 
                 txtDocAction.Text = "EDIT"
             Next
@@ -680,77 +695,81 @@ Public Class requestcontract2
 
             Dim err, scriptKey, javaScript As String
 
-            If txtName.Text = "" Then
-                err = "กรุณาตรวจระบุ ชื่อคู่สัญญา "
-                scriptKey = "UniqueKeyForThisScript"
-                javaScript = err ' "alertSuccess('Error')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                Return False
-            End If
+            'If txtName.Text = "" Then
+            '    err = "กรุณาตรวจระบุ ชื่อคู่สัญญา "
+            '    scriptKey = "UniqueKeyForThisScript"
+            '    javaScript = err ' "alertSuccess('Error')"
+            '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    Return False
+            'End If
 
-            If txtCardID.Text = "" Then
-                err = "กรุณาตรวจสอย เลขที่บัตรประชาชน "
-                scriptKey = "UniqueKeyForThisScript"
-                javaScript = err ' "alertSuccess('Error')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                Return False
-            End If
+            'If txtCardID.Text = "" Then
+            '    err = "กรุณาตรวจสอย เลขที่บัตรประชาชน "
+            '    scriptKey = "UniqueKeyForThisScript"
+            '    javaScript = err ' "alertSuccess('Error')"
+            '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    Return False
+            'End If
 
-            If txtTaxID.Text = "" Then
-                err = "กรุณาตรวจสอย เลขที่ผู้เสียภาษี "
-                scriptKey = "UniqueKeyForThisScript"
-                javaScript = err ' "alertSuccess('Error')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                Return False
-            End If
+            'If txtTaxID.Text = "" Then
+            '    err = "กรุณาตรวจสอย เลขที่ผู้เสียภาษี "
+            '    scriptKey = "UniqueKeyForThisScript"
+            '    javaScript = err ' "alertSuccess('Error')"
+            '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    Return False
+            'End If
 
-            If txtAddress.Text = "" Then
-                err = "กรุณาตรวจสอย ที่อยู่ "
-                scriptKey = "UniqueKeyForThisScript"
-                javaScript = err ' "alertSuccess('Error')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                Return False
-            End If
+            'If txtAddress.Text = "" Then
+            '    err = "กรุณาตรวจสอย ที่อยู่ "
+            '    scriptKey = "UniqueKeyForThisScript"
+            '    javaScript = err ' "alertSuccess('Error')"
+            '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    Return False
+            'End If
 
-            If txtSubDistrict.Text = "" Then
-                err = "กรุณาตรวจสอย ที่ยู่ตำบล "
-                scriptKey = "UniqueKeyForThisScript"
-                javaScript = err ' "alertSuccess('Error')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                Return False
-            End If
+            'If txtSubDistrict.Text = "" Then
+            '    err = "กรุณาตรวจสอย ที่ยู่ตำบล "
+            '    scriptKey = "UniqueKeyForThisScript"
+            '    javaScript = err ' "alertSuccess('Error')"
+            '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    Return False
+            'End If
 
-            If txtDistrict.Text = "" Then
-                err = "กรุณาตรวจสอย ที่อยู่อำเภอ "
-                scriptKey = "UniqueKeyForThisScript"
-                javaScript = err ' "alertSuccess('Error')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                Return False
-            End If
+            'If txtDistrict.Text = "" Then
+            '    err = "กรุณาตรวจสอย ที่อยู่อำเภอ "
+            '    scriptKey = "UniqueKeyForThisScript"
+            '    javaScript = err ' "alertSuccess('Error')"
+            '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    Return False
+            'End If
 
-            If txtProvince.Text = "" Then
-                err = "กรุณาตรวจสอย ที่อยู่จังหวัด "
-                scriptKey = "UniqueKeyForThisScript"
-                javaScript = err ' "alertSuccess('Error')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                Return False
-            End If
+            'If txtProvince.Text = "" Then
+            '    err = "กรุณาตรวจสอย ที่อยู่จังหวัด "
+            '    scriptKey = "UniqueKeyForThisScript"
+            '    javaScript = err ' "alertSuccess('Error')"
+            '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    Return False
+            'End If
 
-            If txtPostcode.Text = "" Then
-                err = "กรุณาตรวจสอย รหัสไปรษณีย์ "
-                scriptKey = "UniqueKeyForThisScript"
-                javaScript = err ' "alertSuccess('Error')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                Return False
-            End If
+            'If txtPostcode.Text = "" Then
+            '    err = "กรุณาตรวจสอย รหัสไปรษณีย์ "
+            '    scriptKey = "UniqueKeyForThisScript"
+            '    javaScript = err ' "alertSuccess('Error')"
+            '    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            '    Return False
+            'End If
 
             CompanyID = cboCompany.SelectedValue
             Branch = cboBranch.SelectedValue
             ContractID = cboContractType.SelectedValue
             GroupConID = cboMainContact.SelectedValue
             GroupConID_SubItem = cboContractType.SelectedValue
-            dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
-            dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
+            'dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
+            'dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
+
+            dContractBegindate = CDate(txtContractBeginDate.Text)
+            dContractEndDate = CDate(txtContractEndDate.Text)
+
             CustName = txtName.Text
             CardID = txtCardID.Text
             Gender = cboSex.Text
@@ -1354,9 +1373,13 @@ Public Class requestcontract2
             End If
             iDueType = 3
 
-            dBeginDateFix = DateAdd(DateInterval.Year, -543, Date.Parse(txtBeginDateFix.Text))
-            dEndDateFix = DateAdd(DateInterval.Year, -543, Date.Parse(txtEndDateFix.Text))
-            dDueDateFix = DateAdd(DateInterval.Year, -543, Date.Parse(txtDueDateFix.Text))
+            'dBeginDateFix = DateAdd(DateInterval.Year, -543, Date.Parse(txtBeginDateFix.Text))
+            'dEndDateFix = DateAdd(DateInterval.Year, -543, Date.Parse(txtEndDateFix.Text))
+            'dDueDateFix = DateAdd(DateInterval.Year, -543, Date.Parse(txtDueDateFix.Text))
+
+            dBeginDateFix = Date.Parse(txtBeginDateFix.Text)
+            dEndDateFix = Date.Parse(txtEndDateFix.Text)
+            dDueDateFix = Date.Parse(txtDueDateFix.Text)
 
             If objCo.AddContractFixiblePayment(txtdocuno.Text, cboPayType.SelectedValue, iDueType, CInt(txtFrequencyFix.Text), dDueDateFix, CDbl(txtAmountFix.Text) _
                                                , dBeginDateFix, dEndDateFix, usercode) = False Then
@@ -1871,12 +1894,12 @@ Public Class requestcontract2
         Try
             Dim dt As New DataTable
 
-            Dim numrows As Integer
-            Dim numcells As Integer
-            Dim i As Integer
-            Dim j As Integer
-            Dim r As TableRow
-            Dim c As TableCell
+            'Dim numrows As Integer
+            'Dim numcells As Integer
+            'Dim i As Integer
+            'Dim j As Integer
+            'Dim r As TableRow
+            'Dim c As TableCell
 
             dt = objCo.loadContractAtt4(iID)
             'numrows = dt.Rows.Count
@@ -2051,13 +2074,15 @@ Public Class requestcontract2
                 'txtBeginDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
 
                 If IsDate(dr("DocDate")) = True Then
-                    txtStartDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
+                    'txtStartDate.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
+                    txtStartDate.Text = CDate(dr("DocDate"))
                 Else
                     txtStartDate.Text = ""
                 End If
 
                 If IsDate(dr("BeginDate")) = True Then
-                    txtBeginDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                    'txtBeginDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                    txtBeginDate4.Text = CDate(dr("BeginDate"))
                 Else
                     txtBeginDate4.Text = ""
                 End If
@@ -2079,7 +2104,8 @@ Public Class requestcontract2
                 End If
 
                 If IsDate(dr("EndDate")) = True Then
-                    txtEndDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+                    'txtEndDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+                    txtEndDate4.Text = CDate(dr("EndDate"))
                 Else
                     txtEndDate4.Text = ""
                 End If
@@ -2091,7 +2117,8 @@ Public Class requestcontract2
                 End If
 
                 If IsDate(dr("DueDate")) = True Then
-                    txtDueDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
+                    'txtDueDate4.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
+                    txtDueDate4.Text = CDate(dr("DueDate"))
                 Else
                     txtDueDate4.Text = ""
                 End If
@@ -2147,13 +2174,15 @@ Public Class requestcontract2
                 'txtDocDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
 
                 If IsDate(dr("DueDate")) = True Then
-                    txtIssueDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
+                    'txtIssueDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
+                    txtIssueDateBook.Text = CDate(dr("DueDate"))
                 Else
                     txtIssueDateBook.Text = ""
                 End If
 
                 If IsDate(dr("DocDate")) = True Then
-                    txtDocDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
+                    'txtDocDateBook.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DocDate")))
+                    txtDocDateBook.Text = CDate(dr("DocDate"))
                 Else
                     txtDocDateBook.Text = ""
                 End If
@@ -2210,9 +2239,14 @@ Public Class requestcontract2
                 cboContractType.SelectedValue = dr("ContractTypeID")
                 lblContractTypeRentJoin.Text = cboContractType.SelectedItem.Text
 
-                txtDocDateRentJoin.Text = DateAdd(DateInterval.Year, +543, CDate(dr("DocDate")))
-                txtBeginDateRentJoin.Text = DateAdd(DateInterval.Year, +543, CDate(dr("BeginDate")))
-                txtEndDateRentJoin.Text = DateAdd(DateInterval.Year, +543, CDate(dr("EndDate")))
+                'txtDocDateRentJoin.Text = DateAdd(DateInterval.Year, +543, CDate(dr("DocDate")))
+                'txtBeginDateRentJoin.Text = DateAdd(DateInterval.Year, +543, CDate(dr("BeginDate")))
+                'txtEndDateRentJoin.Text = DateAdd(DateInterval.Year, +543, CDate(dr("EndDate")))
+
+                txtDocDateRentJoin.Text = CDate(dr("DocDate"))
+                txtBeginDateRentJoin.Text = CDate(dr("BeginDate"))
+                txtEndDateRentJoin.Text = CDate(dr("EndDate"))
+
 
                 txtVendorContract1.Text = dr("VendorContract1")
                 txtVendorContract2.Text = dr("VendorContract2")
@@ -2320,47 +2354,62 @@ Public Class requestcontract2
             Dim dt As New DataTable
 
             dt = objCo.loadContractNonOil(txtdocuno.Text, 0)
-            gvPayTypeNonOil.DataSource = dt
-            gvPayTypeNonOil.DataBind()
+            'gvPayTypeNonOil.DataSource = dt
+            'gvPayTypeNonOil.DataBind()
 
-            'For Each dr As DataRow In dt.Rows
-            '    lblContractTypeNonOil.Text = dr("ContractTypeName")
-            '    'txtAmountNonOil.Text = FormatNumber(CDbl(dr("Amnt")), 2)
-            '    txtFrequencyNonOil.Text = dr("Frequency")
-            '    txtSizeNonOil.Text = dr("Size")
-            '    txtRoomNumberNonOil.Text = dr("RoomNum")
-            '    txtBusinessTypeNonOil.Text = dr("BusinessType")
-            '    'txtCustCodeNonOil.Text = dr("CustCode")
-            '    txtCustNameNonOil.Text = dr("CustName")
-            '    txtIDCardNonOil.Text = dr("CardID")
-            '    txtTaxIDNonOil.Text = dr("TaxID")
-            '    txtHomeIDNonOil.Text = dr("Addr")
-            '    txtSubDistrictNonOil.Text = dr("SubDistrict")
-            '    txtDistrictNonOil.Text = dr("District")
-            '    txtProvinceNonOil.Text = dr("Province")
-            '    txtPostCodeNonOil.Text = dr("PostCode")
-            '    txtContactNonOil.Text = dr("Contact")
-            '    txtTelNonOil.Text = dr("Tel")
-            '    txtLineNonOil.Text = dr("Line")
-            '    txtEmailNonOil.Text = dr("Email")
+            For Each dr As DataRow In dt.Rows
+                lblContractTypeNonOil.Text = dr("ContractTypeName")
+                'txtAmountNonOil.Text = FormatNumber(CDbl(dr("Amnt")), 2)
+                txtFrequencyNonOil.Text = dr("Frequency")
+                txtSizeNonOil.Text = dr("Size")
+                txtRoomNumberNonOil.Text = dr("RoomNum")
+                txtBusinessTypeNonOil.Text = dr("BusinessType")
+                'txtCustCodeNonOil.Text = dr("CustCode")
+                txtCustNameNonOil.Text = dr("CustName")
+                txtIDCardNonOil.Text = dr("CardID")
+                txtTaxIDNonOil.Text = dr("TaxID")
+                txtHomeIDNonOil.Text = dr("Addr")
+                txtSubDistrictNonOil.Text = dr("SubDistrict")
+                txtDistrictNonOil.Text = dr("District")
+                txtProvinceNonOil.Text = dr("Province")
+                txtPostCodeNonOil.Text = dr("PostCode")
+                txtContactNonOil.Text = dr("Contact")
+                txtTelNonOil.Text = dr("Tel")
+                txtLineNonOil.Text = dr("Line")
+                txtEmailNonOil.Text = dr("Email")
 
-            '    'cboPayTypeNonOil.SelectedValue = dr("PayTypeID")
+                txtPayNonOilService.Text = dr("PayService")
+                txtPayNonOilInsurance.Text = dr("PayInsurance")
+                txtPayNonOilCenter.Text = dr("PayCenter")
+                txtPayNonOilGarbag.Text = dr("PayGarbag")
+                txtPayNonOilWater.Text = dr("PayWater")
+                txtPqyNonOilElectrice.Text = dr("PayElectrict")
+                txtPayNonOilLabel.Text = dr("PayLabel")
+                txtPayNonOilRemarkOther.Text = dr("PayOther")
+                'txtNonOilRemarkOther.Text = dr("Remark")
 
-            '    Select Case dr("PayRound")
-            '        Case 1
-            '            rdoMonthNonOil.Checked = True
-            '        Case 2
-            '            rdoYearNonOil.Checked = True
-            '        Case 3
-            '            rdoOnceNonOil.Checked = True
-            '        Case 4
-            '            rdoFreeNonOil.Checked = True
-            '    End Select
+                'cboPayTypeNonOil.SelectedValue = dr("PayTypeID")
 
-            '    txtDueDateNonOil.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
-            '    txtBeginDateNonOil.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
-            '    txtEndDateNonOil.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
-            'Next
+                Select Case dr("PayRound")
+                    Case 1
+                        rdoMonthNonOil.Checked = True
+                    Case 2
+                        rdoYearNonOil.Checked = True
+                    Case 3
+                        rdoOnceNonOil.Checked = True
+                    Case 4
+                        rdoFreeNonOil.Checked = True
+                End Select
+
+                'txtDueDateNonOil.Text = DateAdd(DateInterval.Year, 543, CDate(dr("DueDate")))
+                'txtBeginDateNonOil.Text = DateAdd(DateInterval.Year, 543, CDate(dr("BeginDate")))
+                'txtEndDateNonOil.Text = DateAdd(DateInterval.Year, 543, CDate(dr("EndDate")))
+
+                txtDueDateNonOil.Text = CDate(dr("DueDate"))
+                txtBeginDateNonOil.Text = CDate(dr("BeginDate"))
+                txtEndDateNonOil.Text = CDate(dr("EndDate"))
+
+            Next
 
             Return True
         Catch ex As Exception
@@ -2419,6 +2468,27 @@ Public Class requestcontract2
             '    txtdocuno.Text = contractno
             '    SetButton("NEW")
             'End If
+
+            If Not Request.QueryString("DocID") Is Nothing Then
+                'objpolicy.setComboPolicyByJobTypeID(cboPolicy, cboJobType.SelectedItem.Value)
+                'txtDocDate.Text = Now()
+                Session("iDocID") = Request.QueryString("DocID")
+                'txtJobno.Text = Session("jobno")
+                'FindJobNo(txtJobno.Text)
+
+            Else
+                'If Not Session("branchid") Is Nothing Then
+                '    cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid")))
+                '    If cboJobType.SelectedItem.Value = 1 Then
+                '        FindPositionInPump(cboBranch.SelectedItem.Value)
+                '    End If
+                'End If
+                'Session("status") = "new"
+                'objStatus = "new"
+                'txtCreateBy.Text = Session("username")
+                'txtCreateDate.Text = Now()
+            End If
+
 
 
             SetCboContractLand(cboContractLand)
@@ -2638,9 +2708,14 @@ Public Class requestcontract2
             Dim iItemNo As Integer = CInt(gvContractFix.SelectedRow.Cells(8).Text)
 
             txtFrequencyFix.Text = gvContractFix.SelectedRow.Cells(2).Text
-            txtDueDateFix.Text = DateAdd(DateInterval.Year, 543, Date.Parse(gvContractFix.SelectedRow.Cells(3).Text))
-            txtBeginDateFix.Text = DateAdd(DateInterval.Year, 543, Date.Parse(gvContractFix.SelectedRow.Cells(4).Text))
-            txtEndDateFix.Text = DateAdd(DateInterval.Year, 543, Date.Parse(gvContractFix.SelectedRow.Cells(5).Text))
+            'txtDueDateFix.Text = DateAdd(DateInterval.Year, 543, Date.Parse(gvContractFix.SelectedRow.Cells(3).Text))
+            'txtBeginDateFix.Text = DateAdd(DateInterval.Year, 543, Date.Parse(gvContractFix.SelectedRow.Cells(4).Text))
+            'txtEndDateFix.Text = DateAdd(DateInterval.Year, 543, Date.Parse(gvContractFix.SelectedRow.Cells(5).Text))
+
+            txtDueDateFix.Text = Date.Parse(gvContractFix.SelectedRow.Cells(3).Text)
+            txtBeginDateFix.Text = Date.Parse(gvContractFix.SelectedRow.Cells(4).Text)
+            txtEndDateFix.Text = Date.Parse(gvContractFix.SelectedRow.Cells(5).Text)
+
             txtAmountFix.Text = CDbl(gvContractFix.SelectedRow.Cells(6).Text)
 
             'DateAdd(DateInterval.Year, -543, Date.Parse(txtEndDateFix.Text))
@@ -3082,19 +3157,22 @@ Public Class requestcontract2
                 txtFrequencyNonOil.Text = dr("Frequency")
 
                 If IsDate(dr("DueDate")) = True Then
-                    txtDueDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("DueDate")))
+                    'txtDueDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("DueDate")))
+                    txtDueDateNonOil.Text = Date.Parse(dr("DueDate"))
                 Else
                     txtDueDateNonOil.Text = ""
                 End If
 
                 If IsDate(dr("BeginDate")) = True Then
-                    txtBeginDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("BeginDate")))
+                    'txtBeginDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("BeginDate")))
+                    txtBeginDateNonOil.Text = Date.Parse(dr("BeginDate"))
                 Else
                     txtBeginDateNonOil.Text = ""
                 End If
 
                 If IsDate(dr("EndDate")) = True Then
-                    txtEndDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("EndDate")))
+                    'txtEndDateNonOil.Text = DateAdd(DateInterval.Year, 543, Date.Parse(dr("EndDate")))
+                    txtEndDateNonOil.Text = Date.Parse(dr("EndDate"))
                 Else
                     txtEndDateNonOil.Text = ""
                 End If
@@ -3321,14 +3399,36 @@ Public Class requestcontract2
     Protected Sub txtContractBeginDate_TextChanged(sender As Object, e As EventArgs) 'Handles txtContractBeginDate.TextChanged
         Try
             If IsDate(txtContractBeginDate.Text) = True And IsDate(txtContractEndDate.Text) = True Then
+                'Dim BeginDate As DateTime
+                'Dim EndDatetime As DateTime
+
                 txtcontractPeriod.Text = 0
                 txtcontractPeriod2.Text = 0
-                txtcontractPeriod.Text = DateAndTime.DateDiff(DateInterval.Year, DateTime.Parse(txtContractBeginDate.Text), DateTime.Parse(txtContractEndDate.Text))
-                txtcontractPeriod2.Text = DateAndTime.DateDiff(DateInterval.Month, DateTime.Parse(txtContractBeginDate.Text), DateTime.Parse(txtContractEndDate.Text)) - (DateAndTime.DateDiff(DateInterval.Year, DateTime.Parse(txtContractBeginDate.Text), DateTime.Parse(txtContractEndDate.Text)) * 12)
+                'txtcontractPeriod.Text = DateAndTime.DateDiff(DateInterval.Year, DateTime.Parse(txtContractBeginDate.Text), DateTime.Parse(txtContractEndDate.Text))
+                ''txtcontractPeriod2.Text = DateAndTime.DateDiff(DateInterval.Month, DateTime.Parse(txtContractBeginDate.Text), DateTime.Parse(txtContractEndDate.Text)) - (DateAndTime.DateDiff(DateInterval.Year, DateTime.Parse(txtContractBeginDate.Text), DateTime.Parse(txtContractEndDate.Text)) * 12)
+
+                'txtcontractPeriod2.Text = DateAndTime.DateDiff(DateInterval.Month, DateTime.Parse(txtContractBeginDate.Text), DateTime.Parse(txtContractEndDate.Text)) _
+                '    - (DateAndTime.DateDiff(DateInterval.Year, DateTime.Parse(txtContractBeginDate.Text), DateTime.Parse(txtContractEndDate.Text)) * 12)
+
+                'BeginDate = DateTime.Parse(txtContractBeginDate.Text)
+                'EndDatetime = DateAdd(DateInterval.Day, 1, DateTime.Parse(txtContractEndDate.Text))
+                'txtcontractPeriod.Text = DateDiff(DateInterval.Year, BeginDate, EndDatetime) / 12
+                'txtcontractPeriod2.Text = DateDiff(DateInterval.Year, BeginDate, EndDatetime) * 12%
+
+
+                Dim dt As New DataTable
+
+                dt = objCo.loadPeriod(DateTime.Parse(txtContractBeginDate.Text), DateAdd(DateInterval.Day, 1, DateTime.Parse(txtContractEndDate.Text)))
+
+                For Each dr As DataRow In dt.Rows
+                    txtcontractPeriod.Text = dr("sYear")
+                    txtcontractPeriod2.Text = dr("sMonth")
+                Next
 
             End If
 
             disableTab(cboMainContact.SelectedValue)
+
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
             err = ex.Message
@@ -3558,7 +3658,9 @@ Public Class requestcontract2
         Dim bytes2 As Byte()
 
         iID = Session("IDNonOil")
-        iItem = Session("ItemNoPower")
+
+        iItem = Session("ItemNoNonOil")
+
 
         Using br As BinaryReader = New BinaryReader(FileUpload3.PostedFile.InputStream)
             bytes = br.ReadBytes(FileUpload3.PostedFile.ContentLength)
@@ -3962,7 +4064,8 @@ Public Class requestcontract2
             'DocDate = Now.Date ' DateAdd(DateInterval.Year, -543, CDate(txtdocdate.Text))
 
             If IsDate(txtStartDate.Text) = True Then
-                DocDate = DateAdd(DateInterval.Year, -543, CDate(txtStartDate.Text))
+                'DocDate = DateAdd(DateInterval.Year, -543, CDate(txtStartDate.Text))
+                DocDate = CDate(txtStartDate.Text)
             Else
                 DocDate = "1900-01-01"
             End If
@@ -3979,19 +4082,22 @@ Public Class requestcontract2
             'BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDate4.Text))
 
             If IsDate(txtBeginDate4.Text) = True Then
-                BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDate4.Text))
+                'BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDate4.Text))
+                BeginDate = CDate(txtBeginDate4.Text)
             Else
                 BeginDate = "1900-01-01"
             End If
 
             If IsDate(txtEndDate4.Text) = True Then
-                EndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDate4.Text))
+                'EndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDate4.Text))
+                EndDate = CDate(txtEndDate4.Text)
             Else
                 EndDate = "1900-01-01"
             End If
 
             If IsDate(txtDueDate4.Text) = True Then
-                DueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDate4.Text))
+                'DueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDate4.Text))
+                DueDate = CDate(txtDueDate4.Text)
             Else
                 DueDate = "1900-01-01"
             End If
@@ -4067,6 +4173,10 @@ Public Class requestcontract2
             End If
             AddrLocation = txtAddrOther.Text
             DueDay = txtDueDateOth.Text
+
+            If AddRequest() = False Then
+                Exit Sub
+            End If
 
             If objCo.AddContractOther(txtdocuno.Text, CompanyID, DocDate, Customerparty, Customerparty1, Customerparty2, Addr, Contact, Branch, Amount, [Period], BeginDate, EndDate, DueDate, FineAmnt, PerformanceIns _
                                 , ConditionIns, ConditionAmnt, Remark, Remark1, Remark2, Remark3, Remark4, chkEndDate, chkDueDate, PayInsurance, PayBefore _
@@ -4151,13 +4261,15 @@ Public Class requestcontract2
             'DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateBook.Text))
 
             If IsDate(txtIssueDateBook.Text) = True Then
-                DueDate = DateAdd(DateInterval.Year, -543, CDate(txtIssueDateBook.Text))
+                'DueDate = DateAdd(DateInterval.Year, -543, CDate(txtIssueDateBook.Text))
+                DueDate = CDate(txtIssueDateBook.Text)
             Else
                 DueDate = "1900-01-01"
             End If
 
             If IsDate(txtDocDateBook.Text) = True Then
-                DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateBook.Text))
+                'DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateBook.Text))
+                DocDate = CDate(txtDocDateBook.Text)
             Else
                 DocDate = "1900-01-01"
             End If
@@ -4180,6 +4292,11 @@ Public Class requestcontract2
             Addr = txtAddrPowerBook.Text
             Contact = txtContactPowerBook.Text
             ItemNo = Session("ItemNo")
+
+            If AddRequest() = False Then
+                Exit Sub
+            End If
+
             If objCo.AddPowerBook(txtdocuno.Text, ContractTypeID, DueDate, DocDate, Empfr, Empto, Witness1, Witness2, Obj1, Obj2, Obj3, Oth1, Oth2, Oth3 _
                                  , CreateBy, CompanyID, Empto2, Empto3, BrCode, Addr, Contact, ItemNo) = False Then
                 Exit Sub
@@ -4226,9 +4343,13 @@ Public Class requestcontract2
                                  RentArea2, RentArea3, RentArea4, Oth1, Oth2, Oth3, Oth4, CreateBy As String
 
             ContractTypeID = cboContractType.SelectedValue
-            DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateRentJoin.Text))
-            BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateRentJoin.Text))
-            EndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateRentJoin.Text))
+            'DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateRentJoin.Text))
+            'BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateRentJoin.Text))
+            'EndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateRentJoin.Text))
+
+            DocDate = CDate(txtDocDateRentJoin.Text)
+            BeginDate = CDate(txtBeginDateRentJoin.Text)
+            EndDate = CDate(txtEndDateRentJoin.Text)
 
             VendorContract1 = txtVendorContract1.Text
             VendorContract2 = txtVendorContract2.Text
@@ -4377,20 +4498,23 @@ Public Class requestcontract2
             End If
 
             If IsDate(txtDueDateNonOil.Text) = True Then
-                dDueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDateNonOil.Text))
+                'dDueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDateNonOil.Text))
+                dDueDate = CDate(txtDueDateNonOil.Text)
             Else
                 dDueDate = "1900-01-01"
             End If
 
 
             If IsDate(txtBeginDateNonOil.Text) = True Then
-                dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
+                'dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
+                dBeginDate = CDate(txtBeginDateNonOil.Text)
             Else
                 dBeginDate = "1900-01-01"
             End If
 
             If IsDate(txtEndDateNonOil.Text) = True Then
-                dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
+                'dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
+                dEndDate = CDate(txtEndDateNonOil.Text)
             Else
                 dEndDate = "1900-01-01"
             End If
@@ -4403,13 +4527,15 @@ Public Class requestcontract2
 
 
             If IsDate(txtBeginDateNonOil.Text) = True Then
-                dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
+                'dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
+                dBeginDate = CDate(txtBeginDateNonOil.Text)
             Else
                 dBeginDate = "1900-01-01"
             End If
 
             If IsDate(txtEndDateNonOil.Text) = True Then
-                dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
+                'dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
+                dEndDate = CDate(txtEndDateNonOil.Text)
             Else
                 dEndDate = "1900-01-01"
             End If
@@ -4443,6 +4569,9 @@ Public Class requestcontract2
                 End If
             End If
 
+            If AddRequest() = False Then
+                Exit Sub
+            End If
 
             If objCo.AddContractNonOil(txtdocuno.Text, lblContractTypeNonOil.Text, 0, 20 _
                                        , iPayRound, CInt(txtFrequencyNonOil.Text), dDueDate, dBeginDate, dEndDate, txtSizeNonOil.Text, txtRoomNumberNonOil.Text _
@@ -4463,7 +4592,8 @@ Public Class requestcontract2
 
             For Each dr As DataRow In dtNon.Rows
                 Session("IDNonOil") = dr("ID")
-                Session("ItemNoPower") = dr("ItemNo")
+                Session("ItemNoNonOil") = dr("ItemNo")
+
             Next
 
             UploadPicNonOil()
@@ -4484,9 +4614,11 @@ Public Class requestcontract2
                 Exit Sub
             End If
 
-            If loadContractNonOil() = False Then
-                Exit Sub
-            End If
+
+            'If loadContractNonOil() = False Then
+            '    Exit Sub
+            'End If
+
             Clear()
 
         Catch ex As Exception
@@ -4720,4 +4852,5 @@ Public Class requestcontract2
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+
 End Class

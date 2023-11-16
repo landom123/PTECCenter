@@ -149,8 +149,12 @@ Public Class requestcontract
             Dim dBegindate, dEnddate, dDueDate As Date
 
             dDueDate = Date.Now
-            dBegindate = DateAdd(DateInterval.Year, -543, CDate(txtBegindate.Text))
-            dEnddate = DateAdd(DateInterval.Year, -543, CDate(txtEnddate.Text))
+            'dBegindate = DateAdd(DateInterval.Year, -543, CDate(txtBegindate.Text))
+            'dEnddate = DateAdd(DateInterval.Year, -543, CDate(txtEnddate.Text))
+
+            dBegindate = CDate(txtBegindate.Text)
+            dEnddate = CDate(txtEnddate.Text)
+
 
 
             dt = objReq.FindRequest(dBegindate.ToString("yyyyMMdd", dtinfo), dEnddate.ToString("yyyyMMdd", dtinfo), 1, txtVendor.Text, txtContractno.Text)

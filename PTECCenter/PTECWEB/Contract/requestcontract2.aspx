@@ -395,7 +395,7 @@
 
                                     </div>
                                   <div class="row" style="padding-top: 0.2rem;" >
-                                             <div class="col-2" runat="server">
+                                             <div class="col-3" runat="server">
                                                 <div class="input-group sm-2" runat="server">
                                                     <div class="input-group-prepend" runat="server">
                                                     <span class="input-group-text" runat="server"> วันที่เริ่มสัญญา</span>
@@ -405,7 +405,7 @@
                                                 </div>
                                             </div>
 
-                                             <div class="col-2" >
+                                             <div class="col-3" >
                                                 <div class="input-group sm-2" runat="server">
                                                     <div class="input-group-prepend" runat="server">
                                                     <span class="input-group-text" >วันที่สิ้นสุดสัญญา</span>
