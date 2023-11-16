@@ -1429,6 +1429,40 @@ Public Class clsRequestContract
         Return result
     End Function
 
+    Public Function loadPeriod(BeginDate As DateTime, EndDate As DateTime) As DataTable
+
+        Try
+            Dim result As DataTable
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Calculate_Period"
+            cmd.CommandType = CommandType.StoredProcedure
+
+
+            cmd.Parameters.Add("@BeginDate", SqlDbType.DateTime).Value = BeginDate
+            cmd.Parameters.Add("@EndDate", SqlDbType.DateTime).Value = EndDate
+            'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            'result = cmd.ExecuteNonQuery
+            result = ds.Tables(0)
+            conn.Close()
+
+            Return result
+        Catch ex As Exception
+
+        End Try
+
+    End Function
+
     Public Function Addbranch(BrCode As String, BrName As String, Addr As String, SubDistrict As String, District As String, Province As String _
             , PostCode As String, Tel As String, Contract As String, Remark As String, Createby As String) As Boolean
 
