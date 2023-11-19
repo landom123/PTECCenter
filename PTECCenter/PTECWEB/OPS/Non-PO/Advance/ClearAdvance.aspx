@@ -535,6 +535,12 @@
                                         <td colspan="4" style="width: 160px !important; text-align: right;" id="total_vat"><%= total_tax %></td>
                                     </tr>
                                     <tr>
+                                        <td colspan="20" style="width: 800px !important; text-align: right; border-bottom-width: 0px; border-top-width: 0px;">
+                                            <h6>Purecard</h6>
+                                        </td>
+                                        <td colspan="4" style="width: 160px !important; text-align: right;" id="total_purecard"><%= total_purecard %><span class="d-none" runat="server" id="lbTotal_purecard"></span></td>
+                                    </tr>
+                                    <tr>
                                         <td colspan="2" style="width: 80px !important; text-align: right; border-right-width: 0px; border-top-width: 0px;">
                                             <h5></h5>
                                         </td>
@@ -783,6 +789,11 @@
                     <input type="hidden" class="form-control" id="row" value="0" runat="server">
                     <input type="hidden" class="form-control" id="nextrow" value="0" runat="server">
                     <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
+                    <div class="row">
+                        <div class="col d-flex flex-row-reverse">
+                            <a href="#" runat="server" id="btnAddRef" data-target="#exampleModalToggle2" data-toggle="modal" data-dismiss="modal" data-backdrop="static" data-keyboard="false">เลือกจากรายการ..</a>
+                        </div>
+                    </div>
                     <div class="form-group ">
                         <asp:Label ID="lbcboAccountCode" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="รหัสบัญชี" />
                         <asp:Label ID="lbcboAccountCodeMandatory" CssClass="text-danger" AssociatedControlID="cboAccountCode" runat="server" Text="*" />
@@ -958,6 +969,26 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel2">เลือกรายการ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    <asp:ListBox class="cbomulti" runat="server" ID="multiSelect" SelectionMode="multiple" data-selected-text-format="count"></asp:ListBox>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btnAddDetailsFromSmartBill" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
@@ -1021,6 +1052,10 @@
                 noneSelectedText: '-',
                 liveSearch: true,
                 maxOptions: 1
+            });
+            $('.cbomulti').selectpicker({
+                noneSelectedText: '-',
+                liveSearch: true
             });
 
             $('.form-control').selectpicker('refresh');

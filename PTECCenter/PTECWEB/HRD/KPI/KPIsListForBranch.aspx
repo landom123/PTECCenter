@@ -2,9 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <!-- datetimepicker-->
-    <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
-    <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <style>
         .color__purple {
             color: #af6eab !important;
@@ -84,6 +81,21 @@
         .table__inner > tbody {
             font-size: .75rem;
         }
+        .border__solid {
+            border: solid !important;
+            border-color: red !important;
+        } 
+        tr>.text__rateowner::after {
+          content: "ยังไม่ลงคะแนน";
+          color:red;
+        }
+        tr>.text__rateheader::after {
+          content: "ยังไม่ลงคะแนน";
+          color:red;
+        }
+        .goEdit {
+          cursor: pointer;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -93,6 +105,8 @@
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper" style="min-height: 600px;">
+                <%--<embed src="http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_230100391.pdf" width="100%" height="100%" />--%>
+
                 <div class="px-5">
                     <%--<div class="row">
                         <div class="col text-left align-self-center">
@@ -239,11 +253,13 @@
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Lv2").ToString %></span></td>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Lv1").ToString %></span></td>
                                         <td>
+                                            <% If AllKpi.Tables(1).Rows(i).Item("countnotify") > 0 Then %>
                                             <span class="p-1">
-                                                <%-- <button type="button" class="btn btn-sm btn-danger">
-                                                    <i class="far fa-bell"></i><span class="badge badge-danger">4</span>
-                                                </button>--%>
+                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="<%= AllKpi.Tables(1).Rows(i).Item("notifytitle").ToString %>">
+                                                    <i class="far fa-bell"></i><span class="badge badge-danger"><%= AllKpi.Tables(1).Rows(i).Item("countnotify").ToString %></span>
+                                                </button>
                                             </span>
+                                            <% End If %>
                                         </td>
 
                                     </tr>
@@ -280,7 +296,7 @@
                                                         <% For j = 0 To AllKpi.Tables(2).Rows.Count - 1 %>
                                                         <% If AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(2).Rows(j).Item("actionkpi_code").ToString Then %>
                                                         <tr class="text-center">
-                                                            <td><span class="badge badge-blue"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
+                                                            <td><span class="badge badge-blue <%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And AllKpi.Tables(1).Rows(i).Item("complete") = 0 And (Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer), "border__solid", "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
                                                             <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionbranch").ToString %></span></td>
                                                             <td><span class=""><%= AllKpi.Tables(2).Rows(j).Item("NameOwner").ToString %></span></td>
 
@@ -293,13 +309,17 @@
                                                                     <% else If AllKpi.Tables(2).Rows(j).Item("actionmonthly").ToString = "2" Then %>
                                                                     <span class="badge badge-danger">ช้ากว่าแผน</span>
                                                                     <% else If AllKpi.Tables(2).Rows(j).Item("actionmonthly").ToString = "3" Then %>
-                                                                    <span class="badge badge-danger">เร็วกว่าแผน</span>
+                                                                    <span class="badge badge-primary">เร็วกว่าแผน</span>
                                                                     <% End if %>
                                                                 </span>
                                                             </td>
                                                             <td class="text-left"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actiontitleresult").ToString %></span></td>
-                                                            <td><span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionrateowner"), Integer) < 3), "text-danger", "text-success"), "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionrateowner").ToString %></span></td>
-                                                            <td><span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionratehead"), Integer) < 3), "text-danger", "text-success"), "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionratehead").ToString %></span></td>
+                                                            <td class="<%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And AllKpi.Tables(1).Rows(i).Item("complete") = 0 And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And (adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Or AllKpi.Tables(0).Rows(k).Item("ownercode").ToString = cboBranchManager.SelectedItem.Text.ToString), "border__solid text__rateowner goEdit", "") %>">
+                                                                <span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionrateowner"), Integer) < 3), "text-danger", "text-success"), "") %> "><%= AllKpi.Tables(2).Rows(j).Item("actionrateowner").ToString %></span>
+                                                            </td>
+                                                            <td class="<%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer And (adm_code.IndexOf(Session("usercode").ToString) > -1 Or operator_code.IndexOf(Session("usercode").ToString) > -1 Or AllKpi.Tables(1).Rows(i).Item("empuppercode").ToString = Session("usercode").ToString), "border__solid text__rateheader goEdit", "") %>">
+                                                                <span class="p-1 font-weight-bold <%= If(TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer, If((DirectCast(AllKpi.Tables(2).Rows(j).Item("actionratehead"), Integer) < 3), "text-danger", "text-success"), "") %> "><%= AllKpi.Tables(2).Rows(j).Item("actionratehead").ToString %></span>
+                                                            </td>
                                                             <td class="text-left"><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionfeedback").ToString %></span></td>
                                                         </tr>
 
@@ -342,7 +362,6 @@
 
                         </div>
                     </div>
-                    <%--<embed src="http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_230100391.pdf" width="100%" height="1000rem" />--%>
                     <!------------------------------------------------------------------------>
                 </div>
 
@@ -350,19 +369,8 @@
         </div>
     </div>
 
-    <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
-    <!-- datetimepicker ต้องไปทั้งชุด-->
-    <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script type="text/javascript">
-        jQuery('[id$=txtDuedate]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08'
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
@@ -371,38 +379,29 @@
             });
 
 
+            $('[data-toggle="tooltip"]').tooltip();
             $('.form-control').selectpicker('refresh');
-            //checkCOorHO();
-        });
 
+            var elements = document.getElementsByClassName("goEdit");
+
+
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].addEventListener('click', myFunction, false);
+            }
+        });
+        var myFunction = function () {
+            console.log(this);
+            const elemid = this.parentElement.parentElement.parentElement.parentElement.id;
+            console.log(elemid);
+
+            window.location.href = `KPIsEdit.aspx?Kpi_Code=${elemid}`;
+
+        };
         $('.noEnterSubmit').keypress(function (e) {
             if (e.which == 13) return false;
             //or...
             if (e.which == 13) e.preventDefault();
         });
-
-        <%--function confirmDeletedetail(kpicode) {
-            Swal.fire({
-                title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',
-                text: "",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                    var user = "<% =Session("usercode").ToString %>";
-                    var params = "{'kpicode': '" + kpicode + "','user': '" + user + "'}";
-
-                    __doPostBack('deletehead', params);
-                }
-            })
-
-            return false;
-        }--%>
         function alertSuccess() {
             Swal.fire(
                 'สำเร็จ',

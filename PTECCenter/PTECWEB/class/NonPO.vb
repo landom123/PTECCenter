@@ -294,6 +294,7 @@ Public Class NonPO
             cmd.Parameters.Add("@vat_wait", SqlDbType.Bit).Value = .Item("vat_wait")
             cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
             cmd.Parameters.Add("@ownerid", SqlDbType.Int).Value = .Item("ownerid")
+            cmd.Parameters.Add("@purecard_amount", SqlDbType.Money).Value = .Item("purecard_amount")
         End With
 
 
@@ -328,7 +329,8 @@ Public Class NonPO
                                     .Rows(i).Item("invoicedate"),
                                     .Rows(i).Item("nobill"),
                                     .Rows(i).Item("incompletebill"),
-                                    username)
+                                    username,
+                                    .Rows(i).Item("frm_coderef").ToString)
                 End If
             Next
         End With

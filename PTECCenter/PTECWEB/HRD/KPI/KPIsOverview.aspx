@@ -3,8 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <!-- datetimepicker-->
-    <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
-    <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
+    <%--<link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">--%>
+    <%--<link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">--%>
     <style>
         .container {
             font-size: .8rem;
@@ -354,23 +354,23 @@
         </div>
     </div>
 
-    <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
+    <%--<script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>--%>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
-    <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
+ <%--   <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>--%>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
     <script type="text/javascript">
-        jQuery('[id$=txtDuedate]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08'
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
+        //jQuery('[id$=txtDuedate]').datetimepicker({
+        //    startDate: '+1971/05/01',//or 1986/12/08'
+        //    timepicker: false,
+        //    scrollInput: false,
+        //    format: 'd/m/Y'
+        //});
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 liveSearch: true,

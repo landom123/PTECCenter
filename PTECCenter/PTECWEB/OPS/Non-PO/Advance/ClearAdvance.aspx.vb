@@ -15,6 +15,7 @@ Public Class ClearAdvance
     Public total_tax As String
     Public total As String
     Public total_clear As String
+    Public total_purecard As String
 
     Public chkunsave As Integer = 0
 
@@ -44,6 +45,7 @@ Public Class ClearAdvance
         Dim objsupplier As New Supplier
         Dim objcompany As New Company
         Dim attatch As New Attatch
+        Dim objsmb As New SmartBill
 
         Dim nonpoDs = New DataSet
         Dim statusid As Integer = 0
@@ -107,6 +109,7 @@ Public Class ClearAdvance
             objNonpo.SetCboBu(cboBU)
             objNonpo.SetCboPj(cboPJ)
 
+            objsmb.SetCboSmartBilllist(multiSelect)
 
             'Dim dt As New DataTable
 
@@ -471,6 +474,7 @@ endprocess:
 
 
 
+            lbTotal_purecard.InnerText = .Rows(0).Item("purecard_amount").ToString
 
             chkpayBack.Checked = .Rows(0).Item("chkpayback")
             chkdeductSell.Checked = .Rows(0).Item("chkdeductsell")
@@ -983,6 +987,9 @@ endprocess:
         dt.Columns.Add("updateby_name", GetType(String))
         dt.Columns.Add("createby_name", GetType(String))
 
+
+        dt.Columns.Add("purecard_amount", GetType(Double))
+
         Return dt
     End Function
 
@@ -1016,6 +1023,10 @@ endprocess:
         dt.Columns.Add("invoicedate", GetType(String))
         dt.Columns.Add("nobill", GetType(Boolean))
         dt.Columns.Add("incompletebill", GetType(Boolean))
+
+        dt.Columns.Add("frm_coderef", GetType(String))
+        dt.Columns.Add("frm", GetType(String))
+
         Return dt
     End Function
     Private Function createtablecomment() As DataTable
@@ -1287,6 +1298,12 @@ endprocess:
 
         Dim amountpayBack As Double
         Dim amountdedusctsell As Double
+        Dim purecard As Double
+        Try
+            purecard = Convert.ToDouble(lbTotal_purecard.InnerText)
+        Catch ex As Exception
+            purecard = 0
+        End Try
         Try
             cost = Convert.ToDouble(detailtable.Compute("SUM(cost_total)", String.Empty))
         Catch ex As Exception
@@ -1318,9 +1335,11 @@ endprocess:
         Catch ex As Exception
             amountdedusctsell = 0
         End Try
+        cost = cost - purecard
         total_cost = String.Format("{0:n2}", totalcost)
         total_vat = String.Format("{0:n2}", vat)
         total_tax = String.Format("({0:n2})", tax)
+        total_purecard = String.Format("({0:n2})", purecard)
         total = String.Format("{0:n2}", cost)
         total_clear = String.Format("{0:n2}", cost + amountpayBack)
         'total = Format(cost, "0.00")
@@ -1501,6 +1520,12 @@ endprocess:
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim payback As Double
         Dim cost As Double
+        Dim purecard As Double
+        Try
+            purecard = Convert.ToDouble(lbTotal_purecard.InnerText)
+        Catch ex As Exception
+            purecard = 0
+        End Try
         Try
             payback = Convert.ToDouble(txtamountpayBack.Text)
         Catch ex As Exception
@@ -1512,7 +1537,7 @@ endprocess:
         Catch ex As Exception
             cost = 0
         End Try
-        cost = cost + payback
+        cost = cost + payback - purecard
         If cost > head.Rows(0).Item("amount") Then
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1526,6 +1551,12 @@ endprocess:
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
         Dim payback As Double
         Dim cost As Double
+        Dim purecard As Double
+        Try
+            purecard = Convert.ToDouble(lbTotal_purecard.InnerText)
+        Catch ex As Exception
+            purecard = 0
+        End Try
         Try
             payback = Convert.ToDouble(txtamountpayBack.Text)
         Catch ex As Exception
@@ -1537,7 +1568,7 @@ endprocess:
         Catch ex As Exception
             cost = 0
         End Try
-        cost = cost + payback
+        cost = cost + payback - purecard
         If account_code.IndexOf(Session("usercode").ToString) > -1 Then
             If cost > maintable.Rows(0).Item("totalforcheck") Then
                 Dim scriptKey As String = "alert"
@@ -1582,11 +1613,21 @@ endprocess:
             txtadvno.Text = advno
             Session("status_clearadvance") = "edit"
 
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('save fail 1');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+            GoTo endprocess
+        End Try
+        Try
+            objNonpo.Ref_NonPO_Update_JTN_By_NonPODtlCodeRef(advno, Session("usercode"))
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('save fail');"
+            Dim javaScript As String = "alertWarning('save fail 2');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
 
             GoTo endprocess
@@ -1606,9 +1647,11 @@ endprocess:
         Else
             userowner = cboCreateby.SelectedItem.Value
         End If
+        Dim purecard_amount As Double
         If maintable.Rows.Count > 0 Then
             Dim amountpayBack As Double
             Dim amountdedusctsell As Double
+
             Try
                 amountpayBack = Convert.ToDouble(txtamountpayBack.Text)
             Catch ex As Exception
@@ -1618,6 +1661,11 @@ endprocess:
                 amountdedusctsell = Convert.ToDouble(txtamountdedusctsell.Text)
             Catch ex As Exception
                 amountdedusctsell = 0
+            End Try
+            Try
+                purecard_amount = Convert.ToDouble(lbTotal_purecard.InnerText)
+            Catch ex As Exception
+                purecard_amount = 0
             End Try
 
             'update
@@ -1628,10 +1676,12 @@ endprocess:
                 .Item("payback_amount") = amountpayBack.ToString
                 .Item("deductsell_amount") = amountdedusctsell.ToString
                 .Item("vat_wait") = chkVat.Checked
+                .Item("purecard_amount") = purecard_amount.ToString
             End With
         Else
             Dim amountpayBack As Double
             Dim amountdedusctsell As Double
+
             Try
                 amountpayBack = Convert.ToDouble(txtamountpayBack.Text)
             Catch ex As Exception
@@ -1642,6 +1692,11 @@ endprocess:
             Catch ex As Exception
                 amountdedusctsell = 0
             End Try
+            Try
+                purecard_amount = Convert.ToDouble(lbTotal_purecard.InnerText)
+            Catch ex As Exception
+                purecard_amount = 0
+            End Try
 
             'insert
             With maintable
@@ -1651,7 +1706,7 @@ endprocess:
                           amountpayBack, amountdedusctsell,
                           "", "", chkVat.Checked, cboOwner.SelectedItem.Value,
                           userowner, Date.Now.ToString, "", "", "", "", "", "",
-                          userowner, Date.Now.ToString, userowner, Date.Now.ToString, userowner, userowner)
+                          userowner, Date.Now.ToString, userowner, Date.Now.ToString, userowner, userowner, purecard_amount.ToString)
 
             End With
 
@@ -2016,4 +2071,127 @@ endprocess:
     Private Sub cboCompany_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboCompany.SelectedIndexChanged
         updatehead()
     End Sub
+    Private Sub btnAddDetailsFromSmartBill_Click(sender As Object, e As EventArgs) Handles btnAddDetailsFromSmartBill.Click
+        If multiSelect.GetSelectedIndices.Count > 0 Then
+            Dim result As Boolean = True
+            Try
+                Dim objnonpo As New NonPO
+                Dim objjob As New jobs
+                Dim ds As New DataSet
+                Dim dt As DataTable
+                Dim dt_main As DataTable
+                Dim foundRow() As DataRow
+
+                Dim SBNcode As String = objnonpo.Get_RunningNO_By_Code("SBN")
+
+                'Dim list As New List(Of String)()
+                'list.Add(SBNcode)
+                'listcoderef = New List(Of String)(list)
+                'Dim a As Integer = listcoderef.Count
+                If Not String.IsNullOrEmpty(SBNcode) Then
+                    'codeRef.Text = SBNcode
+                    For Each i As ListItem In multiSelect.Items
+                        If i.Selected = True Then
+                            Dim idjtn As String = objnonpo.Ref_MapToNonPO_Save(SBNcode, "SBN", i.Value, Session("usercode"))
+                        End If
+                    Next
+
+                    ds = objjob.setNonPODtl_by_coderef("SBN", SBNcode, "", Session("usercode").ToString)
+                    'codeRef.Text = "JTN230600001"
+                    dt = ds.Tables(1).DefaultView.ToTable(True, "frm") 'หาตัว unioq
+                    dt_main = detailtable.DefaultView.ToTable(True, "frm")
+                    For Each row As DataRow In dt.Rows
+                        foundRow = dt_main.Select("frm='" & row("frm") & "'")
+                        If foundRow.Length > 0 Then
+                            result = False
+                            GoTo endprocess
+                        End If
+                    Next row
+
+
+                    Dim cntrow As Integer = detailtable.Rows.Count + 1
+                    Dim cnt_new As Integer = 999
+                    Dim cnt_detailtable As Integer = 999
+                    For i = 0 To ds.Tables(1).Rows.Count - 1
+                        cnt_new = ds.Tables(1).Select("row='" & cntrow & "'").Length
+                        cnt_detailtable = detailtable.Select("row='" & cntrow & "'").Length
+                        While cnt_detailtable > 0 Or cnt_new > 0
+                            cntrow += 1
+                            cnt_new = ds.Tables(1).Select("row='" & cntrow & "'").Length
+                            cnt_detailtable = detailtable.Select("row='" & cntrow & "'").Length
+                        End While
+
+
+                        Dim row As DataRow
+                        row = detailtable.NewRow()
+                        row("row") = cntrow
+                        row("status") = "new"
+                        row("nonpodtl_id") = ds.Tables(1).Rows(i)("nonpodtl_id")
+                        row("accountcodeid") = ds.Tables(1).Rows(i)("accountcodeid")
+                        row("accountcode") = ds.Tables(1).Rows(i)("accountcode")
+                        row("depid") = ds.Tables(1).Rows(i)("depid")
+                        row("depname") = ds.Tables(1).Rows(i)("depname")
+                        row("buid") = ds.Tables(1).Rows(i)("buid")
+                        row("buname") = ds.Tables(1).Rows(i)("buname")
+                        row("ppid") = ds.Tables(1).Rows(i)("ppid")
+                        row("ppname") = ds.Tables(1).Rows(i)("ppname")
+                        row("pjid") = ds.Tables(1).Rows(i)("pjid")
+                        row("pjname") = ds.Tables(1).Rows(i)("pjname")
+
+                        row("cost") = ds.Tables(1).Rows(i)("cost")
+                        row("vat_per") = ds.Tables(1).Rows(i)("vat_per")
+                        row("tax_per") = ds.Tables(1).Rows(i)("tax_per")
+                        row("vat") = ds.Tables(1).Rows(i)("vat")
+                        row("tax") = ds.Tables(1).Rows(i)("tax")
+                        row("cost_total") = ds.Tables(1).Rows(i)("cost_total")
+                        row("detail") = ds.Tables(1).Rows(i)("detail")
+                        row("vendorname") = ds.Tables(1).Rows(i)("vendorname")
+                        row("vendorcode") = ds.Tables(1).Rows(i)("vendorcode")
+                        row("invoice") = ds.Tables(1).Rows(i)("invoice")
+                        row("taxid") = ds.Tables(1).Rows(i)("taxid")
+                        row("invoicedate") = ds.Tables(1).Rows(i)("invoicedate")
+                        row("nobill") = ds.Tables(1).Rows(i)("nobill")
+                        row("incompletebill") = ds.Tables(1).Rows(i)("incompletebill")
+                        row("frm_coderef") = ds.Tables(1).Rows(i)("frm_coderef")
+                        row("frm") = ds.Tables(1).Rows(i)("frm")
+
+
+
+                        detailtable.Rows.Add(row)
+                        ds.Tables(1).Rows(i)("row") = cntrow
+                    Next
+
+                    'detailtable.Merge(ds.Tables(1))
+                    If ds.Tables(2) IsNot Nothing Then
+                        'total_purecard = ds.Tables(2).Rows(0).Item("purecard")
+                        Dim purecard As Double = 0.00
+                        If maintable.Rows.Count > 0 Then
+                            purecard = maintable.Rows(0).Item("purecard_amount") + ds.Tables(2).Rows(0).Item("purecard")
+                        Else
+                            purecard = ds.Tables(2).Rows(0).Item("purecard")
+                        End If
+                        lbTotal_purecard.InnerText = purecard
+                    End If
+
+                    Session("detailtable_clearadvance") = detailtable
+                End If
+
+                'hasRef()
+                'checkunsave()
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('add detail fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End Try
+endprocess:
+            If result = False Then
+                Dim scriptKey As String = "alert"
+                Dim javaScript As String = "alertWarning('ไม่สามารถเพิ่มข้อมูลซ้ำได้');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                'MsgBox(msg)
+            End If
+        End If
+    End Sub
+
 End Class
