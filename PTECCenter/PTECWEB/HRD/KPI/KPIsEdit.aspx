@@ -68,7 +68,7 @@
         }
 
         .tooltip-inner {
-            max-width: 250px;
+            max-width: 320px;
         }
         /*.approval {
             display:none;
@@ -451,7 +451,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <span class="text-muted" data-toggle="tooltip" data-placement="top" data-html="true"
-                                                                        title="<span>สาขา : <%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_enddate").ToString %></span><br /><span>เจ้าของ : <%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_enddate").ToString %></span><br /><span>แผนงาน : <%= AllKpi.Tables(1).Rows(j).Item("actiontitle_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actiontitle_enddate").ToString %></span><br /><span>แก้ไข : <%= AllKpi.Tables(1).Rows(j).Item("actionedit_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionedit_enddate").ToString %></span><br /><span>อนุมัติ : <%= AllKpi.Tables(1).Rows(j).Item("actionapproval_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %></span>">
+                                                                        title="<span>สาขา : <%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionownerbranch_enddate").ToString %></span><br /><span>เจ้าของ : <%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionnameowner_enddate").ToString %></span><br /><span>แผนงาน : <%= AllKpi.Tables(1).Rows(j).Item("actiontitle_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actiontitle_enddate").ToString %></span><br /><span>ตนเองประเมิน : <%= AllKpi.Tables(1).Rows(j).Item("actionedit_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionedit_enddate").ToString %></span><br /><span>หัวหน้าประเมิน : <%= AllKpi.Tables(1).Rows(j).Item("actionapproval_begindate").ToString %> - <%= AllKpi.Tables(1).Rows(j).Item("actionapproval_enddate").ToString %></span>">
                                                                         <i class="fas fa-info-circle"></i></span>
                                                                 </td>
                                                             </tr>
@@ -700,13 +700,12 @@
                 const tstart = new Date(+year9, month9 - 1, +day9);
                 const tend = new Date(+year10, month10 - 1, +day10);
 
-                //alert(opt);
                 /*console.log(ownername.indexOf(managername || usercode));
                 console.log(ownername);
                 console.log(managername);
                 console.log(usercode);*/
-                //console.log(empuppercode);
-                //console.log(ownercode);
+                console.log(astart);
+                console.log(aend);
                 //console.log(ownercode.indexOf(usercode));
 
                 if ((ownername.indexOf(managername) > -1) && !opt) { // เจ้าของ KPI

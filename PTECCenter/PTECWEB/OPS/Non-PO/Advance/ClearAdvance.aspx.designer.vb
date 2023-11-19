@@ -401,6 +401,15 @@ Partial Public Class ClearAdvance
     Protected WithEvents txtamountdedusctsell As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbTotal_purecard control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbTotal_purecard As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''btnApproval control.
     '''</summary>
     '''<remarks>
@@ -552,6 +561,15 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hiddenAdvancedetailid As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+
+    '''<summary>
+    '''btnAddRef control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddRef As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
     '''lbcboAccountCode control.
@@ -930,4 +948,22 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents asd As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''multiSelect control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents multiSelect As Global.System.Web.UI.WebControls.ListBox
+
+    '''<summary>
+    '''btnAddDetailsFromSmartBill control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddDetailsFromSmartBill As Global.System.Web.UI.WebControls.Button
 End Class
