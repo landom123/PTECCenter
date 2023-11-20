@@ -1593,7 +1593,14 @@
 
             //alert('cost' + cost);
 
-            if (cost != 0 && accountcodeid == 0) {
+            //if (/['"]/.test(detail)) {
+            //    alertWarning(`รายละเอียดรายการ\nต้องไม่มีเครื่องหมาย \n[ ' , " ]`);
+            //    event.preventDefault();
+            //    event.stopPropagation();
+            //    return 0;
+            //}
+
+            if ((cost != 0 || cost === "") && accountcodeid == 0) {
                 alertWarning('กรุณาเลือกรหัสบัญชี');
                 event.preventDefault();
                 event.stopPropagation();
