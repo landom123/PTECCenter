@@ -964,6 +964,8 @@
             $('#<%= txtVat.ClientID%>').val('7');
             $('#<%= txtTax.ClientID%>').val('3');
 
+            $('#<%= cboBU.ClientID%>').val(1);
+            $('#<%= cboPP.ClientID%> option:contains(' + '<%= maintable.Rows(0).Item("branchcode") %>' + ')').prop("selected", true);
 
             <%--$('#<%= txtInvoiceNo.ClientID%>').val('');
             $('#<%= txtInvDate.ClientID%>').val('');
