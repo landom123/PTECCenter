@@ -27,6 +27,7 @@
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text="ขอสัญญาใหม่" />  
                         <asp:Button ID="btnReEdit" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text="ขอแก้ไขสัญญา" /> 
                         <asp:Button ID="btnReNote" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text="บันทึกข้อตกลง" /> 
+                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text="Print" /> 
                         <%--<button type="button" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" id="btnAddAssetType" runat="server" 
                          data-toggle="modal" data-target="#ModalReEdit" data-backdrop="static" data-keyboard="false" data-whatever="new">เพิ่มประเภท</button>--%>
                     </div>
@@ -63,7 +64,7 @@
                                    <div class="col-2">
                                                 <div class="input-group sm-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">สัญญาออกโดบ</span>
+                                                        <span class="input-group-text">สถานะ</span>
                                                     </div>
                                                     <asp:DropDownList class="form-control" ID="cboStatus"  runat="server" ></asp:DropDownList>    
                                                 </div>

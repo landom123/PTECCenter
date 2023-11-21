@@ -41,6 +41,15 @@ Partial Public Class requestcontract
     Protected WithEvents btnReNote As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnPrint control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnPrint As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnRefresh control.
     '''</summary>
     '''<remarks>

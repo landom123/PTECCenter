@@ -179,6 +179,13 @@ Public Class requestcontract
         Response.Redirect("request2.aspx")
     End Sub
 
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        Session("sDocnoReport") = ""
+        Session("ContractType") = 6
+
+        Response.Redirect("rptComtract.aspx")
+    End Sub
+
     'Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
     '    Try
 

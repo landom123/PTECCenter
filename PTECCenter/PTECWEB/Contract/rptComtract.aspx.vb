@@ -36,6 +36,9 @@ Public Class rptComtract
             Case 4
                 ReportViewer1.ServerReport.ReportPath = "/Report Parts/rptContractPowerBook"
                 paramList.Add(New ReportParameter("sDocNo", Docno, True))
+            Case 6
+                ReportViewer1.ServerReport.ReportPath = "/Report Parts/rptNonOil"
+                'paramList.Add(New ReportParameter("sDocNo", Docno, True))
         End Select
 
         ReportViewer1.ServerReport.SetParameters(paramList)
