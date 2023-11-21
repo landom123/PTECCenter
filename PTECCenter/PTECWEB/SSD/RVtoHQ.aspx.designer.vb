@@ -50,6 +50,15 @@ Partial Public Class RVtoHQ
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnSaveGSM control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSaveGSM As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''gvData control.
     '''</summary>
     '''<remarks>

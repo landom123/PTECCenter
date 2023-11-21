@@ -30,7 +30,8 @@
                     <div class="col-6">
                         <div class="input-group md4">
                           &nbsp;<asp:Button ID="btnOpen" class="btn btn-sm  btn-primary" runat="server" Text="Open" />&nbsp;
-                          &nbsp;<asp:Button ID="btnSave" class="btn btn-sm  btn-primary" runat="server" Text="Save to HQ" />&nbsp;                          
+                          &nbsp;<asp:Button ID="btnSave" class="btn btn-sm  btn-primary" runat="server" Text="Save to HQ" />&nbsp;  
+                          &nbsp;<asp:Button ID="btnSaveGSM" class="btn btn-sm  btn-primary" runat="server" Text="Save to GSM" />&nbsp;      
                         </div>
                     </div>
                 </div>

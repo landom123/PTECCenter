@@ -1197,8 +1197,8 @@
             if (!gotoContent) {
                 <% If maintable IsNot Nothing Then %>
                     <% If maintable.Rows.Count > 0 Then %>
-                        <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And (statusnow = 4) And maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                checkStatusJob();
+                        <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And (statusnow = 4 Or maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน") And maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                            checkStatusJob();
                         <% End if %>
                     <% End if %>
                 <% End if %>

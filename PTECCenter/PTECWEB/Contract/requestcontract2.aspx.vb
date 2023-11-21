@@ -594,12 +594,10 @@ Public Class requestcontract2
                     btnApprove.Enabled = True
                 End If
 
-                'If usercode = "PWO" And dr("StatusID") <> 4 Then
-                '    btnApprove.Enabled = True
-                'End If
 
                 If (Session("positionid") = 1 Or Session("positionid") = 2 Or Session("positionid") = 3 Or Session("positionid") = 4) _
                     And dr("StatusID") <> 4 Then
+
                     btnApprove.Enabled = True
                 End If
 

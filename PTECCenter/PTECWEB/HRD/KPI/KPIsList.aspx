@@ -3,8 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <!-- datetimepicker-->
-    <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
-    <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
+    <%--<link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">--%>
     <style>
         .color__purple {
             color: #af6eab !important;
@@ -452,152 +451,19 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">รายละเอียดรายการ</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!--  ##############  Detail ############### -->
-                    <input type="hidden" class="form-control" id="row" value="0" runat="server">
-                    <input type="hidden" class="form-control" id="nextrow" value="0" runat="server">
-                    <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
-                    <div class="form-group">
-                        <asp:Label ID="lbcboAccountCode" CssClass="form-label" AssociatedControlID="cboAccountCode" runat="server" Text="ผลตามแผน" />
-                        <asp:Label ID="lbcboAccountCodeMandatory" CssClass="text-danger" AssociatedControlID="cboAccountCode" runat="server" Text="*" />
-                        <asp:DropDownList class="form-control" ID="cboAccountCode" runat="server" onchange="setdetail(this);"></asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbDetail" CssClass="form-label" AssociatedControlID="txtDetail" runat="server" Text="รายละเอียด" />
-                        <asp:TextBox class="form-control" ID="txtDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" autocomplete="off"></asp:TextBox>
-                        <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
-                    </div>
-                    <%-- <div class="form-group">
-                        <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="Department" />
-                        <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
-                    </div>--%>
-                    <%-- <div class="form-group">
-                        <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
-                        <asp:DropDownList class="form-control" ID="cboVendor" runat="server" onchange="setVendor(this);"></asp:DropDownList>
-                        <asp:TextBox class="form-control" ID="txtVendor" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
-                    </div>--%>
-                    <div class="form-group">
-                        <asp:Label ID="lbBU" CssClass="form-label" AssociatedControlID="cboBU" runat="server" Text="Business Unit" />
-                        <asp:DropDownList class="form-control" ID="cboBU" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbPP" CssClass="form-label" AssociatedControlID="cboPP" runat="server" Text="Purpose" />
-                        <asp:DropDownList class="form-control" ID="cboPP" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbPJ" CssClass="form-label" AssociatedControlID="cboPJ" runat="server" Text="Project - ( PM / OilLoss / Capex )" />
-                        <asp:DropDownList class="form-control" ID="cboPJ" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน (ก่อน VAT)" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onchange="calculate();"></asp:TextBox>
-                        <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
-                    </div>
-                    <div class="row flex-nowrap">
-                        <div class="form-group ">
-                            <div class="row justify-content-between mr-0 ml-0">
-                                <div class="col text-left align-self-center">
-                                    <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT (%)" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
-                            </div>
-                            <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
-                        </div>
-                        <div class="form-group ">
-                            <div class="col">
-                                <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="WHT (%)" />
-                            </div>
-                            <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
-                                <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <%--<div class="form-group">
-                        <asp:Label ID="lbVat" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" Text="0"'></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbTax" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="TAX" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" Text="0"'></asp:TextBox>
-                    </div>--%>
-
-                    <div class="form-group" style="display: none;">
-                        <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
-                        <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
-                    </div>
-                    <div class="showCost">
-                        <p class="text-muted" id="p_vat"></p>
-                        <p class="text-muted" id="p_tax"></p>
-                        <p class="text-muted" id="p_cost"></p>
-                    </div>
-                    <!--  ############## End Detail ############### -->
-                    <hr />
-                    <h3>ใบแจ้งหนี้ / ใบส่งของ / ใบกำกับ</h3>
-                    <div class="form-group">
-                        <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Document no." />
-                            </div>
-                            <div class="col gropincompletebill">
-                                <div class="row flex-nowrap form-group">
-                                    <div class="pr-4" style="color: #0f66c4;">
-                                        <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
-                                        <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
-                                    </div>
-                                    <div class="pl-4" style="color: #0f66c4;">
-                                        <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
-                                        <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Document date" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" />
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
+    <%--<script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>--%>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
-    <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
+    <%--<script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>--%>
+<%--    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>--%>
     <script type="text/javascript">
-        jQuery('[id$=txtDuedate]').datetimepicker({
-            startDate: '+1971/05/01',//or 1986/12/08'
-            timepicker: false,
-            scrollInput: false,
-            format: 'd/m/Y'
-        });
+        //jQuery('[id$=txtDuedate]').datetimepicker({
+        //    startDate: '+1971/05/01',//or 1986/12/08'
+        //    timepicker: false,
+        //    scrollInput: false,
+        //    format: 'd/m/Y'
+        //});
         $(document).ready(function () {
                 console.log(document)
             $('.form-control').selectpicker({
@@ -628,13 +494,6 @@
             window.location.href = `KPIsEdit.aspx?Kpi_Code=${elemid}`;
 
         };
-        function btnEditDetailClick(ele) {
-            console.log(ele);
-            event.preventDefault();
-            $('#exampleModal').modal('show');
-
-            return false;
-        }
         function checkCOorHO() {
             if ($("#" + "<%= chkHO.ClientID.ToString %>").is(":checked")) {
                 $(".HO").show();

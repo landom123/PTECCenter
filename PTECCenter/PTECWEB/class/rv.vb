@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Web.Configuration
 Public Class rv
-    Public Function rvtohq(voucher As String, transdate As DateTime, account As String, branch As String, amount As Double, user As String) As Boolean
+    Public Function rvtohq(voucher As String, transdate As DateTime, account As String, branch As String, amount As Double, user As String, iType As Integer) As Boolean
         Dim result As Boolean = True
 
         Dim ds As New DataSet
@@ -21,7 +21,7 @@ Public Class rv
         cmd.Parameters.Add("@branch", SqlDbType.VarChar).Value = branch
         cmd.Parameters.Add("@amount", SqlDbType.Float).Value = amount
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
-
+        cmd.Parameters.Add("@iType", SqlDbType.Int).Value = iType
 
         Try
             cmd.ExecuteNonQuery()

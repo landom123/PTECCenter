@@ -2276,7 +2276,7 @@ endprocess:
                         ds.Tables(1).Rows(i)("row") = cntrow
                     Next
 
-                    head = ds.Tables(0)
+                    'head = ds.Tables(0)
                     'detailtable.Merge(ds.Tables(1))
                     If ds.Tables(2) IsNot Nothing Then
                         'total_purecard = ds.Tables(2).Rows(0).Item("purecard")
@@ -2289,7 +2289,7 @@ endprocess:
                         lbTotal_purecard.InnerText = purecard
                     End If
 
-                        Session("head_payment") = head
+                    'Session("head_payment") = head
                     Session("detailtable_payment") = detailtable
                 End If
 
