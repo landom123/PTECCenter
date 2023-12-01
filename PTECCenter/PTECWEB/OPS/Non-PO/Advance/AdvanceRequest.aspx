@@ -902,7 +902,7 @@
 
             mywindow.document.write('<link rel="stylesheet" href="<%=Page.ResolveUrl("~/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css")%>" rel="stylesheet" type="text/css">');
             mywindow.document.write(' <link href="<%=Page.ResolveUrl("~/vendor/fontawesome-free/css/all.min.css")%>" rel="stylesheet" type="text/css">');
-            mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/sb-admin.css")%>" rel="stylesheet">');
+            mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/sb-admin.min.css")%>" rel="stylesheet">');
             mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">');
             
             mywindow.document.write('</head><body >');
