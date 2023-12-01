@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class frmInvoice
 
     '''<summary>
+    '''btnSearch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSearch As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnClear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnExport control.
     '''</summary>
     '''<remarks>
@@ -21,6 +39,24 @@ Partial Public Class frmInvoice
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnExport As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cboZone control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboZone As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboBranch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''txtbegindate control.
@@ -39,4 +75,22 @@ Partial Public Class frmInvoice
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtenddate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtEmail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtEmail As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''note control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents note As Global.System.Web.UI.WebControls.Label
 End Class

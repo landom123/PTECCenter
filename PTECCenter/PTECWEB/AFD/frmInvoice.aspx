@@ -2,6 +2,12 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
+    <style>
+
+        #content-wrapper {
+            min-height: 600px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
@@ -19,13 +25,31 @@
                 </ol>
                 <div class="row">
                     <div class="col-md-12 mb-3">
+                        <asp:Button ID="btnSearch" class="btn btn-sm d-none btn-success" runat="server" Text="Search" />&nbsp;   
+                         <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                         <asp:Button ID="btnExport" class="btn btn-sm  btn-success" runat="server" Text="Export CSV" />
-                        &nbsp;              
+                        &nbsp;           
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Zone</span>
+                            </div>
+                            <asp:DropDownList class="form-control " ID="cboZone" runat="server" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Branch</span>
+                            </div>
+                            <asp:DropDownList class="form-control " ID="cboBranch" runat="server"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เริ่ม</span>
@@ -33,7 +57,7 @@
                             <asp:TextBox class="form-control" ID="txtbegindate" runat="server" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ถึง</span>
@@ -41,14 +65,19 @@
                             <asp:TextBox class="form-control" ID="txtenddate" runat="server" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
-                  <%--  <div class="col-md-4 mb-3">
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">ชื่อผู้อนุมัติ</span>
+                                <span class="input-group-text">Email for test (ถ้ามี)</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="TextBox1" runat="server" autocomplete="off"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtEmail" runat="server" autocomplete="off"></asp:TextBox>
                         </div>
-                    </div>--%>
+                    </div>
+                    <div class="col-md-12">
+                        <asp:Label ID="note" CssClass="text-danger text-right" runat="server" Text="( Email for test ตัวอย่าง  :  abc@rpcthai.com,def@rpcthai.com )" />
+                    </div>
                 </div>
             </div>
             <!-- /.container-fluid -->
@@ -84,6 +113,18 @@
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'
+        });
+        $(document).ready(function () {
+
+            $('.form-control').selectpicker({
+                noneSelectedText: '-',
+                liveSearch: true
+            });
+
+
+            $('.form-control').selectpicker('refresh');
+
+
         });
         function alertSuccess() {
             Swal.fire(
