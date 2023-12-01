@@ -31,10 +31,6 @@ Public Class WebForm1
         Dim objbranch As New Branch
         Dim objapproval As New Approval
         Dim approvaldataset = New DataSet
-        If Session("usercode") Is Nothing Then
-            Session("pre_page") = Request.Url.ToString()
-            Response.Redirect("~/login.aspx")
-        End If
 
         Dim usercode, username As String
         usercode = Session("usercode")

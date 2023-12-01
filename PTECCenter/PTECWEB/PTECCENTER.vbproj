@@ -197,6 +197,9 @@
   <ItemGroup>
     <Content Include="404.html" />
     <Content Include="ADMIN\VendorManage.aspx" />
+    <Content Include="AFD\frmInvoice.aspx" />
+    <Content Include="AFD\frmCN.aspx" />
+    <Content Include="AFD\frmBilling.aspx" />
     <Content Include="Contract\requestcontract.aspx" />
     <Content Include="Contract\requestcontract2.aspx" />
     <Content Include="Contract\assetsinfo.aspx" />
@@ -1589,8 +1592,8 @@
     <Content Include="css\Jobs.css" />
     <Content Include="css\print.css" />
     <Content Include="css\sb-admin.css" />
-    <Content Include="css\sb-admin.min.css" />
     <Content Include="css\checkbox.css" />
+    <Content Include="css\sb-admin.min.css" />
     <Content Include="css\starRating.css" />
     <Content Include="css\Stepper.css" />
     <Content Include="css\style.css" />
@@ -1775,6 +1778,8 @@
     <Content Include="OPS\approval\ApprovalHOMenuList.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\approvalHO.aspx" />
+    <Content Include="OPS\Memo\MemoList.aspx" />
+    <Content Include="OPS\Memo\MemoRequest.aspx" />
     <Content Include="OPS\reports\nac_sale.aspx" />
     <Content Include="OPS\reports\nac.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
@@ -3506,9 +3511,32 @@
       <DependentUpon>VendorManage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="AFD\frmInvoice.aspx.designer.vb">
+      <DependentUpon>frmInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AFD\frmInvoice.aspx.vb">
+      <DependentUpon>frmInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AFD\frmCN.aspx.designer.vb">
+      <DependentUpon>frmCN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AFD\frmCN.aspx.vb">
+      <DependentUpon>frmCN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AFD\frmBilling.aspx.designer.vb">
+      <DependentUpon>frmBilling.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AFD\frmBilling.aspx.vb">
+      <DependentUpon>frmBilling.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="class\BPETAX.vb" />
     <Compile Include="class\Kpi.vb" />
     <Compile Include="class\NTI.vb" />
     <Compile Include="class\Company.vb" />
+    <Compile Include="class\Memo.vb" />
     <Compile Include="class\SmartBill.vb" />
     <Compile Include="Contract\requestcontract.aspx.designer.vb">
       <DependentUpon>requestcontract.aspx</DependentUpon>
@@ -3811,6 +3839,20 @@
     </Compile>
     <Compile Include="OPS\approval\approvalHO.aspx.vb">
       <DependentUpon>approvalHO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Memo\MemoList.aspx.designer.vb">
+      <DependentUpon>MemoList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Memo\MemoList.aspx.vb">
+      <DependentUpon>MemoList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Memo\MemoRequest.aspx.designer.vb">
+      <DependentUpon>MemoRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Memo\MemoRequest.aspx.vb">
+      <DependentUpon>MemoRequest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\reports\nac_sale.aspx.designer.vb">
