@@ -65,7 +65,7 @@ Partial Public Class MemoRequest
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboCC As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboCC As Global.System.Web.UI.WebControls.ListBox
 
     '''<summary>
     '''lbtxtSubject control.
@@ -122,22 +122,22 @@ Partial Public Class MemoRequest
     Protected WithEvents cboMemoType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lbtxtCost control.
+    '''lbtxtAmount control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbtxtCost As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lbtxtAmount As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtCost control.
+    '''txtAmount control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCost As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtAmount As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lbtxtMemoOther control.

@@ -1590,6 +1590,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\autocomplete.css" />
     <Content Include="css\Jobs.css" />
+    <Content Include="css\multi-select-tag.css" />
     <Content Include="css\print.css" />
     <Content Include="css\sb-admin.css" />
     <Content Include="css\checkbox.css" />
@@ -1765,6 +1766,7 @@
     <Content Include="js\Jobs.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\main.js" />
+    <Content Include="js\multi-select-tag.js" />
     <Content Include="js\NonPO.js" />
     <Content Include="js\popper.js" />
     <Content Include="js\btn-loading.js" />
@@ -1779,6 +1781,7 @@
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\approvalHO.aspx" />
     <Content Include="OPS\Memo\MemoList.aspx" />
+    <Content Include="OPS\Memo\Memo2.aspx" />
     <Content Include="OPS\Memo\MemoRequest.aspx" />
     <Content Include="OPS\reports\nac_sale.aspx" />
     <Content Include="OPS\reports\nac.aspx" />
@@ -3846,6 +3849,13 @@
     </Compile>
     <Compile Include="OPS\Memo\MemoList.aspx.vb">
       <DependentUpon>MemoList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Memo\Memo2.aspx.designer.vb">
+      <DependentUpon>Memo2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Memo\Memo2.aspx.vb">
+      <DependentUpon>Memo2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Memo\MemoRequest.aspx.designer.vb">

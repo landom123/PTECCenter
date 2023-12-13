@@ -4,7 +4,7 @@
 
 
     <link href="<%=Page.ResolveUrl("~/fileupload/dist/font/font-fileuploader.css")%>" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+    <link href="<%=Page.ResolveUrl("~/css/multi-select-tag.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader.min.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader-theme-thumbnails.css")%>" rel="stylesheet">
     <style>
@@ -57,14 +57,14 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <asp:Label ID="lbcboCC" CssClass="form-label" AssociatedControlID="cboCC" runat="server" Text="CC" />
-                                        <asp:DropDownList CssClass="chip" ID="cboCC" runat="server" multiple></asp:DropDownList>
+                                        <asp:ListBox CssClass="chip" ID="cboCC" runat="server" SelectionMode="multiple"></asp:ListBox>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <asp:Label ID="lbtxtSubject" CssClass="form-label" AssociatedControlID="txtSubject" runat="server" Text="Subject" />
+                                        <asp:Label ID="lbtxtSubject" CssClass="form-label" AssociatedControlID="txtSubject" runat="server" Text="Subject / Objective" />
                                         <asp:Label ID="lbtxtSubjectMandatory" CssClass="text-danger" AssociatedControlID="txtSubject" runat="server" Text="*" />
                                         <asp:TextBox class="form-control" ID="txtSubject" runat="server" Rows="2" Columns="50" TextMode="MultiLine" ValidateRequestMode="Enabled" autocomplete="off"></asp:TextBox>
                                     </div>
@@ -73,22 +73,22 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <asp:Label ID="lbcboMemoType" CssClass="form-label" AssociatedControlID="cboMemoType" runat="server" Text="Memo Type" />
+                                        <asp:Label ID="lbcboMemoType" CssClass="form-label" AssociatedControlID="cboMemoType" runat="server" Text="Memo Group" />
                                         <asp:Label ID="lbcboMemoTypeMandatory" CssClass="text-danger" AssociatedControlID="cboMemoType" runat="server" Text="*" />
-                                        <asp:DropDownList class="form-control" ID="cboMemoType" runat="server" required></asp:DropDownList>
+                                        <asp:DropDownList class="form-control" ID="cboMemoType" runat="server"></asp:DropDownList>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <asp:Label ID="lbtxtCost" CssClass="form-label" AssociatedControlID="txtCost" runat="server" Text="Cost" />
-                                        <asp:TextBox class="form-control" type="number" ID="txtCost" runat="server" ValidateRequestMode="Enabled" autocomplete="off"></asp:TextBox>
+                                        <asp:Label ID="lbtxtAmount" CssClass="form-label" AssociatedControlID="txtAmount" runat="server" Text="Amount" />
+                                        <asp:TextBox class="form-control" type="number" ID="txtAmount" runat="server" ValidateRequestMode="Enabled" autocomplete="off"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
                             <div class="row memoOther" style="display: none;">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <asp:Label ID="lbtxtMemoOther" CssClass="form-label" AssociatedControlID="txtMemoOther" runat="server" Text="Memo Type (อื่นๆ)" />
+                                        <asp:Label ID="lbtxtMemoOther" CssClass="form-label" AssociatedControlID="txtMemoOther" runat="server" Text="Memo Group (อื่นๆ)" />
                                         <asp:Label ID="lbtxtMemoOtherMandatory" CssClass="text-danger" AssociatedControlID="txtMemoOther" runat="server" Text="*" />
                                         <asp:TextBox class="form-control " ID="txtMemoOther" runat="server" Rows="2" Columns="50" TextMode="MultiLine" ValidateRequestMode="Enabled"></asp:TextBox>
 
@@ -102,7 +102,7 @@
                                         <div class="form-group">
                                             <div class="custom-control custom-radio custom-control-inline">
                                                 <input runat="server" type="radio" id="chkMemoFile" name="customRadioInline" class="custom-control-input" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                <asp:Label ID="lbchk1" CssClass="custom-control-label" AssociatedControlID="chkMemoFile" runat="server" Text="Add Memo" />
+                                                <asp:Label ID="lbchk1" CssClass="custom-control-label" AssociatedControlID="chkMemoFile" runat="server" Text="Attach Memo" />
                                             </div>
                                             <div class="custom-control custom-radio custom-control-inline">
                                                 <input runat="server" type="radio" id="chkMemoDetail" name="customRadioInline" class="custom-control-input" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -156,11 +156,11 @@
 
 
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
-    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
-
+    <script src="<%=Page.ResolveUrl("~/js/multi-select-tag.js")%>"></script>
 
     <script type="text/javascript">
         new MultiSelectTag('<%= cboTo.ClientID.ToString %>', {
+                toggleHide: true,
                 tagColor: {
                     textColor: '#327b2c',
                     borderColor: '#92e681',
@@ -169,9 +169,9 @@
                 onChange: function (values) {
                     console.log(values)
                 }
+
             })  // id
         new MultiSelectTag('<%= cboCC.ClientID.ToString %>')  // id
-       
         $(document).ready(function () {
             //alert('t');
            
@@ -190,6 +190,9 @@
 
             $('.form-control').selectpicker('refresh');
 
+            console.log('ma');
+            checkCboMemo();
+            checkFileOrAddMemo();
 
             $('input[type="file"]').fileuploader({
                 example: ['pdf', 'image/*'],
@@ -281,9 +284,6 @@
                 }
             });
             
-            console.log('ma');
-            checkCboMemo();
-            checkFileOrAddMemo();
             
         });
         $('#<%= cboMemoType.ClientID%>').on('change', function () {

@@ -445,8 +445,8 @@
                                         <td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("pjname").ToString() %>"><%= detailtable.Rows(i).Item("pjname").ToString() %></td>
                                         <td colspan="3" style="width: 120px !important; text-align: right;" title="<%= detailtable.Rows(i).Item("cost").ToString() %>"><%= if((detailtable.Rows(i).Item("cost").ToString()) = "0", "", String.Format("{0:n2}", detailtable.Rows(i).Item("cost"))) %>
                                         </td>
-                                        <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100, 2) %>"><%= detailtable.Rows(i).Item("vat_per").ToString() %></td>
-                                        <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100, 2) %>"><%= detailtable.Rows(i).Item("tax_per").ToString() %></td>
+                                        <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100 %>"><%= detailtable.Rows(i).Item("vat_per").ToString() %></td>
+                                        <td colspan="1" style="width: 40px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100 %>"><%= detailtable.Rows(i).Item("tax_per").ToString() %></td>
                                         <td class="text-center gropincompletebill" colspan="1" style="width: 40px !important; text-align: right; padding-right: 5px;"><%= if( (Not detailtable.Rows(i).Item("nobill") And Not detailtable.Rows(i).Item("incompletebill")), "", If(detailtable.Rows(i).Item("nobill"), "N", "U")) %></td>
                                         <td class="deletedetail notprint" style="position: absolute; border: 0px solid #000;">
                                             <div>
@@ -984,7 +984,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnAddDetailsFromSmartBill" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" />
+                    <asp:Button ID="btnAddDetailsFromSmartBill" class="btn btn-primary" runat="server" Text="Save" OnClientClick="showBtnSpiner(this);" />
                 </div>
             </div>
         </div>
@@ -1101,6 +1101,7 @@
         function Confirm() {
 
             console.log("insave");
+            removeElem("confirm_value");
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
@@ -1154,9 +1155,9 @@
             //console.log(calVat(cost, vat).toFixed(2));
             //console.log(calTax(cost, tax).toFixed(2));
 
-            const c_CostTotal = calCostTotal(cost, vat, tax).toFixed(2);
-            const c_Vat = calVat(cost, vat).toFixed(2);
-            const c_Tax = calTax(cost, tax).toFixed(2);
+            const c_CostTotal = calCostTotal(cost, vat, tax).toFixed(4);
+            const c_Vat = calVat(cost, vat).toFixed(4);
+            const c_Tax = calTax(cost, tax).toFixed(4);
 
             //console.log(calCostTotal(cost, vat, tax).toFixed(2));
             //console.log(calVat(cost, vat).toFixed(2));
@@ -1526,6 +1527,7 @@
             <% End If %>
 
 
+            $('#<%= btnAddRef.ClientID%>').hide();
 
         }
         function setVendor(Acc) {
@@ -1624,11 +1626,13 @@
             //alert(params);
             //PageMethods.addoreditdetail(params);
 
+            removeElem("addDetailJSON");
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
-            confirm_value.name = "confirm_value";
+            confirm_value.name = "addDetailJSON";
             confirm_value.value = params;
             document.forms[0].appendChild(confirm_value);
+            showBtnSpiner(document.getElementById("<%= btnAddDetails.ClientID%>"));
             return true;
 
         }
