@@ -11,6 +11,7 @@ Public Class MemoRequest
     Public CommentTable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim attatch As New Attatch
+        Dim objMemo As New Memo
 
         If Session("usercode") Is Nothing Then
             Session("pre_page") = Request.Url.ToString()
@@ -29,11 +30,10 @@ Public Class MemoRequest
 
         flag = True
 
-        Dim objMemo As New Memo
-        objMemo.SetCboMemoType(cboMemoType)
         If Not IsPostBack() Then
 
 
+            objMemo.SetCboMemoType(cboMemoType)
             SetCboUsersOnly(cboTo)
             SetCboUsersOnly(cboCC)
         Else
@@ -43,21 +43,77 @@ Public Class MemoRequest
 
     Private Sub btnSave_ServerClick(sender As Object, e As EventArgs) Handles btnSave.ServerClick
         If validatedata() Then
-            Dim a As String
+            Dim objMemo As New Memo
+            Dim attatch As New Attatch
+            Dim a As String, mmrno As String, dtltype As String
+            Dim fullfilename As String = String.Empty, url As String = String.Empty
             a = txtMemoDetail.Text
             txtTest.Text = a
+
+
+            If chkMemoFile.Checked Then
+                dtltype = "FILE"
+                If (FileUpload1.HasFile) Then
+                    Dim allow_send_pic() As String = {".tiff", ".pjp", ".jfif", ".gif", ".svg", ".bmp", ".png", ".jpeg", ".svgz", ".jpg", ".webp", ".ico", ".xbm", ".dib", ".tif", ".pjpeg", ".avif", ".pdf"}
+                    Dim Extension As String = System.IO.Path.GetExtension(FileUpload1.FileName)
+                    Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_Memo\\"
+                    Dim di As String = System.IO.Path.GetDirectoryName(FileUpload1.FileName)
+                    Dim oldpath As String = di + FileUpload1.FileName
+                    Try
+                        If Array.IndexOf(allow_send_pic, Extension.ToLower()) = -1 Then
+                            Dim scriptKey As String = "alert"
+                            Dim javaScript As String = "alertWarning('Upload ได้เฉพาะ image,pdf');"
+                            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                        Else
+                            Dim fileName As String
+                            fileName = attatch.GetAttatchName()
+                            savePath += fileName
+                            savePath += Extension
+                            FileUpload1.SaveAs(savePath)
+                            fullfilename += fileName
+                            fullfilename += Extension
+
+                            attatch.Attatch_Save(fullfilename, Extension, "File Memo", savePath, Session("userid").ToString)
+
+                            url = "http://vpnptec.dyndns.org:10280/OPS_Memo/" + fullfilename
+                        End If
+                    Catch ex As Exception
+                        Dim scriptKey As String = "alert"
+                        'Dim javaScript As String = "alert('" & ex.Message & "');"
+                        Dim javaScript As String = "alertWarning('upload file fail');"
+                        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                        GoTo endprocess
+                    End Try
+                End If
+            ElseIf chkMemoDetail.Checked Then
+                dtltype = "DETAIL"
+            End If
+
+            mmrno = objMemo.Memo_Save(mmrno, cboMemoType.SelectedItem.Value, txtSubject.Text.Trim, txtMemoOther.Text.Trim, txtMemoDetail.Text.Trim, dtltype, url, txtAmount.Text, Session("usercode").ToString)
+
+            Dim arrTo As New ArrayList()
+            Dim arrCC As New ArrayList()
 
             If cboTo.GetSelectedIndices.Count > 0 Then
                 For Each i As ListItem In cboTo.Items
                     If i.Selected = True Then
-                        Dim idjtn As String = i.Value
+                        arrTo.Add(i.Value)
+                    End If
+                Next
+            End If
+            If cboCC.GetSelectedIndices.Count > 0 Then
+                For Each i As ListItem In cboCC.Items
+                    If i.Selected = True Then
+                        arrCC.Add(i.Value)
                     End If
                 Next
             End If
 
+            Dim cnt As Integer = arrCC.Count
 
         End If
 
+endprocess:
     End Sub
     Private Function validatedata() As Boolean
         Dim result As Boolean = True

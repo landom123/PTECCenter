@@ -33,7 +33,7 @@ Public Class Memo
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "MemoType_List"
+        cmd.CommandText = "Memo_TypeList"
         cmd.CommandType = CommandType.StoredProcedure
 
         'cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
@@ -44,38 +44,59 @@ Public Class Memo
         conn.Close()
         Return result
     End Function
-    Public Function rvtohq(voucher As String, transdate As DateTime, account As String, branch As String, amount As Double, user As String) As Boolean
-        Dim result As Boolean = True
-
+    Public Sub Memo_SentTo_Save(nonpocode As String, touserid As Integer, type As String, usercode As String)
+        'Credit_Balance_List_Createdate
         Dim ds As New DataSet
-        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_datacenter").ConnectionString)
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
         Dim cmd As New SqlCommand
         Dim adp As New SqlDataAdapter
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandTimeout = 600
-        cmd.CommandText = "RV_to_HQ"
+        cmd.CommandText = "Memo_SentTo_Save"
         cmd.CommandType = CommandType.StoredProcedure
 
-        cmd.Parameters.Add("@voucher", SqlDbType.VarChar).Value = voucher
-        cmd.Parameters.Add("@transdate", SqlDbType.DateTime).Value = transdate
-        cmd.Parameters.Add("@account", SqlDbType.VarChar).Value = account
-        cmd.Parameters.Add("@branch", SqlDbType.VarChar).Value = branch
-        cmd.Parameters.Add("@amount", SqlDbType.Float).Value = amount
-        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
 
+        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@touserid", SqlDbType.Int).Value = touserid
+        cmd.Parameters.Add("@type", SqlDbType.VarChar).Value = type
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
 
-        Try
-            cmd.ExecuteNonQuery()
-        Catch ex As Exception
-            Throw ex
-            result = False
-        End Try
-
+        cmd.ExecuteNonQuery()
         'adp.SelectCommand = cmd
         'adp.Fill(ds)
-        'result = ds.Tables(0)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+    Public Function Memo_Save(mmrno As String, typeid As Integer, subject As String,
+                                 detailOther As String, menodetail As String, dtltype As String, url As String,
+                                 amount As Double, username As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@mmrno", SqlDbType.VarChar).Value = mmrno
+        cmd.Parameters.Add("@typeid", SqlDbType.Int).Value = typeid
+        cmd.Parameters.Add("@subject", SqlDbType.VarChar).Value = subject
+        cmd.Parameters.Add("@detailOther", SqlDbType.VarChar).Value = detailOther
+        cmd.Parameters.Add("@menodetail", SqlDbType.VarChar).Value = menodetail
+        cmd.Parameters.Add("@dtltype", SqlDbType.VarChar).Value = dtltype
+        cmd.Parameters.Add("@url", SqlDbType.VarChar).Value = url
+        cmd.Parameters.Add("@amount", SqlDbType.Money).Value = amount
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
         conn.Close()
         Return result
     End Function

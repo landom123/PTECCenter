@@ -683,6 +683,8 @@ endprocess:
                 FromAddDetail.Visible = True
                 btnAddDetails.Visible = True
 
+                btnAddRef.Visible = True
+
                 'ปุ่ม & status 
                 statusnonpo.Visible = False
 
@@ -707,6 +709,8 @@ endprocess:
                     btnFromAddDetail.Visible = True
                     btnAddDetails.Visible = True
                     FromAddDetail.Visible = True
+
+                    btnAddRef.Visible = True
                 Else
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
@@ -723,6 +727,7 @@ endprocess:
                     FromAddDetail.Visible = False
                     btnAddDetails.Visible = False
 
+                    btnAddRef.Visible = False
 
                     Dim scriptKey As String = "UniqueKeyForThisScript"
                     Dim javaScript As String = "disbtndelete()"
@@ -766,6 +771,8 @@ endprocess:
                 btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
 
+                btnAddRef.Visible = False
+
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -808,6 +815,8 @@ endprocess:
                 btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
 
+                btnAddRef.Visible = False
+
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -840,6 +849,8 @@ endprocess:
                 btnFromAddDetail.Visible = False
                 btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
+
+                btnAddRef.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -874,6 +885,7 @@ endprocess:
                     FromAddDetail.Visible = True
                     btnAddDetails.Visible = True
 
+
                     btnAddAttatch.Visible = True
                 Else
                     btnSave.Enabled = False
@@ -893,6 +905,8 @@ endprocess:
                     Dim javaScript As String = "disbtndelete()"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End If
+
+                btnAddRef.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -922,6 +936,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -955,6 +970,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -984,6 +1000,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -1013,6 +1030,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -1046,6 +1064,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -2034,7 +2053,7 @@ endprocess:
     End Sub
 
     Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
-        Dim res As String = Request.Form("confirm_value")
+        Dim res As String = Request.Form("addDetailJSON")
         Dim strarr() As String
         strarr = res.Split("}")
         res = strarr(0) + "}"
@@ -2093,9 +2112,9 @@ endprocess:
                 row("cost") = cost
                 row("vat_per") = vat
                 row("tax_per") = tax
-                row("vat") = FormatNumber(cost * vat / 100, 2)
-                row("tax") = FormatNumber(cost * tax / 100, 2)
-                row("cost_total") = FormatNumber((cost + FormatNumber(cost * vat / 100, 2)) - FormatNumber(cost * tax / 100, 2), 2)
+                row("vat") = cost * vat / 100
+                row("tax") = cost * tax / 100
+                row("cost_total") = cost + (cost * vat / 100) - (cost * tax / 100)
                 row("detail") = detail
                 row("vendorname") = vendorname
                 row("vendorcode") = vendorcode
@@ -2125,9 +2144,9 @@ endprocess:
                     .Item("cost") = cost
                     .Item("vat_per") = vat
                     .Item("tax_per") = tax
-                    .Item("vat") = FormatNumber(cost * vat / 100, 2)
-                    .Item("tax") = FormatNumber(cost * tax / 100, 2)
-                    .Item("cost_total") = FormatNumber((cost + FormatNumber(cost * vat / 100, 2)) - FormatNumber(cost * tax / 100, 2), 2)
+                    .Item("vat") = cost * vat / 100
+                    .Item("tax") = cost * tax / 100
+                    .Item("cost_total") = cost + (cost * vat / 100) - (cost * tax / 100)
                     .Item("detail") = detail
                     .Item("vendorname") = vendorname
                     .Item("vendorcode") = vendorcode
