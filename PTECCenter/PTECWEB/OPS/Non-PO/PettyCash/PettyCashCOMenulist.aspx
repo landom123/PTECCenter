@@ -309,7 +309,7 @@
                 liveSearch: true,
                 maxOptions: 1
             });
-            checkCOorHO();
+            //checkCOorHO();
         });
 
         <%--$("input:checkbox").on('click', function () {
