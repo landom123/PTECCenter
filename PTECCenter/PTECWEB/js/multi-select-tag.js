@@ -170,7 +170,7 @@ function MultiSelectTag (el, customs = {shadow: false, rounded:true, toggleHide:
                 li.dataset.value = option.value
                 
                 // For search
-                if(val && option.label.toLowerCase().startsWith(val.toLowerCase())) {
+                if (val && option.label.toLowerCase().includes(val.toLowerCase())) {
                     ul.appendChild(li)
                 }
                 else if(!val) {

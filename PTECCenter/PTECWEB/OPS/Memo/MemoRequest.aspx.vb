@@ -45,7 +45,7 @@ Public Class MemoRequest
         If validatedata() Then
             Dim objMemo As New Memo
             Dim attatch As New Attatch
-            Dim a As String, mmrno As String, dtltype As String
+            Dim a As String, mmrno As String = "", dtltype As String
             Dim fullfilename As String = String.Empty, url As String = String.Empty
             a = txtMemoDetail.Text
             txtTest.Text = a
@@ -88,31 +88,33 @@ Public Class MemoRequest
             ElseIf chkMemoDetail.Checked Then
                 dtltype = "DETAIL"
             End If
+            Try
+                mmrno = objMemo.Memo_Save(mmrno, cboMemoType.SelectedItem.Value, txtSubject.Text.Trim, txtMemoOther.Text.Trim, txtMemoDetail.Text.Trim, dtltype, url, txtAmount.Text, Session("usercode").ToString)
+                Dim arrTo As New ArrayList()
+                Dim arrCC As New ArrayList()
 
-            mmrno = objMemo.Memo_Save(mmrno, cboMemoType.SelectedItem.Value, txtSubject.Text.Trim, txtMemoOther.Text.Trim, txtMemoDetail.Text.Trim, dtltype, url, txtAmount.Text, Session("usercode").ToString)
-
-            Dim arrTo As New ArrayList()
-            Dim arrCC As New ArrayList()
-
-            If cboTo.GetSelectedIndices.Count > 0 Then
-                For Each i As ListItem In cboTo.Items
-                    If i.Selected = True Then
-                        arrTo.Add(i.Value)
-                    End If
-                Next
-            End If
-            If cboCC.GetSelectedIndices.Count > 0 Then
-                For Each i As ListItem In cboCC.Items
-                    If i.Selected = True Then
-                        arrCC.Add(i.Value)
-                    End If
-                Next
-            End If
-
-            Dim cnt As Integer = arrCC.Count
-
+                If cboTo.GetSelectedIndices.Count > 0 Then
+                    For Each i As ListItem In cboTo.Items
+                        If i.Selected = True Then
+                            objMemo.Memo_SentTo_Save(mmrno, i.Value, "TO", Session("usercode").ToString)
+                        End If
+                    Next
+                End If
+                If cboCC.GetSelectedIndices.Count > 0 Then
+                    For Each i As ListItem In cboCC.Items
+                        If i.Selected = True Then
+                            objMemo.Memo_SentTo_Save(mmrno, i.Value, "CC", Session("usercode").ToString)
+                        End If
+                    Next
+                End If
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('upload file fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
         End If
-
 endprocess:
     End Sub
     Private Function validatedata() As Boolean

@@ -44,7 +44,7 @@ Public Class Memo
         conn.Close()
         Return result
     End Function
-    Public Sub Memo_SentTo_Save(nonpocode As String, touserid As Integer, type As String, usercode As String)
+    Public Sub Memo_SentTo_Save(mmrno As String, touserid As Integer, type As String, usercode As String)
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -57,7 +57,7 @@ Public Class Memo
         cmd.CommandType = CommandType.StoredProcedure
 
 
-        cmd.Parameters.Add("@nonpocode", SqlDbType.VarChar).Value = nonpocode
+        cmd.Parameters.Add("@mmrno", SqlDbType.VarChar).Value = mmrno
         cmd.Parameters.Add("@touserid", SqlDbType.Int).Value = touserid
         cmd.Parameters.Add("@type", SqlDbType.VarChar).Value = type
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode

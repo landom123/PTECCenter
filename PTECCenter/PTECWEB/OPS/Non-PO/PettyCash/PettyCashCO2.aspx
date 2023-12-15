@@ -1191,10 +1191,7 @@ alert('else nonpo')
 
                 var price = document.getElementById("<%= txtPrice.ClientID%>")
                 //console.log((netprice / (1 + (vat / 100) - (tax / 100))))
-                price.value = (netprice / (1 + (vat / 100) - (tax / 100))).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 4,
-                });
+                price.value = parseFloat(netprice / (1 + (vat / 100) - (tax / 100))).toFixed(4)
             }
         }
         function setnetprice() {
@@ -1207,10 +1204,7 @@ alert('else nonpo')
             tax = parseFloat(tax);
             if (price) {
                 var netprice = document.getElementById("<%= TxtNetPrice.ClientID%>")
-                netprice.value = calCostTotal(price, vat, tax).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 4,
-                });
+                netprice.value = parseFloat(calCostTotal(price, vat, tax)).toFixed(4)
             }
         }
         function calculate() {
