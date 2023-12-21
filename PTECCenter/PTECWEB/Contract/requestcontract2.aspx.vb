@@ -599,6 +599,8 @@ Public Class requestcontract2
                     And dr("StatusID") <> 4 Then
 
                     btnApprove.Enabled = True
+                Else
+                    btnApprove.Enabled = False
                 End If
 
                 txtDocAction.Text = "EDIT"
@@ -2492,7 +2494,7 @@ Public Class requestcontract2
                 'txtCreateDate.Text = Now()
             End If
 
-
+            btnApprove.Enabled = False
 
             SetCboContractLand(cboContractLand)
             SetCboContractBuild(cboContractBu)
