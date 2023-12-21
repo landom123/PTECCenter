@@ -100,4 +100,53 @@ Public Class Memo
         conn.Close()
         Return result
     End Function
+
+    Public Function Memo_Find(code As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_Find"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@mmrcode", SqlDbType.VarChar).Value = code
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+    Public Function MemoPermission(code As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_PermisstionOwner"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@mmrcode", SqlDbType.VarChar).Value = code
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
 End Class

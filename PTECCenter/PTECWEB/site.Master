@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link href="/icon/Logo_pure.png" rel="website icon" />
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <!-- bootstrap-select-->
     <link rel="stylesheet" href="<%=Page.ResolveUrl("~/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css")%>" rel="stylesheet" type="text/css">

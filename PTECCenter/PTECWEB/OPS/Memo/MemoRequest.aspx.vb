@@ -114,6 +114,7 @@ Public Class MemoRequest
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 GoTo endprocess
             End Try
+            Response.Redirect("../Memo/Memo2.aspx?MemoCode=" & mmrno)
         End If
 endprocess:
     End Sub
