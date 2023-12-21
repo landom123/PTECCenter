@@ -105,7 +105,7 @@ Public Class RVtoHQ
     End Sub
 
 
-    Private Function SaveData() As Boolean
+    Private Function SaveData(iType As Integer) As Boolean
 
         Dim result As Boolean = True
 
@@ -119,7 +119,7 @@ Public Class RVtoHQ
                 'objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("branch"), row("amount"), usercode)
                 ' by Pison 20220222 ปรับให้ส่ง voucher แทนที่สาขา เนื่องจาก hq นำสาขาไปไว้ที่ description
                 ' ในรายงานให้ดูที่ description ว่ามี RVP ให้นำมาออกรายงานการรับชำระ
-                objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("voucher"), row("amount"), usercode)
+                objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("voucher"), row("amount"), usercode, iType)
             Next row
         Catch ex As Exception
             result = False
@@ -155,12 +155,21 @@ Public Class RVtoHQ
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        If SaveData() = True Then
+        If SaveData(1) = True Then
 
             Dim ScriptKey As String = "alert"
             Dim javaScript As String = "alertWarning('บันทึกเรียบร้อย');"
             ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
         End If
 
+    End Sub
+
+    Private Sub btnSaveGSM_Click(sender As Object, e As EventArgs) Handles btnSaveGSM.Click
+        If SaveData(2) = True Then
+
+            Dim ScriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('บันทึกเรียบร้อย');"
+            ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
+        End If
     End Sub
 End Class
