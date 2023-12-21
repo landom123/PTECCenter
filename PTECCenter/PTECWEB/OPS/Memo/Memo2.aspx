@@ -8,62 +8,105 @@
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper">
-                <div class="container">
+                <div class="foram pl-5 mb-3">
                     <div class="row">
-                        <div class="col-6 border border-secondary">
+                        <%=allOwner %>
+                    </div>
+                    <div class="row">
+                        <%=at %>
+                    </div>
+                    <div class="row">
+                        <%=approver %>
+                    </div>
+                    <div class="row">
+                        <%=verifier %>
+                    </div>
+                    <div class="row">
+                        <%=now_action %>
+                    </div>
+                </div>
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-6">
                             <div class="font-weight-bold">
-                                <span>Thanapol Duruangram</span>
+                                <asp:Label ID="txtName" runat="server" Text="Name" />
                             </div>
                         </div>
-                        <div class="col-6 text-right border border-danger">
-                            <button type="button" class="btn btn-outline-info">MEMO230100001</button>
-
+                        <div class="col-6 text-right">
+                            <button type="button" id="txtMemoCode" runat="server" class="btn btn-outline-info">MEMO230100001</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6 mb-3 ">
                             <div class="row">
                                 <div class="col text-break">
-                                    <span>To : </span>
-                                    <span>TPS;</span>
-                                    <span>TPD;</span>
+                                    <asp:Label ID="preFixTo" runat="server" AssociatedControlID="txtTo" Text="To : " />
+                                    <asp:Label ID="txtTo" runat="server" Text="" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col text-break">
-                                    <span>Cc : </span>
-                                    <span>TPS;</span>
-                                    <span>TPD;</span>
+                                    <asp:Label ID="preFixCc" runat="server" AssociatedControlID="txtCc" Text="Cc : " />
+                                    <asp:Label ID="txtCc" runat="server" Text="" />
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 mb-3 text-right border border-danger">
-                            <small id="txtCreateDate" class="text-muted">Must be 8-20 characters long.
-                            </small>
+                        <div class="col-6 mb-3 text-right">
+                            <div class="row">
+                                <div class="col text-break">
+                                    <small class="text-muted">
+                                        <asp:Label ID="txtMemoDate" runat="server" Text="01/02/2023" />
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col text-break font-weight-bold ">
+                                    <asp:Label ID="txtStatus" runat="server" Text="Status" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col text-break">
-                            <span>Subject : mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</span>
+                            <asp:Label ID="preFixSubject" runat="server" AssociatedControlID="txtSubject" Text="Subject : " />
+                            <asp:Label ID="txtSubject" runat="server" Text="" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col text-break">
-                            <span>MemoType : ______________________________________________________________________</span>
+                            <asp:Label ID="preFixMemoType" runat="server" AssociatedControlID="txtMemoType" Text="MemoType : " />
+                            <asp:Label ID="txtMemoType" runat="server" Text="" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col text-break mb-3">
-                            <span>Cost : ______________________________________________________________________</span>
-
+                            <asp:Label ID="preFixCost" runat="server" AssociatedControlID="txtAmount" Text="Cost : " />
+                            <asp:Label ID="txtAmount" runat="server" Text="" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-3">
-                            <span>ผู้ตรวจ</span>
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    <span>ผู้ตรวจ</span>
+                                </div>
+                                <div class="col-8 mb-3 text-center font-weight-bold">
+                                    <asp:Label ID="txtVeriftyBy" runat="server" Text="" />
+
+                                </div>
+                            </div>
                         </div>
                         <div class="col-3">
-                            <span>ผู้อนุมัติ</span>
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    <span>ผู้อนุมัติ</span>
+                                </div>
+                                <div class="col-8 mb-3 text-center font-weight-bold">
+                                    <asp:Label ID="txtApprovalBy" runat="server" Text="ทิชา มณีอ่อน" />
+
+                                </div>
+                            </div>
                         </div>
                         <div class="col-6">
                         </div>
@@ -71,21 +114,26 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="row">
-                                <div class="col-auto mb-3">
+                                <div class="col-4 mb-3">
                                     <span>วันที่</span>
                                 </div>
-                                <div class="col mb-3 text-center">
-                                    <small id="txtVeriftyDate" class="text-muted">07/12/2023</small>
+                                <div class="col-8 mb-3 text-center">
+                                    <small class="text-muted">
+                                        <asp:Label ID="txtVeriftyDate" runat="server" Text="07/12/2023" />
+                                    </small>
+
                                 </div>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="row">
-                                <div class="col-auto mb-3">
+                                <div class="col-4 mb-3">
                                     <span>วันที่</span>
                                 </div>
-                                <div class="col mb-3 text-center">
-                                    <small id="txtApprovalDate" class="text-muted">07/12/2023</small>
+                                <div class="col-8 mb-3 text-center">
+                                    <small class="text-muted">
+                                        <asp:Label ID="txtApprovalDate" runat="server" Text="07/12/2023" />
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -93,8 +141,145 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center">
-                    <iframe class="file-upload-image" src="http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_231100762.pdf" title="description" width="95%" height="1000px"></iframe>
+                <div id="contentDetail" class="mb-3" runat="server">
+                    <div class="text-center" id="divcontent__file" runat="server">
+                        <iframe id="fileContent" runat="server" class="file-upload-image" src="http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_231100762.pdf" title="description" width="95%" height="1000px"></iframe>
+                    </div>
+                    <div class="container border border-secondary" id="divcontent__text" runat="server">
+                        <asp:Label ID="txtContent" runat="server" Text="" />
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <% If Not Request.QueryString("MemoCode") Is Nothing And detailtable.Rows.Count > 0 Then%>
+                            <% if (detailtable.Rows(0).Item("statusid") = 1) Then%>
+                            <div class="text-center m-auto">
+                                <% If approval And detailtable.Rows(0).Item("statusid") = 1 Then%>
+                                <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
+                                <% End If %>
+                                <% If verify And detailtable.Rows(0).Item("statusid") = 1 Then%>
+                                <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" />
+                                <% End If %>
+                                <% If ((verify Or approval)) Then%>
+                                <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" />
+                                <% End If %>
+                            </div>
+                            <% End If %>
+                            <% End If %>
+                        </div>
+                    </div>
+
+                    <div class="row notPrint" id="card_attatch" runat="server">
+                        <div class="col-md-6 mt-3">
+                            <div class="card shadow card_attatch">
+                                <div class="card-header">
+                                    เอกสารแนบ
+                                </div>
+                                <div class="card-body attatchItems">
+                                    <%--begin Attatch item--%>
+
+                                    <% For i = 0 To AttachTable.Rows.Count - 1 %>
+                                    <div class="row">
+                                       <%-- <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4" Or Session("depid").ToString = "24" Or Session("depid").ToString = "25") Then%>
+                                        <% If maintable.Rows(0).Item("statusid") = 7 Then%>
+                                        <div class="col-1">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="<%= AttachTable.Rows(i).Item("id") %>" onclick="chkAttach(this,'<%= Session("userid") %>')">
+                                            </div>
+                                        </div>
+                                        <% End If %>
+                                        <% End If %>--%>
+                                        <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
+                                            <div class="col-auto">
+                                                <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                                    <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
+
+                                                <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <%-- end Attatch item--%>
+                                    <% Next i %>
+                                </div>
+                                <div class="card-footer">
+                                    <div id="btnAddAttatch" runat="server">
+                                        <a onclick="addAttach()" id="btnAddNewAttatch" runat="server" class="text-primary" style="cursor: pointer; transition: .2s;">
+                                            <i class="fas fa-plus-circle"></i><span>&nbsp;แนบลิ้งเอกสาร</span></a>
+                                        <a href="#" id="btnAddAttatch2" runat="server" title="addAttach" data-toggle="modal" data-target="#chooseMyfile">เลือกจากคลังไฟล์...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-3" id="card_comment" runat="server">
+                            <div class="card shadow card_comment">
+                                <div class="table-responsive">
+                                    <div class="card-header">
+                                        แสดงความคิดเห็น
+                                    </div>
+                                    <div class="card-body comments">
+                                        <%--begin item--%>
+
+
+                                        <% For i = 0 To CommentTable.Rows.Count - 1 %>
+                                        <div class="comment-detail mb-2">
+
+                                            <div class="row">
+                                                <div class="col-auto font-weight-bolder" style="font-size: 1rem; display: flex; justify-content: flex-start; align-items: center;">
+                                                    <%= CommentTable.Rows(i).Item("CreateBy").ToString() %>
+                                                </div>
+                                                <% If CommentTable.Rows(i).Item("CreateBy").ToString = Session("username").ToString Then %>
+                                                <div class="col-auto">
+                                                    <a onclick="btnEditCommentClick('<%= CommentTable.Rows(i).Item("commentid").ToString() %>')" style="display: none;" class="btn btn-sm editComment">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>&nbsp;
+                                                    <a onclick="confirmDelete('<%= CommentTable.Rows(i).Item("commentid").ToString() %>','<%= Session("userid") %>')" class="btn btn-sm deleteComment">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </div>
+                                                <% End If %>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted" style="font-size: .75rem;">
+                                                    <%= CommentTable.Rows(i).Item("CreateDate").ToString() %>
+                                                </div>
+                                            </div>
+                                            <div class="row commentDetail">
+                                                <div contenteditable="false" class="col-md-12 detailComment" id="<%= CommentTable.Rows(i).Item("commentid").ToString() %>" style="font-size: 1rem;" onblur="cancelEditComment(this,'<%= CommentTable.Rows(i).Item("commentdetail").ToString() %>');" onkeydown="checkEditcomment(this,event,'255','<%= CommentTable.Rows(i).Item("commentdetail").ToString() %>');">
+                                                    <span>
+                                                        <%= CommentTable.Rows(i).Item("commentdetail").ToString() %>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%-- end detail row--%>
+                                        <% Next i %>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <asp:TextBox class="form-control bg-white" ID="txtComment" runat="server" Style="cursor: auto;" Rows="2" Columns="50" TextMode="MultiLine" onkeyup="stoppedTyping();" placeholder="Comment . ." value="" autocomplete="off"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-12">
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%-- end item--%>
+                            </div>
+                            <!-- end card-->
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- end content-->
@@ -105,6 +290,34 @@
 
 
 
+    <div class="modal fade bd-example-modal-lg" id="chooseMyfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">เลือกจากคลังไฟล์</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <asp:Label ID="lbcboMyfile" CssClass="form-label" AssociatedControlID="cboMyfile" runat="server" Text="ไฟล์ของฉัน" />
+                                <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboMyfile" runat="server" Text="*" />
+                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server" required></asp:DropDownList>
+                                <div class="invalid-feedback">กรุณาเลือกไฟล์</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
 
 
@@ -233,6 +446,15 @@
                 '',
                 'warning'
             )
+        }
+        function chooseMyfile() {
+            validateData();
+
+            const url = $('#<%= cboMyfile.ClientID%>').val();
+            const description = $("#<%= cboMyfile.ClientID%> option:selected").text();
+            sentAddAttach(url, description)
+
+            return true;
         }
     </script>
 </asp:Content>
