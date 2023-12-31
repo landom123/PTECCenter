@@ -323,10 +323,10 @@ endprocess:
 
         Dim strSplit As Array
         Dim i As Integer
-
         strSplit = allusercode.Split(",")
 
-        For i = 0 To strSplit.Length - 1
+        Dim cnt As Integer = strSplit.Length
+        For i = 0 To cnt
             If Not Session("userid") = userid And
                 Not Session("usercode") = strSplit(i) And
                 Not Session("secid").ToString = "2" And
@@ -656,7 +656,8 @@ endprocess:
         End If
     End Sub
     Private Sub checkunsave()
-        For i = 0 To detailtable.Rows.Count - 1
+        Dim cnt As Integer = detailtable.Rows.Count - 1
+        For i = 0 To cnt
             If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
                 chkunsave = 1
                 GoTo endprocess
@@ -1279,7 +1280,8 @@ endprocess:
     End Sub
 
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
-        For i = 0 To detailtable.Rows.Count - 1
+        Dim cnt As Integer = detailtable.Rows.Count - 1
+        For i = 0 To cnt
             If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
                 chkunsave = 1
                 Dim scriptKey As String = "alert"
@@ -2243,61 +2245,62 @@ endprocess:
                     Next row
 
 
+                    Dim cnt As Integer = ds.Tables(1).Rows.Count - 1
                     Dim cntrow As Integer = detailtable.Rows.Count + 1
                     Dim cnt_new As Integer = 999
                     Dim cnt_detailtable As Integer = 999
-                    For i = 0 To ds.Tables(1).Rows.Count - 1
+                    For i = 0 To cnt
                         cnt_new = ds.Tables(1).Select("row='" & cntrow & "'").Length
                         cnt_detailtable = detailtable.Select("row='" & cntrow & "'").Length
-                        While cnt_detailtable > 0 Or cnt_new > 0
-                            cntrow += 1
-                            cnt_new = ds.Tables(1).Select("row='" & cntrow & "'").Length
-                            cnt_detailtable = detailtable.Select("row='" & cntrow & "'").Length
-                        End While
+                            While cnt_detailtable > 0 Or cnt_new > 0
+                                cntrow += 1
+                                cnt_new = ds.Tables(1).Select("row='" & cntrow & "'").Length
+                                cnt_detailtable = detailtable.Select("row='" & cntrow & "'").Length
+                            End While
 
 
-                        Dim row As DataRow
-                        row = detailtable.NewRow()
-                        row("row") = cntrow
-                        row("status") = "new"
-                        row("nonpodtl_id") = ds.Tables(1).Rows(i)("nonpodtl_id")
-                        row("accountcodeid") = ds.Tables(1).Rows(i)("accountcodeid")
-                        row("accountcode") = ds.Tables(1).Rows(i)("accountcode")
-                        row("depid") = ds.Tables(1).Rows(i)("depid")
-                        row("depname") = ds.Tables(1).Rows(i)("depname")
-                        row("buid") = ds.Tables(1).Rows(i)("buid")
-                        row("buname") = ds.Tables(1).Rows(i)("buname")
-                        row("ppid") = ds.Tables(1).Rows(i)("ppid")
-                        row("ppname") = ds.Tables(1).Rows(i)("ppname")
-                        row("pjid") = ds.Tables(1).Rows(i)("pjid")
-                        row("pjname") = ds.Tables(1).Rows(i)("pjname")
+                            Dim row As DataRow
+                            row = detailtable.NewRow()
+                            row("row") = cntrow
+                            row("status") = "new"
+                            row("nonpodtl_id") = ds.Tables(1).Rows(i)("nonpodtl_id")
+                            row("accountcodeid") = ds.Tables(1).Rows(i)("accountcodeid")
+                            row("accountcode") = ds.Tables(1).Rows(i)("accountcode")
+                            row("depid") = ds.Tables(1).Rows(i)("depid")
+                            row("depname") = ds.Tables(1).Rows(i)("depname")
+                            row("buid") = ds.Tables(1).Rows(i)("buid")
+                            row("buname") = ds.Tables(1).Rows(i)("buname")
+                            row("ppid") = ds.Tables(1).Rows(i)("ppid")
+                            row("ppname") = ds.Tables(1).Rows(i)("ppname")
+                            row("pjid") = ds.Tables(1).Rows(i)("pjid")
+                            row("pjname") = ds.Tables(1).Rows(i)("pjname")
 
-                        row("cost") = ds.Tables(1).Rows(i)("cost")
-                        row("vat_per") = ds.Tables(1).Rows(i)("vat_per")
-                        row("tax_per") = ds.Tables(1).Rows(i)("tax_per")
-                        row("vat") = ds.Tables(1).Rows(i)("vat")
-                        row("tax") = ds.Tables(1).Rows(i)("tax")
-                        row("cost_total") = ds.Tables(1).Rows(i)("cost_total")
-                        row("detail") = ds.Tables(1).Rows(i)("detail")
-                        row("vendorname") = ds.Tables(1).Rows(i)("vendorname")
-                        row("vendorcode") = ds.Tables(1).Rows(i)("vendorcode")
-                        row("invoice") = ds.Tables(1).Rows(i)("invoice")
-                        row("taxid") = ds.Tables(1).Rows(i)("taxid")
-                        row("invoicedate") = ds.Tables(1).Rows(i)("invoicedate")
-                        row("nobill") = ds.Tables(1).Rows(i)("nobill")
-                        row("incompletebill") = ds.Tables(1).Rows(i)("incompletebill")
-                        row("frm_coderef") = ds.Tables(1).Rows(i)("frm_coderef")
-                        row("frm") = ds.Tables(1).Rows(i)("frm")
+                            row("cost") = ds.Tables(1).Rows(i)("cost")
+                            row("vat_per") = ds.Tables(1).Rows(i)("vat_per")
+                            row("tax_per") = ds.Tables(1).Rows(i)("tax_per")
+                            row("vat") = ds.Tables(1).Rows(i)("vat")
+                            row("tax") = ds.Tables(1).Rows(i)("tax")
+                            row("cost_total") = ds.Tables(1).Rows(i)("cost_total")
+                            row("detail") = ds.Tables(1).Rows(i)("detail")
+                            row("vendorname") = ds.Tables(1).Rows(i)("vendorname")
+                            row("vendorcode") = ds.Tables(1).Rows(i)("vendorcode")
+                            row("invoice") = ds.Tables(1).Rows(i)("invoice")
+                            row("taxid") = ds.Tables(1).Rows(i)("taxid")
+                            row("invoicedate") = ds.Tables(1).Rows(i)("invoicedate")
+                            row("nobill") = ds.Tables(1).Rows(i)("nobill")
+                            row("incompletebill") = ds.Tables(1).Rows(i)("incompletebill")
+                            row("frm_coderef") = ds.Tables(1).Rows(i)("frm_coderef")
+                            row("frm") = ds.Tables(1).Rows(i)("frm")
 
 
 
-                        detailtable.Rows.Add(row)
-                        ds.Tables(1).Rows(i)("row") = cntrow
-                    Next
+                            detailtable.Rows.Add(row)
+                            ds.Tables(1).Rows(i)("row") = cntrow
+                        Next
 
-                    'head = ds.Tables(0)
-                    'detailtable.Merge(ds.Tables(1))
-                    If ds.Tables(2) IsNot Nothing Then
+                        'head = ds.Tables(0)
+                        'detailtable.Merge(ds.Tables(1))
+                        If ds.Tables(2) IsNot Nothing Then
                         'total_purecard = ds.Tables(2).Rows(0).Item("purecard")
                         Dim purecard As Double = 0.00
                         If maintable.Rows.Count > 0 Then

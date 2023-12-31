@@ -100,7 +100,8 @@ Public Class jobs
 
         Dim dtcost As DataTable = JobCenterDtl_List(jobcenterid)
         cboCost.Items.Clear()
-        For i As Integer = 0 To dtcost.Rows.Count - 1
+        Dim cnt As Integer = dtcost.Rows.Count - 1
+        For i As Integer = 0 To cnt
             Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("JobsCenterDtlName"), dtcost.Rows(i).Item("JobsCenterDtlID"))
             If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("CostName").ToString) Then
                 item.Attributes("data-tokens") = dtcost.Rows(i).Item("CostName").ToString
@@ -857,8 +858,9 @@ Public Class jobs
     End Function
     Private Sub SaveDetail(jobno As String, mytable As DataTable, username As String)
         Dim jobdetailid As Integer
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("jobdetailid") = 0 Then
                     jobdetailid = SaveDetailToTable(jobno,
                                       .Rows(i).Item("jobtypeid"),

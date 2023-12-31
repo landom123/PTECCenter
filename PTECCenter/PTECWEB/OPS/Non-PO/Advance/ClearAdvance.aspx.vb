@@ -344,10 +344,10 @@ endprocess:
 
         Dim strSplit As Array
         Dim i As Integer
-
         strSplit = allusercode.Split(",")
 
-        For i = 0 To strSplit.Length - 1
+        Dim cnt As Integer = strSplit.Length
+        For i = 0 To cnt
             If Not Session("userid") = userid And
                 Not Session("usercode") = strSplit(i) And
                 Not Session("secid").ToString = "2" And
@@ -583,7 +583,8 @@ endprocess:
     'End Sub
 
     Private Sub checkunsave()
-        For i = 0 To detailtable.Rows.Count - 1
+        Dim cnt As Integer = detailtable.Rows.Count - 1
+        For i = 0 To cnt
             If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
                 chkunsave = 1
                 GoTo endprocess
@@ -1135,17 +1136,18 @@ endprocess:
     End Sub
 
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
-        For i = 0 To detailtable.Rows.Count - 1
-            If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
-                chkunsave = 1
-                Dim scriptKey As String = "alert"
-                'Dim javaScript As String = "alert('" & ex.Message & "');"
-                Dim javaScript As String = "alertWarning('กรุณาบันทึกรายการ');"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                GoTo endprocess
-            End If
-        Next i
-        Dim approval As New Approval
+        Dim cnt As Integer = detailtable.Rows.Count - 1
+        For i = 0 To cnt
+                If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
+                    chkunsave = 1
+                    Dim scriptKey As String = "alert"
+                    'Dim javaScript As String = "alert('" & ex.Message & "');"
+                    Dim javaScript As String = "alertWarning('กรุณาบันทึกรายการ');"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                    GoTo endprocess
+                End If
+            Next i
+            Dim approval As New Approval
 
         Try
             approval.Save_Comment_By_Code(Request.QueryString("NonpoCode"), txtComment.Text.Trim(), Session("userid"))
@@ -2130,10 +2132,11 @@ endprocess:
                     Next row
 
 
+                    Dim cnt As Integer = ds.Tables(1).Rows.Count - 1
                     Dim cntrow As Integer = detailtable.Rows.Count + 1
                     Dim cnt_new As Integer = 999
                     Dim cnt_detailtable As Integer = 999
-                    For i = 0 To ds.Tables(1).Rows.Count - 1
+                    For i = 0 To cnt
                         cnt_new = ds.Tables(1).Select("row='" & cntrow & "'").Length
                         cnt_detailtable = detailtable.Select("row='" & cntrow & "'").Length
                         While cnt_detailtable > 0 Or cnt_new > 0

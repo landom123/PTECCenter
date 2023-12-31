@@ -7,7 +7,8 @@ Public Class Memo
 
         Dim dtcost As DataTable = MemoType_List()
         cbo.Items.Clear()
-        For i As Integer = 0 To dtcost.Rows.Count - 1
+        Dim cnt As Integer = dtcost.Rows.Count - 1
+        For i As Integer = 0 To cnt
             Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("type_name"), dtcost.Rows(i).Item("memo_typeid"))
             Dim category_name As String = dtcost.Rows(i).Item("category_name").ToString
             If Not String.IsNullOrEmpty(category_name) Then
