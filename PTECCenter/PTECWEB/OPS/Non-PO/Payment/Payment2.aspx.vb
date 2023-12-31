@@ -325,7 +325,7 @@ endprocess:
         Dim i As Integer
         strSplit = allusercode.Split(",")
 
-        Dim cnt As Integer = strSplit.Length
+        Dim cnt As Integer = strSplit.Length - 1
         For i = 0 To cnt
             If Not Session("userid") = userid And
                 Not Session("usercode") = strSplit(i) And
