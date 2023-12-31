@@ -73,7 +73,7 @@ Public Class MemoRequest
                             fullfilename += fileName
                             fullfilename += Extension
 
-                            attatch.Attatch_Save(fullfilename, Extension, "File Memo", savePath, Session("userid").ToString)
+                            'attatch.Attatch_Save(fullfilename, Extension, "File Memo", savePath, Session("userid").ToString)
 
                             url = "http://vpnptec.dyndns.org:10280/OPS_Memo/" + fullfilename
                         End If

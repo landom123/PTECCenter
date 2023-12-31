@@ -74,8 +74,8 @@ Public Class Memo2
                     setPermission(usercode, statusid)
                 Catch ex As Exception
                     Dim scriptKey As String = "UniqueKeyForThisScript"
-                Dim javaScript As String = "alertWarning('Find Fail')"
-                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                    Dim javaScript As String = "alertWarning('Find Fail')"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
             End If
         Else
@@ -222,42 +222,37 @@ Public Class Memo2
     Private Sub setmain(dt As DataTable)
         With dt
             'Select Case .Rows(0).Item("statusid").ToString
-            '    Case = "1" '1 : รอยืนยัน
-            '        statusnonpo.Attributes.Add("class", "btn btn-info")
-            '        If .Rows(0).Item("createby").ToString = Session("userid") Then
-            '            Session("status_payment") = "edit"
-            '        End If
-            '    Case = "2" '2 : รออนุมัติ
-            '        statusnonpo.Attributes.Add("class", "btn btn-warning")
-            '    Case = "4" '4 : ขอเอกสารเพิ่มเติม
-            '        statusnonpo.Attributes.Add("class", "btn btn-info")
-            '    Case = "5" '5 : ไม่ผ่านการตรวจสอบ
-            '        statusnonpo.Attributes.Add("class", "btn btn-danger")
-            '    Case = "6" '6 : ไม่ผ่าน
-            '        statusnonpo.Attributes.Add("class", "btn btn-danger")
-            '    Case = "7" '7 : รอบัญชีตรวจสอบ
-            '        statusnonpo.Attributes.Add("class", "btn btn-warning")
-            '    Case = "8" '8 : รอเอกสารตัวจริง
-            '        statusnonpo.Attributes.Add("class", "btn btn-warning")
-            '    Case = "9" '9 : ได้รับเอกสารตัวจริง
-            '        statusnonpo.Attributes.Add("class", "btn btn-secondary")
-            '    Case = "14" '14 : ยกเลิก
-            '        statusnonpo.Attributes.Add("class", "btn btn-danger")
-            '    Case = "15" '15 : รอตราวจสอบ
-            '        statusnonpo.Attributes.Add("class", "btn btn-warning")
-            '    Case = "17" '17 : การเงินได้รับเอกสาร
-            '        statusnonpo.Attributes.Add("class", "btn btn-secondary")
+            '    Case = "1" '1 : รออนุมัติ
+            '        txtStatus.Attributes.Add("class", "btn btn-warning")
+            '    Case = "2" '2 : ได้รับการอนุมัติ
+            '        txtStatus.Attributes.Add("class", "btn btn-success")
+            '    Case = "3" '3 : ไม่ผ่านการอนุมัติ
+            '        txtStatus.Attributes.Add("class", "btn btn-danger")
+            '    Case = "4" '4 : ยกเลิก
+            '        txtStatus.Attributes.Add("class", "btn btn-danger")
             'End Select
+            Select Case .Rows(0).Item("statusid").ToString
+                Case = "1" '1 : รอยืนยัน
+                    statusmemo.Attributes.Add("class", "btn btn-warning")
+                Case = "2" '2 : ได้รับการอนุมัติ
+                    statusmemo.Attributes.Add("class", "btn btn-success")
+                Case = "3" '3 : ไม่ผ่านการอนุมัติ
+                    statusmemo.Attributes.Add("class", "btn btn-danger")
+                Case = "4" '4 : ยกเลิก
+                    statusmemo.Attributes.Add("class", "btn btn-danger")
+            End Select
+            statusmemo.Text = .Rows(0).Item("statusname").ToString
+
 
 
 
             '------------------Head--------------------------
-            txtMemoCode.InnerText = .Rows(0).Item("Memo_Code").ToString
+            txtMemoCode.Text = .Rows(0).Item("Memo_Code").ToString
 
             txtName.Text = .Rows(0).Item("ownername").ToString
             txtTo.Text = .Rows(0).Item("sendto").ToString
             txtCc.Text = .Rows(0).Item("sendcc").ToString
-            txtStatus.Text = .Rows(0).Item("StatusName").ToString
+            'txtStatus.InnerText = .Rows(0).Item("StatusName").ToString
             txtMemoDate.Text = .Rows(0).Item("CommitDate").ToString
             txtSubject.Text = .Rows(0).Item("Subject").ToString
             txtMemoType.Text = .Rows(0).Item("Type_Name").ToString
@@ -295,7 +290,27 @@ Public Class Memo2
 
     Private Sub SetBtn(statusid As String, createby As Integer)
         Select Case statusid
-            Case = "1" '1 : รอยืนยัน
+            Case = "1" '1 : รออนุมัติ
+                If createby = Session("userid") Then
+                    btnCancel.Enabled = True
+
+                Else
+                    btnCancel.Enabled = False
+                End If
+
+                btnAddAttatch.Visible = True
+            Case = "2" '2 : ได้รับการอนุมัติ
+                btnCancel.Enabled = False
+
+                btnAddAttatch.Visible = False
+            Case = "3" '3 : ไม่ผ่านการอนุมัติ
+                btnCancel.Enabled = False
+
+                btnAddAttatch.Visible = False
+            Case = "4" '4 : ยกเลิก
+                btnCancel.Enabled = False
+
+                btnAddAttatch.Visible = False
         End Select
     End Sub
 
@@ -323,9 +338,6 @@ Public Class Memo2
                     usercode = am_code) And
                     PermissionOwner IsNot Nothing And
                     (detailtable.Rows(0).Item("statusid") = 1) Then
-
-
-
             For Each row As DataRow In PermissionOwner.Tables(0).Rows
                 If row("status").ToString = "now" Then
                     If row("approver").ToString.IndexOf("MD") > -1 Then
@@ -399,4 +411,91 @@ endprocess:
         End If
     End Sub
 
+    Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
+
+        Dim approval As New Approval
+
+        Try
+            approval.Save_Comment_By_Code(Request.QueryString("MemoCode"), txtComment.Text.Trim(), Session("userid"))
+            findMemo()
+            setmain(detailtable)
+            txtComment.Text = ""
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('SaveComment fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+endprocess:
+    End Sub
+
+    Private Sub btnApproval_Click(sender As Object, e As EventArgs) Handles btnApproval.Click
+
+        Dim objMemo As New Memo
+        Try
+            objMemo.Memo_Allow(Request.QueryString("MemoCode"), Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Approval fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect(Request.RawUrl)
+endprocess:
+    End Sub
+
+    Private Sub btnVerify_Click(sender As Object, e As EventArgs) Handles btnVerify.Click
+
+        Dim objapproval As New Approval
+
+        Try
+            objapproval.ApprovalHO_Verify(Request.QueryString("MemoCode"), Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Approval fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect(Request.RawUrl)
+endprocess:
+    End Sub
+
+    Private Sub btnDisApproval_Click(sender As Object, e As EventArgs) Handles btnDisApproval.Click
+
+        Dim objMemo As New Memo
+        Try
+            objMemo.Memo_NotAllow(Request.QueryString("MemoCode"), Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Allow fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect(Request.RawUrl)
+endprocess:
+    End Sub
+
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+
+        Dim objMemo As New Memo
+        Try
+            objMemo.Memo_Cancel(Request.QueryString("MemoCode"), Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Cancel fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect(Request.RawUrl)
+endprocess:
+    End Sub
+    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+        Response.Redirect("MemoRequest.aspx")
+    End Sub
 End Class

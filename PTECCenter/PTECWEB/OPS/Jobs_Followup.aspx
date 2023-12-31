@@ -872,7 +872,7 @@
                             <div class="form-group">
                                 <asp:Label ID="lbcboMyfile" CssClass="form-label" AssociatedControlID="cboMyfile" runat="server" Text="ไฟล์ของฉัน" />
                                 <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboMyfile" runat="server" Text="*" />
-                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server" required></asp:DropDownList>
+                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server"></asp:DropDownList>
                                 <div class="invalid-feedback">กรุณาเลือกไฟล์</div>
                             </div>
                         </div>
