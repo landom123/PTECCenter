@@ -1557,6 +1557,7 @@ endprocess:
             cost = 0
         End Try
         cost = cost + payback - purecard
+        cost = Math.Round(cost, 2)
         If cost > head.Rows(0).Item("amount") Then
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1588,6 +1589,7 @@ endprocess:
             cost = 0
         End Try
         cost = cost + payback - purecard
+        cost = Math.Round(cost, 2)
         If account_code.IndexOf(Session("usercode").ToString) > -1 Then
             If cost > maintable.Rows(0).Item("totalforcheck") Then
                 Dim scriptKey As String = "alert"

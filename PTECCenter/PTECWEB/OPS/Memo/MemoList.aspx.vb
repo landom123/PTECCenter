@@ -38,19 +38,14 @@ Public Class MemoList
         txtStartDate.Attributes.Add("readonly", "readonly")
         txtEndDate.Attributes.Add("readonly", "readonly")
 
-        txtStartDueDate.Attributes.Add("readonly", "readonly")
-        txtEndDueDate.Attributes.Add("readonly", "readonly")
-        operator_code = objNonpo.NonPOPermisstionOperator("ADV")
+        operator_code = objNonpo.NonPOPermisstionOperator("MMR")
         If Not IsPostBack() Then
             criteria = createCriteria()
-            objNonpo.SetCboStatusbyNonpocategory(cboStatusFollow, "ADV")
-            objbranch.SetComboBranchGroup(cboBranchGroup)
-            objbranch.SetComboBranch(cboBranch, "")
-            objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
-            objcompany.SetCboCompany(cboCompany, 0)
+            SetCboUsers(cboMemoType)
+            SetCboUsers(cboStatusFollow)
             SetCboUsers(cboCreateby)
-            SetCboUsers(cboOwner)
+            SetCboUsers(cboTo)
+            SetCboUsers(cboCc)
             If Session("positionid") = "10" Then
                 chkCO.Checked = True
             Else
@@ -61,8 +56,8 @@ Public Class MemoList
                 'objjob.SetCboJobStatusListForReport(cboStatusFollow)
 
                 '------------------------------------
-                If Not Session("criteria_advlist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                    criteria = Session("criteria_advlist")
+                If Not Session("criteria_memo") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_memo")
                     BindCriteria(criteria)
                     searchjobslist()
                 Else
@@ -73,8 +68,8 @@ Public Class MemoList
                 'If Not Session("cboWorking_job") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                 '    cboWorking.SelectedValue = Session("cboWorking_job")
                 'End If
-                If Not Session("criteria_advlist") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
-                    criteria = Session("criteria_advlist")
+                If Not Session("criteria_memo") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_memo")
                     BindCriteria(criteria)
                     searchjobslist_owner()
                 Else
@@ -84,8 +79,8 @@ Public Class MemoList
 
         Else
 
-            criteria = Session("criteria_advlist")
-            itemtable = Session("joblist")
+            criteria = Session("criteria_memo")
+            itemtable = Session("memoitem")
         End If
     End Sub
     Private Sub BindData()
@@ -101,27 +96,23 @@ Public Class MemoList
         If Not criteria Is Nothing Then
 
             criteria.Rows.Clear()
-            criteria.Rows.Add(txtAdvRQ.Text.Trim(),
+            criteria.Rows.Add(txtMemoCode.Text.Trim(),
+                                txtSubject.Text.Trim(),
+                                cboMemoType.SelectedItem.Value.ToString,
                                 txtStartDate.Text.Trim(),
                                 txtEndDate.Text.Trim(),
                                 cboStatusFollow.SelectedItem.Value.ToString,
-                                txtStartDueDate.Text.Trim(),
-                                txtEndDueDate.Text.Trim(),
-                                cboDepartment.SelectedItem.Value.ToString,
-                                cboSection.SelectedItem.Value.ToString,
-                                cboCompany.SelectedItem.Value.ToString,
-                                cboBranchGroup.SelectedItem.Value.ToString,
-                                cboBranch.SelectedItem.Value.ToString,
                                 cboCreateby.SelectedItem.Value.ToString,
-                                cboOwner.SelectedItem.Value.ToString,
+                                cboTo.SelectedItem.Value.ToString,
+                                cboCc.SelectedItem.Value.ToString,
                                 gvRemind.PageIndex)
 
-            Session("criteria_advlist") = criteria
+            Session("criteria_memo") = criteria
         End If
 
     End Sub
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
-        Response.Redirect("AdvanceRequest.aspx")
+        Response.Redirect("MemoRequest.aspx")
     End Sub
 
     Private Function createdetailtable() As DataTable
@@ -131,7 +122,7 @@ Public Class MemoList
         dt.Columns.Add("jobdate", GetType(Date))
         dt.Columns.Add("jobtype", GetType(String))
         dt.Columns.Add("details", GetType(String))
-        dt.Columns.Add("status", GetType(String))
+        dt.Columns.Add("StatusName", GetType(String))
         dt.Columns.Add("closedate", GetType(Date))
         dt.Columns.Add("detailFollow", GetType(String))
         dt.Columns.Add("cost", GetType(Double))
@@ -142,53 +133,32 @@ Public Class MemoList
 
     Private Function createCriteria() As DataTable
         Dim dt As New DataTable
-
-        dt.Columns.Add("txtadvrq", GetType(String))
+        dt.Columns.Add("txtMemoCode", GetType(String))
+        dt.Columns.Add("txtSubject", GetType(String))
+        dt.Columns.Add("cboMemoType", GetType(String))
         dt.Columns.Add("txtStartDate", GetType(String))
         dt.Columns.Add("txtEndDate", GetType(String))
         dt.Columns.Add("cboStatusFollow", GetType(String))
-        dt.Columns.Add("txtStartDueDate", GetType(String))
-        dt.Columns.Add("txtEndDueDate", GetType(String))
-        dt.Columns.Add("cboDep", GetType(String))
-        dt.Columns.Add("cboSec", GetType(String))
-        dt.Columns.Add("cboCom", GetType(String))
-        dt.Columns.Add("cboBranchGroup", GetType(String))
-        dt.Columns.Add("cboBranch", GetType(String))
         dt.Columns.Add("cboCreateby", GetType(String))
-        dt.Columns.Add("cboOwner", GetType(String))
+        dt.Columns.Add("cboTo", GetType(String))
+        dt.Columns.Add("cboCc", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
 
         Return dt
     End Function
     Private Sub BindCriteria(criteria As DataTable)
         If criteria.Rows.Count > 0 Then
-            txtAdvRQ.Text = criteria.Rows(0).Item("txtadvrq")
+            txtMemoCode.Text = criteria.Rows(0).Item("txtMemoCode")
+            txtSubject.Text = criteria.Rows(0).Item("txtSubject")
+            cboMemoType.SelectedValue = criteria.Rows(0).Item("cboMemoType")
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
 
-
-            txtStartDueDate.Text = criteria.Rows(0).Item("txtStartDueDate")
-            txtEndDueDate.Text = criteria.Rows(0).Item("txtEndDueDate")
-
             cboStatusFollow.SelectedValue = criteria.Rows(0).Item("cboStatusFollow")
-            cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
-            Dim objbranch As New Branch
-            cboBranch.SelectedIndex = -1
-            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-            cboBranch.SelectedValue = criteria.Rows(0).Item("cboBranch")
-
-            cboDepartment.SelectedValue = criteria.Rows(0).Item("cboDep")
-            cboSection.SelectedIndex = -1
-            Dim depid As Integer
-            Dim objsection As New Section
-
-            depid = cboDepartment.SelectedItem.Value
-            objsection.SetCboSection_seccode(cboSection, depid)
-            cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
-            cboCompany.SelectedValue = criteria.Rows(0).Item("cboCom")
             cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
-            cboOwner.SelectedValue = criteria.Rows(0).Item("cboOwner")
+            cboTo.SelectedValue = criteria.Rows(0).Item("cboTo")
+            cboCc.SelectedValue = criteria.Rows(0).Item("cboCc")
 
 
         End If
@@ -196,56 +166,67 @@ Public Class MemoList
 
     Private Sub searchjobslist()
 
-        Dim objNonPO As New NonPO
+        Dim objMemo As New Memo
+
         Dim detailtable As New DataTable
         Try
-            If chkCO.Checked Then
-                itemtable = objNonPO.AdvanceRQList_For_Operator(txtAdvRQ.Text.Trim(),
+            'If chkCO.Checked Then
+            '    itemtable = objNonPO.AdvanceRQList_For_Operator(txtMemoCode.Text.Trim(),
+            '                                            txtStartDate.Text.Trim(),
+            '                                            txtEndDate.Text.Trim(),
+            '                                          cboStatusFollow.SelectedItem.Value.ToString,
+            '                                            txtStartDueDate.Text.Trim(),
+            '                                            txtEndDueDate.Text.Trim(),
+            '                                          "",
+            '                                          "",
+            '                                            cboCompany.SelectedItem.Value.ToString,
+            '                                            cboBranchGroup.SelectedItem.Value.ToString,
+            '                                            cboBranch.SelectedItem.Value.ToString,
+            '                                            cboCreateby.SelectedItem.Value.ToString,
+            '                                            cboOwner.SelectedItem.Value.ToString)
+            'ElseIf chkHO.Checked Then
+            '    itemtable = objNonPO.AdvanceRQList_For_Operator(txtMemoCode.Text.Trim(),
+            '                                            txtStartDate.Text.Trim(),
+            '                                            txtEndDate.Text.Trim(),
+            '                                          cboStatusFollow.SelectedItem.Value.ToString,
+            '                                            txtStartDueDate.Text.Trim(),
+            '                                            txtEndDueDate.Text.Trim(),
+            '                                            cboDepartment.SelectedItem.Value.ToString,
+            '                                            cboSection.SelectedItem.Value.ToString,
+            '                                            cboCompany.SelectedItem.Value.ToString,
+            '                                          "",
+            '                                          "",
+            '                                            cboCreateby.SelectedItem.Value.ToString,
+            '                                            cboOwner.SelectedItem.Value.ToString)
+            'Else
+            '    itemtable = objNonPO.AdvanceRQList_For_Operator(txtMemoCode.Text.Trim(),
+            '                                            txtStartDate.Text.Trim(),
+            '                                            txtEndDate.Text.Trim(),
+            '                                          cboStatusFollow.SelectedItem.Value.ToString,
+            '                                            txtStartDueDate.Text.Trim(),
+            '                                            txtEndDueDate.Text.Trim(),
+            '                                            "",
+            '                                          "",
+            '                                            cboCompany.SelectedItem.Value.ToString,
+            '                                          "",
+            '                                          "",
+            '                                            cboCreateby.SelectedItem.Value.ToString,
+            '                                            cboOwner.SelectedItem.Value.ToString)
+            'End If
+
+
+            itemtable = objMemo.MemoList_For_Operator(txtMemoCode.Text.Trim(),
+                                                        txtSubject.Text.Trim(),
+                                                      cboMemoType.SelectedItem.Value.ToString,
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
                                                       cboStatusFollow.SelectedItem.Value.ToString,
-                                                        txtStartDueDate.Text.Trim(),
-                                                        txtEndDueDate.Text.Trim(),
-                                                      "",
-                                                      "",
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                        cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString,
                                                         cboCreateby.SelectedItem.Value.ToString,
-                                                        cboOwner.SelectedItem.Value.ToString)
-            ElseIf chkHO.Checked Then
-                itemtable = objNonPO.AdvanceRQList_For_Operator(txtAdvRQ.Text.Trim(),
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
-                                                        txtStartDueDate.Text.Trim(),
-                                                        txtEndDueDate.Text.Trim(),
-                                                        cboDepartment.SelectedItem.Value.ToString,
-                                                        cboSection.SelectedItem.Value.ToString,
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                      "",
-                                                      "",
-                                                        cboCreateby.SelectedItem.Value.ToString,
-                                                        cboOwner.SelectedItem.Value.ToString)
-            Else
-                itemtable = objNonPO.AdvanceRQList_For_Operator(txtAdvRQ.Text.Trim(),
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
-                                                        txtStartDueDate.Text.Trim(),
-                                                        txtEndDueDate.Text.Trim(),
-                                                        "",
-                                                      "",
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                      "",
-                                                      "",
-                                                        cboCreateby.SelectedItem.Value.ToString,
-                                                        cboOwner.SelectedItem.Value.ToString)
-            End If
+                                                        cboTo.SelectedItem.Value.ToString,
+                                                        cboCc.SelectedItem.Value.ToString)
 
 
-
-            Session("joblist") = itemtable
+            Session("memoitem") = itemtable
             BindData()
 
         Catch ex As Exception
@@ -260,47 +241,47 @@ Public Class MemoList
         Dim objNonPO As New NonPO
         Dim detailtable As New DataTable
         Try
-            If chkCO.Checked Then
-                itemtable = objNonPO.AdvanceRQList_For_Owner(txtAdvRQ.Text.Trim(),
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
-                                                        txtStartDueDate.Text.Trim(),
-                                                        txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                        cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString,
-                                                        Session("userid"),
-                                                         "CO")
-            ElseIf chkHO.Checked Then
-                itemtable = objNonPO.AdvanceRQList_For_Owner(txtAdvRQ.Text.Trim(),
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
-                                                        txtStartDueDate.Text.Trim(),
-                                                        txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                      "",
-                                                      "",
-                                                        Session("userid"),
-                                                        "HO")
-            Else
-                itemtable = objNonPO.AdvanceRQList_For_Owner(txtAdvRQ.Text.Trim(),
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
-                                                        txtStartDueDate.Text.Trim(),
-                                                        txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                      "",
-                                                      "",
-                                                        Session("userid"),
-                                                        "")
-            End If
+            'If chkCO.Checked Then
+            '    itemtable = objNonPO.AdvanceRQList_For_Owner(txtMemoCode.Text.Trim(),
+            '                                            txtStartDate.Text.Trim(),
+            '                                            txtEndDate.Text.Trim(),
+            '                                          cboStatusFollow.SelectedItem.Value.ToString,
+            '                                            txtStartDueDate.Text.Trim(),
+            '                                            txtEndDueDate.Text.Trim(),
+            '                                            cboCompany.SelectedItem.Value.ToString,
+            '                                            cboBranchGroup.SelectedItem.Value.ToString,
+            '                                            cboBranch.SelectedItem.Value.ToString,
+            '                                            Session("userid"),
+            '                                             "CO")
+            'ElseIf chkHO.Checked Then
+            '    itemtable = objNonPO.AdvanceRQList_For_Owner(txtMemoCode.Text.Trim(),
+            '                                            txtStartDate.Text.Trim(),
+            '                                            txtEndDate.Text.Trim(),
+            '                                          cboStatusFollow.SelectedItem.Value.ToString,
+            '                                            txtStartDueDate.Text.Trim(),
+            '                                            txtEndDueDate.Text.Trim(),
+            '                                            cboCompany.SelectedItem.Value.ToString,
+            '                                          "",
+            '                                          "",
+            '                                            Session("userid"),
+            '                                            "HO")
+            'Else
+            '    itemtable = objNonPO.AdvanceRQList_For_Owner(txtMemoCode.Text.Trim(),
+            '                                            txtStartDate.Text.Trim(),
+            '                                            txtEndDate.Text.Trim(),
+            '                                          cboStatusFollow.SelectedItem.Value.ToString,
+            '                                            txtStartDueDate.Text.Trim(),
+            '                                            txtEndDueDate.Text.Trim(),
+            '                                            cboCompany.SelectedItem.Value.ToString,
+            '                                          "",
+            '                                          "",
+            '                                            Session("userid"),
+            '                                            "")
+            'End If
 
 
 
-            Session("joblist") = itemtable
+            Session("memoitem") = itemtable
             BindData()
 
         Catch ex As Exception
@@ -311,8 +292,7 @@ Public Class MemoList
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 10
-        Dim companyAt As Integer = 0
+        Dim statusAt As Integer = 7
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -320,36 +300,16 @@ Public Class MemoList
         End If
 
         If (e.Row.RowType = DataControlRowType.DataRow) Then
-            If Data.Item("status") = "รอยืนยัน" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.LightBlue
-            ElseIf Data.Item("status") = "ยกเลิก" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.LightGray
-            ElseIf Data.Item("status") = "รออนุมัติ" Then
+            If Data.Item("StatusName") = "รออนุมัติ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightYellow
-            ElseIf Data.Item("status") = "ชำระเงินเสร็จสิ้น" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.GreenYellow
-            ElseIf Data.Item("status") = "ไม่ผ่านการอนุมัติ" Then
+            ElseIf Data.Item("StatusName") = "ได้รับการอนุมัติ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Green
+            ElseIf Data.Item("StatusName") = "ไม่ผ่านการอนุมัติ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
-            ElseIf Data.Item("status") = "รอการเงินตรวจสอบ" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.LightCoral
-            ElseIf Data.Item("status") = "รอบัญชีตรวจสอบ" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.LightSalmon
-            ElseIf Data.Item("status") = "รอเคลียร์ค้างชำระ" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Brown
-                e.Row.Cells.Item(statusAt).ForeColor = Color.White
-            ElseIf Data.Item("status") = "ขอเอกสารเพิ่มเติม" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.MediumPurple
-            ElseIf Data.Item("status") = "ได้รับเอกสารตัวจริง" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Gray
-            ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
-                e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
+            ElseIf Data.Item("StatusName") = "ยกเลิก" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightGray
             End If
 
-            If Data.Item("comcode") = "PURE" Then
-                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 237, 1, 128)
-            ElseIf Data.Item("comcode") = "SAP" Then
-                e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 0, 166, 81)
-            End If
         End If
     End Sub
     Private Sub gvRemind_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvRemind.PageIndexChanging
@@ -357,80 +317,29 @@ Public Class MemoList
         BindData()
     End Sub
 
-    Private Sub cboBranchGroup_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranchGroup.SelectedIndexChanged
-        Dim objbranch As New Branch
-
-        cboBranch.SelectedIndex = -1
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-        'searchjobslist()
-    End Sub
-
-    'Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
-    '    Session("cboWorking_job") = cboWorking.SelectedItem.Value
-
-    '    Dim objNonpo As New NonPO
-
-    '    Try
-    '        'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-    '        itemtable = objNonpo.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-    '        Session("joblist") = itemtable
-
-    '    Catch ex As Exception
-    '        Dim scriptKey As String = "alert"
-    '        Dim javaScript As String = "alertWarning('search fail');"
-    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-    '    End Try
-    '    BindData()
-
-    'End Sub
-
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
         Dim objbranch As New Branch
-        txtAdvRQ.Text = ""
+        txtMemoCode.Text = ""
+        txtSubject.Text = ""
+        cboMemoType.SelectedIndex = -1
         txtStartDate.Text = ""
         txtEndDate.Text = ""
 
-        txtStartDueDate.Text = ""
-        txtEndDueDate.Text = ""
 
-        cboDepartment.SelectedIndex = -1
-        cboSection.SelectedIndex = -1
-        cboCompany.SelectedIndex = -1
         cboStatusFollow.SelectedIndex = -1
-        cboBranchGroup.SelectedIndex = -1
-        cboBranch.SelectedIndex = -1
         cboCreateby.SelectedIndex = -1
-        cboOwner.SelectedIndex = -1
+        cboTo.SelectedIndex = -1
+        cboCc.SelectedIndex = -1
         If itemtable IsNot Nothing Then
             itemtable.Rows.Clear()
         End If
         If criteria IsNot Nothing Then
             criteria.Rows.Clear()
         End If
-        Session("joblist") = itemtable
-        Session("criteria_advlist") = criteria
-
-
-        Dim depid As Integer
-        Dim objsection As New Section
-
-        depid = cboDepartment.SelectedItem.Value
-        objsection.SetCboSection_seccode(cboSection, depid)
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
-        'searchjobslist()
+        Session("memoitem") = itemtable
+        Session("criteria_memo") = criteria
 
         BindData()
-    End Sub
-
-    Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
-        cboSection.SelectedIndex = -1
-        Dim depid As Integer
-        Dim objsection As New Section
-
-        depid = cboDepartment.SelectedItem.Value
-        objsection.SetCboSection_seccode(cboSection, depid)
-        'searchjobslist()
-
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click

@@ -149,4 +149,139 @@ Public Class Memo
         conn.Close()
         Return result
     End Function
+
+    Public Sub Memo_Allow(mmrno As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_Allow"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@mmrcode", SqlDbType.VarChar).Value = mmrno
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub Memo_NotAllow(mmrno As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_NotAllow"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@mmrno", SqlDbType.VarChar).Value = mmrno
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Sub Memo_Cancel(mmrno As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_Cancel"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@mmrno", SqlDbType.VarChar).Value = mmrno
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+    Public Function MemoList_For_Operator(mmrcode As String, Subject As String, MemoTypeid As String,
+                                          startdate As String, enddate As String, statusid As String,
+                                          ownerid As String, toid As String, ccid As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_List_For_Operator"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@mmrcode", SqlDbType.VarChar).Value = mmrcode
+        cmd.Parameters.Add("@subject", SqlDbType.VarChar).Value = Subject
+        cmd.Parameters.Add("@memotypeid", SqlDbType.VarChar).Value = MemoTypeid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@statusid", SqlDbType.VarChar).Value = statusid
+        cmd.Parameters.Add("@ownerid", SqlDbType.VarChar).Value = ownerid
+        cmd.Parameters.Add("@toid", SqlDbType.VarChar).Value = toid
+        cmd.Parameters.Add("@ccid", SqlDbType.VarChar).Value = ccid
+
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function MemoList_For_Owner(userid As Integer, statusid As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_List_For_Owner"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        'cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        'cmd.Parameters.Add("@statusid", SqlDbType.Int).Value = statusid
+        'cmd.Parameters.Add("@jobtypeid", SqlDbType.VarChar).Value = jobtypeid
+        'cmd.Parameters.Add("@statusfollowid", SqlDbType.VarChar).Value = statusfollowid
+        'cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        'cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        'cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        'cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
 End Class

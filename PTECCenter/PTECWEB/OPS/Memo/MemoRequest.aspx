@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="MemoRequest.aspx.vb" Inherits="PTECCENTER.MemoRequest" %>
+﻿<%@ Page Title="MemoRequest" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="MemoRequest.aspx.vb" Inherits="PTECCENTER.MemoRequest" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -39,6 +39,16 @@
             <!-- add side menu -->
             <div id="content-wrapper">
                 <div class="container">
+                    <div class="row">
+                        <div class="col mb-3">
+                        </div>
+
+                        <div class="col-auto  mb-3 text-right align-self-center">
+                            <a href="MemoList.aspx" class="btn btn-sm btn-danger ">
+                                <i class="fa fa-tasks" aria-hidden="true"></i></a>
+                        </div>
+
+                    </div>
                     <div class="row bg-danger">
                         <div class="col bg-secondary">
                             <div>
@@ -88,7 +98,7 @@
                             <div class="row memoOther" style="display: none;">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <asp:Label ID="lbtxtMemoOther" CssClass="form-label" AssociatedControlID="txtMemoOther" runat="server" Text="Memo Group (อื่นๆ)" />
+                                        <asp:Label ID="lbtxtMemoOther" CssClass="form-label" AssociatedControlID="txtMemoOther" runat="server" Text="(อื่นๆ)" />
                                         <asp:Label ID="lbtxtMemoOtherMandatory" CssClass="text-danger" AssociatedControlID="txtMemoOther" runat="server" Text="*" />
                                         <asp:TextBox class="form-control " ID="txtMemoOther" runat="server" Rows="2" Columns="50" TextMode="MultiLine" ValidateRequestMode="Enabled"></asp:TextBox>
 

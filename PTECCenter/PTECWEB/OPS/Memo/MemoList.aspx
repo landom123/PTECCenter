@@ -1,4 +1,4 @@
-﻿<%@ Page Title="AdvanceMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="MemoList.aspx.vb" Inherits="PTECCENTER.MemoList" %>
+﻿<%@ Page Title="MemoList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="MemoList.aspx.vb" Inherits="PTECCENTER.MemoList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -53,9 +53,25 @@
                     <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Code</span>
+                                <span class="input-group-text">เลขที่ใบงาน</span>
                             </div>
-                            <asp:TextBox class="form-control noEnterSubmit" ID="txtAdvRQ" runat="server" placeholder="21XXXXXXX" autocomplete="off"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtMemoCode" runat="server" placeholder="21XXXXXXX" autocomplete="off"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group sm-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ค้นหา (รายละเอียด)</span>
+                            </div>
+                            <asp:TextBox class="form-control noEnterSubmit" ID="txtSubject" runat="server" placeholder="" autocomplete="off"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">เรื่อง</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboMemoType" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -83,105 +99,36 @@
                             <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ตั้งแต่ (DueDate)</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtStartDueDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">จนถึง (DueDate)</span>
-                            </div>
-                            <asp:TextBox class="form-control" ID="txtEndDueDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สังกัด</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
-                        </div>
-                    </div>
                      <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                     <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">ผู้เบิก</span>
+                                <span class="input-group-text">ผู้ทำรายการ</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboCreateby" runat="server" readonly="true"></asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">ผู้รับเงิน</span>
+                                <span class="input-group-text">TO</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboOwner" runat="server" readonly="true"></asp:DropDownList>
+                            <asp:DropDownList ID="cboTo" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3 HO">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">ฝ่าย</span>
+                                <span class="input-group-text">CC</span>
                             </div>
-                            <asp:DropDownList ID="cboDepartment" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3 HO">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">แผนก</span>
-                            </div>
-                            <asp:DropDownList ID="cboSection" class="form-control" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="cboCc" class="form-control" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                     <% End If %>
 
-                    <% If Not Session("positionid") = "10" Then %>
-                    <div class="col-md-4 mb-3 CO">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">ประเภทสาขา</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3 CO">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สาขา</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <% End If %>
+               
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12 mb-3 HO">
-                        <asp:Label ID="note" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'แผนก' จะเปลี่ยนไปตาม 'ฝ่าย' ที่เลือก )" />
-                    </div>
-                    <div class="col-md-12 mb-3 CO">
-                        <asp:Label ID="note2" CssClass="text-danger text-right" runat="server" Text="( เงื่อนไข : รายการใน 'สาขา' จะเปลี่ยนไปตาม 'ประเภทสาขา' ที่เลือก )" />
-                    </div>
-                </div>
-                <%--<% else %>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">สถานะงาน</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboWorking" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                </div>
-                <% End If %>--%>
+                
                 <div class="card-body">
                     <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
                         <asp:GridView ID="gvRemind"
@@ -192,60 +139,44 @@
                             AllowPaging="true"
                             runat="server">
                             <Columns>
-
-                                <asp:TemplateField HeaderText="สังกัด" ItemStyle-HorizontalAlign="center">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbcomcode" runat="server" Text='<%#Eval("comcode")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("AdvanceRequest_Code")%>'></asp:Label>
+                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("Memo_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="วันที่เบิก" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="วันที่ส่งอนุมัติ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CommitDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ขอเบิกโดย" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="โดย" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Createname")%>'></asp:Label>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownercode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="เรื่อง" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Type_Name")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="รายละเอียด" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("duedate")%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Subject")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="รายละเอียด">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("detail")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="จำนวนเงินที่เบิก" ItemStyle-HorizontalAlign="Right">
+                                <asp:TemplateField HeaderText="ยอด" ItemStyle-HorizontalAlign="Right">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobtype" runat="server" Text='<%#String.Format("{0:n2}", Eval("amount"))%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ยอดคงค้างชำระ" ItemStyle-HorizontalAlign="Right">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#String.Format("{0:n2}", Eval("balance"))%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("approvalcode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("status")%>'></asp:Label>
+                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusName")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="">

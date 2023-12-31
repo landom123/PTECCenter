@@ -86,13 +86,31 @@ Partial Public Class MemoList
     Protected WithEvents lbchkHO As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtAdvRQ control.
+    '''txtMemoCode control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtAdvRQ As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtMemoCode As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtSubject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSubject As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboMemoType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboMemoType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''txtStartDate control.
@@ -122,33 +140,6 @@ Partial Public Class MemoList
     Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''txtStartDueDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtStartDueDate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''txtEndDueDate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtEndDueDate As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cboCompany control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboCompany As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''cboCreateby control.
     '''</summary>
     '''<remarks>
@@ -158,67 +149,22 @@ Partial Public Class MemoList
     Protected WithEvents cboCreateby As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cboOwner control.
+    '''cboTo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboTo As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cboDepartment control.
+    '''cboCc control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboDepartment As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboSection control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboBranchGroup control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboBranchGroup As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboBranch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''note control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents note As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''note2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents note2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cboCc As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''gvRemind control.

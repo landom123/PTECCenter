@@ -1261,7 +1261,11 @@ endprocess:
             totalinbill = 0
         End Try
         Try
-            totalbill = Convert.ToDouble(detailtable.Compute("SUM(cost)", "not incompletebill and not nobill and vat_per = 0"))
+            For i = 0 To detailtable.Rows.Count - 1
+                If Not detailtable.Rows(i).Item("incompletebill") And Not detailtable.Rows(i).Item("nobill") And detailtable.Rows(i).Item("vat_per") = 0 Then
+                    totalbill = Convert.ToDouble(totalbill + detailtable.Rows(i).Item("cost"))
+                End If
+            Next i
         Catch ex As Exception
             totalbill = 0
         End Try

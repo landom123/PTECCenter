@@ -14,6 +14,42 @@ Option Explicit On
 Partial Public Class Memo2
 
     '''<summary>
+    '''btnNew control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnCancel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCancel As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''txtUnsave control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtUnsave As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''statusmemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents statusmemo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtName control.
     '''</summary>
     '''<remarks>
@@ -29,7 +65,7 @@ Partial Public Class Memo2
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtMemoCode As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents txtMemoCode As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''preFixTo control.
@@ -75,15 +111,6 @@ Partial Public Class Memo2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtMemoDate As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtStatus control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtStatus As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''preFixSubject control.
