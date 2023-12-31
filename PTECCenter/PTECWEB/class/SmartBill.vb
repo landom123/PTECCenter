@@ -5,7 +5,8 @@ Public Class SmartBill
 
         Dim dtcost As DataTable = list()
         cbo.Items.Clear()
-        For i As Integer = 0 To dtcost.Rows.Count - 1
+        Dim cnt As Integer = dtcost.Rows.Count - 1
+        For i As Integer = 0 To cnt
             Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("nameforcbo"), dtcost.Rows(i).Item("sbw_code"))
             If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("pure_card").ToString) Then
                 item.Attributes("data-subtext") = "PC = (" + dtcost.Rows(i).Item("pure_card").ToString + ")"

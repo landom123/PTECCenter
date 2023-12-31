@@ -329,8 +329,9 @@ Public Class Approval
     End Function
     Private Sub SaveDetailAho(ahono As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If String.IsNullOrEmpty(.Rows(i).Item("approvalcode").ToString) Then
                     nonpocode = SaveDetailToTable(ahono,
                                       .Rows(i).Item("approvalid"),

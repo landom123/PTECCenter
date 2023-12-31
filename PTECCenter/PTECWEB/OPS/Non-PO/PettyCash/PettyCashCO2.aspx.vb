@@ -321,10 +321,10 @@ endprocess:
 
         Dim strSplit As Array
         Dim i As Integer
-
         strSplit = allusercode.Split(",")
 
-        For i = 0 To strSplit.Length - 1
+        Dim cnt As Integer = strSplit.Length
+        For i = 0 To cnt
             If Not Session("userid") = userid And
                 Not Session("usercode") = strSplit(i) And
                 Not Session("secid").ToString = "2" And
@@ -560,7 +560,8 @@ endprocess:
     End Sub
 
     Private Sub checkunsave()
-        For i = 0 To detailtable.Rows.Count - 1
+        Dim cnt As Integer = detailtable.Rows.Count - 1
+        For i = 0 To cnt
             If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
                 chkunsave = 1
                 GoTo endprocess
@@ -1115,7 +1116,8 @@ endprocess:
     'End Sub
 
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
-        For i = 0 To detailtable.Rows.Count - 1
+        Dim cnt As Integer = detailtable.Rows.Count - 1
+        For i = 0 To cnt
             If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
                 chkunsave = 1
                 Dim scriptKey As String = "alert"
@@ -1261,7 +1263,8 @@ endprocess:
             totalinbill = 0
         End Try
         Try
-            For i = 0 To detailtable.Rows.Count - 1
+            Dim cnt As Integer = detailtable.Rows.Count - 1
+            For i = 0 To cnt
                 If Not detailtable.Rows(i).Item("incompletebill") And Not detailtable.Rows(i).Item("nobill") And detailtable.Rows(i).Item("vat_per") = 0 Then
                     totalbill = Convert.ToDouble(totalbill + detailtable.Rows(i).Item("cost"))
                 End If
@@ -1291,22 +1294,6 @@ endprocess:
         Return id
 
     End Function
-
-    '<System.Web.Services.WebMethod>
-    'Public Shared Function getTaxid(ByVal vendorname As String)
-    '    Dim objNonpo As New NonPO
-    '    Dim objSupplier As New Supplier
-    '    Dim dt As DataTable
-    '    Dim taxid As String = ""
-    '    Try
-    '        dt = objSupplier.vendor_list("")
-    '        taxid = dt.Select("name='" + vendorname + "'")(0).Item("taxidno")
-    '    Catch ex As Exception
-    '        Return "fail"
-    '    End Try
-    '    Return taxid
-
-    'End Function
 
     <System.Web.Services.WebMethod>
     Public Function deleteDetail(ByVal nonpodtlid As Integer, ByVal rows As Integer, user As String)

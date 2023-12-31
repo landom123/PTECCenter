@@ -6,8 +6,8 @@ Public Class Department
 
         Dim dt As DataTable = List(branch)
         cboDepartment.Items.Clear()
-
-        For i As Integer = 0 To dt.Rows.Count - 1
+        Dim cnt As Integer = dt.Rows.Count - 1
+        For i As Integer = 0 To cnt
             Dim item As ListItem = New ListItem(dt.Rows(i).Item("DepCode").ToString, dt.Rows(i).Item("depid").ToString)
             If Not String.IsNullOrEmpty(dt.Rows(i).Item("depname").ToString) Then
                 'item.Attributes("data-subtext") = dt.Rows(i).Item("depname").ToString

@@ -52,21 +52,20 @@ Public Class NonPO
 
         Dim dtcost As DataTable = AccountCode_List(userid)
         cboAccountCode.Items.Clear()
-        For i As Integer = 0 To dtcost.Rows.Count - 1
-            Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("accountname"), dtcost.Rows(i).Item("accountid"))
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountgroup").ToString) Then
-                item.Attributes("data-tokens") = dtcost.Rows(i).Item("accountgroup").ToString
-                item.Attributes("data-category") = dtcost.Rows(i).Item("accountgroup").ToString
+        For Each row As DataRow In dtcost.Rows
+            Dim item As ListItem = New ListItem(row("accountname"), row("accountid"))
+            If Not String.IsNullOrEmpty(row("accountgroup").ToString) Then
+                item.Attributes("data-tokens") = row("accountgroup").ToString
+                item.Attributes("data-category") = row("accountgroup").ToString
             End If
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountcode").ToString) Then
-                item.Attributes("data-code") = dtcost.Rows(i).Item("accountcode").ToString
+            If Not String.IsNullOrEmpty(row("accountcode").ToString) Then
+                item.Attributes("data-code") = row("accountcode").ToString
             End If
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("groupat").ToString) Then
-                item.Attributes("data-subtext") = "- (" + dtcost.Rows(i).Item("groupat").ToString + ")"
+            If Not String.IsNullOrEmpty(row("groupat").ToString) Then
+                item.Attributes("data-subtext") = "- (" + row("groupat").ToString + ")"
             End If
             cboAccountCode.Items.Add(item)
-
-        Next
+        Next row
 
     End Sub
 
@@ -81,17 +80,17 @@ Public Class NonPO
 
         Dim dtcost As DataTable = AccountCode_List_for_PettyCashCO(userid)
         cboAccountCode.Items.Clear()
-        For i As Integer = 0 To dtcost.Rows.Count - 1
-            Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("accountname"), dtcost.Rows(i).Item("accountid"))
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountgroup").ToString) Then
-                item.Attributes("data-tokens") = dtcost.Rows(i).Item("accountgroup").ToString
-                item.Attributes("data-category") = dtcost.Rows(i).Item("accountgroup").ToString
+        For Each row As DataRow In dtcost.Rows
+            Dim item As ListItem = New ListItem(row("accountname"), row("accountid"))
+            If Not String.IsNullOrEmpty(row("accountgroup").ToString) Then
+                item.Attributes("data-tokens") = row("accountgroup").ToString
+                item.Attributes("data-category") = row("accountgroup").ToString
             End If
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountcode").ToString) Then
-                item.Attributes("data-code") = dtcost.Rows(i).Item("accountcode").ToString
+            If Not String.IsNullOrEmpty(row("accountcode").ToString) Then
+                item.Attributes("data-code") = row("accountcode").ToString
             End If
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("groupat").ToString) Then
-                item.Attributes("data-subtext") = "- (" + dtcost.Rows(i).Item("groupat").ToString + ")"
+            If Not String.IsNullOrEmpty(row("groupat").ToString) Then
+                item.Attributes("data-subtext") = "- (" + row("groupat").ToString + ")"
             End If
             cboAccountCode.Items.Add(item)
 
@@ -179,8 +178,9 @@ Public Class NonPO
 
     Private Sub SaveDetailPCCO(pccono As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
                     nonpocode = SaveDetailToTable(pccono,
                                       .Rows(i).Item("row"),
@@ -240,8 +240,9 @@ Public Class NonPO
 
     Private Sub SaveDetailPCHO(pchono As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
                     nonpocode = SaveDetailToTable(pchono,
                                       .Rows(i).Item("row"),
@@ -306,8 +307,9 @@ Public Class NonPO
     End Function
     Private Sub SaveDetailAdv(advno As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
                     nonpocode = SaveDetailToTable(advno,
                                       .Rows(i).Item("row"),
@@ -372,8 +374,9 @@ Public Class NonPO
     End Function
     Private Sub SaveDetailPay(advno As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
                     nonpocode = SaveDetailToTable(advno,
                                       .Rows(i).Item("row"),
