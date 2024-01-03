@@ -2,6 +2,21 @@
 Imports System.Web.Configuration
 Public Class Memo
 
+    Public Sub SetCboMemoType_List(obj As Object)
+        obj.DataSource = Me.MemoType_List()
+        obj.DataValueField = "memo_typeid"
+        obj.DataTextField = "type_name"
+        obj.DataBind()
+
+    End Sub
+
+    Public Sub SetCboMemoStatus_List(obj As Object)
+        obj.DataSource = Me.Memo_Status_List()
+        obj.DataValueField = "statusid"
+        obj.DataTextField = "statusname"
+        obj.DataBind()
+
+    End Sub
 
     Public Sub SetCboMemoType(cbo As DropDownList)
 
@@ -34,7 +49,7 @@ Public Class Memo
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Memo_TypeList"
+        cmd.CommandText = "Memo_Type_List"
         cmd.CommandType = CommandType.StoredProcedure
 
         'cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
@@ -278,6 +293,28 @@ Public Class Memo
         'cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
 
 
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Memo_Status_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_Status_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
 
         adp.SelectCommand = cmd
         adp.Fill(ds)

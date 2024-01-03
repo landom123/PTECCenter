@@ -145,11 +145,11 @@ Public Class approvalHO
                         now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString + PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
                     End If
 
-                    If (usercode = md_code Or
-                    usercode = fm_code Or
-                    usercode = dm_code Or
-                    usercode = sm_code Or
-                    usercode = am_code) And
+                    If (md_code.ToString.IndexOf(usercode) > -1 Or
+                    fm_code.ToString.IndexOf(usercode) > -1 Or
+                    dm_code.ToString.IndexOf(usercode) > -1 Or
+                    sm_code.ToString.IndexOf(usercode) > -1 Or
+                    am_code.ToString.IndexOf(usercode) > -1) And
                     (maintable.Rows(0).Item("statusid") = 2) Then
                         Session("status_approvalHO") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"

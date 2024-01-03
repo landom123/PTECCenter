@@ -149,12 +149,22 @@
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CommitDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="โดย" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="ผู้ทำรายการ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownercode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="เรื่อง" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="TO" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("sendto")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="CC" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("sendcc")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="เรื่อง">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Type_Name")%>'></asp:Label>
                                     </ItemTemplate>

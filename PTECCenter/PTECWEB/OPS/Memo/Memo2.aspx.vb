@@ -331,11 +331,11 @@ Public Class Memo2
     End Function
 
     Private Sub setPermission(usercode As String, statusid As Integer)
-        If (usercode = md_code Or
-                    usercode = fm_code Or
-                    usercode = dm_code Or
-                    usercode = sm_code Or
-                    usercode = am_code) And
+        If (md_code.ToString.IndexOf(usercode) > -1 Or
+                    fm_code.ToString.IndexOf(usercode) > -1 Or
+                    dm_code.ToString.IndexOf(usercode) > -1 Or
+                    sm_code.ToString.IndexOf(usercode) > -1 Or
+                    am_code.ToString.IndexOf(usercode) > -1) And
                     PermissionOwner IsNot Nothing And
                     (detailtable.Rows(0).Item("statusid") = 1) Then
             For Each row As DataRow In PermissionOwner.Tables(0).Rows
