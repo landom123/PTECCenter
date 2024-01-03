@@ -1759,6 +1759,7 @@
     <Content Include="HRD\KPI\KPIsListForBranch.aspx" />
     <Content Include="HRD\KPI\KPIsOverview.aspx" />
     <Content Include="HRD\KPI\KPIsList.aspx" />
+    <Content Include="HRD\KPI\KPIsRequest.aspx" />
     <Content Include="icon\BranchSeller.svg" />
     <Content Include="icon\logoSAP.svg" />
     <Content Include="icon\Logo_pure.png" />
@@ -3794,6 +3795,13 @@
     <Compile Include="HRD\KPI\KPIsList.aspx.vb">
       <DependentUpon>KPIsList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsRequest.aspx.designer.vb">
+      <DependentUpon>KPIsRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsRequest.aspx.vb">
+      <DependentUpon>KPIsRequest.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="OPS\Jobs_MapsToNonPO.aspx.designer.vb">
       <DependentUpon>Jobs_MapsToNonPO.aspx</DependentUpon>

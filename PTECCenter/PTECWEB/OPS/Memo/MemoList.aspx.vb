@@ -16,6 +16,7 @@ Public Class MemoList
         Dim objbranch As New Branch
         Dim objdep As New Department
         Dim objNonpo As New NonPO
+        Dim objMemo As New Memo
         Dim objsec As New Section
         Dim objcompany As New Company
         'Dim objjob As New jobs
@@ -41,8 +42,8 @@ Public Class MemoList
         operator_code = objNonpo.NonPOPermisstionOperator("MMR")
         If Not IsPostBack() Then
             criteria = createCriteria()
-            SetCboUsers(cboMemoType)
-            SetCboUsers(cboStatusFollow)
+            objMemo.SetCboMemoType_List(cboMemoType)
+            objMemo.SetCboMemoStatus_List(cboStatusFollow)
             SetCboUsers(cboCreateby)
             SetCboUsers(cboTo)
             SetCboUsers(cboCc)
@@ -292,7 +293,7 @@ Public Class MemoList
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 7
+        Dim statusAt As Integer = 9
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then

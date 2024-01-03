@@ -2,6 +2,13 @@
 Imports System.Web.Configuration
 
 Public Class Kpi
+    Public Sub SetCboPeriod(obj As Object)
+        obj.DataSource = Me.Kpi_Period_List()
+        obj.DataValueField = "KpiPeriod_ID"
+        obj.DataTextField = "Description"
+        obj.DataBind()
+
+    End Sub
     Public Sub SetCboRatioType(obj As Object)
         obj.DataSource = Me.RatioType_List()
         obj.DataValueField = "category_id"
@@ -9,6 +16,32 @@ Public Class Kpi
         obj.DataBind()
 
     End Sub
+    Public Function Kpi_Period_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Period_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        'cmd.Parameters.Add("@grpid", SqlDbType.VarChar).Value = grpid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
     Public Function RatioType_List() As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -471,5 +504,29 @@ Public Class Kpi
         conn.Close()
         Return result
 
+    End Function
+    Public Function Get_Weight_by_Period_and_Usercode(periodid As Integer, user As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Get_WeightOfPeriod_by_Usercode"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@periodid", SqlDbType.Int).Value = periodid
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
     End Function
 End Class
