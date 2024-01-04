@@ -33,7 +33,9 @@ Public Class MemoRequest
         If Not IsPostBack() Then
 
 
+            objMemo.SetcboMemoCate_List(cboMemoCate)
             objMemo.SetCboMemoType(cboMemoType)
+
             SetCboUsersOnly(cboTo)
             SetCboUsersOnly(cboCC)
         Else
@@ -89,7 +91,7 @@ Public Class MemoRequest
                 dtltype = "DETAIL"
             End If
             Try
-                mmrno = objMemo.Memo_Save(mmrno, cboMemoType.SelectedItem.Value, txtSubject.Text.Trim, txtMemoOther.Text.Trim, txtMemoDetail.Text.Trim, dtltype, url, txtAmount.Text, Session("usercode").ToString)
+                mmrno = objMemo.Memo_Save(mmrno, cboMemoCate.SelectedItem.Value, cboMemoType.SelectedItem.Value, txtSubject.Text.Trim, txtMemoOther.Text.Trim, txtMemoDetail.Text.Trim, dtltype, url, txtAmount.Text, Session("usercode").ToString)
                 Dim arrTo As New ArrayList()
                 Dim arrCC As New ArrayList()
 
@@ -118,6 +120,7 @@ Public Class MemoRequest
         End If
 endprocess:
     End Sub
+
     Private Function validatedata() As Boolean
         Dim result As Boolean = True
         Dim msg As String = ""
@@ -135,6 +138,11 @@ endprocess:
         If txtSubject.Text.Trim() = "" Then
             result = False
             msg = "กรุณาใส่ " & lbtxtSubject.Text
+            GoTo endprocess
+        End If
+        If cboMemoCate.SelectedItem.Value = 0 Then
+            result = False
+            msg = "กรุณาใส่ " & lbcboMemoCate.Text
             GoTo endprocess
         End If
         If cboMemoType.SelectedItem.Value = 0 Then
@@ -174,4 +182,14 @@ endprocess:
 
         Return result
     End Function
+
+    Private Sub cboMemoType_PreRender(sender As Object, e As EventArgs) Handles cboMemoType.PreRender
+        Dim objMemo As New Memo
+        Dim yy As String = cboMemoType.SelectedValue
+        cboMemoType.Items.Clear()
+
+        objMemo.SetCboMemoType(cboMemoType)
+
+        cboMemoType.Text = yy
+    End Sub
 End Class

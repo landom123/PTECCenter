@@ -7,6 +7,8 @@ Public Class Memo2
 
     Public verify As Boolean = False
     Public approval As Boolean = False
+    Public sign As Boolean = False
+
     Public flag As Boolean = True
 
     Public allOwner As String
@@ -221,20 +223,13 @@ Public Class Memo2
 
     Private Sub setmain(dt As DataTable)
         With dt
-            'Select Case .Rows(0).Item("statusid").ToString
-            '    Case = "1" '1 : รออนุมัติ
-            '        txtStatus.Attributes.Add("class", "btn btn-warning")
-            '    Case = "2" '2 : ได้รับการอนุมัติ
-            '        txtStatus.Attributes.Add("class", "btn btn-success")
-            '    Case = "3" '3 : ไม่ผ่านการอนุมัติ
-            '        txtStatus.Attributes.Add("class", "btn btn-danger")
-            '    Case = "4" '4 : ยกเลิก
-            '        txtStatus.Attributes.Add("class", "btn btn-danger")
-            'End Select
+
             Select Case .Rows(0).Item("statusid").ToString
                 Case = "1" '1 : รอยืนยัน
                     statusmemo.Attributes.Add("class", "btn btn-warning")
-                Case = "2" '2 : ได้รับการอนุมัติ
+                Case = "2" '2 : warning
+                    statusmemo.Attributes.Add("class", "btn btn-warning")
+                Case = "6" '6 : รอลงชื่อตรวจสอบ
                     statusmemo.Attributes.Add("class", "btn btn-success")
                 Case = "3" '3 : ไม่ผ่านการอนุมัติ
                     statusmemo.Attributes.Add("class", "btn btn-danger")
@@ -251,10 +246,12 @@ Public Class Memo2
 
             txtName.Text = .Rows(0).Item("ownername").ToString
             txtTo.Text = .Rows(0).Item("sendto").ToString
+            suffixTo.Text = .Rows(0).Item("suffixTo").ToString
             txtCc.Text = .Rows(0).Item("sendcc").ToString
             'txtStatus.InnerText = .Rows(0).Item("StatusName").ToString
             txtMemoDate.Text = .Rows(0).Item("CommitDate").ToString
             txtSubject.Text = .Rows(0).Item("Subject").ToString
+            txtMemoCate.Text = .Rows(0).Item("Category_Name").ToString
             txtMemoType.Text = .Rows(0).Item("Type_Name").ToString
             txtAmount.Text = String.Format("{0:n2}", .Rows(0).Item("amount"))
 
@@ -268,7 +265,11 @@ Public Class Memo2
             txtApprovalBy.Text = .Rows(0).Item("approvalby").ToString
             txtApprovalDate.Text = .Rows(0).Item("approvaldate").ToString
 
-
+            If (.Rows(0).Item("sendto").ToString.IndexOf(Session("usercode")) > -1) And Not (.Rows(0).Item("allsigned").ToString.IndexOf(Session("usercode")) > -1) Then
+                sign = True
+            Else
+                sign = False
+            End If
 
             '----------------Content-----------------------
 
@@ -299,15 +300,23 @@ Public Class Memo2
                 End If
 
                 btnAddAttatch.Visible = True
-            Case = "2" '2 : ได้รับการอนุมัติ
+
+            Case = "2" '2 : รอลงชื่อตรวจสอบ
                 btnCancel.Enabled = False
 
                 btnAddAttatch.Visible = False
+
             Case = "3" '3 : ไม่ผ่านการอนุมัติ
                 btnCancel.Enabled = False
 
                 btnAddAttatch.Visible = False
+
             Case = "4" '4 : ยกเลิก
+                btnCancel.Enabled = False
+
+                btnAddAttatch.Visible = False
+
+            Case = "6" '6 : ผ่านการตรวจสอบแล้ว
                 btnCancel.Enabled = False
 
                 btnAddAttatch.Visible = False
@@ -497,5 +506,21 @@ endprocess:
     End Sub
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Response.Redirect("MemoRequest.aspx")
+    End Sub
+
+    Private Sub btnSignature_Click(sender As Object, e As EventArgs) Handles btnSignature.Click
+
+        Dim objMemo As New Memo
+        Try
+            objMemo.Memo_Sign_The_Acceptor(Request.QueryString("MemoCode"), Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('sign fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect(Request.RawUrl)
+endprocess:
     End Sub
 End Class

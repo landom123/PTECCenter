@@ -85,14 +85,16 @@
                                         <div class="col text-break">
                                             <asp:Label ID="preFixTo" runat="server" AssociatedControlID="txtTo" Text="To : " />
                                             <asp:Label ID="txtTo" runat="server" class="font-weight-bold" Text="" />
+                                            <asp:Label ID="suffixTo" runat="server" CssClass="text-primary" Text="" />
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col text-break">
-                                            <asp:Label ID="preFixCc" runat="server" AssociatedControlID="txtCc" Text="Cc : " />
-                                            <asp:Label ID="txtCc" runat="server" class="font-weight-bold" Text="" />
-                                        </div>
+
+                                <div class="row">
+                                    <div class="col text-break">
+                                        <asp:Label ID="preFixCc" runat="server" AssociatedControlID="txtCc" Text="Cc : " />
+                                        <asp:Label ID="txtCc" runat="server" class="font-weight-bold" Text="" />
                                     </div>
+                                </div>
                                 </div>
                                 <div class="col-6 text-right">
                                     <div class="row">
@@ -119,7 +121,13 @@
                             </div>
                             <div class="row">
                                 <div class="col text-break">
-                                    <asp:Label ID="preFixMemoType" runat="server" AssociatedControlID="txtMemoType" Text="MemoType : " />
+                                    <asp:Label ID="preFixMemoCate" runat="server" AssociatedControlID="txtMemoCate" Text="Group : " />
+                                    <asp:Label ID="txtMemoCate" runat="server" Text="" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col text-break">
+                                    <asp:Label ID="preFixMemoType" runat="server" AssociatedControlID="txtMemoType" Text="Type : " />
                                     <asp:Label ID="txtMemoType" runat="server" Text="" />
                                 </div>
                             </div>
@@ -200,8 +208,8 @@
                     <div class="row">
                         <div class="col mb-3">
                             <% If Not Request.QueryString("MemoCode") Is Nothing And detailtable.Rows.Count > 0 Then%>
-                            <% if (detailtable.Rows(0).Item("statusid") = 1) Then%>
                             <div class="text-center m-auto">
+                                <% if (detailtable.Rows(0).Item("statusid") = 1) Then%>
                                 <% If approval And detailtable.Rows(0).Item("statusid") = 1 Then%>
                                 <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" OnClientClick="Confirm();" />
                                 <% End If %>
@@ -211,8 +219,13 @@
                                 <% If ((verify Or approval)) Then%>
                                 <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" OnClientClick="Confirm();" />
                                 <% End If %>
+                                <% End If %>
+                                <% if (detailtable.Rows(0).Item("statusid") = 2) Then%>
+                                <% If sign And detailtable.Rows(0).Item("statusid") = 2 Then%>
+                                <asp:Button ID="btnSignature" class="btn btn-warning" runat="server" Text="ลงนามรับทราบ" OnClientClick="Confirm();" />
+                                <% End If %>
+                                <% End If %>
                             </div>
-                            <% End If %>
                             <% End If %>
                         </div>
                     </div>
@@ -221,7 +234,7 @@
                         <div class="col-md-6 mt-3">
                             <div class="card shadow card_attatch">
                                 <div class="card-header">
-                                    เอกสารแนบ
+                                    เอกสารแนบประกอบการพิจารณา
                                 </div>
                                 <div class="card-body attatchItems">
                                     <%--begin Attatch item--%>
@@ -644,7 +657,7 @@
         function urlToClipboard() {
 
             // Copy the text inside the text field
-            navigator.clipboard.writeText(document.location.href);
+            navigator.clipboard.writeText(window.location.href);
 
             // Alert the copied text
             alertSuccessToast('Copied');
