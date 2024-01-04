@@ -2,6 +2,13 @@
 Imports System.Web.Configuration
 Public Class Memo
 
+    Public Sub SetcboMemoCate_List(obj As Object)
+        obj.DataSource = Me.Memo_Category_List()
+        obj.DataValueField = "Memo_CategoryID"
+        obj.DataTextField = "Category_Name"
+        obj.DataBind()
+
+    End Sub
     Public Sub SetCboMemoType_List(obj As Object)
         obj.DataSource = Me.MemoType_List()
         obj.DataValueField = "memo_typeid"
@@ -14,6 +21,13 @@ Public Class Memo
         obj.DataSource = Me.Memo_Status_List()
         obj.DataValueField = "statusid"
         obj.DataTextField = "statusname"
+        obj.DataBind()
+
+    End Sub
+    Public Sub SetCboMemoType_List_by_Cateid(obj As Object, cateid As String)
+        obj.DataSource = Me.MemoType_List(cateid)
+        obj.DataValueField = "memo_typeid"
+        obj.DataTextField = "type_name"
         obj.DataBind()
 
     End Sub
@@ -39,7 +53,7 @@ Public Class Memo
 
     End Sub
 
-    Public Function MemoType_List() As DataTable
+    Public Function MemoType_List(Optional cateid As String = "") As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -50,6 +64,28 @@ Public Class Memo
         conn.Open()
         cmd.Connection = conn
         cmd.CommandText = "Memo_Type_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@cateid", SqlDbType.VarChar).Value = cateid
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Memo_Category_List() As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_Category_List"
         cmd.CommandType = CommandType.StoredProcedure
 
         'cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
@@ -85,7 +121,7 @@ Public Class Memo
         conn.Close()
         'Return result
     End Sub
-    Public Function Memo_Save(mmrno As String, typeid As Integer, subject As String,
+    Public Function Memo_Save(mmrno As String, cateid As Integer, typeid As Integer, subject As String,
                                  detailOther As String, menodetail As String, dtltype As String, url As String,
                                  amount As Double, username As String) As String
         Dim result As String
@@ -100,6 +136,7 @@ Public Class Memo
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@mmrno", SqlDbType.VarChar).Value = mmrno
+        cmd.Parameters.Add("@cateid", SqlDbType.Int).Value = cateid
         cmd.Parameters.Add("@typeid", SqlDbType.Int).Value = typeid
         cmd.Parameters.Add("@subject", SqlDbType.VarChar).Value = subject
         cmd.Parameters.Add("@detailOther", SqlDbType.VarChar).Value = detailOther
@@ -322,4 +359,27 @@ Public Class Memo
         conn.Close()
         Return result
     End Function
+
+    Public Sub Memo_Sign_The_Acceptor(mmrno As String, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Memo_Sign_The_Acceptor"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@mmrcode", SqlDbType.VarChar).Value = mmrno
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
 End Class

@@ -9,6 +9,10 @@
         th {
             text-align: center;
         }
+        .fix__width {
+            max-width: 200px;
+            word-wrap:break-word;
+        }
 
     </style>
 </asp:Content>
@@ -61,7 +65,7 @@
                     <div class="col-md-4 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">ค้นหา (รายละเอียด)</span>
+                                <span class="input-group-text">ค้นหา (เรื่อง)</span>
                             </div>
                             <asp:TextBox class="form-control noEnterSubmit" ID="txtSubject" runat="server" placeholder="" autocomplete="off"></asp:TextBox>
                         </div>
@@ -69,7 +73,7 @@
                     <div class="col-md-4 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">เรื่อง</span>
+                                <span class="input-group-text">ประเภท</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboMemoType" runat="server"></asp:DropDownList>
                         </div>
@@ -144,34 +148,40 @@
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("Memo_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="วันที่ส่งอนุมัติ" ItemStyle-HorizontalAlign="center">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CommitDate")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="ผู้ทำรายการ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownercode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="TO" >
+                                <asp:TemplateField HeaderText="วันที่ส่งอนุมัติ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("sendto")%>'></asp:Label>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CommitDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="CC" >
+                                <asp:TemplateField HeaderText="กลุ่ม">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("sendcc")%>'></asp:Label>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Category_Name")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="เรื่อง">
+                                <asp:TemplateField HeaderText="ประเภท">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("Type_Name")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="รายละเอียด" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField HeaderText="เรื่อง" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("Subject")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                
+                                <asp:TemplateField HeaderText="TO" ItemStyle-CssClass="fix__width">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("sendto")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="CC" ItemStyle-CssClass="fix__width">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("sendcc")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="ยอด" ItemStyle-HorizontalAlign="Right">
@@ -199,7 +209,7 @@
                             </Columns>
                         </asp:GridView>
                     </div>
-                    <h4>ทั้งหมด <% =cntdt%> รายการ</h4>
+                    <%--<h4>ทั้งหมด <% =cntdt%> รายการ</h4>--%>
                 </div>
 
 

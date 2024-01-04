@@ -83,15 +83,17 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <asp:Label ID="lbcboMemoType" CssClass="form-label" AssociatedControlID="cboMemoType" runat="server" Text="Memo Group" />
-                                        <asp:Label ID="lbcboMemoTypeMandatory" CssClass="text-danger" AssociatedControlID="cboMemoType" runat="server" Text="*" />
-                                        <asp:DropDownList class="form-control" ID="cboMemoType" runat="server"></asp:DropDownList>
+                                        <asp:Label ID="lbcboMemoCate" CssClass="form-label" AssociatedControlID="cboMemoCate" runat="server" Text="Memo Group" />
+                                        <asp:Label ID="lbcboMemoCateMandatory" CssClass="text-danger" AssociatedControlID="cboMemoCate" runat="server" Text="*" />
+                                        <asp:DropDownList class="form-control" ID="cboMemoCate" runat="server"></asp:DropDownList>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <asp:Label ID="lbtxtAmount" CssClass="form-label" AssociatedControlID="txtAmount" runat="server" Text="Amount" />
-                                        <asp:TextBox class="form-control" type="number" ID="txtAmount" runat="server" ValidateRequestMode="Enabled" autocomplete="off"></asp:TextBox>
+                                        <asp:Label ID="lbcboMemoType" CssClass="form-label" AssociatedControlID="cboMemoType" runat="server" Text="Memo Items" />
+                                        <asp:Label ID="lbcboMemoTypeMandatory" CssClass="text-danger" AssociatedControlID="cboMemoType" runat="server" Text="*" />
+                                        <asp:DropDownList class="form-control" ID="cboMemoType" runat="server"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
@@ -102,6 +104,14 @@
                                         <asp:Label ID="lbtxtMemoOtherMandatory" CssClass="text-danger" AssociatedControlID="txtMemoOther" runat="server" Text="*" />
                                         <asp:TextBox class="form-control " ID="txtMemoOther" runat="server" Rows="2" Columns="50" TextMode="MultiLine" ValidateRequestMode="Enabled"></asp:TextBox>
 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <asp:Label ID="lbtxtAmount" CssClass="form-label" AssociatedControlID="txtAmount" runat="server" Text="Amount" />
+                                        <asp:TextBox class="form-control" type="number" ID="txtAmount" runat="server" ValidateRequestMode="Enabled" autocomplete="off"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -170,35 +180,34 @@
 
     <script type="text/javascript">
         new MultiSelectTag('<%= cboTo.ClientID.ToString %>', {
-                toggleHide: true,
-                tagColor: {
-                    textColor: '#327b2c',
-                    borderColor: '#92e681',
-                    bgColor: '#eaffe6',
-                },
-                onChange: function (values) {
-                    console.log(values)
-                }
+            toggleHide: true,
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function (values) {
+                console.log(values)
+            }
 
-            })  // id
+        })  // id
         new MultiSelectTag('<%= cboCC.ClientID.ToString %>')  // id
         $(document).ready(function () {
             //alert('t');
-           
-            var groups = {};
-            $("select option[data-category]").each(function () {
-                groups[$.trim($(this).attr("data-category"))] = true;
-            });
-            $.each(groups, function (c) {
-                $("select option[data-category='" + c + "']").wrapAll('<optgroup label="' + c + '">');
-            });
+
+            //var groups = {};
+            //$("select option[data-category]").each(function () {
+            //    groups[$.trim($(this).attr("data-category"))] = true;
+            //});
+            //$.each(groups, function (c) {
+            //    $("select option[data-category='" + c + "']").wrapAll('<optgroup label="' + c + '">');
+            //});
 
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
                 liveSearch: true
             });
 
-            $('.form-control').selectpicker('refresh');
 
             console.log('ma');
             checkCboMemo();
@@ -293,12 +302,30 @@
                     api.getOptions().dragDrop.container = plusInput;
                 }
             });
-            
-            
+
+
+            checkSelectedCbo();
+
+            $('.form-control').selectpicker('refresh');
+        });
+        $('#<%= cboMemoCate.ClientID%>').on('change', function () {
+            checkSelectedCbo();
         });
         $('#<%= cboMemoType.ClientID%>').on('change', function () {
             checkCboMemo();
         });
+        function checkSelectedCbo() {
+            $('#<%= cboMemoType.ClientID%>').val('');
+            var values = $('#<%= cboMemoCate.ClientID%> option:selected').text();
+            console.log(values)
+            $("#<%= cboMemoType.ClientID%> option[data-category]").hide() //hide all options from slect box
+            //loop through values
+            if (values) {
+                $("#<%= cboMemoType.ClientID%> option[data-category='" + values + "']").show() //show that option
+            }
+
+            $('.form-control').selectpicker('refresh');
+        }
         function checkCboMemo() {
             ($('#<%= cboMemoType.ClientID%>').val() == 999) ? $(".memoOther").show() : $(".memoOther").hide();
         }
@@ -374,5 +401,6 @@
                 }
             }
         }
+        
     </script>
 </asp:Content>

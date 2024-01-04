@@ -86,6 +86,15 @@ Partial Public Class Memo2
     Protected WithEvents txtTo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''suffixTo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents suffixTo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''preFixCc control.
     '''</summary>
     '''<remarks>
@@ -129,6 +138,24 @@ Partial Public Class Memo2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtSubject As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''preFixMemoCate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents preFixMemoCate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtMemoCate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtMemoCate As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''preFixMemoType control.
@@ -273,6 +300,15 @@ Partial Public Class Memo2
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnDisApproval As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnSignature control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSignature As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''card_attatch control.

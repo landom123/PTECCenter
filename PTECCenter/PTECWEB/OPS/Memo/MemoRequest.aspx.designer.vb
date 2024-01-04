@@ -95,6 +95,33 @@ Partial Public Class MemoRequest
     Protected WithEvents txtSubject As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbcboMemoCate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboMemoCate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lbcboMemoCateMandatory control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbcboMemoCateMandatory As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cboMemoCate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboMemoCate As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lbcboMemoType control.
     '''</summary>
     '''<remarks>
@@ -122,24 +149,6 @@ Partial Public Class MemoRequest
     Protected WithEvents cboMemoType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lbtxtAmount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbtxtAmount As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtAmount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtAmount As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''lbtxtMemoOther control.
     '''</summary>
     '''<remarks>
@@ -165,6 +174,24 @@ Partial Public Class MemoRequest
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtMemoOther As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbtxtAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbtxtAmount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtAmount As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''chkMemoFile control.

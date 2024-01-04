@@ -88,7 +88,7 @@ Public Class MemoList
         'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
         setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         'End If
-        cntdt = itemtable.Rows.Count
+        gvRemind.Caption = "ทั้งหมด " & itemtable.Rows.Count & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
     End Sub
@@ -303,7 +303,9 @@ Public Class MemoList
         If (e.Row.RowType = DataControlRowType.DataRow) Then
             If Data.Item("StatusName") = "รออนุมัติ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.LightYellow
-            ElseIf Data.Item("StatusName") = "ได้รับการอนุมัติ" Then
+            ElseIf Data.Item("StatusName") = "รอลงชื่อตรวจสอบ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.Thistle
+            ElseIf Data.Item("StatusName") = "ผ่านการตรวจสอบแล้ว" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Green
             ElseIf Data.Item("StatusName") = "ไม่ผ่านการอนุมัติ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
