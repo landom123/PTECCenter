@@ -169,6 +169,14 @@
                                     <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
                                 </div>
                             </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Period</span>
+                                    </div>
+                                    <asp:DropDownList class="form-control" ID="cboPeriod" runat="server" AutoPostBack="false"></asp:DropDownList>
+                                </div>
+                            </div>
                             <div class="col-md-3 mb-3 HO">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
