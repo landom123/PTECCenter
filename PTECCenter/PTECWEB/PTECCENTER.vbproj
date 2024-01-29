@@ -1756,6 +1756,7 @@
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
     <Content Include="HRD\KPI\KPIsEdit.aspx" />
+    <Content Include="HRD\KPI\KPIsRequestList.aspx" />
     <Content Include="HRD\KPI\KPIsListForBranch.aspx" />
     <Content Include="HRD\KPI\KPIsOverview.aspx" />
     <Content Include="HRD\KPI\KPIsList.aspx" />
@@ -1811,6 +1812,7 @@
     <Content Include="OPS\Station\newNTI.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
+    <Content Include="Report\rptEdiRPTInvoice.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
     <Content Include="ROD\OilPriceFormula.aspx" />
     <Content Include="ROD\UpdateSmileSheetID.aspx" />
@@ -3775,6 +3777,13 @@
       <DependentUpon>KPIsEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="HRD\KPI\KPIsRequestList.aspx.designer.vb">
+      <DependentUpon>KPIsRequestList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsRequestList.aspx.vb">
+      <DependentUpon>KPIsRequestList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="HRD\KPI\KPIsListForBranch.aspx.designer.vb">
       <DependentUpon>KPIsListForBranch.aspx</DependentUpon>
     </Compile>
@@ -4053,6 +4062,13 @@
     </Compile>
     <Compile Include="ReportViewer.aspx.vb">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptEdiRPTInvoice.aspx.designer.vb">
+      <DependentUpon>rptEdiRPTInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptEdiRPTInvoice.aspx.vb">
+      <DependentUpon>rptEdiRPTInvoice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ROD\OilPriceFormulaUpdate.aspx.designer.vb">

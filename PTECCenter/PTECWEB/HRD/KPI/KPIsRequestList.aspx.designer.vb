@@ -11,34 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class KPIsList
+Partial Public Class KPIsRequestList
 
     '''<summary>
-    '''logo control.
+    '''btnNew control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents logo As Global.System.Web.UI.HtmlControls.HtmlImage
-
-    '''<summary>
-    '''company_th control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents company_th As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''company_en control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents company_en As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    Protected WithEvents btnNew As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''btnSearch control.
@@ -77,13 +59,13 @@ Partial Public Class KPIsList
     Protected WithEvents chkCO As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
 
     '''<summary>
-    '''lbchkCO control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbchkCO As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''chkHO control.
@@ -95,13 +77,13 @@ Partial Public Class KPIsList
     Protected WithEvents chkHO As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
 
     '''<summary>
-    '''lbchkHO control.
+    '''Label2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lbchkHO As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cboCompany control.
@@ -122,31 +104,22 @@ Partial Public Class KPIsList
     Protected WithEvents cboPeriod As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cboCreateby control.
+    '''cboStatusFollow control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboCreateby As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cboStatusFollow As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cboRatio control.
+    '''txtclearadv control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboRatio As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboPosition control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboPosition As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txtclearadv As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''cboDepartment control.
@@ -167,15 +140,6 @@ Partial Public Class KPIsList
     Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cboBranchManager control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboBranchManager As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''cboBranchGroup control.
     '''</summary>
     '''<remarks>
@@ -194,6 +158,15 @@ Partial Public Class KPIsList
     Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cboCreateby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboCreateby As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''note control.
     '''</summary>
     '''<remarks>
@@ -210,4 +183,13 @@ Partial Public Class KPIsList
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents note2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''gvRemind control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvRemind As Global.System.Web.UI.WebControls.GridView
 End Class

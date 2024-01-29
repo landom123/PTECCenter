@@ -1895,7 +1895,7 @@ alert('else nonpo')
             });
         });
         $('#<% =btnFromAddDetail.ClientID%>').click(function () {
-            $('#exampleModal .modal-footer #btnAddDetail').show();
+            $('#exampleModal .modal-footer #btnAddDetails').show();
             $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').removeAttr("readonly");
             $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').removeAttr("disabled");
             $('#<% =txtinvoicedate.ClientID%>').attr('readonly', true);

@@ -75,6 +75,8 @@ Public Class KPIsList
 
         If Not IsPostBack() Then
 
+
+            objKpi.SetCboPeriod(cboPeriod)
             objposition.SetCboPositionCode(cboPosition)
             objKpi.SetCboRatioType(cboRatio)
             objcompany.SetCboCompany(cboCompany, 0)
@@ -130,6 +132,7 @@ Public Class KPIsList
         Dim dt As New DataTable
 
         dt.Columns.Add("cboCompany", GetType(String))
+        dt.Columns.Add("cboPeriod", GetType(String))
         dt.Columns.Add("cboCreateby", GetType(String))
         dt.Columns.Add("cboRatio", GetType(String))
         dt.Columns.Add("cboPosition", GetType(String))
@@ -149,6 +152,7 @@ Public Class KPIsList
             Dim objsec As New Section
 
             cboCompany.SelectedValue = criteria.Rows(0).Item("cboCompany")
+            cboPeriod.SelectedValue = criteria.Rows(0).Item("cboPeriod")
             cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
             cboRatio.SelectedValue = criteria.Rows(0).Item("cboRatio")
             cboPosition.SelectedValue = criteria.Rows(0).Item("cboPosition")
@@ -177,7 +181,7 @@ Public Class KPIsList
                                                         "",
                                                         Session("userid").ToString,
                                                         "CO",
-                                                        1,
+                                                        cboPeriod.SelectedValue.ToString,
                                                         cboBranchManager.SelectedItem.Value.ToString)
             ElseIf chkHO.Checked Then
                 AllKpi = objKpi.Kpi_List_For_Operator(cboDepartment.SelectedItem.Value.ToString,
@@ -190,7 +194,7 @@ Public Class KPIsList
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
                                                         "HO",
-                                                        1,
+                                                        cboPeriod.SelectedValue.ToString,
                                                         "")
             End If
 
@@ -217,7 +221,8 @@ Public Class KPIsList
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
-                                                        "CO")
+                                                        "CO",
+                                                        cboPeriod.SelectedValue.ToString)
             ElseIf chkHO.Checked Then
                 AllKpi = objKpi.Kpi_List_For_Owner(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
@@ -228,7 +233,8 @@ Public Class KPIsList
                                                       "",
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
-                                                    "HO")
+                                                    "HO",
+                                                        cboPeriod.SelectedValue.ToString)
             End If
 
             setCriteria()
@@ -254,6 +260,7 @@ Public Class KPIsList
         End If
         criteria.Rows.Add(
                           (cboCompany.SelectedItem.Value),
+                          (cboPeriod.SelectedItem.Value),
                           cboCreateby.SelectedItem.Value.ToString,
                         cboRatio.SelectedItem.Value.ToString,
                         cboPosition.SelectedItem.Value.ToString,
@@ -274,6 +281,7 @@ Public Class KPIsList
         cboDepartment.SelectedIndex = -1
         cboSection.SelectedIndex = -1
         cboCompany.SelectedIndex = 1
+        cboPeriod.SelectedIndex = -1
         cboRatio.SelectedIndex = -1
         cboPosition.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1

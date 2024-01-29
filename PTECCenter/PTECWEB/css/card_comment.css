@@ -19,6 +19,10 @@
     display: table;
     word-break: break-word;
 }
+    .comment-detail:has(.row .col-auto:not(:only-of-type)) {
+        background-color: #bedbfb;
+        margin-left: auto !important;
+    }
 
 .detailComment:focus {
     background-color: yellow;
