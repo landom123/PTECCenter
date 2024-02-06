@@ -1761,6 +1761,7 @@
     <Content Include="HRD\KPI\KPIsOverview.aspx" />
     <Content Include="HRD\KPI\KPIsList.aspx" />
     <Content Include="HRD\KPI\KPIsRequest.aspx" />
+    <Content Include="HRD\KPI\rptKPIs.aspx" />
     <Content Include="icon\BranchSeller.svg" />
     <Content Include="icon\logoSAP.svg" />
     <Content Include="icon\Logo_pure.png" />
@@ -1775,6 +1776,7 @@
     <Content Include="js\Sortable.js" />
     <Content Include="js\starRating.js" />
     <Content Include="js\Stepper.js" />
+    <Content Include="forgot-password.aspx" />
     <Content Include="OPS\Jobs_MapsToNonPO.aspx" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
@@ -3811,6 +3813,20 @@
     <Compile Include="HRD\KPI\KPIsRequest.aspx.vb">
       <DependentUpon>KPIsRequest.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\rptKPIs.aspx.designer.vb">
+      <DependentUpon>rptKPIs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\rptKPIs.aspx.vb">
+      <DependentUpon>rptKPIs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="forgot-password.aspx.designer.vb">
+      <DependentUpon>forgot-password.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="forgot-password.aspx.vb">
+      <DependentUpon>forgot-password.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Jobs_MapsToNonPO.aspx.designer.vb">
       <DependentUpon>Jobs_MapsToNonPO.aspx</DependentUpon>

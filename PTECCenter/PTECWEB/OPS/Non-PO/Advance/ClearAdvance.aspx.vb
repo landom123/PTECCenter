@@ -109,7 +109,7 @@ Public Class ClearAdvance
             objNonpo.SetCboBu(cboBU)
             objNonpo.SetCboPj(cboPJ)
 
-            objsmb.SetCboSmartBilllist(multiSelect)
+            objsmb.SetCboSmartBilllist(multiSelect, usercode)
 
             'Dim dt As New DataTable
 

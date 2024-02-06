@@ -286,6 +286,7 @@ Public Class KPIsList
         cboPosition.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
+        cboBranchManager.SelectedIndex = -1
         cboCreateby.SelectedIndex = -1
         If AllKpi IsNot Nothing Then
             AllKpi.Clear()

@@ -46,7 +46,7 @@
 
                 <div class="row">
                     <div class="col-12 ">
-                        <a href="approval.aspx" class="btn btn-sm btn-danger ">New</a>
+                        <a href="approval.aspx" class="btn btn-sm btn-primary ">New</a>
                         &nbsp;
                         <% If Not Session("positionid") = "10" Then%>
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp; 
