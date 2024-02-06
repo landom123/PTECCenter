@@ -16,6 +16,13 @@ Public Class Kpi
         obj.DataBind()
 
     End Sub
+    Public Sub SetCboRatioTypeByUser(obj As Object, usersid As Integer)
+        obj.DataSource = Me.RatioTypeByUser_List(usersid)
+        obj.DataValueField = "category_id"
+        obj.DataTextField = "categoryname"
+        obj.DataBind()
+
+    End Sub
     Public Function Kpi_Period_List() As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -784,6 +791,53 @@ Public Class Kpi
         conn.Close()
         'Return result
     End Sub
+    Public Function Kpi_Report(preriodid As Integer) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Rpt_All"
+        cmd.CommandType = CommandType.StoredProcedure
 
 
+        cmd.Parameters.Add("@preriodid", SqlDbType.Int).Value = preriodid
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function RatioTypeByUser_List(userid As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_RatioType_By_User_List"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
 End Class

@@ -9,8 +9,8 @@
         .modal .form-group, .modal .form-control, .modal .bootstrap-select .dropdown-toggle, .modal .bootstrap-select .dropdown-menu {
             font-size: 0.875rem;
         }
-         .nonpounsaved, .statusnewkpi {
 
+        .nonpounsaved, .statusnewkpi {
             width: 1000px;
             overflow-x: auto;
             overflow-y: visible;
@@ -45,7 +45,7 @@
                             <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" OnClientClick="Confirm();" />
                             &nbsp;   
                         </div>
-                         
+
                         <div class="col-auto text-right align-self-center">
                             <a href="KPIsRequestList.aspx" class="btn btn-sm btn-danger ">
                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
@@ -146,12 +146,12 @@
                                                 </div>
                                             </nav>--%>
                                             <div id="nav-tabContent">
-                                                <% For i As Integer = 0 To weighttable.Rows.Count - 1 %>
-                                                <% if weighttable.Rows(i).Item("weight") > 0 Then%>
-                                                <div class="mb-5" id="nav-<%= weighttable.Rows(i).Item("CategoryName").ToString().ToLower() %>" role="tabpanel" aria-labelledby="nav-<%= weighttable.Rows(i).Item("CategoryName").ToString().ToLower() %>-tab">
+                                                <% if groupdetailtable.Rows.Count > 0 Then%>
+                                                <% For i As Integer = 0 To groupdetailtable.Rows.Count - 1 %>
+                                                <div class="mb-5" id="nav-<%= groupdetailtable.Rows(i).Item("CategoryName").ToString().ToLower() %>" role="tabpanel" aria-labelledby="nav-<%= groupdetailtable.Rows(i).Item("CategoryName").ToString().ToLower() %>-tab">
                                                     <div class="row">
                                                         <div class="col mb-3 h5 font-weight-bold">
-                                                            <span class="ratio__type"><%= weighttable.Rows(i).Item("CategoryName").ToString() %></span>
+                                                            <span class="ratio__type"><%= groupdetailtable.Rows(i).Item("CategoryName").ToString() %></span>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -173,7 +173,7 @@
                                                                 </thead>
                                                                 <tbody class="DetailArea">
                                                                     <% For j = 0 To detailtable.Rows.Count - 1 %>
-                                                                    <% if weighttable.Rows(i).Item("CategoryName").ToString() = detailtable.Rows(j).Item("CategoryName").ToString() Then%>
+                                                                    <% if groupdetailtable.Rows(i).Item("CategoryName").ToString() = detailtable.Rows(j).Item("CategoryName").ToString() Then%>
                                                                     <tr class="draggable detail" data-status="<%= detailtable.Rows(j).Item("status").ToString() %>" name="<%= detailtable.Rows(j).Item("kpi_code").ToString() %>" style="cursor: pointer; transition: .2s;"
                                                                         ondblclick="btnEditDetailClick('<%= detailtable.Rows(j).Item("kpi_code").ToString() %>'
                                                                         ,'<%= detailtable.Rows(j).Item("categoryid").ToString() %>'
@@ -197,7 +197,7 @@
                                                                         <td class="text-center"><%= detailtable.Rows(j).Item("lv1").ToString() %></td>
                                                                         <td class="text-center">
                                                                             <div class="deletedetail">
-                                                                                    <a onclick="confirmDeletedetail('<%= detailtable.Rows(j).Item("kpi_code").ToString() %>','<%= detailtable.Rows(j).Item("status").ToString() %>');" class="btn btn-sm p-0 notPrint">
+                                                                                <a onclick="confirmDeletedetail('<%= detailtable.Rows(j).Item("kpi_code").ToString() %>','<%= detailtable.Rows(j).Item("status").ToString() %>');" class="btn btn-sm p-0 notPrint">
                                                                                     <i class="fas fa-times"></i>
                                                                                 </a>
                                                                             </div>
@@ -218,12 +218,12 @@
                                                     </div>
                                                 </div>
 
-                                                <% else %>
+                                                <%-- <% else %>
                                                 <div class="row">
                                                     <div class="col mb-5">
-                                                    <div class="row">
-                                                        <div class="col mb-3 h5 font-weight-bold">
-                                                            <span><%= weighttable.Rows(i).Item("CategoryName").ToString() %></span>
+                                                        <div class="row">
+                                                            <div class="col mb-3 h5 font-weight-bold">
+                                                                <span><%= groupdetailtable.Rows(i).Item("CategoryName").ToString() %></span>
                                                         </div>
                                                     </div>
                                                     <div class="row  bg-light">
@@ -232,9 +232,16 @@
                                                         </div>
                                                     </div>
                                                     </div>
-                                                </div>
-                                                <% End If %>
+                                                </div>--%>
                                                 <% Next i %>
+                                                <% else %>
+                                                <div class="row bg-light">
+                                                    <div class="col mb-2 pl-5 txt">
+                                                        ยังไม่มีรายการ
+                                                    </div>
+                                                </div>
+
+                                                <% End If %>
                                             </div>
                                         </div>
                                     </div>
@@ -518,7 +525,7 @@
                 if (total < 100) {
                     elemTotal.classList.add("text-muted");
                 }
-                else if (total > 100){
+                else if (total > 100) {
                     elemTotal.classList.add("text-danger");
 
                     //set ratioType text red

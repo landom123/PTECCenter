@@ -265,6 +265,30 @@ Public Class Users
         Return result
     End Function
 
+    Public Function ApprovalPermissionRead(userid As Integer, approvallistid As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_Permisstion"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+        cmd.Parameters.Add("@approvallistid", SqlDbType.Int).Value = approvallistid
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
     Public Function NonPOPermissionRead(userid As Integer) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -370,5 +394,29 @@ Public Class Users
         conn.Close()
         Return result
     End Function
+
+    Public Sub forgotPassword(usercode As String, randomstr As String, newpass As String, email As String)
+        'Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_usersright").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "User_ForgotPassword"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@coderef", SqlDbType.VarChar).Value = randomstr
+        cmd.Parameters.Add("@newpass", SqlDbType.VarChar).Value = newpass
+        cmd.Parameters.Add("@email", SqlDbType.VarChar).Value = email
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Sub
 
 End Class

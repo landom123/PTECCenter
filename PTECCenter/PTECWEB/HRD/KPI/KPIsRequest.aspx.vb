@@ -31,7 +31,7 @@ Public Class KPIsRequest
     Public weighttable As DataTable '= createdetailtable()
     Public detailtable As DataTable '= createdetailtable()
     Public signedtable As DataTable '= createsignedtable()
-
+    Public groupdetailtable As DataTable '= createdetailtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objKpi As New Kpi
 
@@ -61,7 +61,7 @@ Public Class KPIsRequest
             AttachTable = createtableAttach()
 
             objKpi.SetCboPeriod(cboPeriod)
-            objKpi.SetCboRatioType(cboRatio)
+            objKpi.SetCboRatioTypeByUser(cboRatio, Session("userid"))
 
             If Request.QueryString("NewKpiCode") IsNot Nothing Then
                 'Has code
@@ -815,5 +815,24 @@ endprocess:
         Response.Redirect("../KPI/KPIsRequest.aspx?NewKpiCode=" & Request.QueryString("NewKpiCode").ToString())
 
 endprocess:
+    End Sub
+
+    Private Sub KPIsRequest_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        Dim fruitGroups = detailtable.AsEnumerable().
+        GroupBy(Function(row) New With {
+            Key .Name = row.Field(Of String)("categoryname")
+        })
+
+        groupdetailtable = New DataTable
+        groupdetailtable.Columns.Add("categoryname", GetType(String))
+        groupdetailtable.Columns.Add("weight", GetType(Integer))
+
+        Dim newrows As DataRow
+        For Each grp In fruitGroups
+            newrows = groupdetailtable.NewRow()
+            newrows("categoryname") = grp.Key.Name
+            newrows("weight") = grp.Sum(Function(row) row.Field(Of Double)("weight"))
+            groupdetailtable.Rows.Add(newrows)
+        Next
     End Sub
 End Class

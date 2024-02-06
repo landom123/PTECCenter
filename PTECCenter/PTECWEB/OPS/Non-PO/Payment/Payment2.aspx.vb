@@ -101,7 +101,7 @@ Public Class Payment2
             SetCboUsers(cboOwner)
             setmaindefault()
 
-            objsmb.SetCboSmartBilllist(multiSelect)
+            objsmb.SetCboSmartBilllist(multiSelect, usercode)
 
             objdep.SetCboDepartmentBybranch(cboDep, 0)
             objNonpo.SetCboAccountCode(cboAccountCode, Session("userid"))

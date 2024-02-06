@@ -91,7 +91,7 @@ Public Class WebForm1
                     If Not Session("status") = "edit" Then
                         Session("status") = "read"
                     End If
-                    chkuser(detailtable.Rows(0).Item("createby"))
+                    chkuser(detailtable.Rows(0).Item("createby"), detailtable.Rows(0).Item("approvallistid"))
                     showdata(detailtable)
                     SetBtn(detailtable.Rows(0).Item("statusid"), detailtable.Rows(0).Item("ownerapproval"))
                     If (Session("userid") = am_id Or
@@ -276,11 +276,11 @@ endprocess:
         End Try
         Return appPermission
     End Function
-    Private Sub chkuser(userid As Integer)
+    Private Sub chkuser(userid As Integer, approvallistid As Integer)
         Dim approval_permission As New Users
         Dim appPermissionTable As New DataTable
         Try
-            appPermissionTable = approval_permission.ApprovalPermissionRead(userid)
+            appPermissionTable = approval_permission.ApprovalPermissionRead(userid, approvallistid)
             am_id = appPermissionTable.Rows(0).Item("am_id")
             rm_id = appPermissionTable.Rows(0).Item("rm_id")
             dm_id = appPermissionTable.Rows(0).Item("dm_id")

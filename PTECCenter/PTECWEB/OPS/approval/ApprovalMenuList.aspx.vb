@@ -38,7 +38,8 @@ Public Class WebForm3
                 Else
                     area.SetCboArea(cboArea)
                 End If
-                approval.SetCboApproval(cboApproval)
+
+                approval.SetCboApproval(cboApproval, Session("depid"), "")
                 approval.SetCboApprovalCategory(cboApprovalCategory)
                 approval.SetCboApprovalStatus(cboStatus)
                 approval.SetCboApprovalGroup(cboApprovalGroup)
