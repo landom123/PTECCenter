@@ -39,7 +39,7 @@
             preReset.Visible = False
             postReset.Visible = True
 
-            lbcodeRef.Text = "Please check your email Coderef : " & randomstr
+            lbcodeRef.Text = "กรุณาเช็คกล่องข้อความใน email Coderef : " & randomstr
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             Dim javaScript As String = "alertWarning('" & ex.Message & "');"
