@@ -27,6 +27,7 @@ Public Class WebForm1
     Public detailtable As DataTable '= createtable()
     Public PermissionOwner As DataSet '= createtable()
     Public CommentTable As DataTable '= createtable()
+    Public nozzletable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objbranch As New Branch
         Dim objapproval As New Approval
@@ -65,7 +66,9 @@ Public Class WebForm1
                     approvaldataset = objapproval.Approval_Find(Request.QueryString("approvalcode"))
                     detailtable = approvaldataset.Tables(0)
                     CommentTable = approvaldataset.Tables(4)
+                    nozzletable = approvaldataset.Tables(6)
                     Session("detailtable") = detailtable
+                    Session("nozzletable") = nozzletable
                     If approvaldataset.Tables(1).Rows.Count > 0 Then
                         Approval_BF = convertToJSON(approvaldataset.Tables(1))
                     End If
@@ -167,6 +170,7 @@ endprocess:
             End If
         Else
             detailtable = Session("detailtable")
+            nozzletable = Session("nozzletable")
         End If
         SetMenu()
     End Sub
