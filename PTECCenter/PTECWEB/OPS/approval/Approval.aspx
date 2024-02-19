@@ -75,6 +75,19 @@
                 text-align: center !important;*/
             }
         }
+        
+        .hide {
+            display: none;
+        }
+
+        .myDIV:hover + .hide {
+            display: block;
+            max-width: 40%;
+            height: auto;
+            left: 0;
+            z-index: 1;
+            position: absolute;
+        }
     </style>
 
 </asp:Content>
@@ -466,6 +479,109 @@
                         </div>
                         <% End If %>
                     </div>
+                    <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And nozzletable IsNot Nothing Then%>
+                    <% If nozzletable.Rows.Count > 0 Then%>
+                    <% If detailtable.Rows(0).Item("approvallistid") = 23 Then%>
+
+                    <div class="row bg-white">
+                        <div class="col-md-12 col-12 mb-3 ">
+                            <div class="card shadow">
+                                <div class="card-header" style="background-color: cornflowerblue; color: white">
+                                    <div class="row justify-content-between">
+                                        <div class="col text-left">
+                                            ผลการบีบทดสอบมิเตอร์หัวจ่ายด้วยหม้อตวงน้ำมันขนาด 5 ลิตร และ 20 ลิตร
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5% !important;">ลำดับที่</th>
+                                                    <th style="width: 10% !important;">ยี่ห้อ</th>
+                                                    <th style="width: 5% !important;">ชนิดน้ำมัน</th>
+                                                    <th style="width: 20% !important;">เลขที่มาตร</th>
+                                                    <th style="width: 5% !important;">หัวจ่าย</th>
+                                                    <th style="width: 10% !important;">ครั้งที่ 1</th>
+                                                    <th style="width: 10% !important;">ครั้งที่ 2</th>
+                                                    <th style="width: 10% !important;">ครั้งที่ 3</th>
+                                                    <th style="width: 10% !important;">เฉลี่ย</th>
+                                                    <th style="width: 15% !important;">หมายเหตุ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center align-bottom">
+                                                <% If Not Request.QueryString("approvalcode") Is Nothing And nozzletable.Rows.Count > 0 Then%>
+                                                <% For j = 0 To nozzletable.Rows.Count - 1 %>
+                                                <tr>
+                                                    <td>
+                                                        <span><%= nozzletable.Rows(j).Item("rownumber").ToString %></span>
+                                                    </td>
+                                                    <td>
+                                                        <span><%= nozzletable.Rows(j).Item("brand").ToString %></span>
+                                                    </td>
+                                                    <td>
+                                                        <span><%= nozzletable.Rows(j).Item("productType").ToString %></span>
+                                                    </td>
+                                                    <td>
+                                                        <span><%= nozzletable.Rows(j).Item("nozzle_No").ToString %></span>
+                                                    </td>
+                                                    <td>
+                                                        <span><%= nozzletable.Rows(j).Item("positionOnAssest").ToString %></span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex flex-column text-center ">
+                                                            <span><%= nozzletable.Rows(j).Item("rond1").ToString %></span>
+                                                            <% If Not String.IsNullOrEmpty(nozzletable.Rows(j).Item("url1").ToString()) Then %>
+                                                            <a class="myDIV" href="<%= nozzletable.Rows(j).Item("url1").ToString() %>" target="_blank">รูปครั้งที่ 1</a>
+                                                            <img class="hide" src="<%= nozzletable.Rows(j).Item("url1").ToString() %>"
+                                                                alt="Alternate Text" />
+                                                            <% End If %>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex flex-column text-center ">
+                                                            <span><%= nozzletable.Rows(j).Item("rond2").ToString %></span>
+                                                            <% If Not String.IsNullOrEmpty(nozzletable.Rows(j).Item("url2").ToString()) Then %>
+                                                            <a class="myDIV" href="<%= nozzletable.Rows(j).Item("url2").ToString() %>" target="_blank">รูปครั้งที่ 2</a>
+                                                            <img class="hide" src="<%= nozzletable.Rows(j).Item("url2").ToString() %>"
+                                                                alt="Alternate Text" />
+                                                            <% End If %>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex flex-column text-center ">
+                                                            <span><%= nozzletable.Rows(j).Item("rond3").ToString %></span>
+                                                            <% If Not String.IsNullOrEmpty(nozzletable.Rows(j).Item("url3").ToString()) Then %>
+                                                            <a class="myDIV" href="<%= nozzletable.Rows(j).Item("url3").ToString() %>" target="_blank">รูปครั้งที่ 3</a>
+                                                            <img class="hide" src="<%= nozzletable.Rows(j).Item("url3").ToString() %>"
+                                                                alt="Alternate Text" />
+                                                            <% End If %>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span><%= nozzletable.Rows(j).Item("avgAllRond").ToString %></span>
+                                                    </td>
+                                                    <td>
+                                                        <span><%= nozzletable.Rows(j).Item("remark").ToString %></span>
+                                                    </td>
+                                                </tr>
+
+                                                <% Next j %>
+                                                <% End if %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <!-- end card-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <% End If %>
+                    <% End If %>
+                    <% End If %>
                     <!-- end row-->
                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And CommentTable IsNot Nothing Then%>
                     <% If (Session("status") = "read" Or Session("status") = "write") And Not detailtable.Rows(0).Item("statusid") = 7 Then%>

@@ -13,6 +13,12 @@ Public Class Approval
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+    Public Sub SetCboApproval(obj As Object, depid As String, ds As String, secid As String)
+        obj.DataSource = Me.Approval_List(depid, ds, secid)
+        obj.DataValueField = "ApprovalListID"
+        obj.DataTextField = "name"
+        obj.DataBind()
+    End Sub
 
     Public Sub SetCboApprovalGroup(obj As Object)
         obj.DataSource = Me.ApprovalGroup_List()
@@ -60,7 +66,7 @@ Public Class Approval
         obj.DataTextField = "statusname"
         obj.DataBind()
     End Sub
-    Public Function Approval_List(Optional depid As String = "", Optional deductsale As String = "") As DataTable
+    Public Function Approval_List(Optional depid As String = "", Optional deductsale As String = "", Optional secid As String = "") As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -75,6 +81,7 @@ Public Class Approval
 
         cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
         cmd.Parameters.Add("@aho_ds", SqlDbType.VarChar).Value = deductsale
+        cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
         'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
         'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
         'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
@@ -1209,6 +1216,104 @@ Public Class Approval
 
         cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
         cmd.Parameters.Add("@cost", SqlDbType.Money).Value = cost
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        'Return result
+    End Sub
+
+    Public Function SaveTEST5L(appcode As String, rownumber As Integer, brand As String, producttype As String,
+                                nozzle_no As String, positiononassest As String,
+                                round1 As Integer, round2 As Integer, round3 As Integer,
+                                url1 As String, url2 As String, url3 As String, remark As String, user As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_Nozzle_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
+        cmd.Parameters.Add("@rownumber", SqlDbType.Int).Value = rownumber
+        cmd.Parameters.Add("@brand", SqlDbType.VarChar).Value = brand
+        cmd.Parameters.Add("@producttype", SqlDbType.VarChar).Value = producttype
+        cmd.Parameters.Add("@nozzle_no", SqlDbType.VarChar).Value = nozzle_no
+        cmd.Parameters.Add("@positiononassest", SqlDbType.VarChar).Value = positiononassest
+        cmd.Parameters.Add("@round1", SqlDbType.Int).Value = round1
+        cmd.Parameters.Add("@round2", SqlDbType.Int).Value = round2
+        cmd.Parameters.Add("@round3", SqlDbType.Int).Value = round3
+        cmd.Parameters.Add("@url1", SqlDbType.VarChar).Value = url1
+        cmd.Parameters.Add("@url2", SqlDbType.VarChar).Value = url2
+        cmd.Parameters.Add("@url3", SqlDbType.VarChar).Value = url3
+        cmd.Parameters.Add("@remark", SqlDbType.VarChar).Value = remark
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+
+    End Function
+
+    Public Function UpdateTEST5L(appcode As String, appnozzleid As Integer,
+                                round1 As Integer, round2 As Integer, round3 As Integer,
+                                url1 As String, url2 As String, url3 As String, remark As String, user As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_Nozzle_Update"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
+        cmd.Parameters.Add("@appnozzleid", SqlDbType.Int).Value = appnozzleid
+        cmd.Parameters.Add("@round1", SqlDbType.Int).Value = round1
+        cmd.Parameters.Add("@round2", SqlDbType.Int).Value = round2
+        cmd.Parameters.Add("@round3", SqlDbType.Int).Value = round3
+        cmd.Parameters.Add("@url1", SqlDbType.VarChar).Value = url1
+        cmd.Parameters.Add("@url2", SqlDbType.VarChar).Value = url2
+        cmd.Parameters.Add("@url3", SqlDbType.VarChar).Value = url3
+        cmd.Parameters.Add("@remark", SqlDbType.VarChar).Value = remark
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+
+    End Function
+
+    Public Sub deleteDetail(appcode As String, approvalnozzle_id As Integer, row As Integer, usercode As String)
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_Nozzle_Del"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
+        cmd.Parameters.Add("@approvalnozzle_id", SqlDbType.Int).Value = approvalnozzle_id
+        cmd.Parameters.Add("@row", SqlDbType.Int).Value = row
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
 
         cmd.ExecuteNonQuery()
