@@ -37,13 +37,13 @@ Public Class PettyCashCOMenulist
         End If
 
 
-        txtStartDate.Attributes.Add("readonly", "readonly")
-        txtEndDate.Attributes.Add("readonly", "readonly")
+        'txtStartDate.Attributes.Add("readonly", "readonly")
+        'txtEndDate.Attributes.Add("readonly", "readonly")
 
 
 
-        txtStartDueDate.Attributes.Add("readonly", "readonly")
-        txtEndDueDate.Attributes.Add("readonly", "readonly")
+        'txtStartDueDate.Attributes.Add("readonly", "readonly")
+        'txtEndDueDate.Attributes.Add("readonly", "readonly")
         operator_code = objNonpo.NonPOPermisstionOperator("PCCO")
 
         If Not IsPostBack() Then
@@ -73,7 +73,7 @@ Public Class PettyCashCOMenulist
 
                 Try
                     'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-                    itemtable = objNonpo.PettyCashCO_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+                    itemtable = objNonpo.PettyCashCO_For_Owner(Session("userid"), cboWorking.SelectedItem.Value, cboMaxRows.SelectedValue)
                 Catch ex As Exception
                     Dim scriptKey As String = "alert"
                     Dim javaScript As String = "alertWarning('search fail');"
@@ -99,7 +99,8 @@ Public Class PettyCashCOMenulist
                           txtEndDueDate.Text.ToString.Trim(),
                           (cboBranchGroup.SelectedItem.Value),
                           (cboBranch.SelectedItem.Value),
-                          gvRemind.PageIndex)
+                          gvRemind.PageIndex,
+                          cboMaxRows.SelectedValue)
         Session("criteria_pcco") = criteria
     End Sub
     Private Function createCriteria() As DataTable
@@ -114,6 +115,7 @@ Public Class PettyCashCOMenulist
         dt.Columns.Add("cboBranchGroup", GetType(String))
         dt.Columns.Add("cboBranch", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
+        dt.Columns.Add("maxrows", GetType(Integer))
 
         Return dt
     End Function
@@ -128,6 +130,7 @@ Public Class PettyCashCOMenulist
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
+            cboMaxRows.SelectedValue = criteria.Rows(0).Item("maxrows")
 
             txtStartDueDate.Text = criteria.Rows(0).Item("txtStartDueDate")
             txtEndDueDate.Text = criteria.Rows(0).Item("txtEndDueDate")
@@ -156,7 +159,8 @@ Public Class PettyCashCOMenulist
                                                   "",
                                                     cboBranchGroup.SelectedItem.Value.ToString,
                                                     cboBranch.SelectedItem.Value.ToString,
-                                                    "")
+                                                    "",
+                                                    cboMaxRows.SelectedValue)
             Session("joblist_pcco") = itemtable
             BindData()
         Catch ex As Exception
@@ -206,6 +210,7 @@ Public Class PettyCashCOMenulist
             setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         End If
         cntdt = itemtable.Rows.Count
+        gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
     End Sub
@@ -281,7 +286,7 @@ endprocess:
 
         Try
             'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-            itemtable = objNonpo.PettyCashCO_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+            itemtable = objNonpo.PettyCashCO_For_Owner(Session("userid"), cboWorking.SelectedItem.Value, cboMaxRows.SelectedValue)
             Session("joblist_pcco") = itemtable
 
         Catch ex As Exception
@@ -356,4 +361,33 @@ endprocess:
 
         End Using
     End Sub
+    Private Sub gvRemind_Sorting(sender As Object, e As GridViewSortEventArgs) Handles gvRemind.Sorting
+
+        Dim dt As DataTable = TryCast(itemtable, DataTable)
+
+        If dt IsNot Nothing Then
+            dt.DefaultView.Sort = e.SortExpression & " " & GetSortDirection(e.SortExpression)
+            BindData()
+        End If
+    End Sub
+
+    Private Function GetSortDirection(ByVal column As String) As String
+        Dim sortDirection As String = "ASC"
+        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+
+        If sortExpression IsNot Nothing Then
+
+            If sortExpression = column Then
+                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+
+                If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
+                    sortDirection = "DESC"
+                End If
+            End If
+        End If
+
+        ViewState("SortDirection") = sortDirection
+        ViewState("SortExpression") = column
+        Return sortDirection
+    End Function
 End Class

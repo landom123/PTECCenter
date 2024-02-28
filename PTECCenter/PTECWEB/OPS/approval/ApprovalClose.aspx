@@ -513,7 +513,7 @@
 
                     <div class="row bg-white">
                         <div class="col-12 text-center">
-                            <asp:Button ID="btnClose" class="btn btn-danger" runat="server" OnClientClick="validateDataImg()" Text="บันทึก" />
+                            <asp:Button ID="btnClose" class="btn btn-danger" runat="server" OnClientClick="validateDataImg()" Text="ปิดงาน" />
                         </div>
                     </div>
                     <% End If %>

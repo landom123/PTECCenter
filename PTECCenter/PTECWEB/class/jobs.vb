@@ -114,7 +114,7 @@ Public Class jobs
 
     End Sub
 
-    Public Function JobList(usercode As String, status As Integer) As DataTable
+    Public Function JobList(usercode As String, status As Integer, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
 
         Dim ds As New DataSet
@@ -129,6 +129,7 @@ Public Class jobs
 
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
         cmd.Parameters.Add("@status", SqlDbType.BigInt).Value = status
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
         adp.SelectCommand = cmd
         adp.Fill(ds)
@@ -168,7 +169,7 @@ Public Class jobs
 
 
     Public Function JobList_For_Operator(jobcode As String, depid As String, jobtypeid As String, statusfollowid As String,
-                                         branchgroupid As String, branchid As String, startdate As String, enddate As String, suppilerid As String) As DataTable
+                                         branchgroupid As String, branchid As String, startdate As String, enddate As String, suppilerid As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -191,6 +192,8 @@ Public Class jobs
         cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
         cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
         cmd.Parameters.Add("@suppilerid", SqlDbType.VarChar).Value = suppilerid
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
+
 
 
 
@@ -1874,6 +1877,35 @@ Public Class jobs
         cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobno
         cmd.Parameters.Add("@jobdetailid", SqlDbType.BigInt).Value = jobdetailid
         cmd.Parameters.Add("@usercode", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function UpdateDetailnozzle(jobdtlid As Integer, nozzleid As Integer, brand As String, producttype As String, nozzle_no As String,
+                                          positiononassest As String, expirydate As String, url As String, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Nozzle_Update"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobdtlid", SqlDbType.Int).Value = jobdtlid
+        cmd.Parameters.Add("@nozzleid", SqlDbType.Int).Value = nozzleid
+        cmd.Parameters.Add("@nozzle_no", SqlDbType.VarChar).Value = nozzle_no
+        cmd.Parameters.Add("@brand", SqlDbType.VarChar).Value = brand
+        cmd.Parameters.Add("@producttype", SqlDbType.VarChar).Value = producttype
+        cmd.Parameters.Add("@positiononassest", SqlDbType.VarChar).Value = positiononassest
+        cmd.Parameters.Add("@expirydate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(expirydate), DBNull.Value, DateTime.Parse(expirydate))
+        cmd.Parameters.Add("@url", SqlDbType.VarChar).Value = url
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
 
         cmd.ExecuteNonQuery()
 

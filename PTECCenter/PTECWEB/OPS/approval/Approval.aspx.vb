@@ -558,46 +558,78 @@ endprocess:
     End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If InStr(Request.ContentType, "multipart/form-data") Then
+            If validatedata() Then
 
-            Dim imgname As New Approval
-            Dim fullfilename As String = String.Empty
-            Dim Files As HttpFileCollection = Request.Files
-            Dim Keys() As String
-            Keys = Files.AllKeys
-            For i = 0 To Keys.GetUpperBound(0) - 1
-                Dim Extension As String = System.IO.Path.GetExtension(Files(i).FileName)
-                Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
-                Dim di As String = System.IO.Path.GetDirectoryName(Files(i).FileName)
-                'Dim oldpath As String = di + FileUpload1.FileName
+                Dim imgname As New Approval
+                Dim fullfilename As String = String.Empty
+                Dim Files As HttpFileCollection = Request.Files
+                Dim Keys() As String
+                Keys = Files.AllKeys
+                For i = 0 To Keys.GetUpperBound(0) - 1
+                    Dim Extension As String = System.IO.Path.GetExtension(Files(i).FileName)
+                    Dim rootPath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                    Dim savePath As String '= "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                    Dim di As String = System.IO.Path.GetDirectoryName(Files(i).FileName)
+                    'Dim oldpath As String = di + FileUpload1.FileName
 
-                Try
-                    Dim fileName As String
-                    fileName = imgname.GetImageName()
-                    savePath += fileName
-                    savePath += Extension
-                    Files(i).SaveAs(savePath)
-                    fullfilename += fileName
-                    fullfilename += Extension
-                    If Not i = Keys.GetUpperBound(0) - 1 Then
-                        fullfilename += ","
-                    End If
-                    'img1.Attributes.Add("src", a)
-                Catch ex As Exception
-                    Dim scriptKey As String = "alert"
-                    'Dim javaScript As String = "alert('" & ex.Message & "');"
-                    Dim javaScript As String = "alertWarning('upload file fail');"
-                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                    Try
+                        Dim fileName As String
+                        fileName = imgname.GetImageName()
+                        savePath = rootPath
+                        savePath += fileName
+                        savePath += Extension
+                        Do While System.IO.File.Exists(savePath)
+                            fileName = imgname.GetImageName()
+                            savePath = rootPath
+                            savePath += fileName
+                            savePath += Extension
+                        Loop
+                        Files(i).SaveAs(savePath)
+                        fullfilename += fileName
+                        fullfilename += Extension
+                        If Not i = Keys.GetUpperBound(0) - 1 Then
+                            fullfilename += ","
+                        End If
+                        'img1.Attributes.Add("src", a)
+                    Catch ex As Exception
+                        Dim scriptKey As String = "alert"
+                        'Dim javaScript As String = "alert('" & ex.Message & "');"
+                        Dim javaScript As String = "alertWarning('upload file fail');"
+                        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
 
-                End Try
-                'End Try
-            Next i
+                    End Try
+                    'End Try
+                Next i
 
 
-            Approval_Save(fullfilename)
+                Approval_Save(fullfilename)
+            End If
         End If
 
     End Sub
+    Private Function validatedata() As Boolean
+        Dim result As Boolean = True
+        Dim msg As String = ""
 
+        If cboApproval.SelectedItem.Value = 36 Then
+
+            Dim objapp As New Approval
+            result = objapp.Approval_CheckRentalRoom(Session("branchid"), txtPrice.Text)
+            msg = "เกินงบรายเดือนกรุณาติดต่อประสานงาน"
+            GoTo endprocess
+        End If
+
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            'MsgBox(msg)
+        End If
+
+
+        Return result
+    End Function
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Response.Redirect("../approval/approvalClose.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
