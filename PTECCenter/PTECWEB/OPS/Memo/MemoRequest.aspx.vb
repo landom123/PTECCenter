@@ -58,7 +58,8 @@ Public Class MemoRequest
                 If (FileUpload1.HasFile) Then
                     Dim allow_send_pic() As String = {".tiff", ".pjp", ".jfif", ".gif", ".svg", ".bmp", ".png", ".jpeg", ".svgz", ".jpg", ".webp", ".ico", ".xbm", ".dib", ".tif", ".pjpeg", ".avif", ".pdf"}
                     Dim Extension As String = System.IO.Path.GetExtension(FileUpload1.FileName)
-                    Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_Memo\\"
+                    Dim rootPath As String = "D:\\PTECAttatch\\IMG\\OPS_Memo\\"
+                    Dim savePath As String '= "D:\\PTECAttatch\\IMG\\OPS_Memo\\"
                     Dim di As String = System.IO.Path.GetDirectoryName(FileUpload1.FileName)
                     Dim oldpath As String = di + FileUpload1.FileName
                     Try
@@ -69,8 +70,15 @@ Public Class MemoRequest
                         Else
                             Dim fileName As String
                             fileName = attatch.GetAttatchName()
+                            savePath = rootPath
                             savePath += fileName
                             savePath += Extension
+                            Do While System.IO.File.Exists(savePath)
+                                fileName = attatch.GetAttatchName()
+                                savePath = rootPath
+                                savePath += fileName
+                                savePath += Extension
+                            Loop
                             FileUpload1.SaveAs(savePath)
                             fullfilename += fileName
                             fullfilename += Extension

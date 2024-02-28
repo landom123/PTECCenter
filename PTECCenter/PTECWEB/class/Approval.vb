@@ -649,7 +649,7 @@ Public Class Approval
     End Function
 
     Public Function FindApprovalMenuList(approvalcode As String, branchid As String, groupid As String, categoryid As String, approvallistid As String, statusid As String,
-                                         areaid As String, userid As String, startdate As String, enddate As String) As DataTable
+                                         areaid As String, userid As String, startdate As String, enddate As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -672,6 +672,7 @@ Public Class Approval
         cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
         cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
         cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -680,7 +681,7 @@ Public Class Approval
         conn.Close()
         Return result
     End Function
-    Public Function ApprovalMenuList(userid As Integer, working As Integer) As DataTable
+    Public Function ApprovalMenuList(userid As Integer, working As Integer, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
 
         Dim ds As New DataSet
@@ -696,6 +697,7 @@ Public Class Approval
 
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -1266,7 +1268,7 @@ Public Class Approval
     End Function
 
     Public Function UpdateTEST5L(appcode As String, appnozzleid As Integer,
-                                round1 As Integer, round2 As Integer, round3 As Integer,
+                                round1 As Double, round2 As Double, round3 As Double,
                                 url1 As String, url2 As String, url3 As String, remark As String, user As String) As String
         Dim result As String
         Dim ds As New DataSet
@@ -1281,9 +1283,9 @@ Public Class Approval
 
         cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
         cmd.Parameters.Add("@appnozzleid", SqlDbType.Int).Value = appnozzleid
-        cmd.Parameters.Add("@round1", SqlDbType.Int).Value = round1
-        cmd.Parameters.Add("@round2", SqlDbType.Int).Value = round2
-        cmd.Parameters.Add("@round3", SqlDbType.Int).Value = round3
+        cmd.Parameters.Add("@round1", SqlDbType.Float).Value = round1
+        cmd.Parameters.Add("@round2", SqlDbType.Float).Value = round2
+        cmd.Parameters.Add("@round3", SqlDbType.Float).Value = round3
         cmd.Parameters.Add("@url1", SqlDbType.VarChar).Value = url1
         cmd.Parameters.Add("@url2", SqlDbType.VarChar).Value = url2
         cmd.Parameters.Add("@url3", SqlDbType.VarChar).Value = url3
@@ -1323,4 +1325,26 @@ Public Class Approval
         conn.Close()
         'Return result
     End Sub
+    Public Function Approval_CheckRentalRoom(branchid As Integer, price As Double) As Boolean
+        Dim result As Boolean
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_CheckRentalRoom"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@price", SqlDbType.Money).Value = price
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("checked")
+        conn.Close()
+        Return result
+    End Function
 End Class

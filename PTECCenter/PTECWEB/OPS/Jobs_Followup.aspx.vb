@@ -15,6 +15,7 @@ Public Class JobsFollowup
     Public ratetable As DataTable
     Public AttachTable As DataTable '= createtable()
     Public CommentTable As DataTable '= createtable()
+    Public nozzletable As DataTable
 
     Public followuptable As DataTable = CreateFollowup()
     Dim usercode, username As String
@@ -87,6 +88,7 @@ Public Class JobsFollowup
             Session("assessmenttable") = assessmenttable
             Session("comment_jobdetail") = CommentTable
             Session("attatch_jobdetail") = AttachTable
+            Session("nozzle_jobdetail") = nozzletable
 
         Else
             followuptable = Session("followuptable")
@@ -96,6 +98,7 @@ Public Class JobsFollowup
             assessmenttable = Session("assessmenttable")
             CommentTable = Session("comment_jobdetail")
             AttachTable = Session("attatch_jobdetail")
+            nozzletable = Session("nozzle_jobdetail")
 
 
             showsuppilerdata(suppilertable)
@@ -419,7 +422,7 @@ Public Class JobsFollowup
         Try
             mydataset = job.FindFollowup(jobno, jobdetailid, usercode)
             maintable = mydataset.Tables(0)
-            showjobdata(mydataset.Tables(0))
+            showjobdata(maintable)
             followuptable = mydataset.Tables(1)
             stepsuppilertable = mydataset.Tables(2)
             assessmenttable = mydataset.Tables(3)
@@ -427,6 +430,7 @@ Public Class JobsFollowup
             CommentTable = mydataset.Tables(5)
             suppilertable = mydataset.Tables(6)
             txtallOperator.Text = mydataset.Tables(7).Rows(0).Item("alloperator")
+            nozzletable = mydataset.Tables(8)
             showsuppilerdata(suppilertable)
 
 
@@ -438,6 +442,7 @@ Public Class JobsFollowup
             Session("assessmenttable") = assessmenttable
             Session("comment_jobdetail") = CommentTable
             Session("attatch_jobdetail") = AttachTable
+            Session("nozzle_jobdetail") = nozzletable
 
 
 
@@ -710,7 +715,11 @@ endprocess:
             objjob.Jobs_Supplier_FinishStep(jobno, jobdetailid, usercode)
             objjob.Followup_Save(jobno, jobdetailid, 10, "ลงคะแนนประเมินเสร็จสิ้น", usercode)
             ClientScript.RegisterStartupScript(Me.GetType(), "Finish", "finishStep();", True)
+            'If maintable.Rows(0).Item("jobtypeid").ToString = "54" Then
+            '    Response.Redirect("../OPS/Assets/AssetsNozzle.aspx")
+            'Else
             flashData()
+            'End If
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -943,4 +952,106 @@ endprocess:
         'Response.Redirect("../OPS/jobs_followup.aspx?jobno=" & jobno & "&jobdetailid=" & jobdetailid)
 endprocess:
     End Sub
+
+    Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
+        Dim objjob As New jobs
+        Try
+            'Dim a As String = getfilenozzle("files__nozzle")
+            objjob.UpdateDetailnozzle(jobdetailid,
+                                hiddenAdvancedetailid.Value,
+                                txtbrand.Text.ToString,
+                                txtproducttype.Text.ToString,
+                                txtnozzle_no.Text.ToString,
+                                txtpositiononassest.Text.ToString,
+                                txtexpirydate.Text.ToString,
+                                getfilenozzle("files__nozzle"),
+                                Session("usercode")
+                                )
+
+            flashData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('update nozzle fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Function getfilenozzle(key As String) As String
+        Dim res As String = String.Empty
+        Dim fullfilenameimageafter As String = String.Empty
+        Dim approval As New Approval
+        Dim Files As HttpFileCollection = Request.Files
+
+        fullfilenameimageafter = FileUpload(key, Files)
+        Dim filenameArr() As String
+        If Not String.IsNullOrEmpty(fullfilenameimageafter) Then
+            filenameArr = fullfilenameimageafter.Split(",")
+        End If
+        Try
+            If filenameArr IsNot Nothing Then
+                For i = 0 To filenameArr.Length - 1
+                    If Not String.IsNullOrEmpty(filenameArr(i)) Then
+                        'approval.Image_Save(filenameArr(i), key, jobdetailid, Session("usercode"))
+                        Dim urlIMG As String = "http://vpnptec.dyndns.org:10280/OPS_แจ้งซ่อม/"
+                        urlIMG += filenameArr(i)
+                        res = urlIMG
+                    End If
+                Next i
+            End If
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('upload file " & key & " fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+        Return res
+    End Function
+
+    Private Function fileupload(key As String, Files As HttpFileCollection) As String
+        Dim imgname As New Approval
+        Dim fullfilename As String = String.Empty
+
+        Dim Keys() As String
+        Keys = Files.AllKeys
+        For i = 0 To Keys.GetUpperBound(0)
+            If Not String.IsNullOrEmpty(Files(i).FileName) And key = Keys(i) Then
+                Dim Extension As String = System.IO.Path.GetExtension(Files(i).FileName)
+                Dim rootPath As String = "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
+                Dim savePath As String
+                Dim di As String = System.IO.Path.GetDirectoryName(Files(i).FileName)
+                'Dim oldpath As String = di + FileUpload1.FileName
+
+                Try
+                    Dim fileName As String
+                    fileName = imgname.GetImageName()
+                    savePath = rootPath
+                    savePath += fileName
+                    savePath += Extension
+                    Do While System.IO.File.Exists(savePath)
+                        fileName = imgname.GetImageName()
+                        savePath = rootPath
+                        savePath += fileName
+                        savePath += Extension
+                    Loop
+                    Files(i).SaveAs(savePath)
+                    fullfilename += fileName
+                    fullfilename += Extension
+                    If Not i = Keys.GetUpperBound(0) - 1 Then
+                        fullfilename += ","
+                    End If
+                    'img1.Attributes.Add("src", a)
+                Catch ex As Exception
+                    Dim scriptKey As String = "alert"
+                    'Dim javaScript As String = "alert('" & ex.Message & "');"
+                    Dim javaScript As String = "alertWarning('upload file fail');"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+                End Try
+            End If
+            'End Try
+        Next i
+
+        Return fullfilename
+    End Function
 End Class

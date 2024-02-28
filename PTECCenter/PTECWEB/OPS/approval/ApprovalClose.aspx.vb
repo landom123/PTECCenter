@@ -243,15 +243,23 @@ endprocess:
         For i = 0 To Keys.GetUpperBound(0)
             If Not String.IsNullOrEmpty(Files(i).FileName) And key = Keys(i) Then
                 Dim Extension As String = System.IO.Path.GetExtension(Files(i).FileName)
-                Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                Dim rootPath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                Dim savePath As String '= "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
                 Dim di As String = System.IO.Path.GetDirectoryName(Files(i).FileName)
                 'Dim oldpath As String = di + FileUpload1.FileName
 
                 Try
                     Dim fileName As String
                     fileName = imgname.GetImageName()
+                    savePath = rootPath
                     savePath += fileName
                     savePath += Extension
+                    Do While System.IO.File.Exists(savePath)
+                        fileName = imgname.GetImageName()
+                        savePath = rootPath
+                        savePath += fileName
+                        savePath += Extension
+                    Loop
                     Files(i).SaveAs(savePath)
                     fullfilename += fileName
                     fullfilename += Extension
@@ -315,9 +323,9 @@ endprocess:
         Try
             Dim row As Integer = json("row").Trim
             Dim approvalNozzle_ID As String = json("approvalnozzle_id").Trim
-            Dim round1 As Integer = json("round1").Trim
-            Dim round2 As Integer = json("round2").Trim
-            Dim round3 As Integer = json("round3").Trim
+            Dim round1 As Double = json("round1").Trim
+            Dim round2 As Double = json("round2").Trim
+            Dim round3 As Double = json("round3").Trim
             Dim url1 As String = getfilenozzle("nozzle_rond1").ToString()
             Dim url2 As String = getfilenozzle("nozzle_rond2").ToString()
             Dim url3 As String = getfilenozzle("nozzle_rond3").ToString()

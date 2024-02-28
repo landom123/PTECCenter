@@ -348,6 +348,12 @@ Public Class frmJobs
     Private Function validatedata() As Boolean
         Dim result As Boolean = True
         Dim msg As String = ""
+
+        If cboBranch.SelectedItem.Value = "" Or cboBranch.SelectedItem.Value = 0 Then
+            result = False
+            msg = "กรุณาเลือกสาขา"
+            GoTo endprocess
+        End If
         If cboOwner.SelectedIndex < 0 Then
             result = False
             msg = "กรุณาเลือกผู้แจ้ง"
@@ -430,7 +436,7 @@ endprocess:
         Dim result As Boolean = True
         Dim msg As String = ""
 
-        If cboBranch.SelectedItem.Value = "" Then
+        If cboBranch.SelectedItem.Value = "" Or cboBranch.SelectedItem.Value = 0 Then
             result = False
             msg = "กรุณาเลือกสาขา"
             GoTo endprocess
@@ -761,10 +767,18 @@ endprocess:
                     Dim attatchName As New jobs
                     Dim fileName As String
                     fileName = attatchName.GetAttatchName()
-                    Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
+                    Dim rootPath As String = "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
+                    Dim savePath As String '= "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
                     'Dim fileName As String = FileUpload1.FileName
+                    savePath = rootPath
                     savePath += fileName
                     savePath += Extension
+                    Do While System.IO.File.Exists(savePath)
+                        fileName = attatchName.GetAttatchName()
+                        savePath = rootPath
+                        savePath += fileName
+                        savePath += Extension
+                    Loop
                     FileUpload1.SaveAs(savePath)
                     fileName += Extension
                     lblattatch.Text = fileName

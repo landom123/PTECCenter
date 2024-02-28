@@ -38,8 +38,8 @@ Public Class ClearAdvanceMenuList2
         End If
 
 
-        txtStartDate.Attributes.Add("readonly", "readonly")
-        txtEndDate.Attributes.Add("readonly", "readonly")
+        'txtStartDate.Attributes.Add("readonly", "readonly")
+        'txtEndDate.Attributes.Add("readonly", "readonly")
 
         operator_code = objNonpo.NonPOPermisstionOperator("CLADV")
         If Not IsPostBack() Then
@@ -105,7 +105,8 @@ Public Class ClearAdvanceMenuList2
                           (cboBranch.SelectedItem.Value),
                             cboCreateby.SelectedItem.Value.ToString,
                             cboOwner.SelectedItem.Value.ToString,
-                          gvRemind.PageIndex)
+                          gvRemind.PageIndex,
+                            cboMaxRows.SelectedValue)
         Session("criteria_clearadvlist") = criteria
     End Sub
     Private Function createCriteria() As DataTable
@@ -126,6 +127,7 @@ Public Class ClearAdvanceMenuList2
         dt.Columns.Add("cboCreateby", GetType(String))
         dt.Columns.Add("cboOwner", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
+        dt.Columns.Add("maxrows", GetType(Integer))
 
         Return dt
     End Function
@@ -153,6 +155,7 @@ Public Class ClearAdvanceMenuList2
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
+            cboMaxRows.SelectedValue = criteria.Rows(0).Item("maxrows")
 
             cboStatusFollow.SelectedValue = criteria.Rows(0).Item("cboStatusFollow")
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
@@ -195,7 +198,8 @@ Public Class ClearAdvanceMenuList2
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         cboOwner.SelectedItem.Value.ToString,
-                                                        "CO")
+                                                        "CO",
+                                                        cboMaxRows.SelectedValue)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
                                                                 txtcoderef.Text.Trim(),
@@ -209,7 +213,8 @@ Public Class ClearAdvanceMenuList2
                                                       "",
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         cboOwner.SelectedItem.Value.ToString,
-                                                    "HO")
+                                                    "HO",
+                                                        cboMaxRows.SelectedValue)
             Else
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
                                                                 txtcoderef.Text.Trim(),
@@ -223,7 +228,8 @@ Public Class ClearAdvanceMenuList2
                                                       "",
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         cboOwner.SelectedItem.Value.ToString,
-                                                        "")
+                                                        "",
+                                                        cboMaxRows.SelectedValue)
             End If
 
 
@@ -253,7 +259,8 @@ Public Class ClearAdvanceMenuList2
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         cboCompany.SelectedItem.Value.ToString,
                                                         Session("userid"),
-                                                        "CO")
+                                                        "CO",
+                                                        cboMaxRows.SelectedValue)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.ClearAdvanceList_For_Owner(txtclearadv.Text.Trim(),
                                                                 txtcoderef.Text.Trim(),
@@ -264,7 +271,8 @@ Public Class ClearAdvanceMenuList2
                                                       "",
                                                         cboCompany.SelectedItem.Value.ToString,
                                                         Session("userid"),
-                                                    "HO")
+                                                    "HO",
+                                                        cboMaxRows.SelectedValue)
             Else
                 itemtable = objNonPO.ClearAdvanceList_For_Owner(txtclearadv.Text.Trim(),
                                                                 txtcoderef.Text.Trim(),
@@ -275,7 +283,8 @@ Public Class ClearAdvanceMenuList2
                                                       "",
                                                         cboCompany.SelectedItem.Value.ToString,
                                                         Session("userid"),
-                                                        "")
+                                                        "",
+                                                        cboMaxRows.SelectedValue)
             End If
 
 
@@ -294,6 +303,7 @@ Public Class ClearAdvanceMenuList2
         setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         'End If
         cntdt = itemtable.Rows.Count
+        gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
     End Sub
@@ -332,7 +342,7 @@ Public Class ClearAdvanceMenuList2
         If criteria IsNot Nothing Then
             criteria.Rows.Clear()
         End If
-        Session("joblist") = itemtable
+        Session("advlist") = itemtable
         Session("criteria_clearadvlist") = criteria
 
 
@@ -480,4 +490,33 @@ Public Class ClearAdvanceMenuList2
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+
+    Private Sub gvRemind_Sorting(sender As Object, e As GridViewSortEventArgs) Handles gvRemind.Sorting
+
+        Dim dt As DataTable = TryCast(itemtable, DataTable)
+
+        If dt IsNot Nothing Then
+            dt.DefaultView.Sort = e.SortExpression & " " & GetSortDirection(e.SortExpression)
+            BindData()
+        End If
+    End Sub
+    Private Function GetSortDirection(ByVal column As String) As String
+        Dim sortDirection As String = "ASC"
+        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+
+        If sortExpression IsNot Nothing Then
+
+            If sortExpression = column Then
+                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+
+                If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
+                    sortDirection = "DESC"
+                End If
+            End If
+        End If
+
+        ViewState("SortDirection") = sortDirection
+        ViewState("SortExpression") = column
+        Return sortDirection
+    End Function
 End Class

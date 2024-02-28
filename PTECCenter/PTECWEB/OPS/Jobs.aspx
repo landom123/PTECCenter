@@ -376,7 +376,7 @@
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text">รายละเอียดงาน</span>
                                             <%--                                       <span class="input-group-text" style="width:550px"><% =detailtable.Rows(i).Item("details") %></span>--%>
-                                            <label for="detail"><% =detailtable.Rows(i).Item("details") %></label>
+                                            <label for="detail" style="white-space: pre-wrap;"><% =detailtable.Rows(i).Item("details") %></label>
                                         </div>
                                     </div>
                                 </div>

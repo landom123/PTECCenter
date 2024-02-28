@@ -3,7 +3,7 @@
 <!-- Sidebar -->
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="flex-basis: auto;">
-    <ul class="sidebar navbar-nav">
+    <ul class="sidebar navbar-nav h-100">
       <li class="nav-item active">
         <a class="nav-link" href="<%=Page.ResolveUrl("~/default.aspx")%>">
           <i class="fas fa-fw fa-tachometer-alt"></i>

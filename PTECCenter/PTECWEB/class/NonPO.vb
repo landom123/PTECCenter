@@ -690,7 +690,7 @@ Public Class NonPO
     End Function
 
     Public Function AdvanceRQList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
-                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, ownerid As String) As DataTable
+                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, ownerid As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -717,7 +717,7 @@ Public Class NonPO
         cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
         cmd.Parameters.Add("@createbyid", SqlDbType.VarChar).Value = createbyid
         cmd.Parameters.Add("@ownerbyid", SqlDbType.VarChar).Value = ownerid
-
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -759,7 +759,7 @@ Public Class NonPO
         Return result
     End Function
 
-    Public Function AdvanceRQList_For_Owner(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String, comid As String, branchgroupid As String, branchid As String, userid As Integer, category As String) As DataTable
+    Public Function AdvanceRQList_For_Owner(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String, comid As String, branchgroupid As String, branchid As String, userid As Integer, category As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -784,6 +784,7 @@ Public Class NonPO
         cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -794,7 +795,7 @@ Public Class NonPO
     End Function
 
     Public Function ClearAdvanceList_For_Operator(nonpocode As String, coderef As String, startdate As String, enddate As String, statusid As String,
-                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, ownerid As String, category As String) As DataTable
+                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, ownerid As String, category As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -821,7 +822,7 @@ Public Class NonPO
         cmd.Parameters.Add("@createbyid", SqlDbType.VarChar).Value = createbyid
         cmd.Parameters.Add("@ownerbyid", SqlDbType.VarChar).Value = ownerid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
-
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
 
@@ -858,7 +859,7 @@ Public Class NonPO
     'End Function
 
     Public Function ClearAdvanceList_For_Owner(nonpocode As String, coderef As String, startdate As String, enddate As String, statusid As String,
-                                           branchgroupid As String, branchid As String, comid As String, userid As Integer, category As String) As DataTable
+                                           branchgroupid As String, branchid As String, comid As String, userid As Integer, category As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -882,6 +883,8 @@ Public Class NonPO
         cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
+
 
 
 
@@ -918,7 +921,7 @@ Public Class NonPO
         Return result
     End Function
     Public Function PaymentList_For_Owner(nonpocode As String, startdate As String, enddate As String, statusid As Integer, startduedate As String, endduedate As String,
-                                           comid As String, vendor As String, payby As String, userid As Integer, category As String) As DataTable
+                                           comid As String, vendor As String, payby As String, userid As Integer, category As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -942,6 +945,7 @@ Public Class NonPO
         cmd.Parameters.Add("@payby", SqlDbType.VarChar).Value = payby
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
 
@@ -953,7 +957,7 @@ Public Class NonPO
     End Function
 
     Public Function PaymentList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
-                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, vendor As String, payby As String) As DataTable
+                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, vendor As String, payby As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -980,6 +984,7 @@ Public Class NonPO
         cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
         cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
         cmd.Parameters.Add("@payby", SqlDbType.VarChar).Value = payby
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -990,7 +995,7 @@ Public Class NonPO
     End Function
 
     Public Function PettyCashCO_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
-                                          depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String) As DataTable
+                                          depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -1016,6 +1021,7 @@ Public Class NonPO
         cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
         cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
         cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
 
@@ -1026,7 +1032,7 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
-    Public Function PettyCashCO_For_Owner(userid As Integer, working As Integer) As DataTable
+    Public Function PettyCashCO_For_Owner(userid As Integer, working As Integer, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -1042,6 +1048,7 @@ Public Class NonPO
 
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd

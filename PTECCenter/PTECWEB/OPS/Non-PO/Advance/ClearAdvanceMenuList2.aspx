@@ -5,6 +5,14 @@
 
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
+    <style>
+        th {
+            text-align: center;
+        }
+        th a {
+            color:black;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
@@ -82,7 +90,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่วันที่</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -90,7 +98,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จนถึง</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" AutoPostBack="false" autocomplete="off"></asp:TextBox>
 
                         </div>
                     </div>
@@ -158,61 +166,70 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            <asp:DropDownList ID="cboMaxRows" class="form-control" runat="server">
+                                <asp:ListItem Value="1000">1,000 รายการ</asp:ListItem>
+                                <asp:ListItem Value="2147483647">รายการทั้งหมด</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
                     <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
                         <asp:GridView ID="gvRemind"
                             class="table table-striped table-bordered"
+                            AllowSorting="true"
                             AutoGenerateColumns="false"
                             EmptyDataText="No data available."
                             PageSize="20"
                             AllowPaging="true"
                             runat="server">
                             <Columns>
-                                <asp:TemplateField HeaderText="สังกัด" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="comcode" HeaderText="สังกัด" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbcomcode" runat="server" Text='<%#Eval("comcode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="NonPO_Code" HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("NonPO_Code")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Code_ref" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="Code_ref" HeaderText="Code_ref" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("Code_ref")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ผู้เบิก" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="CreateBy" HeaderText="ผู้เบิก" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("CreateBy")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="ownername" HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="วันที่ทำรายการ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="CreateDate" HeaderText="วันที่ทำรายการ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="หัวข้อ">
+                                <asp:TemplateField SortExpression="approvalname" HeaderText="หัวข้อ">
                                     <ItemTemplate>
                                         <asp:Label ID="lbapprovallist" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="รายละเอียด">
+                                <asp:TemplateField SortExpression="detail" HeaderText="รายละเอียด">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("detail")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="owner_permission" HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="StatusNonPO" HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusNonPO")%>'></asp:Label>
                                     </ItemTemplate>
@@ -227,7 +244,7 @@
                             </Columns>
                         </asp:GridView>
                     </div>
-                    <h4>ทั้งหมด <% =cntdt%> รายการ</h4>
+                    <%--<h4>ทั้งหมด <% =cntdt%> รายการ</h4>--%>
 
                 </div>
 

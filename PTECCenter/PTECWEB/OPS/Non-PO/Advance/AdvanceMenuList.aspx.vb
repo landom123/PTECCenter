@@ -47,7 +47,7 @@ Public Class AdvanceMenuList
             objbranch.SetComboBranchGroup(cboBranchGroup)
             objbranch.SetComboBranch(cboBranch, "")
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
             objcompany.SetCboCompany(cboCompany, 0)
             SetCboUsers(cboCreateby)
             SetCboUsers(cboOwner)
@@ -93,6 +93,7 @@ Public Class AdvanceMenuList
         setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         'End If
         cntdt = itemtable.Rows.Count
+        gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
     End Sub
@@ -104,17 +105,18 @@ Public Class AdvanceMenuList
             criteria.Rows.Add(txtAdvRQ.Text.Trim(),
                                 txtStartDate.Text.Trim(),
                                 txtEndDate.Text.Trim(),
-                                cboStatusFollow.SelectedItem.Value.ToString,
+                                cboStatusFollow.SelectedValue.ToString,
                                 txtStartDueDate.Text.Trim(),
                                 txtEndDueDate.Text.Trim(),
-                                cboDepartment.SelectedItem.Value.ToString,
-                                cboSection.SelectedItem.Value.ToString,
-                                cboCompany.SelectedItem.Value.ToString,
-                                cboBranchGroup.SelectedItem.Value.ToString,
-                                cboBranch.SelectedItem.Value.ToString,
-                                cboCreateby.SelectedItem.Value.ToString,
-                                cboOwner.SelectedItem.Value.ToString,
-                                gvRemind.PageIndex)
+                                cboDepartment.SelectedValue.ToString,
+                                cboSection.SelectedValue.ToString,
+                                cboCompany.SelectedValue.ToString,
+                                cboBranchGroup.SelectedValue.ToString,
+                                cboBranch.SelectedValue.ToString,
+                                cboCreateby.SelectedValue.ToString,
+                                cboOwner.SelectedValue.ToString,
+                                gvRemind.PageIndex,
+                                cboMaxRows.SelectedValue)
 
             Session("criteria_advlist") = criteria
         End If
@@ -157,6 +159,7 @@ Public Class AdvanceMenuList
         dt.Columns.Add("cboCreateby", GetType(String))
         dt.Columns.Add("cboOwner", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
+        dt.Columns.Add("maxrows", GetType(Integer))
 
         Return dt
     End Function
@@ -166,7 +169,7 @@ Public Class AdvanceMenuList
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
-
+            cboMaxRows.SelectedValue = criteria.Rows(0).Item("maxrows")
 
             txtStartDueDate.Text = criteria.Rows(0).Item("txtStartDueDate")
             txtEndDueDate.Text = criteria.Rows(0).Item("txtEndDueDate")
@@ -175,7 +178,7 @@ Public Class AdvanceMenuList
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
             Dim objbranch As New Branch
             cboBranch.SelectedIndex = -1
-            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
             cboBranch.SelectedValue = criteria.Rows(0).Item("cboBranch")
 
             cboDepartment.SelectedValue = criteria.Rows(0).Item("cboDep")
@@ -183,7 +186,7 @@ Public Class AdvanceMenuList
             Dim depid As Integer
             Dim objsection As New Section
 
-            depid = cboDepartment.SelectedItem.Value
+            depid = cboDepartment.SelectedValue
             objsection.SetCboSection_seccode(cboSection, depid)
             cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
             cboCompany.SelectedValue = criteria.Rows(0).Item("cboCom")
@@ -203,44 +206,47 @@ Public Class AdvanceMenuList
                 itemtable = objNonPO.AdvanceRQList_For_Operator(txtAdvRQ.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
                                                       "",
                                                       "",
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                        cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString,
-                                                        cboCreateby.SelectedItem.Value.ToString,
-                                                        cboOwner.SelectedItem.Value.ToString)
+                                                        cboCompany.SelectedValue.ToString,
+                                                        cboBranchGroup.SelectedValue.ToString,
+                                                        cboBranch.SelectedValue.ToString,
+                                                        cboCreateby.SelectedValue.ToString,
+                                                        cboOwner.SelectedValue.ToString,
+                                                        cboMaxRows.SelectedValue)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.AdvanceRQList_For_Operator(txtAdvRQ.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
-                                                        cboDepartment.SelectedItem.Value.ToString,
-                                                        cboSection.SelectedItem.Value.ToString,
-                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        cboDepartment.SelectedValue.ToString,
+                                                        cboSection.SelectedValue.ToString,
+                                                        cboCompany.SelectedValue.ToString,
                                                       "",
                                                       "",
-                                                        cboCreateby.SelectedItem.Value.ToString,
-                                                        cboOwner.SelectedItem.Value.ToString)
+                                                        cboCreateby.SelectedValue.ToString,
+                                                        cboOwner.SelectedValue.ToString,
+                                                        cboMaxRows.SelectedValue)
             Else
                 itemtable = objNonPO.AdvanceRQList_For_Operator(txtAdvRQ.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
                                                         "",
                                                       "",
-                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedValue.ToString,
                                                       "",
                                                       "",
-                                                        cboCreateby.SelectedItem.Value.ToString,
-                                                        cboOwner.SelectedItem.Value.ToString)
+                                                        cboCreateby.SelectedValue.ToString,
+                                                        cboOwner.SelectedValue.ToString,
+                                                        cboMaxRows.SelectedValue)
             End If
 
 
@@ -264,38 +270,41 @@ Public Class AdvanceMenuList
                 itemtable = objNonPO.AdvanceRQList_For_Owner(txtAdvRQ.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                        cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedValue.ToString,
+                                                        cboBranchGroup.SelectedValue.ToString,
+                                                        cboBranch.SelectedValue.ToString,
                                                         Session("userid"),
-                                                         "CO")
+                                                         "CO",
+                                                        cboMaxRows.SelectedValue)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.AdvanceRQList_For_Owner(txtAdvRQ.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedValue.ToString,
                                                       "",
                                                       "",
                                                         Session("userid"),
-                                                        "HO")
+                                                        "HO",
+                                                        cboMaxRows.SelectedValue)
             Else
                 itemtable = objNonPO.AdvanceRQList_For_Owner(txtAdvRQ.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedValue.ToString,
                                                       "",
                                                       "",
                                                         Session("userid"),
-                                                        "")
+                                                        "",
+                                                        cboMaxRows.SelectedValue)
             End If
 
 
@@ -361,18 +370,18 @@ Public Class AdvanceMenuList
         Dim objbranch As New Branch
 
         cboBranch.SelectedIndex = -1
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
         'searchjobslist()
     End Sub
 
     'Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
-    '    Session("cboWorking_job") = cboWorking.SelectedItem.Value
+    '    Session("cboWorking_job") = cboWorking.SelectedValue
 
     '    Dim objNonpo As New NonPO
 
     '    Try
-    '        'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-    '        itemtable = objNonpo.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
+    '        'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedValue)
+    '        itemtable = objNonpo.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedValue)
     '        Session("joblist") = itemtable
 
     '    Catch ex As Exception
@@ -414,9 +423,9 @@ Public Class AdvanceMenuList
         Dim depid As Integer
         Dim objsection As New Section
 
-        depid = cboDepartment.SelectedItem.Value
+        depid = cboDepartment.SelectedValue
         objsection.SetCboSection_seccode(cboSection, depid)
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
         'searchjobslist()
 
         BindData()
@@ -427,7 +436,7 @@ Public Class AdvanceMenuList
         Dim depid As Integer
         Dim objsection As New Section
 
-        depid = cboDepartment.SelectedItem.Value
+        depid = cboDepartment.SelectedValue
         objsection.SetCboSection_seccode(cboSection, depid)
         'searchjobslist()
 
@@ -489,4 +498,33 @@ Public Class AdvanceMenuList
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+    Private Sub gvRemind_Sorting(sender As Object, e As GridViewSortEventArgs) Handles gvRemind.Sorting
+
+        Dim dt As DataTable = TryCast(itemtable, DataTable)
+
+        If dt IsNot Nothing Then
+            dt.DefaultView.Sort = e.SortExpression & " " & GetSortDirection(e.SortExpression)
+            BindData()
+        End If
+    End Sub
+
+    Private Function GetSortDirection(ByVal column As String) As String
+        Dim sortDirection As String = "ASC"
+        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+
+        If sortExpression IsNot Nothing Then
+
+            If sortExpression = column Then
+                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+
+                If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
+                    sortDirection = "DESC"
+                End If
+            End If
+        End If
+
+        ViewState("SortDirection") = sortDirection
+        ViewState("SortExpression") = column
+        Return sortDirection
+    End Function
 End Class

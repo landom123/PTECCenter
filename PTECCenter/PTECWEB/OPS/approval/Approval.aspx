@@ -481,7 +481,7 @@
                     </div>
                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And nozzletable IsNot Nothing Then%>
                     <% If nozzletable.Rows.Count > 0 Then%>
-                    <% If detailtable.Rows(0).Item("approvallistid") = 23 Then%>
+                    <% If detailtable.Rows(0).Item("approvallistid") = 23 And detailtable.Rows(0).Item("statusid") = 4 Then%>
 
                     <div class="row bg-white">
                         <div class="col-md-12 col-12 mb-3 ">

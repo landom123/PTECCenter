@@ -157,15 +157,23 @@ Public Class approvalattach
                 If Not String.IsNullOrEmpty(Files(i).FileName) Then
                     fullfilename = String.Empty
                     Dim Extension As String = System.IO.Path.GetExtension(Files(i).FileName)
-                    Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                    Dim rootPath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                    Dim savePath As String '= "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
                     Dim di As String = System.IO.Path.GetDirectoryName(Files(i).FileName)
                     'Dim oldpath As String = di + FileUpload1.FileName
 
                     Try
                         Dim fileName As String
                         fileName = approval.GetImageName()
+                        savePath = rootPath
                         savePath += fileName
                         savePath += Extension
+                        Do While System.IO.File.Exists(savePath)
+                            fileName = approval.GetImageName()
+                            savePath = rootPath
+                            savePath += fileName
+                            savePath += Extension
+                        Loop
                         Files(i).SaveAs(savePath)
                         fullfilename += fileName
                         fullfilename += Extension

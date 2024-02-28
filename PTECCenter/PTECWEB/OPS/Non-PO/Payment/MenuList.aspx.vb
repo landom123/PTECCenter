@@ -38,10 +38,10 @@ Public Class MenuList
         End If
 
 
-        txtStartDate.Attributes.Add("readonly", "readonly")
-        txtEndDate.Attributes.Add("readonly", "readonly")
-        txtStartDueDate.Attributes.Add("readonly", "readonly")
-        txtEndDueDate.Attributes.Add("readonly", "readonly")
+        'txtStartDate.Attributes.Add("readonly", "readonly")
+        'txtEndDate.Attributes.Add("readonly", "readonly")
+        'txtStartDueDate.Attributes.Add("readonly", "readonly")
+        'txtEndDueDate.Attributes.Add("readonly", "readonly")
 
 
         operator_code = objNonpo.NonPOPermisstionOperator("PAY")
@@ -54,7 +54,7 @@ Public Class MenuList
             objbranch.SetComboBranch(cboBranch, "")
             objsupplier.SetCboVendorByName(cboVendor, "")
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
             objcompany.SetCboCompany(cboCompany, 0)
             If Session("positionid") = "10" Then
                 chkCO.Checked = True
@@ -116,6 +116,7 @@ Public Class MenuList
         dt.Columns.Add("cboBranchGroup", GetType(String))
         dt.Columns.Add("cboBranch", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
+        dt.Columns.Add("maxrows", GetType(Integer))
 
         Return dt
     End Function
@@ -128,18 +129,19 @@ Public Class MenuList
                               txtclearadv.Text.ToString.Trim(),
                               txtStartDate.Text.ToString.Trim(),
                               txtEndDate.Text.ToString.Trim(),
-                              (cboStatusFollow.SelectedItem.Value),
+                              (cboStatusFollow.SelectedValue),
                               txtStartDueDate.Text.ToString.Trim(),
                               txtEndDueDate.Text.ToString.Trim(),
-                              (cboVendor.SelectedItem.Value),
-                              (cboPayby.SelectedItem.Value),
-                              (cboDepartment.SelectedItem.Value),
-                              (cboSection.SelectedItem.Value),
-                              (cboCompany.SelectedItem.Value),
-                              (cboBranchGroup.SelectedItem.Value),
-                              (cboBranch.SelectedItem.Value),
-                              gvRemind.PageIndex)
-            Session("criteria_joblist") = criteria
+                              (cboVendor.SelectedValue),
+                              (cboPayby.SelectedValue),
+                              (cboDepartment.SelectedValue),
+                              (cboSection.SelectedValue),
+                              (cboCompany.SelectedValue),
+                              (cboBranchGroup.SelectedValue),
+                              (cboBranch.SelectedValue),
+                              gvRemind.PageIndex,
+                                cboMaxRows.SelectedValue)
+        Session("criteria_joblist") = criteria
     End Sub
 
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
@@ -154,6 +156,7 @@ Public Class MenuList
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
+            cboMaxRows.SelectedValue = criteria.Rows(0).Item("maxrows")
 
             txtStartDueDate.Text = criteria.Rows(0).Item("txtStartDueDate")
             txtEndDueDate.Text = criteria.Rows(0).Item("txtEndDueDate")
@@ -166,7 +169,7 @@ Public Class MenuList
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
             Dim objbranch As New Branch
             cboBranch.SelectedIndex = -1
-            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
             cboBranch.SelectedValue = criteria.Rows(0).Item("cboBranch")
 
             cboDepartment.SelectedValue = criteria.Rows(0).Item("cboDep")
@@ -174,7 +177,7 @@ Public Class MenuList
             Dim depid As Integer
             Dim objsection As New Section
 
-            depid = cboDepartment.SelectedItem.Value
+            depid = cboDepartment.SelectedValue
             objsection.SetCboSection_seccode(cboSection, depid)
             cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
             cboCompany.SelectedValue = criteria.Rows(0).Item("cboCom")
@@ -193,44 +196,47 @@ Public Class MenuList
                 itemtable = objNonPO.PaymentList_For_Operator(txtclearadv.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
                                                       "",
                                                       "",
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                        cboBranchGroup.SelectedItem.Value.ToString,
-                                                        cboBranch.SelectedItem.Value.ToString,
-                                                        cboVendor.SelectedItem.Value,
-                                                        cboPayby.SelectedItem.Value.ToString.ToLower)
+                                                        cboCompany.SelectedValue.ToString,
+                                                        cboBranchGroup.SelectedValue.ToString,
+                                                        cboBranch.SelectedValue.ToString,
+                                                        cboVendor.SelectedValue,
+                                                        cboPayby.SelectedValue.ToString.ToLower,
+                                                        cboMaxRows.SelectedValue)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.PaymentList_For_Operator(txtclearadv.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
-                                                        cboDepartment.SelectedItem.Value.ToString,
-                                                        cboSection.SelectedItem.Value.ToString,
-                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        cboDepartment.SelectedValue.ToString,
+                                                        cboSection.SelectedValue.ToString,
+                                                        cboCompany.SelectedValue.ToString,
                                                       "",
                                                       "",
-                                                        cboVendor.SelectedItem.Value,
-                                                        cboPayby.SelectedItem.Value.ToString.ToLower)
+                                                        cboVendor.SelectedValue,
+                                                        cboPayby.SelectedValue.ToString.ToLower,
+                                                        cboMaxRows.SelectedValue)
             Else
                 itemtable = objNonPO.PaymentList_For_Operator(txtclearadv.Text.Trim(),
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                      cboStatusFollow.SelectedItem.Value.ToString,
+                                                      cboStatusFollow.SelectedValue.ToString,
                                                         txtStartDueDate.Text.Trim(),
                                                         txtEndDueDate.Text.Trim(),
                                                         "",
                                                       "",
-                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedValue.ToString,
                                                       "",
                                                       "",
-                                                        cboVendor.SelectedItem.Value,
-                                                        cboPayby.SelectedItem.Value.ToString.ToLower)
+                                                        cboVendor.SelectedValue,
+                                                        cboPayby.SelectedValue.ToString.ToLower,
+                                                        cboMaxRows.SelectedValue)
             End If
 
 
@@ -255,38 +261,41 @@ Public Class MenuList
                 itemtable = objNonPO.PaymentList_For_Owner(txtclearadv.Text.Trim(),
                                                     txtStartDate.Text.Trim(),
                                                     txtEndDate.Text.Trim(),
-                                                  cboStatusFollow.SelectedItem.Value.ToString,
+                                                  cboStatusFollow.SelectedValue.ToString,
                                                     txtStartDueDate.Text.Trim(),
                                                     txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                    cboVendor.SelectedItem.Value,
-                                                    cboPayby.SelectedItem.Value.ToString.ToLower,
+                                                    cboCompany.SelectedValue.ToString,
+                                                    cboVendor.SelectedValue,
+                                                    cboPayby.SelectedValue.ToString.ToLower,
                                                     userid,
-                                                    "CO")
+                                                    "CO",
+                                                    cboMaxRows.SelectedValue)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.PaymentList_For_Owner(txtclearadv.Text.Trim(),
                                                     txtStartDate.Text.Trim(),
                                                     txtEndDate.Text.Trim(),
-                                                  cboStatusFollow.SelectedItem.Value.ToString,
+                                                  cboStatusFollow.SelectedValue.ToString,
                                                     txtStartDueDate.Text.Trim(),
                                                     txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                    cboVendor.SelectedItem.Value,
-                                                    cboPayby.SelectedItem.Value.ToString.ToLower,
+                                                    cboCompany.SelectedValue.ToString,
+                                                    cboVendor.SelectedValue,
+                                                    cboPayby.SelectedValue.ToString.ToLower,
                                                     userid,
-                                                    "HO")
+                                                    "HO",
+                                                    cboMaxRows.SelectedValue)
             Else
                 itemtable = objNonPO.PaymentList_For_Owner(txtclearadv.Text.Trim(),
                                                     txtStartDate.Text.Trim(),
                                                     txtEndDate.Text.Trim(),
-                                                  cboStatusFollow.SelectedItem.Value.ToString,
+                                                  cboStatusFollow.SelectedValue.ToString,
                                                     txtStartDueDate.Text.Trim(),
                                                     txtEndDueDate.Text.Trim(),
-                                                        cboCompany.SelectedItem.Value.ToString,
-                                                    cboVendor.SelectedItem.Value,
-                                                    cboPayby.SelectedItem.Value.ToString.ToLower,
+                                                    cboCompany.SelectedValue.ToString,
+                                                    cboVendor.SelectedValue,
+                                                    cboPayby.SelectedValue.ToString.ToLower,
                                                     userid,
-                                                    "")
+                                                    "",
+                                                    cboMaxRows.SelectedValue)
             End If
 
             Session("joblist") = itemtable
@@ -328,9 +337,9 @@ Public Class MenuList
         Dim depid As Integer
         Dim objsection As New Section
 
-        depid = cboDepartment.SelectedItem.Value
+        depid = cboDepartment.SelectedValue
         objsection.SetCboSection_seccode(cboSection, depid)
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
 
 
         BindData()
@@ -340,6 +349,7 @@ Public Class MenuList
         setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         'End If
         cntdt = itemtable.Rows.Count
+        gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
     End Sub
@@ -430,8 +440,8 @@ endprocess:
     '    Dim objNonpo As New NonPO
 
     '    Try
-    '        'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedItem.Value)
-    '        itemtable = objNonpo.PaymentList_For_Owner(Session("userid"), cboWorking.SelectedItem.Value)
+    '        'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedValue)
+    '        itemtable = objNonpo.PaymentList_For_Owner(Session("userid"), cboWorking.SelectedValue)
     '        Session("joblist") = itemtable
 
     '    Catch ex As Exception
@@ -445,7 +455,7 @@ endprocess:
         Dim objbranch As New Branch
 
         cboBranch.SelectedIndex = -1
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
         'searchjobslist()
     End Sub
     Private Sub cboDepartment_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDepartment.SelectedIndexChanged
@@ -453,7 +463,7 @@ endprocess:
         Dim depid As Integer
         Dim objsection As New Section
 
-        depid = cboDepartment.SelectedItem.Value
+        depid = cboDepartment.SelectedValue
         objsection.SetCboSection_seccode(cboSection, depid)
         'searchjobslist()
 
@@ -507,6 +517,34 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+    Private Sub gvRemind_Sorting(sender As Object, e As GridViewSortEventArgs) Handles gvRemind.Sorting
 
+        Dim dt As DataTable = TryCast(itemtable, DataTable)
+
+        If dt IsNot Nothing Then
+            dt.DefaultView.Sort = e.SortExpression & " " & GetSortDirection(e.SortExpression)
+            BindData()
+        End If
+    End Sub
+
+    Private Function GetSortDirection(ByVal column As String) As String
+        Dim sortDirection As String = "ASC"
+        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+
+        If sortExpression IsNot Nothing Then
+
+            If sortExpression = column Then
+                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+
+                If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
+                    sortDirection = "DESC"
+                End If
+            End If
+        End If
+
+        ViewState("SortDirection") = sortDirection
+        ViewState("SortExpression") = column
+        Return sortDirection
+    End Function
 
 End Class

@@ -9,7 +9,9 @@
         th {
             text-align: center;
         }
-
+        th a {
+            color:black;
+        }
         .input-group {
             padding-top: 1rem;
         }
@@ -35,14 +37,14 @@
 
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: deeppink; color: white">
-                    <li class="breadcrumb-item">รายการ Jobs
+                    <li class="breadcrumb-item">รายการ Jobs <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
                     </li>
                 </ol>
 
                 <div class="row">
                     <div class="col-12">
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
-                        <% If Not Session("positionid") = "10" Then%>
+                        <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="Search" />&nbsp; 
                         <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
                          <% End If %>
@@ -51,7 +53,7 @@
                     </div>
                 </div>
 
-                <% If Not Session("positionid") = "10" Then%>
+                <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
 
                 <div class="row">
                     <div class="col-md-4">
@@ -119,7 +121,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ตั้งแต่วันที่</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtStartDate" name="txtStartDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -127,7 +129,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">จนถึง</span>
                             </div>
-                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---"></asp:TextBox>
+                            <asp:TextBox class="form-control" ID="txtEndDate" name="txtEndDate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
 
                         </div>
                     </div>
@@ -141,7 +143,7 @@
                     </div>
                 </div>
                 <% else %>
-                <div class="row">
+                <div class="row ">
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -153,46 +155,55 @@
                 </div>
                 <% End If %>
                 <div class="card-body">
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            <asp:DropDownList ID="cboMaxRows" class="form-control" runat="server">
+                                <asp:ListItem Value="1000">1,000 รายการ</asp:ListItem>
+                                <asp:ListItem Value="2147483647">รายการทั้งหมด</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
                     <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
                         <asp:GridView ID="gvRemind"
                             class="table table-striped table-bordered"
+                            AllowSorting="true"
                             AutoGenerateColumns="false"
                             EmptyDataText="No data available."
                             PageSize="20"
                             AllowPaging="true"
                             runat="server">
                             <Columns>
-                                <asp:TemplateField HeaderText="Job">
+                                <asp:TemplateField SortExpression="jobcode" HeaderText="Job">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("jobcode")%>'></asp:Label>
+                                        <asp:Label ID="lbjobcode" runat="server" Text='<%#Eval("jobcode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Branch">
+                                <asp:TemplateField SortExpression="branch" HeaderText="Branch">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("branch")%>'></asp:Label>
+                                        <asp:Label ID="lbBranch" runat="server" Text='<%#Eval("branch")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JobOwner">
+                                <asp:TemplateField SortExpression="jobowner" HeaderText="JobOwner">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("jobowner")%>'></asp:Label>
+                                        <asp:Label ID="lbjobowner" runat="server" Text='<%#Eval("jobowner")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Date">
+                                <asp:TemplateField SortExpression="jobdate" HeaderText="Date">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("jobdate")%>'></asp:Label>
+                                        <asp:Label ID="lbjobdate" runat="server" Text='<%#Eval("jobdate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Type">
+                                <asp:TemplateField SortExpression="jobtype" HeaderText="Type">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("jobtype")%>'></asp:Label>
+                                        <asp:Label ID="lbjobtype" runat="server" Text='<%#Eval("jobtype")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Detail">
+                                <asp:TemplateField SortExpression="details" HeaderText="Detail">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldetails" runat="server" Text='<%#Eval("details")%>'></asp:Label>
+                                        <asp:Label ID="lbdetails" runat="server" Text='<%#Eval("details")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Supplier" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="suppliername" HeaderText="Supplier" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <div class="d-flex flex-column align-items-center" readonly="true">
                                             <a href="../OPS/jobs_followup.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" class="badge badgestatus_app" title="ติดตามสถานะงาน" target="_blank"><%#Eval("supplierstatus")%></a>
@@ -200,20 +211,20 @@
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Last Update">
+                                <asp:TemplateField SortExpression="lastupdate" HeaderText="Last Update">
                                     <ItemTemplate>
                                         <asp:Label ID="lblastupdate" runat="server" Text='<%#Eval("lastupdate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Update Detail">
+                                <asp:TemplateField SortExpression="detailFollow" HeaderText="Update Detail">
                                     <ItemTemplate>
                                         <asp:Label ID="lbdetailFollow" runat="server" Text='<%#Eval("detailFollow")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Cost">
+                                <asp:TemplateField SortExpression="cost" HeaderText="Cost">
                                     <ItemTemplate>
                                         <div class="d-flex flex-column align-items-center" readonly="true">
-                                            <a href="../OPS/jobs_Close.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" title="ดูค่าใช้จ่าย"  target="_blank">
+                                            <a href="../OPS/jobs_Close.aspx?jobno=<%#Eval("jobcode")%>&jobdetailid=<%#Eval("JobDetailID")%>" title="ดูค่าใช้จ่าย" target="_blank">
                                                 <span runat="server" visible='<%#Eval("lockcost")%>'>
                                                     <i class="<%# If(Eval("lockstatus").ToString = "locked", "fas fa-lock text-muted", "fas fa-check-circle text-info") %>" visible='<%#Eval("lockcost")%>'></i>
                                                 </span>
@@ -222,9 +233,9 @@
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Status">
+                                <asp:TemplateField SortExpression="status" HeaderText="Status">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("status")%>'></asp:Label>
+                                        <asp:Label ID="lbstatus" runat="server" Text='<%#Eval("status")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="">
@@ -235,7 +246,7 @@
                             </Columns>
                         </asp:GridView>
                     </div>
-                    <h4>ทั้งหมด <% =cntdt%> รายการ</h4>
+                    <%--<h4>ทั้งหมด <% =cntdt%> รายการ</h4>--%>
                 </div>
 
 

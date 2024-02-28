@@ -305,4 +305,81 @@ Public Class Assets
         Next
 
     End Sub
+
+    Public Function AssesNozzle_list(branchid As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "AssesNozzle_list"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        'cmd.Parameters.Add("@monthly", SqlDbType.VarChar).Value = monthly
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Function UpdateDetail(nozzleid As Integer, brand As String, producttype As String, nozzle_no As String,
+                                          positiononassest As String, expirydate As String, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "AssesNozzle_Update"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@nozzleid", SqlDbType.Int).Value = nozzleid
+        cmd.Parameters.Add("@nozzle_no", SqlDbType.VarChar).Value = nozzle_no
+        cmd.Parameters.Add("@brand", SqlDbType.VarChar).Value = brand
+        cmd.Parameters.Add("@producttype", SqlDbType.VarChar).Value = producttype
+        cmd.Parameters.Add("@positiononassest", SqlDbType.VarChar).Value = positiononassest
+        cmd.Parameters.Add("@expirydate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(expirydate), DBNull.Value, DateTime.Parse(expirydate))
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function Nozzle_Export(branchid As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_Nozzle_Export"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branchid", SqlDbType.Int).Value = branchid
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
 End Class

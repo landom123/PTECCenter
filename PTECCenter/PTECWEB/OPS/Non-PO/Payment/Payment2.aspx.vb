@@ -96,7 +96,7 @@ Public Class Payment2
 
             objbranch.SetComboBranch(cboBranch, usercode)
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
             objcompany.SetCboCompany(cboCompany, 1)
             SetCboUsers(cboOwner)
             setmaindefault()
@@ -373,7 +373,7 @@ endprocess:
         cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(Session("userid").ToString))
         cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid").ToString))
         cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
-        objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+        objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
         cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(Session("secid").ToString))
         cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(1)) 'Pure
 
@@ -447,7 +447,7 @@ endprocess:
             lbcboBranch_show.Text = cboBranch.SelectedItem.Text
             cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(.Rows(0).Item("depid").ToString))
             lbcboDepartment_show.Text = cboDepartment.SelectedItem.Text
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
             cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(.Rows(0).Item("secid").ToString))
             lbcboSection_show.Text = cboSection.SelectedItem.Text
             cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(.Rows(0).Item("comid").ToString))
@@ -1222,7 +1222,7 @@ endprocess:
         'Catch ex As Exception
         '    amountdedusctsell = 0
         'End Try
-        If cboVendor.SelectedItem.Value = "" Then
+        If cboVendor.SelectedValue = "" Then
             result = False
             msg = "กรุณาใส่ Vendor"
             GoTo endprocess
@@ -1275,7 +1275,7 @@ endprocess:
         Dim depid As Integer
         Dim objsection As New Section
 
-        depid = cboDepartment.SelectedItem.Value
+        depid = cboDepartment.SelectedValue
         objsection.SetCboSection_seccode(cboSection, depid)
     End Sub
 
@@ -1323,24 +1323,24 @@ endprocess:
     '    row = detailtable.NewRow()
     '    row("row") = detailtable.Rows.Count + 1
     '    row("nonpodtl_id") = hiddenAdvancedetailid.Value 'df 0
-    '    row("accountcodeid") = cboAccountCode.SelectedItem.Value
+    '    row("accountcodeid") = cboAccountCode.SelectedValue
     '    row("accountcode") = cboAccountCode.SelectedItem.Text
-    '    row("depid") = cboDep.SelectedItem.Value
+    '    row("depid") = cboDep.SelectedValue
     '    row("depname") = cboDep.SelectedItem.Text
-    '    row("buid") = cboBU.SelectedItem.Value
+    '    row("buid") = cboBU.SelectedValue
     '    row("buname") = cboBU.SelectedItem.Text
-    '    row("ppid") = cboPP.SelectedItem.Value
+    '    row("ppid") = cboPP.SelectedValue
     '    row("ppname") = cboPP.SelectedItem.Text
 
     '    row("cost") = cost
     '    row("detail") = txtDetail.Text
     '    row("vendorname") = cboVendor.SelectedItem.Text
-    '    row("vendorcode") = cboVendor.SelectedItem.Value
+    '    row("vendorcode") = cboVendor.SelectedValue
 
 
     '    detailtable.Rows.Add(row)
-    '    'detailtable.Rows.Add(0, cboJobType.SelectedItem.Value, cboJobType.SelectedItem.Text, txtAssetCode.Text, txtAssetName.Text,
-    '    '                    qty, cboUnit.SelectedItem.Value, cboUnit.SelectedItem.Text, cost, cboSupplier.SelectedItem.Value,
+    '    'detailtable.Rows.Add(0, cboJobType.SelectedValue, cboJobType.SelectedItem.Text, txtAssetCode.Text, txtAssetName.Text,
+    '    '                    qty, cboUnit.SelectedValue, cboUnit.SelectedItem.Text, cost, cboSupplier.SelectedValue,
     '    '                    cboSupplier.SelectedItem.Text, urgent, cboPolicy.SelectedValue, reqdate, txtJobDetail.Text, 0)
 
     '    Session("detailtable_payment") = detailtable
@@ -1358,19 +1358,19 @@ endprocess:
     '    With detailtable.Rows(indexrow)
     '        .Item("row") = row.Value 'df 0
     '        .Item("nonpodtl_id") = hiddenAdvancedetailid.Value 'df 0
-    '        .Item("accountcodeid") = cboAccountCode.SelectedItem.Value
+    '        .Item("accountcodeid") = cboAccountCode.SelectedValue
     '        .Item("accountcode") = cboAccountCode.SelectedItem.Text
-    '        .Item("depid") = cboDep.SelectedItem.Value
+    '        .Item("depid") = cboDep.SelectedValue
     '        .Item("depname") = cboDep.SelectedItem.Text
-    '        .Item("buid") = cboBU.SelectedItem.Value
+    '        .Item("buid") = cboBU.SelectedValue
     '        .Item("buname") = cboBU.SelectedItem.Text
-    '        .Item("ppid") = cboPP.SelectedItem.Value
+    '        .Item("ppid") = cboPP.SelectedValue
     '        .Item("ppname") = cboPP.SelectedItem.Text
 
     '        .Item("cost") = cost
     '        .Item("detail") = txtDetail.Text
     '        .Item("vendorname") = cboVendor.SelectedItem.Text
-    '        .Item("vendorcode") = cboVendor.SelectedItem.Value
+    '        .Item("vendorcode") = cboVendor.SelectedValue
     '    End With
 
     'End Sub
@@ -1503,7 +1503,7 @@ endprocess:
     End Sub
 
     Private Sub changecompany()
-        Dim companyid As Integer = cboCompany.SelectedItem.Value
+        Dim companyid As Integer = cboCompany.SelectedValue
         If companyid = 2 Then
             logo.Src = "..\..\..\icon\logoSAP.svg" 'แสดง card SAP
             company_th.InnerText = "บริษัท เอสซีที สหภัณฑ์ จำกัด"
@@ -1801,10 +1801,10 @@ endprocess:
             payby = "pcx"
         End If
 
-        If cboOwner.SelectedItem.Value = 0 Then
+        If cboOwner.SelectedValue = 0 Then
             userowner = userid
         Else
-            userowner = cboOwner.SelectedItem.Value
+            userowner = cboOwner.SelectedValue
         End If
         Dim purecard_amount As Double
         If maintable.Rows.Count > 0 Then
@@ -1816,8 +1816,8 @@ endprocess:
             'update
             With maintable.Rows(0)
                 .Item("payby") = payby
-                .Item("vendorcode") = cboVendor.SelectedItem.Value
-                .Item("comid") = cboCompany.SelectedItem.Value
+                .Item("vendorcode") = cboVendor.SelectedValue
+                .Item("comid") = cboCompany.SelectedValue
                 .Item("DueDate") = txtDuedate.Text.Trim()
                 .Item("detail") = txtNote.Text.Trim()
                 .Item("vat_wait") = If(chkVat.Checked, 1, 0)
@@ -1837,10 +1837,10 @@ endprocess:
             'insert
             With maintable
                 .Rows.Add(0, "", payby, codeRef.Text.Trim(), 0, 0, "", txtNote.Text.Trim(),
-                              cboBranch.SelectedItem.Value, cboDepartment.SelectedItem.Value, cboSection.SelectedItem.Value, cboCompany.SelectedItem.Value,
+                              cboBranch.SelectedValue, cboDepartment.SelectedValue, cboSection.SelectedValue, cboCompany.SelectedValue,
                               0, 0,
                               0, 0,
-                              cboVendor.SelectedItem.Value, "",
+                              cboVendor.SelectedValue, "",
                               txtDuedate.Text.Trim(), chkVat.Checked,
                               userowner, Date.Now.ToString, "", "", "", "", "", "",
                               userowner, Date.Now.ToString, userowner, Date.Now.ToString, userowner, userowner, purecard_amount.ToString)
