@@ -66,6 +66,7 @@
                                                             <th>วันที่สิ้นสุด</th>
                                                             <th>รูปล่าสุด</th>
                                                             <th>ข้อมูลล่าสุดวันที่</th>
+                                                            <th>โดย</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -107,6 +108,9 @@
                                                             </td>
                                                             <td>
                                                                 <span><%= nozzletable.Rows(j).Item("updatedate").ToString %></span>
+                                                            </td>
+                                                            <td>
+                                                                <span><%= nozzletable.Rows(j).Item("updatebycode").ToString %></span>
                                                             </td>
                                                             <td>
                                                                 <% If Not Session("positionid") = "10" Then%>
