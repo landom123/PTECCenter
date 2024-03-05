@@ -81,7 +81,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col">
+                                                <div class="col-auto">
                                                     <div class="media">
                                                         <img src="<%=Page.ResolveUrl("~/icon/Logo_pure.png")%>" class="align-self-center mr-3" alt="..." width="150">
                                                         <div class="media-body">
@@ -117,13 +117,13 @@
                                                 <div class="col d-flex flex-column justify-content-between align-items-end">
                                                     <div class="row">
                                                         <div class="col ">
-                                                            <asp:Label CssClass="h5 font-weight-bold" ID="txtnewkpi" runat="server" Text="tt" />
+                                                            <asp:Label CssClass="h5 font-weight-bold" ID="txtnewkpi" runat="server" Text="" />
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
                                                             <h2>
-                                                                <a href="#" title="Ratio" runat="server" id="txtratio"></a>
+                                                                <a href="#" class="d-none" title="Ratio" runat="server" id="txtratio"></a>
                                                             </h2>
                                                         </div>
                                                     </div>
@@ -358,7 +358,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label10" CssClass="form-label" AssociatedControlID="cboRatio" runat="server" Text="KPIType" />
+                                <asp:Label ID="Label10" CssClass="form-label" AssociatedControlID="cboRatio" runat="server" Text="ประเภท" />
                                 <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboRatio" runat="server" Text="*" />
                                 <asp:DropDownList class="form-control" ID="cboRatio" runat="server"></asp:DropDownList>
                             </div>
@@ -367,7 +367,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label11" CssClass="form-label" AssociatedControlID="txtKpititle" runat="server" Text="Title" />
+                                <asp:Label ID="Label11" CssClass="form-label" AssociatedControlID="txtKpititle" runat="server" Text="หัวข้อ" />
                                 <asp:Label ID="Label12" CssClass="text-danger" AssociatedControlID="txtKpititle" runat="server" Text="*" />
                                 <textarea rows="2" cols="30" class="form-control" name="actiontitle" id="txtKpititle" runat="server"></textarea>
                             </div>
@@ -376,14 +376,14 @@
                     <div class="row">
                         <div class="col-6 mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label13" CssClass="form-label" AssociatedControlID="txtWeight" runat="server" Text="Weight" />
+                                <asp:Label ID="Label13" CssClass="form-label" AssociatedControlID="txtWeight" runat="server" Text="น้ำหนัก" />
                                 <asp:Label ID="Label14" CssClass="text-danger" AssociatedControlID="txtWeight" runat="server" Text="*" />
                                 <asp:TextBox class="form-control" type="number" ID="txtWeight" runat="server" Text="1" step="1" min="1" max="100"></asp:TextBox>
                             </div>
                         </div>
                         <div class="col-6 mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label15" CssClass="form-label" AssociatedControlID="txtUnit" runat="server" Text="Unit" />
+                                <asp:Label ID="Label15" CssClass="form-label" AssociatedControlID="txtUnit" runat="server" Text="หน่วย" />
                                 <asp:Label ID="Label16" CssClass="text-danger" AssociatedControlID="txtUnit" runat="server" Text="*" />
                                 <asp:TextBox class="form-control" type="input" ID="txtUnit" runat="server"></asp:TextBox>
                             </div>
@@ -552,19 +552,19 @@
             const status = $(".DetailArea tr[name='" + kpicode + "']").attr("data-status");
 
             if ((categoryid == 0 || categoryid === "")) {
-                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน' + `KPIType`);
+                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน' + `ประเภท`);
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
             }
             if (!txtKpititle) {
-                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน' + ` Title`);
+                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน' + ` หัวข้อ`);
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
             }
             if ((txtWeight == 0 || txtWeight === "")) {
-                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน' + ` Weight`);
+                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน' + ` น้ำหนัก`);
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
@@ -576,7 +576,7 @@
                 return 0;
             }
             if (!txtUnit) {
-                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน' + ` Unit`);
+                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน' + ` หน่วย`);
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
