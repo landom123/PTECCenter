@@ -107,7 +107,7 @@
             <div id="content-wrapper" style="min-height: 600px;">
                 <%--<embed src="http://vpnptec.dyndns.org:10280/OPS_Fileupload/ATT_230100391.pdf" width="100%" height="100%" />--%>
 
-                <div class="px-5">
+                <div class="px-sm-5  px-3">
                     <%--<div class="row">
                         <div class="col text-left align-self-center">
                             Performance Update : KPIs & Competency
