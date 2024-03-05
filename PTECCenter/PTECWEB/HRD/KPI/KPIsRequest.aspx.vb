@@ -52,6 +52,8 @@ Public Class KPIsRequest
             menutable = Session("menulist")
         End If
 
+        cboPeriod.Attributes.Add("disabled", "True")
+
         If Not IsPostBack() Then
             maintable = createmaintable()
             detailtable = createdetailtable()
@@ -83,6 +85,11 @@ Public Class KPIsRequest
                 Dim ds As DataSet
                 ds = objKpi.Kpi_Get_NewKPIsOfPeriod_by_Usercode(cboPeriod.SelectedItem.Value, usercode)
                 weighttable = ds.Tables(0)
+
+                txtOwnername.Text = Session("username")
+                txtPosition.Text = Session("positionname")
+                txtDep.Text = Session("depname")
+                txtSec.Text = Session("secname")
 
             End If
 

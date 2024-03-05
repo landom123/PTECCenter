@@ -35,88 +35,87 @@
                     <div class="row">
                         <div class="col-auto" style="margin-left: auto;">
                             <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server">
-                            <asp:Label ID="Label1" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
+                            <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
                         </div>
                         <div class="col-auto">
                             <input class="form-check-input chk-img-after" type="checkbox" id="chkHO" name="pay[1][]" runat="server">
-                            <asp:Label ID="Label2" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
+                            <asp:Label ID="lbchkHO" CssClass="form-check-label" AssociatedControlID="chkHO" runat="server" Text="HO" />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">สังกัด</span>
+                                    <span class="input-group-text">Company</span>
                                 </div>
                                 <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">งวด</span>
+                                    <span class="input-group-text">Period</span>
                                 </div>
                                 <asp:DropDownList class="form-control" ID="cboPeriod" runat="server" AutoPostBack="false"></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3 ">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">สถานะงานย่อย</span>
+                                    <span class="input-group-text">Employee KPIs</span>
                                 </div>
-                                <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
+                                <asp:DropDownList class="form-control" ID="cboCreateby" runat="server" readonly="true"></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="input-group sm-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Code</span>
-                                </div>
-                                <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv" runat="server" placeholder="OOK24XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3 HO">
+                        <div class="col-md-3 mb-3 HO">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">ฝ่าย</span>
+                                    <span class="input-group-text">Ratio Type</span>
+                                </div>
+                                <asp:DropDownList ID="cboRatio" class="form-control" runat="server"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 HO">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Position</span>
+                                </div>
+                                <asp:DropDownList ID="cboPosition" class="form-control" runat="server"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <% 'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>
+                        <div class="col-md-3 mb-3 HO">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Dep.</span>
                                 </div>
                                 <asp:DropDownList ID="cboDepartment" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3 HO">
+                        <div class="col-md-3 mb-3 HO">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">แผนก</span>
+                                    <span class="input-group-text">Sec.</span>
                                 </div>
                                 <asp:DropDownList ID="cboSection" class="form-control" runat="server"></asp:DropDownList>
                             </div>
                         </div>
-                        
 
-                        <% If Not Session("positionid") = "10" Then %>
-                        <div class="col-md-4 mb-3 CO">
+                        <%--<% End If %>--%>
+                        <div class="col-md-3 mb-3 CO">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">ประเภทสาขา</span>
+                                    <span class="input-group-text">BranchType</span>
                                 </div>
                                 <asp:DropDownList class="form-control" ID="cboBranchGroup" runat="server" AutoPostBack="true"></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3 CO">
+                        <div class="col-md-3 mb-3 CO">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">สาขา</span>
+                                    <span class="input-group-text">Branch</span>
                                 </div>
                                 <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
-                            </div>
-                        </div>
-                        <% End If %>
-                        <div class="col-md-4 mb-3">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">ผู้เบิก</span>
-                                </div>
-                                <asp:DropDownList class="form-control" ID="cboCreateby" runat="server"></asp:DropDownList>
                             </div>
                         </div>
                     </div>
