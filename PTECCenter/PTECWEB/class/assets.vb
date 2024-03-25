@@ -382,4 +382,27 @@ Public Class Assets
 
         Return result
     End Function
+    Public Function NozzleOver_Export(branchid As Integer) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_Nozzle_Over_Export"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@branchid", SqlDbType.Int).Value = branchid
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
 End Class

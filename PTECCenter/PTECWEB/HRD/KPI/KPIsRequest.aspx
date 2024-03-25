@@ -160,14 +160,14 @@
                                                                 <thead>
                                                                     <tr class="text-center">
                                                                         <th>Code</th>
-                                                                        <th>Title</th>
-                                                                        <th>Weight</th>
-                                                                        <th>Unit</th>
-                                                                        <th>lv5</th>
-                                                                        <th>lv4</th>
-                                                                        <th>lv3</th>
-                                                                        <th>lv2</th>
-                                                                        <th>lv1</th>
+                                                                        <th>หัวข้อ</th>
+                                                                        <th>น้ำหนัก</th>
+                                                                        <th>หน่วยวัด</th>
+                                                                        <th>ระดับ 5</th>
+                                                                        <th>ระดับ 4</th>
+                                                                        <th>ระดับ 3</th>
+                                                                        <th>ระดับ 2</th>
+                                                                        <th>ระดับ 1</th>
                                                                         <th></th>
                                                                     </tr>
                                                                 </thead>
@@ -208,7 +208,7 @@
                                                                 </tbody>
                                                                 <tfoot>
                                                                     <tr>
-                                                                        <td class="h6 text-right font-weight-bold" colspan="2">Total Weight</td>
+                                                                        <td class="h6 text-right font-weight-bold" colspan="2">น้ำหนักรวม</td>
                                                                         <td class="h6 text-center font-weight-bold"></td>
                                                                         <td colspan="7"></td>
                                                                     </tr>
@@ -394,7 +394,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label17" CssClass="form-label" AssociatedControlID="txtlv5" runat="server" Text="lv5" />
+                                <asp:Label ID="Label17" CssClass="form-label" AssociatedControlID="txtlv5" runat="server" Text="ระดับ 5" />
                                 <asp:Label ID="Label18" CssClass="text-danger" AssociatedControlID="txtlv5" runat="server" Text="*" />
                                 <asp:TextBox class="form-control" type="input" ID="txtlv5" runat="server"></asp:TextBox>
                             </div>
@@ -403,7 +403,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label19" CssClass="form-label" AssociatedControlID="txtlv4" runat="server" Text="lv4" />
+                                <asp:Label ID="Label19" CssClass="form-label" AssociatedControlID="txtlv4" runat="server" Text="ระดับ 4" />
                                 <asp:Label ID="Label20" CssClass="text-danger" AssociatedControlID="txtlv4" runat="server" Text="*" />
                                 <asp:TextBox class="form-control" type="input" ID="txtlv4" runat="server"></asp:TextBox>
                             </div>
@@ -412,7 +412,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label21" CssClass="form-label" AssociatedControlID="txtlv3" runat="server" Text="lv3" />
+                                <asp:Label ID="Label21" CssClass="form-label" AssociatedControlID="txtlv3" runat="server" Text="ระดับ 3" />
                                 <asp:Label ID="Label22" CssClass="text-danger" AssociatedControlID="txtlv3" runat="server" Text="*" />
                                 <asp:TextBox class="form-control" type="input" ID="txtlv3" runat="server"></asp:TextBox>
                             </div>
@@ -421,7 +421,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label23" CssClass="form-label" AssociatedControlID="txtlv2" runat="server" Text="lv2" />
+                                <asp:Label ID="Label23" CssClass="form-label" AssociatedControlID="txtlv2" runat="server" Text="ระดับ 2" />
                                 <asp:Label ID="Label24" CssClass="text-danger" AssociatedControlID="txtlv2" runat="server" Text="*" />
                                 <asp:TextBox class="form-control" type="input" ID="txtlv2" runat="server"></asp:TextBox>
                             </div>
@@ -430,7 +430,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <div class="form-group">
-                                <asp:Label ID="Label25" CssClass="form-label" AssociatedControlID="txtlv1" runat="server" Text="lv1" />
+                                <asp:Label ID="Label25" CssClass="form-label" AssociatedControlID="txtlv1" runat="server" Text="ระดับ 1" />
                                 <asp:Label ID="Label26" CssClass="text-danger" AssociatedControlID="txtlv1" runat="server" Text="*" />
                                 <asp:TextBox class="form-control" type="input" ID="txtlv1" runat="server"></asp:TextBox>
                             </div>

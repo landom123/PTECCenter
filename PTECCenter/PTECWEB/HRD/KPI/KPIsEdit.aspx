@@ -490,7 +490,7 @@
                         <%-- end item--%>
                     </div>
                     <!------------------------------------------------------------------------>
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col-1">
                         </div>
                         <div class="col text-muted ">

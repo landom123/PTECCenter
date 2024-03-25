@@ -101,6 +101,10 @@ Public Class AssetsNozzle
                 Dim dt As DataTable
                 dt = objassets.Nozzle_Export(cboBranch.SelectedValue)
                 ExportToExcel(dt, Session("usercode"), createdate)
+            ElseIf chkResultOver.Checked Then
+                Dim dt As DataTable
+                dt = objassets.NozzleOver_Export(cboBranch.SelectedValue)
+                ExportToExcel(dt, Session("usercode"), createdate)
             End If
         Catch ex As Exception
             Dim scriptKey As String = "alert"

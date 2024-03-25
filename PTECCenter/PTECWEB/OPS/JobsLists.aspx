@@ -9,12 +9,15 @@
         th {
             text-align: center;
         }
-        th a {
-            color:black;
-        }
+
+            th a {
+                color: black;
+            }
+
         .input-group {
             padding-top: 1rem;
         }
+
         .statuscompany {
             margin-top: 6.5px;
             margin-right: -11px;
@@ -23,6 +26,13 @@
             background: #FEBC2F; /*เขียว:#00FF27 เหลือง:#FEBC2F แดง:#ee443b*/
             border-radius: 50%;
             margin-bottom: 0.15rem !important;
+        }
+        .pre-line {
+            white-space: pre-line;
+
+        }
+        .pre-wrap {
+            white-space: pre-wrap;
         }
     </style>
 </asp:Content>
@@ -200,7 +210,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="details" HeaderText="Detail">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbdetails" runat="server" Text='<%#Eval("details")%>'></asp:Label>
+                                        <asp:Label ID="lbdetails" CssClass="pre-line" runat="server" Text='<%#Eval("details")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="suppliername" HeaderText="Supplier" ItemStyle-HorizontalAlign="center">
