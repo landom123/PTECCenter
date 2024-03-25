@@ -446,13 +446,16 @@ Public Class requestcontract2
         GroupConID_SubItem = cboContractType.SelectedValue
 
         If IsDate(txtContractBeginDate.Text) = True Then
-            dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
+            'dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
+            dContractBegindate = CDate(txtContractBeginDate.Text)
         Else
             dContractBegindate = "1900-01-01"
         End If
 
         If IsDate(txtContractEndDate.Text) = True Then
-            dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
+            'dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
+            dContractEndDate = CDate(txtContractEndDate.Text)
+
         Else
             dContractEndDate = "1900-01-01"
         End If
@@ -3967,6 +3970,7 @@ Public Class requestcontract2
             If objCo.AddApprove(txtdocuno.Text, 0, Now(), usercode, "") = False Then
                 Exit Sub
             End If
+
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
             err = ex.Message
