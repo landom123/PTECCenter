@@ -677,7 +677,10 @@ Public Class Kpi
         Return result
 
     End Function
-    Public Function newkpi_For_Operator() As DataTable
+    Public Function newkpi_For_Operator(depid As String, secid As String, comid As String,
+                                        ratioid As String, positionid As String, branchgroupid As String,
+                                        branchid As String, createbyid As String, userid As String,
+                                        category As String, preriodid As String) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -691,6 +694,17 @@ Public Class Kpi
         cmd.CommandType = CommandType.StoredProcedure
 
 
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
+        cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
+        cmd.Parameters.Add("@ratioid", SqlDbType.VarChar).Value = ratioid
+        cmd.Parameters.Add("@positionid", SqlDbType.VarChar).Value = positionid
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@createbyid", SqlDbType.VarChar).Value = createbyid
+        cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
+        cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+        cmd.Parameters.Add("@preriodid", SqlDbType.VarChar).Value = preriodid
 
 
 
