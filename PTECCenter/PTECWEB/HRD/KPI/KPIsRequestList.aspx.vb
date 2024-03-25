@@ -36,7 +36,7 @@ Public Class KPIsRequestList
     Public itemtable As DataTable
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim approval As New Approval
+        Dim objposition As New Position
         Dim objKpi As New Kpi
         Dim objbranch As New Branch
         Dim objdep As New Department
@@ -65,16 +65,35 @@ Public Class KPIsRequestList
         operator_code = objNonpo.NonPOPermisstionOperator("MMR")
         If Not IsPostBack() Then
 
-            objcompany.SetCboCompany(cboCompany, 0)
 
             objKpi.SetCboPeriod(cboPeriod)
+            objposition.SetCboPositionCode(cboPosition)
+            objKpi.SetCboRatioType(cboRatio)
+            objcompany.SetCboCompany(cboCompany, 0)
+            objbranch.SetComboBranchGroup(cboBranchGroup)
+            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+            objdep.SetCboDepartmentByMode(cboDepartment, 0, "actived")
+            cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
+            objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
+
+
+
+            cboCompany.SelectedIndex = 1
+            If Session("positionid") = "10" Then
+                chkCO.Checked = True
+            Else
+                chkHO.Checked = True
+            End If
+            SetCboUsers(cboCreateby)
+
+            cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
 
             searchjobslist()
 
         Else
 
-            criteria = Session("criteria_memo")
-            itemtable = Session("memoitem")
+            criteria = Session("criteria_newkpi")
+            itemtable = Session("newkpiitem")
         End If
 
     End Sub
@@ -84,10 +103,33 @@ Public Class KPIsRequestList
 
         Dim detailtable As New DataTable
         Try
-            itemtable = objKpi.newkpi_For_Operator()
+            If chkCO.Checked Then
+                itemtable = objKpi.newkpi_For_Operator("",
+                                                      "",
+                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        "",
+                                                        "",
+                                                        cboBranchGroup.SelectedItem.Value.ToString,
+                                                        cboBranch.SelectedItem.Value.ToString,
+                                                        "",
+                                                        Session("userid").ToString,
+                                                        "CO",
+                                                        cboPeriod.SelectedValue.ToString)
+            ElseIf chkHO.Checked Then
+                itemtable = objKpi.newkpi_For_Operator(cboDepartment.SelectedItem.Value.ToString,
+                                                        cboSection.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        cboRatio.SelectedItem.Value.ToString,
+                                                        cboPosition.SelectedItem.Value.ToString,
+                                                      "",
+                                                      "",
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        Session("userid").ToString,
+                                                        "HO",
+                                                        cboPeriod.SelectedValue.ToString)
+            End If
 
-
-            Session("memoitem") = itemtable
+            Session("newkpiitem") = itemtable
             BindData()
 
         Catch ex As Exception
@@ -116,8 +158,8 @@ Public Class KPIsRequestList
         If criteria IsNot Nothing Then
             criteria.Rows.Clear()
         End If
-        Session("memoitem") = itemtable
-        Session("criteria_memo") = criteria
+        Session("newkpiitem") = itemtable
+        Session("criteria_newkpi") = criteria
 
         BindData()
     End Sub

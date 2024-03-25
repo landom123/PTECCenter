@@ -390,7 +390,7 @@
                         </div>
                     </div>
                     <hr />
-                    <h4>ระดับประเมิน</h4>
+                    <h4 class="mb-3">ระดับประเมิน</h4>
                     <div class="row">
                         <div class="col mb-3">
                             <div class="form-group">

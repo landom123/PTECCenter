@@ -96,7 +96,12 @@ Public Class AssetsNozzle
         Dim objassets As New Assets
         Try
             If chkNozzle.Checked Then
-                ExportToExcel(nozzletable, Session("usercode"), createdate)
+                'findNozzle(cboBranch.SelectedValue)
+                Dim branchid As Integer = cboBranch.SelectedValue
+                If branchid = 0 Then
+                    branchid = 9999
+                End If
+                ExportToExcel(objassets.AssesNozzle_list(branchid), Session("usercode"), createdate)
             ElseIf chkResultTEST.Checked Then
                 Dim dt As DataTable
                 dt = objassets.Nozzle_Export(cboBranch.SelectedValue)

@@ -4,6 +4,10 @@
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <style>
+        #content-wrapper {
+            height: 93vh;
+        }
+
         th {
             text-align: center;
         }
@@ -11,6 +15,7 @@
         .table td {
             vertical-align: middle;
         }
+
         .table a[href='#'] {
             display: none;
         }
@@ -58,11 +63,11 @@
                                                 <table class="table table-hover table-bordered table-sm">
                                                     <thead>
                                                         <tr>
-                                                            <th >ลำดับที่</th>
-                                                            <th >ตำแหน่ง</th>
-                                                            <th >ชนิดน้ำมัน</th>
-                                                            <th >เลขที่มาตร</th>
-                                                            <th >ยี่ห้อ</th>
+                                                            <th>ลำดับที่</th>
+                                                            <th>ตำแหน่ง</th>
+                                                            <th>ชนิดน้ำมัน</th>
+                                                            <th>เลขที่มาตร</th>
+                                                            <th>ยี่ห้อ</th>
                                                             <th>วันที่สิ้นสุด</th>
                                                             <th>รูปล่าสุด</th>
                                                             <th>ข้อมูลล่าสุดวันที่</th>
@@ -253,7 +258,7 @@
         });
         function btnEditDetailClick(rownumber, nozzle_id, nozzle_no, brand, expirydate, producttype, positiononassest) {
             console.log(rownumber, nozzle_id, nozzle_no, brand, expirydate, producttype, positiononassest);
-            
+
 
             $('#<%= row.ClientID%>').val(rownumber);
             $('#<%= hiddenAdvancedetailid.ClientID%>').val(nozzle_id);
