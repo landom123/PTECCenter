@@ -1777,7 +1777,7 @@
     <Content Include="js\starRating.js" />
     <Content Include="js\Stepper.js" />
     <Content Include="forgot-password.aspx" />
-    <Content Include="OPS\Assets\AssetsNozzle.aspx" />
+    <Content Include="Report\AssetsNozzle.aspx" />
     <Content Include="OPS\Jobs_MapsToNonPO.aspx" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
@@ -3829,10 +3829,10 @@
       <DependentUpon>forgot-password.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OPS\Assets\AssetsNozzle.aspx.designer.vb">
+    <Compile Include="Report\AssetsNozzle.aspx.designer.vb">
       <DependentUpon>AssetsNozzle.aspx</DependentUpon>
     </Compile>
-    <Compile Include="OPS\Assets\AssetsNozzle.aspx.vb">
+    <Compile Include="Report\AssetsNozzle.aspx.vb">
       <DependentUpon>AssetsNozzle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -4928,6 +4928,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="js\v1\" />
+    <Folder Include="OPS\Assets\" />
     <Folder Include="OPS\Attatch\" />
     <Folder Include="temp\" />
   </ItemGroup>

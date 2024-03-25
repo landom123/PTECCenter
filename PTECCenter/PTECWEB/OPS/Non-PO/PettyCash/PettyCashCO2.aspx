@@ -1525,10 +1525,18 @@ alert('else nonpo')
             if (prefixaccValue == "521290") {
                 //dd.selectedIndex = [...dd.options].findIndex(option => option.text === 'HRD');
                 $('#<%= cboDep.ClientID%>').val(22); //3 = HRD 22 = 101HDR
-            } else if (accValue == "529200A001") {
+            } else if (accValue == "511200") {
                 $('#<%= cboDep.ClientID%>').val(20); //20 101MMO
+            } else if (accValue == "529200A001") {
+                $('#<%= cboDep.ClientID%>').val(22); //22 = 101HDR 
             } else {
                 $('#<%= cboDep.ClientID%>').val(26); //3 = ROD 26 =101ROD
+            }
+
+            if (accValue == "522302A001") {
+                $('#<%= cboPJ.ClientID%>').val(5); //5	ESG
+            } else {
+                $('#<%= cboPJ.ClientID%>').val(0); 
             }
 
             $('.form-control').selectpicker('refresh');

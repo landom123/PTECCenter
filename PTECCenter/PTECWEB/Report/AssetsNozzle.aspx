@@ -205,6 +205,10 @@
                         <input class="form-check-input chk-img-after" type="checkbox" id="chkResultTEST" runat="server">
                         <asp:Label ID="Label2" CssClass="form-check-label" AssociatedControlID="chkResultTEST" runat="server" Text="ประวัติ/ผล การ TEST" />
                     </div>
+                    <div class="form-group pl-5">
+                        <input class="form-check-input chk-img-after" type="checkbox" id="chkResultOver" runat="server">
+                        <asp:Label ID="Label3" CssClass="form-check-label" AssociatedControlID="chkResultOver" runat="server" Text="ประวัติ/ผล การ TEST ที่เกินกำหนด" />
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>

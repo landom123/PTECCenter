@@ -194,6 +194,24 @@ Partial Public Class AssetsNozzle
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''chkResultOver control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkResultOver As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''btnDowload control.
     '''</summary>
     '''<remarks>
