@@ -27,6 +27,7 @@ Public Class requestcontract2
     Public usercode, username, assetsno, contractno, projectno As String
     'Public clientid As Double = 0
     Public DocID As Integer
+    Dim iDocID As Integer
 
     Dim dtBranch As New DataTable
     Dim dtStatus As New DataTable
@@ -41,6 +42,8 @@ Public Class requestcontract2
     Dim objCo As New clsRequestContract
 
     Dim objPay As New clsPayment
+
+    Dim objPro As New Project
 
     Dim bByte1(0) As Byte
     Dim bByte2(0) As Byte
@@ -1965,6 +1968,14 @@ Public Class requestcontract2
         obj.DataTextField = "SubConName"
         obj.DataBind()
     End Sub
+    Private Sub SetCboStatusLaw(obj As Object, iIndex As Integer)
+
+        obj.DataSource = objPro.loadStatus(iIndex)
+        obj.DataValueField = "ID"
+        obj.DataTextField = "StatusName"
+        obj.DataBind()
+    End Sub
+
     Private Sub SetCboTaxpayGround(obj As Object)
 
         obj.DataSource = objCo.loadTaxPayGround
@@ -2436,6 +2447,15 @@ Public Class requestcontract2
         Clear()
     End Sub
 
+    Private Sub btnStatusLaw_Click(sender As Object, e As EventArgs) Handles btnStatusLaw.Click
+        Try
+            objCo.AddStatus(CInt(txtDocIDAction.Text), cboStatusLaw.SelectedValue)
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objTitleName As New TitleName
         usercode = Session("usercode")
@@ -2444,6 +2464,17 @@ Public Class requestcontract2
         'txtBirthday.Attributes.Add("readonly", "readonly")
 
         'Dim objsupplier As New Supplier
+
+        txtBeginDateFix.Text = Now.Date
+        txtBeginDate4.Text = Now.Date
+        txtBeginDateNonOil.Text = Now.Date
+        txtBeginDateRentJoin.Text = Now.Date
+        txtContractBeginDate.Text = Now.Date
+        txtEndDate4.Text = Now.Date
+        txtEndDateFix.Text = Now.Date
+        txtEndDateNonOil.Text = Now.Date
+        txtEndDateRentJoin.Text = Now.Date
+        txtContractEndDate.Text = Now.Date
 
         If IsPostBack() Then
             If Session("menulist") Is Nothing Then
@@ -2513,6 +2544,8 @@ Public Class requestcontract2
             SetCboSubContact(cboContractType, 1)
             'SetCboFrequency(cboFrequency)
 
+            SetCboStatusLaw(cboStatusLaw, 2)
+
             If loadBank() = False Then
                 Exit Sub
             End If
@@ -2549,6 +2582,7 @@ Public Class requestcontract2
             txtdocuno.Text = objReq.GetDocRun(1, 0)
 
             DocID = Session("iDocID")
+            iDocID = Session("iDocID")
             If loadRequest(DocID) = False Then
                 Exit Sub
             End If
@@ -4007,6 +4041,25 @@ Public Class requestcontract2
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+
+    'Protected Sub cboStatusLaw_SelectedIndexChanged(sender As Object, e As EventArgs) 'Handles cboMainContact.SelectedIndexChanged
+    '    Try
+
+    '        'lblCompany4.Text = cboCompany.SelectedItem.Text
+
+
+    '        'If disableTab(cboMainContact.SelectedValue) = False Then
+    '        '    Exit Sub
+    '        'End If
+
+    '    Catch ex As Exception
+    '        Dim err, scriptKey, javaScript As String
+    '        err = ex.Message
+    '        scriptKey = "UniqueKeyForThisScript"
+    '        javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '    End Try
+    'End Sub
 
     Protected Sub txtEndDate4_TextChanged(sender As Object, e As EventArgs) 'Handles txtContractBeginDate.TextChanged
         Try

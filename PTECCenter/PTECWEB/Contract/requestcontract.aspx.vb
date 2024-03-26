@@ -18,6 +18,9 @@ Public Class requestcontract
     Dim dtStatus As New DataTable
 
     Dim objprj As New Project
+
+    Dim iDepID As Integer
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
 
@@ -29,8 +32,12 @@ Public Class requestcontract
         usercode = Session("usercode")
         username = Session("username")
 
+        iDepID = Session("depid")
 
         'Dim objsupplier As New Supplier
+
+        txtBegindate.Text = Now.Date
+        txtEnddate.Text = Now.Date
 
         If IsPostBack() Then
             If Session("menulist") Is Nothing Then
@@ -154,8 +161,6 @@ Public Class requestcontract
 
             dBegindate = CDate(txtBegindate.Text)
             dEnddate = CDate(txtEnddate.Text)
-
-
 
             dt = objReq.FindRequest(dBegindate.ToString("yyyyMMdd", dtinfo), dEnddate.ToString("yyyyMMdd", dtinfo), 1, txtVendor.Text, txtContractno.Text)
 
