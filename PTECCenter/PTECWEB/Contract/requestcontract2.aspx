@@ -341,7 +341,7 @@
                                                 </div>
                                            
                                     </div>
-                                <div class="col-4">
+                                <div class="col-2">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                         <span class="input-group-text">สถานะ</span>
@@ -349,6 +349,15 @@
                                         <asp:Label class="form-control" ID="lblStatus" style="background-color:darkgreen;color:white" runat="server" ></asp:Label>    
 
                                     </div>
+                                </div>
+                                <div class="col-2">
+                                                <div class="input-group sm-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">สถานะ</span>
+                                                    </div>                                                   
+                                                    <asp:DropDownList class="form-control" ID="cboStatusLaw" runat="server" ></asp:DropDownList>    
+                                                    <asp:Button ID="btnStatusLaw" class="btn btn-sm  btn-outline-info w-20 noEnterSubmit" runat="server" Text=" Update " />
+                                                </div>
                                 </div>
                             </div>
 

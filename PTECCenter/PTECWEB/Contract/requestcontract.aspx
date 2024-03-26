@@ -124,6 +124,7 @@
 	                                        <asp:TemplateField HeaderText="สถานะ">
 		                                        <ItemTemplate>
 			                                        <asp:Label id="lblStatusName" runat="server" Text='<%#Eval("StatusName")%>'></asp:Label>
+                                                    <%--<asp:button id="btnStatus" class="btn btn-outline-info w-10 noEnterSubmit" runat="server" Text='update'></asp:button>--%>
 		                                        </ItemTemplate>
 	                                        </asp:TemplateField>
 	                                        <asp:TemplateField HeaderText="วันที่เริ่ม">

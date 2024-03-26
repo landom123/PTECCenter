@@ -678,7 +678,6 @@ End Class
 
 Public Class Project
 
-
     Public Sub SetCboloadBranch(obj As Object)
         obj.DataSource = Me.loadBranch()
         obj.DataValueField = "brcode"
@@ -3829,6 +3828,36 @@ Public Class clsRequestContract
 
     End Function
 
+    Public Function AddStatus(iDocID As Integer, iStatusID As Integer) As Boolean
+        Try
+
+            Dim ds As New DataSet
+            Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString)
+            Dim cmd As New SqlCommand
+            Dim adp As New SqlDataAdapter
+
+            conn.Open()
+            cmd.Connection = conn
+            cmd.CommandText = "sp_Update_Status"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Add("@iDocID", SqlDbType.Int).Value = iDocID
+            cmd.Parameters.Add("@iStatusID", SqlDbType.Int).Value = iStatusID
+
+            adp.SelectCommand = cmd
+            adp.Fill(ds)
+            conn.Close()
+
+
+            Return True
+        Catch ex As Exception
+            Dim err As String = ex.Message.ToString.Replace("'", "")
+            Dim scriptKey As String = "UniqueKeyForThisScript"
+            Dim javaScript As String = "alertWarning('" & err & "')"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Return False
+        End Try
+    End Function
 End Class
 
 Public Class clsRequestEditContract

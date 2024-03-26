@@ -383,6 +383,24 @@ Partial Public Class requestcontract2
     Protected WithEvents lblStatus As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cboStatusLaw control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboStatusLaw As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''btnStatusLaw control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnStatusLaw As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''cboBranch control.
     '''</summary>
     '''<remarks>
