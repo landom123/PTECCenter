@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        
         html {
             background-color: #f0f2f5 !important;
         }
@@ -11,10 +10,10 @@
             height: 93vh;
         }
 
-        
+
         .checked {
             background-color: #ececec;
-            opacity:1 !important; 
+            opacity: 1 !important;
         }
 
         .table-header {
@@ -22,25 +21,28 @@
             color: #f15a24;
             text-align: center;
         }
-        .__show:after{ 
+
+        .__show:after {
             content: '\f06e';
             font-family: 'Font Awesome 5 Free';
             font-weight: bold;
         }
-        .__hide:after{ 
+
+        .__hide:after {
             content: '\f070';
             font-family: 'Font Awesome 5 Free';
             font-weight: bold;
         }
+
         .opacity-75 {
-            opacity:0.75;
-        }
-        .opacity-50 {
-            opacity:0.50;
+            opacity: 0.75;
         }
 
+        .opacity-50 {
+            opacity: 0.50;
+        }
     </style>
-   
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
@@ -55,24 +57,43 @@
                     <div class="col-12 mb-3">
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <div class="row justify-content-between">
-                                    <div class="col-4 mb-3 ">
-                                        <asp:DropDownList class="form-control" ID="cboSupplier" runat="server" AutoPostBack="true"></asp:DropDownList>
-                                        <asp:Label ID="lbHeadDetail" CssClass="form-label" runat="server" Text="" />
-                                    </div>
-                                    <div class="col mb-3">
+                                <div class="row">
+                                    <div class="col-auto mb-3">
                                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="ค้นหารายการ" />
-                                        &nbsp;   
                                         &nbsp;   
                                         <asp:Button ID="btnJTN" class="btn btn-sm  btn-secondary" runat="server" Text="ดูตัวอย่าง Payment" OnClientClick="sendID();" />
                                         &nbsp;   
-                                        &nbsp;   
-                                        <asp:CheckBox ID="chkvisible" runat="server" Text="ดูรายการทั้งหมด" AutoPostBack="true"></asp:CheckBox>
-
+                                        <asp:CheckBox  ID="chkvisible" runat="server" Text="ดูรายการทั้งหมด" AutoPostBack="true"></asp:CheckBox>
                                         &nbsp;   
                                     </div>
+                                    
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-md-4 mb-3 ">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Suppiler</span>
+                                            </div>
+                                            <asp:DropDownList class="form-control" ID="cboSupplier" runat="server" AutoPostBack="true"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group sm-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Code</span>
+                                            </div>
+                                            <asp:TextBox class="form-control" ID="txtjobcode" runat="server" placeholder="21XXXXXXX" autocomplete="off"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">สาขา</span>
+                                            </div>
+                                            <asp:DropDownList class="form-control" ID="cboBranch" runat="server"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="table-responsive">
                                     <asp:GridView ID="gvRemind"
                                         class="table thead-dark table-bordered"
@@ -129,7 +150,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Unlock" HeaderStyle-CssClass="table-header" ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton type="Button" runat="server" CommandName="Select" CommandArgument="<%# Container.DataItemIndex %>" OnClientClick="return ConfirmUnlock(this);" >
+                                                    <asp:LinkButton type="Button" runat="server" CommandName="Select" CommandArgument="<%# Container.DataItemIndex %>" OnClientClick="return ConfirmUnlock(this);">
                                                         <i class="fas fa-unlock-alt"></i>
                                                     </asp:LinkButton>
                                                 </ItemTemplate>
@@ -150,10 +171,10 @@
                 </div>
             </div>
         </div>
-        <!-- end content-wrapper -->
+    <!-- end content-wrapper -->
 
 
-        <!-- end เนื้อหาเว็บ -->
+    <!-- end เนื้อหาเว็บ -->
 
 
     </div>
@@ -165,7 +186,7 @@
 
         //});
         $(document).ready(function () {
-           
+
             $('.form-control').selectpicker({
                 //showTick: true,
                 liveSearch: true,
@@ -251,7 +272,7 @@
         function checkSelected() {
             let inputList = $(".table tbody tr").find(':checkbox');
             for (let i = 0; i < inputList.length; i++) {
-                if (inputList[i].type == "checkbox" ) {
+                if (inputList[i].type == "checkbox") {
                     if (inputList[i].checked) {
                         inputList[i].parentNode.parentNode.parentNode.classList.add("checked");
 
@@ -298,7 +319,7 @@
             //console.log(params);
             return params;
         }
-        
+
         $(".table tbody tr").click(function (e) {
 
             //if ($(e.target).is(':button')) return; //ignore when click on the checkbox

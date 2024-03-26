@@ -1671,6 +1671,12 @@ alert('else nonpo')
                 event.stopPropagation();
                 return 0;
             }
+            if ((/[^0-9]/g.test(taxid))) {
+                alertWarning('taxid ต้องเป็นตัวเลข 0-9 เท่านั้น');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
             //if (vat != 0 && (!invoice || !taxid || !invoicedate)) {
             //    alertWarning('กรุณากรอกข้อมูล invoice ให้ครบถ้วน');
             //    event.preventDefault();
