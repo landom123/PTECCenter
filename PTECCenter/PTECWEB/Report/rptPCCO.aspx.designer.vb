@@ -11,77 +11,68 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class Jobs_MapsToNonPO
+Partial Public Class rptPCCO
 
     '''<summary>
-    '''btnSearch control.
+    '''btnClear control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnSearch As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''btnJTN control.
+    '''btnExport control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnJTN As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnExport As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''chkvisible control.
+    '''txtduedate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkvisible As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents txtduedate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cboSupplier control.
+    '''chkGroupVAT control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboSupplier As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents chkGroupVAT As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
 
     '''<summary>
-    '''txtjobcode control.
+    '''Label8 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtjobcode As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cboBranch control.
+    '''chkGroupVendor control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents chkGroupVendor As Global.System.Web.UI.HtmlControls.HtmlInputCheckBox
 
     '''<summary>
-    '''gvRemind control.
+    '''Label10 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents gvRemind As Global.System.Web.UI.WebControls.GridView
-
-    '''<summary>
-    '''hfCount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hfCount As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents Label10 As Global.System.Web.UI.WebControls.Label
 End Class

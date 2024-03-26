@@ -1630,7 +1630,7 @@ Public Class jobs
         Return result
     End Function
 
-    Public Function Jobs_CostCommited_list(supplierid As Integer, visibleall As Boolean) As DataTable
+    Public Function Jobs_CostCommited_list(supplierid As Integer, visibleall As Boolean, jobcode As String, branchid As String) As DataTable
         Dim result As DataTable
 
         Dim ds As New DataSet
@@ -1645,6 +1645,9 @@ Public Class jobs
 
         cmd.Parameters.Add("@supplierid", SqlDbType.VarChar).Value = supplierid
         cmd.Parameters.Add("@visibleall", SqlDbType.Bit).Value = visibleall
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobcode
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+
 
         adp.SelectCommand = cmd
         adp.Fill(ds)

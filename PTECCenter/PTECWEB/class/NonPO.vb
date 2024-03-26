@@ -2084,4 +2084,29 @@ Public Class NonPO
         conn.Close()
         'Return result
     End Sub
+    Public Function Nonpo_Export_PCCO_All_Branch_By_Due(duedate As String, groupvat As Boolean, groupvendor As Boolean) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_ExportToD365_PCCO_All_Branch_By_Due"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(duedate), DBNull.Value, DateTime.Parse(duedate))
+        cmd.Parameters.Add("@groupvat", SqlDbType.Bit).Value = groupvat
+        cmd.Parameters.Add("@groupvendor", SqlDbType.Bit).Value = groupvendor
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
 End Class

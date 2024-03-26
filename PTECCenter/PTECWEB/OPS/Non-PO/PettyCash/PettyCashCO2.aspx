@@ -1740,6 +1740,13 @@ alert('else nonpo')
                 event.stopPropagation();
                 return 0;
             }
+            if ((/[^0-9]/g.test(taxid))) {
+                alertWarning('taxid ต้องเป็นตัวเลข 0-9 เท่านั้น');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+            
             //alert(row);
             //var params = "{'row': '" + row + "'}";
             var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
