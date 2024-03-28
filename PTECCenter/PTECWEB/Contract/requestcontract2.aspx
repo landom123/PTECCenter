@@ -1885,7 +1885,7 @@
                                                                                         <div class="col-md-4" runat="server">
                                                                                             <%--<INPUT id="File4" type="file" runat="server" NAME="oFile">--%>
                                                                                             <asp:FileUpload id="fiUpload" runat="server"></asp:FileUpload>
-                                                                                            <asp:button id="btnUpload1" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:button id="btnUpload1" type="submit" text="Upload" runat="server"  Visible="false"></asp:button>
                                                                                             <asp:Panel ID="Panel4" Visible="False" Runat="server">
                                                                                                 <asp:Label id="Label5" Runat="server"></asp:Label>
                                                                                             </asp:Panel>
@@ -1893,7 +1893,7 @@
                                                                                         <div class="col-md-4" runat="server">
                                                                                            <%-- <INPUT id="File5" type="file" runat="server" NAME="oFile">--%>
                                                                                             <asp:FileUpload id="fiUpload2" runat="server"></asp:FileUpload>
-                                                                                            <asp:button id="btnUpload2" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:button id="btnUpload2" type="submit" text="Upload" runat="server"  Visible="false"></asp:button>
                                                                                             <asp:Panel ID="Panel5" Visible="False" Runat="server">
                                                                                                 <asp:Label id="Label6" Runat="server"></asp:Label>
                                                                                             </asp:Panel>
@@ -3000,7 +3000,7 @@
                                                          <div class="col-md-4" runat="server">
                                                                                             <%--<INPUT id="File4" type="file" runat="server" NAME="oFile">--%>
                                                                                             <asp:FileUpload id="FileUpload1" runat="server"></asp:FileUpload>
-                                                                                            <asp:button id="btnUploadPicPower1" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:button id="btnUploadPicPower1" type="submit" text="Upload" runat="server"  Visible="false"></asp:button>
                                                                                             <asp:Panel ID="Panel1" Visible="False" Runat="server">
                                                                                                 <asp:Label id="Label1" Runat="server"></asp:Label>
                                                                                             </asp:Panel>
@@ -3008,7 +3008,7 @@
                                                          <div class="col-md-4" runat="server">
                                                                                            <%-- <INPUT id="File5" type="file" runat="server" NAME="oFile">--%>
                                                                                             <asp:FileUpload id="FileUpload2" runat="server"></asp:FileUpload>
-                                                                                            <asp:button id="btnUploadPicPower2" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:button id="btnUploadPicPower2" type="submit" text="Upload" runat="server"  Visible="false"></asp:button>
                                                                                             <asp:Panel ID="Panel2" Visible="False" Runat="server">
                                                                                                 <asp:Label id="Label2" Runat="server"></asp:Label>
                                                                                             </asp:Panel>
@@ -3396,7 +3396,7 @@
                                                          <div class="col-md-4" runat="server">
                                                                                             <%--<INPUT id="File4" type="file" runat="server" NAME="oFile">--%>
                                                                                             <asp:FileUpload id="FileUpload3" runat="server"></asp:FileUpload>
-                                                                                            <asp:button id="btnUploadPicNon1" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:button id="btnUploadPicNon1" type="submit" text="Upload" runat="server"  Visible="false"></asp:button>
                                                                                             <asp:Panel ID="Panel3" Visible="False" Runat="server">
                                                                                                 <asp:Label id="Label3" Runat="server"></asp:Label>
                                                                                             </asp:Panel>
@@ -3404,7 +3404,7 @@
                                                          <div class="col-md-4" runat="server">
                                                                                            <%-- <INPUT id="File5" type="file" runat="server" NAME="oFile">--%>
                                                                                             <asp:FileUpload id="FileUpload4" runat="server"></asp:FileUpload>
-                                                                                            <asp:button id="btnUploadPicNon2" type="submit" text="Upload" runat="server"></asp:button>
+                                                                                            <asp:button id="btnUploadPicNon2" type="submit" text="Upload" runat="server"  Visible="false"></asp:button>
                                                                                             <asp:Panel ID="Panel6" Visible="False" Runat="server">
                                                                                                 <asp:Label id="Label7" Runat="server"></asp:Label>
                                                                                             </asp:Panel>
@@ -3795,7 +3795,7 @@
                                                            <div class="col-md-4" runat="server">
                                                                                             <%--<INPUT id="File4" type="file" runat="server" NAME="oFile">--%>
                                                                   <asp:FileUpload id="FileUpload5" runat="server"></asp:FileUpload>
-                                                                  <asp:button id="btnUploadPicOth1" type="submit" text="Upload" runat="server"></asp:button>
+                                                                  <asp:button id="btnUploadPicOth1" type="submit" text="Upload" runat="server" Visible="false"></asp:button>
                                                                   <asp:Panel ID="Panel7" Visible="False" Runat="server">
                                                                     <asp:Label id="Label8" Runat="server"></asp:Label>
                                                                   </asp:Panel>
@@ -3803,7 +3803,7 @@
                                                            <div class="col-md-4" runat="server">
                                                                                            <%-- <INPUT id="File5" type="file" runat="server" NAME="oFile">--%>
                                                                   <asp:FileUpload id="FileUpload6" runat="server"></asp:FileUpload>
-                                                                  <asp:button id="btnUploadPicOth2" type="submit" text="Upload" runat="server"></asp:button>
+                                                                  <asp:button id="btnUploadPicOth2" type="submit" text="Upload" runat="server"  Visible="false"></asp:button>
                                                                   <asp:Panel ID="Panel8" Visible="False" Runat="server">
                                                                     <asp:Label id="Label9" Runat="server"></asp:Label>
                                                                   </asp:Panel>
@@ -3816,6 +3816,7 @@
                                                            </div>
                                                            <div  class="col-md-4" runat="server">
                                                                  <asp:Image ID="image8" runat="server" Width="150px" Height="100px"/>
+                                                               <%--<asp:Image runat="server" ID="Image13" Visible="false" Height="60" Width="60" />--%>
                                                            </div>
                                                       </div>
 
