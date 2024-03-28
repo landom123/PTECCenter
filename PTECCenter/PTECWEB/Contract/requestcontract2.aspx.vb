@@ -20,6 +20,7 @@ Imports System.Reflection
 Imports DocumentFormat.OpenXml.Wordprocessing
 Imports DocumentFormat.OpenXml.Office.CustomUI
 Imports DocumentFormat.OpenXml.Office2010.CustomUI
+Imports CrystalDecisions.[Shared].Json
 
 Public Class requestcontract2
     Inherits System.Web.UI.Page
@@ -452,7 +453,7 @@ Public Class requestcontract2
             'dContractBegindate = DateAdd(DateInterval.Year, -543, CDate(txtContractBeginDate.Text))
             dContractBegindate = CDate(txtContractBeginDate.Text)
         Else
-            dContractBegindate = "1900-01-01"
+            dContractBegindate = Nothing
         End If
 
         If IsDate(txtContractEndDate.Text) = True Then
@@ -460,7 +461,7 @@ Public Class requestcontract2
             dContractEndDate = CDate(txtContractEndDate.Text)
 
         Else
-            dContractEndDate = "1900-01-01"
+            dContractEndDate = Nothing
         End If
 
         CustName = txtName.Text
@@ -4129,7 +4130,7 @@ Public Class requestcontract2
                 'DocDate = DateAdd(DateInterval.Year, -543, CDate(txtStartDate.Text))
                 DocDate = CDate(txtStartDate.Text)
             Else
-                DocDate = "1900-01-01"
+                DocDate = Nothing
             End If
 
             Customerparty = txtCustomerparty.Text
@@ -4147,21 +4148,21 @@ Public Class requestcontract2
                 'BeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDate4.Text))
                 BeginDate = CDate(txtBeginDate4.Text)
             Else
-                BeginDate = "1900-01-01"
+                BeginDate = Nothing
             End If
 
             If IsDate(txtEndDate4.Text) = True Then
                 'EndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDate4.Text))
                 EndDate = CDate(txtEndDate4.Text)
             Else
-                EndDate = "1900-01-01"
+                EndDate = Nothing
             End If
 
             If IsDate(txtDueDate4.Text) = True Then
                 'DueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDate4.Text))
                 DueDate = CDate(txtDueDate4.Text)
             Else
-                DueDate = "1900-01-01"
+                DueDate = Nothing
             End If
 
             FineAmnt = txtFineAmnt4.Text
@@ -4326,14 +4327,14 @@ Public Class requestcontract2
                 'DueDate = DateAdd(DateInterval.Year, -543, CDate(txtIssueDateBook.Text))
                 DueDate = CDate(txtIssueDateBook.Text)
             Else
-                DueDate = "1900-01-01"
+                DueDate = Nothing
             End If
 
             If IsDate(txtDocDateBook.Text) = True Then
                 'DocDate = DateAdd(DateInterval.Year, -543, CDate(txtDocDateBook.Text))
                 DocDate = CDate(txtDocDateBook.Text)
             Else
-                DocDate = "1900-01-01"
+                DocDate = Nothing
             End If
 
 
@@ -4563,7 +4564,7 @@ Public Class requestcontract2
                 'dDueDate = DateAdd(DateInterval.Year, -543, CDate(txtDueDateNonOil.Text))
                 dDueDate = CDate(txtDueDateNonOil.Text)
             Else
-                dDueDate = "1900-01-01"
+                dDueDate = Nothing
             End If
 
 
@@ -4571,14 +4572,14 @@ Public Class requestcontract2
                 'dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
                 dBeginDate = CDate(txtBeginDateNonOil.Text)
             Else
-                dBeginDate = "1900-01-01"
+                dBeginDate = Nothing
             End If
 
             If IsDate(txtEndDateNonOil.Text) = True Then
                 'dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
                 dEndDate = CDate(txtEndDateNonOil.Text)
             Else
-                dEndDate = "1900-01-01"
+                dEndDate = Nothing
             End If
 
             If Session("ItemNoNonOil") IsNot Nothing Then
@@ -4592,14 +4593,14 @@ Public Class requestcontract2
                 'dBeginDate = DateAdd(DateInterval.Year, -543, CDate(txtBeginDateNonOil.Text))
                 dBeginDate = CDate(txtBeginDateNonOil.Text)
             Else
-                dBeginDate = "1900-01-01"
+                dBeginDate = Nothing
             End If
 
             If IsDate(txtEndDateNonOil.Text) = True Then
                 'dEndDate = DateAdd(DateInterval.Year, -543, CDate(txtEndDateNonOil.Text))
                 dEndDate = CDate(txtEndDateNonOil.Text)
             Else
-                dEndDate = "1900-01-01"
+                dEndDate = Nothing
             End If
 
             If Session("ItemNoNonOil") IsNot Nothing Then
@@ -4914,5 +4915,6 @@ Public Class requestcontract2
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+
 
 End Class
