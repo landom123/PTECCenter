@@ -1195,6 +1195,28 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
+
+    Private Sub findMainNonPO()
+        Dim nonpoDs = New DataSet
+        Dim objNonpo As New NonPO
+        Try
+            nonpoDs = objNonpo.NonPO_Find(Request.QueryString("NonpoCode"))
+            '-- table 0 = Head
+            '-- table 1 = main
+            '-- table 2 = detail
+            '-- table 3 = attach
+            '-- table 4 = comment
+
+            maintable = nonpoDs.Tables(1)
+
+            Session("maintable_clearadvance") = maintable
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('find Main fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
     'Public Sub AddDetails()
 
     '    Dim cost As Double
@@ -1690,6 +1712,11 @@ endprocess:
             Catch ex As Exception
                 purecard_amount = 0
             End Try
+
+            'fix bug share session 2 tab check code
+            If Not (maintable.Rows(0).Item("nonpocode").Equals(txtadvno.Text)) Then
+                findMainNonPO()
+            End If
 
             'update
             With maintable.Rows(0)

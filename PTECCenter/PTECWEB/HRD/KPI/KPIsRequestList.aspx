@@ -6,6 +6,10 @@
         th {
             text-align: center;
         }
+
+        #content-wrapper {
+            height: 93vh;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -59,7 +63,15 @@
                                 <asp:DropDownList class="form-control" ID="cboPeriod" runat="server" AutoPostBack="false"></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-3 ">
+                        <div class="col-md-3 mb-3 CO">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Employee KPIs</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboCreatebyCO" runat="server" readonly="true"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 HO">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Employee KPIs</span>
