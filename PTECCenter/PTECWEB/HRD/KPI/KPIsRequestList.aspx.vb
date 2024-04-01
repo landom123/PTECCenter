@@ -85,8 +85,10 @@ Public Class KPIsRequestList
                 chkHO.Checked = True
             End If
             SetCboUsers(cboCreateby)
+            SetCboUsersCO(cboCreatebyCO)
 
             cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
+            cboCreatebyCO.SelectedIndex = cboCreatebyCO.Items.IndexOf(cboCreatebyCO.Items.FindByValue(Session("userid")))
 
             searchjobslist()
 
@@ -111,7 +113,7 @@ Public Class KPIsRequestList
                                                         "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
-                                                        "",
+                                                        cboCreatebyCO.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
                                                         "CO",
                                                         cboPeriod.SelectedValue.ToString)
