@@ -993,6 +993,30 @@ Public Class jobs
         conn.Close()
         Return result
     End Function
+    Public Function Cancel(jobcode As String, msg As String, usercode As String) As Boolean
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Cancel"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobcode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+        cmd.Parameters.Add("@msg", SqlDbType.VarChar).Value = msg
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        Return result
+    End Function
     Public Function Confirm(jobcode As String, usercode As String) As Boolean
         Dim result As Boolean
         'Credit_Balance_List_Createdate
