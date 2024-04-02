@@ -259,7 +259,7 @@ Public Class frmJobs
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = False
-                'btnCancel.Enabled = False
+                btnCancel.Disabled = True
             Case = "edit"
                 If owner = 1 Then
                     btnSave.Enabled = True
@@ -269,30 +269,30 @@ Public Class frmJobs
                     btnConfirm.Enabled = False
                 End If
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = True
+                btnCancel.Disabled = False
             Case = "confirm"
                 btnSave.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = True
+                btnCancel.Disabled = False
             Case = "action"
                 btnSave.Enabled = False
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = False
+                btnCancel.Disabled = True
             Case = "close"
                 btnSave.Enabled = False
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = False
+                btnCancel.Disabled = True
             Case = "cancel"
                 btnSave.Enabled = False
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = False
+                btnCancel.Disabled = True
                 'Dim scriptKey As String = "UniqueKeyForThisScript"
                 'Dim javaScript As String = "<script type='text/javascript'>chkButtonCancel('btnCancel'," & Session("status") & ");"
                 'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
@@ -873,6 +873,21 @@ endprocess:
         txtAssetCode.Text = cboAsset.SelectedItem.Text.ToString.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)(0).Trim()
         FindAsset()
     End Sub
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function CancelByCode(ByVal jobno As String, ByVal message As String, ByVal updateby As String)
+        Dim job As New jobs
+
+        Dim result As Boolean
+        Try
+            result = job.Cancel(jobno, message, updateby)
+
+        Catch ex As Exception
+            Return "fail"
+        End Try
+        Return "success"
+
+    End Function
 
     'Private Sub cboJobCate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobCate.SelectedIndexChanged
     '    Try
