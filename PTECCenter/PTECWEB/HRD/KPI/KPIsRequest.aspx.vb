@@ -198,7 +198,7 @@ Public Class KPIsRequest
         Dim dt As New DataTable
         dt.Columns.Add("kpi_code", GetType(String))
         dt.Columns.Add("title", GetType(String))
-        dt.Columns.Add("statusid", GetType(Integer))
+        ' dt.Columns.Add("statusid", GetType(Integer))
         dt.Columns.Add("status", GetType(String))
         dt.Columns.Add("categoryid", GetType(Integer))
         dt.Columns.Add("categoryname", GetType(String))
@@ -209,8 +209,8 @@ Public Class KPIsRequest
         dt.Columns.Add("lv3", GetType(String))
         dt.Columns.Add("lv4", GetType(String))
         dt.Columns.Add("lv5", GetType(String))
-        dt.Columns.Add("commit_date", GetType(String))
-        dt.Columns.Add("preriodid", GetType(Integer))
+        'dt.Columns.Add("commit_date", GetType(String))
+        'dt.Columns.Add("preriodid", GetType(Integer))
         dt.Columns.Add("active", GetType(String))
         dt.Columns.Add("updateby", GetType(String))
         dt.Columns.Add("updatedate", GetType(String))
@@ -253,7 +253,7 @@ Public Class KPIsRequest
         Dim jss As New JavaScriptSerializer
         Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
 
-        Dim preriodid As Integer = json("preriodid").Trim
+        'Dim preriodid As Integer = json("preriodid").Trim
         Dim status As String = json("status").Trim
         Dim kpicode As String = json("kpicode").Trim
         Dim categoryid As Integer = json("categoryid").Trim
@@ -277,7 +277,7 @@ Public Class KPIsRequest
                 row = detailtable.NewRow()
                 row("kpi_code") = cntrow
                 row("status") = "new"
-                row("preriodid") = preriodid
+                'row("preriodid") = preriodid
                 row("categoryid") = categoryid
                 row("categoryname") = categoryname
                 row("title") = title
@@ -295,7 +295,7 @@ Public Class KPIsRequest
                 With detailtable.Rows(detailtable.Rows.IndexOf(detailtable.Select("kpi_code='" & kpicode & "'")(0)))
                     .Item("kpi_code") = kpicode
                     .Item("status") = "edit"
-                    .Item("preriodid") = preriodid
+                    '.Item("preriodid") = preriodid
                     .Item("categoryid") = categoryid
                     .Item("categoryname") = categoryname
                     .Item("title") = title
@@ -490,7 +490,13 @@ endprocess:
 
         userid = Session("userid")
 
-        If maintable.Rows.Count = 0 Then
+        If maintable.Rows.Count > 0 Then
+
+            'fix bug share session 2 tab check code
+            If Not (maintable.Rows(0).Item("newkpicode").Equals(txtnewkpi.Text)) Then
+                findMainNewKPI()
+            End If
+
             'update
             '    With maintable.Rows(0)
             '        .Item("payby") = payby
@@ -505,6 +511,8 @@ endprocess:
             'Else
             'Dim amountpayBack As Double
             'Dim amountdedusctsell As Double
+        Else
+
             'insert
             With maintable
                 .Rows.Add("", cboPeriod.SelectedItem.Value, 0, "",
@@ -541,6 +549,24 @@ endprocess:
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('find fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+    Private Sub findMainNewKPI()
+        Dim ds_find = New DataSet
+        Dim objKpi As New Kpi
+        Try
+            ds_find = objKpi.Kpi_NewKPIs_Find(Request.QueryString("NewKpiCode").ToString())
+            '-- table 0 = main
+            '-- table 1 = detail
+
+            maintable = ds_find.Tables(0)
+
+            Session("maintable_request") = maintable
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('find main fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
