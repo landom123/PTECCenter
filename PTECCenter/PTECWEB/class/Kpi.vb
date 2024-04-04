@@ -632,8 +632,7 @@ Public Class Kpi
                                       .Rows(i).Item("lv3").ToString,
                                       .Rows(i).Item("lv4").ToString,
                                       .Rows(i).Item("lv5").ToString,
-                                    .Rows(i).Item("preriodid"),
-                                    usercode)
+                                     usercode)
                 End If
             Next
         End With
@@ -642,7 +641,7 @@ Public Class Kpi
     End Sub
     Private Function SaveDetailToTable(newkpino As String, kpino As String, title As String, categoryid As Integer, weight As Integer, unit As String,
                                        lv1 As String, lv2 As String, lv3 As String, lv4 As String, lv5 As String,
-                                   preriodid As Integer, user As String) As String
+                                    user As String) As String
         Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
