@@ -1598,7 +1598,7 @@ endprocess:
         Dim objnonpo As New NonPO
         Dim result As Boolean = True
         Dim msg As String = ""
-        If String.IsNullOrEmpty(txtDuedate.Text) Then
+        If String.IsNullOrEmpty(maintable.Rows(0).Item("duedate").ToString) Then
             result = False
             msg = "กรุณาใส่ DueDate"
             GoTo endprocess
