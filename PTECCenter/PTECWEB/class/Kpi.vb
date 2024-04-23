@@ -664,7 +664,7 @@ Public Class Kpi
         cmd.Parameters.Add("@lv3", SqlDbType.VarChar).Value = lv3
         cmd.Parameters.Add("@lv4", SqlDbType.VarChar).Value = lv4
         cmd.Parameters.Add("@lv5", SqlDbType.VarChar).Value = lv5
-        cmd.Parameters.Add("@preriodid", SqlDbType.Int).Value = preriodid
+        'cmd.Parameters.Add("@preriodid", SqlDbType.Int).Value = preriodid
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
 
 
