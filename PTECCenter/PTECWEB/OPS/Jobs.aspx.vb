@@ -647,7 +647,7 @@ endprocess:
         txtDueDate.Text = ""
         cboPolicy.SelectedIndex = -1
         cboSupplier.SelectedIndex = -1
-        cboPosition.SelectedIndex = -1
+        'cboPosition.SelectedIndex = -1
         txtCost.Text = "0"
         cboUnit.SelectedIndex = 1
         txtQuantity.Text = "1"
@@ -717,10 +717,10 @@ endprocess:
         row("jobno") = txtJobno.Text
         row("jobtypeid") = cboJobType.SelectedItem.Value
         row("jobtype") = cboJobType.SelectedItem.Text
-        If cboPosition.SelectedIndex > -1 Then
-            row("assetid") = cboPosition.SelectedItem.Value
-            row("assetposition") = cboPosition.SelectedItem.Text
-        End If
+        'If cboPosition.SelectedIndex > -1 Then
+        '    row("assetid") = cboPosition.SelectedItem.Value
+        '    row("assetposition") = cboPosition.SelectedItem.Text
+        'End If
         row("assetcode") = txtAssetCode.Text
         row("assetname") = txtAssetName.Text
         row("quantity") = qty
@@ -791,7 +791,7 @@ endprocess:
     Private Function FindPositionInPump(branchid As String) As Boolean
         Dim objjobs As New jobs
         Try
-            objjobs.SetPositionInPumpList(cboPosition, branchid)
+            'objjobs.SetPositionInPumpList(cboPosition, branchid)
             Return True
         Catch ex As Exception
             Dim scriptKey As String = "alert"

@@ -62,7 +62,7 @@ Public Class KPIsRequestList
         End If
 
 
-        operator_code = objNonpo.NonPOPermisstionOperator("MMR")
+        operator_code = objKpi.KPIPermisstion("NKPI", "OP")
         If Not IsPostBack() Then
 
 
@@ -90,7 +90,11 @@ Public Class KPIsRequestList
             cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
             cboCreatebyCO.SelectedIndex = cboCreatebyCO.Items.IndexOf(cboCreatebyCO.Items.FindByValue(Session("userid")))
 
-            searchjobslist()
+            If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+                searchjobslist()
+            Else
+                searchNewKpilist_owner()
+            End If
 
         Else
 
@@ -150,10 +154,28 @@ Public Class KPIsRequestList
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
-        searchjobslist()
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+            searchjobslist()
+        Else
+            searchNewKpilist_owner()
+        End If
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        Dim objbranch As New Branch
+
+        cboCompany.SelectedIndex = 1
+        cboPeriod.SelectedIndex = -1
+        cboCreatebyCO.SelectedIndex = -1
+        cboCreateby.SelectedIndex = -1
+        cboRatio.SelectedIndex = -1
+        cboPosition.SelectedIndex = -1
+        cboDepartment.SelectedIndex = -1
+        cboSection.SelectedIndex = -1
+        cboBranchGroup.SelectedIndex = -1
+        cboBranch.SelectedIndex = -1
+
+
         If itemtable IsNot Nothing Then
             itemtable.Rows.Clear()
         End If
@@ -162,6 +184,14 @@ Public Class KPIsRequestList
         End If
         Session("newkpiitem") = itemtable
         Session("criteria_newkpi") = criteria
+
+
+        Dim depid As Integer
+        Dim objsection As New Section
+
+        depid = cboDepartment.SelectedItem.Value
+        objsection.SetCboSectionCodeNameByMode(cboSection, depid, "actived")
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
 
         BindData()
     End Sub
@@ -189,5 +219,48 @@ Public Class KPIsRequestList
 
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         Response.Redirect("KPIsRequest.aspx")
+    End Sub
+
+
+    Private Sub searchNewKpilist_owner()
+        Dim objKpi As New Kpi
+        Dim objMemo As New Memo
+
+        Dim detailtable As New DataTable
+        Try
+            If chkCO.Checked Then
+                itemtable = objKpi.newkpi_For_Owner("",
+                                                      "",
+                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        "",
+                                                        "",
+                                                        cboBranchGroup.SelectedItem.Value.ToString,
+                                                        cboBranch.SelectedItem.Value.ToString,
+                                                        cboCreatebyCO.SelectedItem.Value.ToString,
+                                                        Session("userid").ToString,
+                                                        "CO",
+                                                        cboPeriod.SelectedValue.ToString)
+            ElseIf chkHO.Checked Then
+                itemtable = objKpi.newkpi_For_Owner(cboDepartment.SelectedItem.Value.ToString,
+                                                        cboSection.SelectedItem.Value.ToString,
+                                                        cboCompany.SelectedItem.Value.ToString,
+                                                        cboRatio.SelectedItem.Value.ToString,
+                                                        cboPosition.SelectedItem.Value.ToString,
+                                                      "",
+                                                      "",
+                                                        cboCreateby.SelectedItem.Value.ToString,
+                                                        Session("userid").ToString,
+                                                        "HO",
+                                                        cboPeriod.SelectedValue.ToString)
+            End If
+
+            Session("newkpiitem") = itemtable
+            BindData()
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('search fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
     End Sub
 End Class
