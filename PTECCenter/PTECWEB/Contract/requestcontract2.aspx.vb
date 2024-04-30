@@ -2070,6 +2070,7 @@ Public Class requestcontract2
 
             dtCoOth = objCo.loadContractOth(sDocNo)
 
+
             For Each dr As DataRow In dtCoOth.Rows
                 cboMainContact.SelectedValue = dr("GroupConID")
 
@@ -2155,6 +2156,17 @@ Public Class requestcontract2
 
                 txtDueDateOth.Text = dr("DueDay")
                 txtRentPerMonthOth.Text = FormatNumber(CDbl(dr("RentPerMonth")), 2)
+
+                image7.Visible = ID <> "0"
+                Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                image7.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+
+                image8.Visible = ID <> "0"
+                Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                image8.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+
 
                 If disableTab(cboMainContact.SelectedValue) = False Then
                     Return False
@@ -2466,16 +2478,16 @@ Public Class requestcontract2
 
         'Dim objsupplier As New Supplier
 
-        txtBeginDateFix.Text = Now.Date
-        txtBeginDate4.Text = Now.Date
-        txtBeginDateNonOil.Text = Now.Date
-        txtBeginDateRentJoin.Text = Now.Date
-        txtContractBeginDate.Text = Now.Date
-        txtEndDate4.Text = Now.Date
-        txtEndDateFix.Text = Now.Date
-        txtEndDateNonOil.Text = Now.Date
-        txtEndDateRentJoin.Text = Now.Date
-        txtContractEndDate.Text = Now.Date
+        If txtBeginDateFix.Text = "" Then txtBeginDateFix.Text = Now.Date
+        If txtBeginDate4.Text = "" Then txtBeginDate4.Text = Now.Date
+        If txtBeginDateNonOil.Text = "" Then txtBeginDateNonOil.Text = Now.Date
+        If txtBeginDateRentJoin.Text = "" Then txtBeginDateRentJoin.Text = Now.Date
+        If txtContractBeginDate.Text = "" Then txtContractBeginDate.Text = Now.Date
+        If txtEndDate4.Text = "" Then txtEndDate4.Text = Now.Date
+        If txtEndDateFix.Text = "" Then txtEndDateFix.Text = Now.Date
+        If txtEndDateNonOil.Text = "" Then txtEndDateNonOil.Text = Now.Date
+        If txtEndDateRentJoin.Text = "" Then txtEndDateRentJoin.Text = Now.Date
+        If txtContractEndDate.Text = "" Then txtContractEndDate.Text = Now.Date
 
         If IsPostBack() Then
             If Session("menulist") Is Nothing Then
@@ -2488,12 +2500,6 @@ Public Class requestcontract2
             assetsno = Session("assetsno")
 
         Else
-            'contractno = Request.QueryString("contractno")
-            'assetsno = Request.QueryString("assetsno")
-
-
-            'Session("contractno") = contractno
-            'Session("assetsno") = assetsno
 
             If Session("menulist") Is Nothing Then
                 menutable = LoadMenu(usercode)
@@ -2501,13 +2507,6 @@ Public Class requestcontract2
             Else
                 menutable = Session("menulist")
             End If
-
-            'If Not String.IsNullOrEmpty(assetsno) Then
-            '    FindData(assetsno)
-            'Else
-            '    txtdocuno.Text = contractno
-            '    SetButton("NEW")
-            'End If
 
             If Not Request.QueryString("DocID") Is Nothing Then
                 'objpolicy.setComboPolicyByJobTypeID(cboPolicy, cboJobType.SelectedItem.Value)
@@ -3643,10 +3642,11 @@ Public Class requestcontract2
 
         Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
         Using conn As SqlConnection = New SqlConnection(constr)
-            Dim sql As String = "Update TT_ContractOth SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID "
+            Dim sql As String = "Update TT_ContractOth SET pic1=@pic1,pic2=@pic2,pic3=@pic2 WHERE ID=@iID "
             Using cmd As SqlCommand = New SqlCommand(sql, conn)
                 cmd.Parameters.AddWithValue("@pic1", bytes)
                 cmd.Parameters.AddWithValue("@pic2", bytes2)
+                cmd.Parameters.AddWithValue("@pic3", bytes2)
                 cmd.Parameters.AddWithValue("@iID", iID)
                 conn.Open()
                 cmd.ExecuteNonQuery()
