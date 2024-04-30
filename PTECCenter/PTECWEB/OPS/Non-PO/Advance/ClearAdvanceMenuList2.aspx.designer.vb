@@ -203,6 +203,15 @@ Partial Public Class ClearAdvanceMenuList2
     Protected WithEvents note2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cboMaxRows control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboMaxRows As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''gvRemind control.
     '''</summary>
     '''<remarks>

@@ -5,6 +5,7 @@
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/css/print.css")%>" rel="stylesheet" type="text/css">
     <style>
         .card-advancerequest {
             max-width: 960px;
@@ -13,12 +14,12 @@
         .col-form-label {
             text-align: right;
         }
-
+/*
         @media only screen and (max-width: 992px) {
             .col-form-label {
                 text-align: left;
             }
-        }
+        }*/
 
         .HO, .CO {
             display: none;
@@ -44,8 +45,8 @@
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper">
-                <div class="container">
-                    <div class="foram">
+                <div class="container print">
+                    <div class="foram notPrint">
                         <div class="row">
                             <%=Session("status") %>
                         </div>
@@ -58,7 +59,7 @@
                         <div class="row">
                             <%=approver %>
                         </div>
-                        
+
                         <div class="row">
                             <%=verifier %>
                         </div>
@@ -69,9 +70,9 @@
                             บช. ที่ดูแล : <%=account_code %>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-3 ">
                         <div class="col">
-                            <div class="card shadow card-advancerequest mx-auto">
+                            <div class="card shadow card-advancerequest mx-auto ">
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col text-left align-self-center">
@@ -81,13 +82,13 @@
                                         <div class="col-auto text-right align-self-center">
 
                                             <% If Not Request.QueryString("ADV") Is Nothing Then%>
-                                            <button id="btnPrint" class="btn btn-sm  btn-warning" style="color: #495057;" onclick="PrintElem('#content-wrapper')" title="Print" runat="server">
+                                            <button id="btnPrint" class="btn btn-sm  btn-warning notPrint" style="color: #495057;" onclick="event.preventDefault();event.stopPropagation();window.print();" title="Print" runat="server">
                                                 <i class="fas fa-print"></i>
                                             </button>
                                             &nbsp;
                                             
                                             <% End If %>
-                                            <a href="AdvanceMenuList.aspx" class="btn btn-sm btn-danger ">
+                                            <a href="AdvanceMenuList.aspx" class="btn btn-sm btn-danger notPrint">
                                                 <i class="fa fa-tasks" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
@@ -111,8 +112,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                    <div class="row mb-3 ">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="Label2" CssClass="form-label" AssociatedControlID="cboCompany" runat="server" Text="สังกัด" />
                                         </div>
                                         <div class="col-lg-10">
@@ -121,7 +122,7 @@
                                     </div>
                                     <% If Not Request.QueryString("ADV") Is Nothing Then%>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbNonPOcode" CssClass="form-label" AssociatedControlID="txtNonPOcode" runat="server" Text="เลขที่ใบงาน" />
                                         </div>
                                         <div class="col-lg-10">
@@ -129,7 +130,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbStatusRq" CssClass="form-label" AssociatedControlID="txtStatusRq" runat="server" Text="สถานะ" />
                                         </div>
                                         <div class="col-lg-10">
@@ -139,7 +140,7 @@
                                     <% End If %>
 
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbCreateBy" CssClass="form-label" AssociatedControlID="txtCreateBy" runat="server" Text="ผู้ขอเบิก" />
                                         </div>
                                         <div class="col-lg-10">
@@ -147,7 +148,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbcboOwner" CssClass="form-label" AssociatedControlID="cboOwner" runat="server" Text="ผู้รับเงิน" />
                                         </div>
                                         <div class="col-lg-10">
@@ -156,7 +157,7 @@
                                     </div>
                                     <% If Not Request.QueryString("ADV") Is Nothing Then%>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbDocDate" CssClass="form-label" AssociatedControlID="txtDocDate" runat="server" Text="วันที่เบิก" />
                                         </div>
                                         <div class="col-lg-10">
@@ -164,7 +165,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbVerifyby" CssClass="form-label" AssociatedControlID="txtVerifyby" runat="server" Text="ผู้ตรวจสอบ" />
                                         </div>
                                         <div class="col-lg-5">
@@ -175,7 +176,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbApprovalby" CssClass="form-label" AssociatedControlID="txtApprovalby" runat="server" Text="ผู้อนุมัติ" />
                                         </div>
                                         <div class="col-lg-5">
@@ -185,14 +186,14 @@
                                             <asp:TextBox class="form-control  text-success font-weight-bold" ID="txtApprovalDate" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                   <%-- <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                    <%-- <div class="row mb-3">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbApprovalDate" CssClass="form-label" AssociatedControlID="txtApprovalDate" runat="server" Text="วันที่อนุมัติ" />
                                         </div>
                                         
                                     </div>--%>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbAccountby" CssClass="form-label" AssociatedControlID="txtAccountby" runat="server" Text="ตรวจสอบโดย" />
                                         </div>
                                         <div class="col-lg-5">
@@ -202,14 +203,14 @@
                                             <asp:TextBox class="form-control  text-warning font-weight-bold" ID="txtAccountdate" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                   <%-- <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                    <%-- <div class="row mb-3">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbAccountdate" CssClass="form-label" AssociatedControlID="txtAccountdate" runat="server" Text="วันที่ตรวจสอบ" />
                                         </div>
                                        
                                     </div>--%>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbtxtSupportby" CssClass="form-label" AssociatedControlID="txtSupportby" runat="server" Text="ทำจ่ายโดย" />
                                         </div>
                                         <div class="col-lg-5">
@@ -219,8 +220,8 @@
                                             <asp:TextBox class="form-control  text-info font-weight-bold" ID="txtSupportdate" runat="server" ReadOnly="true"></asp:TextBox>
                                         </div>
                                     </div>
-                                 <%--   <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                    <%--   <div class="row mb-3">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbtxtSupportdate" CssClass="form-label" AssociatedControlID="txtSupportdate" runat="server" Text="วันที่ยืนยันทำจ่าย" />
                                         </div>
                                         
@@ -229,7 +230,7 @@
 
                                     <div class="row mb-3">
 
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbtxtamount" CssClass="form-label" AssociatedControlID="txtamount" runat="server" Text="ยอดขอเบิก" />
                                             <asp:Label ID="lbMandatoryamount" CssClass="text-danger " AssociatedControlID="txtamount" runat="server" Text="*" />
                                         </div>
@@ -259,7 +260,7 @@
 
                                     <% If Not String.IsNullOrEmpty(detailtable.Rows(0).Item("amount_more")) Then%>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbamountmore" CssClass="form-label" AssociatedControlID="txtamountmore" runat="server" Text="เบิกเพิ่มเติม" />
                                         </div>
                                         <div class="col-lg-5">
@@ -291,7 +292,7 @@
                                     <% End If %>
 
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbbalance" CssClass="form-label" AssociatedControlID="txtbalance" runat="server" Text="ยอดคงค้างชำระ" />
                                         </div>
                                         <div class="col-lg-10">
@@ -301,7 +302,7 @@
 
                                     <% End If %>
                                     <%--<div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbDuedate" CssClass="form-label font-weight-bold" AssociatedControlID="txtDuedate" runat="server" Text="Due Date" />
                                         </div>
                                         <div class="col-lg-10">
@@ -319,7 +320,7 @@
                                         </div>
                                     </div>--%>
                                     <div class="row mb-3">
-                                        <div class="col-lg-2 col-form-label">
+                                        <div class="col-lg-2 text-left text-lg-right">
                                             <asp:Label ID="lbtxtdetail" CssClass="form-label" AssociatedControlID="txtdetail" runat="server" Text="วัตถุประสงค์" />
                                             <asp:Label ID="lbMandatorydetail" CssClass="text-danger " AssociatedControlID="txtdetail" runat="server" Text="*" />
                                         </div>
@@ -373,7 +374,7 @@
                         </div>
                     </div>
                     <!-- -->
-                    <div class="row">
+                    <div class="row ">
                         <div class="col">
                             <div class="card-body">
                                 <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
@@ -465,8 +466,8 @@
 
                         </div>
                     </div>
-                    <div class="row notPrint" id="card_attatch" runat="server">
-                        <div class="col-md-6 mt-3">
+                    <div class="row " id="card_attatch" runat="server">
+                        <div class="col-md-6 mt-3 notPrint">
                             <div class="card shadow card_attatch">
                                 <div class="card-header">
                                     เอกสารแนบ
@@ -555,7 +556,7 @@
                                         <% Next i %>
                                     </div>
 
-                                    <div class="card-footer">
+                                    <div class="card-footer notPrint">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -902,7 +903,7 @@
 
             mywindow.document.write('<link rel="stylesheet" href="<%=Page.ResolveUrl("~/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css")%>" rel="stylesheet" type="text/css">');
             mywindow.document.write(' <link href="<%=Page.ResolveUrl("~/vendor/fontawesome-free/css/all.min.css")%>" rel="stylesheet" type="text/css">');
-            mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/sb-admin.css")%>" rel="stylesheet">');
+            mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/sb-admin.min.css")%>" rel="stylesheet">');
             mywindow.document.write('  <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">');
             
             mywindow.document.write('</head><body >');

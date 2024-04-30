@@ -9,7 +9,10 @@
         th {
             text-align: center;
         }
-
+        
+        th a {
+            color:black;
+        }
         .input-group {
             padding-top: 1rem;
         }
@@ -46,7 +49,7 @@
 
                 <div class="row">
                     <div class="col-12 ">
-                        <a href="approval.aspx" class="btn btn-sm btn-danger ">New</a>
+                        <a href="approval.aspx" class="btn btn-sm btn-primary ">New</a>
                         &nbsp;
                         <% If Not Session("positionid") = "10" Then%>
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp; 
@@ -157,52 +160,61 @@
                 </div>
                 <% End If %>
                 <div class="card-body">
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            <asp:DropDownList ID="cboMaxRows" class="form-control" runat="server">
+                                <asp:ListItem Value="1000">1,000 รายการ</asp:ListItem>
+                                <asp:ListItem Value="2147483647">รายการทั้งหมด</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <asp:GridView ID="gvRemind"
                             class="table table-striped table-bordered"
+                            AllowSorting="true"
                             AutoGenerateColumns="false"
                             EmptyDataText="No data available."
                             PageSize="20"
                             AllowPaging="true"
                             runat="server">
                             <Columns>
-                                <asp:TemplateField HeaderText="เลขที่ใบงาน" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="approvalcode" HeaderText="เลขที่ใบงาน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("approvalcode")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="เลขที่ใบเคลียร์" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="cladvcode" HeaderText="เลขที่ใบเคลียร์" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblcode" runat="server" Text='<%#Eval("cladvcode")%>' ToolTip='<%#Eval("cladvstatus")%>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 
-                                <asp:TemplateField HeaderText="วันที่แจ้ง">
+                                <asp:TemplateField SortExpression="createdate" HeaderText="วันที่แจ้ง">
                                     <ItemTemplate>
                                         <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("createdate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="โดย" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="createby" HeaderText="โดย" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("createby")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="สาขา" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="branch" HeaderText="สาขา" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("branch")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="หัวข้อ">
+                                <asp:TemplateField SortExpression="approvalname" HeaderText="หัวข้อ">
                                     <ItemTemplate>
                                         <asp:Label ID="lblApprovalname" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="owner_permission" HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbOwnerpermission" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
+                                <asp:TemplateField SortExpression="statusname" HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("statusname")%>'></asp:Label>
                                     </ItemTemplate>
@@ -215,7 +227,7 @@
                             </Columns>
                         </asp:GridView>
                     </div>
-                    <h4>ทั้งหมด <% =cntdt%> รายการ</h4>
+                    <%--<h4>ทั้งหมด <% =cntdt%> รายการ</h4>--%>
                 </div>
 
 

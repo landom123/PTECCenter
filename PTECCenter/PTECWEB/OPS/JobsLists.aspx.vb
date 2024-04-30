@@ -9,10 +9,12 @@ Public Class JobsList_test
     Public menutable As DataTable
 
     Public cntdt As Integer
+    Public operator_code As String = ""
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim approval As New Approval
         Dim objbranch As New Branch
+        Dim objNonpo As New NonPO
         Dim objdep As New Department
         Dim objjob As New jobs
         Dim objsup As New Supplier
@@ -33,12 +35,15 @@ Public Class JobsList_test
         End If
 
 
+        operator_code = objNonpo.NonPOPermisstionOperator("JOB")
         If Not IsPostBack() Then
 
-            If Not Session("positionid") = "10" Then
-
-                txtStartDate.Attributes.Add("readonly", "readonly")
-                txtEndDate.Attributes.Add("readonly", "readonly")
+            If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+                txtallOperator.Text = operator_code
+                'txtStartDate.Attributes.Add("readonly", "readonly")
+                'txtEndDate.Attributes.Add("readonly", "readonly")
+                'txtStartDate.Text = Date.Now
+                'txtEndDate.Text = Date.Now
 
                 objsup.SetCboSupplier(cboSuppiler)
                 objbranch.SetComboBranchGroup(cboBranchGroup)
@@ -46,7 +51,7 @@ Public Class JobsList_test
                 objjob.SetCboJobStatusListForReport(cboStatusFollow)
                 objdep.SetCboDepartmentforjobtype(cboDep)
                 cboDep.SelectedIndex = cboDep.Items.IndexOf(cboDep.Items.FindByValue(Session("depid").ToString))
-                SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
+                SetCboJobTypeByDepID(cboJobType, cboDep.SelectedValue)
 
 
                 '------------------------------------
@@ -65,7 +70,7 @@ Public Class JobsList_test
                     cboWorking.SelectedValue = Session("cboWorking_job")
                 End If
                 Try
-                    itemtable = objjob.JobList(usercode, cboWorking.SelectedItem.Value)
+                    itemtable = objjob.JobList(usercode, cboWorking.SelectedValue, cboMaxRows.SelectedValue)
                 Catch ex As Exception
                     Dim scriptKey As String = "alert"
                     Dim javaScript As String = "alertWarning('search fail');"
@@ -82,10 +87,11 @@ Public Class JobsList_test
         End If
     End Sub
     Private Sub BindData()
-        If Not Session("positionid") = "10" Then
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
             setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         End If
         cntdt = itemtable.Rows.Count
+        gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
     End Sub
@@ -93,15 +99,16 @@ Public Class JobsList_test
         criteria = createCriteria()
         criteria.Rows.Clear()
         criteria.Rows.Add(txtjobcode.Text.Trim(),
-                            cboDep.SelectedItem.Value,
-                            cboJobType.SelectedItem.Value,
-                            cboStatusFollow.SelectedItem.Value,
-                            cboBranchGroup.SelectedItem.Value,
-                            cboBranch.SelectedItem.Value,
+                            cboDep.SelectedValue,
+                            cboJobType.SelectedValue,
+                            cboStatusFollow.SelectedValue,
+                            cboBranchGroup.SelectedValue,
+                            cboBranch.SelectedValue,
                             txtStartDate.Text.Trim(),
                             txtEndDate.Text.Trim(),
-                            cboSuppiler.SelectedItem.Value,
-                            gvRemind.PageIndex)
+                            cboSuppiler.SelectedValue,
+                            gvRemind.PageIndex,
+                            cboMaxRows.SelectedValue)
         Session("criteria_Job") = criteria
     End Sub
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
@@ -139,6 +146,7 @@ Public Class JobsList_test
         dt.Columns.Add("txtEndDate", GetType(String))
         dt.Columns.Add("cboSuppiler", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
+        dt.Columns.Add("maxrows", GetType(Integer))
 
         Return dt
     End Function
@@ -148,16 +156,17 @@ Public Class JobsList_test
             txtStartDate.Text = criteria.Rows(0).Item("txtStartDate")
             txtEndDate.Text = criteria.Rows(0).Item("txtEndDate")
             gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
+            cboMaxRows.SelectedValue = criteria.Rows(0).Item("maxrows")
 
             cboDep.SelectedValue = criteria.Rows(0).Item("cboDep")
-            SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
+            SetCboJobTypeByDepID(cboJobType, cboDep.SelectedValue)
             cboJobType.SelectedValue = criteria.Rows(0).Item("cboJobType")
             cboStatusFollow.SelectedValue = criteria.Rows(0).Item("cboStatusFollow")
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
             cboSuppiler.SelectedValue = criteria.Rows(0).Item("cboSuppiler")
             Dim objbranch As New Branch
             cboBranch.SelectedIndex = -1
-            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
 
             cboBranch.SelectedValue = criteria.Rows(0).Item("cboBranch")
 
@@ -172,14 +181,15 @@ Public Class JobsList_test
 
 
             itemtable = objjob.JobList_For_Operator(txtjobcode.Text.Trim(),
-                                                      cboDep.SelectedItem.Value,
-                                                      cboJobType.SelectedItem.Value,
-                                                      cboStatusFollow.SelectedItem.Value,
-                                                        cboBranchGroup.SelectedItem.Value,
-                                                        cboBranch.SelectedItem.Value,
+                                                      cboDep.SelectedValue,
+                                                      cboJobType.SelectedValue,
+                                                      cboStatusFollow.SelectedValue,
+                                                        cboBranchGroup.SelectedValue,
+                                                        cboBranch.SelectedValue,
                                                         txtStartDate.Text.Trim(),
                                                         txtEndDate.Text.Trim(),
-                                                        cboSuppiler.SelectedItem.Value)
+                                                        cboSuppiler.SelectedValue,
+                                                        cboMaxRows.SelectedValue)
 
             Session("joblist") = itemtable
             BindData()
@@ -224,7 +234,7 @@ Public Class JobsList_test
 
     Private Sub cboDep_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDep.SelectedIndexChanged
         cboJobType.SelectedIndex = -1
-        SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
+        SetCboJobTypeByDepID(cboJobType, cboDep.SelectedValue)
         'searchjobslist()
     End Sub
 
@@ -232,14 +242,14 @@ Public Class JobsList_test
         Dim objbranch As New Branch
 
         cboBranch.SelectedIndex = -1
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
         'searchjobslist()
     End Sub
 
     Private Sub cboWorking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWorking.SelectedIndexChanged
-        Session("cboWorking_job") = cboWorking.SelectedItem.Value
+        Session("cboWorking_job") = cboWorking.SelectedValue
         Dim objjob As New jobs
-        itemtable = objjob.JobList(Session("usercode"), cboWorking.SelectedItem.Value)
+        itemtable = objjob.JobList(Session("usercode"), cboWorking.SelectedValue, cboMaxRows.SelectedValue)
         Session("joblist") = itemtable
         BindData()
 
@@ -286,9 +296,9 @@ Public Class JobsList_test
         Session("joblist") = itemtable
         Session("criteria_Job") = criteria
 
-        SetCboJobTypeByDepID(cboJobType, cboDep.SelectedItem.Value)
+        SetCboJobTypeByDepID(cboJobType, cboDep.SelectedValue)
 
-        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
+        objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
 
         BindData()
         'searchjobslist()
@@ -346,4 +356,33 @@ Public Class JobsList_test
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         searchjobslist()
     End Sub
+    Private Sub gvRemind_Sorting(sender As Object, e As GridViewSortEventArgs) Handles gvRemind.Sorting
+
+        Dim dt As DataTable = TryCast(itemtable, DataTable)
+
+        If dt IsNot Nothing Then
+            dt.DefaultView.Sort = e.SortExpression & " " & GetSortDirection(e.SortExpression)
+            BindData()
+        End If
+    End Sub
+
+    Private Function GetSortDirection(ByVal column As String) As String
+        Dim sortDirection As String = "ASC"
+        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+
+        If sortExpression IsNot Nothing Then
+
+            If sortExpression = column Then
+                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+
+                If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
+                    sortDirection = "DESC"
+                End If
+            End If
+        End If
+
+        ViewState("SortDirection") = sortDirection
+        ViewState("SortExpression") = column
+        Return sortDirection
+    End Function
 End Class

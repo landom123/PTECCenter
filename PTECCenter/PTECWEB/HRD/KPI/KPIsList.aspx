@@ -107,7 +107,7 @@
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper" style="min-height: 600px;">
-                <div class="px-5">
+                <div class="px-sm-5  px-3">
                     <%--<div class="row">
                         <div class="col text-left align-self-center">
                             Performance Update : KPIs & Competency
@@ -167,6 +167,14 @@
                                         <span class="input-group-text">Company</span>
                                     </div>
                                     <asp:DropDownList class="form-control" ID="cboCompany" runat="server" AutoPostBack="false"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Period</span>
+                                    </div>
+                                    <asp:DropDownList class="form-control" ID="cboPeriod" runat="server" AutoPostBack="false"></asp:DropDownList>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3 HO">

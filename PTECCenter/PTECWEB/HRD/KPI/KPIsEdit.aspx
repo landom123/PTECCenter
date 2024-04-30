@@ -175,7 +175,7 @@
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper">
-                <div class="px-5">
+                <div class="px-sm-5  px-3">
                     <div class="row">
                         <div class="col text-left align-self-center">
                         </div>
@@ -490,7 +490,7 @@
                         <%-- end item--%>
                     </div>
                     <!------------------------------------------------------------------------>
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col-1">
                         </div>
                         <div class="col text-muted ">

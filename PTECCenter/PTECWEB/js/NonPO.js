@@ -87,8 +87,8 @@ function CheckNumber(Number) {
 }
 
 function calCostTotal(cost, vat, tax) {
-    const c_Vat = calVat(cost, vat).toFixed(2);
-    const c_Tax = calTax(cost, tax).toFixed(2);
+    const c_Vat = calVat(cost, vat).toFixed(4);
+    const c_Tax = calTax(cost, tax).toFixed(4);
     return cost + parseFloat(c_Vat) - parseFloat(c_Tax);
 }
 
@@ -302,7 +302,10 @@ function confirmDelete(commentID, userid) {
 //});
 
 function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parseFloat(x).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 4,
+    });
 }
 
 
@@ -557,3 +560,24 @@ function nonpo_autocomplete_invoice(inp, arrlist, arr2, elemindateid, elemvenid,
     });
 }
 /*  ################## END autocomplete #################  */
+function removeElem(nameele) {
+    let elements = document.getElementsByName(nameele);
+    //console.log(elements);
+    //console.log("asdasd");
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].remove();
+    }
+}
+
+function showBtnSpiner(elemHide) {
+    $("#loader").show();
+    $(elemHide).hide();
+    console.log(elemHide)
+    elemHide.parentNode.insertAdjacentHTML(
+        'beforeend',
+       `<button class="btn btn-secondary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>`
+    );
+}

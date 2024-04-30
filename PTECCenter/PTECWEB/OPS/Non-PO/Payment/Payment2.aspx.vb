@@ -94,14 +94,14 @@ Public Class Payment2
             'End With
 
 
-            objbranch.SetComboBranch(cboBranch, Session("usercode"))
+            objbranch.SetComboBranch(cboBranch, usercode)
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
             objcompany.SetCboCompany(cboCompany, 1)
             SetCboUsers(cboOwner)
             setmaindefault()
 
-            objsmb.SetCboSmartBilllist(multiSelect)
+            objsmb.SetCboSmartBilllist(multiSelect, usercode)
 
             objdep.SetCboDepartmentBybranch(cboDep, 0)
             objNonpo.SetCboAccountCode(cboAccountCode, Session("userid"))
@@ -127,7 +127,7 @@ Public Class Payment2
 
                     account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
 
-                    If (account_code.IndexOf(Session("usercode").ToString) > -1) And
+                    If (account_code.IndexOf(usercode.ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 7) Then
                         Session("status_payment") = "account"
 
@@ -142,11 +142,11 @@ Public Class Payment2
                         now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString + PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
                     End If
 
-                    If (Session("usercode") = md_code Or
-                    Session("usercode") = fm_code Or
-                    Session("usercode") = dm_code Or
-                    Session("usercode") = sm_code Or
-                    Session("usercode") = am_code) And
+                    If (md_code.ToString.IndexOf(usercode) > -1 Or
+                    fm_code.ToString.IndexOf(usercode) > -1 Or
+                    dm_code.ToString.IndexOf(usercode) > -1 Or
+                    sm_code.ToString.IndexOf(usercode) > -1 Or
+                    am_code.ToString.IndexOf(usercode) > -1) And
                     (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then
                         Session("status_payment") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
@@ -160,35 +160,35 @@ Public Class Payment2
                         For Each row As DataRow In PermissionOwner.Tables(0).Rows
                             If row("status").ToString = "now" Then
                                 If row("approver").ToString.IndexOf("MD") > -1 Then
-                                    If (md_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (md_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("approver").ToString.IndexOf("FM") > -1 Then
-                                    If (fm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (fm_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("approver").ToString.IndexOf("DM") > -1 Then
-                                    If (dm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (dm_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("approver").ToString.IndexOf("SM") > -1 Then
-                                    If (sm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (sm_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("approver").ToString.IndexOf("AM") > -1 Then
-                                    If (am_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (am_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
@@ -196,27 +196,27 @@ Public Class Payment2
 
                                 If maintable.Rows(0).Item("statusid") = 2 Then
                                     If row("verifier").ToString.IndexOf("MD") > -1 Then
-                                        If (md_code.IndexOf(Session("usercode")) > -1) Then
+                                        If (md_code.IndexOf(usercode) > -1) Then
                                             verify = True
                                             GoTo endprocess
                                         End If
                                     ElseIf row("verifier").ToString.IndexOf("FM") > -1 Then
-                                        If (fm_code.IndexOf(Session("usercode")) > -1) Then
+                                        If (fm_code.IndexOf(usercode) > -1) Then
                                             verify = True
                                             GoTo endprocess
                                         End If
                                     ElseIf row("verifier").ToString.IndexOf("DM") > -1 Then
-                                        If (dm_code.IndexOf(Session("usercode")) > -1) Then
+                                        If (dm_code.IndexOf(usercode) > -1) Then
                                             verify = True
                                             GoTo endprocess
                                         End If
                                     ElseIf row("verifier").ToString.IndexOf("SM") > -1 Then
-                                        If (sm_code.IndexOf(Session("usercode")) > -1) Then
+                                        If (sm_code.IndexOf(usercode) > -1) Then
                                             verify = True
                                             GoTo endprocess
                                         End If
                                     ElseIf row("verifier").ToString.IndexOf("AM") > -1 Then
-                                        If (am_code.IndexOf(Session("usercode")) > -1) Then
+                                        If (am_code.IndexOf(usercode) > -1) Then
                                             verify = True
                                             GoTo endprocess
                                         End If
@@ -244,7 +244,7 @@ endprocess:
                 If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
                     Session("status_payment") = "new"
                     codeRef.Text = Request.QueryString("code_ref").ToString
-                    ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", Session("usercode").ToString)
+                    ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", usercode.ToString)
                     head = ds.Tables(0)
                     detailtable = ds.Tables(1)
                     cboVendor.SelectedIndex = cboVendor.Items.IndexOf(cboVendor.Items.FindByValue(detailtable.Rows(0).Item("vendorcode").ToString))
@@ -323,10 +323,10 @@ endprocess:
 
         Dim strSplit As Array
         Dim i As Integer
-
         strSplit = allusercode.Split(",")
 
-        For i = 0 To strSplit.Length - 1
+        Dim cnt As Integer = strSplit.Length - 1
+        For i = 0 To cnt
             If Not Session("userid") = userid And
                 Not Session("usercode") = strSplit(i) And
                 Not Session("secid").ToString = "2" And
@@ -373,7 +373,7 @@ endprocess:
         cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(Session("userid").ToString))
         cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid").ToString))
         cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
-        objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+        objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
         cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(Session("secid").ToString))
         cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(1)) 'Pure
 
@@ -447,7 +447,7 @@ endprocess:
             lbcboBranch_show.Text = cboBranch.SelectedItem.Text
             cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(.Rows(0).Item("depid").ToString))
             lbcboDepartment_show.Text = cboDepartment.SelectedItem.Text
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedItem.Value)
+            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
             cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(.Rows(0).Item("secid").ToString))
             lbcboSection_show.Text = cboSection.SelectedItem.Text
             cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(.Rows(0).Item("comid").ToString))
@@ -656,7 +656,8 @@ endprocess:
         End If
     End Sub
     Private Sub checkunsave()
-        For i = 0 To detailtable.Rows.Count - 1
+        Dim cnt As Integer = detailtable.Rows.Count - 1
+        For i = 0 To cnt
             If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
                 chkunsave = 1
                 GoTo endprocess
@@ -683,6 +684,8 @@ endprocess:
                 FromAddDetail.Visible = True
                 btnAddDetails.Visible = True
 
+                btnAddRef.Visible = True
+
                 'ปุ่ม & status 
                 statusnonpo.Visible = False
 
@@ -707,6 +710,8 @@ endprocess:
                     btnFromAddDetail.Visible = True
                     btnAddDetails.Visible = True
                     FromAddDetail.Visible = True
+
+                    btnAddRef.Visible = True
                 Else
                     btnSave.Enabled = False
                     btnUpdate.Enabled = False
@@ -723,6 +728,7 @@ endprocess:
                     FromAddDetail.Visible = False
                     btnAddDetails.Visible = False
 
+                    btnAddRef.Visible = False
 
                     Dim scriptKey As String = "UniqueKeyForThisScript"
                     Dim javaScript As String = "disbtndelete()"
@@ -766,6 +772,8 @@ endprocess:
                 btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
 
+                btnAddRef.Visible = False
+
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -808,6 +816,8 @@ endprocess:
                 btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
 
+                btnAddRef.Visible = False
+
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -840,6 +850,8 @@ endprocess:
                 btnFromAddDetail.Visible = False
                 btnAddDetails.Visible = False
                 FromAddDetail.Visible = False
+
+                btnAddRef.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -874,6 +886,7 @@ endprocess:
                     FromAddDetail.Visible = True
                     btnAddDetails.Visible = True
 
+
                     btnAddAttatch.Visible = True
                 Else
                     btnSave.Enabled = False
@@ -893,6 +906,8 @@ endprocess:
                     Dim javaScript As String = "disbtndelete()"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End If
+
+                btnAddRef.Visible = False
 
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
@@ -922,6 +937,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -955,6 +971,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -984,6 +1001,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -1013,6 +1031,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -1046,6 +1065,7 @@ endprocess:
                 FromAddDetail.Visible = False
                 btnAddDetails.Visible = False
 
+                btnAddRef.Visible = False
                 'ปุ่ม & status 
                 statusnonpo.Visible = True
 
@@ -1202,7 +1222,7 @@ endprocess:
         'Catch ex As Exception
         '    amountdedusctsell = 0
         'End Try
-        If cboVendor.SelectedItem.Value = "" Then
+        If cboVendor.SelectedValue = "" Then
             result = False
             msg = "กรุณาใส่ Vendor"
             GoTo endprocess
@@ -1255,12 +1275,13 @@ endprocess:
         Dim depid As Integer
         Dim objsection As New Section
 
-        depid = cboDepartment.SelectedItem.Value
+        depid = cboDepartment.SelectedValue
         objsection.SetCboSection_seccode(cboSection, depid)
     End Sub
 
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
-        For i = 0 To detailtable.Rows.Count - 1
+        Dim cnt As Integer = detailtable.Rows.Count - 1
+        For i = 0 To cnt
             If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
                 chkunsave = 1
                 Dim scriptKey As String = "alert"
@@ -1302,24 +1323,24 @@ endprocess:
     '    row = detailtable.NewRow()
     '    row("row") = detailtable.Rows.Count + 1
     '    row("nonpodtl_id") = hiddenAdvancedetailid.Value 'df 0
-    '    row("accountcodeid") = cboAccountCode.SelectedItem.Value
+    '    row("accountcodeid") = cboAccountCode.SelectedValue
     '    row("accountcode") = cboAccountCode.SelectedItem.Text
-    '    row("depid") = cboDep.SelectedItem.Value
+    '    row("depid") = cboDep.SelectedValue
     '    row("depname") = cboDep.SelectedItem.Text
-    '    row("buid") = cboBU.SelectedItem.Value
+    '    row("buid") = cboBU.SelectedValue
     '    row("buname") = cboBU.SelectedItem.Text
-    '    row("ppid") = cboPP.SelectedItem.Value
+    '    row("ppid") = cboPP.SelectedValue
     '    row("ppname") = cboPP.SelectedItem.Text
 
     '    row("cost") = cost
     '    row("detail") = txtDetail.Text
     '    row("vendorname") = cboVendor.SelectedItem.Text
-    '    row("vendorcode") = cboVendor.SelectedItem.Value
+    '    row("vendorcode") = cboVendor.SelectedValue
 
 
     '    detailtable.Rows.Add(row)
-    '    'detailtable.Rows.Add(0, cboJobType.SelectedItem.Value, cboJobType.SelectedItem.Text, txtAssetCode.Text, txtAssetName.Text,
-    '    '                    qty, cboUnit.SelectedItem.Value, cboUnit.SelectedItem.Text, cost, cboSupplier.SelectedItem.Value,
+    '    'detailtable.Rows.Add(0, cboJobType.SelectedValue, cboJobType.SelectedItem.Text, txtAssetCode.Text, txtAssetName.Text,
+    '    '                    qty, cboUnit.SelectedValue, cboUnit.SelectedItem.Text, cost, cboSupplier.SelectedValue,
     '    '                    cboSupplier.SelectedItem.Text, urgent, cboPolicy.SelectedValue, reqdate, txtJobDetail.Text, 0)
 
     '    Session("detailtable_payment") = detailtable
@@ -1337,19 +1358,19 @@ endprocess:
     '    With detailtable.Rows(indexrow)
     '        .Item("row") = row.Value 'df 0
     '        .Item("nonpodtl_id") = hiddenAdvancedetailid.Value 'df 0
-    '        .Item("accountcodeid") = cboAccountCode.SelectedItem.Value
+    '        .Item("accountcodeid") = cboAccountCode.SelectedValue
     '        .Item("accountcode") = cboAccountCode.SelectedItem.Text
-    '        .Item("depid") = cboDep.SelectedItem.Value
+    '        .Item("depid") = cboDep.SelectedValue
     '        .Item("depname") = cboDep.SelectedItem.Text
-    '        .Item("buid") = cboBU.SelectedItem.Value
+    '        .Item("buid") = cboBU.SelectedValue
     '        .Item("buname") = cboBU.SelectedItem.Text
-    '        .Item("ppid") = cboPP.SelectedItem.Value
+    '        .Item("ppid") = cboPP.SelectedValue
     '        .Item("ppname") = cboPP.SelectedItem.Text
 
     '        .Item("cost") = cost
     '        .Item("detail") = txtDetail.Text
     '        .Item("vendorname") = cboVendor.SelectedItem.Text
-    '        .Item("vendorcode") = cboVendor.SelectedItem.Value
+    '        .Item("vendorcode") = cboVendor.SelectedValue
     '    End With
 
     'End Sub
@@ -1380,6 +1401,28 @@ endprocess:
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('find fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub findMainNonPO()
+        Dim nonpoDs = New DataSet
+        Dim objNonpo As New NonPO
+        Try
+            nonpoDs = objNonpo.NonPO_Find(Request.QueryString("NonpoCode"))
+            '-- table 0 = Head
+            '-- table 1 = main
+            '-- table 2 = detail
+            '-- table 3 = attach
+            '-- table 4 = comment
+
+            maintable = nonpoDs.Tables(1)
+
+            Session("maintable_payment") = maintable
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('find Main fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
     End Sub
@@ -1482,7 +1525,7 @@ endprocess:
     End Sub
 
     Private Sub changecompany()
-        Dim companyid As Integer = cboCompany.SelectedItem.Value
+        Dim companyid As Integer = cboCompany.SelectedValue
         If companyid = 2 Then
             logo.Src = "..\..\..\icon\logoSAP.svg" 'แสดง card SAP
             company_th.InnerText = "บริษัท เอสซีที สหภัณฑ์ จำกัด"
@@ -1780,10 +1823,10 @@ endprocess:
             payby = "pcx"
         End If
 
-        If cboOwner.SelectedItem.Value = 0 Then
+        If cboOwner.SelectedValue = 0 Then
             userowner = userid
         Else
-            userowner = cboOwner.SelectedItem.Value
+            userowner = cboOwner.SelectedValue
         End If
         Dim purecard_amount As Double
         If maintable.Rows.Count > 0 Then
@@ -1792,11 +1835,17 @@ endprocess:
             Catch ex As Exception
                 purecard_amount = 0
             End Try
+
+            'fix bug share session 2 tab check code
+            If Not (maintable.Rows(0).Item("nonpocode").Equals(txtpmno.Text)) Then
+                findMainNonPO()
+            End If
+
             'update
             With maintable.Rows(0)
                 .Item("payby") = payby
-                .Item("vendorcode") = cboVendor.SelectedItem.Value
-                .Item("comid") = cboCompany.SelectedItem.Value
+                .Item("vendorcode") = cboVendor.SelectedValue
+                .Item("comid") = cboCompany.SelectedValue
                 .Item("DueDate") = txtDuedate.Text.Trim()
                 .Item("detail") = txtNote.Text.Trim()
                 .Item("vat_wait") = If(chkVat.Checked, 1, 0)
@@ -1816,10 +1865,10 @@ endprocess:
             'insert
             With maintable
                 .Rows.Add(0, "", payby, codeRef.Text.Trim(), 0, 0, "", txtNote.Text.Trim(),
-                              cboBranch.SelectedItem.Value, cboDepartment.SelectedItem.Value, cboSection.SelectedItem.Value, cboCompany.SelectedItem.Value,
+                              cboBranch.SelectedValue, cboDepartment.SelectedValue, cboSection.SelectedValue, cboCompany.SelectedValue,
                               0, 0,
                               0, 0,
-                              cboVendor.SelectedItem.Value, "",
+                              cboVendor.SelectedValue, "",
                               txtDuedate.Text.Trim(), chkVat.Checked,
                               userowner, Date.Now.ToString, "", "", "", "", "", "",
                               userowner, Date.Now.ToString, userowner, Date.Now.ToString, userowner, userowner, purecard_amount.ToString)
@@ -2034,7 +2083,7 @@ endprocess:
     End Sub
 
     Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
-        Dim res As String = Request.Form("confirm_value")
+        Dim res As String = Request.Form("addDetailJSON")
         Dim strarr() As String
         strarr = res.Split("}")
         res = strarr(0) + "}"
@@ -2093,9 +2142,9 @@ endprocess:
                 row("cost") = cost
                 row("vat_per") = vat
                 row("tax_per") = tax
-                row("vat") = FormatNumber(cost * vat / 100, 2)
-                row("tax") = FormatNumber(cost * tax / 100, 2)
-                row("cost_total") = FormatNumber((cost + FormatNumber(cost * vat / 100, 2)) - FormatNumber(cost * tax / 100, 2), 2)
+                row("vat") = cost * vat / 100
+                row("tax") = cost * tax / 100
+                row("cost_total") = cost + (cost * vat / 100) - (cost * tax / 100)
                 row("detail") = detail
                 row("vendorname") = vendorname
                 row("vendorcode") = vendorcode
@@ -2125,9 +2174,9 @@ endprocess:
                     .Item("cost") = cost
                     .Item("vat_per") = vat
                     .Item("tax_per") = tax
-                    .Item("vat") = FormatNumber(cost * vat / 100, 2)
-                    .Item("tax") = FormatNumber(cost * tax / 100, 2)
-                    .Item("cost_total") = FormatNumber((cost + FormatNumber(cost * vat / 100, 2)) - FormatNumber(cost * tax / 100, 2), 2)
+                    .Item("vat") = cost * vat / 100
+                    .Item("tax") = cost * tax / 100
+                    .Item("cost_total") = cost + (cost * vat / 100) - (cost * tax / 100)
                     .Item("detail") = detail
                     .Item("vendorname") = vendorname
                     .Item("vendorcode") = vendorcode
@@ -2224,10 +2273,11 @@ endprocess:
                     Next row
 
 
+                    Dim cnt As Integer = ds.Tables(1).Rows.Count - 1
                     Dim cntrow As Integer = detailtable.Rows.Count + 1
                     Dim cnt_new As Integer = 999
                     Dim cnt_detailtable As Integer = 999
-                    For i = 0 To ds.Tables(1).Rows.Count - 1
+                    For i = 0 To cnt
                         cnt_new = ds.Tables(1).Select("row='" & cntrow & "'").Length
                         cnt_detailtable = detailtable.Select("row='" & cntrow & "'").Length
                         While cnt_detailtable > 0 Or cnt_new > 0

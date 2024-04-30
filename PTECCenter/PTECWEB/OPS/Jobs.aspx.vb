@@ -259,7 +259,7 @@ Public Class frmJobs
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = False
-                'btnCancel.Enabled = False
+                btnCancel.Disabled = True
             Case = "edit"
                 If owner = 1 Then
                     btnSave.Enabled = True
@@ -269,30 +269,30 @@ Public Class frmJobs
                     btnConfirm.Enabled = False
                 End If
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = True
+                btnCancel.Disabled = False
             Case = "confirm"
                 btnSave.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = True
+                btnCancel.Disabled = False
             Case = "action"
                 btnSave.Enabled = False
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = False
+                btnCancel.Disabled = True
             Case = "close"
                 btnSave.Enabled = False
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = False
+                btnCancel.Disabled = True
             Case = "cancel"
                 btnSave.Enabled = False
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
                 btnPrint.Enabled = True
-                'btnCancel.Enabled = False
+                btnCancel.Disabled = True
                 'Dim scriptKey As String = "UniqueKeyForThisScript"
                 'Dim javaScript As String = "<script type='text/javascript'>chkButtonCancel('btnCancel'," & Session("status") & ");"
                 'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
@@ -348,6 +348,12 @@ Public Class frmJobs
     Private Function validatedata() As Boolean
         Dim result As Boolean = True
         Dim msg As String = ""
+
+        If cboBranch.SelectedItem.Value = "" Or cboBranch.SelectedItem.Value = 0 Then
+            result = False
+            msg = "กรุณาเลือกสาขา"
+            GoTo endprocess
+        End If
         If cboOwner.SelectedIndex < 0 Then
             result = False
             msg = "กรุณาเลือกผู้แจ้ง"
@@ -430,23 +436,27 @@ endprocess:
         Dim result As Boolean = True
         Dim msg As String = ""
 
-        If cboBranch.SelectedItem.Value = "" Then
+        If cboBranch.SelectedItem.Value = "" Or cboBranch.SelectedItem.Value = 0 Then
             result = False
             msg = "กรุณาเลือกสาขา"
             GoTo endprocess
         End If
-        If cboJobType.SelectedItem.Value = 1 Then
-            'If cboPosition.SelectedIndex < 0 And String.IsNullOrEmpty(txtAssetName.Text) Then
-            'result = False
-            'msg = "กรุณาเลือกตำแหน่งตู้ หรือ กรอกรหัส FA.. ของตู้จ่าย"
-            'GoTo endprocess
-            'End If
+        If cboJobType.SelectedItem.Value.ToString = "" Then
+            result = False
+            msg = "กรุณาเลือกประเภทงาน"
+            GoTo endprocess
         ElseIf cboJobType.SelectedItem.Value = 16 Then
             If String.IsNullOrEmpty(txtAssetName.Text) And String.IsNullOrEmpty(txtBrand.Text) And String.IsNullOrEmpty(txtModel.Text) Then
                 result = False
                 msg = "กรุณาระบุรหัสทรัพสินทร์ หรือ ชื่อยี่ห้อ หรือ รุ่น"
                 GoTo endprocess
             End If
+        ElseIf cboJobType.SelectedItem.Value = 1 Then
+            'If cboPosition.SelectedIndex < 0 And String.IsNullOrEmpty(txtAssetName.Text) Then
+            'result = False
+            'msg = "กรุณาเลือกตำแหน่งตู้ หรือ กรอกรหัส FA.. ของตู้จ่าย"
+            'GoTo endprocess
+            'End If
         End If
         If String.IsNullOrEmpty(txtJobDetail.Text) Then
             result = False
@@ -641,7 +651,7 @@ endprocess:
         txtDueDate.Text = ""
         cboPolicy.SelectedIndex = -1
         cboSupplier.SelectedIndex = -1
-        cboPosition.SelectedIndex = -1
+        'cboPosition.SelectedIndex = -1
         txtCost.Text = "0"
         cboUnit.SelectedIndex = 1
         txtQuantity.Text = "1"
@@ -711,10 +721,10 @@ endprocess:
         row("jobno") = txtJobno.Text
         row("jobtypeid") = cboJobType.SelectedItem.Value
         row("jobtype") = cboJobType.SelectedItem.Text
-        If cboPosition.SelectedIndex > -1 Then
-            row("assetid") = cboPosition.SelectedItem.Value
-            row("assetposition") = cboPosition.SelectedItem.Text
-        End If
+        'If cboPosition.SelectedIndex > -1 Then
+        '    row("assetid") = cboPosition.SelectedItem.Value
+        '    row("assetposition") = cboPosition.SelectedItem.Text
+        'End If
         row("assetcode") = txtAssetCode.Text
         row("assetname") = txtAssetName.Text
         row("quantity") = qty
@@ -761,10 +771,18 @@ endprocess:
                     Dim attatchName As New jobs
                     Dim fileName As String
                     fileName = attatchName.GetAttatchName()
-                    Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
+                    Dim rootPath As String = "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
+                    Dim savePath As String '= "D:\\PTECAttatch\\IMG\\OPS_แจ้งซ่อม\\"
                     'Dim fileName As String = FileUpload1.FileName
+                    savePath = rootPath
                     savePath += fileName
                     savePath += Extension
+                    Do While System.IO.File.Exists(savePath)
+                        fileName = attatchName.GetAttatchName()
+                        savePath = rootPath
+                        savePath += fileName
+                        savePath += Extension
+                    Loop
                     FileUpload1.SaveAs(savePath)
                     fileName += Extension
                     lblattatch.Text = fileName
@@ -777,7 +795,7 @@ endprocess:
     Private Function FindPositionInPump(branchid As String) As Boolean
         Dim objjobs As New jobs
         Try
-            objjobs.SetPositionInPumpList(cboPosition, branchid)
+            'objjobs.SetPositionInPumpList(cboPosition, branchid)
             Return True
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -859,6 +877,21 @@ endprocess:
         txtAssetCode.Text = cboAsset.SelectedItem.Text.ToString.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)(0).Trim()
         FindAsset()
     End Sub
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function CancelByCode(ByVal jobno As String, ByVal message As String, ByVal updateby As String)
+        Dim job As New jobs
+
+        Dim result As Boolean
+        Try
+            result = job.Cancel(jobno, message, updateby)
+
+        Catch ex As Exception
+            Return "fail"
+        End Try
+        Return "success"
+
+    End Function
 
     'Private Sub cboJobCate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboJobCate.SelectedIndexChanged
     '    Try

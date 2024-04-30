@@ -197,6 +197,9 @@
   <ItemGroup>
     <Content Include="404.html" />
     <Content Include="ADMIN\VendorManage.aspx" />
+    <Content Include="AFD\frmInvoice.aspx" />
+    <Content Include="AFD\frmCN.aspx" />
+    <Content Include="AFD\frmBilling.aspx" />
     <Content Include="Contract\requestcontract.aspx" />
     <Content Include="Contract\requestcontract2.aspx" />
     <Content Include="Contract\assetsinfo.aspx" />
@@ -1587,10 +1590,11 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\autocomplete.css" />
     <Content Include="css\Jobs.css" />
+    <Content Include="css\multi-select-tag.css" />
     <Content Include="css\print.css" />
     <Content Include="css\sb-admin.css" />
-    <Content Include="css\sb-admin.min.css" />
     <Content Include="css\checkbox.css" />
+    <Content Include="css\sb-admin.min.css" />
     <Content Include="css\starRating.css" />
     <Content Include="css\Stepper.css" />
     <Content Include="css\style.css" />
@@ -1752,9 +1756,12 @@
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
     <Content Include="HRD\KPI\KPIsEdit.aspx" />
+    <Content Include="HRD\KPI\KPIsRequestList.aspx" />
     <Content Include="HRD\KPI\KPIsListForBranch.aspx" />
     <Content Include="HRD\KPI\KPIsOverview.aspx" />
     <Content Include="HRD\KPI\KPIsList.aspx" />
+    <Content Include="HRD\KPI\KPIsRequest.aspx" />
+    <Content Include="HRD\KPI\rptKPIs.aspx" />
     <Content Include="icon\BranchSeller.svg" />
     <Content Include="icon\logoSAP.svg" />
     <Content Include="icon\Logo_pure.png" />
@@ -1762,12 +1769,15 @@
     <Content Include="js\Jobs.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\main.js" />
+    <Content Include="js\multi-select-tag.js" />
     <Content Include="js\NonPO.js" />
     <Content Include="js\popper.js" />
     <Content Include="js\btn-loading.js" />
     <Content Include="js\Sortable.js" />
     <Content Include="js\starRating.js" />
     <Content Include="js\Stepper.js" />
+    <Content Include="forgot-password.aspx" />
+    <Content Include="Report\AssetsNozzle.aspx" />
     <Content Include="OPS\Jobs_MapsToNonPO.aspx" />
     <Content Include="OPS\approval\Approval.aspx" />
     <Content Include="OPS\approval\ApprovalClose.aspx" />
@@ -1775,6 +1785,9 @@
     <Content Include="OPS\approval\ApprovalHOMenuList.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\approvalHO.aspx" />
+    <Content Include="OPS\Memo\MemoList.aspx" />
+    <Content Include="OPS\Memo\Memo2.aspx" />
+    <Content Include="OPS\Memo\MemoRequest.aspx" />
     <Content Include="OPS\reports\nac_sale.aspx" />
     <Content Include="OPS\reports\nac.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
@@ -1802,6 +1815,8 @@
     <Content Include="OPS\Station\newNTI.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
+    <Content Include="Report\rptPCCO.aspx" />
+    <Content Include="Report\rptEdiRPTInvoice.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
     <Content Include="ROD\OilPriceFormula.aspx" />
     <Content Include="ROD\UpdateSmileSheetID.aspx" />
@@ -3506,9 +3521,32 @@
       <DependentUpon>VendorManage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="AFD\frmInvoice.aspx.designer.vb">
+      <DependentUpon>frmInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AFD\frmInvoice.aspx.vb">
+      <DependentUpon>frmInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AFD\frmCN.aspx.designer.vb">
+      <DependentUpon>frmCN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AFD\frmCN.aspx.vb">
+      <DependentUpon>frmCN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AFD\frmBilling.aspx.designer.vb">
+      <DependentUpon>frmBilling.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AFD\frmBilling.aspx.vb">
+      <DependentUpon>frmBilling.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="class\BPETAX.vb" />
     <Compile Include="class\Kpi.vb" />
     <Compile Include="class\NTI.vb" />
     <Compile Include="class\Company.vb" />
+    <Compile Include="class\Memo.vb" />
     <Compile Include="class\SmartBill.vb" />
     <Compile Include="Contract\requestcontract.aspx.designer.vb">
       <DependentUpon>requestcontract.aspx</DependentUpon>
@@ -3743,6 +3781,13 @@
       <DependentUpon>KPIsEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="HRD\KPI\KPIsRequestList.aspx.designer.vb">
+      <DependentUpon>KPIsRequestList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsRequestList.aspx.vb">
+      <DependentUpon>KPIsRequestList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="HRD\KPI\KPIsListForBranch.aspx.designer.vb">
       <DependentUpon>KPIsListForBranch.aspx</DependentUpon>
     </Compile>
@@ -3762,6 +3807,34 @@
     </Compile>
     <Compile Include="HRD\KPI\KPIsList.aspx.vb">
       <DependentUpon>KPIsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsRequest.aspx.designer.vb">
+      <DependentUpon>KPIsRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsRequest.aspx.vb">
+      <DependentUpon>KPIsRequest.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\rptKPIs.aspx.designer.vb">
+      <DependentUpon>rptKPIs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\rptKPIs.aspx.vb">
+      <DependentUpon>rptKPIs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="forgot-password.aspx.designer.vb">
+      <DependentUpon>forgot-password.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="forgot-password.aspx.vb">
+      <DependentUpon>forgot-password.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\AssetsNozzle.aspx.designer.vb">
+      <DependentUpon>AssetsNozzle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\AssetsNozzle.aspx.vb">
+      <DependentUpon>AssetsNozzle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\Jobs_MapsToNonPO.aspx.designer.vb">
@@ -3811,6 +3884,27 @@
     </Compile>
     <Compile Include="OPS\approval\approvalHO.aspx.vb">
       <DependentUpon>approvalHO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Memo\MemoList.aspx.designer.vb">
+      <DependentUpon>MemoList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Memo\MemoList.aspx.vb">
+      <DependentUpon>MemoList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Memo\Memo2.aspx.designer.vb">
+      <DependentUpon>Memo2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Memo\Memo2.aspx.vb">
+      <DependentUpon>Memo2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPS\Memo\MemoRequest.aspx.designer.vb">
+      <DependentUpon>MemoRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Memo\MemoRequest.aspx.vb">
+      <DependentUpon>MemoRequest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\reports\nac_sale.aspx.designer.vb">
@@ -3993,6 +4087,20 @@
     </Compile>
     <Compile Include="ReportViewer.aspx.vb">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptPCCO.aspx.designer.vb">
+      <DependentUpon>rptPCCO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptPCCO.aspx.vb">
+      <DependentUpon>rptPCCO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptEdiRPTInvoice.aspx.designer.vb">
+      <DependentUpon>rptEdiRPTInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptEdiRPTInvoice.aspx.vb">
+      <DependentUpon>rptEdiRPTInvoice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ROD\OilPriceFormulaUpdate.aspx.designer.vb">
@@ -4827,6 +4935,8 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="js\v1\" />
+    <Folder Include="OPS\Assets\" />
     <Folder Include="OPS\Attatch\" />
     <Folder Include="temp\" />
   </ItemGroup>

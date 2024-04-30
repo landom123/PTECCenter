@@ -14,24 +14,6 @@ Option Explicit On
 Partial Public Class Jobs_MapsToNonPO
 
     '''<summary>
-    '''cboSupplier control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboSupplier As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''lbHeadDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lbHeadDetail As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''btnSearch control.
     '''</summary>
     '''<remarks>
@@ -57,6 +39,33 @@ Partial Public Class Jobs_MapsToNonPO
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkvisible As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''cboSupplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboSupplier As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtjobcode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtjobcode As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cboBranch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''gvRemind control.
