@@ -6,7 +6,10 @@
         th {
             text-align: center;
         }
-
+        
+            th a {
+                color: black;
+            }
         #content-wrapper {
             height: 93vh;
         }
@@ -147,43 +150,44 @@
                         <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
                             <asp:GridView ID="gvRemind"
                                 class="table table-striped table-bordered"
+                                AllowSorting="true"
                                 AutoGenerateColumns="false"
                                 EmptyDataText="No data available."
                                 PageSize="20"
                                 AllowPaging="true"
                                 runat="server">
                                 <Columns>
-                                    <asp:TemplateField HeaderText="งวด" ItemStyle-HorizontalAlign="center">
+                                    <asp:TemplateField SortExpression="PeriodDescription" HeaderText="งวด" ItemStyle-HorizontalAlign="center">
                                         <ItemTemplate>
                                             <asp:Label ID="lblcode" runat="server" Text='<%#Eval("PeriodDescription")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
+                                    <asp:TemplateField SortExpression="kpinew_code" HeaderText="เลขใบงาน" ItemStyle-HorizontalAlign="center">
                                         <ItemTemplate>
                                             <asp:Label ID="lblcode" runat="server" Text='<%#Eval("kpinew_code")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="วันที่สร้าง" ItemStyle-HorizontalAlign="center">
+                                    <asp:TemplateField SortExpression="CreateDate" HeaderText="วันที่สร้าง" ItemStyle-HorizontalAlign="center">
                                         <ItemTemplate>
                                             <asp:Label ID="lblcode" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="เจ้าของ KPIs" ItemStyle-HorizontalAlign="center">
+                                    <asp:TemplateField SortExpression="ownercode" HeaderText="เจ้าของ KPIs" ItemStyle-HorizontalAlign="center">
                                         <ItemTemplate>
                                             <asp:Label ID="lblcode" runat="server" Text='<%#Eval("ownercode")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="ชื่อเจ้าของ KPIs" ItemStyle-HorizontalAlign="center">
+                                    <asp:TemplateField SortExpression="ownername" HeaderText="ชื่อเจ้าของ KPIs" ItemStyle-HorizontalAlign="center">
                                         <ItemTemplate>
                                             <asp:Label ID="lblcode" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
+                                    <asp:TemplateField SortExpression="ownerempuppercode" HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
                                         <ItemTemplate>
                                             <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownerempuppercode")%>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
+                                    <asp:TemplateField SortExpression="statusname" HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                         <ItemTemplate>
                                             <asp:Label ID="lblcode" runat="server" Text='<%#Eval("statusname")%>'></asp:Label>
                                         </ItemTemplate>

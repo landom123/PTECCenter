@@ -64,7 +64,6 @@ Public Class KPIsRequest
 
             objKpi.SetCboPeriod(cboPeriod)
             objKpi.SetCboRatioTypeByUser(cboRatio, Session("userid"))
-
             If Request.QueryString("NewKpiCode") IsNot Nothing Then
                 'Has code
                 findNewKPI()
@@ -334,7 +333,7 @@ endprocess:
     End Sub
 
     Private Sub saveorupdate()
-        If validatedata() Then
+        If validateSave() Then
             'If Session("status") = "new" Then
             'If maintable.Rows.Count = 0 Then
             updatehead()
@@ -347,7 +346,7 @@ endprocess:
 
     End Sub
 
-    Private Function validatedata() As Boolean
+    Private Function validateSave() As Boolean
         Dim result As Boolean = True
         Dim msg As String = ""
         Dim cnt_cost As Integer
@@ -360,36 +359,27 @@ endprocess:
             GoTo endprocess
         End If
 
-        'Dim fruitGroups = detailtable.AsEnumerable().
-        'GroupBy(Function(row) New With {
-        '    Key .Name = row.Field(Of String)("categoryname")
-        '})
+        Dim kpiGroup = detailtable.AsEnumerable().
+        GroupBy(Function(row) New With {
+            Key .Name = row.Field(Of String)("categoryname")
+        })
 
-        'Dim tableResult As New DataTable
-        'tableResult.Columns.Add("categoryname", GetType(String))
-        'tableResult.Columns.Add("weight", GetType(Integer))
+        Dim tableResult As New DataTable
+        tableResult.Columns.Add("categoryname", GetType(String))
+        tableResult.Columns.Add("weight", GetType(Integer))
 
-        'Dim newrows As DataRow
-        'For Each grp In fruitGroups
-        '    newrows = tableResult.NewRow()
-        '    newrows("categoryname") = grp.Key.Name
-        '    newrows("weight") = grp.Sum(Function(row) row.Field(Of Double)("weight"))
-        '    tableResult.Rows.Add(newrows)
-        'Next
+        Dim newrows As DataRow
+        For Each grp In kpiGroup
+            newrows = tableResult.NewRow()
+            newrows("categoryname") = grp.Key.Name
+            newrows("weight") = grp.Sum(Function(row) row.Field(Of Double)("weight"))
+            If newrows("weight") > 100 Then
+                result = False
+                msg = "weight รวมย่อยต้องไม่เกิน 100"
+                GoTo endprocess
+            End If
+        Next
 
-        'For Each row As DataRow In tableResult.Rows
-        '    If row("weight") > 100 Then
-        '        result = False
-        '        msg = "( " + row("categoryname") + " ) weight รวมย่อยต้องไม่เกิน 100"
-        '        GoTo endprocess
-        '    End If
-        'Next row
-
-        If Not validateSubWeight() Then
-            result = False
-            msg = "weight รวมย่อยต้องไม่เกิน 100"
-            GoTo endprocess
-        End If
 endprocess:
         If result = False Then
             Dim scriptKey As String = "alert"
@@ -401,10 +391,12 @@ endprocess:
 
         Return result
     End Function
-    Private Function validateSubWeight() As Boolean
+    Private Function validateConfirm() As Boolean
         Dim result As Boolean = True
+        Dim msg As String = ""
+        Dim objKpi As New Kpi
 
-        Dim fruitGroups = detailtable.AsEnumerable().
+        Dim kpiGroup = detailtable.AsEnumerable().
         GroupBy(Function(row) New With {
             Key .Name = row.Field(Of String)("categoryname")
         })
@@ -414,16 +406,44 @@ endprocess:
         tableResult.Columns.Add("weight", GetType(Integer))
 
         Dim newrows As DataRow
-        For Each grp In fruitGroups
+        For Each grp In kpiGroup
             newrows = tableResult.NewRow()
             newrows("categoryname") = grp.Key.Name
             newrows("weight") = grp.Sum(Function(row) row.Field(Of Double)("weight"))
-            If newrows("weight") > 100 Then
+            If Not newrows("weight") = 100 Then
                 result = False
+                msg = "weight ย่อยของแต่ละกลุ่มต้องรวมให้ได้ 100"
                 GoTo endprocess
             End If
         Next
-        'For Each grp In fruitGroups
+
+
+        Dim dtRatioTypeByUser As DataTable
+        Try
+            dtRatioTypeByUser = objKpi.RatioTypeByUser_List(Session("userid"))
+            dtRatioTypeByUser.Rows.Remove(dtRatioTypeByUser.Select("category_id='0'")(0))
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning(' category fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+
+
+        Dim listKPIG = kpiGroup.ToList
+        Dim cntList As Integer = listKPIG.Count
+
+        If Not cntList = dtRatioTypeByUser.Rows.Count Then
+            result = False
+            msg = "ต้องมี KPI ให้ครบทุกประเภท"
+            GoTo endprocess
+        End If
+
+
+
+        'For Each grp In kpiGroup
         '    newrows = tableResult.NewRow()
         '    newrows("categoryname") = grp.Key.Name
         '    newrows("weight") = grp.Sum(Function(row) row.Field(Of Double)("weight"))
@@ -437,6 +457,13 @@ endprocess:
         'Next row
 
 endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            'MsgBox(msg)
+        End If
+
         Return result
     End Function
     Private Sub Save()
@@ -719,7 +746,7 @@ endprocess:
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-        If validateSubWeight() Then
+        If validateConfirm() Then
             Dim objKpi As New Kpi
             Try
                 objKpi.Confirm(Request.QueryString("NewKpiCode").ToString(), Session("usercode"))
@@ -731,12 +758,6 @@ endprocess:
                 GoTo endprocess
             End Try
             Response.Redirect("../KPI/KPIsRequest.aspx?NewKpiCode=" & Request.QueryString("NewKpiCode").ToString())
-        Else
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('weight รวมย่อยต้องไม่เกิน 100');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            GoTo endprocess
         End If
 endprocess:
     End Sub
@@ -802,7 +823,7 @@ endprocess:
         Dim objKpi As New Kpi
 
         Try
-            objKpi.KPI_NewKPIs_Allow(Request.QueryString("NewKpiCode"), Session("usercode"))
+            objKpi.Kpi_NewKPIs_Allow(Request.QueryString("NewKpiCode"), Session("usercode"))
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -851,7 +872,7 @@ endprocess:
     End Sub
 
     Private Sub KPIsRequest_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
-        Dim fruitGroups = detailtable.AsEnumerable().
+        Dim kpiGroup = detailtable.AsEnumerable().
         GroupBy(Function(row) New With {
             Key .Name = row.Field(Of String)("categoryname")
         })
@@ -861,7 +882,7 @@ endprocess:
         groupdetailtable.Columns.Add("weight", GetType(Integer))
 
         Dim newrows As DataRow
-        For Each grp In fruitGroups
+        For Each grp In kpiGroup
             newrows = groupdetailtable.NewRow()
             newrows("categoryname") = grp.Key.Name
             newrows("weight") = grp.Sum(Function(row) row.Field(Of Double)("weight"))

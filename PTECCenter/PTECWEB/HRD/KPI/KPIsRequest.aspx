@@ -176,16 +176,15 @@
                                                                     <% if groupdetailtable.Rows(i).Item("CategoryName").ToString() = detailtable.Rows(j).Item("CategoryName").ToString() Then%>
                                                                     <tr class="draggable detail" data-status="<%= detailtable.Rows(j).Item("status").ToString() %>" name="<%= detailtable.Rows(j).Item("kpi_code").ToString() %>" style="cursor: pointer; transition: .2s;"
                                                                         ondblclick="btnEditDetailClick('<%= detailtable.Rows(j).Item("kpi_code").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("categoryid").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("title").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("weight").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("unit").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("lv1").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("lv2").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("lv3").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("lv4").ToString() %>'
-                                                                        ,'<%= detailtable.Rows(j).Item("lv5").ToString() %>'
-                                                                        );">
+                                                                                                        ,'<%= detailtable.Rows(j).Item("categoryid").ToString() %>'
+                                                                                                        ,'<%= detailtable.Rows(j).Item("title").ToString() %>'
+                                                                                                        ,'<%= detailtable.Rows(j).Item("weight").ToString() %>'
+                                                                                                        ,'<%= detailtable.Rows(j).Item("unit").ToString() %>'
+                                                                                                        ,'<%= detailtable.Rows(j).Item("lv1").ToString() %>'
+                                                                                                        ,'<%= detailtable.Rows(j).Item("lv2").ToString() %>'
+                                                                                                        ,'<%= detailtable.Rows(j).Item("lv3").ToString() %>'
+                                                                                                        ,'<%= detailtable.Rows(j).Item("lv4").ToString() %>'
+                                                                                                        ,'<%= detailtable.Rows(j).Item("lv5").ToString() %>');">
                                                                         <td class="text-center"><%= detailtable.Rows(j).Item("kpi_code").ToString() %></td>
                                                                         <td><%= detailtable.Rows(j).Item("title").ToString() %></td>
                                                                         <td class="text-center"><%= detailtable.Rows(j).Item("weight").ToString() %></td>
