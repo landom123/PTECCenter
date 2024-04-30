@@ -48,6 +48,8 @@
             <div class="container-fluid">
                 <ol class="breadcrumb" style="background-color: deeppink; color: white">
                     <li class="breadcrumb-item">รายการ Jobs <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
+                        <asp:Label ID="txtallOperator" runat="server" ReadOnly="True"></asp:Label>
+
                     </li>
                 </ol>
 

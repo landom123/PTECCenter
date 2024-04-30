@@ -487,6 +487,26 @@ endprocess:
         Response.Redirect("../KPI/KPIsRequest.aspx?NewKpiCode=" & newkpino)
 endprocess:
     End Sub
+    Private Sub SaveBeforeConfirm()
+        Dim objkpi As New Kpi
+        Dim newkpino As String = ""
+
+        newkpino = txtnewkpi.Text
+        Try
+            newkpino = objkpi.SaveNewKPIs(newkpino, maintable, detailtable, Session("usercode"))
+            txtnewkpi.Text = newkpino
+
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('save fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+
+            GoTo endprocess
+        End Try
+endprocess:
+    End Sub
 
     <System.Web.Services.WebMethod>
     Public Function deleteDetail(ByVal kpicode As String, ByVal status As String, user As String)
@@ -746,6 +766,18 @@ endprocess:
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        If validateSave() Then
+            'If Session("status") = "new" Then
+            'If maintable.Rows.Count = 0 Then
+            updatehead()
+            'End If
+            SaveBeforeConfirm()
+            'Else
+            '    SaveEdit()
+            'End If
+        Else
+            GoTo endprocess
+        End If
         If validateConfirm() Then
             Dim objKpi As New Kpi
             Try
