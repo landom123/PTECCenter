@@ -441,18 +441,22 @@ endprocess:
             msg = "กรุณาเลือกสาขา"
             GoTo endprocess
         End If
-        If cboJobType.SelectedItem.Value = 1 Then
-            'If cboPosition.SelectedIndex < 0 And String.IsNullOrEmpty(txtAssetName.Text) Then
-            'result = False
-            'msg = "กรุณาเลือกตำแหน่งตู้ หรือ กรอกรหัส FA.. ของตู้จ่าย"
-            'GoTo endprocess
-            'End If
+        If cboJobType.SelectedItem.Value.ToString = "" Then
+            result = False
+            msg = "กรุณาเลือกประเภทงาน"
+            GoTo endprocess
         ElseIf cboJobType.SelectedItem.Value = 16 Then
             If String.IsNullOrEmpty(txtAssetName.Text) And String.IsNullOrEmpty(txtBrand.Text) And String.IsNullOrEmpty(txtModel.Text) Then
                 result = False
                 msg = "กรุณาระบุรหัสทรัพสินทร์ หรือ ชื่อยี่ห้อ หรือ รุ่น"
                 GoTo endprocess
             End If
+        ElseIf cboJobType.SelectedItem.Value = 1 Then
+            'If cboPosition.SelectedIndex < 0 And String.IsNullOrEmpty(txtAssetName.Text) Then
+            'result = False
+            'msg = "กรุณาเลือกตำแหน่งตู้ หรือ กรอกรหัส FA.. ของตู้จ่าย"
+            'GoTo endprocess
+            'End If
         End If
         If String.IsNullOrEmpty(txtJobDetail.Text) Then
             result = False

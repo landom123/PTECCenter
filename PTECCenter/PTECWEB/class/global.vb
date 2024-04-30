@@ -215,6 +215,15 @@ Module global_module
         obj.DataTextField = "name"
         obj.DataBind()
     End Sub
+
+    Public Sub SetCboUsers(obj As Object, usercode As String, mode As String)
+        Dim user As New Users
+
+        obj.DataSource = user.List(usercode, mode)
+        obj.DataValueField = "userid"
+        obj.DataTextField = "name"
+        obj.DataBind()
+    End Sub
     Public Sub SetCboUsersCO(obj As Object)
         Dim user As New Users
 

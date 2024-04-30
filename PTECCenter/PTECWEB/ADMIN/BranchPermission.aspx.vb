@@ -13,6 +13,10 @@
         username = Session("username")
         usercode = Session("usercode")
 
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
 
         If Session("menulist") Is Nothing Then
             menutable = LoadMenu(usercode)
@@ -23,7 +27,7 @@
 
         branchtable = LoadBranchAll()
         If Not IsPostBack() Then
-            SetCboUsers(cboUser)
+            SetCboUsers(cboUser, "", "ALL")
 
         End If
 
