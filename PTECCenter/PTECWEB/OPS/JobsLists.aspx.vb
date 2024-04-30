@@ -39,7 +39,7 @@ Public Class JobsList_test
         If Not IsPostBack() Then
 
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
-
+                txtallOperator.Text = operator_code
                 'txtStartDate.Attributes.Add("readonly", "readonly")
                 'txtEndDate.Attributes.Add("readonly", "readonly")
                 'txtStartDate.Text = Date.Now

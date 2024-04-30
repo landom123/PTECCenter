@@ -65,9 +65,9 @@ Public Class KPIsList
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
 
-        If Session("positionid") = "10" Then
-            Response.Redirect("KPIsListForBranch.aspx")
-        End If
+        'If Session("positionid") = "10" Then
+        'Response.Redirect("KPIsListForBranch.aspx")
+        'End If
 
 
         operator_code = objKpi.KPIPermisstion("KPI", "OP")
