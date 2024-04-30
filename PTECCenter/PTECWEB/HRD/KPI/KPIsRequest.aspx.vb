@@ -766,7 +766,6 @@ endprocess:
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-
         If validateSave() Then
             'If Session("status") = "new" Then
             'If maintable.Rows.Count = 0 Then
