@@ -1777,6 +1777,7 @@
     <Content Include="js\starRating.js" />
     <Content Include="js\Stepper.js" />
     <Content Include="forgot-password.aspx" />
+    <Content Include="js\sweetalert2.all.min.js" />
     <Content Include="Report\AssetsNozzle.aspx" />
     <Content Include="OPS\Jobs_MapsToNonPO.aspx" />
     <Content Include="OPS\approval\Approval.aspx" />
