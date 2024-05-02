@@ -377,8 +377,8 @@
                 inputAttributes: {
                     'aria-label': 'ใส่ข้อความ.'
                 },
-                preConfirm: () => {
-                    if (!document.getElementById('swal2-input').value) {
+                preConfirm: (value) => {
+                    if (!value) {
                         // Handle return value 
                         Swal.showValidationMessage('First input missing')
                     }
