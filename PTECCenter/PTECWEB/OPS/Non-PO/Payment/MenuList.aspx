@@ -401,10 +401,12 @@
                 inputAttributes: {
                     'aria-label': 'ใส่ข้อความ.'
                 },
-                preConfirm: () => {
-                    if (!document.getElementById('swal2-input').value) {
-                        // Handle return value 
-                        Swal.showValidationMessage('First input missing')
+                preConfirm: (value) => {
+                    if (!value) {
+                        //if (!document.getElementById('swal2-input').value) {
+                        // Handle return value
+
+                        Swal.showValidationMessage('กรุณาใส่รายละเอียด')
                     }
                 },
                 showCancelButton: true
