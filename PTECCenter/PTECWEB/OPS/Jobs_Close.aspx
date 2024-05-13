@@ -88,6 +88,16 @@
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
 
                     </div>
+                    <div class="col mb-3">
+                        <div class="row justify-content-end align-items-center">
+                            <div class="col-auto">
+                                <a class="gtContent6" id="txtCntComment" runat="server" href="#" title="ไปยังแสดงความคิดเห็น"><%= CommentTable.Rows.Count %> <i class="far fa-comment-dots"></i></a>
+                            </div>
+                            <div class="col-auto">
+                                <a class="gtContent5" id="txtCntAttach" runat="server" href="#" title="ไปยังแสดงความคิดเห็น"><%= AttachTable.Rows.Count %> <i class="fas fa-paperclip"></i></a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-auto mb-3">
                         <ul class="nav">
                             <li class="nav-item dropdown">

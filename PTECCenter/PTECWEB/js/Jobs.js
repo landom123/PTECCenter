@@ -76,34 +76,46 @@ function scrollToID(elid) {
     });
 }
 
-document.querySelector('#gtContent1')?.addEventListener('click', function (e) {
-    e.preventDefault();
-    $('#collapseOne').collapse('show');
-    scrollToID('headingOne');
-});
-document.querySelector('#gtContent2')?.addEventListener('click', function (e) {
-    e.preventDefault();
-    $('#collapseTwo').collapse('show');
-    scrollToID('headingTwo');
-});
-document.querySelector('#gtContent3')?.addEventListener('click', function (e) {
-    e.preventDefault();
-    $('#collapseThree').collapse('show');
-    scrollToID('headingThree');
-});
-document.querySelector('#gtContent4')?.addEventListener('click', function (e) {
-    e.preventDefault();
-    $('#collapseFour').collapse('show');
-    scrollToID('headingFour');
-});
-document.querySelector('#gtContent5')?.addEventListener('click', function (e) {
-    e.preventDefault();
-    scrollToID('card_attatch');
-});
-document.querySelector('#gtContent6')?.addEventListener('click', function (e) {
-    e.preventDefault();
-    scrollToID('card_comment');
-});
+document.querySelectorAll('#gtContent1,.gtContent1')?.forEach(box =>
+    box?.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#collapseOne').collapse('show');
+        scrollToID('headingOne');
+    })
+);
+document.querySelectorAll('#gtContent2,.gtContent2')?.forEach(box =>
+    box?.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#collapseTwo').collapse('show');
+        scrollToID('headingTwo');
+    })
+);
+document.querySelectorAll('#gtContent3,.gtContent3')?.forEach(box =>
+    box?.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#collapseThree').collapse('show');
+        scrollToID('headingThree');
+    })
+);
+document.querySelectorAll('#gtContent4,.gtContent4')?.forEach(box =>
+    box?.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#collapseFour').collapse('show');
+        scrollToID('headingFour');
+    })
+);
+document.querySelectorAll('#gtContent5,.gtContent5')?.forEach(box =>
+    box?.addEventListener('click', function (e) {
+        e.preventDefault();
+        scrollToID('card_attatch');
+    })
+);
+document.querySelectorAll("#gtContent6,.gtContent6")?.forEach(box =>
+    box?.addEventListener('click', function (e) {
+        e.preventDefault();
+        scrollToID('card_comment');
+    })
+);
 
 
 $(document).ready(function () {
