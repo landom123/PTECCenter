@@ -77,7 +77,7 @@ Public Class KPIsEdit
             objUser.SetcboUserName(cboUserName)
             objbranch.SetComboBranch(cboBranch, "")
             objKpi.SetCboRatioType(cboRatio)
-            SetCboUsers(cboOwnerKPI)
+            SetCboUsers(cboOwnerKPI, "", "ALL")
             If Not Request.QueryString("Kpi_Code") Is Nothing Then
                 findKpi()
             End If

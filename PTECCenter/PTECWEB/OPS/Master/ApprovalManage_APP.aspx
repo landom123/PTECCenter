@@ -19,7 +19,7 @@
                     จัดการงาน (APP)
                 </ol>
                 <div class="row">
-                    <div class="col-md12 mb-3">
+                    <div class="col-md-12 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขที่เอกสาร</span>

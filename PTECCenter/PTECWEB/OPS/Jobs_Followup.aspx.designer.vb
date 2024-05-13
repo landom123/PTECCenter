@@ -50,6 +50,24 @@ Partial Public Class JobsFollowup
     Protected WithEvents txtallOperator As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''txtCntComment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCntComment As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''txtCntAttach control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCntAttach As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
     '''cardone control.
     '''</summary>
     '''<remarks>

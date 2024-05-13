@@ -101,7 +101,7 @@ Public Class AssetsNozzle
                 If branchid = 0 Then
                     branchid = 9999
                 End If
-                ExportToExcel(objassets.AssesNozzle_list(branchid), Session("usercode"), createdate)
+                ExportToExcel(objassets.AssesNozzle_Export(branchid), Session("usercode"), createdate)
             ElseIf chkResultTEST.Checked Then
                 Dim dt As DataTable
                 dt = objassets.Nozzle_Export(cboBranch.SelectedValue)

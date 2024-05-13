@@ -40,6 +40,21 @@
             border: 2px dashed #ff0000;
             color: #ff0000;
         }
+        .modal img {
+            display: none;
+            background: none;
+            border: 0;
+        }
+
+        .modal a:hover img {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            left: 30%;
+            top: -1200%;
+            display: block;
+            z-index: 999;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -77,6 +92,16 @@
                     </div>
                     <div class="col  mb-3">
                         <asp:Label ID="txtallOperator" runat="server" ReadOnly="True"></asp:Label>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="row justify-content-end align-items-center">
+                            <div class="col-auto">
+                                <a class="gtContent6" id="txtCntComment" runat="server" href="#" title="ไปยังแสดงความคิดเห็น"><%= CommentTable.Rows.Count %> <i class="far fa-comment-dots"></i></a>
+                            </div>
+                            <div class="col-auto">
+                                <a class="gtContent5" id="txtCntAttach" runat="server" href="#" title="ไปยังแสดงความคิดเห็น"><%= AttachTable.Rows.Count %> <i class="fas fa-paperclip"></i></a>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-auto mb-3">
                         <ul class="nav">
@@ -763,10 +788,10 @@
                                     <!-- end rate__Operator -->
                                 </div>
                                 <!-- end Rating -->
+                                <% If nozzletable IsNot Nothing Then%>
+                                <% If nozzletable.Rows.Count > 0 Then%>
                                 <div class="row w-75  m-auto">
                                     <div class="col">
-                                        <% If nozzletable IsNot Nothing Then%>
-                                        <% If nozzletable.Rows.Count > 0 Then%>
                                         <div class="table-responsive nozzle__management">
                                             <table class="table table-hover table-bordered table-sm">
                                                 <thead class="table-info">
@@ -846,10 +871,19 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <% End if %>
-                                        <% End if %>
                                     </div>
                                 </div>
+
+                                <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                                <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+                                    <strong>กรุณา ตรวจสอบ/แก้ไข/แนบรูป ข้อมูลมือจ่าย ให้เป็นปัจจุบันก่อนกด 'รับงาน'</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <% End if %>
+                                <% End if %>
+                                <% End if %>
                                 <div class="row">
                                     <div class="col-12 mb-3 text-center">
                                         <asp:Button ID="btnSubmitRate" class="btn btn-success" runat="server" Text="รับงาน" autopostback="False" OnClientClick="validateRate(); " />
@@ -998,6 +1032,17 @@
                     <div class="form-group">
                         <asp:Label ID="Label12" CssClass="form-label" AssociatedControlID="txtexpirydate" runat="server" Text="วันที่สิ้นสุด" />
                         <asp:TextBox class="form-control" type="input" ID="txtexpirydate" runat="server" autocomplete="off"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <u><a class="" style="color: #c0c0c0; font-size: .8rem;">
+                                    (ตัวอย่างรูปภาพที่จะต้องแนบ <i class="fas fa-info-circle"></i> )
+                                    <img src="../../../icon/nozzle_pace.jpg" class="img-fluid img-thumbnail" />
+                                </a>
+                                </u>
+                            </div>
+                        </div>
                     </div>
                     <div class="file_att">
                         <input type="file" name="files__nozzle" id="file_att" accept="image/*,.pdf" data-fileuploader-listinput="file_att" data-fileuploader-limit="1" data-fileuploader-files=''>
