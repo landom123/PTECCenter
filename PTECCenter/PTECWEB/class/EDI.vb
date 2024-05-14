@@ -2604,4 +2604,26 @@ Public Class EDI
 
         Return result
     End Function
+    Public Function EDI_RPT_Invoice_byDate(startdate As String, enddate As String) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_edi").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "EDI_RPT_Invoice_byDate"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@begindate", SqlDbType.Int).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.Int).Value = enddate
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
 End Class

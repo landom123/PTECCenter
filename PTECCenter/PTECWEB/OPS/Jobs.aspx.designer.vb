@@ -50,6 +50,15 @@ Partial Public Class frmJobs
     Protected WithEvents btnPrint As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnCancel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCancel As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''txtJobno control.
     '''</summary>
     '''<remarks>

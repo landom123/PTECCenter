@@ -83,7 +83,7 @@ Public Class AdvanceRequest
 
                     account_code = objNonPO.NonPOPermisstionAccount(Request.QueryString("ADV"))
 
-                    If (account_code.IndexOf(Session("usercode").ToString) > -1) Then
+                    If (account_code.IndexOf(usercode.ToString) > -1) Then
                         If (detailtable.Rows(0).Item("statusrqid") = 7) Then
                             Session("status") = "account"
                             verify = True
@@ -104,11 +104,11 @@ Public Class AdvanceRequest
                         now_action = "ผู้ที่ต้องปฏิบัติงาน : " + PermissionOwner.Tables(0).Rows(1).Item("approver").ToString + PermissionOwner.Tables(0).Rows(1).Item("verifier").ToString
                     End If
 
-                    If (Session("usercode") = md_code Or
-                    Session("usercode") = fm_code Or
-                    Session("usercode") = dm_code Or
-                    Session("usercode") = sm_code Or
-                    Session("usercode") = am_code) And
+                    If (md_code.ToString.IndexOf(usercode) > -1 Or
+                    fm_code.ToString.IndexOf(usercode) > -1 Or
+                    dm_code.ToString.IndexOf(usercode) > -1 Or
+                    sm_code.ToString.IndexOf(usercode) > -1 Or
+                    am_code.ToString.IndexOf(usercode) > -1) And
                     (detailtable.Rows(0).Item("statusrqid") = 2) Then
                         Session("status") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
@@ -119,62 +119,62 @@ Public Class AdvanceRequest
                         For Each row As DataRow In PermissionOwner.Tables(0).Rows
                             If row("status").ToString = "now" Then
                                 If row("approver").ToString.IndexOf("MD") > -1 Then
-                                    If (md_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (md_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("approver").ToString.IndexOf("FM") > -1 Then
-                                    If (fm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (fm_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("approver").ToString.IndexOf("DM") > -1 Then
-                                    If (dm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (dm_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("approver").ToString.IndexOf("SM") > -1 Then
-                                    If (sm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (sm_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("approver").ToString.IndexOf("AM") > -1 Then
-                                    If (am_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (am_code.IndexOf(usercode) > -1) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
                                 End If
 
                                 If row("verifier").ToString.IndexOf("MD") > -1 Then
-                                    If (md_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (md_code.IndexOf(usercode) > -1) Then
                                         verify = True
                                         GoTo endprocess
                                     End If
                                 ElseIf row("verifier").ToString.IndexOf("FM") > -1 Then
-                                    If (fm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (fm_code.IndexOf(usercode) > -1) Then
                                         verify = True
                                         GoTo endprocess
                                     End If
                                 ElseIf row("verifier").ToString.IndexOf("DM") > -1 Then
-                                    If (dm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (dm_code.IndexOf(usercode) > -1) Then
                                         verify = True
                                         GoTo endprocess
                                     End If
                                 ElseIf row("verifier").ToString.IndexOf("SM") > -1 Then
-                                    If (sm_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (sm_code.IndexOf(usercode) > -1) Then
                                         verify = True
                                         GoTo endprocess
                                     End If
                                 ElseIf row("verifier").ToString.IndexOf("AM") > -1 Then
-                                    If (am_code.IndexOf(Session("usercode")) > -1) Then
+                                    If (am_code.IndexOf(usercode) > -1) Then
                                         verify = True
                                         GoTo endprocess
                                     End If

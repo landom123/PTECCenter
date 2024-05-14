@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Web.Script.Serialization
 
 Public Class WebForm4
     Inherits System.Web.UI.Page
@@ -8,6 +9,7 @@ Public Class WebForm4
     Public usercode, username
     Public menutable As DataTable
     Public detailtable As DataTable '= createtable()
+    Public nozzletable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objapproval As New Approval
         Dim approvaldataset = New DataSet
@@ -44,7 +46,9 @@ Public Class WebForm4
                 Try
                     approvaldataset = objapproval.Approval_Find(Request.QueryString("approvalcode"))
                     detailtable = approvaldataset.Tables(0)
+                    nozzletable = approvaldataset.Tables(6)
                     Session("detailtable") = detailtable
+                    Session("nozzletable") = nozzletable
                     statusid = approvaldataset.Tables(0).Rows(0).Item("statusid")
                     If statusid = 4 Then
                         txtDetail.ReadOnly = True
@@ -75,6 +79,15 @@ Public Class WebForm4
             End If
         Else
             detailtable = Session("detailtable")
+            nozzletable = Session("nozzletable")
+
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "deletedetail" Then
+                Dim argument As String = Request("__EVENTARGUMENT")
+                Dim jss As New JavaScriptSerializer
+                Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(argument)
+                deleteDetail(json("approvalnozzle_id"), json("row"))
+            End If
         End If
     End Sub
     Private Sub chkuser(userid As String, supportid As String)
@@ -169,6 +182,55 @@ Public Class WebForm4
                 GoTo endprocess
             End Try
         End If
+        'If detailtable.Rows(0).Item("approvallistid") = 23 Then
+        '    Try
+
+        '        Dim res As String = Request.Form("confirm_value")
+
+        '        res = res.Replace("[", "")
+        '        res = res.Replace("]", "")
+        '        res = res.Replace("},", "}|")
+        '        Dim strarr() As String
+        '        strarr = res.Split("|")
+
+
+        '        For index = 1 To strarr.Length
+
+        '            res = strarr(index - 1)
+
+        '            res = res.Replace(",{", "{")
+
+        '            Dim jss As New JavaScriptSerializer
+        '            Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
+
+        '            Dim rownumber As Integer = json("rownumber")
+        '            Dim brand As String = json("brand").ToString().Trim()
+        '            Dim producttype As String = json("producttype").ToString().Trim()
+        '            Dim nozzle_no As String = json("nozzle_no").ToString().Trim()
+        '            Dim positiononassest As String = json("positiononassest").ToString().Trim()
+        '            Dim round1 As Integer = json("round1")
+        '            Dim round2 As Integer = json("round2")
+        '            Dim round3 As Integer = json("round3")
+        '            Dim url1 As String = json("url1").ToString().Trim()
+        '            Dim url2 As String = json("url2").ToString().Trim()
+        '            Dim url3 As String = json("url3").ToString().Trim()
+        '            Dim remark As String = json("remark").ToString().Trim()
+
+        '            Dim id As String
+        '            id = approval.SaveTEST5L(txtApprovalcode.Text.Trim(), rownumber, brand,
+        '                                     producttype, nozzle_no, positiononassest,
+        '                                     round1, round2, round3,
+        '                                     url1, url2, url3,
+        '                                     remark, Session("usercode"))
+        '        Next
+        '    Catch ex As Exception
+        '        Dim scriptKey As String = "alert"
+        '        'Dim javaScript As String = "alert('" & ex.Message & "');"
+        '        Dim javaScript As String = "alertWarning('5L fail');"
+        '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        '        GoTo endprocess
+        '    End Try
+        'End If
         Approval_Close(fullfilenameimageafter, fullfilenameimagebill)
 endprocess:
     End Sub
@@ -178,18 +240,26 @@ endprocess:
 
         Dim Keys() As String
         Keys = Files.AllKeys
-        For i = 0 To Keys.GetUpperBound(0) - 1
+        For i = 0 To Keys.GetUpperBound(0)
             If Not String.IsNullOrEmpty(Files(i).FileName) And key = Keys(i) Then
                 Dim Extension As String = System.IO.Path.GetExtension(Files(i).FileName)
-                Dim savePath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                Dim rootPath As String = "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
+                Dim savePath As String '= "D:\\PTECAttatch\\IMG\\OPS_ขออนุมัติ\\"
                 Dim di As String = System.IO.Path.GetDirectoryName(Files(i).FileName)
                 'Dim oldpath As String = di + FileUpload1.FileName
 
                 Try
                     Dim fileName As String
                     fileName = imgname.GetImageName()
+                    savePath = rootPath
                     savePath += fileName
                     savePath += Extension
+                    Do While System.IO.File.Exists(savePath)
+                        fileName = imgname.GetImageName()
+                        savePath = rootPath
+                        savePath += fileName
+                        savePath += Extension
+                    Loop
                     Files(i).SaveAs(savePath)
                     fullfilename += fileName
                     fullfilename += Extension
@@ -237,4 +307,90 @@ endprocess:
         ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
 endprocess:
     End Sub
+
+    Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
+
+        Dim objApp As New Approval
+        Dim res As String = Request.Form("addDetailJSON")
+
+        Dim strarr() As String
+        strarr = res.Split("}")
+        res = strarr(0) + "}"
+        res = res.Split("[")(1)
+        Dim jss As New JavaScriptSerializer
+        Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
+
+        Try
+            Dim row As Integer = json("row").Trim
+            Dim approvalNozzle_ID As String = json("approvalnozzle_id").Trim
+            Dim round1 As Double = json("round1").Trim
+            Dim round2 As Double = json("round2").Trim
+            Dim round3 As Double = json("round3").Trim
+            Dim url1 As String = getfilenozzle("nozzle_rond1").ToString()
+            Dim url2 As String = getfilenozzle("nozzle_rond2").ToString()
+            Dim url3 As String = getfilenozzle("nozzle_rond3").ToString()
+            Dim Remark As String = json("remark").Trim
+
+            objApp.UpdateTEST5L(txtApprovalcode.Text.Trim(), approvalNozzle_ID,
+                                             round1, round2, round3,
+                                             url1, url2, url3,
+                                             Remark, Session("usercode"))
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('adddetail fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect(Request.RawUrl)
+endprocess:
+    End Sub
+    Private Function getfilenozzle(key As String) As String
+        Dim res As String = String.Empty
+        Dim fullfilenameimageafter As String = String.Empty
+        Dim approval As New Approval
+        Dim Files As HttpFileCollection = Request.Files
+
+        fullfilenameimageafter = fileupload(key, Files)
+        Dim filenameArr() As String
+        If Not String.IsNullOrEmpty(fullfilenameimageafter) Then
+            filenameArr = fullfilenameimageafter.Split(",")
+        End If
+        Try
+            If filenameArr IsNot Nothing Then
+                For i = 0 To filenameArr.Length - 1
+                    If Not String.IsNullOrEmpty(filenameArr(i)) Then
+                        approval.Image_Save(filenameArr(i), key, detailtable.Rows(0).Item("approvalid"), Session("usercode"))
+                        Dim urlIMG As String = My.Settings.fullurl
+                        urlIMG += filenameArr(i)
+                        res = urlIMG
+                    End If
+                Next i
+            End If
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('upload file " & key & " fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+        Return res
+    End Function
+
+    Private Sub deleteDetail(approvalnozzle_id As Integer, rows As Integer)
+        Dim objApp As New Approval
+
+        Try
+            objApp.deleteDetail(txtApprovalcode.Text.Trim(), approvalnozzle_id, rows, Session("usercode"))
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Confirm fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect(Request.RawUrl)
+endprocess:
+    End Sub
+
 End Class

@@ -52,21 +52,20 @@ Public Class NonPO
 
         Dim dtcost As DataTable = AccountCode_List(userid)
         cboAccountCode.Items.Clear()
-        For i As Integer = 0 To dtcost.Rows.Count - 1
-            Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("accountname"), dtcost.Rows(i).Item("accountid"))
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountgroup").ToString) Then
-                item.Attributes("data-tokens") = dtcost.Rows(i).Item("accountgroup").ToString
-                item.Attributes("data-category") = dtcost.Rows(i).Item("accountgroup").ToString
+        For Each row As DataRow In dtcost.Rows
+            Dim item As ListItem = New ListItem(row("accountname"), row("accountid"))
+            If Not String.IsNullOrEmpty(row("accountgroup").ToString) Then
+                item.Attributes("data-tokens") = row("accountgroup").ToString
+                item.Attributes("data-category") = row("accountgroup").ToString
             End If
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountcode").ToString) Then
-                item.Attributes("data-code") = dtcost.Rows(i).Item("accountcode").ToString
+            If Not String.IsNullOrEmpty(row("accountcode").ToString) Then
+                item.Attributes("data-code") = row("accountcode").ToString
             End If
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("groupat").ToString) Then
-                item.Attributes("data-subtext") = "- (" + dtcost.Rows(i).Item("groupat").ToString + ")"
+            If Not String.IsNullOrEmpty(row("groupat").ToString) Then
+                item.Attributes("data-subtext") = "- (" + row("groupat").ToString + ")"
             End If
             cboAccountCode.Items.Add(item)
-
-        Next
+        Next row
 
     End Sub
 
@@ -81,17 +80,17 @@ Public Class NonPO
 
         Dim dtcost As DataTable = AccountCode_List_for_PettyCashCO(userid)
         cboAccountCode.Items.Clear()
-        For i As Integer = 0 To dtcost.Rows.Count - 1
-            Dim item As ListItem = New ListItem(dtcost.Rows(i).Item("accountname"), dtcost.Rows(i).Item("accountid"))
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountgroup").ToString) Then
-                item.Attributes("data-tokens") = dtcost.Rows(i).Item("accountgroup").ToString
-                item.Attributes("data-category") = dtcost.Rows(i).Item("accountgroup").ToString
+        For Each row As DataRow In dtcost.Rows
+            Dim item As ListItem = New ListItem(row("accountname"), row("accountid"))
+            If Not String.IsNullOrEmpty(row("accountgroup").ToString) Then
+                item.Attributes("data-tokens") = row("accountgroup").ToString
+                item.Attributes("data-category") = row("accountgroup").ToString
             End If
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("accountcode").ToString) Then
-                item.Attributes("data-code") = dtcost.Rows(i).Item("accountcode").ToString
+            If Not String.IsNullOrEmpty(row("accountcode").ToString) Then
+                item.Attributes("data-code") = row("accountcode").ToString
             End If
-            If Not String.IsNullOrEmpty(dtcost.Rows(i).Item("groupat").ToString) Then
-                item.Attributes("data-subtext") = "- (" + dtcost.Rows(i).Item("groupat").ToString + ")"
+            If Not String.IsNullOrEmpty(row("groupat").ToString) Then
+                item.Attributes("data-subtext") = "- (" + row("groupat").ToString + ")"
             End If
             cboAccountCode.Items.Add(item)
 
@@ -179,8 +178,9 @@ Public Class NonPO
 
     Private Sub SaveDetailPCCO(pccono As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
                     nonpocode = SaveDetailToTable(pccono,
                                       .Rows(i).Item("row"),
@@ -240,8 +240,9 @@ Public Class NonPO
 
     Private Sub SaveDetailPCHO(pchono As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
                     nonpocode = SaveDetailToTable(pchono,
                                       .Rows(i).Item("row"),
@@ -306,8 +307,9 @@ Public Class NonPO
     End Function
     Private Sub SaveDetailAdv(advno As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
                     nonpocode = SaveDetailToTable(advno,
                                       .Rows(i).Item("row"),
@@ -372,8 +374,9 @@ Public Class NonPO
     End Function
     Private Sub SaveDetailPay(advno As String, mytable As DataTable, username As String)
         Dim nonpocode As String
+        Dim cnt As Integer = mytable.Rows.Count - 1
         With mytable
-            For i = 0 To mytable.Rows.Count - 1
+            For i = 0 To cnt
                 If .Rows(i).Item("status") = "new" Or .Rows(i).Item("status") = "edit" Then
                     nonpocode = SaveDetailToTable(advno,
                                       .Rows(i).Item("row"),
@@ -687,7 +690,7 @@ Public Class NonPO
     End Function
 
     Public Function AdvanceRQList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
-                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, ownerid As String) As DataTable
+                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, ownerid As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -714,7 +717,7 @@ Public Class NonPO
         cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
         cmd.Parameters.Add("@createbyid", SqlDbType.VarChar).Value = createbyid
         cmd.Parameters.Add("@ownerbyid", SqlDbType.VarChar).Value = ownerid
-
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -756,7 +759,7 @@ Public Class NonPO
         Return result
     End Function
 
-    Public Function AdvanceRQList_For_Owner(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String, comid As String, branchgroupid As String, branchid As String, userid As Integer, category As String) As DataTable
+    Public Function AdvanceRQList_For_Owner(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String, comid As String, branchgroupid As String, branchid As String, userid As Integer, category As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -781,6 +784,7 @@ Public Class NonPO
         cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -791,7 +795,7 @@ Public Class NonPO
     End Function
 
     Public Function ClearAdvanceList_For_Operator(nonpocode As String, coderef As String, startdate As String, enddate As String, statusid As String,
-                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, ownerid As String, category As String) As DataTable
+                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, createbyid As String, ownerid As String, category As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -818,7 +822,7 @@ Public Class NonPO
         cmd.Parameters.Add("@createbyid", SqlDbType.VarChar).Value = createbyid
         cmd.Parameters.Add("@ownerbyid", SqlDbType.VarChar).Value = ownerid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
-
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
 
@@ -855,7 +859,7 @@ Public Class NonPO
     'End Function
 
     Public Function ClearAdvanceList_For_Owner(nonpocode As String, coderef As String, startdate As String, enddate As String, statusid As String,
-                                           branchgroupid As String, branchid As String, comid As String, userid As Integer, category As String) As DataTable
+                                           branchgroupid As String, branchid As String, comid As String, userid As Integer, category As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -879,6 +883,8 @@ Public Class NonPO
         cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
+
 
 
 
@@ -915,7 +921,7 @@ Public Class NonPO
         Return result
     End Function
     Public Function PaymentList_For_Owner(nonpocode As String, startdate As String, enddate As String, statusid As Integer, startduedate As String, endduedate As String,
-                                           comid As String, vendor As String, payby As String, userid As Integer, category As String) As DataTable
+                                           comid As String, vendor As String, payby As String, userid As Integer, category As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -939,6 +945,7 @@ Public Class NonPO
         cmd.Parameters.Add("@payby", SqlDbType.VarChar).Value = payby
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
 
@@ -950,7 +957,7 @@ Public Class NonPO
     End Function
 
     Public Function PaymentList_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
-                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, vendor As String, payby As String) As DataTable
+                                          depid As String, secid As String, comid As String, branchgroupid As String, branchid As String, vendor As String, payby As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -977,6 +984,7 @@ Public Class NonPO
         cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
         cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
         cmd.Parameters.Add("@payby", SqlDbType.VarChar).Value = payby
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -987,7 +995,7 @@ Public Class NonPO
     End Function
 
     Public Function PettyCashCO_For_Operator(nonpocode As String, startdate As String, enddate As String, statusid As String, startduedate As String, endduedate As String,
-                                          depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String) As DataTable
+                                          depid As String, secid As String, branchgroupid As String, branchid As String, vendor As String, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -1013,6 +1021,7 @@ Public Class NonPO
         cmd.Parameters.Add("@startduedate", SqlDbType.VarChar).Value = startduedate
         cmd.Parameters.Add("@endduedate", SqlDbType.VarChar).Value = endduedate
         cmd.Parameters.Add("@vendor", SqlDbType.VarChar).Value = vendor
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
 
@@ -1023,7 +1032,7 @@ Public Class NonPO
         conn.Close()
         Return result
     End Function
-    Public Function PettyCashCO_For_Owner(userid As Integer, working As Integer) As DataTable
+    Public Function PettyCashCO_For_Owner(userid As Integer, working As Integer, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -1039,6 +1048,7 @@ Public Class NonPO
 
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@working", SqlDbType.Int).Value = working
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
 
 
         adp.SelectCommand = cmd
@@ -2074,4 +2084,29 @@ Public Class NonPO
         conn.Close()
         'Return result
     End Sub
+    Public Function Nonpo_Export_PCCO_All_Branch_By_Due(duedate As String, groupvat As Boolean, groupvendor As Boolean) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "NonPO_ExportToD365_PCCO_All_Branch_By_Due"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(duedate), DBNull.Value, DateTime.Parse(duedate))
+        cmd.Parameters.Add("@groupvat", SqlDbType.Bit).Value = groupvat
+        cmd.Parameters.Add("@groupvendor", SqlDbType.Bit).Value = groupvendor
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+
+        Return result
+    End Function
 End Class

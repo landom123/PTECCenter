@@ -22,6 +22,7 @@ Public Class Jobs_MapsToNonPO
     Dim usercode, username As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objjob As New jobs
+        Dim objbranch As New Branch
         Dim objsupplier As New Supplier
         'Dim attatch As New Attatch
 
@@ -42,7 +43,7 @@ Public Class Jobs_MapsToNonPO
 
 
         If Not IsPostBack Then
-
+            objbranch.SetComboBranch(cboBranch, "")
 
             itemtable = createdetailtable()
 
@@ -98,7 +99,7 @@ Public Class Jobs_MapsToNonPO
         Try
 
 
-            itemtable = objjob.Jobs_CostCommited_list(cboSupplier.SelectedItem.Value, chkvisible.Checked)
+            itemtable = objjob.Jobs_CostCommited_list(cboSupplier.SelectedItem.Value, chkvisible.Checked, txtjobcode.Text.ToString, cboBranch.SelectedValue)
 
             Session("joblist") = itemtable
             BindData()

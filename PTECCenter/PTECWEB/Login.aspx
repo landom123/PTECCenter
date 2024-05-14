@@ -29,7 +29,9 @@
             </div>
             <asp:TextBox type="password" class="form-control" placeholder="Password" required="required" ID="txtPassword"  runat="server"></asp:TextBox>
           </div>
-          <br />
+          <div class="text-right mb-3 mt-1">
+              <a class="small pr-1" href="forgot-password.aspx">ลืมรหัสผ่าน ?</a>
+          </div>
 <%--          <div class="form-group">
             <div class="checkbox">
               <label>

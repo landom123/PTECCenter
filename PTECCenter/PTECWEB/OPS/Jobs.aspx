@@ -50,7 +50,10 @@
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" />
                         &nbsp;   
                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />&nbsp;
-                        <button <% If Session("status") = "new" Or Session("status") = "cancel" Then %> disabled <% End if %> type="button" class="btn btn-sm  btn-danger" onclick="chkCancel('../ops/jobsCancel.aspx?jobno=<% =Session("jobno") %>')">Cancel</button>&nbsp;
+                        <button <% If Session("status") = "new" Or Session("status") = "cancel" Then %> disabled <% End if %> type="button" class="btn btn-sm  btn-danger d-none" onclick="chkCancel('../ops/jobsCancel.aspx?jobno=<% =Session("jobno") %>')">Cancel</button>&nbsp;
+                        <button runat="server" id="btnCancel" name="btnCancel" onclick="return cancelJobs();" class="btn btn-sm btn-danger">
+                            Cancel
+                        </button>&nbsp;
                         <% If Not Request.QueryString("jobno") Is Nothing And maintable.Rows.Count > 0 Then%>
                         <% if (maintable.Rows(0).Item("statusname") = "แจ้งงาน") Then%>
                         <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
@@ -376,7 +379,7 @@
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text">รายละเอียดงาน</span>
                                             <%--                                       <span class="input-group-text" style="width:550px"><% =detailtable.Rows(i).Item("details") %></span>--%>
-                                            <label for="detail"><% =detailtable.Rows(i).Item("details") %></label>
+                                            <label for="detail" style="white-space: pre-wrap;"><% =detailtable.Rows(i).Item("details") %></label>
                                         </div>
                                     </div>
                                 </div>
@@ -705,6 +708,62 @@
                 '',
                 'warning'
             )
+        }
+
+        function cancelJobs() {
+
+            /*alert(GridView);*/
+            var jobno = document.getElementById('<%= txtJobno.ClientID%>').value
+            var usercode = "<%= Session("usercode")%>";
+
+            Swal.fire({
+                input: 'textarea',
+                inputLabel: 'กรุณาใส่เหตุผลในการยกเลิก',
+                inputPlaceholder: 'ใส่ข้อความ . . .',
+                inputAttributes: {
+                    'aria-label': 'ใส่ข้อความ.'
+                },
+                preConfirm: () => {
+                    if (!document.getElementById('swal2-input').value) {
+                        // Handle return value 
+                        Swal.showValidationMessage('First input missing')
+                    }
+                },
+                showCancelButton: true
+            }).then((result) => {
+                console.log(result.value);
+                if (result.isConfirmed) {
+                    var params = "{'jobno': '" + jobno + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
+                    console.log(params);
+                    $.ajax({
+                        type: "POST",
+                        url: "../ops/jobs.aspx/CancelByCode",
+                        async: true,
+                        data: params,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            console.log(msg.d)
+                            if (msg.d) {
+                                swal.fire({
+                                    title: "success!",
+                                    text: "",
+                                    icon: "success"
+                                }).then(function () {
+                                    window.location.href = location.href;
+                                });
+                            } else {
+                                alertWarning('fail')
+                            }
+                        },
+                        error: function () {
+                            alertWarning('fail')
+                        }
+                    });
+                }
+            })
+
+            return false;
         }
     </script>
 

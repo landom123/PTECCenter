@@ -30,9 +30,14 @@
                     Session("username") = usertable.Rows(0).Item("name")
                     Session("dep") = usertable.Rows(0).Item("dep")
                     Session("depid") = usertable.Rows(0).Item("depid")
+                    Session("depname") = usertable.Rows(0).Item("depname")
                     Session("branchid") = usertable.Rows(0).Item("branchid")
                     Session("secid") = usertable.Rows(0).Item("secid")
-                    Session("positionid") = usertable.Rows(0).Item("PositionID")
+                    Session("seccode") = usertable.Rows(0).Item("seccode")
+                    Session("secname") = usertable.Rows(0).Item("secname")
+                    Session("positionid") = usertable.Rows(0).Item("positionid")
+                    Session("positioncode") = usertable.Rows(0).Item("positioncode")
+                    Session("positionname") = usertable.Rows(0).Item("positionname")
                     Session("areaid") = usertable.Rows(0).Item("areaid")
 
                     If usertable.Rows(0).Item("changepassword") = 0 Then

@@ -2,6 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/font/font-fileuploader.css")%>" rel="stylesheet">
+
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader.min.css")%>" rel="stylesheet">
+    <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader-theme-thumbnails.css")%>" rel="stylesheet">
     <!-- datetimepicker-->
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
 
@@ -14,14 +18,32 @@
         html {
             background-color: #f0f2f5 !important;
         }
+
         .divEditDetail {
-        font-size:1.5rem;
+            font-size: 1.5rem;
         }
-        
+
+        .nozzle__management a[href='#'] {
+            display: none;
+        }
+
+        .fileuploader-theme-thumbnails .fileuploader-items .fileuploader-item .fileuploader-action + .fileuploader-action {
+            display: none;
+        }
+
+        .fileuploader-popup .fileuploader-popup-footer {
+            display: none;
+        }
+
+        .fileuploader-theme-thumbnails .fileuploader-thumbnails-input-inner {
+            background: #f0cccc;
+            border: 2px dashed #ff0000;
+            color: #ff0000;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+
     <div id="wrapper">
         <!-- #include virtual ="/include/menu.inc" -->
         <!-- add side menu -->
@@ -741,6 +763,93 @@
                                     <!-- end rate__Operator -->
                                 </div>
                                 <!-- end Rating -->
+                                <div class="row w-75  m-auto">
+                                    <div class="col">
+                                        <% If nozzletable IsNot Nothing Then%>
+                                        <% If nozzletable.Rows.Count > 0 Then%>
+                                        <div class="table-responsive nozzle__management">
+                                            <table class="table table-hover table-bordered table-sm">
+                                                <thead class="table-info">
+                                                    <tr>
+                                                        <th class="text-center">ลำดับที่</th>
+                                                        <th class="text-center">ยี่ห้อ</th>
+                                                        <th class="text-center">ชนิดน้ำมัน</th>
+                                                        <th class="text-center">เลขที่มาตร</th>
+                                                        <th class="text-center">ตำแหน่ง</th>
+                                                        <th class="text-center">วันที่สิ้นสุด</th>
+                                                        <th class="text-center">รูปภาพ</th>
+                                                        <% If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then %>
+                                                        <th class="text-center">แก้ไขเมื่อวันที่</th>
+                                                        <% Else %>
+                                                        <th></th>
+                                                        <% End if %>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="text-center align-bottom">
+                                                    <% If nozzletable.Rows.Count > 0 Then%>
+                                                    <% For j = 0 To nozzletable.Rows.Count - 1 %>
+                                                    <tr style="cursor: pointer;"
+                                                        <% If maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
+                                                        ondblclick="btnEditDetailClick('<%= nozzletable.Rows(j).Item("rownumber").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("nozzle_id").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("nozzle_no").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("brand").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("expirydate").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("producttype").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("positiononassest").ToString() %>'
+                                                                        );"
+                                                        <% End if %>>
+                                                        <td>
+                                                            <span><%= nozzletable.Rows(j).Item("rownumber").ToString %></span>
+                                                        </td>
+                                                        <td>
+                                                            <span><%= nozzletable.Rows(j).Item("brand").ToString %></span>
+                                                        </td>
+                                                        <td>
+                                                            <span><%= nozzletable.Rows(j).Item("producttype").ToString %></span>
+                                                        </td>
+                                                        <td>
+                                                            <span><%= nozzletable.Rows(j).Item("nozzle_No").ToString %></span>
+                                                        </td>
+                                                        <td>
+                                                            <span><%= nozzletable.Rows(j).Item("positionOnAssest").ToString %></span>
+                                                        </td>
+                                                        <td>
+                                                            <span><%= nozzletable.Rows(j).Item("expirydate").ToString %></span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="<%= nozzletable.Rows(j).Item("url").ToString %>" target="_blank">รูปภาพ</a>
+                                                        </td>
+                                                        <% If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then %>
+                                                        <td class="text-primary">
+                                                            <span><%= nozzletable.Rows(j).Item("updatedate").ToString %></span>
+                                                        </td>
+                                                        <% Else %>
+                                                        <td>
+                                                            <a title="EditDetail"
+                                                                onclick="btnEditDetailClick('<%= nozzletable.Rows(j).Item("rownumber").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("nozzle_id").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("nozzle_no").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("brand").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("expirydate").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("producttype").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("positiononassest").ToString() %>'
+                                                                        );">
+                                                                <i class="fas fa-edit color__purple"></i>
+                                                            </a>&nbsp;&nbsp;
+                                                        </td>
+                                                        <% End if %>
+                                                    </tr>
+
+                                                    <% Next j %>
+                                                    <% End if %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <% End if %>
+                                        <% End if %>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-12 mb-3 text-center">
                                         <asp:Button ID="btnSubmitRate" class="btn btn-success" runat="server" Text="รับงาน" autopostback="False" OnClientClick="validateRate(); " />
@@ -856,7 +965,51 @@
         </div>
         <!-- /#wrapper -->
     </div>
-
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">รายละเอียดรายการ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--  ##############  Detail ############### -->
+                    <input type="hidden" class="form-control" id="row" value="0" runat="server">
+                    <input type="hidden" class="form-control" id="nextrow" value="0" runat="server">
+                    <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
+                    <div class="form-group">
+                        <asp:Label ID="Label8" CssClass="form-label" AssociatedControlID="txtbrand" runat="server" Text="ยี่ห้อ" />
+                        <asp:TextBox class="form-control" type="input" ID="txtbrand" runat="server" autocomplete="off"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="Label9" CssClass="form-label" AssociatedControlID="txtproducttype" runat="server" Text="ชนิดน้ำมัน" />
+                        <asp:TextBox class="form-control" type="input" ID="txtproducttype" runat="server" autocomplete="off"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="Label10" CssClass="form-label" AssociatedControlID="txtnozzle_no" runat="server" Text="เลขที่มาตร" />
+                        <asp:TextBox class="form-control" type="input" ID="txtnozzle_no" runat="server" autocomplete="off"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="Label11" CssClass="form-label" AssociatedControlID="txtpositiononassest" runat="server" Text="ตำแหน่ง" />
+                        <asp:TextBox class="form-control" type="input" ID="txtpositiononassest" runat="server" autocomplete="off"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="Label12" CssClass="form-label" AssociatedControlID="txtexpirydate" runat="server" Text="วันที่สิ้นสุด" />
+                        <asp:TextBox class="form-control" type="input" ID="txtexpirydate" runat="server" autocomplete="off"></asp:TextBox>
+                    </div>
+                    <div class="file_att">
+                        <input type="file" name="files__nozzle" id="file_att" accept="image/*,.pdf" data-fileuploader-listinput="file_att" data-fileuploader-limit="1" data-fileuploader-files=''>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" />
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade bd-example-modal-lg" id="chooseMyfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -872,7 +1025,7 @@
                             <div class="form-group">
                                 <asp:Label ID="lbcboMyfile" CssClass="form-label" AssociatedControlID="cboMyfile" runat="server" Text="ไฟล์ของฉัน" />
                                 <asp:Label ID="lbMandatorycboMyfile" CssClass="text-danger" AssociatedControlID="cboMyfile" runat="server" Text="*" />
-                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server" required></asp:DropDownList>
+                                <asp:DropDownList class="form-control" ID="cboMyfile" runat="server"></asp:DropDownList>
                                 <div class="invalid-feedback">กรุณาเลือกไฟล์</div>
                             </div>
                         </div>
@@ -1124,6 +1277,12 @@
             scrollInput: false,
             format: 'd/m/Y H:i'
         });
+        jQuery('[id$=txtexpirydate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: true,
+            scrollInput: false,
+            format: 'd/m/Y H:i'
+        });
 
         function alertSuccess() {
             Swal.fire(
@@ -1141,9 +1300,97 @@
             )
         }
 
-       
+
         $(document).ready(function () {
-            
+            $('input[name="files__nozzle"]').fileuploader({
+                example: ['pdf', 'image/*'],
+                fileMaxSize: 30,
+                limit: 3,
+                changeInput: ' ',
+                theme: 'thumbnails',
+                enableApi: true,
+                addMore: true,
+                thumbnails: {
+                    box: '<div class="fileuploader-items">' +
+                        '<ul class="fileuploader-items-list" style="text-align: center;">' +
+                        '<li class="fileuploader-thumbnails-input"><div class="fileuploader-thumbnails-input-inner"><i>+</i></div></li>' +
+                        '</ul>' +
+                        '</div>',
+                    item: '<li class="fileuploader-item">' +
+                        '<div class="fileuploader-item-inner">' +
+                        '<div class="type-holder">${extension}</div>' +
+                        '<div class="actions-holder">' +
+                        '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                        '</div>' +
+                        '<div class="thumbnail-holder">' +
+                        '${image}' +
+                        '<span class="fileuploader-action-popup"></span>' +
+                        '</div>' +
+                        '<div class="content-holder"><h5>${name}</h5><span>${size2}</span></div>' +
+                        '<div class="progress-holder">${progressBar}</div>' +
+                        '</div>' +
+                        '</li>',
+                    item2: '<li class="fileuploader-item">' +
+                        '<div class="fileuploader-item-inner">' +
+                        '<div class="type-holder">${extension}</div>' +
+                        '<div class="actions-holder">' +
+                        '<a href="${file}" class="fileuploader-action fileuploader-action-download" title="${captions.download}" download><i class="fileuploader-icon-download"></i></a>' +
+                        '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                        '</div>' +
+                        '<div class="thumbnail-holder">' +
+                        '${image}' +
+                        '<span class="fileuploader-action-popup"></span>' +
+                        '</div>' +
+                        '<div class="content-holder"><h5 title="${name}">${name}</h5><span>${size2}</span></div>' +
+                        '<div class="progress-holder">${progressBar}</div>' +
+                        '</div>' +
+                        '</li>',
+                    startImageRenderer: true,
+                    useObjectUrl: false,
+                    canvasImage: false,
+                    _selectors: {
+                        list: '.fileuploader-items-list',
+                        item: '.fileuploader-item',
+                        start: '.fileuploader-action-start',
+                        retry: '.fileuploader-action-retry',
+                        remove: '.fileuploader-action-remove'
+                    },
+                    onItemShow: function (item, listEl, parentEl, newInputEl, inputEl) {
+                        var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                            api = $.fileuploader.getInstance(inputEl.get(0));
+
+                        plusInput.insertAfter(item.html)[api.getOptions().limit && api.getChoosedFiles().length >= api.getOptions().limit ? 'hide' : 'show']();
+
+                        if (item.format == 'image') {
+                            item.html.find('.fileuploader-item-icon').hide();
+                        }
+                    },
+                    onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
+                        var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                            api = $.fileuploader.getInstance(inputEl.get(0));
+
+                        html.children().animate({ 'opacity': 0 }, 200, function () {
+                            html.remove();
+
+                            if (api.getOptions().limit && api.getChoosedFiles().length - 1 < api.getOptions().limit)
+                                plusInput.show();
+                        });
+                    }
+                },
+                dragDrop: {
+                    container: '.fileuploader-thumbnails-input'
+                },
+                afterRender: function (listEl, parentEl, newInputEl, inputEl) {
+                    var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                        api = $.fileuploader.getInstance(inputEl.get(0));
+
+                    plusInput.on('click', function () {
+                        api.open();
+                    });
+
+                    api.getOptions().dragDrop.container = plusInput;
+                }
+            });
             $('.form-control:not(.cbomulti)').selectpicker({
                 noneSelectedText: '-',
                 liveSearch: true,
@@ -1198,7 +1445,7 @@
                 <% If maintable IsNot Nothing Then %>
                     <% If maintable.Rows.Count > 0 Then %>
                         <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And (statusnow = 4 Or maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน") And maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                            checkStatusJob();
+                checkStatusJob();
                         <% End if %>
                     <% End if %>
                 <% End if %>
@@ -1551,8 +1798,8 @@
                     //alert('in');
                     //var params = "{'approvalcode': '" + approvalcode + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
                     let url = "../OPS/approval/WebForm5.aspx/disAcceptByCode";
-                    const cntSupplier = <%= cntSupplier %>??0;
-                    url = (cntSupplier > 0) ? "http://vpnptec.dyndns.org:32001/api/STK_unCompletedBy_User":"../OPS/approval/WebForm5.aspx/disAcceptByCode";
+                    const cntSupplier = <%= cntSupplier %>?? 0;
+                    url = (cntSupplier > 0) ? "http://vpnptec.dyndns.org:32001/api/STK_unCompletedBy_User" : "../OPS/approval/WebForm5.aspx/disAcceptByCode";
 
                     //alert(url);
                     var params = `{"jobcode" : "${jobcode}","dtlid" : "${dtlid}","message" : "${result.value}","user" : "${usercode}"}`;
@@ -1590,6 +1837,20 @@
 
             return false;
         }
+        function btnEditDetailClick(rownumber, nozzle_id, nozzle_no, brand, expirydate, producttype, positiononassest) {
+            console.log(rownumber, nozzle_id, nozzle_no, brand, expirydate, producttype, positiononassest);
 
+
+            $('#<%= row.ClientID%>').val(rownumber);
+            $('#<%= hiddenAdvancedetailid.ClientID%>').val(nozzle_id);
+           <%-- $('#<%= txtVendor.ClientID%>').val(vendorcode);--%>
+            $('#<%= txtbrand.ClientID%>').val(brand);
+            $('#<%= txtproducttype.ClientID%>').val(producttype);
+            $('#<%= txtnozzle_no.ClientID%>').val(nozzle_no);
+            $('#<%= txtpositiononassest.ClientID%>').val(positiononassest);
+            $('#<%= txtexpirydate.ClientID%>').val(expirydate);
+
+            $('#exampleModal').modal('show');
+        }
     </script>
 </asp:Content>

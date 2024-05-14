@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class JobsList_test
 
     '''<summary>
+    '''txtallOperator control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtallOperator As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''btnNew control.
     '''</summary>
     '''<remarks>
@@ -156,6 +165,15 @@ Partial Public Class JobsList_test
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboWorking As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cboMaxRows control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboMaxRows As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''gvRemind control.

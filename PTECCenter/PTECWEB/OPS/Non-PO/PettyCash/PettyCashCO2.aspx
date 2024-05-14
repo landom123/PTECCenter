@@ -462,8 +462,8 @@
                                         <%--<td colspan="2" style="width: 80px !important; text-align: center;" title="<%= detailtable.Rows(i).Item("pjname").ToString() %>"><%= detailtable.Rows(i).Item("pjname").ToString() %></td>--%>
                                         <td colspan="3" style="width: 120px !important; text-align: right; padding-right: 5px;" title="<%= detailtable.Rows(i).Item("cost").ToString() %>"><%= if((detailtable.Rows(i).Item("cost").ToString()) = "0", "", String.Format("{0:n2}", detailtable.Rows(i).Item("cost"))) %>
                                         </td>
-                                        <td colspan="2" style="width: 80px !important; text-align: right; padding-right: 5px;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100, 2) %>"><%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100, 2) %></td>
-                                        <td colspan="2" style="width: 80px !important; text-align: right; padding-right: 5px;" title="<%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100, 2) %>"><%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100, 2) %></td>
+                                        <td colspan="2" style="width: 80px !important; text-align: right; padding-right: 5px;" title="<%= (detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100) %>"><%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("vat_per") / 100, 2) %></td>
+                                        <td colspan="2" style="width: 80px !important; text-align: right; padding-right: 5px;" title="<%= (detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100) %>"><%= FormatNumber(detailtable.Rows(i).Item("cost") * detailtable.Rows(i).Item("tax_per") / 100, 2) %></td>
 
                                         <td colspan="3" style="width: 120px !important; text-align: right; padding-right: 5px;" title="<%= detailtable.Rows(i).Item("cost_total").ToString() %>"><%= if((detailtable.Rows(i).Item("cost_total").ToString()) = "0", "", String.Format("{0:n2}", detailtable.Rows(i).Item("cost_total"))) %></td>
                                         <td class="text-center gropincompletebill" colspan="1" style="width: 40px !important; text-align: right; padding-right: 5px;"><%= if( (Not detailtable.Rows(i).Item("nobill") And Not detailtable.Rows(i).Item("incompletebill")), "", If(detailtable.Rows(i).Item("nobill"), "N", "U")) %></td>
@@ -904,14 +904,14 @@
 
                     </div>
                     <div class="gropincompletebill form-group">
-                            <div class="pl-4 mb-1" style="color: #0f66c4;">
-                                <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
-                                <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
-                            </div>
-                            <div class="pl-4 mb-1" style="color: #0f66c4;">
-                                <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
-                                <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
-                            </div>
+                        <div class="pl-4 mb-1" style="color: #0f66c4;">
+                            <input class="form-check-input" type="checkbox" id="chkNoBill" runat="server">
+                            <asp:Label ID="lbchkNoBill" CssClass="form-check-label" AssociatedControlID="chkNoBill" runat="server" Text="ไม่มีบิล (N)" />
+                        </div>
+                        <div class="pl-4 mb-1" style="color: #0f66c4;">
+                            <input class="form-check-input" type="checkbox" id="chkIncompleteBill" runat="server">
+                            <asp:Label ID="lbchkIncompleteBill" CssClass="form-check-label" AssociatedControlID="chkIncompleteBill" runat="server" Text="บิลไม่สมบูรณ์ (U)" />
+                        </div>
                     </div>
                     <div class="form-group autocomplete">
                         <asp:Label ID="lbcboVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="Vendor" />
@@ -1061,7 +1061,7 @@
         });
         <% End If %>
 
-        </script>
+    </script>
 
     <script>
         var cntdetail =<% =chkunsave%>;
@@ -1145,6 +1145,7 @@ alert('else nonpo')
         function Confirm() {
 
             //console.log("insave");
+            removeElem("confirm_value");
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
@@ -1190,7 +1191,7 @@ alert('else nonpo')
 
                 var price = document.getElementById("<%= txtPrice.ClientID%>")
                 //console.log((netprice / (1 + (vat / 100) - (tax / 100))))
-                price.value = (netprice / (1 + (vat / 100) - (tax / 100))).toFixed(4).toLocaleString();
+                price.value = parseFloat(netprice / (1 + (vat / 100) - (tax / 100))).toFixed(4)
             }
         }
         function setnetprice() {
@@ -1203,7 +1204,7 @@ alert('else nonpo')
             tax = parseFloat(tax);
             if (price) {
                 var netprice = document.getElementById("<%= TxtNetPrice.ClientID%>")
-                netprice.value = calCostTotal(price, vat, tax).toFixed(2).toLocaleString();
+                netprice.value = parseFloat(calCostTotal(price, vat, tax)).toFixed(4)
             }
         }
         function calculate() {
@@ -1231,9 +1232,9 @@ alert('else nonpo')
             //console.log(vat);
             //console.log(tax);
 
-            const c_CostTotal = calCostTotal(cost, vat, tax).toFixed(2).toLocaleString();
-            const c_Vat = calVat(cost, vat).toFixed(2).toLocaleString();
-            const c_Tax = calTax(cost, tax).toFixed(2).toLocaleString();
+            const c_CostTotal = calCostTotal(cost, vat, tax).toFixed(4).toLocaleString();
+            const c_Vat = calVat(cost, vat).toFixed(4).toLocaleString();
+            const c_Tax = calTax(cost, tax).toFixed(4).toLocaleString();
 
             //console.log(c_CostTotal);
             //console.log(c_Vat);
@@ -1391,7 +1392,7 @@ alert('else nonpo')
                     let url = result.value[0];
                     let description = result.value[1];
                     sentAddAttach(url, description)
-                    
+
 
                 }
             })
@@ -1513,21 +1514,29 @@ alert('else nonpo')
             //console.log(Acc);
             const myArr = Acc.options[Acc.selectedIndex].textContent.split(" - ");
             let accValue = Acc.options[Acc.selectedIndex].value
-            accValue = accValue.substring(0, 6);
+            let prefixaccValue = accValue.substring(0, 6);
+            
 
             //console.log(accValue);
-            //console.log(test);
             //console.log(myArr[myArr.length - 1]);
-
             $("#<%= txtDetail.ClientID%>").val(myArr[myArr.length - 1]);
 
             <%--const dd = document.getElementById('<%= cboDep.ClientID%>');--%>
-            if (accValue == "521290") {
+            if (prefixaccValue == "521290") {
                 //dd.selectedIndex = [...dd.options].findIndex(option => option.text === 'HRD');
                 $('#<%= cboDep.ClientID%>').val(22); //3 = HRD 22 = 101HDR
-
+            } else if (accValue == "511200") {
+                $('#<%= cboDep.ClientID%>').val(20); //20 101MMO
+            } else if (accValue == "529200A001") {
+                $('#<%= cboDep.ClientID%>').val(22); //22 = 101HDR 
             } else {
                 $('#<%= cboDep.ClientID%>').val(26); //3 = ROD 26 =101ROD
+            }
+
+            if (accValue == "522302A001") {
+                $('#<%= cboPJ.ClientID%>').val(5); //5	ESG
+            } else {
+                $('#<%= cboPJ.ClientID%>').val(0); 
             }
 
             $('.form-control').selectpicker('refresh');
@@ -1724,13 +1733,20 @@ alert('else nonpo')
                 event.stopPropagation();
                 return 0;
             }
-            
+
             if (vat != 0 && (!invoice || !taxid || !invoicedate)) {
                 alertWarning('กรุณากรอกข้อมูล invoice ให้ครบถ้วน');
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
             }
+            if ((/[^0-9]/g.test(taxid))) {
+                alertWarning('taxid ต้องเป็นตัวเลข 0-9 เท่านั้น');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+            
             //alert(row);
             //var params = "{'row': '" + row + "'}";
             var params = "{'rows': '" + row + "','status': '" + status + "','nonpodtl_id': '" + nonpodtl_id + "','accountcodeid': '" + accountcodeid +
@@ -1745,16 +1761,13 @@ alert('else nonpo')
             //PageMethods.addoreditdetail(params);
             //console.log(document.getElementsByTagName("addDetailJSON"));
 
-<%--            const elebtnAddDetails = document.getElementById("<%= btnAddDetails.ClientID%>");
-            console.log(elebtnAddDetails);
-            BtnLoading(elebtnAddDetails);--%>
-
+            removeElem("addDetailJSON");
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "addDetailJSON";
             confirm_value.value = params;
-            //(document.getElementsByTagName("addDetailJSON"))? console.log('23') : console.log('1');
             document.forms[0].appendChild(confirm_value);
+            showBtnSpiner(document.getElementById("<%= btnAddDetails.ClientID%>"));
             return true;
 
         }
@@ -1881,7 +1894,7 @@ alert('else nonpo')
                 $(group).prop("checked", false);
                 $box.prop("checked", true);
 
-                
+
                 array.forEach((element) => {
                     console.log(`${element.textContent}`);
                     element.value = '';
