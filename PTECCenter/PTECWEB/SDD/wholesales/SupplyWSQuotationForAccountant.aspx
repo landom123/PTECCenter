@@ -185,9 +185,9 @@
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">ค่าขนส่งสุทธิ</span>
+                                    <span class="input-group-text" runat="server" visible="false">ค่าขนส่งสุทธิ</span>
                                 </div>
-                                <asp:label class="form-control" ID="lblNetTTCost" runat="server" ></asp:label>
+                                <asp:label class="form-control" ID="lblNetTTCost" runat="server" visible="false"></asp:label>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -203,17 +203,17 @@
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">ราคาขายสุทธิ/ลิตร</span>
+                                    <span class="input-group-text" runat="server" visible="false">ราคาขายสุทธิ/ลิตร</span>
                                 </div>
-                                <asp:label class="form-control" ID="lblTotalPerLitre" runat="server"></asp:label>
+                                <asp:label class="form-control" ID="lblTotalPerLitre" runat="server" visible="false"></asp:label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">ราคาขายสุทธิ (ที่ต้องชำระ)</span>
+                                    <span class="input-group-text" runat="server" visible="false">ราคาขายสุทธิ (ที่ต้องชำระ)</span>
                                 </div>
-                                <asp:label class="form-control" ID="lblTotal" runat="server" ></asp:label>
+                                <asp:label class="form-control" ID="lblTotal" runat="server" visible="false"></asp:label>
                             </div>
                         </div>
                     </div>
