@@ -113,7 +113,11 @@ Public Class JobsFollowup
 
         'txtCreateBy.Text = Session("jobtypeid")
     End Sub
-
+    Private Sub BindData()
+        'cntdt = itemtable.Rows.Count
+        gvNozzle.DataSource = nozzletable
+        gvNozzle.DataBind()
+    End Sub
     Private Sub setBtn()
         If maintable IsNot Nothing Then
             If maintable.Rows.Count > 0 Then
@@ -129,6 +133,7 @@ Public Class JobsFollowup
                     If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
+                        btnNozzle.Visible = False
 
 
                         'Supplier
@@ -166,6 +171,12 @@ Public Class JobsFollowup
                     Else
                         btnSave.Enabled = True
                         btnEditDetail.Visible = True
+                        If nozzletable.Rows.Count > 0 Then
+                            btnNozzle.Visible = True
+                        Else
+                            btnNozzle.Visible = False
+                        End If
+
 
 
                         'Supplier
@@ -237,6 +248,7 @@ Public Class JobsFollowup
                     btnSave.Visible = False
                     'btnConfirm.Visible = False
                     btnEditDetail.Visible = False
+                    btnNozzle.Visible = False
 
 
                     'Rating
@@ -292,6 +304,7 @@ Public Class JobsFollowup
                         btnSave.Visible = False
                     'btnConfirm.Visible = False
                     btnEditDetail.Visible = False
+                    btnNozzle.Visible = False
                     'btnConfirm.Enabled = False
 
                     'Follow UP
@@ -432,7 +445,7 @@ Public Class JobsFollowup
             txtallOperator.Text = mydataset.Tables(7).Rows(0).Item("alloperator")
             nozzletable = mydataset.Tables(8)
             showsuppilerdata(suppilertable)
-
+            BindData()
 
 
             Session("maintable") = maintable

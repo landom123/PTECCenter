@@ -85,7 +85,7 @@ Public Class KPIsList
             objdep.SetCboDepartmentByMode(cboDepartment, 0, "actived")
             cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
             objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
-            objbranch.SetCboBranchManager(cboBranchManager)
+            'objbranch.SetCboBranchManager(cboBranchManager)
 
 
 
@@ -96,8 +96,10 @@ Public Class KPIsList
                 chkHO.Checked = True
             End If
             SetCboUsers(cboCreateby)
+            SetCboUsersCO(cboBranchManager)
 
             cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
+            cboBranchManager.SelectedIndex = cboBranchManager.Items.IndexOf(cboBranchManager.Items.FindByValue(Session("userid")))
             '------------------------------------
             find()
 
@@ -222,7 +224,8 @@ Public Class KPIsList
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
                                                         "CO",
-                                                        cboPeriod.SelectedValue.ToString)
+                                                        cboPeriod.SelectedValue.ToString,
+                                                        cboBranchManager.SelectedItem.Value.ToString)
             ElseIf chkHO.Checked Then
                 AllKpi = objKpi.Kpi_List_For_Owner(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
@@ -234,7 +237,8 @@ Public Class KPIsList
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
                                                     "HO",
-                                                        cboPeriod.SelectedValue.ToString)
+                                                        cboPeriod.SelectedValue.ToString,
+                                                        "")
             End If
 
             setCriteria()
