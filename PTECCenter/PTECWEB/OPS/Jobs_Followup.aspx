@@ -40,6 +40,7 @@
             border: 2px dashed #ff0000;
             color: #ff0000;
         }
+
         .modal img {
             display: none;
             background: none;
@@ -95,11 +96,12 @@
                     </div>
                     <div class="col mb-3">
                         <div class="row justify-content-end align-items-center">
+
                             <div class="col-auto">
                                 <a class="gtContent6" id="txtCntComment" runat="server" href="#" title="ไปยังแสดงความคิดเห็น"><%= CommentTable.Rows.Count %> <i class="far fa-comment-dots"></i></a>
                             </div>
                             <div class="col-auto">
-                                <a class="gtContent5" id="txtCntAttach" runat="server" href="#" title="ไปยังแสดงความคิดเห็น"><%= AttachTable.Rows.Count %> <i class="fas fa-paperclip"></i></a>
+                                <a class="gtContent5" id="txtCntAttach" runat="server" href="#" title="ไปยังเอกสารแนบ"><%= AttachTable.Rows.Count %> <i class="fas fa-paperclip"></i></a>
                             </div>
                         </div>
                     </div>
@@ -133,6 +135,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col mb-3 text-left text-md-right divEditDetail" id="divEditDetail">
+                                        <a id="btnNozzle" runat="server" href="#" title="ดูข้อมูลมือจ่าย" data-toggle="modal" data-target="#nozzleDetail"><%= nozzletable.Rows.Count %> <i class="fas fa-gas-pump"></i></a>&nbsp;&nbsp;
                                         <a href="#" id="btnEditDetail" runat="server" title="EditDetail" data-toggle="modal" data-target="#EditDetail"><i class="fas fa-edit"></i></a>
                                     </div>
                                 </div>
@@ -1036,8 +1039,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col">
-                                <u><a class="" style="color: #c0c0c0; font-size: .8rem;">
-                                    (ตัวอย่างรูปภาพที่จะต้องแนบ <i class="fas fa-info-circle"></i> )
+                                <u><a class="" style="color: #c0c0c0; font-size: .8rem;">(ตัวอย่างรูปภาพที่จะต้องแนบ <i class="fas fa-info-circle"></i>)
                                     <img src="../../../icon/nozzle_pace.jpg" class="img-fluid img-thumbnail" />
                                 </a>
                                 </u>
@@ -1297,7 +1299,82 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade bd-example-modal-lg" id="nozzleDetail" tabindex="-1" role="dialog" aria-labelledby="nozzleDetailModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nozzleDetailModal">รายละเอียดมือจ่ายในงาน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body nozzle__management">
+                    <asp:GridView ID="gvNozzle"
+                        class="table thead-dark table-bordered"
+                        AllowSorting="True"
+                        AllowPaging="false"
+                        AutoGenerateColumns="false"
+                        runat="server">
+                        <Columns>
+                            <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbid" runat="server" Text='<%#Eval("rownumber")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ยี่ห้อ" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("brand")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ชนิดน้ำมัน" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbapproval" runat="server" Text='<%#Eval("producttype")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="เลขที่มาตร" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetail" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("positionOnAssest")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("expirydate")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="รูปภาพ" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <a href="<%#Eval("url")%>" target="_blank">รูปภาพ</a>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <a title="EditDetail" data-dismiss="modal"
+                                        onclick="btnEditDetailClick('<%#Eval("rownumber") %>'
+                                                                        ,'<%#Eval("nozzle_id") %>'
+                                                                        ,'<%#Eval("nozzle_no") %>'
+                                                                        ,'<%#Eval("brand") %>'
+                                                                        ,'<%#Eval("expirydate") %>'
+                                                                        ,'<%#Eval("producttype") %>'
+                                                                        ,'<%#Eval("positiononassest") %>'
+                                                                        );">
+                                        <i class="fas fa-edit color__purple"></i>
+                                    </a>&nbsp;&nbsp;
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/starRating.js")%>"></script>

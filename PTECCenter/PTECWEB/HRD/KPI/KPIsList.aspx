@@ -360,7 +360,7 @@
                                                                 </a>
                                                                 <% End If %>
                                                             </th>
-                                                            <% If chkCO.Checked Then %>
+                                                            <% If chkCO.Checked And cboPeriod.SelectedValue.ToString <= 1 Then %> <%--ปีแรกยังไม่มีการทำ KPI ติดบุคคล--%>
                                                             <th><span class="p-1">เลขสาขา</span></th>
 
                                                             <% End If %>
@@ -382,7 +382,7 @@
                                                         <% If AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString = AllKpi.Tables(2).Rows(j).Item("actionkpi_code").ToString Then %>
                                                         <tr class="text-center">
                                                             <td><span class="badge badge-blue <%= If(AllKpi.Tables(2).Rows(j).Item("nowMonths") = 1 And AllKpi.Tables(1).Rows(i).Item("complete") = 0 And (Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionrateowner") Is Integer And Not TypeOf AllKpi.Tables(2).Rows(j).Item("actionratehead") Is Integer), "border__solid", "") %>"><%= AllKpi.Tables(2).Rows(j).Item("actionmonth").ToString %></span></td>
-                                                            <% If chkCO.Checked Then %>
+                                                            <% If chkCO.Checked And cboPeriod.SelectedValue.ToString <= 1 Then %> <%--ปีแรกยังไม่มีการทำ KPI ติดบุคคล--%>
                                                             <td><span class="p-1"><%= AllKpi.Tables(2).Rows(j).Item("actionbranch").ToString %></span></td>
 
                                                             <% End If %>

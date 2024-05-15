@@ -77,6 +77,15 @@ Partial Public Class JobsFollowup
     Protected WithEvents cardone As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
+    '''btnNozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnNozzle As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
     '''btnEditDetail control.
     '''</summary>
     '''<remarks>
@@ -912,4 +921,13 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSuppilerSubmit As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''gvNozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvNozzle As Global.System.Web.UI.WebControls.GridView
 End Class
