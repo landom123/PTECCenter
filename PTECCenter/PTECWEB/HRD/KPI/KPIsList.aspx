@@ -9,7 +9,7 @@
             color: #af6eab !important;
         }
 
-        .content-wrapper {
+        #content-wrapper {
             font-size: .8rem;
         }
 
@@ -83,20 +83,28 @@
         .table__inner > tbody {
             font-size: .75rem;
         }
+
         .border__solid {
             border: solid !important;
             border-color: red !important;
-        } 
-        tr>.text__rateowner::after {
-          content: "ยังไม่ลงคะแนน";
-          color:red;
         }
-        tr>.text__rateheader::after {
-          content: "ยังไม่ลงคะแนน";
-          color:red;
+
+        tr > .text__rateowner::after {
+            content: "ยังไม่ลงคะแนน";
+            color: red;
         }
+
+        tr > .text__rateheader::after {
+            content: "ยังไม่ลงคะแนน";
+            color: red;
+        }
+
         .goEdit {
-          cursor: pointer;
+            cursor: pointer;
+        }
+
+        .pre-line {
+            white-space: pre-line;
         }
     </style>
 </asp:Content>
@@ -317,7 +325,7 @@
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("seccode").ToString %></span></td>
                                         <% End If %>
                                         <td><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("CategoryName").ToString %></span></td>
-                                        <td class="text-left"><span class="p-1"><%= AllKpi.Tables(1).Rows(i).Item("Title").ToString %></span>
+                                        <td class="text-left"><span class="pre-line"><%= AllKpi.Tables(1).Rows(i).Item("Title").ToString %></span>
                                             <% If AllKpi.Tables(1).Rows(i).Item("complete") Then %>
                                             <span class="badge badge-success" title="<%= AllKpi.Tables(1).Rows(i).Item("completedate").ToString %>">Complete</span>
                                             <% End if %>
@@ -463,7 +471,7 @@
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <%--<script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>--%>
-<%--    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
+    <%--    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>--%>
     <script type="text/javascript">
         //jQuery('[id$=txtDuedate]').datetimepicker({
@@ -473,7 +481,7 @@
         //    format: 'd/m/Y'
         //});
         $(document).ready(function () {
-                console.log(document)
+            console.log(document)
             $('.form-control').selectpicker({
                 noneSelectedText: '-',
                 liveSearch: true,
@@ -488,7 +496,7 @@
 
             var elements = document.getElementsByClassName("goEdit");
 
-           
+
 
             for (var i = 0; i < elements.length; i++) {
                 elements[i].addEventListener('click', myFunction, false);
@@ -498,7 +506,7 @@
             console.log(this);
             const elemid = this.parentElement.parentElement.parentElement.parentElement.id;
             console.log(elemid);
-            
+
             window.location.href = `KPIsEdit.aspx?Kpi_Code=${elemid}`;
 
         };
