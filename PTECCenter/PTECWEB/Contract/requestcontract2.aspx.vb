@@ -1526,13 +1526,22 @@ Public Class requestcontract2
                         txtAtt2Ngan14.Text = "0"
                         txtAtt2Wa14.Text = "0.00"
 
-                        If IIf(IsDBNull(dr("pic1")), "", dr("pic1")) <> "" Then
-                            image3.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic1"))
-                        End If
-                        If IIf(IsDBNull(dr("pic1")), "", dr("pic2")) <> "" Then
-                            image4.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
-                        End If
+                        'If IIf(IsDBNull(dr("pic1")), "", dr("pic1")) <> "" Then
+                        '    image3.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic1"))
+                        'End If
+                        'If IIf(IsDBNull(dr("pic1")), "", dr("pic2")) <> "" Then
+                        '    image4.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
+                        'End If
 
+                        image1.Visible = ID <> "0"
+                        Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                        Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                        image1.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+
+                        image2.Visible = ID <> "0"
+                        Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                        Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                        image2.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
 
                     Case 1
                         txtAtt2DocNo2.Text = dr("DocNo")
@@ -1561,12 +1570,24 @@ Public Class requestcontract2
                         txtAtt2Wa24.Text = "0.00"
 
 
-                        If IIf(IsDBNull(dr("pic1")), "", dr("pic1")) <> "" Then
-                            image5.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic1"))
-                        End If
-                        If IIf(IsDBNull(dr("pic1")), "", dr("pic2")) <> "" Then
-                            image6.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
-                        End If
+                        'If IIf(IsDBNull(dr("pic1")), "", dr("pic1")) <> "" Then
+                        '    image5.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic1"))
+                        'End If
+                        'If IIf(IsDBNull(dr("pic1")), "", dr("pic2")) <> "" Then
+                        '    image6.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
+                        'End If
+
+                        image1.Visible = ID <> "0"
+                        Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                        Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                        image1.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+
+                        image2.Visible = ID <> "0"
+                        Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                        Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                        image2.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+
+
                 End Select
                 iRow += 1
             Next
@@ -2237,6 +2258,17 @@ Public Class requestcontract2
                 'CreateBy = usercode
                 Session("ItemNo") = dr("ItemNo")
 
+                image9.Visible = ID <> "0"
+                Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                image9.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+
+                image10.Visible = ID <> "0"
+                Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                image10.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+
+
                 If disableTab(cboMainContact.SelectedValue) = False Then
                     Return False
                 End If
@@ -2440,6 +2472,17 @@ Public Class requestcontract2
                 txtDueDateNonOil.Text = CDate(dr("DueDate"))
                 txtBeginDateNonOil.Text = CDate(dr("BeginDate"))
                 txtEndDateNonOil.Text = CDate(dr("EndDate"))
+
+                image11.Visible = ID <> "0"
+                Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                image11.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+
+                image12.Visible = ID <> "0"
+                Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                image12.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+
 
             Next
 
@@ -3568,7 +3611,7 @@ Public Class requestcontract2
                 Exit Sub
             End If
 
-            UploadPic()
+            UploadPicAsset()
 
             If loadContractAsset() = False Then
                 Exit Sub
@@ -3583,7 +3626,7 @@ Public Class requestcontract2
         End Try
     End Sub
 
-    Protected Sub UploadPic()
+    Protected Sub UploadPicAsset()
 
         Dim iID As Integer
         Dim iItem As Integer
@@ -3601,10 +3644,9 @@ Public Class requestcontract2
             bytes2 = br2.ReadBytes(fiUpload2.PostedFile.ContentLength)
         End Using
 
-
         Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
         Using conn As SqlConnection = New SqlConnection(constr)
-            Dim sql As String = "Update TT_Asset SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@iItem"
+                    Dim sql As String = "Update TT_Asset SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@iItem"
             Using cmd As SqlCommand = New SqlCommand(sql, conn)
                 'cmd.Parameters.AddWithValue("@Name", Path.GetFileName(fiUpload.PostedFile.FileName))
                 'cmd.Parameters.AddWithValue("@ContentType", fiUpload.PostedFile.ContentType)
@@ -3617,6 +3659,26 @@ Public Class requestcontract2
                 conn.Close()
             End Using
         End Using
+
+
+
+
+
+        'Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
+        'Using conn As SqlConnection = New SqlConnection(constr)
+        '    Dim sql As String = "Update TT_Asset SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@iItem"
+        '    Using cmd As SqlCommand = New SqlCommand(sql, conn)
+        '        'cmd.Parameters.AddWithValue("@Name", Path.GetFileName(fiUpload.PostedFile.FileName))
+        '        'cmd.Parameters.AddWithValue("@ContentType", fiUpload.PostedFile.ContentType)
+        '        cmd.Parameters.AddWithValue("@pic1", bytes)
+        '        cmd.Parameters.AddWithValue("@pic2", bytes2)
+        '        cmd.Parameters.AddWithValue("@iID", iID)
+        '        cmd.Parameters.AddWithValue("@iItem", iItem)
+        '        conn.Open()
+        '        cmd.ExecuteNonQuery()
+        '        conn.Close()
+        '    End Using
+        'End Using
 
         'Response.Redirect(Request.Url.AbsoluteUri)
     End Sub

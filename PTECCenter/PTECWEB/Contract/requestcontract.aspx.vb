@@ -36,8 +36,10 @@ Public Class requestcontract
 
         'Dim objsupplier As New Supplier
 
-        txtBegindate.Text = Now.Date
-        txtEnddate.Text = Now.Date
+        If txtBegindate.Text = "" Or txtEnddate.Text = "" Then
+            txtBegindate.Text = Now.Date
+            txtEnddate.Text = Now.Date
+        End If
 
         If IsPostBack() Then
             If Session("menulist") Is Nothing Then
