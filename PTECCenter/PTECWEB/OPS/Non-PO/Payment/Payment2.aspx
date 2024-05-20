@@ -924,7 +924,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน (ก่อน VAT)" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onchange="calculate();"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onkeyup="setnetprice();calculate();"></asp:TextBox>
                         <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
                     <div class="row flex-nowrap">
@@ -935,7 +935,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
                             </div>
                             <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                         </div>
@@ -944,12 +944,16 @@
                                 <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="WHT (%)" />
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
                                 <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <asp:Label ID="lbNetPrice" CssClass="form-label" AssociatedControlID="TxtNetPrice" runat="server" Text="จำนวนเงิน (รวม VAT)" />
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="TxtNetPrice" runat="server" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
+                        <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
+                    </div>
                     <%--<div class="form-group">
                         <asp:Label ID="lbVat" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT" />
                         <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" Text="0"'></asp:TextBox>
@@ -966,7 +970,7 @@
                     <div class="showCost">
                         <p class="text-muted" id="p_vat"></p>
                         <p class="text-muted" id="p_tax"></p>
-                        <p class="text-muted" id="p_cost"></p>
+                        <p class="text-muted font-weight-bold" id="p_cost"></p>
                     </div>
                     <!--  ############## End Detail ############### -->
                     <hr />
@@ -1156,6 +1160,7 @@
 
 
             $('#exampleModal').on('shown.bs.modal', function (e) {
+                setnetprice();
                 calculate();
             });
             /*$(".listCommentAndAttatch").click(function () {
@@ -1243,6 +1248,7 @@ alert('else nonpo')
 
             //console.log("############ calculate");
 
+            let netcost = CheckNumber(document.getElementById("<%= txtNetPrice.ClientID%>").value);
             let cost = CheckNumber(document.getElementById("<%= txtPrice.ClientID%>").value);
             let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
             let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
@@ -1251,6 +1257,8 @@ alert('else nonpo')
             const p_tax = document.getElementById("p_tax");
             const p_vat = document.getElementById("p_vat");
 
+
+            netcost = parseFloat(netcost);
 
             cost = parseFloat(cost);
             vat = parseFloat(vat);
@@ -1526,6 +1534,7 @@ alert('else nonpo')
             $('#<%= txtPrice.ClientID%>').val('');
             $('#<%= txtVat.ClientID%>').val('7');
             $('#<%= txtTax.ClientID%>').val('');
+            $('#<%= TxtNetPrice.ClientID%>').val('');
             $('#<%= txtDetail.ClientID%>').val('');
             $('#<%= txtinvoiceno.ClientID%>').val('');
 
@@ -1969,6 +1978,35 @@ alert('else nonpo')
             const urlParams = new URLSearchParams(window.location.search);
             const coderef = urlParams.get('code_ref') ?? $('#<%= codeRef.ClientID%>').val();
             return coderef;
+        }
+        function setprice() {
+            let netprice = CheckNumber(document.getElementById("<%=TxtNetPrice.ClientID%>").value);
+            let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            netprice = parseFloat(netprice);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+            if (netprice) {
+
+
+                var price = document.getElementById("<%= txtPrice.ClientID%>")
+                //console.log((netprice / (1 + (vat / 100) - (tax / 100))))
+                price.value = parseFloat(netprice / (1 + (vat / 100) - (tax / 100))).toFixed(4)
+            }
+        }
+        function setnetprice() {
+            let price = CheckNumber(document.getElementById("<%=txtPrice.ClientID%>").value);
+            let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            price = parseFloat(price);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+            if (price) {
+                var netprice = document.getElementById("<%= TxtNetPrice.ClientID%>")
+                netprice.value = parseFloat(calCostTotal(price, vat, tax)).toFixed(4)
+            }
         }
     </script>
 </asp:Content>
