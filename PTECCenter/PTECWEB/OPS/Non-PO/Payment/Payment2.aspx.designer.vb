@@ -977,6 +977,24 @@ Partial Public Class Payment2
     Protected WithEvents txtTax As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbNetPrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbNetPrice As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''TxtNetPrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TxtNetPrice As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>
