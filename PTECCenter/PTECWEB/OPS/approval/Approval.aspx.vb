@@ -67,8 +67,8 @@ Public Class WebForm1
                     detailtable = approvaldataset.Tables(0)
                     CommentTable = approvaldataset.Tables(4)
                     nozzletable = approvaldataset.Tables(6)
-                    Session("detailtable") = detailtable
-                    Session("nozzletable") = nozzletable
+                    ViewState("detailtable") = detailtable
+                    ViewState("nozzletable") = nozzletable
                     If approvaldataset.Tables(1).Rows.Count > 0 Then
                         Approval_BF = convertToJSON(approvaldataset.Tables(1))
                     End If
@@ -91,8 +91,8 @@ Public Class WebForm1
                         invoicedate = detailtable.Rows(0).Item("InvoiceDate").ToString
 
                     End If
-                    If Not Session("status") = "edit" Then
-                        Session("status") = "read"
+                    If Not ViewState("status") = "edit" Then
+                        ViewState("status") = "read"
                     End If
                     chkuser(detailtable.Rows(0).Item("createby"), detailtable.Rows(0).Item("approvallistid"))
                     showdata(detailtable)
@@ -105,7 +105,7 @@ Public Class WebForm1
                     ) And
                     (detailtable.Rows(0).Item("statusid") = 1) Then
                         If Not (Session("secid").ToString = "2") And Not (Session("secid").ToString = "35") Then
-                            Session("status") = "write"
+                            ViewState("status") = "write"
                         End If
 
                         PermissionOwner = chkPermissionApproval(Request.QueryString("approvalcode"))
@@ -163,14 +163,14 @@ endprocess:
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
             Else
-                Session("status") = "new"
+                ViewState("status") = "new"
                 If Not Session("branchid") Is Nothing Then
                     cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid")))
                 End If
             End If
         Else
-            detailtable = Session("detailtable")
-            nozzletable = Session("nozzletable")
+            detailtable = ViewState("detailtable")
+            nozzletable = ViewState("nozzletable")
         End If
         SetMenu()
     End Sub
@@ -243,7 +243,7 @@ endprocess:
                     End If
                 Next i
             End If
-            Session("status") = "read"
+            ViewState("status") = "read"
             Response.Redirect("../approval/approval.aspx?approvalcode=" & approvaltable.Rows(0).Item("code"))
 
 
@@ -345,7 +345,7 @@ endprocess:
             objbranch.SetComboBranchByAreaid(cboBranch, "0", Session("userid"), 1) 'แก้ bug ไม่โชว์สาขา
             cboApproval.SelectedIndex = cboApproval.Items.IndexOf(cboApproval.Items.FindByValue(.Item("approvallistid")))
             cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(.Item("branchid")))
-            If Session("status") = "edit" Then
+            If ViewState("status") = "edit" Then
                 txtPrice.Attributes.Add("type", "number")
                 txtPrice.Text = .Item("price")
             Else
@@ -375,7 +375,7 @@ endprocess:
     End Sub
 
     Private Sub SetMenu()
-        Select Case Session("status")
+        Select Case ViewState("status")
             Case = "new"
                 cboApproval.Attributes.Remove("disabled")
                 cboBranch.Attributes.Remove("disabled")
@@ -470,7 +470,7 @@ endprocess:
                 End If
 
             Case = "8"  'รอประสานงานรับเรื่อง
-                    btnConfirm.Visible = False
+                btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
                 btnAddDoc.Visible = False
@@ -537,7 +537,7 @@ endprocess:
 
         Try
             approvalcode = approval.Approval_Cancel(txtApprovalcode.Text.Trim(), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
             Response.Redirect("../approval/approval.aspx?approvalcode=" & approvalcode)
 
 
@@ -640,7 +640,7 @@ endprocess:
 
         Try
             approvalcode = approval.Approval_Allow(txtApprovalcode.Text.Trim(), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
 
         Catch ex As Exception
@@ -669,12 +669,12 @@ endprocess:
     End Function
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
-        Session("status") = "edit"
+        ViewState("status") = "edit"
         Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 
     Private Sub btnCancelEdit_Click(sender As Object, e As EventArgs) Handles btnCancelEdit.Click
-        Session("status") = "read"
+        ViewState("status") = "read"
         Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 
@@ -689,7 +689,7 @@ endprocess:
         Try
             approval.Approval_Edit(Request.QueryString("approvalcode"), cboApproval.SelectedItem.Value, txtName.Text.Trim(), txtDetail.Text.Trim(), txtPrice.Text.Trim(),
                                                   cboBranch.SelectedItem.Value, day, Session("userid"))
-            Session("status") = "read"
+            ViewState("status") = "read"
             Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
 
 
@@ -721,7 +721,7 @@ endprocess:
 
         Try
             approval.Approval_Support_Knowledge(Request.QueryString("approvalcode"), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"

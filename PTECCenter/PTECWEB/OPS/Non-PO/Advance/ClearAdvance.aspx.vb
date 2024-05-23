@@ -126,9 +126,9 @@ Public Class ClearAdvance
             If Not Request.QueryString("NonpoCode") Is Nothing Then
 
                 objNonpo.SetCboPurpose(cboPP, "all")
-                Session("detailtable_clearadvance") = detailtable
-                'If Not Session("status_clearadvance") = "edit" Then
-                Session("status_clearadvance") = "read"
+                ViewState("detailtable_clearadvance") = detailtable
+                'If Not ViewState("status_clearadvance") = "edit" Then
+                ViewState("status_clearadvance") = "read"
                 'End If
                 Try
                     attatch.SetCboMyfile(cboMyfile, Session("userid"))
@@ -144,7 +144,7 @@ Public Class ClearAdvance
 
                     If (account_code.IndexOf(usercode.ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 7) Then
-                        Session("status_clearadvance") = "account"
+                        ViewState("status_clearadvance") = "account"
 
                     End If
 
@@ -163,7 +163,7 @@ Public Class ClearAdvance
                     sm_code.ToString.IndexOf(usercode) > -1 Or
                     am_code.ToString.IndexOf(usercode) > -1) And
                     (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then
-                        Session("status_clearadvance") = "write"
+                        ViewState("status_clearadvance") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
                         'Dim SearchForThis As String = "DEF"
                         'Dim FirstCharacter As Integer = SearchWithinThis.IndexOf(SearchForThis)
@@ -253,7 +253,7 @@ endprocess:
                 Dim objjob As New jobs
                 Dim ds As New DataSet
                 If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
-                    Session("status_clearadvance") = "new"
+                    ViewState("status_clearadvance") = "new"
                     codeRef.Text = Request.QueryString("code_ref").ToString
                     ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", usercode.ToString)
                     setmaindefault()
@@ -272,29 +272,29 @@ endprocess:
                 End If
             Else
                 objNonpo.SetCboPurpose(cboPP, "active")
-                Session("status_clearadvance") = "new"
+                ViewState("status_clearadvance") = "new"
                 setmaindefault()
 
             End If
 
 
 
-            Session("head_clearadvance") = head
-            Session("detailtable_clearadvance") = detailtable
-            Session("maintable_clearadvance") = maintable
-            Session("comment_clearadvance") = CommentTable
-            Session("attatch_clearadvance") = AttachTable
+            ViewState("head_clearadvance") = head
+            ViewState("detailtable_clearadvance") = detailtable
+            ViewState("maintable_clearadvance") = maintable
+            ViewState("comment_clearadvance") = CommentTable
+            ViewState("attatch_clearadvance") = AttachTable
         Else
             If Not String.IsNullOrEmpty(Request.QueryString("NonpoCode")) Then
                 account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
             End If
             'account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
 
-            head = Session("head_clearadvance")
-            detailtable = Session("detailtable_clearadvance")
-            maintable = Session("maintable_clearadvance")
-            AttachTable = Session("attatch_clearadvance")
-            CommentTable = Session("comment_clearadvance")
+            head = ViewState("head_clearadvance")
+            detailtable = ViewState("detailtable_clearadvance")
+            maintable = ViewState("maintable_clearadvance")
+            AttachTable = ViewState("attatch_clearadvance")
+            CommentTable = ViewState("comment_clearadvance")
 
             Try
                 statusid = maintable.Rows(0).Item("statusid")
@@ -420,7 +420,7 @@ endprocess:
                 Case = "1" '1 : รอยืนยัน
                     statusnonpo.Attributes.Add("class", "btn btn-info")
                     If .Rows(0).Item("createby").ToString = Session("userid") Then
-                        Session("status_clearadvance") = "edit"
+                        ViewState("status_clearadvance") = "edit"
                     End If
                 Case = "2" '2 : รออนุมัติ
                     statusnonpo.Attributes.Add("class", "btn btn-warning")
@@ -480,7 +480,7 @@ endprocess:
             chkdeductSell.Checked = .Rows(0).Item("chkdeductsell")
 
             chkVat.Checked = .Rows(0).Item("vat_wait")
-            If (Session("status_clearadvance") = "new" Or Session("status_clearadvance") = "edit" Or Session("status_clearadvance") = "account") Then
+            If (ViewState("status_clearadvance") = "new" Or ViewState("status_clearadvance") = "edit" Or ViewState("status_clearadvance") = "account") Then
                 txtamountpayBack.Attributes.Remove("disabled")
                 txtamountdedusctsell.Attributes.Remove("disabled")
 
@@ -521,7 +521,7 @@ endprocess:
 
     End Sub
     'Private Sub SetMenu()
-    '    Select Case Session("status_clearadvance")
+    '    Select Case ViewState("status_clearadvance")
     '        Case = "new"
     '            'ช่อง ปุ่ม เพิ่มรายการ
     '            btnFromAddDetail.Visible = True
@@ -627,7 +627,7 @@ endprocess:
                     btnConfirm.Enabled = True
                     btnCancel.Enabled = True
 
-                    Session("status_clearadvance") = "edit"
+                    ViewState("status_clearadvance") = "edit"
 
                     'ช่อง ปุ่ม เพิ่มรายการ
 
@@ -642,7 +642,7 @@ endprocess:
                     btnConfirm.Enabled = False
                     btnCancel.Enabled = False
 
-                    Session("status_clearadvance") = "read"
+                    ViewState("status_clearadvance") = "read"
 
                     'ช่อง ปุ่ม เพิ่มรายการ
 
@@ -723,7 +723,7 @@ endprocess:
                     btnAddAttatch.Visible = False
 
                 End If
-                Session("status_clearadvance") = "read"
+                ViewState("status_clearadvance") = "read"
 
 
                 btnExport.Visible = False
@@ -1138,16 +1138,16 @@ endprocess:
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
         Dim cnt As Integer = detailtable.Rows.Count - 1
         For i = 0 To cnt
-                If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
-                    chkunsave = 1
-                    Dim scriptKey As String = "alert"
-                    'Dim javaScript As String = "alert('" & ex.Message & "');"
-                    Dim javaScript As String = "alertWarning('กรุณาบันทึกรายการ');"
-                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-                    GoTo endprocess
-                End If
-            Next i
-            Dim approval As New Approval
+            If detailtable.Rows(i).Item("nonpodtl_id") = 0 Or detailtable.Rows(i).Item("row") = 0 Or Not detailtable.Rows(i).Item("status") = "read" Then
+                chkunsave = 1
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('กรุณาบันทึกรายการ');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End If
+        Next i
+        Dim approval As New Approval
 
         Try
             approval.Save_Comment_By_Code(Request.QueryString("NonpoCode"), txtComment.Text.Trim(), Session("userid"))
@@ -1183,11 +1183,11 @@ endprocess:
             AttachTable = nonpoDs.Tables(3)
             CommentTable = nonpoDs.Tables(4)
 
-            Session("head_clearadvance") = head
-            Session("detailtable_clearadvance") = detailtable
-            Session("maintable_clearadvance") = maintable
-            Session("comment_clearadvance") = CommentTable
-            Session("attatch_clearadvance") = AttachTable
+            ViewState("head_clearadvance") = head
+            ViewState("detailtable_clearadvance") = detailtable
+            ViewState("maintable_clearadvance") = maintable
+            ViewState("comment_clearadvance") = CommentTable
+            ViewState("attatch_clearadvance") = AttachTable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1209,7 +1209,7 @@ endprocess:
 
             maintable = nonpoDs.Tables(1)
 
-            Session("maintable_clearadvance") = maintable
+            ViewState("maintable_clearadvance") = maintable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1250,7 +1250,7 @@ endprocess:
     '    '                    qty, cboUnit.SelectedItem.Value, cboUnit.SelectedItem.Text, cost, cboSupplier.SelectedItem.Value,
     '    '                    cboSupplier.SelectedItem.Text, urgent, cboPolicy.SelectedValue, reqdate, txtJobDetail.Text, 0)
 
-    '    Session("detailtable_clearadvance") = detailtable
+    '    ViewState("detailtable_clearadvance") = detailtable
 
     'End Sub
     'Private Sub updateDetails(indexrow As Integer)
@@ -1656,7 +1656,7 @@ endprocess:
         Try
             advno = objNonpo.SaveAdvance(advno, maintable, detailtable, Session("usercode"))
             txtadvno.Text = advno
-            Session("status_clearadvance") = "edit"
+            ViewState("status_clearadvance") = "edit"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1761,7 +1761,7 @@ endprocess:
             End With
 
         End If
-        Session("maintable_clearadvance") = maintable
+        ViewState("maintable_clearadvance") = maintable
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
@@ -1783,7 +1783,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Session("status_clearadvance") = "read"
+        ViewState("status_clearadvance") = "read"
         Response.Redirect("../Advance/ClearAdvance.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
@@ -1793,7 +1793,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_NotAllow(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_clearadvance") = "read"
+            ViewState("status_clearadvance") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1811,7 +1811,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Allow(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_clearadvance") = "read"
+            ViewState("status_clearadvance") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1829,7 +1829,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Verify(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_clearadvance") = "read"
+            ViewState("status_clearadvance") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1847,7 +1847,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Pass(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_clearadvance") = "read"
+            ViewState("status_clearadvance") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1865,7 +1865,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AccountEdit(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_clearadvance") = "read"
+            ViewState("status_clearadvance") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1883,7 +1883,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Reject(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_clearadvance") = "read"
+            ViewState("status_clearadvance") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1901,7 +1901,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Complete(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_clearadvance") = "read"
+            ViewState("status_clearadvance") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -2073,7 +2073,7 @@ endprocess:
                 End With
             End If
 
-            Session("detailtable_clearadvance") = detailtable
+            ViewState("detailtable_clearadvance") = detailtable
 
             checkunsave()
         Catch ex As Exception
@@ -2105,7 +2105,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Cancel(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_clearadvance") = "read"
+            ViewState("status_clearadvance") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -2224,7 +2224,7 @@ endprocess:
                         lbTotal_purecard.InnerText = purecard
                     End If
 
-                    Session("detailtable_clearadvance") = detailtable
+                    ViewState("detailtable_clearadvance") = detailtable
                 End If
 
                 'hasRef()

@@ -43,10 +43,10 @@ Public Class JobsFollowup
         End If
 
         objStatus = "edit"
-        Session("jobno") = Request.QueryString("jobno")
-        Session("jobdetailid") = Request.QueryString("jobdetailid")
-        jobno = Session("jobno")
-        jobdetailid = Session("jobdetailid")
+        ViewState("jobno") = Request.QueryString("jobno")
+        ViewState("jobdetailid") = Request.QueryString("jobdetailid")
+        jobno = ViewState("jobno")
+        jobdetailid = ViewState("jobdetailid")
         txtJobno.Text = jobno
 
 
@@ -81,24 +81,24 @@ Public Class JobsFollowup
                 '    cboStatus.DataBind()
             End If
 
-            Session("maintable") = maintable
-            Session("followuptable") = followuptable
-            Session("suppilertable") = suppilertable
-            Session("stepsuppilertable") = stepsuppilertable
-            Session("assessmenttable") = assessmenttable
-            Session("comment_jobdetail") = CommentTable
-            Session("attatch_jobdetail") = AttachTable
-            Session("nozzle_jobdetail") = nozzletable
+            ViewState("maintable") = maintable
+            ViewState("followuptable") = followuptable
+            ViewState("suppilertable") = suppilertable
+            ViewState("stepsuppilertable") = stepsuppilertable
+            ViewState("assessmenttable") = assessmenttable
+            ViewState("comment_jobdetail") = CommentTable
+            ViewState("attatch_jobdetail") = AttachTable
+            ViewState("nozzle_jobdetail") = nozzletable
 
         Else
-            followuptable = Session("followuptable")
-            maintable = Session("maintable")
-            suppilertable = Session("suppilertable")
-            stepsuppilertable = Session("stepsuppilertable")
-            assessmenttable = Session("assessmenttable")
-            CommentTable = Session("comment_jobdetail")
-            AttachTable = Session("attatch_jobdetail")
-            nozzletable = Session("nozzle_jobdetail")
+            followuptable = ViewState("followuptable")
+            maintable = ViewState("maintable")
+            suppilertable = ViewState("suppilertable")
+            stepsuppilertable = ViewState("stepsuppilertable")
+            assessmenttable = ViewState("assessmenttable")
+            CommentTable = ViewState("comment_jobdetail")
+            AttachTable = ViewState("attatch_jobdetail")
+            nozzletable = ViewState("nozzle_jobdetail")
 
 
             showsuppilerdata(suppilertable)
@@ -111,7 +111,7 @@ Public Class JobsFollowup
 
         setBtn()
 
-        'txtCreateBy.Text = Session("jobtypeid")
+        'txtCreateBy.Text = ViewState("jobtypeid")
     End Sub
     Private Sub BindData()
         'cntdt = itemtable.Rows.Count
@@ -289,19 +289,19 @@ Public Class JobsFollowup
                     fromUpdateFollowup.Visible = False
 
 
-                        'Analy
-                        btnDataAnalyCategory.Visible = False
-                        btnDataAnalyGroupType.Visible = False
+                    'Analy
+                    btnDataAnalyCategory.Visible = False
+                    btnDataAnalyGroupType.Visible = False
 
-                        'Supplier
-                        btnSentSupplier.Visible = False
-                        btnPrint.Visible = False
-                        btnBackStep.Visible = False
-                        btnNextStep.Visible = False
-                        btnCancelSupplier.Visible = False
-                    Else
-                        'Detail
-                        btnSave.Visible = False
+                    'Supplier
+                    btnSentSupplier.Visible = False
+                    btnPrint.Visible = False
+                    btnBackStep.Visible = False
+                    btnNextStep.Visible = False
+                    btnCancelSupplier.Visible = False
+                Else
+                    'Detail
+                    btnSave.Visible = False
                     'btnConfirm.Visible = False
                     btnEditDetail.Visible = False
                     btnNozzle.Visible = False
@@ -429,7 +429,7 @@ Public Class JobsFollowup
         Dim job As New jobs
         Dim mydataset As DataSet
         ' Dim jobtable As DataTable
-        Session("jobno") = jobno
+        ViewState("jobno") = jobno
 
         'itemtable
         Try
@@ -448,14 +448,14 @@ Public Class JobsFollowup
             BindData()
 
 
-            Session("maintable") = maintable
-            Session("followuptable") = followuptable
-            Session("suppilertable") = suppilertable
-            Session("stepsuppilertable") = stepsuppilertable
-            Session("assessmenttable") = assessmenttable
-            Session("comment_jobdetail") = CommentTable
-            Session("attatch_jobdetail") = AttachTable
-            Session("nozzle_jobdetail") = nozzletable
+            ViewState("maintable") = maintable
+            ViewState("followuptable") = followuptable
+            ViewState("suppilertable") = suppilertable
+            ViewState("stepsuppilertable") = stepsuppilertable
+            ViewState("assessmenttable") = assessmenttable
+            ViewState("comment_jobdetail") = CommentTable
+            ViewState("attatch_jobdetail") = AttachTable
+            ViewState("nozzle_jobdetail") = nozzletable
 
 
 

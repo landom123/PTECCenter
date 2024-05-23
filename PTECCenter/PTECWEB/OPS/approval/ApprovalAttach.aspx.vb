@@ -46,7 +46,7 @@ Public Class approvalattach
                     If Not statusid = 11 Then
                         flag = False
                     End If
-                    Session("detailtable") = detailtable
+                    ViewState("detailtable") = detailtable
                     chkuser(detailtable.Rows(0).Item("createby"))
                     showdata(detailtable)
                 Catch ex As Exception
@@ -59,7 +59,7 @@ Public Class approvalattach
                 flag = False
             End If
         Else
-            detailtable = Session("detailtable")
+            detailtable = ViewState("detailtable")
 
             Dim target = Request.Form("__EVENTTARGET")
             If target = "btnUpload_Click" Then
@@ -125,7 +125,7 @@ Public Class approvalattach
 
         Try
             approvalcode = approval.Approval_Cancel(Request.QueryString("approvalcode"), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
             Response.Redirect("../approval/approval.aspx?approvalcode=" & approvalcode)
 
 
