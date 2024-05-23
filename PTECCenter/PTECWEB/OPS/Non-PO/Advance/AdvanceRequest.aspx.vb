@@ -75,8 +75,8 @@ Public Class AdvanceRequest
                     Dim a As Double = Convert.ToDouble(detailtable.Rows(0).Item("amount_more"))
 
 
-                    If Not Session("status") = "edit" Then
-                        Session("status") = "read"
+                    If Not ViewState("status") = "edit" Then
+                        ViewState("status") = "read"
                     End If
 
                     chkuser(detailtable.Rows(0).Item("ownerid"))
@@ -85,11 +85,11 @@ Public Class AdvanceRequest
 
                     If (account_code.IndexOf(usercode.ToString) > -1) Then
                         If (detailtable.Rows(0).Item("statusrqid") = 7) Then
-                            Session("status") = "account"
+                            ViewState("status") = "account"
                             verify = True
 
                         ElseIf (detailtable.Rows(0).Item("statusrqid") = 3) Then
-                            Session("status") = "account"
+                            ViewState("status") = "account"
                             verify = True
 
                         End If
@@ -110,7 +110,7 @@ Public Class AdvanceRequest
                     sm_code.ToString.IndexOf(usercode) > -1 Or
                     am_code.ToString.IndexOf(usercode) > -1) And
                     (detailtable.Rows(0).Item("statusrqid") = 2) Then
-                        Session("status") = "write"
+                        ViewState("status") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
                         'Dim SearchForThis As String = "DEF"
                         'Dim FirstCharacter As Integer = SearchWithinThis.IndexOf(SearchForThis)
@@ -183,7 +183,7 @@ Public Class AdvanceRequest
                         Next row
 endprocess:
                         'ElseIf (account_code.IndexOf(Session("usercode").ToString) > -1) And (detailtable.Rows(0).Item("statusrqid") = 3) Then
-                        '    Session("status") = "account"
+                        '    ViewState("status") = "account"
                         '    verify = True
                     End If
 
@@ -195,21 +195,21 @@ endprocess:
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
             Else
-                Session("status") = "new"
+                ViewState("status") = "new"
                 txtCreateBy.Text = Session("username")
                 cboOwner.SelectedIndex = cboOwner.Items.IndexOf(cboOwner.Items.FindByValue(Session("userid")))
                 cboCompany.SelectedIndex = cboCompany.Items.IndexOf(cboCompany.Items.FindByValue(1)) '1 PURE
             End If
 
-            Session("detailtable_advancerq") = detailtable
-            Session("comment_advancerq") = CommentTable
-            Session("attatch_advancerq") = AttachTable
+            ViewState("detailtable_advancerq") = detailtable
+            ViewState("comment_advancerq") = CommentTable
+            ViewState("attatch_advancerq") = AttachTable
         Else
-            detailtable = Session("detailtable_advancerq")
-            AttachTable = Session("attatch_advancerq")
-            CommentTable = Session("comment_advancerq")
+            detailtable = ViewState("detailtable_advancerq")
+            AttachTable = ViewState("attatch_advancerq")
+            CommentTable = ViewState("comment_advancerq")
 
-            itemtable = Session("joblist")
+            itemtable = ViewState("joblist_adv")
 
             'showdata(detailtable)
             'Dim target = Request.Form("__EVENTTARGET")
@@ -363,7 +363,7 @@ endprocess:
 
                 If createby = Session("userid") Then
                     btnAddAttatch.Visible = True
-                    'Session("status") = "edit"
+                    'ViewState("status") = "edit"
                 Else
                     btnAddAttatch.Visible = False
                 End If
@@ -494,7 +494,7 @@ endprocess:
 
             txtDuedate.Text = .Item("duedate").ToString
             txtDuedate_more.Text = .Item("duedate_more").ToString
-            If Session("status") = "edit" Then
+            If ViewState("status") = "edit" Then
                 txtamount.Attributes.Add("type", "number")
                 txtamount.Text = .Item("amount")
             Else
@@ -508,7 +508,7 @@ endprocess:
     End Sub
 
     Private Sub SetMenu()
-        Select Case Session("status")
+        Select Case ViewState("status")
             Case = "new"
                 lbMandatoryamount.Visible = True
                 lbMandatorydetail.Visible = True
@@ -590,7 +590,7 @@ endprocess:
     '    save()
     'End Sub
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
-        Session("status") = "edit"
+        ViewState("status") = "edit"
         Response.Redirect("../Advance/AdvanceRequest.aspx?ADV=" & Request.QueryString("ADV"))
     End Sub
 
@@ -611,7 +611,7 @@ endprocess:
         End If
         Try
             objnonpo.NonPO_AdvanceRequest_Edit(Request.QueryString("ADV").ToString, txtamount.Text.Trim(), txtdetail.Text.Trim(), txtDuedate.Text.Trim(), Session("userid"), jobowner, cboCompany.SelectedItem.Value)
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -630,7 +630,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AdvanceRequest_Confirm(Request.QueryString("ADV").Trim, Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -648,7 +648,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AdvanceRequest_Cancel(Request.QueryString("ADV").Trim, Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -724,7 +724,7 @@ endprocess:
         Try
             itemtable = objNonPO.AdvanceRQList_For_Owner(userid, 999)
 
-            Session("joblist") = itemtable
+            ViewState("joblist_adv") = itemtable
             BindData()
 
         Catch ex As Exception
@@ -746,7 +746,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AdvanceRequest_Allow(Request.QueryString("ADV"), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -767,7 +767,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AdvanceRequest_Verify(Request.QueryString("ADV"), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -785,7 +785,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AdvanceRequest_NotAllow(Request.QueryString("ADV"), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -808,7 +808,7 @@ endprocess:
             nonpods = objNonPO.NonPO_AdvanceRQ_Find(Request.QueryString("ADV"))
             CommentTable = nonpods.Tables(2)
 
-            Session("comment_advancerq") = CommentTable
+            ViewState("comment_advancerq") = CommentTable
             txtComment.Text = ""
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -831,7 +831,7 @@ endprocess:
                 .Item("comid") = cboCompany.SelectedItem.Value
             End With
         End If
-        Session("detailtable_advancerq") = detailtable
+        ViewState("detailtable_advancerq") = detailtable
     End Sub
     Private Sub btnAddamount_Click(sender As Object, e As EventArgs) Handles btnAddamount.Click
         Dim objNonPO As New NonPO
@@ -844,7 +844,7 @@ endprocess:
         End Try
         Try
             objNonPO.NonPO_AdvanceRequest_More(Request.QueryString("ADV"), more, Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -868,7 +868,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AdvanceRequest_Account_Verify(Request.QueryString("ADV"), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -891,7 +891,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AdvanceRequest_SetDueDate(Request.QueryString("ADV"), txtDuedate.Text.Trim(), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -913,7 +913,7 @@ endprocess:
         End If
         Try
             objnonpo.NonPO_AdvanceRequest_SetDueDateMore(Request.QueryString("ADV"), txtDuedate_more.Text.Trim(), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -931,7 +931,7 @@ endprocess:
 
     '        Try
     '            objnonpo.NonPO_AdvanceRequest_SetDueDate(Request.QueryString("ADV"), txtDuedate.Text.Trim(), Session("usercode"))
-    '            Session("status") = "read"
+    '            ViewState("status") = "read"
 
     '        Catch ex As Exception
     '            Dim scriptKey As String = "alert"
@@ -997,7 +997,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AdvanceRequest_VerifyApproval(Request.QueryString("ADV"), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"

@@ -237,7 +237,7 @@
                     </div>
                     <div class="foram">
                         <div class="row">
-                            <%=Session("status_pcco") %>
+                            <%=ViewState("status_pcco") %>
                         </div>
                         <div class="row">
                             <%=allOwner %>
@@ -638,7 +638,7 @@
                     <div class="row">
 
                         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-                        <% if Session("status_pcco") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
+                        <% if ViewState("status_pcco") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
                         <div class="text-center m-auto">
                             <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
                             <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
@@ -1040,7 +1040,7 @@
             format: 'd/m/Y'
         });
         <% End If %>
-        <% else If Session("status_pcco").ToString = "new" Then %>
+        <% else If ViewState("status_pcco").ToString = "new" Then %>
         //jQuery('[id$=txtDuedate]').datetimepicker({
         //    startDate: '+1971/05/01',//or 1986/12/08'
         //    timepicker: false,
@@ -1648,7 +1648,7 @@ alert('else nonpo')
 */
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-            <% If (Not Session("status_pcco") = "new" And Not Session("status_pcco") = "edit" And Not Session("status_pcco") = "account") Then%>
+            <% If (Not ViewState("status_pcco") = "new" And Not ViewState("status_pcco") = "edit" And Not ViewState("status_pcco") = "account") Then%>
             $('#exampleModal .modal-footer #btnAddDetail').hide();
             $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
             $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);

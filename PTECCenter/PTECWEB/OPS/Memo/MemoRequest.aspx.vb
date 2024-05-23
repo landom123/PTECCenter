@@ -39,7 +39,7 @@ Public Class MemoRequest
             SetCboUsersOnly(cboTo)
             SetCboUsersOnly(cboCC)
         Else
-            detailtable = Session("detailtable")
+            detailtable = ViewState("detailtable_rmm")
         End If
     End Sub
 

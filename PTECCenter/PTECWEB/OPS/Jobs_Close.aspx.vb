@@ -45,10 +45,10 @@ Public Class JobsClose
         End If
 
         objStatus = "edit"
-        Session("jobno") = Request.QueryString("jobno")
-        Session("jobdetailid") = Request.QueryString("jobdetailid")
-        jobno = Session("jobno")
-        jobdetailid = Session("jobdetailid")
+        ViewState("jobno") = Request.QueryString("jobno")
+        ViewState("jobdetailid") = Request.QueryString("jobdetailid")
+        jobno = ViewState("jobno")
+        jobdetailid = ViewState("jobdetailid")
         txtJobno.Text = jobno
 
         If Not IsPostBack Then
@@ -62,7 +62,7 @@ Public Class JobsClose
                 objNonpo.SetCboPurpose(cboPP, "active")
                 objjob.SetCboCloseType(cboCloseType)
                 objjob.SetCboCloseCategory(cboCloseCategory)
-                Attatch.SetCboMyfile(cboMyfile, Session("userid"))
+                attatch.SetCboMyfile(cboMyfile, Session("userid"))
                 FindJob(jobno, jobdetailid)
                 objjob.SetCboJobCenterDtlListByJobCenterID_GroupByJobCenterid(cboCost, jobcenterid)
 
@@ -79,17 +79,17 @@ Public Class JobsClose
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End Try
         Else
-            'followuptable = Session("followuptable")
+            'followuptable = ViewState("followuptable")
             'FindJob(jobno, jobdetailid)
 
-            maintable = Session("maintable")
-            costtable = Session("costtable")
-            AttachTable = Session("attach_jobclose")
-            CommentTable = Session("comment_jobclose")
+            maintable = ViewState("maintable")
+            costtable = ViewState("costtable")
+            AttachTable = ViewState("attach_jobclose")
+            CommentTable = ViewState("comment_jobclose")
         End If
         setBtn()
 
-        'txtCreateBy.Text = Session("jobtypeid")
+        'txtCreateBy.Text = ViewState("jobtypeid")
     End Sub
     Private Function createtablecomment() As DataTable
         Dim dt As New DataTable
@@ -188,7 +188,7 @@ Public Class JobsClose
         Dim job As New jobs
         Dim mydataset As DataSet
         ' Dim jobtable As DataTable
-        Session("jobno") = jobno
+        ViewState("jobno") = jobno
         'itemtable
         Try
             mydataset = job.FindClose(jobno, jobdetailid, usercode)
@@ -207,10 +207,10 @@ Public Class JobsClose
             jobcenterid = mydataset.Tables(0).Rows(0).Item("jobcenterid")
 
 
-            Session("maintable") = maintable
-            Session("costtable") = costtable
-            Session("attach_jobclose") = AttachTable
-            Session("comment_jobclose") = CommentTable
+            ViewState("maintable") = maintable
+            ViewState("costtable") = costtable
+            ViewState("attach_jobclose") = AttachTable
+            ViewState("comment_jobclose") = CommentTable
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"

@@ -81,9 +81,9 @@ Public Class Memo2
                 End Try
             End If
         Else
-            detailtable = Session("detailtable_memo")
-            CommentTable = Session("comment_memo")
-            AttachTable = Session("attatch_memo")
+            detailtable = ViewState("detailtable_memo")
+            CommentTable = ViewState("comment_memo")
+            AttachTable = ViewState("attatch_memo")
 
             Try
                 statusid = detailtable.Rows(0).Item("statusid")
@@ -210,9 +210,9 @@ Public Class Memo2
             AttachTable = memoDs.Tables(1)
             CommentTable = memoDs.Tables(2)
 
-            Session("detailtable_memo") = detailtable
-            Session("comment_memo") = CommentTable
-            Session("attatch_memo") = AttachTable
+            ViewState("detailtable_memo") = detailtable
+            ViewState("comment_memo") = CommentTable
+            ViewState("attatch_memo") = AttachTable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"

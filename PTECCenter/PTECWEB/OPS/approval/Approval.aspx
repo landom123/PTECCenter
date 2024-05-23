@@ -330,22 +330,22 @@
                                     <% End If %>
                                     <% End If %>
                                     <div class="card-footer text-center bg-white">
-                                        <% If Session("status") = "new" Then%>
+                                        <% If ViewState("status") = "new" Then%>
                                         <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" />
-                                        <% ElseIf Session("status") = "read" And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
+                                        <% ElseIf ViewState("status") = "read" And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
                                         <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" />
                                         <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" />
                                         <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" />
                                         <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน" />
                                         <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" />
-                                        <% ElseIf Session("status") = "write" And detailtable.Rows(0).Item("statusid") = 1 Then%>
+                                        <% ElseIf ViewState("status") = "write" And detailtable.Rows(0).Item("statusid") = 1 Then%>
                                         <% If approval Then%>
                                         <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
                                         <% End If %>
                                         <button runat="server" id="btnDisApproval" name="btnEdit" onclick="return disApproval();" class="btn btn-danger">
                                             ไม่อนุมัติ
                                         </button>
-                                        <% ElseIf Session("status") = "edit" Then%>
+                                        <% ElseIf ViewState("status") = "edit" Then%>
                                         <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
                                         <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
                                         <% End If %>
@@ -375,7 +375,7 @@
 
                         </div>
                         <!-- end col-lg-12-->
-                        <% If not Session("status") = "new" Then%>
+                        <% If not ViewState("status") = "new" Then%>
                         <div class="col-xl-4 files_approval">
                             <div class="row">
                                 <div class="col-xl-12 mb-3  file_Approval_Doc">
@@ -584,7 +584,7 @@
                     <% End If %>
                     <!-- end row-->
                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And CommentTable IsNot Nothing Then%>
-                    <% If (Session("status") = "read" Or Session("status") = "write") And Not detailtable.Rows(0).Item("statusid") = 7 Then%>
+                    <% If (ViewState("status") = "read" Or ViewState("status") = "write") And Not detailtable.Rows(0).Item("statusid") = 7 Then%>
                     <!-- statusid = 7 รอผู้แจ้งยืนยัน-->
                     <div class="row bg-white">
                         <div class="col-lg-12">
@@ -890,7 +890,7 @@
             var Approval_AT = '<%= Approval_AT.ToString %>'
             var Approval_Bill = '<%= Approval_Bill.ToString %>'
             var Approval_Doc = '<%= Approval_Doc.ToString %>'
-            var status_session = "<%= Session("status")%>"
+            var status_session = "<%= ViewState("status")%>"
 
             if (status_session != "new") {
                 if (!Approval_BF) {

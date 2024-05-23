@@ -113,11 +113,11 @@ Public Class approvalHO
                         lbConfirmDate.Text = maintable.Rows(0).Item("confirmdate").ToString
                     End If
                     'CommentTable = approvaldataset.Tables(4)
-                    'Session("detailtable_approvalHO") = detailtable
+                    'ViewState("detailtable_approvalHO") = detailtable
 
 
-                    If Not Session("status_approvalHO") = "edit" Then
-                        Session("status_approvalHO") = "read"
+                    If Not ViewState("status_approvalHO") = "edit" Then
+                        ViewState("status_approvalHO") = "read"
                     End If
 
 
@@ -128,7 +128,7 @@ Public Class approvalHO
 
                     If (confirmer_code.IndexOf(Session("usercode").ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 6) Then 'statusid = 6 รอยืนยันหักยอดขาย
-                        Session("status_approvalHO") = "confirm"
+                        ViewState("status_approvalHO") = "confirm"
                         confirmer = True
                     End If
 
@@ -151,7 +151,7 @@ Public Class approvalHO
                     sm_code.ToString.IndexOf(usercode) > -1 Or
                     am_code.ToString.IndexOf(usercode) > -1) And
                     (maintable.Rows(0).Item("statusid") = 2) Then
-                        Session("status_approvalHO") = "write"
+                        ViewState("status_approvalHO") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
                         'Dim SearchForThis As String = "DEF"
                         'Dim FirstCharacter As Integer = SearchWithinThis.IndexOf(SearchForThis)
@@ -234,15 +234,15 @@ endprocess:
                 End Try
             End If
 
-            Session("maintable_approvalHO") = maintable
-            Session("detailtable_approvalHO") = detailtable
-            Session("comment_approvalHO") = CommentTable
-            Session("attatch_approvalHO") = AttachTable
+            ViewState("maintable_approvalHO") = maintable
+            ViewState("detailtable_approvalHO") = detailtable
+            ViewState("comment_approvalHO") = CommentTable
+            ViewState("attatch_approvalHO") = AttachTable
         Else
-            detailtable = Session("detailtable_approvalHO")
-            maintable = Session("maintable_approvalHO")
-            CommentTable = Session("comment_approvalHO")
-            AttachTable = Session("attatch_approvalHO")
+            detailtable = ViewState("detailtable_approvalHO")
+            maintable = ViewState("maintable_approvalHO")
+            CommentTable = ViewState("comment_approvalHO")
+            AttachTable = ViewState("attatch_approvalHO")
 
             Try
                 statusid = maintable.Rows(0).Item("statusid")
@@ -293,7 +293,7 @@ endprocess:
                     btnCancel.Enabled = True
 
                     btnExport.Visible = True
-                    Session("status_approvalHO") = "edit"
+                    ViewState("status_approvalHO") = "edit"
 
                     'ช่อง ปุ่ม เพิ่มรายการ
                     groupFromAddDetail.Visible = True
@@ -303,7 +303,7 @@ endprocess:
                     btnConfirm.Enabled = False
                     btnCancel.Enabled = False
 
-                    Session("status_approvalHO") = "read"
+                    ViewState("status_approvalHO") = "read"
 
                     'ช่อง ปุ่ม เพิ่มรายการ
                     groupFromAddDetail.Visible = False
@@ -784,12 +784,12 @@ endprocess:
         badgestatus.Visible = False
         lbCreateby.Text = Session("usercode")
         lbCreateDate.Text = Now()
-        Session("status_approvalHO") = "new"
+        ViewState("status_approvalHO") = "new"
 
     End Sub
 
     Private Sub BindData()
-        Session("detailtable_approvalHO") = detailtable
+        ViewState("detailtable_approvalHO") = detailtable
         gvData.DataSource = detailtable
         gvData.DataBind()
     End Sub
@@ -800,7 +800,7 @@ endprocess:
 
     Private Sub saveorupdate()
         If validatedata() Then
-            'If Session("status") = "new" Then
+            'If ViewState("status") = "new" Then
             'If maintable.Rows.Count = 0 Then
             updatehead()
             'End If
@@ -864,7 +864,7 @@ endprocess:
             dr("detail") = txtHeadDetail.Text
             maintable.Rows.Add(dr)
         End If
-        Session("maintable_approvalHO") = maintable
+        ViewState("maintable_approvalHO") = maintable
     End Sub
     Private Sub Save()
         Dim objapproval As New Approval
@@ -874,7 +874,7 @@ endprocess:
         Try
             ahono = objapproval.SaveApprovalHO(ahono, maintable, detailtable, Session("usercode"))
             'txtApprovalHOcode.Text = ahono
-            Session("status_approvalHO") = "edit"
+            ViewState("status_approvalHO") = "edit"
 
 
         Catch ex As Exception
@@ -953,7 +953,7 @@ endprocess:
 
         Try
             objapproval.ApprovalHO_Confirm(approvalhocode, usercode)
-            Session("status_approvalHO") = "read"
+            ViewState("status_approvalHO") = "read"
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -968,7 +968,7 @@ endprocess:
     '        Dim objapproval As New Approval
     '        Try
     '            objapproval.ApprovalHO_Pass(Request.QueryString("approvalHOcode"), Session("usercode"))
-    '            Session("status_approvalHO") = "read"
+    '            ViewState("status_approvalHO") = "read"
 
     '        Catch ex As Exception
     '            Dim scriptKey As String = "alert"
@@ -1000,7 +1000,7 @@ endprocess:
 
         Try
             objapproval.ApprovalHO_Cancel(Request.QueryString("approvalHOcode"), Session("usercode"))
-            Session("status_approvalHO") = "read"
+            ViewState("status_approvalHO") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1017,7 +1017,7 @@ endprocess:
         Dim objapproval As New Approval
         Try
             objapproval.ApprovalHO_NotAllow(Request.QueryString("approvalHOcode"), Session("usercode"))
-            Session("status_approvalHO") = "read"
+            ViewState("status_approvalHO") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1035,7 +1035,7 @@ endprocess:
 
         Try
             objapproval.ApprovalHO_Allow(Request.QueryString("approvalHOcode"), Session("usercode"))
-            Session("status_approvalHO") = "read"
+            ViewState("status_approvalHO") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1053,7 +1053,7 @@ endprocess:
 
         Try
             objapproval.ApprovalHO_Verify(Request.QueryString("approvalHOcode"), Session("usercode"))
-            Session("status_approvalHO") = "read"
+            ViewState("status_approvalHO") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1097,7 +1097,7 @@ endprocess:
 
         Try
             objapproval.ApprovalHO_AllowDeductSell(Request.QueryString("approvalHOcode"), Session("usercode"))
-            Session("status_approvalHO") = "read"
+            ViewState("status_approvalHO") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
