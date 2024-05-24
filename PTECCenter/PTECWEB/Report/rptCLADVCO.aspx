@@ -1,4 +1,4 @@
-﻿<%@ Page Title="ClearAdvanceMenuList" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="ClearAdvanceMenuList2.aspx.vb" Inherits="PTECCENTER.ClearAdvanceMenuList2" %>
+﻿<%@ Page Title="rptCLADVCO" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="rptCLADVCO.aspx.vb" Inherits="PTECCENTER.rptCLADVCO" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -8,9 +8,14 @@
     <style>
         th {
             text-align: center;
+            background-color: #cbf4f0;
         }
         th a {
             color:black;
+        }
+        .checked {
+            background-color: #ececec;
+            opacity: 1 !important;
         }
     </style>
 </asp:Content>
@@ -24,24 +29,35 @@
         <div id="content-wrapper">
 
             <div class="container-fluid">
-                <ol class="breadcrumb" style="background-color: navy; color: white">
-                    <li class="breadcrumb-item">รายการเคลียร์ค้างชำระ Advance <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Report CLADV TO D365 <% If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%> (Operator) <% End If %>
                     </li>
                 </ol>
 
                 <div class="row">
-                    <div class="col-12 mb-3">
+                    <div class="col-auto mb-3">
 
                         <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" />&nbsp;
                             <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" />&nbsp;
-                        
-                        
                             <asp:Button ID="btnExport" class="btn btn-sm  btn-info" runat="server" Text="Export" />&nbsp;
+                            <asp:Button ID="btnCLADVTOD365" class="btn btn-sm  btn-info" runat="server" Text="Export TO D365" OnClientClick="sendID();" />
+                        &nbsp;   
+
+                    </div>
+                    <div class="col">
+                        <div class="form-group pl-5">
+                            <input class="form-check-input chk-img-after" type="checkbox" id="chkGroupVAT" runat="server">
+                            <asp:Label ID="Label1" CssClass="form-check-label" AssociatedControlID="chkGroupVAT" runat="server" Text="รวบ VAT" />
+                        </div>
+                        <div class="form-group pl-5">
+                            <input class="form-check-input chk-img-after" type="checkbox" id="chkGroupVendor" runat="server">
+                            <asp:Label ID="Label2" CssClass="form-check-label" AssociatedControlID="chkGroupVendor" runat="server" Text="รวบ Vendor" />
+                        </div>
                     </div>
                 </div>
 
 
-                <div class="row">
+                <div class="row jobtype">
                     <div class="col-auto mb-3" style="margin-left: auto;">
                         <input class="form-check-input chk-img-after" type="checkbox" id="chkCO" name="pay[1][]" runat="server">
                         <asp:Label ID="lbchkCO" CssClass="form-check-label" AssociatedControlID="chkCO" runat="server" Text="CO" />
@@ -177,6 +193,8 @@
                     <div class="row justify-content-end">
                         <div class="col-auto">
                             <asp:DropDownList ID="cboMaxRows" class="form-control" runat="server">
+                                <asp:ListItem Value="50">50 รายการ</asp:ListItem>
+                                <asp:ListItem Value="100">100 รายการ</asp:ListItem>
                                 <asp:ListItem Value="1000">1,000 รายการ</asp:ListItem>
                                 <asp:ListItem Value="2147483647">รายการทั้งหมด</asp:ListItem>
                             </asp:DropDownList>
@@ -184,14 +202,24 @@
                     </div>
                     <div class="table-responsive overflow-auto" style="font-size: 0.9rem">
                         <asp:GridView ID="gvRemind"
-                            class="table table-striped table-bordered"
+                            class="table table-hover table-bordered"
                             AllowSorting="true"
                             AutoGenerateColumns="false"
                             EmptyDataText="No data available."
                             PageSize="20"
-                            AllowPaging="true"
+                            AllowPaging="false"
                             runat="server">
                             <Columns>
+                                <asp:TemplateField HeaderStyle-Width="50px" HeaderStyle-CssClass="text-center table-header" ItemStyle-Width="50px" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="Center">
+                                    <HeaderTemplate>
+                                        <asp:CheckBox ID="chkAll" runat="server"
+                                            onclick="checkAll(this);" />
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="chk" runat="server" data-key='<%#Eval("NonPO_Code").ToString%>'
+                                            onclick="Check_Click(this)" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField SortExpression="comcode" HeaderText="สังกัด" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbcomcode" runat="server" Text='<%#Eval("comcode")%>'></asp:Label>
@@ -204,49 +232,42 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="Code_ref" HeaderText="Code_ref" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("Code_ref")%>'></asp:Label>
+                                        <asp:Label ID="lblCode_ref" runat="server" Text='<%#Eval("Code_ref")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="CreateBy" HeaderText="ผู้เบิก" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("CreateBy")%>'></asp:Label>
+                                        <asp:Label ID="lbCreateBy" runat="server" Text='<%#Eval("CreateBy")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="ownername" HeaderText="ผู้รับเงิน" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
+                                        <asp:Label ID="lbownername" runat="server" Text='<%#Eval("ownername")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="CreateDate" HeaderText="วันที่ทำรายการ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                        <asp:Label ID="lbCreateDate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="approvalname" HeaderText="หัวข้อ">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbapprovallist" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
+                                        <asp:Label ID="lbapprovalname" runat="server" Text='<%#Eval("approvalname")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="detail" HeaderText="รายละเอียด">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("detail")%>'></asp:Label>
+                                        <asp:Label ID="lbdetail" runat="server" Text='<%#Eval("detail")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="owner_permission" HeaderText="ผู้มีสิทธิอนุมัติ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblBranch" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
+                                        <asp:Label ID="lbowner_permission" runat="server" Text='<%#Eval("owner_permission")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="StatusNonPO" HeaderText="สถานะ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lbljobtype" runat="server" Text='<%#Eval("StatusNonPO")%>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="">
-                                    <ItemTemplate>
-                                        <div class="d-flex align-items-center">
-                                            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("link")%>' Text="" ><img src="../../../icon/addnote.png" title="รายละเอียด" style="width:20px" /></asp:HyperLink>
-                                        </div>
+                                        <asp:Label ID="lbStatusNonPO" runat="server" Text='<%#Eval("StatusNonPO")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -263,10 +284,10 @@
         </div>
     </div>
 
-
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script>
         jQuery('[id$=txtStartDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
@@ -299,16 +320,18 @@
                 maxOptions: 1
             });
             checkCOorHO();
+
+            checkSelected()
         });
 
-        $("input:checkbox").on('click', function () {
+        $(".jobtype input:checkbox").on('click', function () {
             // in the handler, 'this' refers to the box clicked on
             console.log(this);
             var $box = $(this);
             if ($box.is(":checked")) {
                 // the name of the box is retrieved using the .attr() method
                 // as it is assumed and expected to be immutable
-                var group = "input:checkbox";
+                var group = ".jobtype input:checkbox";
                 // the checked state of the group/box on the other hand will change
                 // and the current value is retrieved using .prop() method
                 $(group).prop("checked", false);
@@ -355,6 +378,155 @@
             //or...
             if (e.which == 13) e.preventDefault();
         });
+        $(".table tbody tr").click(function (e) {
+
+            //if ($(e.target).is(':button')) return; //ignore when click on the checkbox
+            //console.log(this)
+            var $cb = $(this).find(':checkbox');
+            if (!$(e.target).is(':checkbox')) {
+                $cb.prop('checked', !$cb.is(':checked'));
+            }
+            $cb.is(':checked') ? $(this).addClass("checked") : $(this).removeClass("checked");
+            Check_Click(this)
+        });
+        function Check_Click(objRef) {
+
+            //Get the Row based on checkbox
+            var row = objRef.parentNode.parentNode.parentNode;
+
+            //Get the reference of GridView
+            var GridView = row.parentNode;
+
+            //Get all input elements in Gridview
+            var inputList = GridView.getElementsByTagName("input");
+
+            var headerCheckBox = inputList[0];
+            var checked = true;
+            for (var i = 0; i < inputList.length; i++) {
+                //The First element is the Header Checkbox
+
+                //Based on all or none checkboxes
+                //are checked check/uncheck Header Checkbox
+                checked = true;
+                if (inputList[i].type == "checkbox" && inputList[i] != headerCheckBox) {
+                    if (!inputList[i].checked) {
+                        checked = false;
+                        break;
+                    }
+                }
+            }
+            headerCheckBox.checked = checked;
+        }
+        function checkAll(objRef) {
+            let GridView = objRef.parentNode.parentNode.parentNode;
+            let inputList = GridView.getElementsByTagName("input");
+            for (let i = 0; i < inputList.length; i++) {
+                let row = inputList[i].parentNode.parentNode;
+                if (inputList[i].type == "checkbox" && objRef != inputList[i]) {
+                    if (objRef.checked) {
+                        inputList[i].checked = true;
+                        inputList[i].parentNode.parentNode.parentNode.classList.add("checked");
+
+                    }
+                    else {
+                        /*if (row.rowIndex % 2 == 0) {
+                            row.style.backgroundColor = "#C2D69B";
+                        }
+                        else {
+                            row.style.backgroundColor = "white";
+                        }*/
+                        inputList[i].checked = false;
+                        inputList[i].parentNode.parentNode.parentNode.classList.remove("checked");
+
+                    }
+                    //$cb.is(':checked') ? $(this).css('background-color', '#ececec') : $(this).css('background-color', '#ffffff');
+                }
+            }
+        }
+        function checkSelected() {
+            let inputList = $(".table tbody tr").find(':checkbox');
+            for (let i = 0; i < inputList.length; i++) {
+                if (inputList[i].type == "checkbox") {
+                    if (inputList[i].checked) {
+                        inputList[i].parentNode.parentNode.parentNode.classList.add("checked");
+
+                    }
+                    else {
+                        inputList[i].parentNode.parentNode.parentNode.classList.remove("checked");
+
+                    }
+                    //$cb.is(':checked') ? $(this).css('background-color', '#ececec') : $(this).css('background-color', '#ffffff');
+                }
+            }
+        }
+        function getSeleted() {
+            //console.log("xxx22");
+            let textinputs = document.querySelectorAll('td input:checked');
+
+            //console.log(arrs);
+            let arrs = [];
+            for (let i = 0; i < textinputs.length; i++) {
+                arrs[i] = textinputs[i].parentNode.getAttribute("data-key");
+
+                //console.log(textinputs[i].parentNode);
+                //console.log(textinputs[i].parentNode.getAttribute("data-key"));
+            }
+            //console.log(arrs);
+
+            let arrsWithKey = arrs.map((arr) => {
+                let fullname = `{"code":"${arr}"}`;
+                return fullname;
+            })
+            //console.log(`arrsWithKey : ${arrsWithKey}`);
+            //console.log(arrsWithKey);
+            let params = arrsWithKey.reduce((txt, array) => {
+                return txt + array + ',';
+            }, "");
+
+            let paramslength = params.length;
+            if (params[paramslength - 1] === ',') {
+                //console.log(`params sdad`);
+                params = params.substring(0, params.length - 1);
+            }
+            params = `[${params}]`
+            //console.log(params);
+            return params;
+        }
+        function sendID() {
+            //console.log("xxx");
+            let textinputs = document.querySelectorAll('td input:checked');
+            //console.log(textinputs);
+            const params = getSeleted();
+            const sizeText = textinputs.length;
+            //console.log("xxx");
+            console.log(params);
+            //console.log(textinputs.length);
+
+            //removeElem("delete_value");
+
+            removeElem("export_value");
+            let confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "export_value";
+            if (textinputs.length > 0) {
+                if (confirm(`Export จาก (${sizeText}) รายการที่เลือกหรือไม่ ?`)) {
+                    confirm_value.value = params;
+
+                } else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+            }
+            else {
+                alert("กรุณาเลือกรายการก่อน");
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            document.forms[0].appendChild(confirm_value);
+            //console.log(confirm_value.value);
+            return true;
+        }
     </script>
 
 </asp:Content>

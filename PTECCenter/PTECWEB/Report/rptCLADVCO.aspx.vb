@@ -1,8 +1,10 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports ClosedXML.Excel
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 
-Public Class ClearAdvanceMenuList2
+Public Class rptCLADVCO
     Inherits System.Web.UI.Page
 
     Public criteria As DataTable = createCriteria()
@@ -220,7 +222,7 @@ Public Class ClearAdvanceMenuList2
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         cboOwner.SelectedItem.Value.ToString,
                                                     "HO",
-                                                        cboApproval.SelectedItem.Value.ToString,
+                                                        "",
                                                         cboMaxRows.SelectedValue)
             Else
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
@@ -236,7 +238,7 @@ Public Class ClearAdvanceMenuList2
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         cboOwner.SelectedItem.Value.ToString,
                                                         "",
-                                                        cboApproval.SelectedItem.Value.ToString,
+                                                        "",
                                                         cboMaxRows.SelectedValue)
             End If
 
@@ -316,10 +318,10 @@ Public Class ClearAdvanceMenuList2
         gvRemind.DataBind()
     End Sub
 
-    Private Sub gvRemind_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvRemind.PageIndexChanging
-        gvRemind.PageIndex = e.NewPageIndex
-        BindData()
-    End Sub
+    'Private Sub gvRemind_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvRemind.PageIndexChanging
+    '    gvRemind.PageIndex = e.NewPageIndex
+    '    BindData()
+    'End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
@@ -382,9 +384,9 @@ Public Class ClearAdvanceMenuList2
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 9
-        Dim approvalname As Integer = 6
-        Dim companyAt As Integer = 0
+        Dim statusAt As Integer = 10
+        Dim approvalname As Integer = 7
+        Dim companyAt As Integer = 1
         Dim Data As DataRowView
         Data = e.Row.DataItem
         If Data Is Nothing Then
@@ -528,4 +530,45 @@ Public Class ClearAdvanceMenuList2
         ViewState("SortExpression") = column
         Return sortDirection
     End Function
+    Private Sub btnCLADVTOD365_Click(sender As Object, e As EventArgs) Handles btnCLADVTOD365.Click
+        Dim confirmValue As String = Request.Form("export_value")
+        'Dim rawresp As String = "[{""id"":""1""},{""id"":""2""},{""id"":""3""},{""id"":""4""},{""id"":""5""},{""id"":""6""},{""id"":""7""}]"
+        Dim createdate As String
+        createdate = Date.Now
+        Dim result = JsonConvert.DeserializeObject(Of ArrayList)(confirmValue)
+        Dim token As JToken
+        Dim code
+        If result IsNot Nothing Then
+
+            Dim objnonpo As New NonPO
+
+            'Dim jyncode As String = objjob.Jobs_Get_RunningNO_JTN()
+            Dim resAll As New DataTable
+            For Each value As Object In result
+                token = JObject.Parse(value.ToString())
+                code = token.SelectToken("code")
+                Try
+                    Dim dt As New DataTable
+                    dt = objnonpo.Nonpo_Export_ADV(code, chkGroupVAT.Checked, chkGroupVendor.Checked)
+                    resAll.Merge(dt, False, MissingSchemaAction.Add)
+                Catch ex As Exception
+                    Dim scriptKey As String = "alert"
+                    'Dim javaScript As String = "alert('" & ex.Message & "');"
+                    Dim javaScript As String = "alertWarning('Delete fail');"
+                    ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                    GoTo endprocess
+                End Try
+            Next value
+
+            Dim cnt As Integer = resAll.Rows.Count - 1
+            For i = 0 To cnt
+                resAll.Rows(i).Item("LINENUMBER") = i + 1
+            Next i
+
+            ExportToExcel(resAll, Session("usercode"), createdate)
+            'BindData()
+            'Response.Redirect("../OPS/Non-PO/Payment/Payment2.aspx?f=JOB&code_ref=" + jyncode)
+        End If
+endprocess:
+    End Sub
 End Class

@@ -1817,6 +1817,7 @@
     <Content Include="OPS\Station\newNTI.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
+    <Content Include="Report\rptCLADVCO.aspx" />
     <Content Include="Report\rptPCCO.aspx" />
     <Content Include="Report\rptEdiRPTInvoice.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
@@ -4089,6 +4090,13 @@
     </Compile>
     <Compile Include="ReportViewer.aspx.vb">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptCLADVCO.aspx.designer.vb">
+      <DependentUpon>rptCLADVCO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptCLADVCO.aspx.vb">
+      <DependentUpon>rptCLADVCO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Report\rptPCCO.aspx.designer.vb">

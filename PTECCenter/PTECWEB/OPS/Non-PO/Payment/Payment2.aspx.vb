@@ -103,7 +103,7 @@ Public Class Payment2
 
             objsmb.SetCboSmartBilllist(multiSelect, usercode)
 
-            objdep.SetCboDepartmentBybranch(cboDep, 0)
+            'objdep.SetCboDepartmentBybranch(cboDep, 0)
             objNonpo.SetCboAccountCode(cboAccountCode, Session("userid"))
             'objsupplier.SetCboVendor(cboVendor, "")
             'objNonpo.SetCboPurpose(cboPP, "all")
@@ -1432,7 +1432,7 @@ endprocess:
         hiddenAdvancedetailid.Value = 0
 
         cboAccountCode.SelectedIndex = -1
-        cboDep.SelectedIndex = -1
+        'cboDep.SelectedIndex = -1
         cboBU.SelectedIndex = -1
         cboPP.SelectedIndex = -1
         cboPJ.SelectedIndex = -1
