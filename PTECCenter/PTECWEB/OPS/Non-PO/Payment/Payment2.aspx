@@ -960,12 +960,12 @@
                     <div class="form-group">
                         <asp:Label ID="lbTax" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="TAX" />
                         <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" Text="0"'></asp:TextBox>
-                    </div>--%>
+                    </div>
 
                     <div class="form-group" style="display: none;">
                         <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
-                    </div>
+                </div>--%>
                     <div class="showCost">
                         <p class="text-muted" id="p_vat"></p>
                         <p class="text-muted" id="p_tax"></p>
@@ -1169,13 +1169,13 @@
             /*stoppedTyping();*/
             checkUnSave();
             /*
-            const urlParams = new URLSearchParams(window.location.search);
-            const nonpocode = urlParams.get('NonpoCode');
-            if (nonpocode) {
-            checkStatusNonpo();
-            } else {
-            alert('else nonpo')
-            }*/
+const urlParams = new URLSearchParams(window.location.search);
+const nonpocode = urlParams.get('NonpoCode');
+if (nonpocode) {
+checkStatusNonpo();
+} else {
+alert('else nonpo')
+}*/
 
             <% If Not AttachTable Is Nothing Then %>
                 <% For i = 0 To AttachTable.Rows.Count - 1 %>
@@ -1202,16 +1202,16 @@
                 console.log(coderef.indexOf('JTN'))
                 if (coderef.indexOf('JTN') > -1) {
                     <% If (Not ViewState("status_payment") = "account") Then%>
-                        $('#exampleModal .modal-footer .btn-primary').hide();
-                        $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
-                        $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
-                        disbtndelete();
-                        $('#<% =FromAddDetail.ClientID%>').hide();
+                    $('#exampleModal .modal-footer .btn-primary').hide();
+                    $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
+                    $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
+                    disbtndelete();
+                    $('#<% =FromAddDetail.ClientID%>').hide();
                     <% End If %>
 
                 }
             }
-            
+
         });
         function Confirm() {
 
@@ -1526,7 +1526,6 @@
             $('#<%= row.ClientID%>').val(0);
             $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
             $('#<%= cboAccountCode.ClientID%>').val(0);
-            $('#<%= cboDep.ClientID%>').val(0);
             $('#<%= cboBU.ClientID%>').val(0);
             $('#<%= cboPP.ClientID%>').val(0);
             $('#<%= cboPJ.ClientID%>').val(0);
@@ -1558,7 +1557,7 @@
         function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, invoice, taxid, invoicedate, NoBill, IncompleteBill) {
             console.log(advancedetailid);
             console.log(accountcodeid);
-            console.log(depid);
+            //console.log(depid);
             console.log(buid);
             console.log(ppid);
             console.log(cost);
@@ -1567,7 +1566,6 @@
             //console.log(vendorcode);
 
             const Accountcode = '<%= cboAccountCode.ClientID%>';
-            const dep = '<%= cboDep.ClientID%>';
             const bu = '<%= cboBU.ClientID%>';
             const pp = '<%= cboPP.ClientID%>';
             const pj = '<%= cboPJ.ClientID%>';
@@ -1575,7 +1573,7 @@
             $('#exampleModal').modal('show');
 
             selectElement(Accountcode, accountcodeid);
-            selectElement(dep, depid);
+            //selectElement(dep, depid);
             selectElement(bu, buid);
             selectElement(pp, ppid);
             selectElement(pj, pjid);
@@ -1644,8 +1642,8 @@
             const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
             const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
             const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
-            const depid = $('#<%= cboDep.ClientID%>').val();
-            const depname = $("#<%= cboDep.ClientID%> option:selected").text();
+            const depid = "0";
+            const depname = "";
             const buid = $('#<%= cboBU.ClientID%>').val();
             const buname = $("#<%= cboBU.ClientID%> option:selected").text();
             const ppid = $('#<%= cboPP.ClientID%>').val();
@@ -1771,8 +1769,8 @@
             const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
             const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
             const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
-            const depid = $('#<%= cboDep.ClientID%>').val();
-            const depname = $("#<%= cboDep.ClientID%> option:selected").text();
+            const depid = "0"
+            const depname = ""
             const buid = $('#<%= cboBU.ClientID%>').val();
             const buname = $("#<%= cboBU.ClientID%> option:selected").text();
             const ppid = $('#<%= cboPP.ClientID%>').val();

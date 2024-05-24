@@ -279,7 +279,7 @@ Public Class Assets
         obj.DataBind()
 
     End Sub
-    Public Sub SetCboVendorByName(cboAsset As DropDownList, branch As Integer, Optional depid As Integer = 0, Optional secid As Integer = 0)
+    Public Sub SetCboAssetsByName(cboAsset As DropDownList, branch As Integer, Optional depid As Integer = 0, Optional secid As Integer = 0)
 
         Dim dt As DataTable = ComboList(branch, depid, secid)
         cboAsset.Items.Clear()

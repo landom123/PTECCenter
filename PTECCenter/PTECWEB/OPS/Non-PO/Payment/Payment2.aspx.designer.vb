@@ -995,24 +995,6 @@ Partial Public Class Payment2
     Protected WithEvents TxtNetPrice As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cboDep control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboDep As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''lbtaxid control.
     '''</summary>
     '''<remarks>

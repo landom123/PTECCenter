@@ -73,7 +73,7 @@ Public Class frmJobs
             'SetCboDepartment(cboDepartment)
             'SetCboSection(cboSection, cboDepartment.SelectedItem.Value)
             'objAssets.SetCboAssets(cboAsset, 0)
-            objAssets.SetCboVendorByName(cboAsset, 0)
+            objAssets.SetCboAssetsByName(cboAsset, 0)
 
             SetCboJobType(cboJobType, usercode, "actived")
 
@@ -844,7 +844,7 @@ endprocess:
 
             FindPositionInPump(branchid)
             findNozzle(cboBranch.SelectedItem.Value)
-            objAssets.SetCboVendorByName(cboAsset, 0)
+            objAssets.SetCboAssetsByName(cboAsset, 0)
         End If
 
     End Sub
