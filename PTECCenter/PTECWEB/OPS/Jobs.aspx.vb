@@ -1,5 +1,7 @@
 ﻿Imports CrystalDecisions.CrystalReports.Engine
 Imports CrystalDecisions.Shared
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 Imports System.IO
 Imports System.Windows
 
@@ -9,6 +11,7 @@ Public Class frmJobs
     Public detailtable As DataTable '= createdetailtable()
     Public maintable As DataTable '= createmaintable()
     Public nozzletable As DataTable
+    Public assetsNozzletable As DataTable
     Public menutable As DataTable
     Public owner As Integer
     Public branchid As Integer
@@ -55,6 +58,8 @@ Public Class frmJobs
         If Not IsPostBack() Then
             detailtable = createdetailtable()
             maintable = createmaintable()
+            nozzletable = createnozzletable()
+            ViewState("nozzletable") = nozzletable
             ViewState("detailtable") = detailtable
             ViewState("maintable") = maintable
             ViewState("status") = "new"
@@ -112,6 +117,7 @@ Public Class frmJobs
             detailtable = ViewState("detailtable")
             maintable = ViewState("maintable")
             nozzletable = ViewState("nozzletable")
+            assetsNozzletable = ViewState("assetsNozzletable")
             'If maintable.Rows.Count > 0 Then
             '    showdata(maintable)
             'End If
@@ -152,12 +158,14 @@ Public Class frmJobs
             mydataset = job.Find(usercode, jobno)
             maintable = mydataset.Tables(0)
             detailtable = mydataset.Tables(1)
+            nozzletable = mydataset.Tables(2)
             'itemtable = mydataset.Tables(1)
             'ViewState("itemtable") = itemtable
 
             showdata(maintable)
             ViewState("maintable") = mydataset.Tables(0)
             ViewState("detailtable") = mydataset.Tables(1)
+            ViewState("nozzletable") = mydataset.Tables(2)
         Catch ex As Exception
             Dim scriptKey As String = "UniqueKeyForThisScript"
             Dim javaScript As String = "alertWarning('Find Fail')"
@@ -201,6 +209,7 @@ Public Class frmJobs
 
 
 
+            BindDataNozzle()
         End With
     End Sub
     Private Function createdetailtable() As DataTable
@@ -230,6 +239,7 @@ Public Class frmJobs
         dt.Columns.Add("attatch", GetType(String))
         dt.Columns.Add("brand", GetType(String))
         dt.Columns.Add("model", GetType(String))
+        dt.Columns.Add("nozzle", GetType(String))
         'dt.Columns.Add("vendor_code", GetType(String))
 
 
@@ -251,6 +261,28 @@ Public Class frmJobs
         dt.Columns.Add("depid", GetType(Double))
         dt.Columns.Add("secid", GetType(Double))
         dt.Columns.Add("owner", GetType(Integer))
+
+        Return dt
+    End Function
+    Private Function createnozzletable() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("nozzle_ID", GetType(Integer))
+        dt.Columns.Add("nozzle_No", GetType(String))
+        dt.Columns.Add("branchid", GetType(Integer))
+        dt.Columns.Add("rowNumber", GetType(Integer))
+        dt.Columns.Add("brand", GetType(String))
+        dt.Columns.Add("expiryDate", GetType(String))
+        dt.Columns.Add("productType", GetType(String))
+        dt.Columns.Add("positionOnAssest", GetType(String))
+        dt.Columns.Add("url", GetType(String))
+        dt.Columns.Add("active", GetType(Integer))
+        dt.Columns.Add("AssetID", GetType(String))
+        dt.Columns.Add("UpdateBycode", GetType(String))
+        dt.Columns.Add("UpdateBy", GetType(Integer))
+        dt.Columns.Add("UpdateDate", GetType(String))
+        dt.Columns.Add("jobref", GetType(String))
+
 
         Return dt
     End Function
@@ -460,6 +492,16 @@ endprocess:
             'GoTo endprocess
             'End If
         End If
+
+        If cboJobType.SelectedItem.Text.ToString.IndexOf("ตีตรา") > -1 Then
+            If String.IsNullOrEmpty(lblnozzlehidden.Text.ToString) Then
+                result = False
+                msg = "กรุณาระบุมือจ่ายที่จะตีตรา"
+                GoTo endprocess
+            End If
+
+        End If
+
         If String.IsNullOrEmpty(txtJobDetail.Text) Then
             result = False
             msg = "กรุณาระบุรายละเอียด"
@@ -660,6 +702,8 @@ endprocess:
         txtAssetCode.Text = ""
         txtAssetName.Text = ""
         lblattatch.Text = ""
+        lblnozzle.Text = ""
+        lblnozzlehidden.Text = ""
     End Sub
 
     Private Sub updatehead()
@@ -745,6 +789,7 @@ endprocess:
         row("attatch") = lblattatch.Text
         row("brand") = txtBrand.Text
         row("model") = txtModel.Text
+        row("nozzle") = lblnozzlehidden.Text
         'row("vendor_code") = ""
 
         detailtable.Rows.Add(row)
@@ -951,6 +996,12 @@ endprocess:
     '        MessageBox.Show(ex.Message)
     '    End Try
     'End Sub
+    Private Sub BindDataAssetsNozzle()
+        cntdt = assetsNozzletable.Rows.Count
+        gvAssetsNozzle.Caption = "ทั้งหมด " & cntdt & " รายการ"
+        gvAssetsNozzle.DataSource = assetsNozzletable
+        gvAssetsNozzle.DataBind()
+    End Sub
     Private Sub BindDataNozzle()
         cntdt = nozzletable.Rows.Count
         gvNozzle.Caption = "ทั้งหมด " & cntdt & " รายการ"
@@ -962,9 +1013,9 @@ endprocess:
 
         Try
             If cboJobType.SelectedItem.Text.ToString.IndexOf("ตีตรา") > -1 Then
-                nozzletable = objassets.AssesNozzle_list(branchid)
-                ViewState("nozzletable") = nozzletable
-                BindDataNozzle()
+                assetsNozzletable = objassets.AssesNozzle_list(branchid)
+                BindDataAssetsNozzle()
+                ViewState("assetsNozzletable") = assetsNozzletable
             End If
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -972,5 +1023,77 @@ endprocess:
             Dim javaScript As String = "alertWarning('find nozzle fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+    End Sub
+
+    Private Sub btnSetNozzle_Click(sender As Object, e As EventArgs) Handles btnSetNozzle.Click
+        Dim confirmValue As String = Request.Form("setNozzle")
+        'Dim rawresp As String = "[{""id"":""1""},{""id"":""2""},{""id"":""3""},{""id"":""4""},{""id"":""5""},{""id"":""6""},{""id"":""7""}]"
+
+        Dim result = JsonConvert.DeserializeObject(Of ArrayList)(confirmValue)
+        Dim token As JToken
+        Dim positionAll As String = ""
+        Dim codeAll As String = ""
+        Dim position
+        Dim code
+        If result IsNot Nothing Then
+
+            Dim objjob As New jobs
+
+            Dim jyncode As String = objjob.Jobs_Get_RunningNO_JTN()
+            nozzletable = createnozzletable()
+
+            For Each value As Object In result
+                token = JObject.Parse(value.ToString())
+                position = token.SelectToken("position")
+                code = token.SelectToken("code")
+
+                positionAll = positionAll & "(" & position & "),"
+                codeAll = codeAll & code & ","
+
+
+                Dim row As DataRow
+                row = nozzletable.NewRow()
+                With assetsNozzletable.Rows(assetsNozzletable.Rows.IndexOf(assetsNozzletable.Select("nozzle_No='" & code & "'")(0)))
+                    row("nozzle_ID") = .Item("nozzle_ID")
+                    row("nozzle_No") = .Item("nozzle_No")
+                    row("branchid") = .Item("branchid")
+                    row("rowNumber") = .Item("rowNumber")
+                    row("brand") = .Item("brand")
+                    row("expiryDate") = .Item("expiryDate")
+                    row("productType") = .Item("productType")
+                    row("positionOnAssest") = .Item("positionOnAssest")
+                    row("url") = .Item("url")
+                    row("active") = .Item("active")
+                    row("AssetID") = .Item("AssetID")
+                    row("UpdateBycode") = .Item("UpdateBycode")
+                    row("UpdateBy") = .Item("UpdateBy")
+                    row("UpdateDate") = .Item("UpdateDate")
+                    row("jobref") = .Item("jobref")
+                End With
+                nozzletable.Rows.Add(row)
+
+            Next value
+            'BindData()
+            lblnozzle.Text = positionAll
+            lblnozzle.ToolTip = "จำนวน (" & result.Count & ") มือจ่าย"
+            lblnozzlehidden.Text = codeAll
+
+            BindDataNozzle()
+            ViewState("nozzletable") = nozzletable
+        End If
+endprocess:
+    End Sub
+
+    Private Sub gvAssetsNozzle_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvAssetsNozzle.RowDataBound
+        Dim Data As DataRowView
+        Data = e.Row.DataItem
+        If Data Is Nothing Then
+            Return
+        End If
+        If (e.Row.RowType = DataControlRowType.DataRow) Then
+            If Not String.IsNullOrEmpty(Data.Item("jobref").ToString) Then
+                e.Row.Visible = False
+            End If
+        End If
     End Sub
 End Class

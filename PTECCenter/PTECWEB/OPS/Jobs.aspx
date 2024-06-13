@@ -10,6 +10,10 @@
         html {
             background-color: #f0f2f5 !important;
         }
+        .checked {
+            background-color: #ececec;
+            opacity: 1 !important;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -362,7 +366,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-12 mb-3">
+                                <div class="col-md-8 col-12 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text">เอกสารแนบ</span>
@@ -376,7 +380,11 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <% If detailtable.Rows(i).Item("jobtype").ToString.IndexOf("ตีตรา") > -1 And nozzletable IsNot Nothing Then %>
+                                <div class="col-md-4 mb-3">
+                                    <a id="btnNozzle" runat="server" href="#" title="ดูข้อมูลมือจ่าย" data-toggle="modal" data-target="#nozzleDetail"><%= nozzletable.Rows.Count %> <i class="fas fa-gas-pump"></i></a>&nbsp;&nbsp;
+                                </div>
+                                <% End if %>
                             </div>
                             <div class="row">
                                 <div class="col-8 mb-3">
@@ -576,12 +584,14 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">มือจ่าย <h5 class="text-danger m-0">&nbsp;*&nbsp;</h5>
+                                            <span class="input-group-text">มือจ่าย
+                                                <h5 class="text-danger m-0">&nbsp;*&nbsp;</h5>
                                             </span>
                                         </div>
-                                        <asp:Label ID="Label1" class="form-control" runat="server" Text=""></asp:Label>
+                                        <asp:Label ID="lblnozzle" class="form-control" runat="server" Text="" Style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></asp:Label>
+                                        <asp:Label ID="lblnozzlehidden" class="form-control d-none" runat="server" Text=""></asp:Label>
                                         <div class="input-group-append">
-                                            <a href="#" id="A1" class="btn btn-outline-info" runat="server" title="uploadfile" data-toggle="modal" data-target="#nozzleDetail"><i class="fas fa-paperclip"></i></a>
+                                            <a href="#" id="A1" class="btn btn-outline-info" runat="server" title="uploadfile" data-toggle="modal" data-target="#assetsNozzleDetail"><i class="fas fa-gas-pump"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -676,17 +686,17 @@
             </div>
         </div>
     </div>
-    <div class="modal fade bd-example-modal-lg" id="nozzleDetail" tabindex="-1" role="dialog" aria-labelledby="nozzleDetailModal" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="assetsNozzleDetail" tabindex="-1" role="dialog" aria-labelledby="assetsNozzleDetailModal" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="nozzleDetailModal">รายละเอียดมือจ่ายประจำสาขา</h5>
+                    <h5 class="modal-title" id="assetsNozzleDetailModal">รายละเอียดมือจ่ายประจำสาขา</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body nozzle__management">
-                    <asp:GridView ID="gvNozzle"
+                <div class="modal-body nozzle__management table-responsive-xl">
+                    <asp:GridView ID="gvAssetsNozzle"
                         class="table table-hover table-bordered"
                         AllowSorting="True"
                         AllowPaging="false"
@@ -699,7 +709,7 @@
                                         onclick="checkAll(this);" />
                                 </HeaderTemplate>
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="chk" runat="server" data-key='<%#Eval("nozzle_id").ToString + "," + Eval("rownumber").ToString%>'
+                                    <asp:CheckBox ID="chk" runat="server" data-key='<%#Eval("positionOnAssest").ToString + "," + Eval("nozzle_No").ToString%>'
                                         onclick="Check_Click(this)" />
                                 </ItemTemplate>
                             </asp:TemplateField>
@@ -738,6 +748,68 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btnSetNozzle" class="btn btn-primary" runat="server" Text="Save changes" OnClientClick="setSelected();" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="nozzleDetail" tabindex="-1" role="dialog" aria-labelledby="nozzleDetailModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nozzleDetailModal">รายละเอียดมือจ่ายในงาน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body nozzle__management table-responsive-xl">
+                    <asp:GridView ID="gvNozzle"
+                        class="table thead-dark table-bordered"
+                        AllowSorting="True"
+                        AllowPaging="false"
+                        AutoGenerateColumns="false"
+                        runat="server">
+                        <Columns>
+                            <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbid" runat="server" Text='<%#Eval("rownumber")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ยี่ห้อ" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("brand")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ชนิดน้ำมัน" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbapproval" runat="server" Text='<%#Eval("producttype")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="เลขที่มาตร" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetail" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("positionOnAssest")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("expirydate")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="รูปภาพ" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <a href="<%#Eval("url")%>" target="_blank">รูปภาพ</a>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -746,6 +818,7 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
 
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script type="text/javascript">
         //jQuery('[id$=txtDueDate]').datetimepicker({
         //    startDate: '+1971/05/01',//or 1986/12/08
@@ -771,7 +844,7 @@
                 maxOptions: 1
             });
 
-            $('#nozzleDetail').on('show.bs.modal', function (e) {
+            $('#assetsNozzleDetail').on('show.bs.modal', function (e) {
                 clearAll();
             });
         });
@@ -903,20 +976,20 @@
             }
         }
         function clearAll() {
-            let GridView = $("#nozzleDetail .table tbody");
+            let GridView = $("#assetsNozzleDetail .table tbody");
             let inputList = GridView[0].getElementsByTagName("input");
             for (let i = 0; i < inputList.length; i++) {
                 if (inputList[i].type == "checkbox") {
-                        inputList[i].checked = false;
-                        inputList[i].parentNode.parentNode.parentNode.classList.remove("checked");
+                    inputList[i].checked = false;
+                    inputList[i].parentNode.parentNode.parentNode.classList.remove("checked");
 
                 }
             }
         }
 
-        
 
-        $("#nozzleDetail .table tbody tr").click(function (e) {
+
+        $("#assetsNozzleDetail .table tbody tr").click(function (e) {
             if ($(e.target).is(':checkbox')) return; //ignore when click on the checkbox
 
             var $cb = $(this).find(':checkbox');
@@ -924,6 +997,82 @@
             $cb.is(':checked') ? $(this).addClass("checked") : $(this).removeClass("checked");
             Check_Click(this)
         });
-        
+        function getSeleted() {
+            //console.log("xxx22");
+            let textinputs = document.querySelectorAll('td input:checked');
+
+            //console.log(arrs);
+            let arrs = [];
+            for (let i = 0; i < textinputs.length; i++) {
+                arrs[i] = textinputs[i].parentNode.getAttribute("data-key");
+
+                //console.log(textinputs[i].parentNode);
+                //console.log(textinputs[i].parentNode.getAttribute("data-key"));
+            }
+            //console.log(arrs);
+
+            let arrsWithKey = arrs.map((arr) => {
+                const myArray = arr.split(",");
+                let fullname = `{"position":"${myArray[0]}","code":"${myArray[1]}"}`;
+                return fullname;
+            })
+            //console.log(`arrsWithKey : ${arrsWithKey}`);
+            //console.log(arrsWithKey);
+            let params = arrsWithKey.reduce((txt, array) => {
+                return txt + array + ',';
+            }, "");
+
+            let paramslength = params.length;
+            if (params[paramslength - 1] === ',') {
+                //console.log(`params sdad`);
+                params = params.substring(0, params.length - 1);
+            }
+            params = `[${params}]`
+            //console.log(params);
+            return params;
+        }
+
+        function setSelected() {
+            let textinputs = document.querySelectorAll('td input:checked');
+            const params = getSeleted();
+            const sizeText = textinputs.length;
+            removeElem("setNozzle");
+
+            let confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "setNozzle";
+            if (textinputs.length > 0) {
+                if (confirm(`ต้องการแจ้งตีตรา (${sizeText}) รายการที่เลือกหรือไม่ ?`)) {
+                    confirm_value.value = params;
+                   <%-- const arrSelected = JSON.parse(params);
+                    console.log(arrSelected);
+                    let strNozzleShow = $.map(arrSelected, function (v) {
+                        return `(${v.position})`;
+                    }).join(', ');
+                    let strNozzleHidden = $.map(arrSelected, function (v) {
+                        return v.code;
+                    }).join('|');
+                    //console.log(strNozzleShow);
+                    //console.log(strNozzleHidden);
+
+                    $('#<%= lblnozzle.ClientID%>').text(strNozzleShow);
+                    $('#<%= lblnozzle.ClientID%>').attr('title', `จำนวน (${sizeText}) มือจ่าย`);
+                    $('#<%= lblnozzlehidden.ClientID%>').text(strNozzleHidden);
+                    $('#assetsNozzleDetail').modal('hide')--%>
+                } else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+            }
+            else {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            document.forms[0].appendChild(confirm_value);
+            return true;
+        }
+
     </script>
 </asp:Content>

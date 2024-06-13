@@ -23,9 +23,6 @@
             font-size: 1.5rem;
         }
 
-        .nozzle__management a[href='#'] {
-            display: none;
-        }
 
         .fileuploader-theme-thumbnails .fileuploader-items .fileuploader-item .fileuploader-action + .fileuploader-action {
             display: none;
@@ -40,6 +37,7 @@
             border: 2px dashed #ff0000;
             color: #ff0000;
         }
+
 
         .modal img {
             display: none;
@@ -913,7 +911,7 @@
                                 <div class="row">
                                     <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
                                         <div class="col-auto">
-                                            <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="text-primary listCommentAndAttatch " style="cursor: pointer;" target="_blank">
+                                            <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="btn btn-sm p-0 notPrint" style="cursor: pointer;" target="_blank">
                                                 <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
 
                                             <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
@@ -1195,6 +1193,73 @@
             </div>
         </div>
     </div>
+    <div class="modal fade bd-example-modal-lg" id="assetsNozzleDetail" tabindex="-1" role="dialog" aria-labelledby="assetsNozzleDetailModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assetsNozzleDetailModal">รายละเอียดมือจ่ายประจำสาขา</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body nozzle__management table-responsive-xl">
+                    <asp:GridView ID="gvAssetsNozzle"
+                        class="table table-hover table-bordered"
+                        AllowSorting="True"
+                        AllowPaging="false"
+                        AutoGenerateColumns="false"
+                        runat="server">
+                        <Columns>
+                            <asp:TemplateField HeaderStyle-Width="50px" HeaderStyle-CssClass="text-center table-header table-info " ItemStyle-Width="50px" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="Center">
+                                <HeaderTemplate>
+                                    <asp:CheckBox ID="chkAll" runat="server"
+                                        onclick="checkAll(this);" />
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:CheckBox ID="chk" runat="server" data-key='<%#Eval("positionOnAssest").ToString + "," + Eval("nozzle_No").ToString%>'
+                                        onclick="Check_Click(this)" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbrownumber" runat="server" Text='<%#Eval("rownumber")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ยี่ห้อ" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbbrand" runat="server" Text='<%#Eval("brand")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ชนิดน้ำมัน" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbproducttype" runat="server" Text='<%#Eval("producttype")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="เลขที่มาตร" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbnozzleno" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbpositionOnAssest" runat="server" Text='<%#Eval("positionOnAssest")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbexpirydate" runat="server" Text='<%#Eval("expirydate")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <asp:Button ID="btnSetNozzle" class="btn btn-primary" runat="server" Text="Save changes" OnClientClick="setSelected();" />
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade bd-example-modal-lg analy" id="dataAnalyCategory" tabindex="-1" role="dialog" aria-labelledby="dataAnalyCategoryModal" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -1308,9 +1373,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body nozzle__management">
+                <div class="modal-body nozzle__management table-responsive-xl" style=" font-size: .75rem;">
                     <asp:GridView ID="gvNozzle"
-                        class="table thead-dark table-bordered"
+                        class="table table-sm thead-dark table-bordered"
                         AllowSorting="True"
                         AllowPaging="false"
                         AutoGenerateColumns="false"
@@ -1351,6 +1416,16 @@
                                     <a href="<%#Eval("url")%>" target="_blank">รูปภาพ</a>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="อัปเดทล่าสุดโดย" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("UpdateByCode")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="วันที่อัปเดทล่าสุด" HeaderStyle-CssClass="table-header table-info ">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("UpdateDate")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="" HeaderStyle-CssClass="table-header table-info ">
                                 <ItemTemplate>
                                     <a title="EditDetail" data-dismiss="modal"
@@ -1364,6 +1439,9 @@
                                                                         );">
                                         <i class="fas fa-edit color__purple"></i>
                                     </a>&nbsp;&nbsp;
+                                    <a onclick="confirmDeleteNozzle('<%#Eval("nozzle_id") %>','<%#Eval("rownumber") %>')" class="btn btn-sm p-0 notPrint">
+                                        <i class="fas fa-times"></i>
+                                    </a>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -1371,6 +1449,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="#" runat="server" id="btnAddRef" data-target="#assetsNozzleDetail" data-toggle="modal" data-dismiss="modal" data-backdrop="static" data-keyboard="false">เพิ่มมือจ่าย..</a>
                 </div>
             </div>
         </div>
@@ -1518,7 +1597,9 @@
                 liveSearch: true,
                 maxOptions: 1
             });
-
+            $('#assetsNozzleDetail').on('show.bs.modal', function (e) {
+                clearAll();
+            });
 
             $('.cbomulti').selectpicker({
                 noneSelectedText: '-',
@@ -1973,6 +2054,165 @@
             $('#<%= txtexpirydate.ClientID%>').val(expirydate);
 
             $('#exampleModal').modal('show');
+        }
+
+        function confirmDeleteNozzle(nozzleid) {
+            Swal.fire({
+                title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    var params = "{'nozzleid': '" + nozzleid + "'}";
+
+                    __doPostBack('deleteNozzle', params);
+                }
+            })
+
+            return false;
+        }
+        function Check_Click(objRef) {
+
+            //Get the Row based on checkbox
+            var row = objRef.parentNode.parentNode.parentNode;
+
+            //Get the reference of GridView
+            var GridView = row.parentNode;
+
+            //Get all input elements in Gridview
+            var inputList = GridView.getElementsByTagName("input");
+
+            var headerCheckBox = inputList[0];
+            var checked = true;
+            for (var i = 0; i < inputList.length; i++) {
+                //The First element is the Header Checkbox
+
+                //Based on all or none checkboxes
+                //are checked check/uncheck Header Checkbox
+                checked = true;
+                if (inputList[i].type == "checkbox" && inputList[i] != headerCheckBox) {
+                    if (!inputList[i].checked) {
+                        checked = false;
+                        break;
+                    }
+                }
+            }
+            headerCheckBox.checked = checked;
+        }
+        function checkAll(objRef) {
+            let GridView = objRef.parentNode.parentNode.parentNode;
+            let inputList = GridView.getElementsByTagName("input");
+            for (let i = 0; i < inputList.length; i++) {
+                let row = inputList[i].parentNode.parentNode;
+                if (inputList[i].type == "checkbox" && objRef != inputList[i]) {
+                    if (objRef.checked) {
+                        inputList[i].checked = true;
+                        inputList[i].parentNode.parentNode.parentNode.classList.add("checked");
+
+                    }
+                    else {
+                        /*if (row.rowIndex % 2 == 0) {
+                            row.style.backgroundColor = "#C2D69B";
+                        }
+                        else {
+                            row.style.backgroundColor = "white";
+                        }*/
+                        inputList[i].checked = false;
+                        inputList[i].parentNode.parentNode.parentNode.classList.remove("checked");
+
+                    }
+                    //$cb.is(':checked') ? $(this).css('background-color', '#ececec') : $(this).css('background-color', '#ffffff');
+                }
+            }
+        }
+        function clearAll() {
+            let GridView = $("#assetsNozzleDetail .table tbody");
+            let inputList = GridView[0].getElementsByTagName("input");
+            for (let i = 0; i < inputList.length; i++) {
+                if (inputList[i].type == "checkbox") {
+                    inputList[i].checked = false;
+                    inputList[i].parentNode.parentNode.parentNode.classList.remove("checked");
+
+                }
+            }
+        }
+
+
+
+        $("#assetsNozzleDetail .table tbody tr").click(function (e) {
+            if ($(e.target).is(':checkbox')) return; //ignore when click on the checkbox
+
+            var $cb = $(this).find(':checkbox');
+            $cb.prop('checked', !$cb.is(':checked'));
+            $cb.is(':checked') ? $(this).addClass("checked") : $(this).removeClass("checked");
+            Check_Click(this)
+        });
+        function getSeleted() {
+            //console.log("xxx22");
+            let textinputs = document.querySelectorAll('td input:checked');
+
+            //console.log(arrs);
+            let arrs = [];
+            for (let i = 0; i < textinputs.length; i++) {
+                arrs[i] = textinputs[i].parentNode.getAttribute("data-key");
+
+                //console.log(textinputs[i].parentNode);
+                //console.log(textinputs[i].parentNode.getAttribute("data-key"));
+            }
+            //console.log(arrs);
+
+            let arrsWithKey = arrs.map((arr) => {
+                const myArray = arr.split(",");
+                let fullname = `{"position":"${myArray[0]}","code":"${myArray[1]}"}`;
+                return fullname;
+            })
+            //console.log(`arrsWithKey : ${arrsWithKey}`);
+            //console.log(arrsWithKey);
+            let params = arrsWithKey.reduce((txt, array) => {
+                return txt + array + ',';
+            }, "");
+
+            let paramslength = params.length;
+            if (params[paramslength - 1] === ',') {
+                //console.log(`params sdad`);
+                params = params.substring(0, params.length - 1);
+            }
+            params = `[${params}]`
+            //console.log(params);
+            return params;
+        }
+
+        function setSelected() {
+            let textinputs = document.querySelectorAll('td input:checked');
+            const params = getSeleted();
+            const sizeText = textinputs.length;
+            removeElem("setNozzle");
+
+            let confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "setNozzle";
+            if (textinputs.length > 0) {
+                if (confirm(`ต้องการแจ้งตีตรา (${sizeText}) รายการที่เลือกหรือไม่ ?`)) {
+                    confirm_value.value = params;
+                } else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+            }
+            else {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            document.forms[0].appendChild(confirm_value);
+            return true;
         }
     </script>
 </asp:Content>
