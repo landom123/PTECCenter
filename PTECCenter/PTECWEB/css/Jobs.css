@@ -80,3 +80,12 @@
     right: 25px;
     display: none;
 }
+
+.nozzle__management a[href='#'] {
+    display: none;
+}
+
+.modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+}

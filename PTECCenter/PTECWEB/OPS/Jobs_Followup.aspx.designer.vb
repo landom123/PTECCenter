@@ -815,6 +815,24 @@ Partial Public Class JobsFollowup
     Protected WithEvents btnUpdate As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''gvAssetsNozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvAssetsNozzle As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''btnSetNozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSetNozzle As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''cboJobCate control.
     '''</summary>
     '''<remarks>
@@ -930,4 +948,13 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gvNozzle As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''btnAddRef control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnAddRef As Global.System.Web.UI.HtmlControls.HtmlAnchor
 End Class

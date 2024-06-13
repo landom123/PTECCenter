@@ -882,6 +882,18 @@ Public Class jobs
                     If Not .Rows(i).Item("attatch") Is Nothing Then
                         SaveDetail_Attatch(jobdetailid, .Rows(i).Item("attatch"))
                     End If
+                    If Not String.IsNullOrEmpty(.Rows(i).Item("nozzle")) Then
+                        Dim arrayNozzle As String() = .Rows(i).Item("nozzle").Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                        For Each code As String In arrayNozzle
+                            Try
+                                SaveDetail_Nozzle(jobdetailid, code)
+                            Catch ex As Exception
+                                Dim scriptKey As String = "alert"
+                                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                                Dim javaScript As String = "alertWarning('save fail');"
+                            End Try
+                        Next
+                    End If
                 End If
             Next
         End With
@@ -941,6 +953,25 @@ Public Class jobs
 
         cmd.Parameters.Add("@jobdetailid", SqlDbType.Int).Value = jobdetailid
         cmd.Parameters.Add("@fileName", SqlDbType.VarChar).Value = filename
+
+
+        cmd.ExecuteNonQuery()
+        conn.Close()
+
+    End Sub
+    Public Sub SaveDetail_Nozzle(jobdetailid As Integer, nozzle As String)
+        'Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        'Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Nozzle_Save"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobdetailid", SqlDbType.Int).Value = jobdetailid
+        cmd.Parameters.Add("@codelist", SqlDbType.VarChar).Value = nozzle
 
 
         cmd.ExecuteNonQuery()
@@ -1932,6 +1963,27 @@ Public Class jobs
         cmd.Parameters.Add("@positiononassest", SqlDbType.VarChar).Value = positiononassest
         cmd.Parameters.Add("@expirydate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(expirydate), DBNull.Value, DateTime.Parse(expirydate))
         cmd.Parameters.Add("@url", SqlDbType.VarChar).Value = url
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
+
+        cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+    Public Function DelDetail_Nozzle(jobdtlid As Integer, nozzleid As Integer, usercode As String) As Boolean
+        Dim result As Boolean
+
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_Nozzle_Del"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@jobdtlid", SqlDbType.Int).Value = jobdtlid
+        cmd.Parameters.Add("@nozzleid", SqlDbType.Int).Value = nozzleid
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = usercode
 
         cmd.ExecuteNonQuery()
