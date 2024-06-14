@@ -179,7 +179,7 @@ Public Class JobsFollowup
                     Else
                         btnSave.Enabled = True
                         btnEditDetail.Visible = True
-                        If nozzletable.Rows.Count > 0 Then
+                        If maintable.Rows(0).Item("jobtype").ToString.IndexOf("ตีตรา") > -1 Then
                             btnNozzle.Visible = True
                         Else
                             btnNozzle.Visible = False
@@ -622,6 +622,30 @@ endprocess:
 
         Return result
     End Function
+    Private Function ValidateSubmitRate() As Boolean
+        Dim result As Boolean = True
+        Dim msg As String = ""
+
+        If maintable.Rows(0).Item("jobtype").ToString.IndexOf("ตีตรา") > -1 Then
+            Dim row As DataRow
+            For Each row In nozzletable.Rows
+                If row.IsNull("nozzle_No_new") Or row.IsNull("expirydate_new") Then
+                    result = False
+                    msg = "กรุณากรอกข้อมูล มือจ่าย ให้ครบถ้วน"
+                    GoTo endprocess
+                End If
+            Next row
+        End If
+
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End If
+
+        Return result
+    End Function
     Private Sub saveFollowup(statusid As Integer, details As String)
 
         Dim objjob As New jobs
@@ -705,49 +729,51 @@ endprocess:
     End Sub
 
     Private Sub btnSubmitRate_Click(sender As Object, e As EventArgs) Handles btnSubmitRate.Click
+        If ValidateSubmitRate() Then
 
-        Dim objjob As New jobs
-        Dim res As String = Request.Form("confirm_value")
-        res = res.Replace("[", "")
-        res = res.Replace("]", "")
-        Dim strarr() As String
-        strarr = res.Split("},")
-        Dim lengthArr = strarr.Length
-        Dim rateid As Integer
-        Try
-            For i = 0 To lengthArr - 1
-                If Not String.IsNullOrEmpty(strarr(i).ToString) Then
-                    If strarr(i).Substring(0, 1) = "," Then
-                        res = strarr(i).Substring(1, strarr(i).Length - 1) + "}"
-                    Else
-                        res = strarr(i) + "}"
+            Dim objjob As New jobs
+            Dim res As String = Request.Form("confirm_value")
+            res = res.Replace("[", "")
+            res = res.Replace("]", "")
+            Dim strarr() As String
+            strarr = res.Split("},")
+            Dim lengthArr = strarr.Length
+            Dim rateid As Integer
+            Try
+                For i = 0 To lengthArr - 1
+                    If Not String.IsNullOrEmpty(strarr(i).ToString) Then
+                        If strarr(i).Substring(0, 1) = "," Then
+                            res = strarr(i).Substring(1, strarr(i).Length - 1) + "}"
+                        Else
+                            res = strarr(i) + "}"
+                        End If
+                        Dim jss As New JavaScriptSerializer
+                        Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
+
+                        Dim topic_id As String = json("topic_id").Trim
+                        Dim value As String = json("value").Trim
+                        Dim type As String = json("type").Trim
+
+
+
+                        rateid = objjob.SaveRate(topic_id, value, type, jobdetailid, usercode)
                     End If
-                    Dim jss As New JavaScriptSerializer
-                    Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
-
-                    Dim topic_id As String = json("topic_id").Trim
-                    Dim value As String = json("value").Trim
-                    Dim type As String = json("type").Trim
-
-
-
-                    rateid = objjob.SaveRate(topic_id, value, type, jobdetailid, usercode)
-                End If
-            Next
-            objjob.Jobs_Supplier_FinishStep(jobno, jobdetailid, usercode)
-            objjob.Followup_Save(jobno, jobdetailid, 10, "ลงคะแนนประเมินเสร็จสิ้น", usercode)
-            ClientScript.RegisterStartupScript(Me.GetType(), "Finish", "finishStep();", True)
-            'If maintable.Rows(0).Item("jobtypeid").ToString = "54" Then
-            '    Response.Redirect("../OPS/Assets/AssetsNozzle.aspx")
-            'Else
-            flashData()
-            'End If
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('json fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+                Next
+                objjob.Jobs_Supplier_FinishStep(jobno, jobdetailid, usercode)
+                objjob.Followup_Save(jobno, jobdetailid, 10, "ลงคะแนนประเมินเสร็จสิ้น", usercode)
+                ClientScript.RegisterStartupScript(Me.GetType(), "Finish", "finishStep();", True)
+                'If maintable.Rows(0).Item("jobtypeid").ToString = "54" Then
+                '    Response.Redirect("../OPS/Assets/AssetsNozzle.aspx")
+                'Else
+                flashData()
+                'End If
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('json fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End Try
+        End If
     End Sub
     '    Private Sub btnEditClose_Click(sender As Object, e As EventArgs) Handles btnEditClose.Click
 
@@ -1086,7 +1112,7 @@ endprocess:
                                 Session("usercode")
                                 )
 
-            approval.Save_Comment_By_Code(Request.QueryString("jobdetailid"), txtComment.Text.Trim(), Session("userid"))
+            'approval.Save_Comment_By_Code(Request.QueryString("jobdetailid"), txtComment.Text.Trim(), Session("userid"))
             flashData()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
