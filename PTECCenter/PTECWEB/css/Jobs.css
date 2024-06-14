@@ -89,3 +89,13 @@
     max-height: 80vh;
     overflow-y: auto;
 }
+
+.mandatory::after {
+    content: '*';
+    color: red;
+    padding-left: 5px;
+}
+
+.highlighter-rouge {
+    color: #e83e8c;
+}

@@ -617,24 +617,6 @@ Partial Public Class JobsFollowup
     Protected WithEvents txtproducttype As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label10 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label10 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''txtnozzle_no control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtnozzle_no As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''Label11 control.
     '''</summary>
     '''<remarks>
@@ -651,6 +633,24 @@ Partial Public Class JobsFollowup
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtpositiononassest As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Label10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label10 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtnozzle_no control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtnozzle_no As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Label12 control.

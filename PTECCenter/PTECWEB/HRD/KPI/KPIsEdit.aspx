@@ -810,10 +810,10 @@
                     //console.log('77777777777777')
                 }
                 if (!(empuppercode == usercode)) {
-                    //console.log('8888888888')
+                    console.log('8888888888')
                     checkComplete();
                 } else {
-                    $(".kpicompleted").show(); //show card status
+                    //$(".kpicompleted").show(); //show card status
                     //console.log('9999999')
                 }
             }
@@ -961,6 +961,8 @@
                 let param = getValueUnDisabled();
                 const params = JSON.stringify(param);
                 //console.log(params);
+
+                removeElem("confirm_value");
                 let confirm_value = document.createElement("INPUT");
                 confirm_value.type = "hidden";
                 confirm_value.name = "confirm_value";
@@ -983,6 +985,7 @@
                 let param = getValue();
                 const params = JSON.stringify(param);
                 //console.log(params);
+                removeElem("confirm_value");
                 let confirm_value = document.createElement("INPUT");
                 confirm_value.type = "hidden";
                 confirm_value.name = "confirm_value";
@@ -1094,6 +1097,7 @@
 
             } else {
                 $(".kpicompleted").hide();
+                //alert('ss')
             }
 
         }

@@ -49,7 +49,7 @@
             width: 100%;
             height: auto;
             position: absolute;
-            left: 30%;
+            left: 10%;
             top: -1200%;
             display: block;
             z-index: 999;
@@ -134,7 +134,7 @@
                                 <div class="row">
                                     <div class="col mb-3 text-left text-md-right divEditDetail" id="divEditDetail">
                                         <a id="btnNozzle" runat="server" href="#" title="ดูข้อมูลมือจ่าย" data-toggle="modal" data-target="#nozzleDetail"><%= nozzletable.Rows.Count %> <i class="fas fa-gas-pump"></i></a>&nbsp;&nbsp;
-                                        <a href="#" id="btnEditDetail" runat="server" title="EditDetail" data-toggle="modal" data-target="#EditDetail"><i class="fas fa-edit"></i></a>
+                                        <a href="#" id="btnEditDetail" runat="server" title="คลิกแก้ไขข้อมูล" data-toggle="modal" data-target="#EditDetail"><i class="fas fa-edit"></i></a>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -370,7 +370,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col mb-3 text-left text-md-right divEditDetail">
-                                        <a href="#" id="btnDataAnalyCategory" runat="server" title="DataAnalyCategory" data-toggle="modal" data-target="#dataAnalyCategory"><i class="fas fa-edit"></i></a>
+                                        <a href="#" id="btnDataAnalyCategory" runat="server" title="คลิกแก้ไขข้อมูล" data-toggle="modal" data-target="#dataAnalyCategory"><i class="fas fa-edit"></i></a>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -385,7 +385,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-3 text-left text-md-right">
-                                        <a href="#" id="btnDataAnalyGroupType" runat="server" title="DataAnalyGroupType" data-toggle="modal" data-target="#dataAnalyGroupType"><i class="fas fa-plus"></i></a>
+                                        <a href="#" id="btnDataAnalyGroupType" runat="server" title="คลิกแก้ไขข้อมูล" data-toggle="modal" data-target="#dataAnalyGroupType"><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -798,12 +798,13 @@
                                                 <thead class="table-info">
                                                     <tr>
                                                         <th class="text-center">ลำดับที่</th>
-                                                        <th class="text-center">ยี่ห้อ</th>
-                                                        <th class="text-center">ชนิดน้ำมัน</th>
-                                                        <th class="text-center">เลขที่มาตร</th>
+                                                        <th class="text-center">ยี่ห้อ(ชนิด)</th>
                                                         <th class="text-center">ตำแหน่ง</th>
-                                                        <th class="text-center">วันที่สิ้นสุด</th>
+                                                        <th class="text-center">เลขที่มาตร</th>
+                                                        <th class="text-center">วันสิ้นคำรับรอง</th>
                                                         <th class="text-center">รูปภาพ</th>
+                                                        <th class="text-center">เลขที่มาตร(ใหม่)</th>
+                                                        <th class="text-center">วันสิ้นคำรับรอง(ใหม่)</th>
                                                         <% If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then %>
                                                         <th class="text-center">แก้ไขเมื่อวันที่</th>
                                                         <% Else %>
@@ -823,22 +824,21 @@
                                                                         ,'<%= nozzletable.Rows(j).Item("expirydate").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("producttype").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("positiononassest").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("nozzle_No_new").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("expirydate_new").ToString() %>'
                                                                         );"
                                                         <% End if %>>
                                                         <td>
                                                             <span><%= nozzletable.Rows(j).Item("rownumber").ToString %></span>
                                                         </td>
                                                         <td>
-                                                            <span><%= nozzletable.Rows(j).Item("brand").ToString %></span>
-                                                        </td>
-                                                        <td>
-                                                            <span><%= nozzletable.Rows(j).Item("producttype").ToString %></span>
-                                                        </td>
-                                                        <td>
-                                                            <span><%= nozzletable.Rows(j).Item("nozzle_No").ToString %></span>
+                                                            <span><%= nozzletable.Rows(j).Item("brand").ToString %></span>(<span><%= nozzletable.Rows(j).Item("producttype").ToString %></span>)
                                                         </td>
                                                         <td>
                                                             <span><%= nozzletable.Rows(j).Item("positionOnAssest").ToString %></span>
+                                                        </td>
+                                                        <td>
+                                                            <span><%= nozzletable.Rows(j).Item("nozzle_No").ToString %></span>
                                                         </td>
                                                         <td>
                                                             <span><%= nozzletable.Rows(j).Item("expirydate").ToString %></span>
@@ -846,13 +846,19 @@
                                                         <td>
                                                             <a href="<%= nozzletable.Rows(j).Item("url").ToString %>" target="_blank">รูปภาพ</a>
                                                         </td>
+                                                        <td>
+                                                            <span class="highlighter-rouge"><%= nozzletable.Rows(j).Item("nozzle_No_new").ToString %></span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="highlighter-rouge"><%= nozzletable.Rows(j).Item("expirydate_new").ToString %></span>
+                                                        </td>
                                                         <% If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then %>
                                                         <td class="text-primary">
                                                             <span><%= nozzletable.Rows(j).Item("updatedate").ToString %></span>
                                                         </td>
                                                         <% Else %>
                                                         <td>
-                                                            <a title="EditDetail"
+                                                            <a title="คลิกแก้ไขข้อมูล"
                                                                 onclick="btnEditDetailClick('<%= nozzletable.Rows(j).Item("rownumber").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("nozzle_id").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("nozzle_no").ToString() %>'
@@ -860,6 +866,8 @@
                                                                         ,'<%= nozzletable.Rows(j).Item("expirydate").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("producttype").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("positiononassest").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("nozzle_No_new").ToString() %>'
+                                                                        ,'<%= nozzletable.Rows(j).Item("expirydate_new").ToString() %>'
                                                                         );">
                                                                 <i class="fas fa-edit color__purple"></i>
                                                             </a>&nbsp;&nbsp;
@@ -1001,7 +1009,7 @@
         <!-- /#wrapper -->
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog " role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">รายละเอียดรายการ</h5>
@@ -1016,23 +1024,25 @@
                     <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
                     <div class="form-group">
                         <asp:Label ID="Label8" CssClass="form-label" AssociatedControlID="txtbrand" runat="server" Text="ยี่ห้อ" />
-                        <asp:TextBox class="form-control" type="input" ID="txtbrand" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control form-control-sm" type="input" ID="txtbrand" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="Label9" CssClass="form-label" AssociatedControlID="txtproducttype" runat="server" Text="ชนิดน้ำมัน" />
-                        <asp:TextBox class="form-control" type="input" ID="txtproducttype" runat="server" autocomplete="off"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label ID="Label10" CssClass="form-label" AssociatedControlID="txtnozzle_no" runat="server" Text="เลขที่มาตร" />
-                        <asp:TextBox class="form-control" type="input" ID="txtnozzle_no" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control form-control-sm" type="input" ID="txtproducttype" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="Label11" CssClass="form-label" AssociatedControlID="txtpositiononassest" runat="server" Text="ตำแหน่ง" />
-                        <asp:TextBox class="form-control" type="input" ID="txtpositiononassest" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control form-control-sm" type="input" ID="txtpositiononassest" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="Label12" CssClass="form-label" AssociatedControlID="txtexpirydate" runat="server" Text="วันที่สิ้นสุด" />
-                        <asp:TextBox class="form-control" type="input" ID="txtexpirydate" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:Label ID="Label10" CssClass="form-label mandatory" AssociatedControlID="txtnozzle_no" runat="server" Text="เลขที่มาตรใหม่" />
+                        <asp:TextBox class="form-control form-control-sm highlighter-rouge" type="input" ID="txtnozzle_no" aria-describedby="txtnozzle_no_old" runat="server" autocomplete="off"></asp:TextBox>
+                        <small id="txtnozzle_no_old" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="Label12" CssClass="form-label mandatory" AssociatedControlID="txtexpirydate" runat="server" Text="วันสิ้นคำรับรองใหม่" />
+                        <asp:TextBox class="form-control form-control-sm highlighter-rouge" type="input" ID="txtexpirydate" aria-describedby="txtexpirydate_old" runat="server" autocomplete="off"></asp:TextBox>
+                        <small id="txtexpirydate_old" class="form-text text-muted"></small>
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -1204,7 +1214,7 @@
                 </div>
                 <div class="modal-body nozzle__management table-responsive-xl">
                     <asp:GridView ID="gvAssetsNozzle"
-                        class="table table-hover table-bordered"
+                        class="table table-sm table-hover table-bordered"
                         AllowSorting="True"
                         AllowPaging="false"
                         AutoGenerateColumns="false"
@@ -1220,32 +1230,32 @@
                                         onclick="Check_Click(this)" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="">
+                            <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-CssClass="" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbrownumber" runat="server" Text='<%#Eval("rownumber")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ยี่ห้อ" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                            <asp:TemplateField HeaderText="ยี่ห้อ" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbbrand" runat="server" Text='<%#Eval("brand")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ชนิดน้ำมัน" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                            <asp:TemplateField HeaderText="ชนิดน้ำมัน" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbproducttype" runat="server" Text='<%#Eval("producttype")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="เลขที่มาตร" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="เลขที่มาตร" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbnozzleno" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbpositionOnAssest" runat="server" Text='<%#Eval("positionOnAssest")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="วันสิ้นคำรับรอง" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbexpirydate" runat="server" Text='<%#Eval("expirydate")%>'></asp:Label>
                                 </ItemTemplate>
@@ -1365,7 +1375,7 @@
         </div>
     </div>
     <div class="modal fade bd-example-modal-lg" id="nozzleDetail" tabindex="-1" role="dialog" aria-labelledby="nozzleDetailModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="nozzleDetailModal">รายละเอียดมือจ่ายในงาน</h5>
@@ -1373,7 +1383,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body nozzle__management table-responsive-xl" style=" font-size: .75rem;">
+                <div class="modal-body nozzle__management table-responsive-xl" style="font-size: .75rem;">
                     <asp:GridView ID="gvNozzle"
                         class="table table-sm thead-dark table-bordered"
                         AllowSorting="True"
@@ -1381,54 +1391,59 @@
                         AutoGenerateColumns="false"
                         runat="server">
                         <Columns>
-                            <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="">
+                            <asp:TemplateField HeaderText="ลำดับ" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="Center" ItemStyle-CssClass="" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbid" runat="server" Text='<%#Eval("rownumber")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ยี่ห้อ" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
+                            <asp:TemplateField HeaderText="ยี่ห้อ (ชนิด)" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
-                                    <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("brand")%>'></asp:Label>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("brand") & " (" & Eval("producttype") & ")" %>'></asp:Label>
+                                    </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ชนิดน้ำมัน" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
-                                <ItemTemplate>
-                                    <asp:Label ID="lbapproval" runat="server" Text='<%#Eval("producttype")%>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="เลขที่มาตร" HeaderStyle-CssClass="table-header table-info ">
-                                <ItemTemplate>
-                                    <asp:Label ID="lbdetail" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("positionOnAssest")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="เลขที่มาตร(เก่า)" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lbdetail" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="วันสิ้นคำรับรอง(เก่า)" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("expirydate")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="รูปภาพ" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="รูปภาพ" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <a href="<%#Eval("url")%>" target="_blank">รูปภาพ</a>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="อัปเดทล่าสุดโดย" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="เลขที่มาตร(ใหม่)" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-CssClass="highlighter-rouge">
                                 <ItemTemplate>
-                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("UpdateByCode")%>'></asp:Label>
+                                    <asp:Label ID="lbdetail" runat="server" Text='<%#Eval("nozzle_No_new")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="วันที่อัปเดทล่าสุด" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="วันสิ้นคำรับรอง(ใหม่)" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-CssClass="highlighter-rouge" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
-                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("UpdateDate")%>'></asp:Label>
+                                    <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("expirydate_new")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="อัปเดทล่าสุด" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center" ItemStyle-CssClass="">
                                 <ItemTemplate>
-                                    <a title="EditDetail" data-dismiss="modal"
+                                    <div class="d-flex flex-column align-items-center">
+                                        <asp:Label ID="lbupdateby" CssClass="text-muted" runat="server" Text='<%#Eval("UpdateByCode")%>'></asp:Label>
+                                        <asp:Label ID="lbupdatedate" runat="server" Text='<%#Eval("UpdateDate")%>'></asp:Label>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <a title="คลิกแก้ไขข้อมูล" data-dismiss="modal"
                                         onclick="btnEditDetailClick('<%#Eval("rownumber") %>'
                                                                         ,'<%#Eval("nozzle_id") %>'
                                                                         ,'<%#Eval("nozzle_no") %>'
@@ -1436,6 +1451,8 @@
                                                                         ,'<%#Eval("expirydate") %>'
                                                                         ,'<%#Eval("producttype") %>'
                                                                         ,'<%#Eval("positiononassest") %>'
+                                                                        ,'<%#Eval("nozzle_No_new") %>'
+                                                                        ,'<%#Eval("expirydate_new") %>'
                                                                         );">
                                         <i class="fas fa-edit color__purple"></i>
                                     </a>&nbsp;&nbsp;
@@ -1480,9 +1497,9 @@
         });
         jQuery('[id$=txtexpirydate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
-            timepicker: true,
+            timepicker: false,
             scrollInput: false,
-            format: 'd/m/Y H:i'
+            format: 'd/m/Y'
         });
 
         function alertSuccess() {
@@ -1500,7 +1517,6 @@
                 'warning'
             )
         }
-
 
         $(document).ready(function () {
             $('input[name="files__nozzle"]').fileuploader({
@@ -2040,7 +2056,7 @@
 
             return false;
         }
-        function btnEditDetailClick(rownumber, nozzle_id, nozzle_no, brand, expirydate, producttype, positiononassest) {
+        function btnEditDetailClick(rownumber, nozzle_id, nozzle_no, brand, expirydate, producttype, positiononassest, nozzle_no_new, expirydate_new) {
             console.log(rownumber, nozzle_id, nozzle_no, brand, expirydate, producttype, positiononassest);
 
 
@@ -2049,9 +2065,12 @@
            <%-- $('#<%= txtVendor.ClientID%>').val(vendorcode);--%>
             $('#<%= txtbrand.ClientID%>').val(brand);
             $('#<%= txtproducttype.ClientID%>').val(producttype);
-            $('#<%= txtnozzle_no.ClientID%>').val(nozzle_no);
+            $('#<%= txtnozzle_no.ClientID%>').val(nozzle_no_new);
             $('#<%= txtpositiononassest.ClientID%>').val(positiononassest);
-            $('#<%= txtexpirydate.ClientID%>').val(expirydate);
+            $('#<%= txtexpirydate.ClientID%>').val(expirydate_new);
+
+            $('#txtnozzle_no_old').text(`เลขที่มาตร เดิม : ${nozzle_no}`);
+            $('#txtexpirydate_old').text(`วันสิ้นคำรับรอง เดิม : ${expirydate}`);
 
             $('#exampleModal').modal('show');
         }
@@ -2213,6 +2232,23 @@
 
             document.forms[0].appendChild(confirm_value);
             return true;
+        }
+        function postBack_addDetail() {
+            const txtnozzle_no = $('#<%= txtnozzle_no.ClientID%>').val();
+            const txtexpirydate = $('#<%= txtexpirydate.ClientID%>').val();
+            if (!txtnozzle_no || !txtexpirydate) {
+                alertWarning('กรุณากรอกข้อมูลให้ครบถ้วน');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+
+            if ($('input[name="files__nozzle"]')[0].files.length === 0) {
+                alertWarning('กรุณาแนบรูปภาพ');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
         }
     </script>
 </asp:Content>

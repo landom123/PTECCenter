@@ -687,7 +687,7 @@
         </div>
     </div>
     <div class="modal fade bd-example-modal-lg" id="assetsNozzleDetail" tabindex="-1" role="dialog" aria-labelledby="assetsNozzleDetailModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="assetsNozzleDetailModal">รายละเอียดมือจ่ายประจำสาขา</h5>
@@ -697,7 +697,7 @@
                 </div>
                 <div class="modal-body nozzle__management table-responsive-xl">
                     <asp:GridView ID="gvAssetsNozzle"
-                        class="table table-hover table-bordered"
+                        class="table table-sm table-hover table-bordered"
                         AllowSorting="True"
                         AllowPaging="false"
                         AutoGenerateColumns="false"
@@ -713,7 +713,7 @@
                                         onclick="Check_Click(this)" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="">
+                            <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbrownumber" runat="server" Text='<%#Eval("rownumber")%>'></asp:Label>
                                 </ItemTemplate>
@@ -733,12 +733,12 @@
                                     <asp:Label ID="lbnozzleno" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbpositionOnAssest" runat="server" Text='<%#Eval("positionOnAssest")%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info ">
+                            <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <asp:Label ID="lbexpirydate" runat="server" Text='<%#Eval("expirydate")%>'></asp:Label>
                                 </ItemTemplate>
@@ -754,7 +754,7 @@
         </div>
     </div>
     <div class="modal fade bd-example-modal-lg" id="nozzleDetail" tabindex="-1" role="dialog" aria-labelledby="nozzleDetailModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="nozzleDetailModal">รายละเอียดมือจ่ายในงาน</h5>
