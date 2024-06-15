@@ -358,7 +358,7 @@
                                                             <th class="text-nowrap align-middle">
                                                                 <span class="p-1">
 
-                                                                    <a href="javascript:__doPostBack('overview','<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>');" title="Overview"><i class="fas fa-chart-pie color__purple"></i></a>&nbsp;&nbsp;
+                                                                    <a href="javascript:__doPostBack('overview',`{'periodid': '<%= AllKpi.Tables(1).Rows(i).Item("preriodid").ToString %>','user': '<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>'}`);" title="Overview"><i class="fas fa-chart-pie color__purple"></i></a>&nbsp;&nbsp;
                                                                 <%--<a href="KPIsOverview.aspx?uc=<%= AllKpi.Tables(1).Rows(i).Item("ownercode").ToString %>" title="Overview"><i class="fas fa-chart-pie color__purple"></i></a>--%>&nbsp;&nbsp;
                                                                     <a href="KPIsEdit.aspx?Kpi_Code=<%= AllKpi.Tables(1).Rows(i).Item("Kpi_Code").ToString %>" title="EditDetail"><i class="fas fa-edit color__purple"></i></a>&nbsp;&nbsp;
                                                                 </span>

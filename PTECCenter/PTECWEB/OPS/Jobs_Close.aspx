@@ -126,7 +126,7 @@
                     <div id="collapseOne" class="collapse multi-collapse show" aria-labelledby="headingOne">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 d-none d-md-block">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">เลขที่เอกสาร</span>
@@ -164,7 +164,7 @@
                                         <asp:TextBox class="form-control" ID="txtBranch" runat="server" ReadOnly="True"></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 d-none d-md-block">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ฝ่าย</span>
@@ -172,7 +172,7 @@
                                         <asp:TextBox class="form-control" ID="txtDepartment" runat="server" ReadOnly="True"></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3  d-none d-md-block">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">แผนก</span>
@@ -609,7 +609,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="overflow-y:unset;max-height:unset;">
                     <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
                     <div class="form-group">
                         <asp:Label ID="lbcboCost" CssClass="form-label" AssociatedControlID="cboCost" runat="server" Text="รหัสบัญชี" />

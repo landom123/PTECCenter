@@ -89,7 +89,7 @@
                     <div class="col-auto mb-3">
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
                     </div>
-                    <div class="col  mb-3">
+                    <div class="col  mb-3 d-none d-md-block">
                         <asp:Label ID="txtallOperator" runat="server" ReadOnly="True"></asp:Label>
                     </div>
                     <div class="col mb-3">
@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-4 mb-3 d-none d-md-block">
                                         <div class="input-group sm-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">เลขที่เอกสาร</span>
@@ -174,7 +174,7 @@
                                             <asp:TextBox class="form-control" ID="txtBranch" runat="server" ReadOnly="True"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-4 mb-3 d-none d-md-block">
                                         <div class="input-group sm-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">ฝ่าย</span>
@@ -182,7 +182,7 @@
                                             <asp:TextBox class="form-control" ID="txtDepartment" runat="server" ReadOnly="True"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-4 mb-3 d-none d-md-block">
                                         <div class="input-group sm-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">แผนก</span>
@@ -301,8 +301,8 @@
                                                 <tr>
                                                     <th class="text-center" style="width: 200px;">สถานะ</th>
                                                     <th class="text-center" style="width: 300px;">รายละเอียด</th>
-                                                    <th class="text-center" style="width: 200px;">ผู้ปรับปรุง</th>
-                                                    <th class="text-center" style="width: 200px;">วันที่ปรับปรุง</th>
+                                                    <th class="text-center d-none d-md-table-cell" style="width: 200px;">ผู้ปรับปรุง</th>
+                                                    <th class="text-center d-none d-md-table-cell" style="width: 200px;">วันที่ปรับปรุง</th>
                                                     <th class="text-center" style="width: 120px;"></th>
                                                 </tr>
                                             </thead>
@@ -314,10 +314,10 @@
                                                     <td style="vertical-align: middle">
                                                         <asp:TextBox ID="txtDetailFollow" class="form-control" runat="server" TextMode="MultiLine" Rows="1" required></asp:TextBox>
                                                     </td>
-                                                    <td style="vertical-align: middle">
+                                                    <td style="vertical-align: middle" class="d-none d-md-table-cell">
                                                         <asp:Label ID="lblCreateBy" class="form-control  text-truncate" runat="server" Text=""></asp:Label>
                                                     </td>
-                                                    <td style="vertical-align: middle">
+                                                    <td style="vertical-align: middle" class="d-none d-md-table-cell">
                                                         <asp:Label ID="lblCreateDate" class="form-control  text-truncate" runat="server" Text=""></asp:Label>
                                                     </td>
                                                     <td style="vertical-align: middle">
@@ -332,8 +332,8 @@
                                                 <tr>
                                                     <td><% =followuptable.Rows(i).Item("statusname") %></td>
                                                     <td><% =followuptable.Rows(i).Item("details") %></td>
-                                                    <td><% =followuptable.Rows(i).Item("createby") %></td>
-                                                    <td class="text-center"><% =followuptable.Rows(i).Item("createdate") %></td>
+                                                    <td class="d-none d-md-table-cell"><% =followuptable.Rows(i).Item("createby") %></td>
+                                                    <td class="text-center d-none d-md-table-cell"><% =followuptable.Rows(i).Item("createdate") %></td>
                                                     <td class="text-center">
                                                         <% If (i = 0) Then%>
                                                         <%-- <asp:Label ID="lastStatus" CssClass="text-danger" runat="server" Text="(สถานะล่าสุด)" />--%>
@@ -793,7 +793,7 @@
                                 <% If nozzletable.Rows.Count > 0 Then%>
                                 <div class="row w-75  m-auto">
                                     <div class="col">
-                                        <div class="table-responsive nozzle__management">
+                                        <div class="table-responsive-xl nozzle__management">
                                             <table class="table table-hover table-bordered table-sm">
                                                 <thead class="table-info">
                                                     <tr>
@@ -832,25 +832,35 @@
                                                             <span><%= nozzletable.Rows(j).Item("rownumber").ToString %></span>
                                                         </td>
                                                         <td>
-                                                            <span><%= nozzletable.Rows(j).Item("brand").ToString %></span>(<span><%= nozzletable.Rows(j).Item("producttype").ToString %></span>)
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <span><%= nozzletable.Rows(j).Item("brand").ToString %></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    (<span><%= nozzletable.Rows(j).Item("producttype").ToString %></span>)
+
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <span><%= nozzletable.Rows(j).Item("positionOnAssest").ToString %></span>
                                                         </td>
                                                         <td>
-                                                            <span><%= nozzletable.Rows(j).Item("nozzle_No").ToString %></span>
+                                                            <span class="text-nowrap"><%= nozzletable.Rows(j).Item("nozzle_No").ToString %></span>
                                                         </td>
                                                         <td>
-                                                            <span><%= nozzletable.Rows(j).Item("expirydate").ToString %></span>
+                                                            <span class="text-nowrap"><%= nozzletable.Rows(j).Item("expirydate").ToString %></span>
                                                         </td>
                                                         <td>
                                                             <a href="<%= nozzletable.Rows(j).Item("url").ToString %>" target="_blank">รูปภาพ</a>
                                                         </td>
                                                         <td>
-                                                            <span class="highlighter-rouge"><%= nozzletable.Rows(j).Item("nozzle_No_new").ToString %></span>
+                                                            <span class="text-nowrap highlighter-rouge"><%= nozzletable.Rows(j).Item("nozzle_No_new").ToString %></span>
                                                         </td>
                                                         <td>
-                                                            <span class="highlighter-rouge"><%= nozzletable.Rows(j).Item("expirydate_new").ToString %></span>
+                                                            <span class="text-nowrap highlighter-rouge"><%= nozzletable.Rows(j).Item("expirydate_new").ToString %></span>
                                                         </td>
                                                         <% If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then %>
                                                         <td class="text-primary">
@@ -919,7 +929,7 @@
                                 <div class="row">
                                     <div class="attatchItems-link-btndelete" id="ATT<%= AttachTable.Rows(i).Item("id") %>">
                                         <div class="col-auto">
-                                            <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="btn btn-sm p-0 notPrint" style="cursor: pointer;" target="_blank">
+                                            <a href="<%= Page.ResolveUrl(AttachTable.Rows(i).Item("url").ToString()) %>" class="text-primary" style="cursor: pointer;" target="_blank">
                                                 <span><%= AttachTable.Rows(i).Item("show").ToString() %></span></a>
 
                                             <a onclick="removeAttach('<%= AttachTable.Rows(i).Item("id") %>','<%= Session("userid") %>');" class="btn btn-sm pt-0 text-danger deletedetail">
@@ -1399,7 +1409,8 @@
                             <asp:TemplateField HeaderText="ยี่ห้อ (ชนิด)" HeaderStyle-CssClass="table-header table-info text-center " HeaderStyle-HorizontalAlign="center" ItemStyle-HorizontalAlign="center">
                                 <ItemTemplate>
                                     <div class="d-flex flex-column align-items-center">
-                                        <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("brand") & " (" & Eval("producttype") & ")" %>'></asp:Label>
+                                        <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("brand") %>'></asp:Label>
+                                        <asp:Label ID="Label1" runat="server" Text='<%#" (" & Eval("producttype") & ")" %>'></asp:Label>
                                     </div>
                                 </ItemTemplate>
                             </asp:TemplateField>

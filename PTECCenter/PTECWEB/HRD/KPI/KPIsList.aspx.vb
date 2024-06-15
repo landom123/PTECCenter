@@ -115,13 +115,17 @@ Public Class KPIsList
             ElseIf target = "overview" Then
 
                 Dim argument As String = Request("__EVENTARGUMENT")
+
+                Dim jss As New JavaScriptSerializer
+                Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(argument)
+
                 Dim typeuser As String = ""
                 If chkCO.Checked Then
                     typeuser = "CO"
                 ElseIf chkHO.Checked Then
                     typeuser = "HO"
                 End If
-                Response.Redirect("KPIsOverview.aspx?p=1&t=" & typeuser & "&uc=" & argument)
+                Response.Redirect("KPIsOverview.aspx?p=" & json("periodid") & "&t=" & typeuser & "&uc=" & json("user"))
             End If
 
 
