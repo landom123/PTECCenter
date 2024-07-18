@@ -8,6 +8,12 @@
         Dim objjob As New jobs
         Dim objsupplier As New Supplier
 
+
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
+
         'txtbegindate.Attributes.Add("readonly", "readonly")
         txtenddate.Attributes.Add("readonly", "readonly")
         username = Session("username")
@@ -20,6 +26,24 @@
         Else
             menutable = Session("menulist")
         End If
+
+        '######## START Check Permission page  ########
+        Dim total As Integer = menutable.Rows.Count - 1
+        Dim is_allowThisPage As Boolean = False
+        Dim urlCurrent As String = Request.Url.ToString()
+        For i = 0 To total
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "")
+            If Not String.IsNullOrEmpty(frmMenuUrl) Then
+                If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
+                    is_allowThisPage = True
+                    Exit For
+                End If
+            End If
+        Next
+        If Not is_allowThisPage Then
+            Response.Redirect("~/403.aspx")
+        End If
+        '######## END Check Permission page  ########
 
     End Sub
     Private Sub setCboYear()
