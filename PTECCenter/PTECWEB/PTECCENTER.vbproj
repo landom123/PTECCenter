@@ -1755,6 +1755,7 @@
     <Content Include="fileupload\src\thirdparty\react\Fileuploader.js" />
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
+    <Content Include="403.aspx" />
     <Content Include="HRD\KPI\KPIsEdit.aspx" />
     <Content Include="HRD\KPI\KPIsRequestList.aspx" />
     <Content Include="HRD\KPI\KPIsListForBranch.aspx" />
@@ -3777,6 +3778,13 @@
     <Compile Include="class\Users.vb" />
     <Compile Include="CrystalDecisions.vb" />
     <Compile Include="CrystalDecisions1.vb" />
+    <Compile Include="403.aspx.designer.vb">
+      <DependentUpon>403.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="403.aspx.vb">
+      <DependentUpon>403.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="HRD\KPI\KPIsEdit.aspx.designer.vb">
       <DependentUpon>KPIsEdit.aspx</DependentUpon>
     </Compile>
