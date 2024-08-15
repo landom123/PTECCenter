@@ -586,7 +586,7 @@
                         <div class="row align-items-baseline">
                             <div class="col-auto">
                                 <asp:Label ID="Label3" CssClass="form-label" AssociatedControlID="txtRound2" runat="server" Text="ครั้งที่ 2" />
-                                <asp:Label ID="Label5" CssClass="text-danger" AssociatedControlID="txtRound2" runat="server" Text="*" />
+                                <%--<asp:Label ID="Label5" CssClass="text-danger" AssociatedControlID="txtRound2" runat="server" Text="*" />--%>
                             </div>
                             <div class="col">
                                 <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtRound2" runat="server" min="0" Text="0" onchange="calculateAVG();"></asp:TextBox>
@@ -601,7 +601,7 @@
                         <div class="row align-items-baseline">
                             <div class="col-auto">
                                 <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtRound3" runat="server" Text="ครั้งที่ 3" />
-                                <asp:Label ID="Label7" CssClass="text-danger" AssociatedControlID="txtRound3" runat="server" Text="*" />
+                                <%--<asp:Label ID="Label7" CssClass="text-danger" AssociatedControlID="txtRound3" runat="server" Text="*" />--%>
                             </div>
                             <div class="col">
                                 <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtRound3" runat="server" min="0" Text="0" onchange="calculateAVG();"></asp:TextBox>
@@ -1136,30 +1136,80 @@
             const Round3 = $('#<%= txtRound3.ClientID%>').val();
             const Remark = $('#<%= txtRemark.ClientID%>').val();
 
-            if (!(Round1) ||
-                !(Round2) ||
-                !(Round3)) {
+
+            if (!(Round1)) {
                 alertWarning('กรุณากรอกข้อมูลให้ครบ');
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
-            } else if (!(parseFloat(Round1) >= (-50.00) && parseFloat(Round1) <= (50.00)) ||
-                !(parseFloat(Round2) >= (-50.00) && parseFloat(Round2) <= (50.00)) ||
-                !(parseFloat(Round3) >= (-50.00) && parseFloat(Round3) <= (50.00))) {
+            }
+
+            if (Round1 && !(parseFloat(Round1) >= (-50.00) && parseFloat(Round1) <= (50.00))) {
                 alertWarning('กรุณากรอกข้อมูลอยู่ในช่วง -50.0 ถึง 50.00');
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
             }
 
-            if ($('.file_rond1 input[type=hidden]').val().length == 2 ||
-                $('.file_rond2 input[type=hidden]').val().length == 2 ||
-                $('.file_rond3 input[type=hidden]').val().length == 2) {
+            if (Round2 && !(parseFloat(Round2) >= (-50.00) && parseFloat(Round2) <= (50.00))) {
+                alertWarning('กรุณากรอกข้อมูลอยู่ในช่วง -50.0 ถึง 50.00');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+
+            if (Round3 && !(parseFloat(Round3) >= (-50.00) && parseFloat(Round3) <= (50.00))) {
+                alertWarning('กรุณากรอกข้อมูลอยู่ในช่วง -50.0 ถึง 50.00');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+
+            if (Round1 && $('.file_rond1 input[type=hidden]').val().length == 2 ){
                 alertWarning('กรุณาแนบเอกสารให้ครบ');
                 event.preventDefault();
                 event.stopPropagation();
                 return 0;
             }
+
+            if (Round2 && $('.file_rond2 input[type=hidden]').val().length == 2 ){
+                alertWarning('กรุณาแนบเอกสารให้ครบ');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+
+            if (Round3 && $('.file_rond3 input[type=hidden]').val().length == 2 ){
+                alertWarning('กรุณาแนบเอกสารให้ครบ');
+                event.preventDefault();
+                event.stopPropagation();
+                return 0;
+            }
+
+            //if (!(Round1) ||
+            //    !(Round2) ||
+            //    !(Round3)) {
+            //    alertWarning('กรุณากรอกข้อมูลให้ครบ');
+            //    event.preventDefault();
+            //    event.stopPropagation();
+            //    return 0;
+            //} else if (!(parseFloat(Round1) >= (-50.00) && parseFloat(Round1) <= (50.00)) ||
+            //    !(parseFloat(Round2) >= (-50.00) && parseFloat(Round2) <= (50.00)) ||
+            //    !(parseFloat(Round3) >= (-50.00) && parseFloat(Round3) <= (50.00))) {
+            //    alertWarning('กรุณากรอกข้อมูลอยู่ในช่วง -50.0 ถึง 50.00');
+            //    event.preventDefault();
+            //    event.stopPropagation();
+            //    return 0;
+            //}
+
+            //if ($('.file_rond1 input[type=hidden]').val().length == 2 ||
+            //    $('.file_rond2 input[type=hidden]').val().length == 2 ||
+            //    $('.file_rond3 input[type=hidden]').val().length == 2) {
+            //    alertWarning('กรุณาแนบเอกสารให้ครบ');
+            //    event.preventDefault();
+            //    event.stopPropagation();
+            //    return 0;
+            //}
 
 
             //alert('ss')
