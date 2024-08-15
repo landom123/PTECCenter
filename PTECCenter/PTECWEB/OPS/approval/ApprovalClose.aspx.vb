@@ -323,9 +323,9 @@ endprocess:
         Try
             Dim row As Integer = json("row").Trim
             Dim approvalNozzle_ID As String = json("approvalnozzle_id").Trim
-            Dim round1 As Double = json("round1").Trim
-            Dim round2 As Double = json("round2").Trim
-            Dim round3 As Double = json("round3").Trim
+            Dim round1 As String = json("round1").Trim
+            Dim round2 As String = json("round2").Trim
+            Dim round3 As String = json("round3").Trim
             Dim url1 As String = getfilenozzle("nozzle_rond1").ToString()
             Dim url2 As String = getfilenozzle("nozzle_rond2").ToString()
             Dim url3 As String = getfilenozzle("nozzle_rond3").ToString()

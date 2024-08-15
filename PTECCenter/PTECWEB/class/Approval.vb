@@ -1268,7 +1268,7 @@ Public Class Approval
     End Function
 
     Public Function UpdateTEST5L(appcode As String, appnozzleid As Integer,
-                                round1 As Double, round2 As Double, round3 As Double,
+                                round1 As String, round2 As String, round3 As String,
                                 url1 As String, url2 As String, url3 As String, remark As String, user As String) As String
         Dim result As String
         Dim ds As New DataSet
@@ -1283,9 +1283,9 @@ Public Class Approval
 
         cmd.Parameters.Add("@appcode", SqlDbType.VarChar).Value = appcode
         cmd.Parameters.Add("@appnozzleid", SqlDbType.Int).Value = appnozzleid
-        cmd.Parameters.Add("@round1", SqlDbType.Float).Value = round1
-        cmd.Parameters.Add("@round2", SqlDbType.Float).Value = round2
-        cmd.Parameters.Add("@round3", SqlDbType.Float).Value = round3
+        cmd.Parameters.Add("@round1", SqlDbType.Float).Value = If(String.IsNullOrEmpty(round1), DBNull.Value, round1)
+        cmd.Parameters.Add("@round2", SqlDbType.Float).Value = If(String.IsNullOrEmpty(round2), DBNull.Value, round2)
+        cmd.Parameters.Add("@round3", SqlDbType.Float).Value = If(String.IsNullOrEmpty(round3), DBNull.Value, round3)
         cmd.Parameters.Add("@url1", SqlDbType.VarChar).Value = url1
         cmd.Parameters.Add("@url2", SqlDbType.VarChar).Value = url2
         cmd.Parameters.Add("@url3", SqlDbType.VarChar).Value = url3
