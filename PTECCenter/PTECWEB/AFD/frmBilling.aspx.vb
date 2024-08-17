@@ -32,9 +32,9 @@ Public Class frmBilling
         '######## START Check Permission page  ########
         Dim total As Integer = menutable.Rows.Count - 1
         Dim is_allowThisPage As Boolean = False
-        Dim urlCurrent As String = Request.Url.ToString()
+        Dim urlCurrent As String = Request.Url.ToString().ToLower()
         For i = 0 To total
-            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "")
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "").ToLower()
             If Not String.IsNullOrEmpty(frmMenuUrl) Then
                 If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
                     is_allowThisPage = True
