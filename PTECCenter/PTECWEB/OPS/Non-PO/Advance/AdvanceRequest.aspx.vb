@@ -97,7 +97,7 @@ Public Class AdvanceRequest
                         ViewState("status") = "read"
                     End If
 
-                    chkuser(detailtable.Rows(0).Item("ownerid"))
+                    chkuser(detailtable.Rows(0).Item("ownerid"), Request.QueryString("ADV"))
 
                     account_code = objNonPO.NonPOPermisstionAccount(Request.QueryString("ADV"))
 
@@ -263,12 +263,12 @@ endprocess:
 
         Return dt
     End Function
-    Private Sub chkuser(userid As Integer)
+    Private Sub chkuser(userid As Integer, nonpocode As String)
         Dim objuser As New Users
         Dim NonPOPermissionTable As New DataTable
         Try
             searchjobslist(userid)
-            NonPOPermissionTable = objuser.NonPOPermissionRead(userid)
+            NonPOPermissionTable = objuser.NonPOPermissionRead(userid, nonpocode)
             md_code = NonPOPermissionTable.Rows(0).Item("md_code")
             fm_code = NonPOPermissionTable.Rows(0).Item("fm_code")
             dm_code = NonPOPermissionTable.Rows(0).Item("dm_code")

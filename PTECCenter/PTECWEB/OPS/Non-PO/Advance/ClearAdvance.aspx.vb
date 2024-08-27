@@ -140,7 +140,7 @@ Public Class ClearAdvance
                     statusid = maintable.Rows(0).Item("statusid")
                     createby = maintable.Rows(0).Item("createby")
                     ownerid = maintable.Rows(0).Item("ownerid")
-                    chkuser(ownerid)
+                    chkuser(ownerid, Request.QueryString("NonpoCode"))
 
                     If (account_code.IndexOf(usercode.ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 7) Then
@@ -316,11 +316,11 @@ endprocess:
         'SetMenu()
         checkunsave()
     End Sub
-    Private Sub chkuser(userid As Integer)
+    Private Sub chkuser(userid As Integer, nonpocode As String)
         Dim objuser As New Users
         Dim NonPOPermissionTable As New DataTable
         Try
-            NonPOPermissionTable = objuser.NonPOPermissionRead(userid)
+            NonPOPermissionTable = objuser.NonPOPermissionRead(userid, nonpocode)
             md_code = NonPOPermissionTable.Rows(0).Item("md_code")
             fm_code = NonPOPermissionTable.Rows(0).Item("fm_code")
             dm_code = NonPOPermissionTable.Rows(0).Item("dm_code")
