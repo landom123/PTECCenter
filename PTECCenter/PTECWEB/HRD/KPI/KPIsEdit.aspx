@@ -251,7 +251,7 @@
                             <div class="col table-responsive-xl">
 
                                 <table class="table table-sm shadow-sm">
-                                    <thead class="thead-blue ">
+                                    <thead class="" style="background-color: #DCCCBB;">
                                         <tr>
 
                                             <% If Not Request.QueryString("Kpi_Code") Is Nothing And AllKpi IsNot Nothing Then%>
