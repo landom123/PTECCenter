@@ -121,6 +121,12 @@ Public Class WebForm4
                 Case = "11"
                     txtStatus.BackColor = Color.Brown
                     txtStatus.ForeColor = Color.White
+                Case = "12"
+                    txtStatus.BackColor = Color.LightYellow
+                Case = "13"
+                    txtStatus.BackColor = Color.LightSalmon
+                Case = "14"
+                    txtStatus.BackColor = Color.IndianRed
             End Select
 
             'cboApproval.Attributes.Add("disabled", "True")

@@ -122,6 +122,24 @@ Partial Public Class ClearAdvance
     Protected WithEvents txtremark As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lbDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbDuedate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDuedate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDuedate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtUnsave control.
     '''</summary>
     '''<remarks>
@@ -165,6 +183,15 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents company_en As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''txtSubtitle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSubtitle As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''Label2 control.
@@ -309,6 +336,15 @@ Partial Public Class ClearAdvance
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboOwner As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''txtSwear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSwear As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''chkVat control.

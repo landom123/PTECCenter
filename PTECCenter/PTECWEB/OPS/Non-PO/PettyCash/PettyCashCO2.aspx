@@ -924,15 +924,15 @@
                     <h3>ใบเสร็จรับเงิน / ใบกำกับ</h3>
                     <div class="form-group">
                         <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
-                        <asp:TextBox class="form-control noEnterSubmit bill" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit bill" type="search" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
-                        <asp:TextBox class="form-control noEnterSubmit bill" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit bill" type="search" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
-                        <asp:TextBox class="form-control noEnterSubmit " type="input" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit " type="search" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1085,7 +1085,7 @@
             const Number = CheckNumber(total.textContent);
             //console.log(Number);
 
-            if (!isNaN(Number) && (Number - 0) < 9999999.9999) {
+            if (!isNaN(Number) && (Number - 0) < 999999999.9999) {
                 element.innerHTML = " (   " + ArabicNumberToText(total.textContent) + "   )";
             } else {
                 element.innerHTML = "รวม ";
@@ -1240,19 +1240,19 @@ alert('else nonpo')
             //console.log(c_Vat);
             //console.log(c_Tax);
 
-            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+            if (!isNaN(cost) && (cost - 0) < 999999999.9999) {
                 p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
             } else {
                 p_cost.innerHTML = "";
             }
 
-            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+            if (!isNaN(vat) && (vat - 0) < 999999999.9999) {
                 p_vat.innerHTML = "Vat : " + numberWithCommas(c_Vat) + " บาท";
             } else {
                 p_vat.innerHTML = "";
             }
 
-            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+            if (!isNaN(tax) && (tax - 0) < 999999999.9999) {
                 p_tax.innerHTML = "Tax : (" + numberWithCommas(c_Tax) + ") บาท";
             } else {
                 p_tax.innerHTML = "";

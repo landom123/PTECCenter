@@ -902,7 +902,18 @@
                         break;
                     case "รอแสกนเอกสาร":
                         arrs_app[i].style.backgroundColor = "Brown";
+                        arrs_app[i].style.color = "White";
 
+                        break;
+                    case "รอนุมัติจากหน่วยงานที่เกี่ยวข้อง":
+                        arrs_app[i].style.backgroundColor = "LightYellow";
+                        break;
+                    case "รอบัญชีตรวจสอบ":
+                        arrs_app[i].style.backgroundColor = "LightSalmon";
+
+                        break;
+                    case "ไม่ผ่านอนุมัติจากหน่วยงานที่เกี่ยวข้อง":
+                        arrs_app[i].style.backgroundColor = "IndianRed";
                         break;
                     case "เอกสารครบถ้วน":
                         arrs_app[i].style.backgroundColor = "MediumPurple";

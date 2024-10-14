@@ -292,6 +292,7 @@ Public Class NonPO
             cmd.Parameters.Add("@chkdeductsell", SqlDbType.Bit).Value = .Item("chkdeductsell")
             cmd.Parameters.Add("@payback_amount", SqlDbType.Money).Value = .Item("payback_amount")
             cmd.Parameters.Add("@deductsell_amount", SqlDbType.Money).Value = .Item("deductsell_amount")
+            cmd.Parameters.Add("@duedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(.Item("duedate")), DBNull.Value, DateTime.Parse(.Item("duedate")))
             cmd.Parameters.Add("@vat_wait", SqlDbType.Bit).Value = .Item("vat_wait")
             cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
             cmd.Parameters.Add("@ownerid", SqlDbType.Int).Value = .Item("ownerid")

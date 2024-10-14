@@ -876,7 +876,7 @@ endprocess:
         Dim objjobs As New jobs
         Dim mydataset As DataSet
         Try
-            mydataset = objjobs.setDueDateByPolicyID(policyid)
+            mydataset = objjobs.setDueDateByPolicyID(policyid, txtDocDate.Text)
             txtDueDate.Text = mydataset.Tables(0).Rows(0).Item("duedate")
             Return True
         Catch ex As Exception
@@ -1113,6 +1113,12 @@ endprocess:
             If Not String.IsNullOrEmpty(Data.Item("jobref").ToString) Then
                 e.Row.Visible = False
             End If
+        End If
+    End Sub
+
+    Private Sub txtDocDate_TextChanged(sender As Object, e As EventArgs) Handles txtDocDate.TextChanged
+        If cboPolicy.SelectedItem.Value > 0 Then
+            setDueDate(cboPolicy.SelectedItem.Value)
         End If
     End Sub
 End Class

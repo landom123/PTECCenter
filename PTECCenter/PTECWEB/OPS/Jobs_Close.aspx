@@ -879,7 +879,7 @@
 
 
 
-            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+            if (!isNaN(cost) && (cost - 0) < 999999999.9999) {
                 p_costunit.innerHTML = "ราคา ต่อชิ้น : " + numberWithCommas(c_CostUnit) + " บาท";
                 p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
 
@@ -888,13 +888,13 @@
                 p_costunit.innerHTML = "";
             }
 
-            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+            if (!isNaN(vat) && (vat - 0) < 999999999.9999) {
                 p_vat.innerHTML = "Vat ต่อชิ้น : " + numberWithCommas(c_Vat) + " บาท";
             } else {
                 p_vat.innerHTML = "";
             }
 
-            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+            if (!isNaN(tax) && (tax - 0) < 999999999.9999) {
                 p_tax.innerHTML = "Tax ต่อชิ้น : (" + numberWithCommas(c_Tax) + ") บาท";
             } else {
                 p_tax.innerHTML = "";

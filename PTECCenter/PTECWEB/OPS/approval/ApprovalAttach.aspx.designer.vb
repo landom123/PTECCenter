@@ -203,6 +203,24 @@ Partial Public Class approvalattach
     Protected WithEvents txtTax As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtDistance control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtDistance As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lbcboVendor control.
     '''</summary>
     '''<remarks>

@@ -9,10 +9,11 @@
         th {
             text-align: center;
         }
-        
-        th a {
-            color:black;
-        }
+
+            th a {
+                color: black;
+            }
+
         .input-group {
             padding-top: 1rem;
         }
@@ -185,10 +186,13 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="cladvcode" HeaderText="เลขที่ใบเคลียร์" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblcode" runat="server" Text='<%#Eval("cladvcode")%>' ToolTip='<%#Eval("cladvstatus")%>' ></asp:Label>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <asp:Label ID="lblcode" runat="server" Text='<%#Eval("cladvcode")%>' ToolTip='<%#Eval("cladvstatus")%>'></asp:Label>
+                                            <a href="../Non-PO/Advance/ClearAdvance.aspx?NonpoCode=<%#Eval("cladvcode")%>" target="_blank" class="badge badgestatus_cladv" title="<%#Eval("cladvstatus")%>"><%#Eval("cladvstatus")%></a>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                
+
                                 <asp:TemplateField SortExpression="createdate" HeaderText="วันที่แจ้ง">
                                     <ItemTemplate>
                                         <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("createdate")%>'></asp:Label>
@@ -281,6 +285,50 @@
                 liveSearch: true,
                 maxOptions: 1
             });
+
+            const arrs_cladv = document.querySelectorAll('.badgestatus_cladv');
+
+            for (let i = 0; i < arrs_cladv.length; i++) {
+                let st_name = arrs_cladv[i].textContent;
+                switch (st_name) {
+                    case "รอยืนยัน":
+                        arrs_cladv[i].style.backgroundColor = "LightBlue";
+                        break;
+                    case "ยกเลิก":
+                        arrs_cladv[i].style.backgroundColor = "LightGray";
+                        break;
+                    case "รอตรวจสอบ":
+                        arrs_cladv[i].style.backgroundColor = "LightGoldenrodYellow";
+                        break;
+                    case "รออนุมัติ":
+                        arrs_cladv[i].style.backgroundColor = "LightYellow";
+                        break;
+                    case "ชำระเงินเสร็จสิ้น":
+                        arrs_cladv[i].style.backgroundColor = "GreenYellow";
+                        break;
+                    case "ไม่ผ่านการอนุมัติ":
+                        arrs_cladv[i].style.backgroundColor = "IndianRed";
+                        break;
+                    case "รอการเงินตรวจสอบ":
+                        arrs_cladv[i].style.backgroundColor = "LightCoral";
+                        break;
+                    case "รอบัญชีตรวจสอบ":
+                        arrs_cladv[i].style.backgroundColor = "LightSalmon";
+                        break;
+                    case "รอเคลียร์ค้างชำระ":
+                        arrs_cladv[i].style.backgroundColor = "Brown";
+                        break;
+                    case "ขอเอกสารเพิ่มเติม":
+                        arrs_cladv[i].style.backgroundColor = "MediumPurple";
+                        break;
+                    case "ได้รับเอกสารตัวจริง":
+                        arrs_cladv[i].style.backgroundColor = "Gray";
+                        break;
+                    case "รอเอกสารตัวจริง":
+                        arrs_cladv[i].style.backgroundColor = "Yellow";
+                }
+                arrs_cladv[i].style.color = "#ececec";
+            }
         });
 
     </script>

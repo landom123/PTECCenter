@@ -332,6 +332,15 @@ Public Class ClearAdvanceMenuList2
         gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
+
+
+        'hide/show Columns GridView
+        Dim colDuedate As Integer = 6
+        Dim colOwnerApprover As Integer = 9
+        Dim colApprovalname As Integer = 7
+        gvRemind.Columns(colApprovalname).Visible = chkCO.Checked
+        gvRemind.Columns(colOwnerApprover).Visible = chkHO.Checked
+        gvRemind.Columns(colDuedate).Visible = chkCO.Checked
     End Sub
 
     Private Sub gvRemind_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvRemind.PageIndexChanging
@@ -400,8 +409,7 @@ Public Class ClearAdvanceMenuList2
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 9
-        Dim approvalname As Integer = 6
+        Dim statusAt As Integer = 10
         Dim companyAt As Integer = 0
         Dim Data As DataRowView
         Data = e.Row.DataItem
@@ -436,11 +444,9 @@ Public Class ClearAdvanceMenuList2
             ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
             End If
-            If String.IsNullOrEmpty(Data.Item("approvalname").ToString) Then
-                gvRemind.Columns(approvalname).Visible = False
-            Else
-                gvRemind.Columns(approvalname).Visible = True
-            End If
+
+
+
 
             If Data.Item("comcode") = "PURE" Then
                 e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 237, 1, 128)

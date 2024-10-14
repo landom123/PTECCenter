@@ -1,74 +1,66 @@
-﻿function ArabicNumberToText(Number) {
-    var Number = CheckNumber(Number);
-    var NumberArray = new Array("ศูนย์", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า", "สิบ");
-    var DigitArray = new Array("", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน","สิบ", "ร้อย", "พัน", "หมื่น", "แสน");
-    var BahtText = "";
-    if (isNaN(Number)) {
-        return "ข้อมูลนำเข้าไม่ถูกต้อง";
-    } else {
-        if ((Number - 0) > 999999999.9999) {
-            return "ข้อมูลนำเข้าเกินขอบเขตที่ตั้งไว้";
-        } else {
-            Number = Number.split(".");
-            //console.log(Number);
-            if (Number[1].length > 0) {
-                Number[1] = Number[1].substring(0, 2);
-            }
-            if (Number[0][0] == '-') {
-                BahtText += 'ลบ'
-                Number[0] = Number[0].replace("-", "");
-            }
-            //console.log(Number);
-            //console.log(Number[0].indexOf('-'));
+﻿function ArabicNumberToText(number) {
+    var number = CheckNumber(number);
+    if (isNaN(number)) return "ไม่ใช่ตัวเลข";
 
-            var NumberLen = Number[0].length - 0;
-            //console.log(NumberLen);
+    const units = ["", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า"];
+    const places = ["", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน"];
 
-            for (var i = 0; i < NumberLen; i++) {
-                var tmp = Number[0].substring(i, i + 1) - 0;
-                //console.log(tmp);
-                if (tmp != 0) {
-                    if ((i == (NumberLen - 1)) && (tmp == 1)) {
-                        BahtText += "เอ็ด";
-                    } else
-                        if ((i == (NumberLen - 2)) && (tmp == 2)) {
-                            BahtText += "ยี่";
-                        } else
-                            if ((i == (NumberLen - 2)) && (tmp == 1)) {
-                                BahtText += "";
-                            } else {
-                                BahtText += NumberArray[tmp];
-                            }
-                    BahtText += DigitArray[NumberLen - i - 1];
-                }
-            }
-            BahtText += "บาท";
-            if ((Number[1] == "0") || (Number[1] == "00")) {
-                BahtText += "ถ้วน";
+    function convertChunk(num) {
+        let text = "";
+        const numStr = num.toString();
+        const len = numStr.length;
+
+        for (let i = 0; i < len; i++) {
+            const digit = parseInt(numStr[i], 10);
+            const place = len - i - 1;
+
+            if (digit === 0) continue;
+
+            if (place === 1 && digit === 1) {
+                text += "สิบ";
+            } else if (place === 1 && digit === 2) {
+                text += "ยี่สิบ";
+            } else if (place === 1) {
+                text += units[digit] + "สิบ";
+            } else if (place === 0 && digit === 1 && len > 1) {
+                text += "เอ็ด";
             } else {
-                DecimalLen = Number[1].length - 0;
-                for (var i = 0; i < DecimalLen; i++) {
-                    var tmp = Number[1].substring(i, i + 1) - 0;
-                    if (tmp != 0) {
-                        if ((i == (DecimalLen - 1)) && (tmp == 1)) {
-                            BahtText += "เอ็ด";
-                        } else
-                            if ((i == (DecimalLen - 2)) && (tmp == 2)) {
-                                BahtText += "ยี่";
-                            } else
-                                if ((i == (DecimalLen - 2)) && (tmp == 1)) {
-                                    BahtText += "";
-                                } else {
-                                    BahtText += NumberArray[tmp];
-                                }
-                        BahtText += DigitArray[DecimalLen - i - 1];
-                    }
-                }
-                BahtText += "สตางค์";
+                text += units[digit] + places[place];
             }
-            return BahtText;
         }
+
+        return text;
     }
+
+    function convertDecimal(decimal) {
+        let decimalText = "";
+        const decimalStr = decimal.toString().slice(0, 2); // ใช้ทศนิยมแค่สองตำแหน่ง
+        for (let i = 0; i < decimalStr.length; i++) {
+            const digit = parseInt(decimalStr[i], 10);
+            decimalText += units[digit];
+        }
+        return decimalText ? decimalText + "สตางค์" : "";
+    }
+
+    let [integerPart, decimalPart] = number.toString().split('.');
+
+    // แปลงส่วนจำนวนเต็ม
+    let text = "";
+    let millionPart = "";
+
+    if (integerPart.length > 6) {
+        const millionIndex = integerPart.length - 6;
+        millionPart = convertChunk(integerPart.slice(0, millionIndex)) + "ล้าน";
+        integerPart = integerPart.slice(millionIndex);
+    }
+
+    const remainderPart = convertChunk(integerPart);
+    text = millionPart + remainderPart;
+
+    // แปลงส่วนทศนิยม (ถ้ามี)
+    let decimalText = decimalPart ? convertDecimal(decimalPart) : "ถ้วน";
+
+    return text + decimalText;
 }
 
 function CheckNumber(Number) {

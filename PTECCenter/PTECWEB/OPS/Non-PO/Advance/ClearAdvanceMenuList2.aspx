@@ -57,7 +57,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code</span>
                             </div>
-                            <asp:TextBox class="form-control noEnterSubmit" ID="txtclearadv" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" type="search" ID="txtclearadv" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -65,7 +65,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Code_ref</span>
                             </div>
-                            <asp:TextBox class="form-control noEnterSubmit" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
+                            <asp:TextBox class="form-control noEnterSubmit" type="search" ID="txtcoderef" runat="server" placeholder="21XXXXXXX" AutoPostBack="false" autocomplete="off"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -220,6 +220,11 @@
                                 <asp:TemplateField SortExpression="CreateDate" HeaderText="วันที่ทำรายการ" ItemStyle-HorizontalAlign="center">
                                     <ItemTemplate>
                                         <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("CreateDate")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField SortExpression="duedate" HeaderText="DueDate" ItemStyle-HorizontalAlign="center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbljobdate" runat="server" Text='<%#Eval("duedate")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField SortExpression="approvalname" HeaderText="หัวข้อ">
