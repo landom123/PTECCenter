@@ -1096,7 +1096,7 @@
             //console.log(calVat(cost, vat).toFixed(2));
             //console.log(calTax(cost, tax).toFixed(2));
 
-            if (!isNaN(avg) && (avg - 0) < 9999999.9999) {
+            if (!isNaN(avg) && (avg - 0) < 999999999.9999) {
                 p_avg.innerHTML = `เฉลี่ย : ${avg}`;
             } else {
                 p_avg.innerHTML = "";

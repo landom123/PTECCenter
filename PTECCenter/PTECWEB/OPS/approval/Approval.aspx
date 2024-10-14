@@ -75,7 +75,7 @@
                 text-align: center !important;*/
             }
         }
-        
+
         .hide {
             display: none;
         }
@@ -87,6 +87,11 @@
             left: 0;
             z-index: 1;
             position: absolute;
+        }
+
+        .badge-lightyellow {
+            color: #767676;
+            background-color: lightyellow;
         }
     </style>
 
@@ -111,7 +116,7 @@
                                             แจ้งขออนุมัติ
                                         </div>
                                         <div class="col">
-                                            <div id="demo2" style="color: navy; font-size: 10px;"></div>
+                                            <span id="demo2" style="color: navy; font-size: 10px;" runat="server"></span>
                                             <div id="demo" style="color: navy; font-size: 10px;"></div>
                                         </div>
                                         <% If Request.QueryString("approvalcode") IsNot Nothing And detailtable IsNot Nothing Then%>
@@ -189,10 +194,10 @@
                                         </div>
                                     </div>
                                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing Then%>
-                                    <% If detailtable.Rows(0).Item("statusid") = 4 Or detailtable.Rows(0).Item("working") Then%>
+                                    <% If detailtable.Rows(0).Item("statusid") = 4 Or detailtable.Rows(0).Item("working") Then '4	ปิดงาน %>
                                     <!-- status = ปิดงาน = 4 -->
                                     <!-- working = true มีสถานะ 2 อนุมัติ,8 รอประสานงานรับเรื่อง,9 ดำเนินการด้านเอกสาร,10 จัดส่งเอกสาร -->
-                                    <div class="row">
+                                    <div class="row d-none">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <asp:Label ID="lbtxtOwnerApprovalName" CssClass="form-label" AssociatedControlID="txtOwnerApprovalName" runat="server" Text="อนุมัติโดย" />
@@ -233,7 +238,7 @@
                                             </div>
                                         </div>
                                         <% End If %>
-                                        <% If detailtable.Rows(0).Item("statusid") = 4 Then%>
+                                        <% If detailtable.Rows(0).Item("statusid") = 4 Then '4	ปิดงาน %>
                                         <!-- status = ปิดงาน = 4 -->
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -293,8 +298,9 @@
                                         </div>
                                     </div>
                                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing Then%>
-                                    <% If detailtable.Rows(0).Item("statusid") = 3 Then%>
+                                    <% If detailtable.Rows(0).Item("statusid") = 3 Or detailtable.Rows(0).Item("statusid") = 14 Then%>
                                     <!-- status = ไม่อนุมัติ = 3 -->
+                                    <!-- status = ไม่ผ่านอนุมัติจากหน่วยงานที่เกี่ยวข้อง = 14 -->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -312,7 +318,7 @@
                                         </div>
                                     </div>
                                     <% End If %>
-                                    <% If detailtable.Rows(0).Item("statusid") = 4 Then%>
+                                    <% If detailtable.Rows(0).Item("statusid") = 4 Then '4	ปิดงาน %>
                                     <!-- status = ปิดงาน = 4 -->
                                     <div class="approval">
                                         <!-- รายละเอียดปิดงาน  -->
@@ -328,6 +334,101 @@
                                     </div>
 
                                     <% End If %>
+
+                                    <div class="signatureBox__main">
+                                        <div class="mx-3">
+                                            <div class="row">
+
+                                                <div class="col-sm-6 col-lg-3 border mb-sm-0 mb-3 d-flex flex-column justify-content-between">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h6>ผู้ขออนุมัติ</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h6 class="font-weight-bold text-center text-truncate">
+                                                                <asp:Label ID="txtSignatureNameReqBy" runat="server"></asp:Label>
+                                                                <asp:Label ID="txtBadgesReqBy" class="badge badge-lightyellow" runat="server"></asp:Label>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-auto">
+                                                            <span>วันที่</span>
+                                                        </div>
+                                                        <div class="col p-0 text-truncate">
+                                                            <asp:Label ID="txtSignatureNameReqDate" runat="server"></asp:Label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-lg-3 border mb-sm-0 mb-3 d-flex flex-column justify-content-between">
+                                                    <div class="row">
+                                                        <div class="col">ประสานงาน</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h6 class="font-weight-bold text-center text-truncate">
+                                                                <asp:Label ID="txtSignatureSupportby" runat="server"></asp:Label>
+                                                                <asp:Label ID="txtBadgesSupportby" class="badge badge-lightyellow" runat="server"></asp:Label>
+                                                            </h6>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-auto">
+                                                            <span>วันที่</span>
+                                                        </div>
+                                                        <div class="col p-0 text-truncate">
+                                                            <asp:Label ID="txtSignatureSupportDate" runat="server"></asp:Label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-lg-3 border mb-sm-0 mb-3 d-flex flex-column justify-content-between">
+                                                    <div class="row">
+                                                        <div class="col">หน่วยงานที่เกี่ยวข้อง</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h6 class="font-weight-bold text-center text-truncate">
+                                                                <asp:Label ID="txtSignatureAppOtherby" runat="server"></asp:Label>
+                                                                <asp:Label ID="txtBadgesAppOtherby" class="badge badge-lightyellow" runat="server"></asp:Label>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-auto">
+                                                            <span>วันที่</span>
+                                                        </div>
+                                                        <div class="col p-0 text-truncate">
+                                                            <asp:Label ID="txtSignatureAppOtherDate" runat="server"></asp:Label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-lg-3 border mb-sm-0 mb-3 d-flex flex-column justify-content-between">
+                                                    <div class="row">
+                                                        <div class="col">ผู้อนุมัติ</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h6 class="font-weight-bold text-center text-truncate">
+                                                                <asp:Label ID="txtSignatureAppBy" runat="server"></asp:Label>
+                                                                <asp:Label ID="txtBadgesAppby" class="badge badge-lightyellow" runat="server"></asp:Label>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-auto">
+                                                            <span>วันที่</span>
+                                                        </div>
+                                                        <div class="col p-0 text-truncate">
+                                                            <asp:Label ID="txtSignatureAppDate" runat="server"></asp:Label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <% End If %>
                                     <div class="card-footer text-center bg-white">
                                         <% If ViewState("status") = "new" Then%>
@@ -338,7 +439,7 @@
                                         <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" />
                                         <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน" />
                                         <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" />
-                                        <% ElseIf ViewState("status") = "write" And detailtable.Rows(0).Item("statusid") = 1 Then%>
+                                        <% ElseIf ViewState("status") = "write" And detailtable.Rows(0).Item("statusid") = 1 Then '1	รออนุมัติ %>
                                         <% If approval Then%>
                                         <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
                                         <% End If %>
@@ -350,21 +451,28 @@
                                         <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
                                         <% End If %>
                                         <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And (Session("secid").ToString = "2" Or Session("secid").ToString = "35") Then%>
-                                        <% If detailtable.Rows(0).Item("statusid") = 8 Then%>
+                                        <% If detailtable.Rows(0).Item("statusid") = 8 Then '8	รอประสานงานรับเรื่อง%>
                                         <asp:Button ID="btnSupportKnowlange" class="btn btn-warning d-none" runat="server" Text="รับเรื่อง" />
                                         <% End If %>
-                                        <% If (detailtable.Rows(0).Item("statusid") = 9) And (Session("secid").ToString = "2" Or Session("secid").ToString = "35") Then%>
+                                        <% If (detailtable.Rows(0).Item("statusid") = 9) And (Session("secid").ToString = "2" Or Session("secid").ToString = "35") Then '9	ดำเนินการด้านเอกสาร%>
                                         <asp:Button ID="btnSupportClose" class="btn btn-danger" runat="server" Text="ปิดงาน / กรอกรหัส" />
                                         <% End If %>
                                         <% End If %>
 
                                         <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing Then%>
-                                        <% If (detailtable.Rows(0).Item("statusid") = 9) And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
-                                            <% if String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) %>
-                                                <asp:Button ID="btnCLADV" class="btn btn-warning" runat="server" Text="สร้างใบ CLADV" />
-                                            <% Else %>
-                                                <asp:Button ID="btnrdrCLADV" class="btn btn-success" runat="server" Text="ดูใบ CLADV" />
-                                            <% End If %>
+                                        <% If detailtable.Rows(0).Item("statusid") = 12 And PermissionAppOther IsNot Nothing And approval_other Then '12	รอนุมัติจากหน่วยงานที่เกี่ยวข้อง %>
+                                        <asp:Button type="button" OnClientClick="return approvalOther();" ID="btnApprovalFormOther" runat="server" class="btn btn-success" Text="อนุมัติ"></asp:Button>
+                                        <asp:Button type="button" OnClientClick="return disapprovalOther();" ID="Button2" runat="server" class="btn btn-danger" Text="ไม่อนุมัติ"></asp:Button>
+                                        <% End If %>
+
+                                        <% If (detailtable.Rows(0).Item("statusid") = 9 Or detailtable.Rows(0).Item("statusid") = 13) Then '9	ดำเนินการด้านเอกสาร ,13	รอบัญชีตรวจสอบ %>
+                                        <% if String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) And detailtable.Rows(0).Item("statusid") = 9 And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then %>
+                                        <asp:Button ID="btnCLADV" class="btn btn-warning" runat="server" Text="สร้างใบสรุปค่าใช้จ่าย" />
+                                        <% ElseIf String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) And detailtable.Rows(0).Item("statusid") = 13 And PermissionAccount IsNot Nothing And approval_account Then '13	รอบัญชีตรวจสอบ %>
+                                        <asp:Button ID="btnCLADVfrmACC" OnClientClick="return confirmCLADV();" class="btn btn-warning" runat="server" Text="สร้างใบสรุปค่าใช้จ่าย" />
+                                        <% ElseIf Not String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString() Or approval_account) Then %>
+                                        <asp:Button ID="btnrdrCLADV" class="btn btn-success" runat="server" Text="ดูใบสรุปค่าใช้จ่าย" />
+                                        <% End If %>
                                         <% End If %>
                                         <% End If %>
                                     </div>
@@ -389,6 +497,13 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
+                                            <% If approval_account Then %>
+                                            <div class="row">
+                                                <div class="col d-flex flex-row-reverse">
+                                                    <a href="#" runat="server" id="btnEditDetailInvoice">แก้ไขรายการ..</a>
+                                                </div>
+                                            </div>
+                                            <% End If %>
                                             <div class="row justify-content-md-center">
                                                 <div class="col-md-10">
                                                     <input type="file" name="files" accept="image/*,.pdf" data-fileuploader-files='<%=Approval_Doc%>'>
@@ -427,6 +542,11 @@
                                             <div class="row">
                                                 <div class="col-md-12 text-muted">
                                                     InvoiceDateอ : <%=invoicedate%>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-muted">
+                                                    Distance : <%=distance%>
                                                 </div>
                                             </div>
                                         </div>
@@ -481,7 +601,7 @@
                     </div>
                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And nozzletable IsNot Nothing Then%>
                     <% If nozzletable.Rows.Count > 0 Then%>
-                    <% If detailtable.Rows(0).Item("approvallistid") = 23 And detailtable.Rows(0).Item("statusid") = 4 Then%>
+                    <% If detailtable.Rows(0).Item("approvallistid") = 23 And detailtable.Rows(0).Item("statusid") = 4 Then ' 4	ปิดงาน%>
 
                     <div class="row bg-white">
                         <div class="col-md-12 col-12 mb-3 ">
@@ -584,8 +704,7 @@
                     <% End If %>
                     <!-- end row-->
                     <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And CommentTable IsNot Nothing Then%>
-                    <% If (ViewState("status") = "read" Or ViewState("status") = "write") And Not detailtable.Rows(0).Item("statusid") = 7 Then%>
-                    <!-- statusid = 7 รอผู้แจ้งยืนยัน-->
+                    <% If (ViewState("status") = "read" Or ViewState("status") = "write") And Not detailtable.Rows(0).Item("statusid") = 7 Then '7	รอผู้แจ้งยืนยัน%>
                     <div class="row bg-white">
                         <div class="col-lg-12">
                             <div class="card shadow">
@@ -876,11 +995,11 @@
             const approvalcode = urlParams.get('approvalcode');
             console.log(approvalcode);
 
-            if (approvalcode) {
+            <%--if (approvalcode) {
                 var asd = '<%= ownerapproval.ToString %>'
 
                 document.getElementById("demo2").innerHTML = "(" + asd + ")";
-            }
+            }--%>
 
             var status = document.getElementById('<%= txtStatus.ClientID%>');
             var grid = document.getElementById('grid'); //สำหรับแสดงผล
@@ -994,8 +1113,6 @@
 
         });
 
-    </script>
-    <script type="text/javascript">
         function checkTextAreaMaxLength(textBox, e, length) {
             var mLen = textBox["MaxLength"];
             if (null == mLen)
@@ -1145,8 +1262,6 @@
 
             return false;
         }
-    </script>
-    <script>
         function valueChangedDay() {
             if ($('.chk-day').is(":checked"))
                 $(".form-day").show();
@@ -1154,8 +1269,6 @@
                 $(".img-bill").hide();
 
         }
-    </script>
-    <script type="text/javascript">
         function alertSuccess() {
             Swal.fire(
                 'สำเร็จ',
@@ -1171,8 +1284,6 @@
                 'warning'
             )
         }
-    </script>
-    <script>
         function validateComment() {
             var txtcomment = document.getElementById('<%= txtComment.ClientID%>');
             /*console.log(txtcomment.value)
@@ -1183,8 +1294,6 @@
             }
             txtcomment.classList.add('was-validated');
         }
-    </script>
-    <script>
         // Set the date we're counting down to
 
         var countDownDate = new Date('<%= deadline%>')
@@ -1216,8 +1325,6 @@
 
 
         }, 1000);
-    </script>
-    <script>
         function Confirm() {
 
             console.log("insave");
@@ -1243,8 +1350,56 @@
             } else {
                 $(".statusGSM").css("background-color", "#ee443b");
                 $(".statusGSM").css("box-shadow", "rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #8f0000 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 0px 5px");
-                $("#statusGSMName").text("Not find in GSM");
+                $("#statusGSMName").text("Not found in GSM");
             }
+        }
+        function confirmCLADV() {
+            if (confirm(`ยืนยันการทำรายการหรือไม่ ?`)) {
+                __doPostBack('<%= btnCLADVfrmACC.id %>', '<%= Session("usercode")%>');
+                return true;
+            } else {
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
+        }
+
+        function approvalOther() {
+            if (confirm(`ยืนยันการทำรายการหรือไม่ ?`)) {
+                __doPostBack('approvalFormOtherBy', '');
+                return true;
+            } else {
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
+        }
+        function disapprovalOther() {
+            Swal.fire({
+                input: 'textarea',
+                inputLabel: 'ไม่อนุมัติเนื่องจาก',
+                inputPlaceholder: 'ใส่ข้อความ . . .',
+                inputAttributes: {
+                    'aria-label': 'ใส่ข้อความ.'
+                },
+                preConfirm: (value) => {
+                    if (!value) {
+                        // Handle return value 
+                        Swal.showValidationMessage('First input missing')
+                    }
+                },
+                showCancelButton: true
+            }).then((result) => {
+                console.log(result.value);
+                if (result.isConfirmed) {
+                    __doPostBack('disApprovalFormOtherBy', `${result.value}`);
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            })
+
+            return false;
         }
     </script>
 

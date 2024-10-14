@@ -475,7 +475,7 @@
                                                 </div>
                                                 <div class="col-11">
                                                     <asp:Label ID="lbtxtNote_show" CssClass="form-label" AssociatedControlID="txtNote" runat="server" Text="" />
-                                                    <asp:TextBox class="form-control" ID="txtNote" runat="server"></asp:TextBox>
+                                                    <asp:TextBox class="form-control" type="search" ID="txtNote" runat="server"></asp:TextBox>
                                                 </div>
                                             </div>
 
@@ -1275,19 +1275,19 @@ alert('else nonpo')
             //console.log(calVat(cost, vat).toFixed(2));
             //console.log(calTax(cost, tax).toFixed(2));
 
-            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+            if (!isNaN(cost) && (cost - 0) < 999999999.9999) {
                 p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
             } else {
                 p_cost.innerHTML = "";
             }
 
-            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+            if (!isNaN(vat) && (vat - 0) < 999999999.9999) {
                 p_vat.innerHTML = "Vat : " + numberWithCommas(c_Vat) + " บาท";
             } else {
                 p_vat.innerHTML = "";
             }
 
-            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+            if (!isNaN(tax) && (tax - 0) < 999999999.9999) {
                 p_tax.innerHTML = "Tax : (" + numberWithCommas(c_Tax) + ") บาท";
             } else {
                 p_tax.innerHTML = "";
@@ -1478,32 +1478,7 @@ alert('else nonpo')
                     var params = "{'nonpodtlid': '" + nonpodtlid + "','rows': '" + row + "','user': '" + user + "'}";
 
                     __doPostBack('deletedetail', params);
-                    //$.ajax({
-                    //    type: "POST",
-                    //    url: "../Payment/Payment2.aspx/deleteDetail",
-                    //    async: true,
-                    //    data: params,
-                    //    contentType: "application/json; charset=utf-8",
-                    //    dataType: "json",
-                    //    success: function (msg) {
-                    //        if (msg.d == 'success') {
-                    //            swal.fire({
-                    //                title: "Deleted!",
-                    //                text: "",
-                    //                icon: "success",
-                    //                allowOutsideClick: false
-                    //            }).then(function () {
-                    //                __doPostBack('detailtable', '');
-
-                    //            });
-                    //        } else {
-                    //            alertWarning('fail')
-                    //        }
-                    //    },
-                    //    error: function () {
-                    //        alertWarning('fail ee')
-                    //    }
-                    //});
+                    
                 }
             })
 

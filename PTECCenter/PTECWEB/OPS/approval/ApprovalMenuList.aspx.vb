@@ -166,6 +166,12 @@ Public Class WebForm3
                 e.Row.Cells.Item(statusAt).BackColor = Color.Brown
             ElseIf Data.Item("statusname") = "เอกสารครบถ้วน" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.MediumPurple
+            ElseIf Data.Item("statusname") = "รอนุมัติจากหน่วยงานที่เกี่ยวข้อง" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightYellow
+            ElseIf Data.Item("statusname") = "รอบัญชีตรวจสอบ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightSalmon
+            ElseIf Data.Item("statusname") = "ไม่ผ่านอนุมัติจากหน่วยงานที่เกี่ยวข้อง" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
             End If
         End If
 

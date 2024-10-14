@@ -16,6 +16,7 @@
             margin-right: auto;
             margin-left: auto;
         }
+
         .form-label {
             vertical-align: sub;
         }
@@ -114,9 +115,9 @@
             text-overflow: ellipsis;
         }
 
-        
+
         /*####################### CSS FROM ATTATCH ########################*/
-        .attatchItems-link-btndelete .deletedetail{
+        .attatchItems-link-btndelete .deletedetail {
             font-size: .7rem
         }
         /*####################### END CSS FROM ATTATCH ########################*/
@@ -135,6 +136,7 @@
             background-color: #e9ecef;
             border-color: #ced4da;
         }
+
         .modal .showCost {
             background-color: #f7faff;
             padding: 1rem;
@@ -164,7 +166,7 @@
                             <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" />
                             &nbsp;   
                             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-                            <% if (maintable.Rows(0).Item("statusid") = 1) Or (maintable.Rows(0).Item("statusid") = 4) Then%>
+                            <% if (maintable.Rows(0).Item("statusid") = 1) Or (maintable.Rows(0).Item("statusid") = 4) Then '1	รอยืนยัน , 4	ขอเอกสารเพิ่มเติม %>
                             <span class="text-red font-weight-bold text-danger">*** (กรุณากด confirm เพื่อยืนยัน) ***</span>
                             <% End If %>
                             <% End If %>
@@ -191,7 +193,7 @@
                             <asp:Label ID="lbcodeRef" CssClass="form-label" AssociatedControlID="codeRef" runat="server" Text="codeRef" />
                         </div>
                         <div class="col-7">
-                            <asp:TextBox class="form-control font-weight-bold" ID="codeRef" runat="server" ReadOnly="True" ></asp:TextBox>
+                            <asp:TextBox class="form-control font-weight-bold" ID="codeRef" runat="server" ReadOnly="True"></asp:TextBox>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -208,6 +210,16 @@
                         </div>
                         <div class="col-7">
                             <asp:TextBox class="form-control font-weight-bold" ID="txtremark" runat="server" ReadOnly="True"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-2 text-right">
+                            <asp:Label ID="lbDuedate" CssClass="form-label" AssociatedControlID="txtDuedate" runat="server" Text="Due Date" />
+                        </div>
+                        <div class="col-7">
+                            <div class="input-group">
+                                <asp:TextBox type="search" class="form-control font-weight-bold" ID="txtDuedate" runat="server" autocomplete="off"></asp:TextBox>
+                            </div>
                         </div>
                     </div>
                     <div class="foram">
@@ -285,8 +297,12 @@
                                     <!--  6 * 40  = 240 px -->
                                     <td colspan="6" style="width: 240px !important;">
                                         <div class="row">
-
                                             <h5>ADVANCE CLEARING</h5>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col text-center">
+                                                <span id="txtSubtitle" runat="server"></span>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -390,7 +406,7 @@
                                 <tr>
                                     <td colspan="24" style="width: 960px !important; height: 50px;">
                                         <div class="row">
-                                            <h5 class="m-auto">ข้าพเจ้าขอเคลียร์เงินยืม (Cash Advance) ที่เบิกจากบริษัทฯ ไปแล้ว ดังรายละเอียดต่อไปนี้</h5>
+                                            <h5 class="m-auto" id="txtSwear" runat="server">ข้าพเจ้าขอเคลียร์เงินยืม (Cash Advance) ที่เบิกจากบริษัทฯ ไปแล้ว ดังรายละเอียดต่อไปนี้</h5>
                                         </div>
                                     </td>
                                 </tr>
@@ -519,7 +535,7 @@
                                                 </p>
                                             </div>
                                         </td>
-                                        
+
                                         <td colspan="4" style="width: 160px !important; text-align: right; padding-right: 5px; border-bottom-width: 0px; border-top-width: 0px; border-left-width: 0px;">
                                             <h6>VAT
                                             </h6>
@@ -620,12 +636,12 @@
                     <div class="row">
 
                         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-                        <% if ViewState("status_clearadvance") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
+                        <% if ViewState("status_clearadvance") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then ' 2	รออนุมัติ , 15	รอตรวจสอบ%>
                         <div class="text-center m-auto">
-                            <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
+                            <% If approval And maintable.Rows(0).Item("statusid") = 2 Then ' 2	รออนุมัติ%>
                             <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
                             <% End If %>
-                            <% If verify And maintable.Rows(0).Item("statusid") = 2 Then%>
+                            <% If verify And maintable.Rows(0).Item("statusid") = 2 Then ' 2	รออนุมัติ%>
                             <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" />
                             <% End If %>
                             <% If ((verify Or approval)) Then%>
@@ -648,7 +664,7 @@
                                     <% For i = 0 To AttachTable.Rows.Count - 1 %>
                                     <div class="row">
                                         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 And (Session("depid").ToString = "2" Or Session("depid").ToString = "4" Or Session("depid").ToString = "24" Or Session("depid").ToString = "25") Then%>
-                                        <% If maintable.Rows(0).Item("statusid") = 7 Then%>
+                                        <% If maintable.Rows(0).Item("statusid") = 7 Then '7	รอบัญชีตรวจสอบ%>
                                         <div class="col-1">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="<%= AttachTable.Rows(i).Item("id") %>" onclick="chkAttach(this,'<%= Session("userid") %>')">
@@ -807,7 +823,7 @@
                         <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="Department" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
                     </div>--%>
-                   
+
                     <div class="form-group">
                         <asp:Label ID="lbBU" CssClass="form-label" AssociatedControlID="cboBU" runat="server" Text="Business Unit" />
                         <asp:DropDownList class="form-control" ID="cboBU" runat="server"></asp:DropDownList>
@@ -876,10 +892,10 @@
                     <!--  ############## End Detail ############### -->
                     <hr />
                     <h3>ใบแจ้งหนี้ / ใบส่งของ / ใบกำกับ</h3>
-                   
+
                     <div class="form-group">
                         <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="search" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <div class="row justify-content-between">
@@ -899,13 +915,13 @@
                                 </div>
                             </div>
                         </div>
-                        <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="search" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Document date" />
                         <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
                     </div>
-                   
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
@@ -1001,18 +1017,24 @@
 
     <script type="text/javascript">
 
-
-
         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-        <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
-                      (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
+            <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
+(maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then  ' 1	รอยืนยัน , 7	รอบัญชีตรวจสอบ  %>
         jQuery('[id$=txtinvoicedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
             scrollInput: false,
             format: 'd/m/Y'
         });
-        <% End If %>
+            <% End If %>
+            <% If (account_code.IndexOf(Session("usercode").ToString) > -1) And head.Rows.Count > 0 And head.Rows(0).Item("coderef").StartsWith("APP") %>
+        jQuery('[id$=txtDuedate]').datetimepicker({
+            startDate: '+1971/05/01',//or 1986/12/08'
+            timepicker: false,
+            scrollInput: false,
+            format: 'd/m/Y'
+        });
+            <% End If %>
         <% else If ViewState("status_clearadvance").ToString = "new" Then %>
         jQuery('[id$=txtinvoicedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
@@ -1075,13 +1097,13 @@
             /*stoppedTyping();*/
             checkUnSave();
             /*
-    const urlParams = new URLSearchParams(window.location.search);
-    const nonpocode = urlParams.get('NonpoCode');
-    if (nonpocode) {
-    checkStatusNonpo();
-    } else {
-    alert('else nonpo')
-    }*/
+const urlParams = new URLSearchParams(window.location.search);
+const nonpocode = urlParams.get('NonpoCode');
+if (nonpocode) {
+checkStatusNonpo();
+} else {
+alert('else nonpo')
+}*/
 
             <% If Not AttachTable Is Nothing Then %>
                 <% For i = 0 To AttachTable.Rows.Count - 1 %>
@@ -1132,7 +1154,7 @@
                 }
             }
         }
-        
+
 
         function calculate() {
 
@@ -1169,19 +1191,19 @@
             //console.log(calVat(cost, vat).toFixed(2));
             //console.log(calTax(cost, tax).toFixed(2));
 
-            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+            if (!isNaN(cost) && (cost - 0) < 999999999.9999) {
                 p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
             } else {
                 p_cost.innerHTML = "";
             }
 
-            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+            if (!isNaN(vat) && (vat - 0) < 999999999.9999) {
                 p_vat.innerHTML = "Vat : " + numberWithCommas(c_Vat) + " บาท";
             } else {
                 p_vat.innerHTML = "";
             }
 
-            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+            if (!isNaN(tax) && (tax - 0) < 999999999.9999) {
                 p_tax.innerHTML = "Tax : (" + numberWithCommas(c_Tax) + ") บาท";
             } else {
                 p_tax.innerHTML = "";
@@ -1679,6 +1701,10 @@
         //    });
 
         //}
+        $('#<%= txtDuedate.ClientID%>').on('change', function () {
+            cntdetail = 1; //show unsave
+            checkUnSave(); //show unsave
+        });
         $('#<%= chkpayBack.ClientID%>').on('change', function () {
             cntdetail = 1; //show unsave
             checkUnSave(); //show unsave

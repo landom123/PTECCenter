@@ -831,7 +831,7 @@ Public Class Approval
         conn.Close()
         Return result
     End Function
-    Public Function Approval_Support_Allow(approvalcode As String, cost As Double, vat As Integer, tax As Integer, vendor As String, invoice As String, taxid As String, invoicedate As String, username As String) As String
+    Public Function Approval_Support_Allow(approvalcode As String, cost As Double, vat As Integer, tax As Integer, vendor As String, invoice As String, taxid As String, invoicedate As String, username As String, Optional distance As Double = 0.00) As String
         Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
@@ -852,6 +852,8 @@ Public Class Approval
         cmd.Parameters.Add("@taxid", SqlDbType.VarChar).Value = taxid
         cmd.Parameters.Add("@invoicedate", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(invoicedate), DBNull.Value, DateTime.Parse(invoicedate))
         cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+        cmd.Parameters.Add("@distance", SqlDbType.Float).Value = distance
+
 
         'cmd.ExecuteNonQuery()
         adp.SelectCommand = cmd
@@ -1344,6 +1346,98 @@ Public Class Approval
         adp.SelectCommand = cmd
         adp.Fill(ds)
         result = ds.Tables(0).Rows(0).Item("checked")
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function ApprovalOtherPermission(approvalcode As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_PermisstionOwnerOther"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+    Public Function Approval_Allow_Other(approvalcode As String, username As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_Allow_Other"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        Return result
+    End Function
+    Public Sub Approval_NotAllow_Other(approvalcode As String, message As String, username As String)
+        'Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_NotAllow_Other"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
+        cmd.Parameters.Add("@message", SqlDbType.VarChar).Value = message
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = username
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Sub
+    Public Function ApprovalAccountPermission(approvalcode As String) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Approval_PermisstionOwnerAccount"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@approvalcode", SqlDbType.VarChar).Value = approvalcode
+        'cmd.Parameters.Add("@taxtype", SqlDbType.VarChar).Value = taxtype
+        'cmd.Parameters.Add("@doctype", SqlDbType.VarChar).Value = doctype
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
         conn.Close()
         Return result
     End Function

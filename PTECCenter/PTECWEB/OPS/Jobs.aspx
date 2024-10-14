@@ -10,6 +10,7 @@
         html {
             background-color: #f0f2f5 !important;
         }
+        
         .checked {
             background-color: #ececec;
             opacity: 1 !important;
@@ -19,7 +20,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
-    <div id="wrapper">
+    <div id="wrapper" class="h-100">
 
         <!-- #include virtual ="/include/menu.inc" -->
         <!-- add side menu -->
@@ -107,7 +108,7 @@
                             <div class="input-group sm-3 shadow-sm">
                                 <div class="input-group-prepend w-100">
                                     <span class="input-group-text">วันที่แจ้ง</span>
-                                    <asp:TextBox class="form-control" ID="txtDocDate" runat="server"></asp:TextBox>
+                                    <asp:TextBox class="form-control" ID="txtDocDate" runat="server" AutoPostBack="true"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
@@ -831,6 +832,11 @@
         //    scrollInput: false,
         //    format: 'd/m/Y H:i'
         //});
+
+
+        <% If objStatus = "new" Or objStatus = "edit" Then %>
+        <% If detailtable IsNot Nothing Then %>
+        <% If detailtable.Rows.Count < 1 Then %>
         jQuery('[id$=txtDocDate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: true,
@@ -838,6 +844,9 @@
             format: 'd/m/Y H:i'
         });
 
+        <% End if %>
+        <% End if %>
+        <% End if %>
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 liveSearch: true,
