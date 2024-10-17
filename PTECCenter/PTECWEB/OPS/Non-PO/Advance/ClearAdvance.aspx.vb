@@ -1179,15 +1179,20 @@ endprocess:
     Private Function validatedataBF_ACC_pass() As Boolean
         Dim result As Boolean = True
         Dim msg As String = ""
+        Dim objapproval As New Approval
 
         If head IsNot Nothing Then
             If head.Rows.Count > 0 And head.Rows(0).Item("coderef").StartsWith("APP") Then
                 If (account_code.IndexOf(Session("usercode").ToString) > -1) And
                 (maintable.Rows(0).Item("statusid") = 7) Then '7	รอบัญชีตรวจสอบ
-                    If txtDuedate.Text.Trim() = "" Then
-                        result = False
-                        msg = "กรุณาเลือก Duedate"
-                        GoTo endprocess
+                    Dim ds As DataSet
+                    ds = objapproval.Approval_Find(head.Rows(0).Item("coderef"))
+                    If ds.Tables(0).Rows(0).Item("statusid") = 13 Then
+                        If txtDuedate.Text.Trim() = "" Then
+                            result = False
+                            msg = "กรุณาเลือก Duedate"
+                            GoTo endprocess
+                        End If
                     End If
                 End If
             End If
