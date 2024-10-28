@@ -1855,6 +1855,7 @@
       <BrowseToURL>~/SSD/newgsm_billingnote01_detail.aspx</BrowseToURL>
     </Content>
     <Content Include="SSD\newgsm_billingnote.aspx" />
+    <Content Include="SSD\OverBalance.aspx" />
     <Content Include="SSD\RVtoHQ.aspx" />
     <Content Include="SSD\gsmsavetobatch.aspx" />
     <Content Include="SSD\gsmapprovededuct.aspx" />
@@ -4339,6 +4340,13 @@
     </Compile>
     <Compile Include="SSD\newgsm_billingnote.aspx.vb">
       <DependentUpon>newgsm_billingnote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSD\OverBalance.aspx.designer.vb">
+      <DependentUpon>OverBalance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SSD\OverBalance.aspx.vb">
+      <DependentUpon>OverBalance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SSD\RVtoHQ.aspx.designer.vb">

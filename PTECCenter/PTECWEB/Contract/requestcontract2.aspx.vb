@@ -459,7 +459,6 @@ Public Class requestcontract2
         If IsDate(txtContractEndDate.Text) = True Then
             'dContractEndDate = DateAdd(DateInterval.Year, -543, CDate(txtContractEndDate.Text))
             dContractEndDate = CDate(txtContractEndDate.Text)
-
         Else
             dContractEndDate = Nothing
         End If
@@ -2258,15 +2257,15 @@ Public Class requestcontract2
                 'CreateBy = usercode
                 Session("ItemNo") = dr("ItemNo")
 
-                image9.Visible = ID <> "0"
-                Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
-                Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
-                image9.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+                'image9.Visible = ID <> "0"
+                'Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                'Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                'image9.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
 
-                image10.Visible = ID <> "0"
-                Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
-                Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
-                image10.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+                'image10.Visible = ID <> "0"
+                'Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                'Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                'image10.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
 
 
                 If disableTab(cboMainContact.SelectedValue) = False Then
@@ -2542,6 +2541,7 @@ Public Class requestcontract2
             contractno = Session("contractno")
             assetsno = Session("assetsno")
 
+
         Else
 
             If Session("menulist") Is Nothing Then
@@ -2633,6 +2633,8 @@ Public Class requestcontract2
             disableTab(cboMainContact.SelectedValue)
 
         End If
+
+
         'txtDocAction.Text = "NEW"
 
     End Sub
@@ -4418,9 +4420,9 @@ Public Class requestcontract2
             Contact = txtContactPowerBook.Text
             ItemNo = Session("ItemNo")
 
-            If AddRequest() = False Then
-                Exit Sub
-            End If
+            'If AddRequest() = False Then
+            '    Exit Sub
+            'End If
 
             If objCo.AddPowerBook(txtdocuno.Text, ContractTypeID, DueDate, DocDate, Empfr, Empto, Witness1, Witness2, Obj1, Obj2, Obj3, Oth1, Oth2, Oth3 _
                                  , CreateBy, CompanyID, Empto2, Empto3, BrCode, Addr, Contact, ItemNo) = False Then
