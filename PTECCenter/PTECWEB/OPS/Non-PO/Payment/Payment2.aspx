@@ -220,7 +220,7 @@
                     </div>
                     <div class="foram">
                         <div class="row">
-                            <%=Session("status_payment") %>
+                            <%=ViewState("status_payment") %>
                         </div>
                         <div class="row">
                             <%=allOwner %>
@@ -310,7 +310,7 @@
                                                 </div>
                                                 <div class="col-11">
 
-                                                    <asp:Label ID="lbcboOwner_show" CssClass="form-label"   AssociatedControlID="cboOwner" runat="server" Text="" />
+                                                    <asp:Label ID="lbcboOwner_show" CssClass="form-label" AssociatedControlID="cboOwner" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control" ID="cboOwner" runat="server"></asp:DropDownList>
 
                                                 </div>
@@ -322,7 +322,7 @@
                                                     <asp:Label ID="lbCompany" CssClass="form-label" AssociatedControlID="cboCompany" runat="server" Text="สังกัด" />
                                                 </div>
                                                 <div class="col-9">
-                                                    <asp:Label ID="lbcboCompany_show" CssClass="form-label"   AssociatedControlID="cboCompany" runat="server" Text="" />
+                                                    <asp:Label ID="lbcboCompany_show" CssClass="form-label" AssociatedControlID="cboCompany" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control " ID="cboCompany" runat="server" ReadOnly="True" AutoPostBack="true"></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -332,7 +332,7 @@
                                                     <asp:Label ID="Label3" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="สาขา" />
                                                 </div>
                                                 <div class="col-9">
-                                                    <asp:Label ID="lbcboBranch_show" CssClass="form-label"   AssociatedControlID="cboBranch" runat="server" Text="" />
+                                                    <asp:Label ID="lbcboBranch_show" CssClass="form-label" AssociatedControlID="cboBranch" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control" ID="cboBranch" runat="server">
                                                     </asp:DropDownList>
                                                 </div>
@@ -345,7 +345,7 @@
                                                     <asp:Label ID="lbpmno" CssClass="form-label" AssociatedControlID="txtpmno" runat="server" Text="เลขที่" />
                                                 </div>
                                                 <div class="col-9">
-                                                    <asp:Label ID="lbtxtpmno_show" CssClass="form-label"   AssociatedControlID="txtpmno" runat="server" Text="" />
+                                                    <asp:Label ID="lbtxtpmno_show" CssClass="form-label" AssociatedControlID="txtpmno" runat="server" Text="" />
                                                     <asp:TextBox class="form-control" ID="txtpmno" runat="server" ReadOnly="True"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -358,7 +358,7 @@
                                                     <asp:Label ID="lbApprovalcode" CssClass="form-label" AssociatedControlID="cboSection" runat="server" Text="แผนก" />
                                                 </div>
                                                 <div class="col-9">
-                                                    <asp:Label ID="lbcboSection_show" CssClass="form-label"   AssociatedControlID="cboSection" runat="server" Text="" />
+                                                    <asp:Label ID="lbcboSection_show" CssClass="form-label" AssociatedControlID="cboSection" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control" ID="cboSection" runat="server">
                                                     </asp:DropDownList>
                                                 </div>
@@ -370,7 +370,7 @@
                                                     <asp:Label ID="Label7" CssClass="form-label" AssociatedControlID="cboDepartment" runat="server" Text="ฝ่าย" />
                                                 </div>
                                                 <div class="col-9">
-                                                    <asp:Label ID="lbcboDepartment_show" CssClass="form-label"   AssociatedControlID="cboDepartment" runat="server" Text="" />
+                                                    <asp:Label ID="lbcboDepartment_show" CssClass="form-label" AssociatedControlID="cboDepartment" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control" ID="cboDepartment" AutoPostBack="True"
                                                         runat="server">
                                                     </asp:DropDownList>
@@ -383,11 +383,11 @@
                                                     <asp:Label ID="lbAffiliation" CssClass="form-label" AssociatedControlID="cboAffiliation" runat="server" Text="สายงาน" />
                                                 </div>
                                                 <div class="col-9">
-                                                    <asp:Label ID="lbcboAffiliation_show" CssClass="form-label"   AssociatedControlID="cboAffiliation" runat="server" Text="" />
+                                                    <asp:Label ID="lbcboAffiliation_show" CssClass="form-label" AssociatedControlID="cboAffiliation" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control " ID="cboAffiliation" runat="server" required></asp:DropDownList>
                                                 </div>
                                             </div>
-                                            
+
                                         </td>
                                         <td colspan="6" style="width: 240px !important;">
                                             <div class="row">
@@ -395,7 +395,7 @@
                                                     <asp:Label ID="Label9" CssClass="form-label" AssociatedControlID="txtCreateDate" runat="server" Text="วันที่" />
                                                 </div>
                                                 <div class="col-9">
-                                                    <asp:Label ID="lbtxtCreateDate_show" CssClass="form-label"   AssociatedControlID="txtCreateDate" runat="server" Text="" />
+                                                    <asp:Label ID="lbtxtCreateDate_show" CssClass="form-label" AssociatedControlID="txtCreateDate" runat="server" Text="" />
                                                     <asp:TextBox class="form-control font-weight-bold" ID="txtCreateDate" runat="server" ReadOnly="True"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -410,7 +410,7 @@
                                                     <asp:Label ID="lbVendor" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="ผู้รับเงิน" />
                                                 </div>
                                                 <div class="col-11">
-                                                    <asp:Label ID="lbcboVendor_show" CssClass="form-label"   AssociatedControlID="cboVendor" runat="server" Text="" />
+                                                    <asp:Label ID="lbcboVendor_show" CssClass="form-label" AssociatedControlID="cboVendor" runat="server" Text="" />
                                                     <asp:DropDownList class="form-control " ID="cboVendor" runat="server" required></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -474,8 +474,8 @@
                                                     <asp:Label ID="lbnote" CssClass="form-label" AssociatedControlID="txtNote" runat="server" Text="วัตถุประสงค์" />
                                                 </div>
                                                 <div class="col-11">
-                                                    <asp:Label ID="lbtxtNote_show" CssClass="form-label"   AssociatedControlID="txtNote" runat="server" Text="" />
-                                                    <asp:TextBox class="form-control" ID="txtNote" runat="server"></asp:TextBox>
+                                                    <asp:Label ID="lbtxtNote_show" CssClass="form-label" AssociatedControlID="txtNote" runat="server" Text="" />
+                                                    <asp:TextBox class="form-control" type="search" ID="txtNote" runat="server"></asp:TextBox>
                                                 </div>
                                             </div>
 
@@ -691,7 +691,7 @@
                     <div class="row">
 
                         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-                        <% if Session("status_payment") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
+                        <% if ViewState("status_payment") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
                         <div class="text-center m-auto">
                             <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
                             <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
@@ -850,7 +850,7 @@
         <% End If %>
         <% End If %>
     </div>
-  
+
     <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -862,8 +862,7 @@
 
                 </div>
                 <div class="modal-body">
-                    <asp:ListBox class="cbomulti" runat="server" ID="multiSelect" SelectionMode="multiple" data-selected-text-format="count">
-                    </asp:ListBox>
+                    <asp:ListBox class="cbomulti" runat="server" ID="multiSelect" SelectionMode="multiple" data-selected-text-format="count"></asp:ListBox>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
@@ -924,7 +923,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbPrice" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="จำนวนเงิน (ก่อน VAT)" />
-                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onchange="calculate();"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtPrice" runat="server" Text="0" onkeyup="setnetprice();calculate();"></asp:TextBox>
                         <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                     </div>
                     <div class="row flex-nowrap">
@@ -935,7 +934,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
                             </div>
                             <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                         </div>
@@ -944,12 +943,16 @@
                                 <asp:Label ID="Label5" CssClass="form-label" AssociatedControlID="txtTax" runat="server" Text="WHT (%)" />
                             </div>
                             <div class="col">
-                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
+                                <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
                                 <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <asp:Label ID="lbNetPrice" CssClass="form-label" AssociatedControlID="TxtNetPrice" runat="server" Text="จำนวนเงิน (รวม VAT)" />
+                        <asp:TextBox class="form-control noEnterSubmit" type="number" ID="TxtNetPrice" runat="server" Text="0" onkeyup="setprice();calculate();"></asp:TextBox>
+                        <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
+                    </div>
                     <%--<div class="form-group">
                         <asp:Label ID="lbVat" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT" />
                         <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" Text="0"'></asp:TextBox>
@@ -957,16 +960,16 @@
                     <div class="form-group">
                         <asp:Label ID="lbTax" CssClass="form-label" AssociatedControlID="txtPrice" runat="server" Text="TAX" />
                         <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" Text="0"'></asp:TextBox>
-                    </div>--%>
+                    </div>
 
                     <div class="form-group" style="display: none;">
                         <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="cboDep" runat="server" Text="cboDep" />
                         <asp:DropDownList class="form-control" ID="cboDep" runat="server"></asp:DropDownList>
-                    </div>
+                </div>--%>
                     <div class="showCost">
                         <p class="text-muted" id="p_vat"></p>
                         <p class="text-muted" id="p_tax"></p>
-                        <p class="text-muted" id="p_cost"></p>
+                        <p class="text-muted font-weight-bold" id="p_cost"></p>
                     </div>
                     <!--  ############## End Detail ############### -->
                     <hr />
@@ -1082,7 +1085,7 @@
 
         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
         <% If ((account_code.IndexOf(Session("usercode").ToString) > -1) And
-(maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
+  (maintable.Rows(0).Item("statusid") = 7)) Or (maintable.Rows(0).Item("statusid") = 1) Then%>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -1096,7 +1099,7 @@
             format: 'd/m/Y'
         });
         <% End If %>
-        <% else If Session("status_payment").ToString = "new" Then %>
+        <% else If ViewState("status_payment").ToString = "new" Then %>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -1156,6 +1159,7 @@
 
 
             $('#exampleModal').on('shown.bs.modal', function (e) {
+                setnetprice();
                 calculate();
             });
             /*$(".listCommentAndAttatch").click(function () {
@@ -1197,17 +1201,17 @@ alert('else nonpo')
             if (coderef) {
                 console.log(coderef.indexOf('JTN'))
                 if (coderef.indexOf('JTN') > -1) {
-                    <% If (Not Session("status_payment") = "account") Then%>
-                        $('#exampleModal .modal-footer .btn-primary').hide();
-                        $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
-                        $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
-                        disbtndelete();
-                        $('#<% =FromAddDetail.ClientID%>').hide();
+                    <% If (Not ViewState("status_payment") = "account") Then%>
+                    $('#exampleModal .modal-footer .btn-primary').hide();
+                    $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
+                    $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
+                    disbtndelete();
+                    $('#<% =FromAddDetail.ClientID%>').hide();
                     <% End If %>
 
                 }
             }
-            
+
         });
         function Confirm() {
 
@@ -1243,6 +1247,7 @@ alert('else nonpo')
 
             //console.log("############ calculate");
 
+            let netcost = CheckNumber(document.getElementById("<%= txtNetPrice.ClientID%>").value);
             let cost = CheckNumber(document.getElementById("<%= txtPrice.ClientID%>").value);
             let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
             let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
@@ -1251,6 +1256,8 @@ alert('else nonpo')
             const p_tax = document.getElementById("p_tax");
             const p_vat = document.getElementById("p_vat");
 
+
+            netcost = parseFloat(netcost);
 
             cost = parseFloat(cost);
             vat = parseFloat(vat);
@@ -1268,19 +1275,19 @@ alert('else nonpo')
             //console.log(calVat(cost, vat).toFixed(2));
             //console.log(calTax(cost, tax).toFixed(2));
 
-            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+            if (!isNaN(cost) && (cost - 0) < 999999999.9999) {
                 p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
             } else {
                 p_cost.innerHTML = "";
             }
 
-            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+            if (!isNaN(vat) && (vat - 0) < 999999999.9999) {
                 p_vat.innerHTML = "Vat : " + numberWithCommas(c_Vat) + " บาท";
             } else {
                 p_vat.innerHTML = "";
             }
 
-            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+            if (!isNaN(tax) && (tax - 0) < 999999999.9999) {
                 p_tax.innerHTML = "Tax : (" + numberWithCommas(c_Tax) + ") บาท";
             } else {
                 p_tax.innerHTML = "";
@@ -1471,32 +1478,7 @@ alert('else nonpo')
                     var params = "{'nonpodtlid': '" + nonpodtlid + "','rows': '" + row + "','user': '" + user + "'}";
 
                     __doPostBack('deletedetail', params);
-                    //$.ajax({
-                    //    type: "POST",
-                    //    url: "../Payment/Payment2.aspx/deleteDetail",
-                    //    async: true,
-                    //    data: params,
-                    //    contentType: "application/json; charset=utf-8",
-                    //    dataType: "json",
-                    //    success: function (msg) {
-                    //        if (msg.d == 'success') {
-                    //            swal.fire({
-                    //                title: "Deleted!",
-                    //                text: "",
-                    //                icon: "success",
-                    //                allowOutsideClick: false
-                    //            }).then(function () {
-                    //                __doPostBack('detailtable', '');
-
-                    //            });
-                    //        } else {
-                    //            alertWarning('fail')
-                    //        }
-                    //    },
-                    //    error: function () {
-                    //        alertWarning('fail ee')
-                    //    }
-                    //});
+                    
                 }
             })
 
@@ -1519,13 +1501,13 @@ alert('else nonpo')
             $('#<%= row.ClientID%>').val(0);
             $('#<%= hiddenAdvancedetailid.ClientID%>').val(0);
             $('#<%= cboAccountCode.ClientID%>').val(0);
-            $('#<%= cboDep.ClientID%>').val(0);
             $('#<%= cboBU.ClientID%>').val(0);
             $('#<%= cboPP.ClientID%>').val(0);
             $('#<%= cboPJ.ClientID%>').val(0);
             $('#<%= txtPrice.ClientID%>').val('');
             $('#<%= txtVat.ClientID%>').val('7');
             $('#<%= txtTax.ClientID%>').val('');
+            $('#<%= TxtNetPrice.ClientID%>').val('');
             $('#<%= txtDetail.ClientID%>').val('');
             $('#<%= txtinvoiceno.ClientID%>').val('');
 
@@ -1550,7 +1532,7 @@ alert('else nonpo')
         function btnEditDetailClick(row, advancedetailid, accountcodeid, depid, buid, ppid, pjid, cost, vat, tax, detail, invoice, taxid, invoicedate, NoBill, IncompleteBill) {
             console.log(advancedetailid);
             console.log(accountcodeid);
-            console.log(depid);
+            //console.log(depid);
             console.log(buid);
             console.log(ppid);
             console.log(cost);
@@ -1559,7 +1541,6 @@ alert('else nonpo')
             //console.log(vendorcode);
 
             const Accountcode = '<%= cboAccountCode.ClientID%>';
-            const dep = '<%= cboDep.ClientID%>';
             const bu = '<%= cboBU.ClientID%>';
             const pp = '<%= cboPP.ClientID%>';
             const pj = '<%= cboPJ.ClientID%>';
@@ -1567,7 +1548,7 @@ alert('else nonpo')
             $('#exampleModal').modal('show');
 
             selectElement(Accountcode, accountcodeid);
-            selectElement(dep, depid);
+            //selectElement(dep, depid);
             selectElement(bu, buid);
             selectElement(pp, ppid);
             selectElement(pj, pjid);
@@ -1600,7 +1581,7 @@ alert('else nonpo')
 */
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-            <% If (Not Session("status_payment") = "new" And Not Session("status_payment") = "edit" And Not Session("status_payment") = "account") Then%>
+            <% If (Not ViewState("status_payment") = "new" And Not ViewState("status_payment") = "edit" And Not ViewState("status_payment") = "account") Then%>
             $('#exampleModal .modal-footer #btnAddDetail').hide();
             $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
             $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);
@@ -1636,8 +1617,8 @@ alert('else nonpo')
             const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
             const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
             const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
-            const depid = $('#<%= cboDep.ClientID%>').val();
-            const depname = $("#<%= cboDep.ClientID%> option:selected").text();
+            const depid = "0";
+            const depname = "";
             const buid = $('#<%= cboBU.ClientID%>').val();
             const buname = $("#<%= cboBU.ClientID%> option:selected").text();
             const ppid = $('#<%= cboPP.ClientID%>').val();
@@ -1763,8 +1744,8 @@ alert('else nonpo')
             const nonpodtl_id = $('#<%= hiddenAdvancedetailid.ClientID%>').val();
             const accountcodeid = $('#<%= cboAccountCode.ClientID%>').val();
             const accountcode = $("#<%= cboAccountCode.ClientID%> option:selected").text();
-            const depid = $('#<%= cboDep.ClientID%>').val();
-            const depname = $("#<%= cboDep.ClientID%> option:selected").text();
+            const depid = "0"
+            const depname = ""
             const buid = $('#<%= cboBU.ClientID%>').val();
             const buname = $("#<%= cboBU.ClientID%> option:selected").text();
             const ppid = $('#<%= cboPP.ClientID%>').val();
@@ -1969,6 +1950,35 @@ alert('else nonpo')
             const urlParams = new URLSearchParams(window.location.search);
             const coderef = urlParams.get('code_ref') ?? $('#<%= codeRef.ClientID%>').val();
             return coderef;
+        }
+        function setprice() {
+            let netprice = CheckNumber(document.getElementById("<%=TxtNetPrice.ClientID%>").value);
+            let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            netprice = parseFloat(netprice);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+            if (netprice) {
+
+
+                var price = document.getElementById("<%= txtPrice.ClientID%>")
+                //console.log((netprice / (1 + (vat / 100) - (tax / 100))))
+                price.value = parseFloat(netprice / (1 + (vat / 100) - (tax / 100))).toFixed(4)
+            }
+        }
+        function setnetprice() {
+            let price = CheckNumber(document.getElementById("<%=txtPrice.ClientID%>").value);
+            let vat = CheckNumber(document.getElementById("<%= txtVat.ClientID%>").value);
+            let tax = CheckNumber(document.getElementById("<%= txtTax.ClientID%>").value);
+
+            price = parseFloat(price);
+            vat = parseFloat(vat);
+            tax = parseFloat(tax);
+            if (price) {
+                var netprice = document.getElementById("<%= TxtNetPrice.ClientID%>")
+                netprice.value = parseFloat(calCostTotal(price, vat, tax)).toFixed(4)
+            }
         }
     </script>
 </asp:Content>

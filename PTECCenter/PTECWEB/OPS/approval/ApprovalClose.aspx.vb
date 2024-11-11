@@ -38,7 +38,7 @@ Public Class WebForm4
             txtCloseDate.Text = Now
             txtCloseDate.Attributes.Add("readonly", "readonly")
 
-            Session("status") = "new"
+            ViewState("status") = "new"
             'objapproval.SetCboApproval(cboApproval)
             'objbranch.SetComboBranch(cboBranch, usercode)
 
@@ -47,8 +47,8 @@ Public Class WebForm4
                     approvaldataset = objapproval.Approval_Find(Request.QueryString("approvalcode"))
                     detailtable = approvaldataset.Tables(0)
                     nozzletable = approvaldataset.Tables(6)
-                    Session("detailtable") = detailtable
-                    Session("nozzletable") = nozzletable
+                    ViewState("detailtable") = detailtable
+                    ViewState("nozzletable") = nozzletable
                     statusid = approvaldataset.Tables(0).Rows(0).Item("statusid")
                     If statusid = 4 Then
                         txtDetail.ReadOnly = True
@@ -65,7 +65,7 @@ Public Class WebForm4
                             'img2.Attributes.Add("src", fileImgBillName)
                         End If
                     End If
-                    Session("status") = "read"
+                    ViewState("status") = "read"
                     chkuser(detailtable.Rows(0).Item("createby").ToString, detailtable.Rows(0).Item("supportid").ToString)
                     showdata(detailtable)
                 Catch ex As Exception
@@ -78,8 +78,8 @@ Public Class WebForm4
                 flag = False
             End If
         Else
-            detailtable = Session("detailtable")
-            nozzletable = Session("nozzletable")
+            detailtable = ViewState("detailtable")
+            nozzletable = ViewState("nozzletable")
 
             Dim target = Request.Form("__EVENTTARGET")
             If target = "deletedetail" Then
@@ -121,6 +121,12 @@ Public Class WebForm4
                 Case = "11"
                     txtStatus.BackColor = Color.Brown
                     txtStatus.ForeColor = Color.White
+                Case = "12"
+                    txtStatus.BackColor = Color.LightYellow
+                Case = "13"
+                    txtStatus.BackColor = Color.LightSalmon
+                Case = "14"
+                    txtStatus.BackColor = Color.IndianRed
             End Select
 
             'cboApproval.Attributes.Add("disabled", "True")
@@ -323,9 +329,9 @@ endprocess:
         Try
             Dim row As Integer = json("row").Trim
             Dim approvalNozzle_ID As String = json("approvalnozzle_id").Trim
-            Dim round1 As Double = json("round1").Trim
-            Dim round2 As Double = json("round2").Trim
-            Dim round3 As Double = json("round3").Trim
+            Dim round1 As String = json("round1").Trim
+            Dim round2 As String = json("round2").Trim
+            Dim round3 As String = json("round3").Trim
             Dim url1 As String = getfilenozzle("nozzle_rond1").ToString()
             Dim url2 As String = getfilenozzle("nozzle_rond2").ToString()
             Dim url3 As String = getfilenozzle("nozzle_rond3").ToString()

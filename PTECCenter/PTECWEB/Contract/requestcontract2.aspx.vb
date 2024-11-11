@@ -1532,6 +1532,7 @@ Public Class requestcontract2
                         '    image4.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
                         'End If
 
+
                         If IsDBNull(dr("pic1")) = False Then
                             image1.Visible = ID <> "0"
                             Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
@@ -1545,6 +1546,7 @@ Public Class requestcontract2
                             Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
                             image2.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
                         End If
+
 
                     Case 1
                         txtAtt2DocNo2.Text = dr("DocNo")
@@ -2197,8 +2199,6 @@ Public Class requestcontract2
 
 
 
-
-
                 If disableTab(cboMainContact.SelectedValue) = False Then
                     Return False
                 End If
@@ -2267,7 +2267,6 @@ Public Class requestcontract2
                 txtAddrPowerBook.Text = dr("Addr")
                 'CreateBy = usercode
                 Session("ItemNo") = dr("ItemNo")
-
 
                 If IsDBNull(dr("pic1")) = False Then
                     image9.Visible = ID <> "0"
@@ -2559,7 +2558,6 @@ Public Class requestcontract2
             End If
             contractno = Session("contractno")
             assetsno = Session("assetsno")
-
 
         Else
 
@@ -3680,6 +3678,7 @@ Public Class requestcontract2
                 conn.Close()
             End Using
         End Using
+
 
     End Sub
 

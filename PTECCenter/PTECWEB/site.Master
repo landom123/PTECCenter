@@ -23,16 +23,22 @@
     <link href="<%=Page.ResolveUrl("~/css/sb-admin.min.css")%>" rel="stylesheet">
     <%--  <link href="../css/sb-admin.min.css" rel="stylesheet">--%>
     <style>
-        * {
-            font-family:Roboto;
+        html, body {
+            height: 100%;
+            margin: 0;
         }
 
-        *, *:after, *:before {
-            transition: all .3s ease-out;
-            -webkit-transition: all .3s ease-out;
-            -moz-transition: all .3s ease-out;
-            -o-transition: all .3s ease-out;
+        * {
+            font-family: Roboto;
         }
+
+            *, *:after, *:before {
+                transition: all .3s ease-out;
+                -webkit-transition: all .3s ease-out;
+                -moz-transition: all .3s ease-out;
+                -o-transition: all .3s ease-out;
+            }
+
         .loader {
             position: fixed;
             top: 50%;
@@ -78,16 +84,16 @@
     </script>
 
     <!-- sweetalert2-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="<%=Page.ResolveUrl("~/js/sweetalert2.all.min.js")%>"></script>
 
     <title>PTEC Web Center V2</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body id="page-top">
-    <form id="form1" runat="server" enctype="multipart/form-data" novalidate>
+    <form id="form1" class="h-100" runat="server" enctype="multipart/form-data" novalidate>
         <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-           
+
             <div class="col text-left">
                 <button class="btn btn-dark mr-4" id="btnMenu" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
@@ -207,7 +213,7 @@
     //    $('#loader').show();
     //    console.log('window.onload');
     //};
-    
+
     $(document).ready(function () {
         //console.log('ready');
         $('#loader').hide();
@@ -224,7 +230,7 @@
         } else {
             $('#btnMenu').hide();
         }
-     });
+    });
 </script>
 
 

@@ -19,15 +19,21 @@ Public Class WebForm1
     Public invoice As String = ""
     Public taxid As String = ""
     Public invoicedate As String = ""
+    Public distance As String = ""
     Public flag As Boolean = True
     Public approval As Boolean = False
+    Public approval_other As Boolean = False
+    Public approval_account As Boolean = False
     Public deadline As String
     Public ownerapproval As String = String.Empty
 
     Public detailtable As DataTable '= createtable()
     Public PermissionOwner As DataSet '= createtable()
+    Public PermissionAppOther As DataSet '= createtable()
+    Public PermissionAccount As DataSet '= createtable()
     Public CommentTable As DataTable '= createtable()
     Public nozzletable As DataTable '= createtable()
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objbranch As New Branch
         Dim objapproval As New Approval
@@ -50,6 +56,24 @@ Public Class WebForm1
             menutable = Session("menulist")
         End If
 
+        '######## START Check Permission page  ########
+        Dim total As Integer = menutable.Rows.Count - 1
+        Dim is_allowThisPage As Boolean = False
+        Dim urlCurrent As String = Request.Url.ToString().ToLower()
+        For i = 0 To total
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "").ToLower()
+            If Not String.IsNullOrEmpty(frmMenuUrl) Then
+                If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
+                    is_allowThisPage = True
+                    Exit For
+                End If
+            End If
+        Next
+        If Not is_allowThisPage Then
+            Response.Redirect("~/403.aspx")
+        End If
+        '######## END Check Permission page  ########
+
         If Not IsPostBack() Then
             objapproval.SetCboApproval(cboApproval, "", "nds")
             'If Not Session("positionid") = "10" Then
@@ -67,12 +91,12 @@ Public Class WebForm1
                     detailtable = approvaldataset.Tables(0)
                     CommentTable = approvaldataset.Tables(4)
                     nozzletable = approvaldataset.Tables(6)
-                    Session("detailtable") = detailtable
-                    Session("nozzletable") = nozzletable
+                    ViewState("detailtable") = detailtable
+                    ViewState("nozzletable") = nozzletable
                     If approvaldataset.Tables(1).Rows.Count > 0 Then
                         Approval_BF = convertToJSON(approvaldataset.Tables(1))
                     End If
-                    If detailtable.Rows(0).Item("statusid") = 4 Then
+                    If detailtable.Rows(0).Item("statusid") = 4 Then '4	ปิดงาน
                         If approvaldataset.Tables(2).Rows.Count > 0 Then
                             Approval_AT = convertToJSON(approvaldataset.Tables(2))
                         End If
@@ -89,12 +113,13 @@ Public Class WebForm1
                         invoice = detailtable.Rows(0).Item("InvoiceNo").ToString
                         taxid = detailtable.Rows(0).Item("TaxIDNo").ToString
                         invoicedate = detailtable.Rows(0).Item("InvoiceDate").ToString
-
+                        distance = detailtable.Rows(0).Item("distance").ToString
                     End If
-                    If Not Session("status") = "edit" Then
-                        Session("status") = "read"
+                    If Not ViewState("status") = "edit" Then
+                        ViewState("status") = "read"
                     End If
                     chkuser(detailtable.Rows(0).Item("createby"), detailtable.Rows(0).Item("approvallistid"))
+                    PermissionAppOther = chkPermissionApprovalOther(Request.QueryString("approvalcode"))
                     showdata(detailtable)
                     SetBtn(detailtable.Rows(0).Item("statusid"), detailtable.Rows(0).Item("ownerapproval"))
                     If (Session("userid") = am_id Or
@@ -103,29 +128,14 @@ Public Class WebForm1
                     Session("secid").ToString = "2" Or
                     Session("secid").ToString = "35"
                     ) And
-                    (detailtable.Rows(0).Item("statusid") = 1) Then
+                    (detailtable.Rows(0).Item("statusid") = 1) Then '1	รออนุมัติ
                         If Not (Session("secid").ToString = "2") And Not (Session("secid").ToString = "35") Then
-                            Session("status") = "write"
+                            ViewState("status") = "write"
                         End If
 
                         PermissionOwner = chkPermissionApproval(Request.QueryString("approvalcode"))
                         deadline = PermissionOwner.Tables(0).Rows(0).Item("deadline").ToString
 
-                        'Dim dt As DataTable
-                        'If PermissionOwner.Tables.Count > 1 Then 'ถ้ามีมากกว่า 1 ตารางให้ใช้ตารางที่มี row น้อยกว่า
-                        'If PermissionOwner.Tables(0).Rows.Count > 0 And
-                        'PermissionOwner.Tables(1).Rows.Count > 0 Then
-                        'If PermissionOwner.Tables(0).Rows.Count >= PermissionOwner.Tables(1).Rows.Count Then
-                        'dt = PermissionOwner.Tables(1)
-                        'Else
-                        ' dt = PermissionOwner.Tables(0)
-                        'End If
-                        'Else
-                        'dt = PermissionOwner.Tables(0)
-                        'End If
-                        'Else
-                        'dt = PermissionOwner.Tables(0)
-                        'End If
                         For Each rows As DataRow In PermissionOwner.Tables(0).Rows
                             If rows("OwnerStatus") Then
                                 ownerapproval += rows("sendto").ToString + ","
@@ -134,7 +144,7 @@ Public Class WebForm1
                         If ownerapproval.Length > 0 Then
                             ownerapproval = ownerapproval.Remove(ownerapproval.Length - 1, 1) 'ใช้ในหน้า html
                         End If
-
+                        demo2.InnerText = "(" & ownerapproval & ")"
                         For Each row As DataRow In PermissionOwner.Tables(0).Rows
                             If row("OwnerStatus") Then
                                 If row("sendto").ToString = "AM" Then
@@ -155,22 +165,67 @@ Public Class WebForm1
                                 End If
                             End If
                         Next row
-endprocess:
                     End If
+
+
+                    'ทำเพิ่ม 15/09/67
+                    If (detailtable.Rows(0).Item("statusid") = 12) Then '12	รอนุมัติจากหน่วยงานที่เกี่ยวข้อง
+
+                        demo2.InnerText = "(" & PermissionAppOther.Tables(0).Rows(0).Item("all_approval_code").ToString & ")"
+                        Dim all_approval_id = PermissionAppOther.Tables(0).Rows(0).Item("all_approval_id").ToString
+                        Dim words As String() = all_approval_id.Split(New Char() {","c})
+
+                        words = words.Select(Function(v) v.Trim()).ToArray()
+
+                        If words.Contains(Session("userid").ToString()) Then
+                            approval_other = True
+                            GoTo endprocess
+                        End If
+
+                    End If
+                    If (detailtable.Rows(0).Item("statusid") = 13) Then '13	รอบัญชีตรวจสอบ
+
+                        PermissionAccount = chkPermissionAccount(Request.QueryString("approvalcode"))
+                        demo2.InnerText = "(" & PermissionAccount.Tables(0).Rows(0).Item("acc").ToString & ")"
+                        Dim all_Account_Code = PermissionAccount.Tables(0).Rows(0).Item("acc").ToString
+                        Dim words As String() = all_Account_Code.Split(New Char() {","c})
+
+                        words = words.Select(Function(v) v.Trim()).ToArray()
+
+                        If words.Contains(Session("usercode").ToString()) Then
+                            approval_account = True
+                            GoTo endprocess
+                        End If
+
+                    End If
+
+endprocess:
                 Catch ex As Exception
                     Dim scriptKey As String = "UniqueKeyForThisScript"
                     Dim javaScript As String = "alertWarning('Find Fail')"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
             Else
-                Session("status") = "new"
+                ViewState("status") = "new"
                 If Not Session("branchid") Is Nothing Then
                     cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid")))
                 End If
             End If
         Else
-            detailtable = Session("detailtable")
-            nozzletable = Session("nozzletable")
+            detailtable = ViewState("detailtable")
+            nozzletable = ViewState("nozzletable")
+
+
+            'func ของ ปุ่ม อนุมัติหรือไม่อนุมัติ 
+            Dim target = Request.Form("__EVENTTARGET")
+            If target = "disApprovalFormOtherBy" Then
+                Dim arg_msgCancel As String = Request("__EVENTARGUMENT")
+                disApprovalOther(arg_msgCancel)
+            ElseIf target = "approvalFormOtherBy" Then
+                approvalOther_Allow()
+            ElseIf target = btnCLADVfrmACC.ID Then
+                createCLADVfrmACC()
+            End If
         End If
         SetMenu()
     End Sub
@@ -243,16 +298,16 @@ endprocess:
                     End If
                 Next i
             End If
-            Session("status") = "read"
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & approvaltable.Rows(0).Item("code"))
-
-
+            ViewState("status") = "read"
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('save fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & approvaltable.Rows(0).Item("code"))
+endprocess:
     End Sub
     Private Sub Confirm(approvalcode As String, usercode As String)
         Dim approval As New Approval
@@ -264,8 +319,10 @@ endprocess:
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('Confirm fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
         Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+endprocess:
     End Sub
     Private Function chkPermissionApproval(approvalcode As String) As DataSet
         Dim permissionApproval As New Approval
@@ -273,10 +330,11 @@ endprocess:
         Try
             appPermission = permissionApproval.ApprovalPermission(approvalcode)
         Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('approval_permission fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            'Dim scriptKey As String = "alert"
+            ''Dim javaScript As String = "alert('" & ex.Message & "');"
+            'Dim javaScript As String = "alertWarning('approval_permission fail');"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Throw New ApplicationException("Something happened :( chkPermissionApproval ", ex)
         End Try
         Return appPermission
     End Function
@@ -334,6 +392,12 @@ endprocess:
                 Case = "11"
                     txtStatus.BackColor = Color.Brown
                     txtStatus.ForeColor = Color.White
+                Case = "12"
+                    txtStatus.BackColor = Color.LightYellow
+                Case = "13"
+                    txtStatus.BackColor = Color.LightSalmon
+                Case = "14"
+                    txtStatus.BackColor = Color.IndianRed
             End Select
 
             txtName.Text = .Item("name_request").ToString
@@ -342,10 +406,48 @@ endprocess:
             txtCloseDate.Text = .Item("approvalclosedate").ToString
             txtOwnerApprovalName.Text = .Item("ownerapprovalname").ToString
 
+            'โชว์ตรง signatureBox__main
+            If Not String.IsNullOrEmpty(.Item("name_request").ToString) And Not String.IsNullOrEmpty(.Item("createdate").ToString) Then
+                txtSignatureNameReqBy.Text = .Item("name_request").ToString
+                txtSignatureNameReqBy.ToolTip = .Item("name_request").ToString
+                txtSignatureNameReqDate.Text = .Item("createdate").ToString
+                txtSignatureNameReqDate.ToolTip = .Item("createdate").ToString
+            End If
+            If Not String.IsNullOrEmpty(.Item("supportby").ToString) And Not String.IsNullOrEmpty(.Item("supportstartdate").ToString) Then
+                txtSignatureSupportby.Text = .Item("supportby").ToString
+                txtSignatureSupportby.ToolTip = .Item("supportby").ToString
+                txtSignatureSupportDate.Text = .Item("supportstartdate").ToString
+                txtSignatureSupportDate.ToolTip = .Item("supportstartdate").ToString
+            End If
+            If Not String.IsNullOrEmpty(.Item("approvalothername").ToString) And Not String.IsNullOrEmpty(.Item("approvalotherdate").ToString) Then
+                txtSignatureAppOtherby.Text = .Item("approvalothername").ToString
+                txtSignatureAppOtherby.ToolTip = .Item("approvalothername").ToString
+                txtSignatureAppOtherDate.Text = .Item("approvalotherdate").ToString
+                txtSignatureAppOtherDate.ToolTip = .Item("approvalotherdate").ToString
+            ElseIf (PermissionAppOther IsNot Nothing And
+                (String.IsNullOrEmpty(.Item("approvalothername").ToString) Or
+                String.IsNullOrEmpty(.Item("approvalotherdate").ToString))) Then
+                If (PermissionAppOther.Tables(0).Rows.Count > 0 And
+                    (detailtable.Rows(0).Item("working") Or
+                    detailtable.Rows(0).Item("statusid") = 1)) Then
+                    txtBadgesAppOtherby.Text = "รอนุมัติหน่วยงานที่เกี่ยวข้อง . ."
+                End If
+            End If
+            If Not String.IsNullOrEmpty(.Item("ownerapprovalname").ToString) And Not String.IsNullOrEmpty(.Item("ownerapprovaldate").ToString) Then
+                txtSignatureAppBy.Text = .Item("ownerapprovalname").ToString
+                txtSignatureAppBy.ToolTip = .Item("ownerapprovalname").ToString
+                txtSignatureAppDate.Text = .Item("ownerapprovaldate").ToString
+                txtSignatureAppDate.ToolTip = .Item("ownerapprovaldate").ToString
+            ElseIf (String.IsNullOrEmpty(.Item("ownerapprovalname").ToString) Or String.IsNullOrEmpty(.Item("ownerapprovaldate").ToString)) And
+                (detailtable.Rows(0).Item("working") Or detailtable.Rows(0).Item("statusid") = 1) Then
+                txtBadgesAppby.Text = "รอนุมัติ . ."
+            End If
+
+
             objbranch.SetComboBranchByAreaid(cboBranch, "0", Session("userid"), 1) 'แก้ bug ไม่โชว์สาขา
             cboApproval.SelectedIndex = cboApproval.Items.IndexOf(cboApproval.Items.FindByValue(.Item("approvallistid")))
             cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(.Item("branchid")))
-            If Session("status") = "edit" Then
+            If ViewState("status") = "edit" Then
                 txtPrice.Attributes.Add("type", "number")
                 txtPrice.Text = .Item("price")
             Else
@@ -355,10 +457,15 @@ endprocess:
 
             txtOwnerApprovaldate.Text = .Item("ownerapprovaldate").ToString
             txtDay.Text = .Item("approvalday").ToString
-            txtCloseDetail.Text = .Item("message_closeapproval").ToString
+            txtCloseDetail.Text = "[" & .Item("approvalclosedate").ToString & "] " & .Item("message_closeapproval").ToString
             txtDetail.Text = .Item("approvaldetail").ToString
+
+            If .Item("statusid") = "14" Then
+                lbOwnerDisApprovalName.Text = lbOwnerDisApprovalName.Text & " (ไม่ผ่านอนุมัติจากหน่วยงานที่เกี่ยวข้อง)"
+                lbDisApproval.Text = lbDisApproval.Text & " (ไม่ผ่านอนุมัติจากหน่วยงานที่เกี่ยวข้อง)"
+            End If
             txtOwnerDisApprovalName.Text = .Item("ownerdisapprovalname").ToString
-            txtDisApproval.Text = .Item("message_disapproval").ToString
+            txtDisApproval.Text = "[" & .Item("ownerdisapprovaldate").ToString & "] " & .Item("message_disapproval").ToString
             txtSupportby.Text = .Item("supportby").ToString
             txtSupportdate.Text = .Item("supportstartdate").ToString
             txtSupportFinished.Text = .Item("supportenddate").ToString
@@ -375,7 +482,7 @@ endprocess:
     End Sub
 
     Private Sub SetMenu()
-        Select Case Session("status")
+        Select Case ViewState("status")
             Case = "new"
                 cboApproval.Attributes.Remove("disabled")
                 cboBranch.Attributes.Remove("disabled")
@@ -470,7 +577,7 @@ endprocess:
                 End If
 
             Case = "8"  'รอประสานงานรับเรื่อง
-                    btnConfirm.Visible = False
+                btnConfirm.Visible = False
                 btnCancel.Visible = False
                 btnClose.Visible = False
                 btnAddDoc.Visible = False
@@ -492,6 +599,24 @@ endprocess:
                 btnCancel.Visible = False
                 btnClose.Visible = False
                 btnAddDoc.Visible = True
+                btnEdit.Visible = False
+            Case = "12"  'รอนุมัติจากหน่วยงานที่เกี่ยวข้อง
+                btnConfirm.Visible = False
+                btnCancel.Visible = False
+                btnClose.Visible = False
+                btnAddDoc.Visible = False
+                btnEdit.Visible = False
+            Case = "13"  'รอบัญชีตรวจสอบ
+                btnConfirm.Visible = False
+                btnCancel.Visible = False
+                btnClose.Visible = False
+                btnAddDoc.Visible = False
+                btnEdit.Visible = False
+            Case = "14"  'ไม่ผ่านอนุมัติจากหน่วยงานที่เกี่ยวข้อง
+                btnConfirm.Visible = False
+                btnCancel.Visible = False
+                btnClose.Visible = False
+                btnAddDoc.Visible = False
                 btnEdit.Visible = False
         End Select
     End Sub
@@ -537,8 +662,7 @@ endprocess:
 
         Try
             approvalcode = approval.Approval_Cancel(txtApprovalcode.Text.Trim(), Session("usercode"))
-            Session("status") = "read"
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & approvalcode)
+            ViewState("status") = "read"
 
 
         Catch ex As Exception
@@ -546,7 +670,10 @@ endprocess:
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('save fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+endprocess:
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
@@ -640,7 +767,7 @@ endprocess:
 
         Try
             approvalcode = approval.Approval_Allow(txtApprovalcode.Text.Trim(), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
 
         Catch ex As Exception
@@ -650,7 +777,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Response.Redirect("../approval/approval.aspx?approvalcode=" & approvalcode)
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
 endprocess:
     End Sub
 
@@ -669,12 +796,12 @@ endprocess:
     End Function
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
-        Session("status") = "edit"
+        ViewState("status") = "edit"
         Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 
     Private Sub btnCancelEdit_Click(sender As Object, e As EventArgs) Handles btnCancelEdit.Click
-        Session("status") = "read"
+        ViewState("status") = "read"
         Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 
@@ -689,8 +816,7 @@ endprocess:
         Try
             approval.Approval_Edit(Request.QueryString("approvalcode"), cboApproval.SelectedItem.Value, txtName.Text.Trim(), txtDetail.Text.Trim(), txtPrice.Text.Trim(),
                                                   cboBranch.SelectedItem.Value, day, Session("userid"))
-            Session("status") = "read"
-            Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+            ViewState("status") = "read"
 
 
         Catch ex As Exception
@@ -698,7 +824,10 @@ endprocess:
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('save fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+endprocess:
     End Sub
 
     Private Sub btnSaveComment_Click(sender As Object, e As EventArgs) Handles btnSaveComment.Click
@@ -711,8 +840,10 @@ endprocess:
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('SaveComment fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
         Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+endprocess:
     End Sub
 
 
@@ -721,19 +852,21 @@ endprocess:
 
         Try
             approval.Approval_Support_Knowledge(Request.QueryString("approvalcode"), Session("usercode"))
-            Session("status") = "read"
+            ViewState("status") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('SupportAllow fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
         End Try
         Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+endprocess:
     End Sub
 
     Private Sub btnAddDoc_Click(sender As Object, e As EventArgs) Handles btnAddDoc.Click
-        Response.Redirect("../approval/ApprovalAttach.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+        goAttatchPage()
     End Sub
 
     Private Sub btnSupportClose_Click(sender As Object, e As EventArgs) Handles btnSupportClose.Click
@@ -762,5 +895,99 @@ endprocess:
 
     Private Sub btnrdrCLADV_Click(sender As Object, e As EventArgs) Handles btnrdrCLADV.Click
         Response.Redirect("../Non-PO/Advance/ClearAdvance.aspx?NonpoCode=" & detailtable.Rows(0).Item("statusCLADV").ToString)
+    End Sub
+    Private Function chkPermissionApprovalOther(approvalcode As String) As DataSet
+        Dim permissionApproval As New Approval
+        Dim appPermission As New DataSet
+        Try
+            appPermission = permissionApproval.ApprovalOtherPermission(approvalcode)
+        Catch ex As Exception
+            'Dim scriptKey As String = "alert"
+            ''Dim javaScript As String = "alert('" & ex.Message & "');"
+            'Dim javaScript As String = "alertWarning('approval_permission fail');"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Throw New ApplicationException("Something happened :( chkPermissionApprovalOther ", ex)
+        End Try
+        Return appPermission
+    End Function
+
+    Private Sub disApprovalOther(msgCancel As String)
+        Dim approval As New Approval
+        Try
+            approval.Approval_NotAllow_Other(Request.QueryString("approvalcode"), msgCancel, Session("usercode"))
+            ViewState("status") = "read"
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('disApprovalOther fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+endprocess:
+    End Sub
+    Private Sub approvalOther_Allow()
+        Dim approval As New Approval
+        Dim approvalcode As String
+
+        Try
+            approvalcode = approval.Approval_Allow_Other(Request.QueryString("approvalcode"), Session("usercode"))
+            ViewState("status") = "read"
+
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('save fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../approval/approval.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+endprocess:
+    End Sub
+
+    Private Function chkPermissionAccount(approvalcode As String) As DataSet
+        Dim permissionApproval As New Approval
+        Dim appPermission As New DataSet
+        Try
+            appPermission = permissionApproval.ApprovalAccountPermission(approvalcode)
+        Catch ex As Exception
+            'Dim scriptKey As String = "alert"
+            ''Dim javaScript As String = "alert('" & ex.Message & "');"
+            'Dim javaScript As String = "alertWarning('approval_permission fail');"
+            'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            Throw New ApplicationException("Something happened :( chkPermissionApprovalOther ", ex)
+        End Try
+        Return appPermission
+    End Function
+
+    Private Sub createCLADVfrmACC()
+        Dim approval As New Approval
+        Dim approvalcode As String
+
+        Try
+            'approvalcode = approval.Approval_Allow_Other(Request.QueryString("approvalcode"), Session("usercode"))
+            ViewState("status") = "read"
+
+            Dim s As String = "window.open('https://www.google.com/?hl=th', '_blank');"
+            ClientScript.RegisterStartupScript(Me.GetType(), "alertscript", s, True)
+
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('save fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            GoTo endprocess
+        End Try
+        Response.Redirect("../Non-PO/Advance/ClearAdvance.aspx?f=APP&code_ref=" & Request.QueryString("approvalcode"))
+endprocess:
+    End Sub
+    Private Sub goAttatchPage()
+        Response.Redirect("../approval/ApprovalAttach.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+    End Sub
+
+    Private Sub btnEditDetailInvoice_ServerClick(sender As Object, e As EventArgs) Handles btnEditDetailInvoice.ServerClick
+        goAttatchPage()
     End Sub
 End Class

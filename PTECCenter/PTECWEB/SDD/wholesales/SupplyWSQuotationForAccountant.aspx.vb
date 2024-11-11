@@ -60,7 +60,6 @@ Public Class SupplyWSQuotationForAccountant
             End If
 
         End If
-
     End Sub
     Private Function createimagetable() As DataTable
         Dim dt As New DataTable

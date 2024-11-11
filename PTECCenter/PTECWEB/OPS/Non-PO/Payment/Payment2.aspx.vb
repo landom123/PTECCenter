@@ -68,6 +68,25 @@ Public Class Payment2
             menutable = Session("menulist")
         End If
 
+        '######## START Check Permission page  ########
+        Dim total As Integer = menutable.Rows.Count - 1
+        Dim is_allowThisPage As Boolean = False
+        Dim urlCurrent As String = Request.Url.ToString().ToLower()
+        For i = 0 To total
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "").ToLower()
+            If Not String.IsNullOrEmpty(frmMenuUrl) Then
+                If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
+                    is_allowThisPage = True
+                    Exit For
+                End If
+            End If
+        Next
+        If Not is_allowThisPage Then
+            Response.Redirect("~/403.aspx")
+        End If
+        '######## END Check Permission page  ########
+
+
         txtDuedate.Attributes.Add("readonly", "readonly")
         txtinvoicedate.Attributes.Add("readonly", "readonly")
 
@@ -96,14 +115,14 @@ Public Class Payment2
 
             objbranch.SetComboBranch(cboBranch, usercode)
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
-            objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
+            objsec.SetCboSection_seccode(cboSection, 0)
             objcompany.SetCboCompany(cboCompany, 1)
             SetCboUsers(cboOwner)
             setmaindefault()
 
             objsmb.SetCboSmartBilllist(multiSelect, usercode)
 
-            objdep.SetCboDepartmentBybranch(cboDep, 0)
+            'objdep.SetCboDepartmentBybranch(cboDep, 0)
             objNonpo.SetCboAccountCode(cboAccountCode, Session("userid"))
             'objsupplier.SetCboVendor(cboVendor, "")
             'objNonpo.SetCboPurpose(cboPP, "all")
@@ -113,9 +132,9 @@ Public Class Payment2
 
             If Not Request.QueryString("NonpoCode") Is Nothing Then
                 objNonpo.SetCboPurpose(cboPP, "all")
-                Session("detailtable_payment") = detailtable
-                'If Not Session("status_payment") = "edit" Then
-                Session("status_payment") = "read"
+                ViewState("detailtable_payment") = detailtable
+                'If Not ViewState("status_payment") = "edit" Then
+                ViewState("status_payment") = "read"
                 ' End If
                 Try
                     attatch.SetCboMyfile(cboMyfile, Session("userid"))
@@ -129,7 +148,7 @@ Public Class Payment2
 
                     If (account_code.IndexOf(usercode.ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 7) Then
-                        Session("status_payment") = "account"
+                        ViewState("status_payment") = "account"
 
                     End If
 
@@ -148,7 +167,7 @@ Public Class Payment2
                     sm_code.ToString.IndexOf(usercode) > -1 Or
                     am_code.ToString.IndexOf(usercode) > -1) And
                     (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then
-                        Session("status_payment") = "write"
+                        ViewState("status_payment") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
                         'Dim SearchForThis As String = "DEF"
                         'Dim FirstCharacter As Integer = SearchWithinThis.IndexOf(SearchForThis)
@@ -242,7 +261,7 @@ endprocess:
                 Dim objjob As New jobs
                 Dim ds As New DataSet
                 If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
-                    Session("status_payment") = "new"
+                    ViewState("status_payment") = "new"
                     codeRef.Text = Request.QueryString("code_ref").ToString
                     ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", usercode.ToString)
                     head = ds.Tables(0)
@@ -252,27 +271,27 @@ endprocess:
                 End If
             Else
                 objNonpo.SetCboPurpose(cboPP, "active")
-                Session("status_payment") = "new"
+                ViewState("status_payment") = "new"
             End If
 
 
 
-            Session("head_payment") = head
-            Session("detailtable_payment") = detailtable
-            Session("maintable_payment") = maintable
-            Session("comment_payment") = CommentTable
-            Session("attatch_payment") = AttachTable
+            ViewState("head_payment") = head
+            ViewState("detailtable_payment") = detailtable
+            ViewState("maintable_payment") = maintable
+            ViewState("comment_payment") = CommentTable
+            ViewState("attatch_payment") = AttachTable
         Else
 
             If Not String.IsNullOrEmpty(Request.QueryString("NonpoCode")) Then
                 account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
             End If
 
-            head = Session("head_payment")
-            detailtable = Session("detailtable_payment")
-            maintable = Session("maintable_payment")
-            AttachTable = Session("attatch_payment")
-            CommentTable = Session("comment_payment")
+            head = ViewState("head_payment")
+            detailtable = ViewState("detailtable_payment")
+            maintable = ViewState("maintable_payment")
+            AttachTable = ViewState("attatch_payment")
+            CommentTable = ViewState("comment_payment")
 
             Try
                 statusid = maintable.Rows(0).Item("statusid")
@@ -407,7 +426,7 @@ endprocess:
                 Case = "1" '1 : รอยืนยัน
                     statusnonpo.Attributes.Add("class", "btn btn-info")
                     If .Rows(0).Item("createby").ToString = Session("userid") Then
-                        Session("status_payment") = "edit"
+                        ViewState("status_payment") = "edit"
                     End If
                 Case = "2" '2 : รออนุมัติ
                     statusnonpo.Attributes.Add("class", "btn btn-warning")
@@ -488,7 +507,7 @@ endprocess:
             cboVendor.SelectedIndex = cboVendor.Items.IndexOf(cboVendor.Items.FindByValue(.Rows(0).Item("vendorcode").ToString))
 
             chkVat.Checked = .Rows(0).Item("vat_wait")
-            If (Session("status_payment") = "new" Or Session("status_payment") = "edit" Or Session("status_payment") = "account") Then
+            If (ViewState("status_payment") = "new" Or ViewState("status_payment") = "edit" Or ViewState("status_payment") = "account") Then
                 cboVendor.Attributes.Remove("disabled")
 
                 chkCheque.Attributes.Remove("disabled")
@@ -499,7 +518,7 @@ endprocess:
                 chkPXC.Attributes.Remove("disabled")
                 chkdeductSell.Attributes.Remove("disabled")
 
-                If Not Session("status_payment") = "account" Then
+                If Not ViewState("status_payment") = "account" Then
                     txtNote.Attributes.Remove("readonly")
                 Else
                     txtNote.Attributes.Add("readonly", "readonly")
@@ -585,7 +604,7 @@ endprocess:
 
     End Sub
     'Private Sub SetMenu()
-    '    Select Case Session("status_payment")
+    '    Select Case ViewState("status_payment")
     '        Case = "new"
     '            'ช่อง ปุ่ม เพิ่มรายการ
     '            btnFromAddDetail.Visible = True
@@ -701,7 +720,7 @@ endprocess:
                     btnConfirm.Enabled = True
                     btnCancel.Enabled = True
 
-                    Session("status_payment") = "edit"
+                    ViewState("status_payment") = "edit"
 
                     'BtnCancelCodeRef.Visible = True
 
@@ -718,7 +737,7 @@ endprocess:
                     btnConfirm.Enabled = False
                     btnCancel.Enabled = False
 
-                    Session("status_payment") = "read"
+                    ViewState("status_payment") = "read"
 
 
                     'BtnCancelCodeRef.Visible = False
@@ -803,7 +822,7 @@ endprocess:
                     btnAddAttatch.Visible = False
 
                 End If
-                Session("status_payment") = "read"
+                ViewState("status_payment") = "read"
 
 
                 btnExport.Visible = False
@@ -1343,7 +1362,7 @@ endprocess:
     '    '                    qty, cboUnit.SelectedValue, cboUnit.SelectedItem.Text, cost, cboSupplier.SelectedValue,
     '    '                    cboSupplier.SelectedItem.Text, urgent, cboPolicy.SelectedValue, reqdate, txtJobDetail.Text, 0)
 
-    '    Session("detailtable_payment") = detailtable
+    '    ViewState("detailtable_payment") = detailtable
 
     'End Sub
     'Private Sub updateDetails(indexrow As Integer)
@@ -1392,11 +1411,11 @@ endprocess:
             AttachTable = nonpoDs.Tables(3)
             CommentTable = nonpoDs.Tables(4)
 
-            Session("head_payment") = head
-            Session("detailtable_payment") = detailtable
-            Session("maintable_payment") = maintable
-            Session("comment_payment") = CommentTable
-            Session("attatch_payment") = AttachTable
+            ViewState("head_payment") = head
+            ViewState("detailtable_payment") = detailtable
+            ViewState("maintable_payment") = maintable
+            ViewState("comment_payment") = CommentTable
+            ViewState("attatch_payment") = AttachTable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1418,7 +1437,7 @@ endprocess:
 
             maintable = nonpoDs.Tables(1)
 
-            Session("maintable_payment") = maintable
+            ViewState("maintable_payment") = maintable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1432,7 +1451,7 @@ endprocess:
         hiddenAdvancedetailid.Value = 0
 
         cboAccountCode.SelectedIndex = -1
-        cboDep.SelectedIndex = -1
+        'cboDep.SelectedIndex = -1
         cboBU.SelectedIndex = -1
         cboPP.SelectedIndex = -1
         cboPJ.SelectedIndex = -1
@@ -1755,7 +1774,7 @@ endprocess:
     End Sub
     Private Sub saveorupdate()
         If validatedata() Then
-            'If Session("status") = "new" Then
+            'If viewstate("status") = "new" Then
             'If maintable.Rows.Count = 0 Then
             updatehead()
             'End If
@@ -1775,7 +1794,7 @@ endprocess:
         Try
             payno = objNonpo.SavePayment(payno, maintable, detailtable, Session("usercode"))
             txtpmno.Text = payno
-            Session("status_payment") = "edit"
+            ViewState("status_payment") = "edit"
 
 
         Catch ex As Exception
@@ -1876,7 +1895,7 @@ endprocess:
             End With
 
         End If
-        Session("maintable_payment") = maintable
+        ViewState("maintable_payment") = maintable
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
@@ -1898,7 +1917,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Session("status_payment") = "read"
+        ViewState("status_payment") = "read"
         Response.Redirect("../Payment/Payment2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
@@ -1908,7 +1927,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_NotAllow(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1926,7 +1945,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Allow(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1944,7 +1963,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Verify(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1962,7 +1981,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Pass(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1980,7 +1999,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AccountEdit(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1998,7 +2017,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Reject(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -2016,7 +2035,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Complete(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -2034,7 +2053,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_FNS_ReceiveDoc(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -2188,7 +2207,7 @@ endprocess:
                 End With
             End If
 
-            Session("detailtable_payment") = detailtable
+            ViewState("detailtable_payment") = detailtable
             checkunsave()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -2219,7 +2238,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Cancel(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_payment") = "read"
+            ViewState("status_payment") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -2339,8 +2358,8 @@ endprocess:
                         lbTotal_purecard.InnerText = purecard
                     End If
 
-                    'Session("head_payment") = head
-                    Session("detailtable_payment") = detailtable
+                    'ViewState("head_payment") = head
+                    ViewState("detailtable_payment") = detailtable
                 End If
 
                 hasRef()

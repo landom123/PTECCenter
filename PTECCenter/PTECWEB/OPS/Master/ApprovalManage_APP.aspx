@@ -19,7 +19,7 @@
                     จัดการงาน (APP)
                 </ol>
                 <div class="row">
-                    <div class="col-md12 mb-3">
+                    <div class="col-md-12 mb-3">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">เลขที่เอกสาร</span>
@@ -194,9 +194,15 @@
                         arrs_app[i].style.color = "White";
 
                         break;
+                    case "รอนุมัติจากหน่วยงานที่เกี่ยวข้อง":
+                        arrs_app[i].style.backgroundColor = "LightYellow";
+                        break;
                     case "รอบัญชีตรวจสอบ":
                         arrs_app[i].style.backgroundColor = "LightSalmon";
 
+                        break;
+                    case "ไม่ผ่านอนุมัติจากหน่วยงานที่เกี่ยวข้อง":
+                        arrs_app[i].style.backgroundColor = "IndianRed";
                         break;
                     case "เอกสารครบถ้วน":
                         arrs_app[i].style.backgroundColor = "MediumPurple";

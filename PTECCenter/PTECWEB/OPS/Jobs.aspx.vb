@@ -1,5 +1,7 @@
 ﻿Imports CrystalDecisions.CrystalReports.Engine
 Imports CrystalDecisions.Shared
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 Imports System.IO
 Imports System.Windows
 
@@ -8,10 +10,13 @@ Public Class frmJobs
     Public objStatus As String
     Public detailtable As DataTable '= createdetailtable()
     Public maintable As DataTable '= createmaintable()
+    Public nozzletable As DataTable
+    Public assetsNozzletable As DataTable
     Public menutable As DataTable
     Public owner As Integer
     Public branchid As Integer
     Public jobtypeid As Integer
+    Public cntdt As Integer
 
     Public jobcateid As Integer
     Public jobgroupid As Integer
@@ -49,13 +54,33 @@ Public Class frmJobs
         End If
 
 
+        '######## START Check Permission page  ########
+        Dim total As Integer = menutable.Rows.Count - 1
+        Dim is_allowThisPage As Boolean = False
+        Dim urlCurrent As String = Request.Url.ToString().ToLower()
+        For i = 0 To total
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "").ToLower()
+            If Not String.IsNullOrEmpty(frmMenuUrl) Then
+                If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
+                    is_allowThisPage = True
+                    Exit For
+                End If
+            End If
+        Next
+        If Not is_allowThisPage Then
+            Response.Redirect("~/403.aspx")
+        End If
+        '######## END Check Permission page  ########
+
 
         If Not IsPostBack() Then
             detailtable = createdetailtable()
             maintable = createmaintable()
-            Session("detailtable") = detailtable
-            Session("maintable") = maintable
-            Session("status") = "new"
+            nozzletable = createnozzletable()
+            ViewState("nozzletable") = nozzletable
+            ViewState("detailtable") = detailtable
+            ViewState("maintable") = maintable
+            ViewState("status") = "new"
             objStatus = "new"
 
             ClearText()
@@ -71,14 +96,14 @@ Public Class frmJobs
             'SetCboDepartment(cboDepartment)
             'SetCboSection(cboSection, cboDepartment.SelectedItem.Value)
             'objAssets.SetCboAssets(cboAsset, 0)
-            objAssets.SetCboVendorByName(cboAsset, 0)
+            objAssets.SetCboAssetsByName(cboAsset, 0)
 
             SetCboJobType(cboJobType, usercode, "actived")
 
 
             SetCboUnit(cboUnit)
             SetCboUsers(cboOwner)
-            'Session("jobtype") = cboJobType.SelectedItem.Value
+            'ViewState("jobtype") = cboJobType.SelectedItem.Value
 
             jobtypeid = cboJobType.SelectedItem.Value
             objpolicy.setComboPolicyByJobTypeID(cboPolicy, cboJobType.SelectedItem.Value)
@@ -86,18 +111,17 @@ Public Class frmJobs
             If Not Request.QueryString("jobno") Is Nothing Then
                 'objpolicy.setComboPolicyByJobTypeID(cboPolicy, cboJobType.SelectedItem.Value)
                 'txtDocDate.Text = Now()
-                Session("jobno") = Request.QueryString("jobno")
-                txtJobno.Text = Session("jobno")
+                ViewState("jobno") = Request.QueryString("jobno")
+                txtJobno.Text = ViewState("jobno")
                 FindJobNo(txtJobno.Text)
 
             Else
                 If Not Session("branchid") Is Nothing Then
                     cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid")))
-                    If cboJobType.SelectedItem.Value = 1 Then
-                        FindPositionInPump(cboBranch.SelectedItem.Value)
-                    End If
+                    FindPositionInPump(cboBranch.SelectedItem.Value)
+                    findNozzle(cboBranch.SelectedItem.Value)
                 End If
-                Session("status") = "new"
+                ViewState("status") = "new"
                 objStatus = "new"
                 txtCreateBy.Text = Session("username")
                 txtCreateDate.Text = Now()
@@ -105,11 +129,13 @@ Public Class frmJobs
 
             SetMenu()
         Else
-            objStatus = Session("status")
+            objStatus = ViewState("status")
 
-            'If Not (Session("detailtable") Is Nothing) Then
-            detailtable = Session("detailtable")
-            maintable = Session("maintable")
+            'If Not (ViewState("detailtable") Is Nothing) Then
+            detailtable = ViewState("detailtable")
+            maintable = ViewState("maintable")
+            nozzletable = ViewState("nozzletable")
+            assetsNozzletable = ViewState("assetsNozzletable")
             'If maintable.Rows.Count > 0 Then
             '    showdata(maintable)
             'End If
@@ -144,18 +170,20 @@ Public Class frmJobs
         Dim mydataset As DataSet
         'Dim maintable As DataTable
         Dim usercode As String = Session("usercode")
-        Session("jobno") = jobno
+        ViewState("jobno") = jobno
         'itemtable
         Try
             mydataset = job.Find(usercode, jobno)
             maintable = mydataset.Tables(0)
             detailtable = mydataset.Tables(1)
+            nozzletable = mydataset.Tables(2)
             'itemtable = mydataset.Tables(1)
-            'Session("itemtable") = itemtable
+            'ViewState("itemtable") = itemtable
 
             showdata(maintable)
-            Session("maintable") = mydataset.Tables(0)
-            Session("detailtable") = mydataset.Tables(1)
+            ViewState("maintable") = mydataset.Tables(0)
+            ViewState("detailtable") = mydataset.Tables(1)
+            ViewState("nozzletable") = mydataset.Tables(2)
         Catch ex As Exception
             Dim scriptKey As String = "UniqueKeyForThisScript"
             Dim javaScript As String = "alertWarning('Find Fail')"
@@ -176,19 +204,19 @@ Public Class frmJobs
             txtStatus.Text = .Item("statusname")
             Select Case .Item("statusid")
                 Case = 1
-                    Session("status") = "edit"
+                    ViewState("status") = "edit"
                     objStatus = "edit"
                 Case = 2
-                    Session("status") = "confirm"
+                    ViewState("status") = "confirm"
                     objStatus = "confirm"
                 Case = 3
-                    Session("status") = "action"
+                    ViewState("status") = "action"
                     objStatus = "action"
                 Case = 4
-                    Session("status") = "close"
+                    ViewState("status") = "close"
                     objStatus = "close"
                 Case = 5
-                    Session("status") = "cancel"
+                    ViewState("status") = "cancel"
                     objStatus = "cancel"
             End Select
 
@@ -199,6 +227,7 @@ Public Class frmJobs
 
 
 
+            BindDataNozzle()
         End With
     End Sub
     Private Function createdetailtable() As DataTable
@@ -228,6 +257,7 @@ Public Class frmJobs
         dt.Columns.Add("attatch", GetType(String))
         dt.Columns.Add("brand", GetType(String))
         dt.Columns.Add("model", GetType(String))
+        dt.Columns.Add("nozzle", GetType(String))
         'dt.Columns.Add("vendor_code", GetType(String))
 
 
@@ -249,6 +279,28 @@ Public Class frmJobs
         dt.Columns.Add("depid", GetType(Double))
         dt.Columns.Add("secid", GetType(Double))
         dt.Columns.Add("owner", GetType(Integer))
+
+        Return dt
+    End Function
+    Private Function createnozzletable() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("nozzle_ID", GetType(Integer))
+        dt.Columns.Add("nozzle_No", GetType(String))
+        dt.Columns.Add("branchid", GetType(Integer))
+        dt.Columns.Add("rowNumber", GetType(Integer))
+        dt.Columns.Add("brand", GetType(String))
+        dt.Columns.Add("expiryDate", GetType(String))
+        dt.Columns.Add("productType", GetType(String))
+        dt.Columns.Add("positionOnAssest", GetType(String))
+        dt.Columns.Add("url", GetType(String))
+        dt.Columns.Add("active", GetType(Integer))
+        dt.Columns.Add("AssetID", GetType(String))
+        dt.Columns.Add("UpdateBycode", GetType(String))
+        dt.Columns.Add("UpdateBy", GetType(Integer))
+        dt.Columns.Add("UpdateDate", GetType(String))
+        dt.Columns.Add("jobref", GetType(String))
+
 
         Return dt
     End Function
@@ -294,9 +346,9 @@ Public Class frmJobs
                 btnPrint.Enabled = True
                 btnCancel.Disabled = True
                 'Dim scriptKey As String = "UniqueKeyForThisScript"
-                'Dim javaScript As String = "<script type='text/javascript'>chkButtonCancel('btnCancel'," & Session("status") & ");"
+                'Dim javaScript As String = "<script type='text/javascript'>chkButtonCancel('btnCancel'," & ViewState("status") & ");"
                 'ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
-                'Page.ClientScript.RegisterStartupScript(Me.GetType(), "window-script", "chkButtonCancel('btnCancel'," & Session("status") & ")", True)
+                'Page.ClientScript.RegisterStartupScript(Me.GetType(), "window-script", "chkButtonCancel('btnCancel'," & ViewState("status") & ")", True)
         End Select
 
 
@@ -320,10 +372,10 @@ Public Class frmJobs
         txtQuantity.Text = "1"
         detailtable.Rows.Clear()
         maintable.Rows.Clear()
-        Session("detailtable") = detailtable
-        Session("maintable") = maintable
-        Session("status") = "new"
-        Session("jobno") = Nothing
+        ViewState("detailtable") = detailtable
+        ViewState("maintable") = maintable
+        ViewState("status") = "new"
+        ViewState("jobno") = Nothing
 
 
         detailtable.Rows.Clear()
@@ -333,7 +385,7 @@ Public Class frmJobs
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If validatedata() Then
-            'If Session("status") = "new" Then
+            'If ViewState("status") = "new" Then
             If maintable.Rows.Count = 0 Then
                 updatehead()
             End If
@@ -396,8 +448,8 @@ endprocess:
         Try
             jobno = job.Save(jobno, maintable, detailtable, Session("usercode"))
             txtJobno.Text = jobno
-            Session("jobno") = jobno
-            Session("status") = "edit"
+            ViewState("jobno") = jobno
+            ViewState("status") = "edit"
             objStatus = "edit"
             txtStatus.Text = "แจ้งงาน"
 
@@ -424,8 +476,8 @@ endprocess:
     '    Try
     '        jobcode = job.Save(maintable, detailtable)
     '        txtJobno.Text = jobcode
-    '        Session("jobcode") = jobcode
-    '        Session("status") = "edit"
+    '        ViewState("jobcode") = jobcode
+    '        ViewState("status") = "edit"
     '    Catch ex As Exception
     '        Dim scriptKey As String = "UniqueKeyForThisScript"
     '        Dim javaScript As String = "<script type='text/javascript'>msgalert('" & ex.Message & "');"
@@ -458,6 +510,16 @@ endprocess:
             'GoTo endprocess
             'End If
         End If
+
+        If cboJobType.SelectedItem.Text.ToString.IndexOf("ตีตรา") > -1 Then
+            If String.IsNullOrEmpty(lblnozzlehidden.Text.ToString) Then
+                result = False
+                msg = "กรุณาระบุมือจ่ายที่จะตีตรา"
+                GoTo endprocess
+            End If
+
+        End If
+
         If String.IsNullOrEmpty(txtJobDetail.Text) Then
             result = False
             msg = "กรุณาระบุรายละเอียด"
@@ -487,7 +549,7 @@ endprocess:
 
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         objStatus = "new"
-        Session("status") = "new"
+        ViewState("status") = "new"
         ClearText()
         SetMenu()
     End Sub
@@ -522,13 +584,13 @@ endprocess:
             rpt.SetParameterValue("@jobcode", jobcode)
 
 
-            Session("rpt") = rpt
+            ViewState("rpt") = rpt
             Response.Write("<script>")
             Response.Write("window.open('../ReportViewer.aspx','_blank')")
             Response.Write("</script>")
 
 
-            'Me.CrystalReportViewer1.ReportSource = Session("rpt")
+            'Me.CrystalReportViewer1.ReportSource = ViewState("rpt")
             'Me.CrystalReportViewer1.DataBind()
         Catch ex As Exception
             Dim scriptKey As String = "UniqueKeyForThisScript"
@@ -597,7 +659,7 @@ endprocess:
         Dim result As String
         'Dim jobtypeid As Integer=0
         Try
-            result = job.EmailList(Session("jobno"), jobtypeid)
+            result = job.EmailList(ViewState("jobno"), jobtypeid)
         Catch ex As Exception
             result = False
             Dim scriptKey As String = "UniqueKeyForThisScript"
@@ -612,7 +674,7 @@ endprocess:
 
         Try
             job.Confirm(jobno, usercode)
-            Session("status") = "confirm"
+            ViewState("status") = "confirm"
             objStatus = "confirm"
             txtStatus.Text = "ยืนยัน"
             SetMenu()
@@ -658,6 +720,8 @@ endprocess:
         txtAssetCode.Text = ""
         txtAssetName.Text = ""
         lblattatch.Text = ""
+        lblnozzle.Text = ""
+        lblnozzlehidden.Text = ""
     End Sub
 
     Private Sub updatehead()
@@ -688,7 +752,7 @@ endprocess:
             End With
 
         End If
-        Session("maintable") = maintable
+        ViewState("maintable") = maintable
     End Sub
     Private Sub AddDetails()
 
@@ -743,6 +807,7 @@ endprocess:
         row("attatch") = lblattatch.Text
         row("brand") = txtBrand.Text
         row("model") = txtModel.Text
+        row("nozzle") = lblnozzlehidden.Text
         'row("vendor_code") = ""
 
         detailtable.Rows.Add(row)
@@ -750,7 +815,7 @@ endprocess:
         '                    qty, cboUnit.SelectedItem.Value, cboUnit.SelectedItem.Text, cost, cboSupplier.SelectedItem.Value,
         '                    cboSupplier.SelectedItem.Text, urgent, cboPolicy.SelectedValue, reqdate, txtJobDetail.Text, 0)
 
-        Session("detailtable") = detailtable
+        ViewState("detailtable") = detailtable
 
     End Sub
 
@@ -795,21 +860,23 @@ endprocess:
     Private Function FindPositionInPump(branchid As String) As Boolean
         Dim objjobs As New jobs
         Try
-            'objjobs.SetPositionInPumpList(cboPosition, branchid)
-            Return True
+            If cboJobType.SelectedItem.Value = 1 Then
+                'objjobs.SetPositionInPumpList(cboPosition, branchid)
+            End If
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             Dim javaScript As String = "alertWarning('fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             Return False
         End Try
+        Return True
     End Function
 
     Private Function setDueDate(policyid As String) As Boolean
         Dim objjobs As New jobs
         Dim mydataset As DataSet
         Try
-            mydataset = objjobs.setDueDateByPolicyID(policyid)
+            mydataset = objjobs.setDueDateByPolicyID(policyid, txtDocDate.Text)
             txtDueDate.Text = mydataset.Tables(0).Rows(0).Item("duedate")
             Return True
         Catch ex As Exception
@@ -838,10 +905,9 @@ endprocess:
             Dim objdep As New Department
             objdep.SetCboDepartment(cboDepartment, branchid)
 
-            If cboJobType.SelectedItem.Value = 1 Then
-                FindPositionInPump(branchid)
-            End If
-            objAssets.SetCboVendorByName(cboAsset, 0)
+            FindPositionInPump(branchid)
+            findNozzle(cboBranch.SelectedItem.Value)
+            objAssets.SetCboAssetsByName(cboAsset, 0)
         End If
 
     End Sub
@@ -871,6 +937,16 @@ endprocess:
                 ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             End If
         End If
+        If cboJobType.SelectedItem.Text.ToString.IndexOf("ตีตรา") > -1 Then
+            If Not cboBranch.SelectedItem.Value = "" Then
+                findNozzle(cboBranch.SelectedItem.Value)
+            Else
+                Dim scriptKey As String = "alert"
+                Dim javaScript As String = "alertWarning('กรุณาเลือกสาขา');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End If
+        End If
+
     End Sub
 
     Private Sub cboAsset_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboAsset.SelectedIndexChanged
@@ -938,6 +1014,111 @@ endprocess:
     '        MessageBox.Show(ex.Message)
     '    End Try
     'End Sub
+    Private Sub BindDataAssetsNozzle()
+        'cntdt = assetsNozzletable.Rows.Count
+        cntdt = assetsNozzletable.Select("jobref is null or jobref=''").Length
+        gvAssetsNozzle.Caption = "ทั้งหมด " & cntdt & " รายการ"
+        gvAssetsNozzle.DataSource = assetsNozzletable
+        gvAssetsNozzle.DataBind()
+    End Sub
+    Private Sub BindDataNozzle()
+        cntdt = nozzletable.Rows.Count
+        gvNozzle.Caption = "ทั้งหมด " & cntdt & " รายการ"
+        gvNozzle.DataSource = nozzletable
+        gvNozzle.DataBind()
+    End Sub
+    Private Sub findNozzle(branchid As Integer)
+        Dim objassets As New Assets
+
+        Try
+            If cboJobType.SelectedItem.Text.ToString.IndexOf("ตีตรา") > -1 Then
+                assetsNozzletable = objassets.AssesNozzle_list(branchid)
+                BindDataAssetsNozzle()
+                ViewState("assetsNozzletable") = assetsNozzletable
+            End If
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('find nozzle fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+
+    Private Sub btnSetNozzle_Click(sender As Object, e As EventArgs) Handles btnSetNozzle.Click
+        Dim confirmValue As String = Request.Form("setNozzle")
+        'Dim rawresp As String = "[{""id"":""1""},{""id"":""2""},{""id"":""3""},{""id"":""4""},{""id"":""5""},{""id"":""6""},{""id"":""7""}]"
+
+        Dim result = JsonConvert.DeserializeObject(Of ArrayList)(confirmValue)
+        Dim token As JToken
+        Dim positionAll As String = ""
+        Dim codeAll As String = ""
+        Dim position
+        Dim code
+        If result IsNot Nothing Then
+
+            Dim objjob As New jobs
+
+            Dim jyncode As String = objjob.Jobs_Get_RunningNO_JTN()
+            nozzletable = createnozzletable()
+
+            For Each value As Object In result
+                token = JObject.Parse(value.ToString())
+                position = token.SelectToken("position")
+                code = token.SelectToken("code")
+
+                positionAll = positionAll & "(" & position & "),"
+                codeAll = codeAll & code & ","
 
 
+                Dim row As DataRow
+                row = nozzletable.NewRow()
+                With assetsNozzletable.Rows(assetsNozzletable.Rows.IndexOf(assetsNozzletable.Select("nozzle_No='" & code & "'")(0)))
+                    row("nozzle_ID") = .Item("nozzle_ID")
+                    row("nozzle_No") = .Item("nozzle_No")
+                    row("branchid") = .Item("branchid")
+                    row("rowNumber") = .Item("rowNumber")
+                    row("brand") = .Item("brand")
+                    row("expiryDate") = .Item("expiryDate")
+                    row("productType") = .Item("productType")
+                    row("positionOnAssest") = .Item("positionOnAssest")
+                    row("url") = .Item("url")
+                    row("active") = .Item("active")
+                    row("AssetID") = .Item("AssetID")
+                    row("UpdateBycode") = .Item("UpdateBycode")
+                    row("UpdateBy") = .Item("UpdateBy")
+                    row("UpdateDate") = .Item("UpdateDate")
+                    row("jobref") = .Item("jobref")
+                End With
+                nozzletable.Rows.Add(row)
+
+            Next value
+            'BindData()
+            lblnozzle.Text = positionAll
+            lblnozzle.ToolTip = "จำนวน (" & result.Count & ") มือจ่าย"
+            lblnozzlehidden.Text = codeAll
+
+            BindDataNozzle()
+            ViewState("nozzletable") = nozzletable
+        End If
+endprocess:
+    End Sub
+
+    Private Sub gvAssetsNozzle_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvAssetsNozzle.RowDataBound
+        Dim Data As DataRowView
+        Data = e.Row.DataItem
+        If Data Is Nothing Then
+            Return
+        End If
+        If (e.Row.RowType = DataControlRowType.DataRow) Then
+            If Not String.IsNullOrEmpty(Data.Item("jobref").ToString) Then
+                e.Row.Visible = False
+            End If
+        End If
+    End Sub
+
+    Private Sub txtDocDate_TextChanged(sender As Object, e As EventArgs) Handles txtDocDate.TextChanged
+        If cboPolicy.SelectedItem.Value > 0 Then
+            setDueDate(cboPolicy.SelectedItem.Value)
+        End If
+    End Sub
 End Class

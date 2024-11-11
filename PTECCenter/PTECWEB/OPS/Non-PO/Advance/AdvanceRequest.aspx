@@ -48,7 +48,7 @@
                 <div class="container print">
                     <div class="foram notPrint">
                         <div class="row">
-                            <%=Session("status") %>
+                            <%=ViewState("status") %>
                         </div>
                         <div class="row">
                             <%=allOwner %>
@@ -331,9 +331,9 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-center bg-white">
-                                    <% If Session("status") = "new" Then%>
+                                    <% If ViewState("status") = "new" Then%>
                                     <asp:Button ID="btnSaves" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" />
-                                    <% ElseIf Session("status") = "edit" Then%>
+                                    <% ElseIf ViewState("status") = "edit" Then%>
                                     <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
                                     <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
                                     <% ElseIf (Session("userid").ToString() = detailtable.Rows(0).Item("CreateBy").ToString()) Then%>
@@ -351,7 +351,7 @@
                                     <% End If %>
                                     <% If Not Request.QueryString("ADV") Is Nothing And detailtable.Rows.Count > 0 Then%>
                                     <% If verify Or approval Then%>
-                                        <% If Session("status") = "write" And approval And detailtable.Rows(0).Item("statusrqid") = 2 Then%>
+                                        <% If ViewState("status") = "write" And approval And detailtable.Rows(0).Item("statusrqid") = 2 Then%>
                                         <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
                                         <% End If %>
                                         <% If verify And detailtable.Rows(0).Item("statusrqid") = 7 Then%>
@@ -646,7 +646,7 @@
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script type="text/javascript">
         <% If Not Request.QueryString("ADV") Is Nothing Then%>
-        <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3 Or Session("status") = "edit" Then %>
+        <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3 Or ViewState("status") = "edit" Then %>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -660,7 +660,7 @@
             format: 'd/m/Y'
         });
         <% End If %>
-        <% else If Session("status") = "new" Then %>
+        <% else If ViewState("status") = "new" Then %>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -849,8 +849,8 @@
                 inputAttributes: {
                     'aria-label': 'ใส่ข้อความ.'
                 },
-                preConfirm: () => {
-                    if (!document.getElementById('swal2-input').value) {
+                preConfirm: (value) => {
+                    if (!value) {
                         // Handle return value 
                         Swal.showValidationMessage('First input missing')
                     }

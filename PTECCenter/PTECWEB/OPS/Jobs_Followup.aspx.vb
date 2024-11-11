@@ -1,4 +1,6 @@
 ﻿Imports System.Web.Script.Serialization
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 
 Public Class JobsFollowup
     Inherits System.Web.UI.Page
@@ -16,6 +18,7 @@ Public Class JobsFollowup
     Public AttachTable As DataTable '= createtable()
     Public CommentTable As DataTable '= createtable()
     Public nozzletable As DataTable
+    Public assetsNozzletable As DataTable
 
     Public followuptable As DataTable = CreateFollowup()
     Dim usercode, username As String
@@ -43,10 +46,10 @@ Public Class JobsFollowup
         End If
 
         objStatus = "edit"
-        Session("jobno") = Request.QueryString("jobno")
-        Session("jobdetailid") = Request.QueryString("jobdetailid")
-        jobno = Session("jobno")
-        jobdetailid = Session("jobdetailid")
+        ViewState("jobno") = Request.QueryString("jobno")
+        ViewState("jobdetailid") = Request.QueryString("jobdetailid")
+        jobno = ViewState("jobno")
+        jobdetailid = ViewState("jobdetailid")
         txtJobno.Text = jobno
 
 
@@ -81,24 +84,24 @@ Public Class JobsFollowup
                 '    cboStatus.DataBind()
             End If
 
-            Session("maintable") = maintable
-            Session("followuptable") = followuptable
-            Session("suppilertable") = suppilertable
-            Session("stepsuppilertable") = stepsuppilertable
-            Session("assessmenttable") = assessmenttable
-            Session("comment_jobdetail") = CommentTable
-            Session("attatch_jobdetail") = AttachTable
-            Session("nozzle_jobdetail") = nozzletable
+            ViewState("maintable") = maintable
+            ViewState("followuptable") = followuptable
+            ViewState("suppilertable") = suppilertable
+            ViewState("stepsuppilertable") = stepsuppilertable
+            ViewState("assessmenttable") = assessmenttable
+            ViewState("comment_jobdetail") = CommentTable
+            ViewState("attatch_jobdetail") = AttachTable
+            ViewState("nozzle_jobdetail") = nozzletable
 
         Else
-            followuptable = Session("followuptable")
-            maintable = Session("maintable")
-            suppilertable = Session("suppilertable")
-            stepsuppilertable = Session("stepsuppilertable")
-            assessmenttable = Session("assessmenttable")
-            CommentTable = Session("comment_jobdetail")
-            AttachTable = Session("attatch_jobdetail")
-            nozzletable = Session("nozzle_jobdetail")
+            followuptable = ViewState("followuptable")
+            maintable = ViewState("maintable")
+            suppilertable = ViewState("suppilertable")
+            stepsuppilertable = ViewState("stepsuppilertable")
+            assessmenttable = ViewState("assessmenttable")
+            CommentTable = ViewState("comment_jobdetail")
+            AttachTable = ViewState("attatch_jobdetail")
+            nozzletable = ViewState("nozzle_jobdetail")
 
 
             showsuppilerdata(suppilertable)
@@ -106,14 +109,23 @@ Public Class JobsFollowup
             Dim target = Request.Form("__EVENTTARGET")
             If target = "flashData" Then
                 flashData()
+            ElseIf target = "deleteNozzle" Then
+                Dim argument As String = Request("__EVENTARGUMENT")
+                Dim jss As New JavaScriptSerializer
+                Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(argument)
+                deleteNozzle(json("nozzleid"))
             End If
         End If
 
         setBtn()
 
-        'txtCreateBy.Text = Session("jobtypeid")
+        'txtCreateBy.Text = ViewState("jobtypeid")
     End Sub
-
+    Private Sub BindData()
+        'cntdt = itemtable.Rows.Count
+        gvNozzle.DataSource = nozzletable
+        gvNozzle.DataBind()
+    End Sub
     Private Sub setBtn()
         If maintable IsNot Nothing Then
             If maintable.Rows.Count > 0 Then
@@ -129,6 +141,7 @@ Public Class JobsFollowup
                     If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
+                        btnNozzle.Visible = False
 
 
                         'Supplier
@@ -166,6 +179,12 @@ Public Class JobsFollowup
                     Else
                         btnSave.Enabled = True
                         btnEditDetail.Visible = True
+                        If maintable.Rows(0).Item("jobtype").ToString.IndexOf("ตีตรา") > -1 Then
+                            btnNozzle.Visible = True
+                        Else
+                            btnNozzle.Visible = False
+                        End If
+
 
 
                         'Supplier
@@ -237,6 +256,7 @@ Public Class JobsFollowup
                     btnSave.Visible = False
                     'btnConfirm.Visible = False
                     btnEditDetail.Visible = False
+                    btnNozzle.Visible = False
 
 
                     'Rating
@@ -277,21 +297,22 @@ Public Class JobsFollowup
                     fromUpdateFollowup.Visible = False
 
 
-                        'Analy
-                        btnDataAnalyCategory.Visible = False
-                        btnDataAnalyGroupType.Visible = False
+                    'Analy
+                    btnDataAnalyCategory.Visible = False
+                    btnDataAnalyGroupType.Visible = False
 
-                        'Supplier
-                        btnSentSupplier.Visible = False
-                        btnPrint.Visible = False
-                        btnBackStep.Visible = False
-                        btnNextStep.Visible = False
-                        btnCancelSupplier.Visible = False
-                    Else
-                        'Detail
-                        btnSave.Visible = False
+                    'Supplier
+                    btnSentSupplier.Visible = False
+                    btnPrint.Visible = False
+                    btnBackStep.Visible = False
+                    btnNextStep.Visible = False
+                    btnCancelSupplier.Visible = False
+                Else
+                    'Detail
+                    btnSave.Visible = False
                     'btnConfirm.Visible = False
                     btnEditDetail.Visible = False
+                    btnNozzle.Visible = False
                     'btnConfirm.Enabled = False
 
                     'Follow UP
@@ -416,7 +437,7 @@ Public Class JobsFollowup
         Dim job As New jobs
         Dim mydataset As DataSet
         ' Dim jobtable As DataTable
-        Session("jobno") = jobno
+        ViewState("jobno") = jobno
 
         'itemtable
         Try
@@ -431,18 +452,19 @@ Public Class JobsFollowup
             suppilertable = mydataset.Tables(6)
             txtallOperator.Text = mydataset.Tables(7).Rows(0).Item("alloperator")
             nozzletable = mydataset.Tables(8)
+            findNozzle(maintable.Rows(0).Item("branchid"))
             showsuppilerdata(suppilertable)
+            BindData()
 
 
-
-            Session("maintable") = maintable
-            Session("followuptable") = followuptable
-            Session("suppilertable") = suppilertable
-            Session("stepsuppilertable") = stepsuppilertable
-            Session("assessmenttable") = assessmenttable
-            Session("comment_jobdetail") = CommentTable
-            Session("attatch_jobdetail") = AttachTable
-            Session("nozzle_jobdetail") = nozzletable
+            ViewState("maintable") = maintable
+            ViewState("followuptable") = followuptable
+            ViewState("suppilertable") = suppilertable
+            ViewState("stepsuppilertable") = stepsuppilertable
+            ViewState("assessmenttable") = assessmenttable
+            ViewState("comment_jobdetail") = CommentTable
+            ViewState("attatch_jobdetail") = AttachTable
+            ViewState("nozzle_jobdetail") = nozzletable
 
 
 
@@ -459,7 +481,7 @@ Public Class JobsFollowup
 
         If mytable.Rows.Count > 0 Then
             Dim objjob As New jobs
-        Dim objpolicy As New Policy
+            Dim objpolicy As New Policy
 
             With mytable.Rows(0)
                 txtDocDate.Text = .Item("jobdate")
@@ -538,7 +560,7 @@ Public Class JobsFollowup
             Dim statusid As Integer = cboStatus.SelectedItem.Value
             Dim details As String = txtDetailFollow.Text
 
-            saveFollowup(statusid,details)
+            saveFollowup(statusid, details)
         End If
     End Sub
     'Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
@@ -595,6 +617,30 @@ endprocess:
         If result = False Then
             Dim scriptKey As String = "alert"
             Dim javaScript As String = "alertWarning('" + msg + "');modalShowID = 'EditDetail';"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End If
+
+        Return result
+    End Function
+    Private Function ValidateSubmitRate() As Boolean
+        Dim result As Boolean = True
+        Dim msg As String = ""
+
+        If maintable.Rows(0).Item("jobtype").ToString.IndexOf("ตีตรา") > -1 Then
+            Dim row As DataRow
+            For Each row In nozzletable.Rows
+                If row.IsNull("nozzle_No_new") Or row.IsNull("expirydate_new") Then
+                    result = False
+                    msg = "กรุณากรอกข้อมูล มือจ่าย ให้ครบถ้วน"
+                    GoTo endprocess
+                End If
+            Next row
+        End If
+
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End If
 
@@ -683,49 +729,51 @@ endprocess:
     End Sub
 
     Private Sub btnSubmitRate_Click(sender As Object, e As EventArgs) Handles btnSubmitRate.Click
+        If ValidateSubmitRate() Then
 
-        Dim objjob As New jobs
-        Dim res As String = Request.Form("confirm_value")
-        res = res.Replace("[", "")
-        res = res.Replace("]", "")
-        Dim strarr() As String
-        strarr = res.Split("},")
-        Dim lengthArr = strarr.Length
-        Dim rateid As Integer
-        Try
-            For i = 0 To lengthArr - 1
-                If Not String.IsNullOrEmpty(strarr(i).ToString) Then
-                    If strarr(i).Substring(0, 1) = "," Then
-                        res = strarr(i).Substring(1, strarr(i).Length - 1) + "}"
-                    Else
-                        res = strarr(i) + "}"
+            Dim objjob As New jobs
+            Dim res As String = Request.Form("confirm_value")
+            res = res.Replace("[", "")
+            res = res.Replace("]", "")
+            Dim strarr() As String
+            strarr = res.Split("},")
+            Dim lengthArr = strarr.Length
+            Dim rateid As Integer
+            Try
+                For i = 0 To lengthArr - 1
+                    If Not String.IsNullOrEmpty(strarr(i).ToString) Then
+                        If strarr(i).Substring(0, 1) = "," Then
+                            res = strarr(i).Substring(1, strarr(i).Length - 1) + "}"
+                        Else
+                            res = strarr(i) + "}"
+                        End If
+                        Dim jss As New JavaScriptSerializer
+                        Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
+
+                        Dim topic_id As String = json("topic_id").Trim
+                        Dim value As String = json("value").Trim
+                        Dim type As String = json("type").Trim
+
+
+
+                        rateid = objjob.SaveRate(topic_id, value, type, jobdetailid, usercode)
                     End If
-                    Dim jss As New JavaScriptSerializer
-                    Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(res)
-
-                    Dim topic_id As String = json("topic_id").Trim
-                    Dim value As String = json("value").Trim
-                    Dim type As String = json("type").Trim
-
-
-
-                    rateid = objjob.SaveRate(topic_id, value, type, jobdetailid, usercode)
-                End If
-            Next
-            objjob.Jobs_Supplier_FinishStep(jobno, jobdetailid, usercode)
-            objjob.Followup_Save(jobno, jobdetailid, 10, "ลงคะแนนประเมินเสร็จสิ้น", usercode)
-            ClientScript.RegisterStartupScript(Me.GetType(), "Finish", "finishStep();", True)
-            'If maintable.Rows(0).Item("jobtypeid").ToString = "54" Then
-            '    Response.Redirect("../OPS/Assets/AssetsNozzle.aspx")
-            'Else
-            flashData()
-            'End If
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('json fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+                Next
+                objjob.Jobs_Supplier_FinishStep(jobno, jobdetailid, usercode)
+                objjob.Followup_Save(jobno, jobdetailid, 10, "ลงคะแนนประเมินเสร็จสิ้น", usercode)
+                ClientScript.RegisterStartupScript(Me.GetType(), "Finish", "finishStep();", True)
+                'If maintable.Rows(0).Item("jobtypeid").ToString = "54" Then
+                '    Response.Redirect("../OPS/Assets/AssetsNozzle.aspx")
+                'Else
+                flashData()
+                'End If
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('json fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End Try
+        End If
     End Sub
     '    Private Sub btnEditClose_Click(sender As Object, e As EventArgs) Handles btnEditClose.Click
 
@@ -983,7 +1031,7 @@ endprocess:
         Dim approval As New Approval
         Dim Files As HttpFileCollection = Request.Files
 
-        fullfilenameimageafter = FileUpload(key, Files)
+        fullfilenameimageafter = fileupload(key, Files)
         Dim filenameArr() As String
         If Not String.IsNullOrEmpty(fullfilenameimageafter) Then
             filenameArr = fullfilenameimageafter.Split(",")
@@ -1054,4 +1102,88 @@ endprocess:
 
         Return fullfilename
     End Function
+    Private Sub deleteNozzle(nozzleid As Integer)
+        Dim objjob As New jobs
+        Dim approval As New Approval
+        Try
+            'Dim a As String = getfilenozzle("files__nozzle")
+            objjob.DelDetail_Nozzle(jobdetailid,
+                                nozzleid,
+                                Session("usercode")
+                                )
+
+            'approval.Save_Comment_By_Code(Request.QueryString("jobdetailid"), txtComment.Text.Trim(), Session("userid"))
+            flashData()
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('Delete nozzle fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+    Private Sub findNozzle(branchid As Integer)
+        Dim objassets As New Assets
+
+        Try
+            assetsNozzletable = objassets.AssesNozzle_list(branchid)
+            BindDataAssetsNozzle()
+            ViewState("assetsNozzletable") = assetsNozzletable
+        Catch ex As Exception
+            Dim scriptKey As String = "alert"
+            'Dim javaScript As String = "alert('" & ex.Message & "');"
+            Dim javaScript As String = "alertWarning('find nozzle fail');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+    End Sub
+    Private Sub BindDataAssetsNozzle()
+        Dim cntdt = assetsNozzletable.Rows.Count
+        gvAssetsNozzle.Caption = "ทั้งหมด " & cntdt & " รายการ"
+        gvAssetsNozzle.DataSource = assetsNozzletable
+        gvAssetsNozzle.DataBind()
+    End Sub
+
+    Private Sub btnSetNozzle_Click(sender As Object, e As EventArgs) Handles btnSetNozzle.Click
+        Dim confirmValue As String = Request.Form("setNozzle")
+        Dim objjob As New jobs
+        Dim result = JsonConvert.DeserializeObject(Of ArrayList)(confirmValue)
+        Dim token As JToken
+        Dim code
+        If result IsNot Nothing Then
+
+            For Each value As Object In result
+                token = JObject.Parse(value.ToString())
+                'position = token.SelectToken("position")
+                code = token.SelectToken("code")
+
+                If Not String.IsNullOrEmpty(code) Then
+                    Try
+                        objjob.SaveDetail_Nozzle(jobdetailid, code)
+                        flashData()
+                    Catch ex As Exception
+                        Dim scriptKey As String = "alert"
+                        'Dim javaScript As String = "alert('" & ex.Message & "');"
+                        Dim javaScript As String = "alertWarning('save fail');"
+                    End Try
+                End If
+
+
+
+            Next value
+            'BindData()
+            ViewState("nozzletable") = nozzletable
+        End If
+endprocess:
+    End Sub
+    Private Sub gvAssetsNozzle_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvAssetsNozzle.RowDataBound
+        Dim Data As DataRowView
+        Data = e.Row.DataItem
+        If Data Is Nothing Then
+            Return
+        End If
+        If (e.Row.RowType = DataControlRowType.DataRow) Then
+            If Not String.IsNullOrEmpty(Data.Item("jobref").ToString) Then
+                e.Row.Visible = False
+            End If
+        End If
+    End Sub
 End Class

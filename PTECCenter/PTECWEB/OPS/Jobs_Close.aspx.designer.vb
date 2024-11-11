@@ -41,6 +41,24 @@ Partial Public Class JobsClose
     Protected WithEvents btnBack As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''txtCntComment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCntComment As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
+    '''txtCntAttach control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtCntAttach As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
     '''txtJobno control.
     '''</summary>
     '''<remarks>

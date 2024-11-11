@@ -139,7 +139,7 @@
                                 <div class="row justify-content-md-center">
                                     <div class="col-md-10">
                                         <div class="input-group justify-content-center">
-                                            <input type="file" name="files" accept="image/*,.pdf">
+                                            <input type="file" name="files" accept="image/*,.pdf" data-fileuploader-files='<%=Approval_Doc%>'>
                                         </div>
                                     </div>
                                 </div>
@@ -156,10 +156,8 @@
                                 <%--###################################################--%>
                                 <div class="row">
                                     <div class="form-group ">
-                                        <div class="row justify-content-between mr-0 ml-0">
-                                            <div class="col text-left align-self-center">
-                                                <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT (%)" />
-                                            </div>
+                                        <div class="col">
+                                            <asp:Label ID="Label4" CssClass="form-label" AssociatedControlID="txtVat" runat="server" Text="VAT (%)" />
                                         </div>
                                         <div class="col">
                                             <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtVat" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
@@ -173,6 +171,14 @@
                                         <div class="col">
                                             <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtTax" runat="server" min="0" Text="0" onchange="calculate();"></asp:TextBox>
                                             <div class="invalid-feedback">* ตัวเลขจำนวนเต็ม</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div class="col">
+                                            <asp:Label ID="Label1" CssClass="form-label" AssociatedControlID="txtDistance" runat="server" Text="ระยะทาง (km)" />
+                                        </div>
+                                        <div class="col">
+                                            <asp:TextBox class="form-control noEnterSubmit" type="number" ID="txtDistance" runat="server" min="0" Text="0" step="0.1"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -447,6 +453,7 @@
 
             const urlParams = new URLSearchParams(window.location.search);
             const approvalcode = urlParams.get('approvalcode');
+            console.log($('input[type=file]').length);
             console.log(approvalcode.length);
 
 
@@ -455,24 +462,29 @@
                 event.preventDefault();
                 event.stopPropagation();
             } else {
-
                 console.log("pre");
                 <% If Not Request.QueryString("approvalcode") Is Nothing Then%>
-                    console.log("in1");
-                <% If detailtable.Rows(0).Item("list_depcode").ToString.IndexOf("ROD") < 0 Then%>
-                    const price = <%=detailtable.Rows(0).Item("price") %> ;
-                    const cost = document.getElementById("<%= txtCost.ClientID%>").value;
-                    console.log(price)
-                    console.log(cost)
-                    console.log(parseFloat(cost))
-                    if (price < parseFloat(cost)) {
-                        console.log("in2");
-                        const payload = `ยอดที่ใส่มา (${parseFloat(cost)}บ.) มากกว่า ยอดที่ตั้งเดิม (${price}บ.)`
-                        alertValidateCost(payload, price, parseFloat(cost));
+                console.log("in1");
+                const price = <%=detailtable.Rows(0).Item("price") %> ;
+                const cost = document.getElementById("<%= txtCost.ClientID%>").value;
+                if (price < parseFloat(cost)) {
+                    console.log("in2");
+                    const payload = `ยอดที่ใส่มา (${parseFloat(cost).toLocaleString()}บ.) มากกว่า ยอดที่ตั้งเดิม (${price.toLocaleString()}บ.)`
+                    <% If detailtable.Rows(0).Item("approval_form").ToString = "AHO" Then%>
+                    alertValidateCostOther(payload, price, parseFloat(cost));
+                    <% Else %>
+                    alertValidateCostROD(payload, price, parseFloat(cost));
+                    <% End If %>
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    if (confirm(`คุณต้องการดำเนินการต่อที่ยอด (${parseFloat(cost).toLocaleString()}) หรือไม่ ?`)) {
+                        __doPostBack('btnUpload_Click_newCost', `${parseFloat(cost)}`);
+                    } else {
                         event.preventDefault();
                         event.stopPropagation();
                     }
-                <% End If %>
+                }
                 <% End If %>
                 console.log("end");
             }
@@ -494,34 +506,74 @@
                 'warning'
             )
         }
-        function alertValidateCost(massage,oldcost,newcost) {
+        function alertValidateCostROD(massage, oldcost, newcost) {
             Swal.fire({
-                title: '',
+                title: 'กรุณาเลือกยอดที่ต้องการดำเนินการต่อ',
                 text: massage,
                 icon: 'info',
+                width: '50%',
                 showCancelButton: true,
                 showDenyButton: true,
                 cancelButtonColor: '#d33',
                 cancelButtonText: 'ยกเลิก',
                 confirmButtonColor: '#3085d6',
-                confirmButtonText: `ดำเนินการต่อ (${oldcost})`,
-                denyButtonText: `ยกเลิกและแจ้งต้นเรื่อง`,
+                confirmButtonText: `ดำเนินการต่อด้วย (${newcost.toLocaleString()})`,
+                denyButtonText: `ดำเนินการต่อด้วย (${oldcost.toLocaleString()})`,
+                denyButtonColor: `#3085d6`,
                 allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
-                    if (confirm(`คุณต้องการดำเนินการต่อที่ยอดเดิม (${oldcost}) หรือไม่ ?`)) {
-                        __doPostBack('btnUpload_Click', 'isConfirmed');
+                    if (confirm(`คุณต้องการดำเนินการต่อที่ยอด (${newcost.toLocaleString()}) หรือไม่ ?`)) {
+                        __doPostBack('btnUpload_Click_newCost_ROD', `${newcost}`);
                     }
                     else {
                         event.preventDefault();
                         event.stopPropagation();
                     }
-                } else if (result.dismiss === Swal.DismissReason.cancel){
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else if (result.isDenied) {
+
+                    if (confirm(`คุณต้องการดำเนินการต่อที่ยอด (${oldcost.toLocaleString()}) หรือไม่ ?`)) {
+                        __doPostBack('btnUpload_Click_oldCost_ROD', `${oldcost}`);
+                    }
+                    else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                }
+            })
+        }
+        function alertValidateCostOther(massage, oldcost, newcost) {
+            Swal.fire({
+                title: 'ไม่สามารถแก้ไขยอดที่ได้รับมอบหมายจาก HO',
+                text: massage,
+                icon: 'warning',
+                width: '50%',
+                showCancelButton: true,
+                showDenyButton: true,
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'ยกเลิก',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: `ดำเนินการต่อ (${oldcost.toLocaleString()})`,
+                denyButtonText: `ยกเลิกรายการนี้ และ แจ้งไปยังต้นเรื่อง`,
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (confirm(`คุณต้องการดำเนินการต่อที่ยอดเดิม (${oldcost.toLocaleString()}) หรือไม่ ?`)) {
+                        __doPostBack('btnUpload_Click_oldCost_Other', `${oldcost}`);
+                    }
+                    else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
                     event.preventDefault();
                     event.stopPropagation();
                 } else if (result.isDenied) {
                     if (confirm("คุณต้องการจะยกเลิกและแจ้งต้นเรื่องรับทราบ หรือไม่ ?")) {
-                        __doPostBack('btnUpload_Click', 'isDenied');
+                        __doPostBack('btnUpload_Click_isDenied_Other', 'isDenied');
                     }
                     else {
                         event.preventDefault();

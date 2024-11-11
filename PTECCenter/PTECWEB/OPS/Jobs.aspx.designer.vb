@@ -140,6 +140,15 @@ Partial Public Class frmJobs
     Protected WithEvents cboSection As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''btnNozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnNozzle As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
     '''cboDepForJobType control.
     '''</summary>
     '''<remarks>
@@ -275,6 +284,33 @@ Partial Public Class frmJobs
     Protected WithEvents txtDueDate As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblnozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblnozzle As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblnozzlehidden control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblnozzlehidden As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''A1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents A1 As Global.System.Web.UI.HtmlControls.HtmlAnchor
+
+    '''<summary>
     '''lblattatch control.
     '''</summary>
     '''<remarks>
@@ -336,4 +372,31 @@ Partial Public Class frmJobs
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnUpload As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''gvAssetsNozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvAssetsNozzle As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''btnSetNozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSetNozzle As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''gvNozzle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvNozzle As Global.System.Web.UI.WebControls.GridView
 End Class

@@ -6,6 +6,7 @@
     <style>
         #content-wrapper {
             height: 93vh;
+            font-size:.75rem;
         }
 
         th {
@@ -16,7 +17,7 @@
             vertical-align: middle;
         }
 
-        .table a[href='#'] {
+        .table .nozzle__url a[href='#'] {
             display: none;
         }
     </style>
@@ -64,14 +65,15 @@
                                                     <thead>
                                                         <tr>
                                                             <th>ลำดับที่</th>
-                                                            <th>ตำแหน่ง</th>
-                                                            <th>ชนิดน้ำมัน</th>
-                                                            <th>เลขที่มาตร</th>
-                                                            <th>ยี่ห้อ</th>
-                                                            <th>วันที่สิ้นสุด</th>
-                                                            <th>รูปล่าสุด</th>
                                                             <th>ข้อมูลล่าสุดวันที่</th>
                                                             <th>โดย</th>
+                                                            <th>ตำแหน่ง</th>
+                                                            <th>ยี่ห้อ</th>
+                                                            <th>ชนิดน้ำมัน</th>
+                                                            <th>เลขที่มาตร</th>
+                                                            <th>วันที่สิ้นสุด</th>
+                                                            <th>รูปล่าสุด</th>
+                                                            <th>ระหว่างดำเนินการ</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -94,7 +96,16 @@
                                                                 <span><%= nozzletable.Rows(j).Item("rownumber").ToString %></span>
                                                             </td>
                                                             <td>
+                                                                <span><%= nozzletable.Rows(j).Item("updatedate").ToString %></span>
+                                                            </td>
+                                                            <td>
+                                                                <span><%= nozzletable.Rows(j).Item("updatebycode").ToString %></span>
+                                                            </td>
+                                                            <td>
                                                                 <span><%= nozzletable.Rows(j).Item("positionOnAssest").ToString %></span>
+                                                            </td>
+                                                            <td>
+                                                                <span><%= nozzletable.Rows(j).Item("brand").ToString %></span>
                                                             </td>
                                                             <td>
                                                                 <span><%= nozzletable.Rows(j).Item("producttype").ToString %></span>
@@ -103,19 +114,23 @@
                                                                 <span><%= nozzletable.Rows(j).Item("nozzle_No").ToString %></span>
                                                             </td>
                                                             <td>
-                                                                <span><%= nozzletable.Rows(j).Item("brand").ToString %></span>
-                                                            </td>
-                                                            <td>
                                                                 <span><%= nozzletable.Rows(j).Item("expirydate").ToString %></span>
                                                             </td>
                                                             <td>
-                                                                <a href="<%= nozzletable.Rows(j).Item("url").ToString %>" target="_blank">รูปภาพ</a>
+                                                                <div class="nozzle__url">
+                                                                    <a href="<%= nozzletable.Rows(j).Item("url").ToString %>" target="_blank">รูปภาพ</a>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <span><%= nozzletable.Rows(j).Item("updatedate").ToString %></span>
-                                                            </td>
-                                                            <td>
-                                                                <span><%= nozzletable.Rows(j).Item("updatebycode").ToString %></span>
+                                                                <div class="d-flex flex-column align-items-center">
+
+                                                                    <% For Each item As String In nozzletable.Rows(j).Item("jobref").ToString.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries) %>
+                                                                    <% if not String.IsNullOrEmpty(item) Then %>
+                                                                    <a href="../OPS/jobs.aspx?jobno=<%= item.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)(0).Trim %>" target="_blank"><%= item.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)(0).Trim %></a>
+                                                                    <a href="#" class="badge badgestatus_app" id="badgeapprovalcode"><%= item.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)(1).Trim %></a>
+                                                                    <% End if %>
+                                                                    <% Next %>
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 <% If Not Session("positionid") = "10" Then%>
@@ -223,6 +238,7 @@
         </div>
     </div>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/Jobs.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
@@ -232,13 +248,14 @@
             startDate: '+1971/05/01',//or 1986/12/08
             timepicker: false,
             scrollInput: false,
-            format: 'd/m/yy'
+            format: 'd/m/Y'
         });
         $(document).ready(function () {
             $('.form-control').selectpicker({
                 liveSearch: true,
                 maxOptions: 1
             });
+            changeColorBadges();
         });
         $("input:checkbox").on('click', function () {
             // in the handler, 'this' refers to the box clicked on

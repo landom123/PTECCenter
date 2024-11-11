@@ -62,6 +62,7 @@ Public Class KPIsRequestList
         End If
 
 
+
         operator_code = objKpi.KPIPermisstion("NKPI", "OP")
         If Not IsPostBack() Then
 

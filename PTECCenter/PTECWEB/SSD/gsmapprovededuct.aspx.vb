@@ -4,34 +4,55 @@
     Public gsmtable As DataTable = creategsm()
     Public usercode, username As String
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
+
         Dim objgsm As New gsm
 
         usercode = Session("usercode")
         username = Session("username")
+
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
+        Else
+            menutable = Session("menulist")
+        End If
+
+        '######## START Check Permission page  ########
+        Dim total As Integer = menutable.Rows.Count - 1
+        Dim is_allowThisPage As Boolean = False
+        Dim urlCurrent As String = Request.Url.ToString().ToLower()
+        For i = 0 To total
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "").ToLower()
+            If Not String.IsNullOrEmpty(frmMenuUrl) Then
+                If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
+                    is_allowThisPage = True
+                    Exit For
+                End If
+            End If
+        Next
+        If Not is_allowThisPage Then
+            Response.Redirect("~/403.aspx")
+        End If
+        '######## END Check Permission page  ########
+
         txtbegindate.Attributes.Add("readonly", "readonly")
         txtenddate.Attributes.Add("readonly", "readonly")
 
         'Dim objsupplier As New Supplier
 
         If IsPostBack() Then
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
+
 
             'gsmtable = Session("gsmtable")
             'BindData()
         Else
 
             setCboStatus()
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
 
             If Not (Session("gsmtable") Is Nothing) Then
                 gsmtable = Session("gsmtable")

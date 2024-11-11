@@ -67,7 +67,6 @@ Public Class SupplyWSLastPriceSet
             'FindData(beginpricedate, endpricedate)
 
         End If
-
     End Sub
     Public Sub FindData(beginpricedate As String, endpricedate As String)
         Dim wsobj As New wholesales

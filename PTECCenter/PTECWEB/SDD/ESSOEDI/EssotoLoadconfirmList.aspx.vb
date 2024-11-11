@@ -6,31 +6,30 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim objgsm As New gsm
 
+        If Session("usercode") Is Nothing Then
+            Session("pre_page") = Request.Url.ToString()
+            Response.Redirect("~/login.aspx")
+        End If
+
         usercode = Session("usercode")
         username = Session("username")
         txtCloseDate.Attributes.Add("readonly", "readonly")
 
         'Dim objsupplier As New Supplier
+        If Session("menulist") Is Nothing Then
+            menutable = LoadMenu(usercode)
+            Session("menulist") = menutable
+        Else
+            menutable = Session("menulist")
+        End If
+
 
         If IsPostBack() Then
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
+            Dim a
 
             'gsmtable = Session("gsmtable")
             'BindData()
         Else
-
-
-            If Session("menulist") Is Nothing Then
-                menutable = LoadMenu(usercode)
-                Session("menulist") = menutable
-            Else
-                menutable = Session("menulist")
-            End If
 
             If Not (Session("editable") Is Nothing) Then
                 editable = Session("editable")

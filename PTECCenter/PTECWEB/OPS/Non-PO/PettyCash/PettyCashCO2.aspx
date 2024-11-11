@@ -237,7 +237,7 @@
                     </div>
                     <div class="foram">
                         <div class="row">
-                            <%=Session("status_pcco") %>
+                            <%=ViewState("status_pcco") %>
                         </div>
                         <div class="row">
                             <%=allOwner %>
@@ -638,7 +638,7 @@
                     <div class="row">
 
                         <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-                        <% if Session("status_pcco") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
+                        <% if ViewState("status_pcco") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
                         <div class="text-center m-auto">
                             <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
                             <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
@@ -924,15 +924,15 @@
                     <h3>ใบเสร็จรับเงิน / ใบกำกับ</h3>
                     <div class="form-group">
                         <asp:Label ID="lbtaxid" CssClass="form-label" AssociatedControlID="txttaxid" runat="server" Text="Tax ID no." />
-                        <asp:TextBox class="form-control noEnterSubmit bill" type="input" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit bill" type="search" ID="txttaxid" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoiceno" CssClass="form-label" AssociatedControlID="txtinvoiceno" runat="server" Text="Invoice no." />
-                        <asp:TextBox class="form-control noEnterSubmit bill" type="input" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit bill" type="search" ID="txtinvoiceno" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbinvoicedate" CssClass="form-label" AssociatedControlID="txtinvoicedate" runat="server" Text="Invoice date" />
-                        <asp:TextBox class="form-control noEnterSubmit " type="input" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control noEnterSubmit " type="search" ID="txtinvoicedate" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1040,7 +1040,7 @@
             format: 'd/m/Y'
         });
         <% End If %>
-        <% else If Session("status_pcco").ToString = "new" Then %>
+        <% else If ViewState("status_pcco").ToString = "new" Then %>
         //jQuery('[id$=txtDuedate]').datetimepicker({
         //    startDate: '+1971/05/01',//or 1986/12/08'
         //    timepicker: false,
@@ -1085,7 +1085,7 @@
             const Number = CheckNumber(total.textContent);
             //console.log(Number);
 
-            if (!isNaN(Number) && (Number - 0) < 9999999.9999) {
+            if (!isNaN(Number) && (Number - 0) < 999999999.9999) {
                 element.innerHTML = " (   " + ArabicNumberToText(total.textContent) + "   )";
             } else {
                 element.innerHTML = "รวม ";
@@ -1240,19 +1240,19 @@ alert('else nonpo')
             //console.log(c_Vat);
             //console.log(c_Tax);
 
-            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+            if (!isNaN(cost) && (cost - 0) < 999999999.9999) {
                 p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
             } else {
                 p_cost.innerHTML = "";
             }
 
-            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+            if (!isNaN(vat) && (vat - 0) < 999999999.9999) {
                 p_vat.innerHTML = "Vat : " + numberWithCommas(c_Vat) + " บาท";
             } else {
                 p_vat.innerHTML = "";
             }
 
-            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+            if (!isNaN(tax) && (tax - 0) < 999999999.9999) {
                 p_tax.innerHTML = "Tax : (" + numberWithCommas(c_Tax) + ") บาท";
             } else {
                 p_tax.innerHTML = "";
@@ -1648,7 +1648,7 @@ alert('else nonpo')
 */
 
             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
-            <% If (Not Session("status_pcco") = "new" And Not Session("status_pcco") = "edit" And Not Session("status_pcco") = "account") Then%>
+            <% If (Not ViewState("status_pcco") = "new" And Not ViewState("status_pcco") = "edit" And Not ViewState("status_pcco") = "account") Then%>
             $('#exampleModal .modal-footer #btnAddDetail').hide();
             $('#exampleModal .modal-body input,#exampleModal .modal-body textarea').attr('readonly', true);
             $('#exampleModal .modal-body select,#exampleModal .modal-body button,#exampleModal .modal-body input[type="checkbox"]').attr('disabled', true);

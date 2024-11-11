@@ -88,6 +88,16 @@
                         <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
 
                     </div>
+                    <div class="col mb-3">
+                        <div class="row justify-content-end align-items-center">
+                            <div class="col-auto">
+                                <a class="gtContent6" id="txtCntComment" runat="server" href="#" title="ไปยังแสดงความคิดเห็น"><%= CommentTable.Rows.Count %> <i class="far fa-comment-dots"></i></a>
+                            </div>
+                            <div class="col-auto">
+                                <a class="gtContent5" id="txtCntAttach" runat="server" href="#" title="ไปยังแสดงความคิดเห็น"><%= AttachTable.Rows.Count %> <i class="fas fa-paperclip"></i></a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-auto mb-3">
                         <ul class="nav">
                             <li class="nav-item dropdown">
@@ -116,7 +126,7 @@
                     <div id="collapseOne" class="collapse multi-collapse show" aria-labelledby="headingOne">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 d-none d-md-block">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">เลขที่เอกสาร</span>
@@ -154,7 +164,7 @@
                                         <asp:TextBox class="form-control" ID="txtBranch" runat="server" ReadOnly="True"></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 d-none d-md-block">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">ฝ่าย</span>
@@ -162,7 +172,7 @@
                                         <asp:TextBox class="form-control" ID="txtDepartment" runat="server" ReadOnly="True"></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3  d-none d-md-block">
                                     <div class="input-group sm-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">แผนก</span>
@@ -599,7 +609,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="overflow-y:unset;max-height:unset;">
                     <input type="hidden" class="form-control" id="hiddenAdvancedetailid" value="0" runat="server">
                     <div class="form-group">
                         <asp:Label ID="lbcboCost" CssClass="form-label" AssociatedControlID="cboCost" runat="server" Text="รหัสบัญชี" />
@@ -869,7 +879,7 @@
 
 
 
-            if (!isNaN(cost) && (cost - 0) < 9999999.9999) {
+            if (!isNaN(cost) && (cost - 0) < 999999999.9999) {
                 p_costunit.innerHTML = "ราคา ต่อชิ้น : " + numberWithCommas(c_CostUnit) + " บาท";
                 p_cost.innerHTML = "รวมทั้งสิ้น : " + numberWithCommas(c_CostTotal) + " บาท";
 
@@ -878,13 +888,13 @@
                 p_costunit.innerHTML = "";
             }
 
-            if (!isNaN(vat) && (vat - 0) < 9999999.9999) {
+            if (!isNaN(vat) && (vat - 0) < 999999999.9999) {
                 p_vat.innerHTML = "Vat ต่อชิ้น : " + numberWithCommas(c_Vat) + " บาท";
             } else {
                 p_vat.innerHTML = "";
             }
 
-            if (!isNaN(tax) && (tax - 0) < 9999999.9999) {
+            if (!isNaN(tax) && (tax - 0) < 999999999.9999) {
                 p_tax.innerHTML = "Tax ต่อชิ้น : (" + numberWithCommas(c_Tax) + ") บาท";
             } else {
                 p_tax.innerHTML = "";

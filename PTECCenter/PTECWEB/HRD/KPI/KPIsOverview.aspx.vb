@@ -27,6 +27,7 @@ Public Class KPIsOverview
 
     Public totalRatio As Double = 0
 
+    Public codeowner As String = ""
     Public nameowner As String = ""
     Public account_code As String = ""
     Public operator_code As String = ""
@@ -59,18 +60,19 @@ Public Class KPIsOverview
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
 
-        Try
-            Dim usernamebycode As String = ""
-            Dim objuser As New Users
-            Dim dt As DataTable
+        'Try
+        '    Dim usernamebycode As String = ""
+        '    Dim usercodebyname As String = ""
+        '    Dim objuser As New Users
+        '    Dim dt As DataTable
 
-            dt = objuser.Find("", "", Request.QueryString("uc"))
-            usernamebycode = dt.Rows(0).Item("name").ToString
+        '    dt = objuser.Find("", "", Request.QueryString("uc"))
+        '    usernamebycode = dt.Rows(0).Item("name").ToString
 
-            nameowner = If(Session("managername") IsNot Nothing, Session("managername"), usernamebycode)
-        Catch ex As Exception
-            nameowner = ""
-        End Try
+        '    nameowner = If(Session("managername") IsNot Nothing, Session("managername"), usernamebycode)
+        'Catch ex As Exception
+        '    nameowner = ""
+        'End Try
 
 
         operator_code = objKpi.KPIPermisstion("KPI", "OP")
@@ -79,11 +81,34 @@ Public Class KPIsOverview
             If Not Request.QueryString("p") Is Nothing Then 'preriod
                 If Not Request.QueryString("t") Is Nothing Then 'type user
                     If Not Request.QueryString("uc") Is Nothing Then
-                        If Request.QueryString("t").ToString.ToUpper = "HO" Then
-                            AllKpi = objKpi.Kpi_Find_Overview(Request.QueryString("p").ToString, nameowner, Request.QueryString("uc").ToString)
-                        ElseIf Request.QueryString("t").ToString.ToUpper = "CO" Then
-                            AllKpi = objKpi.Kpi_Find_Overview_For_Branch(Request.QueryString("p").ToString, Request.QueryString("uc").ToString, Session("usercode"))
-                        End If
+                        Try
+                            Dim usernamebycode As String = ""
+                            Dim usercodebyname As String = ""
+                            Dim objuser As New Users
+                            Dim dt As DataTable
+
+                            If Request.QueryString("t").ToString.ToUpper = "HO" Then
+
+                                dt = objuser.Find("", "", Request.QueryString("uc"))
+                                nameowner = dt.Rows(0).Item("name").ToString
+                                codeowner = Request.QueryString("uc")
+                            ElseIf Request.QueryString("t").ToString.ToUpper = "CO" Then
+
+                                dt = objuser.Find("", Request.QueryString("uc"), "")
+                                nameowner = Request.QueryString("uc")
+                                codeowner = dt.Rows(0).Item("UserCode").ToString
+
+                            End If
+                        Catch ex As Exception
+                            nameowner = ""
+                            codeowner = ""
+                        End Try
+                        AllKpi = objKpi.Kpi_Find_Overview(Request.QueryString("p").ToString, nameowner, codeowner)
+                        'If Request.QueryString("t").ToString.ToUpper = "HO" Then
+
+                        'ElseIf Request.QueryString("t").ToString.ToUpper = "CO" Then
+                        '    'AllKpi = objKpi.Kpi_Find_Overview_For_Branch(Request.QueryString("p").ToString, Request.QueryString("uc").ToString, Session("usercode"))
+                        'End If
                     End If
                 End If
             End If

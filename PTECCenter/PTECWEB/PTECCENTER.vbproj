@@ -1755,6 +1755,7 @@
     <Content Include="fileupload\src\thirdparty\react\Fileuploader.js" />
     <Content Include="fileupload\src\thirdparty\s3\php\fileuploader.s3.php" />
     <Content Include="Fonts\THSarabunNew.svg" />
+    <Content Include="403.aspx" />
     <Content Include="HRD\KPI\KPIsEdit.aspx" />
     <Content Include="HRD\KPI\KPIsRequestList.aspx" />
     <Content Include="HRD\KPI\KPIsListForBranch.aspx" />
@@ -1763,8 +1764,12 @@
     <Content Include="HRD\KPI\KPIsRequest.aspx" />
     <Content Include="HRD\KPI\rptKPIs.aspx" />
     <Content Include="icon\BranchSeller.svg" />
+    <Content Include="icon\logoSAP 02 Artboard 1 Copy 2.svg" />
     <Content Include="icon\logoSAP.svg" />
+    <Content Include="icon\logoSAP3.svg" />
+    <Content Include="icon\logoSAP4.svg" />
     <Content Include="icon\Logo_pure.png" />
+    <Content Include="icon\nozzle_pace.jpg" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\Jobs.js" />
     <Content Include="js\jquery.min.js" />
@@ -1777,6 +1782,7 @@
     <Content Include="js\starRating.js" />
     <Content Include="js\Stepper.js" />
     <Content Include="forgot-password.aspx" />
+    <Content Include="js\sweetalert2.all.min.js" />
     <Content Include="Report\AssetsNozzle.aspx" />
     <Content Include="OPS\Jobs_MapsToNonPO.aspx" />
     <Content Include="OPS\approval\Approval.aspx" />
@@ -1815,6 +1821,7 @@
     <Content Include="OPS\Station\newNTI.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
+    <Content Include="Report\rptCLADVCO.aspx" />
     <Content Include="Report\rptPCCO.aspx" />
     <Content Include="Report\rptEdiRPTInvoice.aspx" />
     <Content Include="ROD\OilPriceFormulaUpdate.aspx" />
@@ -3775,6 +3782,13 @@
     <Compile Include="class\Users.vb" />
     <Compile Include="CrystalDecisions.vb" />
     <Compile Include="CrystalDecisions1.vb" />
+    <Compile Include="403.aspx.designer.vb">
+      <DependentUpon>403.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="403.aspx.vb">
+      <DependentUpon>403.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="HRD\KPI\KPIsEdit.aspx.designer.vb">
       <DependentUpon>KPIsEdit.aspx</DependentUpon>
     </Compile>
@@ -4088,6 +4102,13 @@
     </Compile>
     <Compile Include="ReportViewer.aspx.vb">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptCLADVCO.aspx.designer.vb">
+      <DependentUpon>rptCLADVCO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptCLADVCO.aspx.vb">
+      <DependentUpon>rptCLADVCO.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Report\rptPCCO.aspx.designer.vb">

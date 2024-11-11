@@ -60,6 +60,24 @@ Public Class KPIsList
             menutable = Session("menulist")
         End If
 
+        '######## START Check Permission page  ########
+        Dim total As Integer = menutable.Rows.Count - 1
+        Dim is_allowThisPage As Boolean = False
+        Dim urlCurrent As String = Request.Url.ToString().ToLower()
+        For i = 0 To total
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "").ToLower()
+            If Not String.IsNullOrEmpty(frmMenuUrl) Then
+                If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
+                    is_allowThisPage = True
+                    Exit For
+                End If
+            End If
+        Next
+        If Not is_allowThisPage Then
+            Response.Redirect("~/403.aspx")
+        End If
+        '######## END Check Permission page  ########
+
         logo.Src = Page.ResolveUrl("~/icon/Logo_pure.png") 'แสดง card PURE
         company_th.InnerText = "บริษัท เพียวพลังงานไทย จำกัด"
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
@@ -85,7 +103,7 @@ Public Class KPIsList
             objdep.SetCboDepartmentByMode(cboDepartment, 0, "actived")
             cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
             objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
-            objbranch.SetCboBranchManager(cboBranchManager)
+            'objbranch.SetCboBranchManager(cboBranchManager)
 
 
 
@@ -96,8 +114,10 @@ Public Class KPIsList
                 chkHO.Checked = True
             End If
             SetCboUsers(cboCreateby)
+            SetCboUsersCO(cboBranchManager)
 
             cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
+            cboBranchManager.SelectedIndex = cboBranchManager.Items.IndexOf(cboBranchManager.Items.FindByValue(Session("userid")))
             '------------------------------------
             find()
 
@@ -113,13 +133,17 @@ Public Class KPIsList
             ElseIf target = "overview" Then
 
                 Dim argument As String = Request("__EVENTARGUMENT")
+
+                Dim jss As New JavaScriptSerializer
+                Dim json As Dictionary(Of String, String) = jss.Deserialize(Of Dictionary(Of String, String))(argument)
+
                 Dim typeuser As String = ""
                 If chkCO.Checked Then
                     typeuser = "CO"
                 ElseIf chkHO.Checked Then
                     typeuser = "HO"
                 End If
-                Response.Redirect("KPIsOverview.aspx?p=1&t=" & typeuser & "&uc=" & argument)
+                Response.Redirect("KPIsOverview.aspx?p=" & json("periodid") & "&t=" & typeuser & "&uc=" & json("user"))
             End If
 
 
@@ -222,7 +246,8 @@ Public Class KPIsList
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
                                                         "CO",
-                                                        cboPeriod.SelectedValue.ToString)
+                                                        cboPeriod.SelectedValue.ToString,
+                                                        cboBranchManager.SelectedItem.Value.ToString)
             ElseIf chkHO.Checked Then
                 AllKpi = objKpi.Kpi_List_For_Owner(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
@@ -234,7 +259,8 @@ Public Class KPIsList
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         Session("userid").ToString,
                                                     "HO",
-                                                        cboPeriod.SelectedValue.ToString)
+                                                        cboPeriod.SelectedValue.ToString,
+                                                        "")
             End If
 
             setCriteria()

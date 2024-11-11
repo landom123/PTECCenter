@@ -107,18 +107,18 @@ Public Class KPIsRequest
 
 
 
-            Session("maintable_request") = maintable
-            Session("detailtable_request") = detailtable
-            Session("weighttable_request") = weighttable
-            Session("signedtable_request") = signedtable
-            Session("commenttable_request") = CommentTable
+            ViewState("maintable_request") = maintable
+            ViewState("detailtable_request") = detailtable
+            ViewState("weighttable_request") = weighttable
+            ViewState("signedtable_request") = signedtable
+            ViewState("commenttable_request") = CommentTable
         Else
 
-            maintable = Session("maintable_request")
-            detailtable = Session("detailtable_request")
-            weighttable = Session("weighttable_request")
-            signedtable = Session("signedtable_request")
-            CommentTable = Session("commenttable_request")
+            maintable = ViewState("maintable_request")
+            detailtable = ViewState("detailtable_request")
+            weighttable = ViewState("weighttable_request")
+            signedtable = ViewState("signedtable_request")
+            CommentTable = ViewState("commenttable_request")
 
             Try
                 statusid = maintable.Rows(0).Item("statusid")
@@ -309,7 +309,7 @@ Public Class KPIsRequest
                 End With
             End If
 
-            Session("detailtable_request") = detailtable
+            ViewState("detailtable_request") = detailtable
             checkunsave()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -334,7 +334,7 @@ endprocess:
 
     Private Sub saveorupdate()
         If validateSave() Then
-            'If Session("status") = "new" Then
+            'If ViewState("status") = "new" Then
             'If maintable.Rows.Count = 0 Then
             updatehead()
             'End If
@@ -572,7 +572,7 @@ endprocess:
             End With
 
         End If
-        Session("maintable_request") = maintable
+        ViewState("maintable_request") = maintable
 
     End Sub
     Private Sub findNewKPI()
@@ -588,10 +588,10 @@ endprocess:
             weighttable = ds_find.Tables(2)
             CommentTable = ds_find.Tables(3)
 
-            Session("maintable_request") = maintable
-            Session("detailtable_request") = detailtable
-            Session("weighttable_request") = weighttable
-            Session("commenttable_request") = CommentTable
+            ViewState("maintable_request") = maintable
+            ViewState("detailtable_request") = detailtable
+            ViewState("weighttable_request") = weighttable
+            ViewState("commenttable_request") = CommentTable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -609,7 +609,7 @@ endprocess:
 
             maintable = ds_find.Tables(0)
 
-            Session("maintable_request") = maintable
+            ViewState("maintable_request") = maintable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -767,7 +767,7 @@ endprocess:
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
         If validateSave() Then
-            'If Session("status") = "new" Then
+            'If ViewState("status") = "new" Then
             'If maintable.Rows.Count = 0 Then
             updatehead()
             'End If

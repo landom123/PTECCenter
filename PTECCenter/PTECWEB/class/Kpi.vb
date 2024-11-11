@@ -164,7 +164,7 @@ Public Class Kpi
         Return result
     End Function
 
-    Public Function Kpi_List_For_Owner(depid As String, secid As String, comid As String, ratioid As String, positionid As String, branchgroupid As String, branchid As String, createbyid As String, userid As String, category As String, preriodid As String) As DataSet
+    Public Function Kpi_List_For_Owner(depid As String, secid As String, comid As String, ratioid As String, positionid As String, branchgroupid As String, branchid As String, createbyid As String, userid As String, category As String, preriodid As String, managerid As String) As DataSet
         Dim result As DataSet
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -189,6 +189,7 @@ Public Class Kpi
         cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
         cmd.Parameters.Add("@preriodid", SqlDbType.VarChar).Value = preriodid
+        cmd.Parameters.Add("@managerid", SqlDbType.VarChar).Value = managerid
 
         adp.SelectCommand = cmd
         adp.Fill(ds)

@@ -187,7 +187,7 @@
                                     <%  Dim temp As String = "" %>
                                     <%  Dim cnt_child As Integer = 0 %>
                                     <table class="table table-sm table-hover shadow-sm table__header">
-                                        <thead class="thead-blue ">
+                                        <thead class="" style="background-color: #DCCCBB;">
                                             <tr>
                                                 <th class="text-center align-middle" rowspan="2"><span class="p-1">ประเภท</span></th>
                                                 <th class="text-center align-middle" rowspan="2"><span class="p-1">ผู้ดูแล</span></th>

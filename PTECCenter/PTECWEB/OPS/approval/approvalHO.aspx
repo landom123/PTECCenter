@@ -392,7 +392,7 @@
                     <div class="text-center m-auto">
 
                         <% If Not Request.QueryString("approvalHOcode") Is Nothing And maintable.Rows.Count > 0 Then%>
-                        <% if Session("status_approvalHO") = "write" And (maintable.Rows(0).Item("statusid") = 2) Then%>
+                        <% if ViewState("status_approvalHO") = "write" And (maintable.Rows(0).Item("statusid") = 2) Then%>
                         <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
                         <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
                         <% End If %>
@@ -402,7 +402,7 @@
                         <% If ((verify Or approval)) Then%>
                         <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" />
                         <% End If %>
-                        <% ElseIf (Session("status_approvalHO") = "confirm") And (confirmer_code.IndexOf(Session("usercode").ToString) > -1) And (maintable.Rows(0).Item("statusid") = 6) And confirmer Then %>
+                        <% ElseIf (ViewState("status_approvalHO") = "confirm") And (confirmer_code.IndexOf(Session("usercode").ToString) > -1) And (maintable.Rows(0).Item("statusid") = 6) And confirmer Then %>
                         <asp:Button ID="btnConfirmerApproval" class="btn btn-success" runat="server" Text="ยืนยันหักยอดขาย" />
                         <% End If %>
                         <% End If %>
@@ -769,7 +769,7 @@
             var Approval_AT = '<%= Approval_AT.ToString %>'
             var Approval_Bill = '<%= Approval_Bill.ToString %>'
             var Approval_Doc = '<%= Approval_Doc.ToString %>'
-            var status_session = "<%= Session("status")%>"
+            var status_session = "<%= ViewState("status")%>"
 
             if (status_session != "new") {
                 if (!Approval_BF) {
@@ -902,7 +902,18 @@
                         break;
                     case "รอแสกนเอกสาร":
                         arrs_app[i].style.backgroundColor = "Brown";
+                        arrs_app[i].style.color = "White";
 
+                        break;
+                    case "รอนุมัติจากหน่วยงานที่เกี่ยวข้อง":
+                        arrs_app[i].style.backgroundColor = "LightYellow";
+                        break;
+                    case "รอบัญชีตรวจสอบ":
+                        arrs_app[i].style.backgroundColor = "LightSalmon";
+
+                        break;
+                    case "ไม่ผ่านอนุมัติจากหน่วยงานที่เกี่ยวข้อง":
+                        arrs_app[i].style.backgroundColor = "IndianRed";
                         break;
                     case "เอกสารครบถ้วน":
                         arrs_app[i].style.backgroundColor = "MediumPurple";

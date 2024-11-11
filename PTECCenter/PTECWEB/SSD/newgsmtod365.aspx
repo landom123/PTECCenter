@@ -93,7 +93,7 @@
 
             </div>            <!-- /.container-fluid -->
             <!-- Sticky Footer -->
-            <footer class="sticky-footer">
+            <footer class="sticky-footer d-none">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                     <span>Copyright © Your Website 2019</span>
@@ -119,6 +119,40 @@
             scrollInput: false,
             format:'d/m/Y'
         });
+        function alertSuccess() {
+            Swal.fire(
+                'สำเร็จ',
+                '',
+                'success'
+            )
+        }
+
+        function alertWarning(massage) {
+            Swal.fire(
+                massage,
+                '',
+                'warning'
+            )
+        }
+        function alertSuccessToast(massage) {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: massage
+            })
+        }
     </script>
 
 

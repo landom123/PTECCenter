@@ -70,6 +70,24 @@ Public Class PettyCashCO2
             menutable = Session("menulist")
         End If
 
+        '######## START Check Permission page  ########
+        Dim total As Integer = menutable.Rows.Count - 1
+        Dim is_allowThisPage As Boolean = False
+        Dim urlCurrent As String = Request.Url.ToString().ToLower()
+        For i = 0 To total
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "").ToLower()
+            If Not String.IsNullOrEmpty(frmMenuUrl) Then
+                If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
+                    is_allowThisPage = True
+                    Exit For
+                End If
+            End If
+        Next
+        If Not is_allowThisPage Then
+            Response.Redirect("~/403.aspx")
+        End If
+        '######## END Check Permission page  ########
+
         txtDuedate.Attributes.Add("readonly", "readonly")
         txtinvoicedate.Attributes.Add("readonly", "readonly")
 
@@ -113,9 +131,9 @@ Public Class PettyCashCO2
             d365code = objuser.D365Code(Session("userid"))
             If Not Request.QueryString("NonpoCode") Is Nothing Then
                 objNonpo.SetCboPurpose(cboPP, "all")
-                Session("detailtable_pcco") = detailtable
-                'If Not Session("status_pcco") = "edit" Then
-                Session("status_pcco") = "read"
+                ViewState("detailtable_pcco") = detailtable
+                'If Not ViewState("status_pcco") = "edit" Then
+                ViewState("status_pcco") = "read"
                 ' End If
                 Try
                     attatch.SetCboMyfile(cboMyfile, Session("userid"))
@@ -129,7 +147,7 @@ Public Class PettyCashCO2
 
                     If (account_code.IndexOf(usercode.ToString) > -1) And
                     (maintable.Rows(0).Item("statusid") = 7) Then
-                        Session("status_pcco") = "account"
+                        ViewState("status_pcco") = "account"
 
                     End If
 
@@ -148,7 +166,7 @@ Public Class PettyCashCO2
                     sm_code.ToString.IndexOf(usercode) > -1 Or
                     am_code.ToString.IndexOf(usercode) > -1) And
                     (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then
-                        Session("status_pcco") = "write"
+                        ViewState("status_pcco") = "write"
                         'Dim SearchWithinThis As String = "ABCDEFGHIJKLMNOP"
                         'Dim SearchForThis As String = "DEF"
                         'Dim FirstCharacter As Integer = SearchWithinThis.IndexOf(SearchForThis)
@@ -242,7 +260,7 @@ endprocess:
                 Dim objjob As New jobs
                 Dim ds As New DataSet
                 If Not Request.QueryString("code_ref") Is Nothing And Request.QueryString("code_ref_dtl") Is Nothing Then
-                    Session("status_pcco") = "new"
+                    ViewState("status_pcco") = "new"
                     codeRef.Text = Request.QueryString("code_ref").ToString
                     ds = objjob.setNonPODtl_by_coderef(Request.QueryString("f").ToString, Request.QueryString("code_ref").ToString, "", usercode.ToString)
                     head = ds.Tables(0)
@@ -250,28 +268,28 @@ endprocess:
                 End If
             Else
                 objNonpo.SetCboPurpose(cboPP, "active")
-                Session("status_pcco") = "new"
+                ViewState("status_pcco") = "new"
 
             End If
 
 
 
-            Session("head_pcco") = head
-            Session("detailtable_pcco") = detailtable
-            Session("maintable_pcco") = maintable
-            Session("comment_pcco") = CommentTable
-            Session("attatch_pcco") = AttachTable
+            ViewState("head_pcco") = head
+            ViewState("detailtable_pcco") = detailtable
+            ViewState("maintable_pcco") = maintable
+            ViewState("comment_pcco") = CommentTable
+            ViewState("attatch_pcco") = AttachTable
         Else
             d365code = objuser.D365Code(Session("userid"))
             If Not String.IsNullOrEmpty(Request.QueryString("NonpoCode")) Then
                 account_code = objNonpo.NonPOPermisstionAccount(Request.QueryString("NonpoCode"))
             End If
 
-            head = Session("head_pcco")
-            detailtable = Session("detailtable_pcco")
-            maintable = Session("maintable_pcco")
-            AttachTable = Session("attatch_pcco")
-            CommentTable = Session("comment_pcco")
+            head = ViewState("head_pcco")
+            detailtable = ViewState("detailtable_pcco")
+            maintable = ViewState("maintable_pcco")
+            AttachTable = ViewState("attatch_pcco")
+            CommentTable = ViewState("comment_pcco")
 
             Try
                 statusid = maintable.Rows(0).Item("statusid")
@@ -395,7 +413,7 @@ endprocess:
                 Case = "1" '1 : รอยืนยัน
                     statusnonpo.Attributes.Add("class", "btn btn-info")
                     If .Rows(0).Item("createby").ToString = Session("userid") Then
-                        Session("status_pcco") = "edit"
+                        ViewState("status_pcco") = "edit"
                     End If
                 Case = "2" '2 : รออนุมัติ
                     statusnonpo.Attributes.Add("class", "btn btn-warning")
@@ -467,7 +485,7 @@ endprocess:
             'cboVendor.SelectedIndex = cboVendor.Items.IndexOf(cboVendor.Items.FindByValue(.Rows(0).Item("vendorcode").ToString))
 
             chkVat.Checked = .Rows(0).Item("vat_wait")
-            'If (Session("status_pcco") = "new" Or Session("status_pcco") = "edit" Or Session("status_pcco") = "account") Then
+            'If (ViewState("status_pcco") = "new" Or ViewState("status_pcco") = "edit" Or ViewState("status_pcco") = "account") Then
             '    cboVendor.Attributes.Remove("disabled")
 
             '    chkCheque.Attributes.Remove("disabled")
@@ -476,7 +494,7 @@ endprocess:
             '    chkEFT.Attributes.Remove("disabled")
             '    chkdeductSell.Attributes.Remove("disabled")
 
-            '    If Not Session("status_pcco") = "account" Then
+            '    If Not ViewState("status_pcco") = "account" Then
             '        txtNote.Attributes.Remove("readonly")
             '    Else
             '        txtNote.Attributes.Add("readonly", "readonly")
@@ -498,7 +516,7 @@ endprocess:
 
     End Sub
     Private Sub SetMenu()
-        Select Case Session("status_pcco")
+        Select Case ViewState("status_pcco")
             Case = "new"
                 'ช่อง ปุ่ม เพิ่มรายการ
                 btnFromAddDetail.Visible = True
@@ -601,7 +619,7 @@ endprocess:
                     btnConfirm.Enabled = True
                     btnCancel.Enabled = True
 
-                    Session("status_pcco") = "edit"
+                    ViewState("status_pcco") = "edit"
 
                     'ช่อง ปุ่ม เพิ่มรายการ
 
@@ -614,7 +632,7 @@ endprocess:
                     btnConfirm.Enabled = False
                     btnCancel.Enabled = False
 
-                    Session("status_pcco") = "read"
+                    ViewState("status_pcco") = "read"
 
                     'ช่อง ปุ่ม เพิ่มรายการ
 
@@ -688,7 +706,7 @@ endprocess:
                     btnAddAttatch.Visible = False
 
                 End If
-                Session("status_pcco") = "read"
+                ViewState("status_pcco") = "read"
 
 
                 btnExport.Visible = False
@@ -1163,11 +1181,11 @@ endprocess:
             AttachTable = nonpoDs.Tables(3)
             CommentTable = nonpoDs.Tables(4)
 
-            Session("head_pcco") = head
-            Session("detailtable_pcco") = detailtable
-            Session("maintable_pcco") = maintable
-            Session("comment_pcco") = CommentTable
-            Session("attatch_pcco") = AttachTable
+            ViewState("head_pcco") = head
+            ViewState("detailtable_pcco") = detailtable
+            ViewState("maintable_pcco") = maintable
+            ViewState("comment_pcco") = CommentTable
+            ViewState("attatch_pcco") = AttachTable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1189,7 +1207,7 @@ endprocess:
 
             maintable = nonpoDs.Tables(1)
 
-            Session("maintable_pcco") = maintable
+            ViewState("maintable_pcco") = maintable
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
@@ -1439,7 +1457,7 @@ endprocess:
         Try
             payno = objNonpo.SavePettyCashCO(payno, maintable, detailtable, Session("usercode"))
             txtpmno.Text = payno
-            Session("status_pcco") = "edit"
+            ViewState("status_pcco") = "edit"
 
 
         Catch ex As Exception
@@ -1512,7 +1530,7 @@ endprocess:
             End With
 
         End If
-        Session("maintable_pcco") = maintable
+        ViewState("maintable_pcco") = maintable
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
@@ -1535,7 +1553,7 @@ endprocess:
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
             GoTo endprocess
         End Try
-        Session("status_pcco") = "read"
+        ViewState("status_pcco") = "read"
         Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
     End Sub
@@ -1545,7 +1563,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_NotAllow(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pcco") = "read"
+            ViewState("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1563,7 +1581,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Allow_ft(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pcco") = "read"
+            ViewState("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1581,7 +1599,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Verify(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pcco") = "read"
+            ViewState("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1605,7 +1623,7 @@ endprocess:
         End If
         Try
             objnonpo.NonPO_Pass_ft(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pcco") = "read"
+            ViewState("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1629,7 +1647,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_AccountEdit(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pcco") = "read"
+            ViewState("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1647,7 +1665,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Reject(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pcco") = "read"
+            ViewState("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1665,7 +1683,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Complete(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pcco") = "read"
+            ViewState("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1827,7 +1845,7 @@ endprocess:
                 End With
             End If
 
-            Session("detailtable_pcco") = detailtable
+            ViewState("detailtable_pcco") = detailtable
             checkunsave()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1858,7 +1876,7 @@ endprocess:
 
         Try
             objnonpo.NonPO_Cancel(Request.QueryString("NonpoCode"), Session("usercode"))
-            Session("status_pcco") = "read"
+            ViewState("status_pcco") = "read"
 
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -1883,7 +1901,7 @@ endprocess:
     '            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
     '            GoTo endprocess
     '        End Try
-    '        Session("status_pcco") = "read"
+    '        ViewState("status_pcco") = "read"
     '        Response.Redirect("../PettyCash/PettyCashCO2.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
     'endprocess:
     '    End Sub
@@ -1893,7 +1911,7 @@ endprocess:
 
     '        Try
     '            objnonpo.NonPO_Allow_ft(Request.QueryString("NonpoCode"), Session("usercode"))
-    '            Session("status_pcco") = "read"
+    '            ViewState("status_pcco") = "read"
 
     '        Catch ex As Exception
     '            Dim scriptKey As String = "alert"
@@ -1911,7 +1929,7 @@ endprocess:
 
     '        Try
     '            objnonpo.NonPO_Pass_ft(Request.QueryString("NonpoCode"), Session("usercode"))
-    '            Session("status_pcco") = "read"
+    '            ViewState("status_pcco") = "read"
 
     '        Catch ex As Exception
     '            Dim scriptKey As String = "alert"

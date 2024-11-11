@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class WebForm1
 
     '''<summary>
+    '''demo2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents demo2 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''lbApprovalcode control.
     '''</summary>
     '''<remarks>
@@ -410,6 +419,114 @@ Partial Public Class WebForm1
     Protected WithEvents txtCloseDetail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''txtSignatureNameReqBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSignatureNameReqBy As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtBadgesReqBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBadgesReqBy As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSignatureNameReqDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSignatureNameReqDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSignatureSupportby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSignatureSupportby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtBadgesSupportby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBadgesSupportby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSignatureSupportDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSignatureSupportDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSignatureAppOtherby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSignatureAppOtherby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtBadgesAppOtherby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBadgesAppOtherby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSignatureAppOtherDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSignatureAppOtherDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSignatureAppBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSignatureAppBy As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtBadgesAppby control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtBadgesAppby As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''txtSignatureAppDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtSignatureAppDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''btnSave control.
     '''</summary>
     '''<remarks>
@@ -518,6 +635,24 @@ Partial Public Class WebForm1
     Protected WithEvents btnSupportClose As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnApprovalFormOther control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnApprovalFormOther As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Button2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Button2 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnCLADV control.
     '''</summary>
     '''<remarks>
@@ -527,6 +662,15 @@ Partial Public Class WebForm1
     Protected WithEvents btnCLADV As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''btnCLADVfrmACC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCLADVfrmACC As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''btnrdrCLADV control.
     '''</summary>
     '''<remarks>
@@ -534,6 +678,15 @@ Partial Public Class WebForm1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnrdrCLADV As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnEditDetailInvoice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnEditDetailInvoice As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
     '''txtComment control.

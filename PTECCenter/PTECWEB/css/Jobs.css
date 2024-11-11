@@ -80,3 +80,22 @@
     right: 25px;
     display: none;
 }
+
+.nozzle__management a[href='#'] {
+    display: none;
+}
+
+.modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.mandatory::after {
+    content: '*';
+    color: red;
+    padding-left: 5px;
+}
+
+.highlighter-rouge {
+    color: #e83e8c;
+}

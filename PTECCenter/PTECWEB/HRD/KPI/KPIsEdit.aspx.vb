@@ -77,15 +77,15 @@ Public Class KPIsEdit
             objUser.SetcboUserName(cboUserName)
             objbranch.SetComboBranch(cboBranch, "")
             objKpi.SetCboRatioType(cboRatio)
-            SetCboUsers(cboOwnerKPI)
+            SetCboUsers(cboOwnerKPI, "", "ALL")
             If Not Request.QueryString("Kpi_Code") Is Nothing Then
                 findKpi()
             End If
 
-            Session("AllKpi") = AllKpi
+            ViewState("AllKpi") = AllKpi
         Else
 
-            AllKpi = Session("AllKpi")
+            AllKpi = ViewState("AllKpi")
 
         End If
 
@@ -165,7 +165,7 @@ Public Class KPIsEdit
             '-- table 2 = detail
             '-- table 3 = attach
             '-- table 4 = comment
-            Session("AllKpi") = AllKpi
+            ViewState("AllKpi") = AllKpi
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"

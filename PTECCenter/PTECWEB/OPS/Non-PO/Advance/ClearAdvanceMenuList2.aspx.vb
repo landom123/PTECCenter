@@ -37,6 +37,24 @@ Public Class ClearAdvanceMenuList2
             menutable = Session("menulist")
         End If
 
+        '######## START Check Permission page  ########
+        Dim total As Integer = menutable.Rows.Count - 1
+        Dim is_allowThisPage As Boolean = False
+        Dim urlCurrent As String = Request.Url.ToString().ToLower()
+        For i = 0 To total
+            Dim frmMenuUrl As String = menutable.Rows(i).Item("menu_url").ToString.Replace("\", "/").Replace("~", "").ToLower()
+            If Not String.IsNullOrEmpty(frmMenuUrl) Then
+                If (urlCurrent.IndexOf(frmMenuUrl) > -1) Then
+                    is_allowThisPage = True
+                    Exit For
+                End If
+            End If
+        Next
+        If Not is_allowThisPage Then
+            Response.Redirect("~/403.aspx")
+        End If
+        '######## END Check Permission page  ########
+
 
         'txtStartDate.Attributes.Add("readonly", "readonly")
         'txtEndDate.Attributes.Add("readonly", "readonly")
@@ -52,6 +70,7 @@ Public Class ClearAdvanceMenuList2
             objcompany.SetCboCompany(cboCompany, 0)
             SetCboUsers(cboCreateby)
             SetCboUsers(cboOwner)
+            approval.SetCboApproval(cboApproval, Session("depid"), "", Session("secid"))
             If Session("positionid") = "10" Then
                 chkCO.Checked = True
             Else
@@ -105,6 +124,7 @@ Public Class ClearAdvanceMenuList2
                           (cboBranch.SelectedItem.Value),
                             cboCreateby.SelectedItem.Value.ToString,
                             cboOwner.SelectedItem.Value.ToString,
+                            cboApproval.SelectedItem.Value.ToString,
                           gvRemind.PageIndex,
                             cboMaxRows.SelectedValue)
         Session("criteria_clearadvlist") = criteria
@@ -126,6 +146,7 @@ Public Class ClearAdvanceMenuList2
         dt.Columns.Add("cboBranch", GetType(String))
         dt.Columns.Add("cboCreateby", GetType(String))
         dt.Columns.Add("cboOwner", GetType(String))
+        dt.Columns.Add("cboApproval", GetType(String))
         dt.Columns.Add("pageindex", GetType(Integer))
         dt.Columns.Add("maxrows", GetType(Integer))
 
@@ -176,6 +197,8 @@ Public Class ClearAdvanceMenuList2
             cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
             cboOwner.SelectedValue = criteria.Rows(0).Item("cboOwner")
 
+            cboApproval.SelectedValue = criteria.Rows(0).Item("cboApproval")
+
             chkCO.Checked = criteria.Rows(0).Item("chkCO")
             chkHO.Checked = criteria.Rows(0).Item("chkHO")
         End If
@@ -199,6 +222,7 @@ Public Class ClearAdvanceMenuList2
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         cboOwner.SelectedItem.Value.ToString,
                                                         "CO",
+                                                        cboApproval.SelectedItem.Value.ToString,
                                                         cboMaxRows.SelectedValue)
             ElseIf chkHO.Checked Then
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
@@ -214,6 +238,7 @@ Public Class ClearAdvanceMenuList2
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         cboOwner.SelectedItem.Value.ToString,
                                                     "HO",
+                                                        cboApproval.SelectedItem.Value.ToString,
                                                         cboMaxRows.SelectedValue)
             Else
                 itemtable = objNonPO.ClearAdvanceList_For_Operator(txtclearadv.Text.Trim(),
@@ -229,6 +254,7 @@ Public Class ClearAdvanceMenuList2
                                                         cboCreateby.SelectedItem.Value.ToString,
                                                         cboOwner.SelectedItem.Value.ToString,
                                                         "",
+                                                        cboApproval.SelectedItem.Value.ToString,
                                                         cboMaxRows.SelectedValue)
             End If
 
@@ -306,6 +332,15 @@ Public Class ClearAdvanceMenuList2
         gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
+
+
+        'hide/show Columns GridView
+        Dim colDuedate As Integer = 6
+        Dim colOwnerApprover As Integer = 9
+        Dim colApprovalname As Integer = 7
+        gvRemind.Columns(colApprovalname).Visible = chkCO.Checked
+        gvRemind.Columns(colOwnerApprover).Visible = chkHO.Checked
+        gvRemind.Columns(colDuedate).Visible = chkCO.Checked
     End Sub
 
     Private Sub gvRemind_PageIndexChanging(sender As Object, e As GridViewPageEventArgs) Handles gvRemind.PageIndexChanging
@@ -336,6 +371,7 @@ Public Class ClearAdvanceMenuList2
         cboBranch.SelectedIndex = -1
         cboCreateby.SelectedIndex = -1
         cboOwner.SelectedIndex = -1
+        cboApproval.SelectedIndex = -1
         If itemtable IsNot Nothing Then
             itemtable.Rows.Clear()
         End If
@@ -373,8 +409,7 @@ Public Class ClearAdvanceMenuList2
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
-        Dim statusAt As Integer = 9
-        Dim approvalname As Integer = 6
+        Dim statusAt As Integer = 10
         Dim companyAt As Integer = 0
         Dim Data As DataRowView
         Data = e.Row.DataItem
@@ -409,11 +444,9 @@ Public Class ClearAdvanceMenuList2
             ElseIf Data.Item("statusnonpo") = "รอเอกสารตัวจริง" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Yellow
             End If
-            If String.IsNullOrEmpty(Data.Item("approvalname").ToString) Then
-                gvRemind.Columns(approvalname).Visible = False
-            Else
-                gvRemind.Columns(approvalname).Visible = True
-            End If
+
+
+
 
             If Data.Item("comcode") = "PURE" Then
                 e.Row.Cells.Item(companyAt).ForeColor = Color.FromArgb(1, 237, 1, 128)

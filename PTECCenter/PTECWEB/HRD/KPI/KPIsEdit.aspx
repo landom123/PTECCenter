@@ -6,7 +6,7 @@
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=Page.ResolveUrl("~/css/card_comment.css")%>" rel="stylesheet">
     <style>
-        .content-wrapper {
+        #content-wrapper {
             font-size: .8rem;
         }
 
@@ -92,7 +92,7 @@
             border-color: red !important;
         }
 
-        .showUpdateDate:hover::after,.actiontitle:hover::after, .actionrateowner:hover::after, .actionratehead:hover::after {
+        .showUpdateDate:hover::after, .actiontitle:hover::after, .actionrateowner:hover::after, .actionratehead:hover::after {
             position: absolute;
             z-index: 999;
             display: block;
@@ -153,19 +153,25 @@
                 border-radius: 50%;
                 background-color: red;
             }
-            .kpicompleted {
-                overflow-x: auto;
-                overflow-y: visible;
-                padding: 0;
-                margin-right: auto;
-                margin-left: auto;
-            }
+
+        .kpicompleted {
+            overflow-x: auto;
+            overflow-y: visible;
+            padding: 0;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
             .kpicompleted input {
                 border-top-left-radius: 10px;
                 border-top-right-radius: 10px;
                 border-bottom-left-radius: 0px;
                 border-bottom-right-radius: 0px;
             }
+
+        .pre-line {
+            white-space: pre-line;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -234,7 +240,7 @@
                                     <% End If%></h4>
                             </div>
                             <div class="col">
-                                <div class="col w-100 kpicompleted text-right align-self-center" style="display: none; ">
+                                <div class="col w-100 kpicompleted text-right align-self-center" style="display: none;">
                                     <asp:TextBox class="btn btn-success" ID="txtUnsave" runat="server" ReadOnly="true">Completed</asp:TextBox>
                                 </div>
                             </div>
@@ -245,7 +251,7 @@
                             <div class="col table-responsive-xl">
 
                                 <table class="table table-sm shadow-sm">
-                                    <thead class="thead-blue ">
+                                    <thead class="" style="background-color: #DCCCBB;">
                                         <tr>
 
                                             <% If Not Request.QueryString("Kpi_Code") Is Nothing And AllKpi IsNot Nothing Then%>
@@ -282,7 +288,7 @@
                                             <td><%= AllKpi.Tables(0).Rows(i).Item("ownercode").ToString %></td>
                                             <% End If %>
                                             <td><%= AllKpi.Tables(0).Rows(i).Item("CategoryName").ToString %></td>
-                                            <td class="text-left"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></td>
+                                            <td class="text-left pre-line"><%= AllKpi.Tables(0).Rows(i).Item("Title").ToString %></td>
                                             <td><%= AllKpi.Tables(0).Rows(i).Item("Weight").ToString %></td>
                                             <td><%= AllKpi.Tables(0).Rows(i).Item("Unit").ToString %></td>
                                             <td><%= AllKpi.Tables(0).Rows(i).Item("Lv5").ToString %></td>
@@ -605,7 +611,7 @@
                 liveSearch: true,
                 maxOptions: 1
             });
-           //console.log('START');
+            //console.log('START');
 
             $('.footer__page').hide();
             $('.form-control').selectpicker('refresh');
@@ -622,7 +628,7 @@
             let elemActionratehead = document.getElementsByName("actionratehead");
             let elemActionFeedback = document.getElementsByName("actionfeedback");
 
-           
+
 
             //console.log(elemActiontitle);
             //console.log(elemActiontitle[4].value);
@@ -733,7 +739,7 @@
                     if (!(date >= branchstart && date <= branchend)) { //แผนงาน / เป้าหมาย
                         elemActionbranchBtn[i].hidden = true;
                     } else {
-                        elemActionbranchBtn[i].hidden = (ownerbranch == 901) ? true:false;
+                        elemActionbranchBtn[i].hidden = (ownerbranch == 901) ? true : false;
                     }
 
                     console.log(`ownerbranch is ${ownerbranch}`);
@@ -804,15 +810,15 @@
                     //console.log('77777777777777')
                 }
                 if (!(empuppercode == usercode)) {
-                    //console.log('8888888888')
+                    console.log('8888888888')
                     checkComplete();
                 } else {
-                    $(".kpicompleted").show(); //show card status
+                    //$(".kpicompleted").show(); //show card status
                     //console.log('9999999')
                 }
             }
 
-            
+
             $('.form-control').selectpicker('refresh');
         });
 
@@ -955,6 +961,8 @@
                 let param = getValueUnDisabled();
                 const params = JSON.stringify(param);
                 //console.log(params);
+
+                removeElem("confirm_value");
                 let confirm_value = document.createElement("INPUT");
                 confirm_value.type = "hidden";
                 confirm_value.name = "confirm_value";
@@ -977,6 +985,7 @@
                 let param = getValue();
                 const params = JSON.stringify(param);
                 //console.log(params);
+                removeElem("confirm_value");
                 let confirm_value = document.createElement("INPUT");
                 confirm_value.type = "hidden";
                 confirm_value.name = "confirm_value";
@@ -1065,7 +1074,7 @@
             showUnsave()
             $('.footer__page').show();
         }
-        
+
         function showUnsave() {
             let elements = document.getElementsByClassName("btnUpdate");
             //console.log(elements)
@@ -1088,6 +1097,7 @@
 
             } else {
                 $(".kpicompleted").hide();
+                //alert('ss')
             }
 
         }

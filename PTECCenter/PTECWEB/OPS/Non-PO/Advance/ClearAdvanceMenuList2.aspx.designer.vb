@@ -185,6 +185,15 @@ Partial Public Class ClearAdvanceMenuList2
     Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cboApproval control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboApproval As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''note control.
     '''</summary>
     '''<remarks>
