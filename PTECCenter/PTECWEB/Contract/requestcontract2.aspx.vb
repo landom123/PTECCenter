@@ -1532,15 +1532,19 @@ Public Class requestcontract2
                         '    image4.ImageUrl = "data:image/gif;base64," + Convert.ToBase64String(dr("pic2"))
                         'End If
 
-                        image1.Visible = ID <> "0"
-                        Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
-                        Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
-                        image1.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+                        If IsDBNull(dr("pic1")) = False Then
+                            image1.Visible = ID <> "0"
+                            Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                            Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                            image1.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+                        End If
 
-                        image2.Visible = ID <> "0"
-                        Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
-                        Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
-                        image2.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+                        If IsDBNull(dr("pic2")) = False Then
+                            image2.Visible = ID <> "0"
+                            Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                            Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                            image2.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+                        End If
 
                     Case 1
                         txtAtt2DocNo2.Text = dr("DocNo")
@@ -2177,15 +2181,22 @@ Public Class requestcontract2
                 txtDueDateOth.Text = dr("DueDay")
                 txtRentPerMonthOth.Text = FormatNumber(CDbl(dr("RentPerMonth")), 2)
 
-                image7.Visible = ID <> "0"
-                Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
-                Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
-                image7.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+                If IsDBNull(dr("pic1")) = False Then
+                    image7.Visible = ID <> "0"
+                    Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                    Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                    image7.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+                End If
 
-                image8.Visible = ID <> "0"
-                Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
-                Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
-                image8.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+                If IsDBNull(dr("pic2")) = False Then
+                    image8.Visible = ID <> "0"
+                    Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                    Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                    image8.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+                End If
+
+
+
 
 
                 If disableTab(cboMainContact.SelectedValue) = False Then
@@ -2257,15 +2268,20 @@ Public Class requestcontract2
                 'CreateBy = usercode
                 Session("ItemNo") = dr("ItemNo")
 
-                'image9.Visible = ID <> "0"
-                'Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
-                'Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
-                'image9.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
 
-                'image10.Visible = ID <> "0"
-                'Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
-                'Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
-                'image10.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+                If IsDBNull(dr("pic1")) = False Then
+                    image9.Visible = ID <> "0"
+                    Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                    Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                    image9.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+                End If
+
+                If IsDBNull(dr("pic2")) = False Then
+                    image10.Visible = ID <> "0"
+                    Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                    Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                    image10.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+                End If
 
 
                 If disableTab(cboMainContact.SelectedValue) = False Then
@@ -2472,16 +2488,19 @@ Public Class requestcontract2
                 txtBeginDateNonOil.Text = CDate(dr("BeginDate"))
                 txtEndDateNonOil.Text = CDate(dr("EndDate"))
 
-                image11.Visible = ID <> "0"
-                Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
-                Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
-                image11.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+                If IsDBNull(dr("pic1")) = False Then
+                    image11.Visible = ID <> "0"
+                    Dim bytes As Byte() = DirectCast(dr("pic1"), Byte())
+                    Dim base64String As String = Convert.ToBase64String(bytes, 0, bytes.Length)
+                    image11.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String
+                End If
 
-                image12.Visible = ID <> "0"
-                Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
-                Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
-                image12.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
-
+                If IsDBNull(dr("pic2")) = False Then
+                    image12.Visible = ID <> "0"
+                    Dim bytes2 As Byte() = DirectCast(dr("pic2"), Byte())
+                    Dim base64String2 As String = Convert.ToBase64String(bytes2, 0, bytes2.Length)
+                    image12.ImageUrl = Convert.ToString("data:image/jpeg;base64,") & base64String2
+                End If
 
             Next
 
@@ -3662,27 +3681,6 @@ Public Class requestcontract2
             End Using
         End Using
 
-
-
-
-
-        'Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
-        'Using conn As SqlConnection = New SqlConnection(constr)
-        '    Dim sql As String = "Update TT_Asset SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@iItem"
-        '    Using cmd As SqlCommand = New SqlCommand(sql, conn)
-        '        'cmd.Parameters.AddWithValue("@Name", Path.GetFileName(fiUpload.PostedFile.FileName))
-        '        'cmd.Parameters.AddWithValue("@ContentType", fiUpload.PostedFile.ContentType)
-        '        cmd.Parameters.AddWithValue("@pic1", bytes)
-        '        cmd.Parameters.AddWithValue("@pic2", bytes2)
-        '        cmd.Parameters.AddWithValue("@iID", iID)
-        '        cmd.Parameters.AddWithValue("@iItem", iItem)
-        '        conn.Open()
-        '        cmd.ExecuteNonQuery()
-        '        conn.Close()
-        '    End Using
-        'End Using
-
-        'Response.Redirect(Request.Url.AbsoluteUri)
     End Sub
 
     Protected Sub UploadPicOth()
@@ -3722,39 +3720,50 @@ Public Class requestcontract2
     End Sub
 
     Protected Sub UploadPicPowerBook()
+        Try
 
-        Dim iID As Integer
-        Dim iItem As Integer
-        Dim bytes As Byte()
-        Dim bytes2 As Byte()
+            Dim iID As Integer
+            Dim iItem As Integer
+            Dim bytes As Byte()
+            Dim bytes2 As Byte()
 
-        iID = Session("IDPower")
-        iItem = Session("ItemNoPower")
+            iID = Session("IDPower")
+            iItem = Session("ItemNoPower")
 
-        Using br As BinaryReader = New BinaryReader(FileUpload1.PostedFile.InputStream)
-            bytes = br.ReadBytes(FileUpload1.PostedFile.ContentLength)
-        End Using
-
-        Using br2 As BinaryReader = New BinaryReader(FileUpload2.PostedFile.InputStream)
-            bytes2 = br2.ReadBytes(FileUpload2.PostedFile.ContentLength)
-        End Using
-
-
-        Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
-        Using conn As SqlConnection = New SqlConnection(constr)
-            Dim sql As String = "Update TT_PowerBook SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@iItem"
-            Using cmd As SqlCommand = New SqlCommand(sql, conn)
-                cmd.Parameters.AddWithValue("@pic1", bytes)
-                cmd.Parameters.AddWithValue("@pic2", bytes2)
-                cmd.Parameters.AddWithValue("@iID", iID)
-                cmd.Parameters.AddWithValue("@ItemNo", iItem)
-                conn.Open()
-                cmd.ExecuteNonQuery()
-                conn.Close()
+            Using br As BinaryReader = New BinaryReader(FileUpload1.PostedFile.InputStream)
+                bytes = br.ReadBytes(FileUpload1.PostedFile.ContentLength)
             End Using
-        End Using
 
-        'Response.Redirect(Request.Url.AbsoluteUri)
+            Using br2 As BinaryReader = New BinaryReader(FileUpload2.PostedFile.InputStream)
+                bytes2 = br2.ReadBytes(FileUpload2.PostedFile.ContentLength)
+            End Using
+
+
+            Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
+            Using conn As SqlConnection = New SqlConnection(constr)
+                Dim sql As String = "Update TT_PowerBook SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@ItemNo"
+                Using cmd As SqlCommand = New SqlCommand(sql, conn)
+                    cmd.Parameters.AddWithValue("@pic1", bytes)
+                    cmd.Parameters.AddWithValue("@pic2", bytes2)
+                    cmd.Parameters.AddWithValue("@iID", iID)
+                    cmd.Parameters.AddWithValue("@ItemNo", iItem)
+                    conn.Open()
+                    cmd.ExecuteNonQuery()
+                    conn.Close()
+                End Using
+            End Using
+
+            'Response.Redirect(Request.Url.AbsoluteUri)
+
+
+        Catch ex As Exception
+            Dim err, scriptKey, javaScript As String
+            err = ex.Message
+            scriptKey = "UniqueKeyForThisScript"
+            javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+        End Try
+
     End Sub
 
     Protected Sub UploadPicNonOil()
@@ -3777,10 +3786,9 @@ Public Class requestcontract2
             bytes2 = br2.ReadBytes(FileUpload4.PostedFile.ContentLength)
         End Using
 
-
         Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
         Using conn As SqlConnection = New SqlConnection(constr)
-            Dim sql As String = "Update TT_ContractNonOil SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@iItem"
+            Dim sql As String = "Update TT_ContractNonOil SET pic1=@pic1,pic2=@pic2 WHERE ID=@iID AND ItemNo=@ItemNo"
             Using cmd As SqlCommand = New SqlCommand(sql, conn)
                 cmd.Parameters.AddWithValue("@pic1", bytes)
                 cmd.Parameters.AddWithValue("@pic2", bytes2)
@@ -3798,13 +3806,11 @@ Public Class requestcontract2
     Private Sub btnUpload1_Click(sender As Object, e As EventArgs) Handles btnUpload1.Click
         Try
 
-
             Dim folderPath As String = Server.MapPath("~/Files/")
 
             If Not Directory.Exists(folderPath) Then
                 Directory.CreateDirectory(folderPath)
             End If
-
 
             fiUpload.SaveAs(folderPath & Path.GetFileName(fiUpload.FileName))
             image1.ImageUrl = "~/Files/" + fiUpload.FileName
@@ -3822,7 +3828,6 @@ Public Class requestcontract2
                 bytes = br.ReadBytes(fiUpload.PostedFile.ContentLength)
             End Using
 
-
             Dim constr As String = ConfigurationManager.ConnectionStrings("cnnstr_contract").ConnectionString
             Using conn As SqlConnection = New SqlConnection(constr)
                 Dim sql As String = "Update TT_Asset SET pic1=@pic1 WHERE ID=@iID AND ItemNo=@iItem"
@@ -3835,7 +3840,6 @@ Public Class requestcontract2
                     conn.Close()
                 End Using
             End Using
-
 
         Catch ex As Exception
             Dim err, scriptKey, javaScript As String
@@ -3977,7 +3981,6 @@ Public Class requestcontract2
     Private Function disableTab(iIndex As Integer) As Boolean
 
         Try
-
             Select Case iIndex
                 Case 4
                     Menu1.Visible = False
@@ -4007,9 +4010,7 @@ Public Class requestcontract2
                     MultiView3.Visible = True
                     Menu4.Visible = False
                     MultiView4.Visible = False
-
                 Case 1, 5
-
                     Menu1.Visible = True
                     MultiView1.Visible = True
                     Menu2.Visible = False
@@ -4032,7 +4033,6 @@ Public Class requestcontract2
                     'Menu1.Items(11).Enabled = False
                     'Menu1.Items(12).Enabled = True
                     'MultiView1.SetActiveView(Tab13)
-
             End Select
 
             Return True
@@ -4169,9 +4169,9 @@ Public Class requestcontract2
             err = ""
             If validateData() Then
                 Try
-                    assetsno = Save()
-                    'txtClientNo.Text = clientno
-                    Session("assetsno") = assetsno
+                    'assetsno = Save()
+                    ''txtClientNo.Text = clientno
+                    'Session("assetsno") = assetsno
 
                 Catch ex As Exception
                     err = ex.Message.ToString.Replace("'", "")
@@ -4364,9 +4364,9 @@ Public Class requestcontract2
             err = ""
             If validateData() Then
                 Try
-                    assetsno = Save()
-                    'txtClientNo.Text = clientno
-                    Session("assetsno") = assetsno
+                    'assetsno = Save()
+                    ''txtClientNo.Text = clientno
+                    'Session("assetsno") = assetsno
 
                 Catch ex As Exception
                     err = ex.Message.ToString.Replace("'", "")
@@ -4420,9 +4420,9 @@ Public Class requestcontract2
             Contact = txtContactPowerBook.Text
             ItemNo = Session("ItemNo")
 
-            'If AddRequest() = False Then
-            '    Exit Sub
-            'End If
+            If AddRequest() = False Then
+                Exit Sub
+            End If
 
             If objCo.AddPowerBook(txtdocuno.Text, ContractTypeID, DueDate, DocDate, Empfr, Empto, Witness1, Witness2, Obj1, Obj2, Obj3, Oth1, Oth2, Oth3 _
                                  , CreateBy, CompanyID, Empto2, Empto3, BrCode, Addr, Contact, ItemNo) = False Then
@@ -4440,8 +4440,8 @@ Public Class requestcontract2
 
             UploadPicPowerBook()
 
-
             Clear()
+
 
             Dim message As String = "Save Successfully."
             Dim sb As New System.Text.StringBuilder()
@@ -4701,7 +4701,7 @@ Public Class requestcontract2
             End If
 
             If objCo.AddContractNonOil(txtdocuno.Text, lblContractTypeNonOil.Text, 0, 20 _
-                                       , iPayRound, CInt(txtFrequencyNonOil.Text), dDueDate, dBeginDate, dEndDate, txtSizeNonOil.Text, txtRoomNumberNonOil.Text _
+                                       , iPayRound, 0, dDueDate, dBeginDate, dEndDate, txtSizeNonOil.Text, txtRoomNumberNonOil.Text _
                                        , txtBusinessTypeNonOil.Text, "", txtCustNameNonOil.Text, txtIDCardNonOil.Text, txtTaxIDNonOil.Text _
                                        , txtHomeIDNonOil.Text, txtSubDistrictNonOil.Text, txtDistrictNonOil.Text, txtProvinceNonOil.Text, txtPostCodeNonOil.Text _
                                        , txtContactNonOil.Text, txtTelNonOil.Text, txtLineNonOil.Text, txtEmailNonOil.Text _
