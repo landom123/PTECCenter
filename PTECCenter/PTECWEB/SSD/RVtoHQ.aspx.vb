@@ -1,6 +1,8 @@
 ﻿Imports ClosedXML.Excel
 Imports ExcelDataReader
+Imports System.Data.SqlClient
 Imports System.IO
+Imports System.Windows.Controls
 
 Public Class RVtoHQ
 
@@ -84,6 +86,24 @@ Public Class RVtoHQ
         dt.Columns("Id").AutoIncrementSeed = 1
         Return dt
     End Function
+
+    Private Function creatervtable2() As DataTable
+
+        Dim dt As New DataTable
+        dt.Columns.Add("id", GetType(Integer))
+        dt.Columns.Add("col1", GetType(String))
+        dt.Columns.Add("col2", GetType(String))
+        dt.Columns.Add("col3", GetType(String))
+        dt.Columns.Add("col4", GetType(Double))
+        dt.Columns.Add("col5", GetType(String))
+        dt.Columns.Add("col6", GetType(String))
+        dt.Columns.Add("col7", GetType(String))
+        dt.Columns.Add("col8", GetType(String))
+        dt.Columns("id").AutoIncrement = True
+        dt.Columns("Id").AutoIncrementSeed = 1
+        Return dt
+    End Function
+
     Private Sub Import_To_Grid(ByVal FilePath As String, ByVal Extension As String)
         filename = FilePath
         Session(filename) = filename
@@ -148,7 +168,7 @@ Public Class RVtoHQ
                 'objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("branch"), row("amount"), usercode)
                 ' by Pison 20220222 ปรับให้ส่ง voucher แทนที่สาขา เนื่องจาก hq นำสาขาไปไว้ที่ description
                 ' ในรายงานให้ดูที่ description ว่ามี RVP ให้นำมาออกรายงานการรับชำระ
-                objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("voucher"), row("amount"), usercode, iType)
+                objrv.rvtohq(row("voucher"), row("transdate"), row("account"), row("branch"), row("amount"), usercode, iType)
             Next row
         Catch ex As Exception
             result = False
@@ -201,4 +221,55 @@ Public Class RVtoHQ
             ClientScript.RegisterStartupScript(Me.GetType(), ScriptKey, javaScript, True)
         End If
     End Sub
+
+    'Private Sub btnLoad_Click(sender As Object, e As EventArgs) Handles btnLoad.Click
+    '    Try
+
+    '        Dim csvPath As String = Server.MapPath("~/temp/") + Path.GetFileName(FileUpload2.PostedFile.FileName)
+    '        FileUpload2.SaveAs(csvPath)
+
+    '        rvtable = creatervtable()
+
+    '        Dim csvData As String = File.ReadAllText(csvPath)
+    '        Dim dr As DataRow
+
+    '        For Each row As String In csvData.Split(ControlChars.Lf)
+    '            If Not String.IsNullOrEmpty(row) Then
+    '                dr = rvtable.NewRow()
+    '                Dim i As Integer = 1
+    '                For Each cell As String In row.Split(New Char() {vbTab})
+    '                    'dt.Rows(dt.Rows.Count - 1)(i) = cell
+    '                    Select Case i
+    '                        Case 1
+    '                            dr("voucher") = cell
+    '                        Case 2
+    '                            dr("account") = cell
+    '                        Case 3
+    '                        Case 4
+    '                            dr("amount") = cell
+    '                        Case 5
+    '                        Case 6
+    '                        Case 7
+    '                            dr("branch") = cell
+    '                        Case 8
+    '                            dr("transdate") = CDate(cell)
+    '                    End Select
+    '                    i += 1
+    '                Next
+    '                rvtable.Rows.Add(dr)
+    '            End If
+    '        Next
+
+    '        Session("rv") = rvtable
+    '        gvData.DataSource = rvtable
+    '        gvData.DataBind()
+
+    '    Catch ex As Exception
+    '        Dim err, scriptKey, javaScript As String
+    '        err = ex.Message
+    '        scriptKey = "UniqueKeyForThisScript"
+    '        javaScript = err ' "alertSuccess('โหลดข้อมูลเรียบร้อย')"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+    '    End Try
+    'End Sub
 End Class

@@ -35,6 +35,29 @@
                         </div>
                     </div>
                 </div>
+
+
+<%--                <div class="row col-6" style="padding-top: 1rem;">
+                    <ol class="breadcrumb"style="background-color:deeppink;color:white">
+                      <li class="breadcrumb-item" >
+                               <i class="fa fa-tasks" aria-hidden="true"></i>AX to HQ
+                      </li>
+                    </ol>
+                </div>
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="input-group md8">
+                          <asp:FileUpload ID="FileUpload2" class="btn btn-primary" runat="server" text="File AX" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                          &nbsp;<asp:Button ID="btnLoad" class="btn btn-sm  btn-primary" runat="server" Text="Load AX CSV" />&nbsp;
+                          &nbsp;<asp:Button ID="btnAddToHQ" class="btn btn-sm  btn-primary" runat="server" Text="AX to HQ" />&nbsp;  
+                    </div>
+
+                </div>--%>
+
                 <div class="row">
                     <div class="col-12"><%= filename %></div>
                 </div>
