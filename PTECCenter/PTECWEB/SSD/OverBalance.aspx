@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" 
-    MasterPageFile="~/site.Master" CodeBehind="RVtoHQ.aspx.vb" Inherits="PTECCENTER.RVtoHQ" %>
+    MasterPageFile="~/site.Master" CodeBehind="OverBalance.aspx.vb" Inherits="PTECCENTER.OverBalance" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
@@ -15,7 +15,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
                   <li class="breadcrumb-item" >
-                           <i class="fa fa-tasks" aria-hidden="true"></i>RV to HQ
+                           <i class="fa fa-tasks" aria-hidden="true"></i>ยอดยกมา TO NEW GSM
                   </li>
                 </ol>
                 <p>
@@ -29,35 +29,10 @@
                     </div>
                     <div class="col-6">
                         <div class="input-group md4">
-                          &nbsp;<asp:Button ID="btnOpen" class="btn btn-sm  btn-primary" runat="server" Text="Open" />&nbsp;
-                          &nbsp;<asp:Button ID="btnSave" class="btn btn-sm  btn-primary" runat="server" Text="Save to HQ" />&nbsp;  
                           &nbsp;<asp:Button ID="btnSaveGSM" class="btn btn-sm  btn-primary" runat="server" Text="Save to GSM" />&nbsp;      
                         </div>
                     </div>
                 </div>
-
-
-<%--                <div class="row col-6" style="padding-top: 1rem;">
-                    <ol class="breadcrumb"style="background-color:deeppink;color:white">
-                      <li class="breadcrumb-item" >
-                               <i class="fa fa-tasks" aria-hidden="true"></i>AX to HQ
-                      </li>
-                    </ol>
-                </div>
-                <div class="row">
-
-                    <div class="col-6">
-                        <div class="input-group md8">
-                          <asp:FileUpload ID="FileUpload2" class="btn btn-primary" runat="server" text="File AX" />
-                        </div>
-                    </div>
-                    <div class="col-6">
-                          &nbsp;<asp:Button ID="btnLoad" class="btn btn-sm  btn-primary" runat="server" Text="Load AX CSV" />&nbsp;
-                          &nbsp;<asp:Button ID="btnAddToHQ" class="btn btn-sm  btn-primary" runat="server" Text="AX to HQ" />&nbsp;  
-                    </div>
-
-                </div>--%>
-
                 <div class="row">
                     <div class="col-12"><%= filename %></div>
                 </div>
@@ -81,7 +56,7 @@
 
             </div>            <!-- /.container-fluid -->
             <!-- Sticky Footer -->
-            <footer class="sticky-footer d-none">
+            <footer class="sticky-footer">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                     <span>Copyright © Your Website 2019</span>
