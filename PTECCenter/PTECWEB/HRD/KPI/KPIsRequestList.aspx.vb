@@ -88,8 +88,8 @@ Public Class KPIsRequestList
             SetCboUsers(cboCreateby)
             SetCboUsersCO(cboCreatebyCO)
 
-            cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
-            cboCreatebyCO.SelectedIndex = cboCreatebyCO.Items.IndexOf(cboCreatebyCO.Items.FindByValue(Session("userid")))
+            'cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
+            'cboCreatebyCO.SelectedIndex = cboCreatebyCO.Items.IndexOf(cboCreatebyCO.Items.FindByValue(Session("userid")))
 
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
                 searchjobslist()

@@ -1757,6 +1757,12 @@
     <Content Include="Fonts\THSarabunNew.svg" />
     <Content Include="403.aspx" />
     <Content Include="HRD\KPI\KPIsEdit.aspx" />
+    <Content Include="HRD\KPI\KPIsForm.aspx" />
+    <Content Include="HRD\KPI\KPIsSummary2Person.aspx" />
+    <Content Include="HRD\KPI\KPIsSummarySelf2.aspx" />
+    <Content Include="HRD\KPI\KPIsSummaryView.aspx" />
+    <Content Include="HRD\KPI\KPIsSummaryList.aspx" />
+    <Content Include="HRD\KPI\KPIsSummary.aspx" />
     <Content Include="HRD\KPI\KPIsRequestList.aspx" />
     <Content Include="HRD\KPI\KPIsListForBranch.aspx" />
     <Content Include="HRD\KPI\KPIsOverview.aspx" />
@@ -1771,6 +1777,7 @@
     <Content Include="icon\Logo_pure.png" />
     <Content Include="icon\nozzle_pace.jpg" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\KPIs.js" />
     <Content Include="js\Jobs.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\main.js" />
@@ -3795,6 +3802,48 @@
     <Compile Include="HRD\KPI\KPIsEdit.aspx.vb">
       <DependentUpon>KPIsEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsForm.aspx.designer.vb">
+      <DependentUpon>KPIsForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsForm.aspx.vb">
+      <DependentUpon>KPIsForm.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummary2Person.aspx.designer.vb">
+      <DependentUpon>KPIsSummary2Person.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummary2Person.aspx.vb">
+      <DependentUpon>KPIsSummary2Person.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummarySelf2.aspx.designer.vb">
+      <DependentUpon>KPIsSummarySelf2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummarySelf2.aspx.vb">
+      <DependentUpon>KPIsSummarySelf2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummaryView.aspx.designer.vb">
+      <DependentUpon>KPIsSummaryView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummaryView.aspx.vb">
+      <DependentUpon>KPIsSummaryView.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummaryList.aspx.designer.vb">
+      <DependentUpon>KPIsSummaryList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummaryList.aspx.vb">
+      <DependentUpon>KPIsSummaryList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummary.aspx.designer.vb">
+      <DependentUpon>KPIsSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HRD\KPI\KPIsSummary.aspx.vb">
+      <DependentUpon>KPIsSummary.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="HRD\KPI\KPIsRequestList.aspx.designer.vb">
       <DependentUpon>KPIsRequestList.aspx</DependentUpon>

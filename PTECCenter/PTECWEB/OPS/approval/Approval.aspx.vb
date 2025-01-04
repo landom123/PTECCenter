@@ -8,6 +8,8 @@ Public Class WebForm1
     Dim am_id As String
     Dim rm_id As String
     Dim dm_id As String
+    Dim fm_id As String
+    Dim md_id As String
     Public Approval_BF As String = ""
     Public Approval_AT As String = ""
     Public Approval_Bill As String = ""
@@ -125,6 +127,8 @@ Public Class WebForm1
                     If (Session("userid") = am_id Or
                     Session("userid") = rm_id Or
                     Session("userid") = dm_id Or
+                    Session("userid") = fm_id Or
+                    Session("userid") = md_id Or
                     Session("secid").ToString = "2" Or
                     Session("secid").ToString = "35"
                     ) And
@@ -159,6 +163,16 @@ Public Class WebForm1
                                     End If
                                 ElseIf row("sendto").ToString = "DM" Then
                                     If (Session("userid") = dm_id) Then
+                                        approval = True
+                                        GoTo endprocess
+                                    End If
+                                ElseIf row("sendto").ToString = "FM" Then
+                                    If (Session("userid") = fm_id) Then
+                                        approval = True
+                                        GoTo endprocess
+                                    End If
+                                ElseIf row("sendto").ToString = "MD" Then
+                                    If (Session("userid") = md_id) Then
                                         approval = True
                                         GoTo endprocess
                                     End If
@@ -346,10 +360,14 @@ endprocess:
             am_id = appPermissionTable.Rows(0).Item("am_id")
             rm_id = appPermissionTable.Rows(0).Item("rm_id")
             dm_id = appPermissionTable.Rows(0).Item("dm_id")
+            fm_id = appPermissionTable.Rows(0).Item("fm_id")
+            md_id = appPermissionTable.Rows(0).Item("md_id")
             If Not Session("userid") = userid And
             Not Session("userid") = am_id And
             Not Session("userid") = rm_id And
             Not Session("userid") = dm_id And
+            Not Session("userid") = fm_id And
+            Not Session("userid") = md_id And
             Session("positionid").ToString = "10" Then
                 'Not Session("secid").ToString = "2" And
                 'Not Session("depid").ToString = "2" And
@@ -964,7 +982,7 @@ endprocess:
 
     Private Sub createCLADVfrmACC()
         Dim approval As New Approval
-        Dim approvalcode As String
+        'Dim approvalcode As String
 
         Try
             'approvalcode = approval.Approval_Allow_Other(Request.QueryString("approvalcode"), Session("usercode"))

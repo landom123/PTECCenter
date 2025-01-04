@@ -1806,7 +1806,8 @@ Public Class jobs
         adp.Fill(ds)
         result = ds.Tables(0).Rows(0).Item("code")
         conn.Close()
-        'Return result
+
+        Return result
     End Function
 
     Public Function Jobs_Supplier_Cancel(jobno As String, jobdetailid As Double, usercode As String) As Boolean

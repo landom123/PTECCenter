@@ -28,6 +28,16 @@
             margin: 0;
         }
 
+        html {
+            font-size: 100%; /* เริ่มต้นที่ 16px */
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 90%; /* ลดลงเหลือ 14.4px */
+            }
+        }
+
         * {
             font-family: Roboto;
         }
@@ -170,6 +180,7 @@
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
+            alertWarningToast('กรุณากรอกข้อมูลให้ครบถ้วน');
         }
         form.classList.add('was-validated');
     }
@@ -194,9 +205,9 @@
 
         const Toast = Swal.mixin({
             toast: true,
-            position: 'top-end',
+            position: 'bottom-end',
             showConfirmButton: false,
-            timer: 1000,
+            timer: 2000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -206,6 +217,25 @@
 
         Toast.fire({
             icon: 'success',
+            title: massage
+        })
+    }
+    function alertWarningToast(massage) {
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'warning',
             title: massage
         })
     }

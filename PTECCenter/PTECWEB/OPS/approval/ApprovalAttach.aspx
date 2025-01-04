@@ -264,7 +264,6 @@
             $('input[name="files"]').fileuploader({
                 example: ['pdf', 'image/*'],
                 fileMaxSize: 30,
-                limit: 3,
                 changeInput: ' ',
                 theme: 'thumbnails',
                 enableApi: true,
