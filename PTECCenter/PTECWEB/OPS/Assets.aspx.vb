@@ -313,8 +313,8 @@ endprocess:
         Dim mytable As DataTable
         Dim mydataset As DataSet
         Dim objsection As New Section
-        Dim invdate As DateTime
-        Dim warbegin, warend, createdate As DateTime
+        'Dim invdate As DateTime
+        'Dim warbegin, warend, createdate As DateTime
 
         Try
             mydataset = ass.Find(assetcode)

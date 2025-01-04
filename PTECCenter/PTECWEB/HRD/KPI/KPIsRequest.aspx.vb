@@ -82,7 +82,7 @@ Public Class KPIsRequest
             Else
                 'New
                 Dim ds As DataSet
-                ds = objKpi.Kpi_Get_NewKPIsOfPeriod_by_Usercode(cboPeriod.SelectedItem.Value, usercode)
+                ds = objKpi.Kpi_Get_NewKPIsOfPeriod_by_Usercode(cboPeriod.SelectedItem.Value, usercode, "kpi")
                 weighttable = ds.Tables(0)
 
                 txtOwnername.Text = Session("username")
