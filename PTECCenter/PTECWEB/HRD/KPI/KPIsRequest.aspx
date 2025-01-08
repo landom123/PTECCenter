@@ -24,6 +24,10 @@
                 border-bottom-left-radius: 0px;
                 border-bottom-right-radius: 0px;
             }
+
+        .pre-line {
+            white-space: pre-line;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -185,15 +189,15 @@
                                                                                                         ,'<%= detailtable.Rows(j).Item("lv3").ToString() %>'
                                                                                                         ,'<%= detailtable.Rows(j).Item("lv4").ToString() %>'
                                                                                                         ,'<%= detailtable.Rows(j).Item("lv5").ToString() %>');">
-                                                                        <td class="text-center"><%= detailtable.Rows(j).Item("kpi_code").ToString() %></td>
-                                                                        <td><%= detailtable.Rows(j).Item("title").ToString() %></td>
-                                                                        <td class="text-center"><%= detailtable.Rows(j).Item("weight").ToString() %></td>
-                                                                        <td class="text-center"><%= detailtable.Rows(j).Item("unit").ToString() %></td>
-                                                                        <td class="text-center"><%= detailtable.Rows(j).Item("lv5").ToString() %></td>
-                                                                        <td class="text-center"><%= detailtable.Rows(j).Item("lv4").ToString() %></td>
-                                                                        <td class="text-center"><%= detailtable.Rows(j).Item("lv3").ToString() %></td>
-                                                                        <td class="text-center"><%= detailtable.Rows(j).Item("lv2").ToString() %></td>
-                                                                        <td class="text-center"><%= detailtable.Rows(j).Item("lv1").ToString() %></td>
+                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("kpi_code").ToString() %></span></td>
+                                                                        <td><div class="pre-line"><%= detailtable.Rows(j).Item("title").ToString() %></div></td>
+                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("weight").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("unit").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv5").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv4").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv3").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv2").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv1").ToString() %></span></td>
                                                                         <td class="text-center">
                                                                             <div class="deletedetail">
                                                                                 <a onclick="confirmDeletedetail('<%= detailtable.Rows(j).Item("kpi_code").ToString() %>','<%= detailtable.Rows(j).Item("status").ToString() %>');" class="btn btn-sm p-0 notPrint">
@@ -208,7 +212,7 @@
                                                                 <tfoot>
                                                                     <tr>
                                                                         <td class="h6 text-right font-weight-bold" colspan="2">น้ำหนักรวม</td>
-                                                                        <td class="h6 text-center font-weight-bold"></td>
+                                                                        <td class="h6 text-center font-weight-bold"><span class="total_weight"></span></td>
                                                                         <td colspan="7"></td>
                                                                     </tr>
                                                                 </tfoot>
@@ -470,70 +474,80 @@
 
             });
             checkUnSave()
-            // select the Nodes
-            calTotal()
-            //const tables = document.querySelectorAll('table');
-            //console.log(tables);
-            //console.log(tables[0].getElementsByTagName('tbody')[0].rows);
-            //const tableRows = document.querySelectorAll('tr');
+            calculateTotalWeights()
 
-
-            //// loop over each row
-            //tableRows.forEach(row => {
-            //    // select each cell in the current row node
-            //    let cells = row.querySelectorAll('td')
-            //    // get ready to store each individual value
-            //    const allTheValues = []
-
-            //    // loop over each cell and extract the content into our array
-            //    cells.forEach(cell => allTheValues.push(parseInt(cell.innerHTML, 10)));
-
-            //    // compute the values, in this example sum
-            //    const total = allTheValues.reduce((acc, val) => acc + val, 0);
-
-            //    // display the output: add a new <td> with the total in it.
-            //    row.insertAdjacentHTML('beforeend', `<td>sum: ${total}</td>`)
-            //})
         });
-        function calTotal() {
-            const tables = document.querySelectorAll('table');
-            //console.log(tables);
-            //console.log(typeof (tables));
-            //console.log(tables[0].getElementsByTagName('tbody')[0].rows);
-            //    const tableBodyRows = tables[0].getElementsByTagName('tbody')[0].rows;
+        //function calTotal() {
+        //    const tables = document.querySelectorAll('table');
+        //    //console.log(tables);
+        //    //console.log(typeof (tables));
+        //    //console.log(tables[0].getElementsByTagName('tbody')[0].rows);
+        //    //    const tableBodyRows = tables[0].getElementsByTagName('tbody')[0].rows;
+        //    tables.forEach(table => {
+        //        const allTheValues = []
+        //        const tbodys = [];
+        //        let total = 0
+        //        tbodys.push(table.getElementsByTagName('tbody')[0].rows);
+        //        //console.log(tbodys);
+        //        //console.log(tbodys[0].length);
+        //        if (tbodys[0].length > 0) {
+        //            for (let i = 0; i < tbodys[0].length; i++) {
+        //                allTheValues.push(parseInt(tbodys[0][i].cells[2].innerHTML))
+
+
+        //            }
+        //            total = allTheValues.reduce((acc, val) => acc + val, 0);
+        //            //console.log(`333333333`);
+        //            //console.log(`${total}`);
+        //        }
+        //        const elemratiotypename = table.parentNode.parentNode.parentNode.getElementsByClassName("ratio__type")[0];
+        //        const elemTotal = table.getElementsByTagName('tfoot')[0].rows[0].cells[1];
+        //        elemTotal.innerHTML = total;
+        //        if (total < 100) {
+        //            elemTotal.classList.add("text-muted");
+        //        }
+        //        else if (total > 100) {
+        //            elemTotal.classList.add("text-danger");
+
+        //            //set ratioType text red
+        //            elemratiotypename.classList.add("text-danger");
+        //            elemratiotypename.title = "Have a problem";
+        //        }
+
+        //    });
+        //}
+
+        function calculateTotalWeights() {
+            // ดึงตารางทั้งหมดที่มีในหน้า
+            const tables = document.querySelectorAll('.table-responsive-xl');
+
+            // วนลูปผ่านแต่ละตาราง
             tables.forEach(table => {
-                const allTheValues = []
-                const tbodys = [];
-                let total = 0
-                tbodys.push(table.getElementsByTagName('tbody')[0].rows);
-                //console.log(tbodys);
-                //console.log(tbodys[0].length);
-                if (tbodys[0].length > 0) {
-                    for (let i = 0; i < tbodys[0].length; i++) {
-                        allTheValues.push(parseInt(tbodys[0][i].cells[2].innerHTML))
+                let totalWeight = 0;
 
+                // ค้นหาแถวใน tbody ที่มี class 'DetailArea'
+                const rows = table.querySelectorAll('tbody.DetailArea tr');
 
+                // วนลูปแต่ละแถวเพื่อดึงค่า weight
+                rows.forEach(row => {
+                    const weightCell = row.querySelector('td:nth-child(3) .pre-line'); // คอลัมน์ที่ 3 สำหรับ weight
+                    if (weightCell) {
+                        const weight = parseFloat(weightCell.textContent.trim());
+                        if (!isNaN(weight)) {
+                            totalWeight += weight;
+                        }
                     }
-                    total = allTheValues.reduce((acc, val) => acc + val, 0);
-                    //console.log(`333333333`);
-                    //console.log(`${total}`);
-                }
-                const elemratiotypename = table.parentNode.parentNode.parentNode.getElementsByClassName("ratio__type")[0];
-                const elemTotal = table.getElementsByTagName('tfoot')[0].rows[0].cells[1];
-                elemTotal.innerHTML = total;
-                if (total < 100) {
-                    elemTotal.classList.add("text-muted");
-                }
-                else if (total > 100) {
-                    elemTotal.classList.add("text-danger");
+                });
 
-                    //set ratioType text red
-                    elemratiotypename.classList.add("text-danger");
-                    elemratiotypename.title = "Have a problem";
+                // อัปเดตค่าใน <span class="total_weight"></span>
+                const totalWeightSpan = table.querySelector('.total_weight');
+                if (totalWeightSpan) {
+                    totalWeightSpan.textContent = totalWeight; 
+                    totalWeightSpan.classList.add(totalWeight <= 100 ?"text-muted":"text-danger");
                 }
-
             });
         }
+
         function postBack_addDetail() {
             let kpicode = $('#<%= row.ClientID%>').val();
             const preriodid = $('#<%= cboPeriod.ClientID%>').val();

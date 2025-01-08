@@ -1828,6 +1828,9 @@
     <Content Include="OPS\Station\newNTI.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
+    <Content Include="Report\rptKPIsPotential.aspx" />
+    <Content Include="Report\rptKPIsTalent.aspx" />
+    <Content Include="Report\rptKPIsFeedback.aspx" />
     <Content Include="Report\rptCLADVCO.aspx" />
     <Content Include="Report\rptPCCO.aspx" />
     <Content Include="Report\rptEdiRPTInvoice.aspx" />
@@ -4151,6 +4154,27 @@
     </Compile>
     <Compile Include="ReportViewer.aspx.vb">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptKPIsPotential.aspx.designer.vb">
+      <DependentUpon>rptKPIsPotential.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptKPIsPotential.aspx.vb">
+      <DependentUpon>rptKPIsPotential.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptKPIsTalent.aspx.designer.vb">
+      <DependentUpon>rptKPIsTalent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptKPIsTalent.aspx.vb">
+      <DependentUpon>rptKPIsTalent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptKPIsFeedback.aspx.designer.vb">
+      <DependentUpon>rptKPIsFeedback.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptKPIsFeedback.aspx.vb">
+      <DependentUpon>rptKPIsFeedback.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Report\rptCLADVCO.aspx.designer.vb">

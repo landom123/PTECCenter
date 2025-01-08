@@ -32,7 +32,7 @@ Public Class KPIsRequestList
     Public operator_code As String = ""
     Public adm_code As String = ""
 
-    Public criteria As DataTable '= createCriteria()
+    Public criteria As DataTable = createCriteria()
     Public itemtable As DataTable
     Public detailtable As DataTable '= createtable()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -92,9 +92,21 @@ Public Class KPIsRequestList
             'cboCreatebyCO.SelectedIndex = cboCreatebyCO.Items.IndexOf(cboCreatebyCO.Items.FindByValue(Session("userid")))
 
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
-                searchjobslist()
+                If Not Session("criteria_newkpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_newkpi")
+                    BindCriteria(criteria)
+                    searchjobslist()
+                Else
+                    searchjobslist()
+                End If
             Else
-                searchNewKpilist_owner()
+                If Not Session("criteria_newkpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
+                    criteria = Session("criteria_newkpi")
+                    BindCriteria(criteria)
+                    searchNewKpilist_owner()
+                Else
+                    searchNewKpilist_owner()
+                End If
             End If
 
         Else
@@ -103,6 +115,79 @@ Public Class KPIsRequestList
             itemtable = Session("newkpiitem")
         End If
 
+    End Sub
+
+    Private Function createCriteria() As DataTable
+        Dim dt As New DataTable
+
+        dt.Columns.Add("chkCO", GetType(Boolean))
+        dt.Columns.Add("chkHO", GetType(Boolean))
+        dt.Columns.Add("cboCompany", GetType(String))
+        dt.Columns.Add("cboPeriod", GetType(String))
+        dt.Columns.Add("cboCreatebyCO", GetType(String))
+        dt.Columns.Add("cboCreateby", GetType(String))
+        dt.Columns.Add("cboRatio", GetType(String))
+        dt.Columns.Add("cboPosition", GetType(String))
+        dt.Columns.Add("cboDep", GetType(String))
+        dt.Columns.Add("cboSec", GetType(String))
+        dt.Columns.Add("cboBranchGroup", GetType(String))
+        dt.Columns.Add("cboBranch", GetType(String))
+        dt.Columns.Add("pageindex", GetType(Integer))
+        'dt.Columns.Add("maxrows", GetType(Integer))
+
+        Return dt
+    End Function
+
+    Private Sub setCriteria()
+        criteria = createCriteria()
+        criteria.Rows.Clear()
+        criteria.Rows.Add(chkCO.Checked,
+                            chkHO.Checked,
+                            cboCompany.SelectedValue,
+                            cboPeriod.SelectedValue,
+                            cboCreatebyCO.SelectedValue,
+                            cboCreateby.SelectedValue,
+                            cboRatio.SelectedValue,
+                            cboPosition.SelectedValue,
+                            cboDepartment.SelectedValue,
+                            cboSection.SelectedValue,
+                            cboBranchGroup.SelectedValue,
+                            cboBranch.SelectedValue,
+                            gvRemind.PageIndex)
+        Session("criteria_newkpi") = criteria
+    End Sub
+
+    Private Sub BindCriteria(criteria As DataTable)
+        If criteria.Rows.Count > 0 Then
+            gvRemind.PageIndex = criteria.Rows(0).Item("pageindex")
+
+            cboCompany.SelectedValue = criteria.Rows(0).Item("cboCompany")
+            cboPeriod.SelectedValue = criteria.Rows(0).Item("cboPeriod")
+            cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
+            cboCreatebyCO.SelectedValue = criteria.Rows(0).Item("cboCreatebyCO")
+            cboRatio.SelectedValue = criteria.Rows(0).Item("cboRatio")
+            cboPosition.SelectedValue = criteria.Rows(0).Item("cboPosition")
+
+
+            cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
+            Dim objbranch As New Branch
+            cboBranch.SelectedIndex = -1
+            objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedValue)
+            cboBranch.SelectedValue = criteria.Rows(0).Item("cboBranch")
+
+            cboDepartment.SelectedValue = criteria.Rows(0).Item("cboDep")
+            cboSection.SelectedIndex = -1
+            Dim depid As Integer
+            Dim objsection As New Section
+
+            depid = cboDepartment.SelectedValue
+            objsection.SetCboSection_seccode(cboSection, depid)
+            cboSection.SelectedValue = criteria.Rows(0).Item("cboSec")
+
+            chkCO.Checked = criteria.Rows(0).Item("chkCO")
+            chkHO.Checked = criteria.Rows(0).Item("chkHO")
+
+        End If
     End Sub
     Private Sub searchjobslist()
         Dim objKpi As New Kpi
@@ -147,7 +232,7 @@ Public Class KPIsRequestList
     End Sub
     Private Sub BindData()
         'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
-        'setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
+        setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         'End If
         gvRemind.Caption = "ทั้งหมด " & itemtable.Rows.Count & " รายการ"
         gvRemind.DataSource = itemtable
