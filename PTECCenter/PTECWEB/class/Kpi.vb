@@ -1447,4 +1447,72 @@ Public Class Kpi
         conn.Close()
         'Return result
     End Sub
+    Public Function Kpi_Report_Feedback(kpiform_id As Integer) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Rpt_Feedback"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@kpiform_id", SqlDbType.Int).Value = kpiform_id
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Kpi_Report_Talent(kpiform_id As Integer) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Rpt_Talent"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@kpiform_id", SqlDbType.Int).Value = kpiform_id
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+    Public Function Kpi_Report_Potential(kpiform_id As Integer) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Rpt_Potential"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@kpiform_id", SqlDbType.Int).Value = kpiform_id
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+
 End Class

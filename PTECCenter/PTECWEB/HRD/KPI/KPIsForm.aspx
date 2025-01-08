@@ -595,7 +595,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="text-center align-middle w-10"><span class="p-1 font-weight-bold">4</span></td>
-                                                            <td class="text-left w-90"><span class="p-1"><%= kpiTable.Rows(k).Item("Lv3").ToString %></span></td>
+                                                            <td class="text-left w-90"><span class="p-1"><%= kpiTable.Rows(k).Item("Lv4").ToString %></span></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="text-center align-middle w-10"><span class="p-1 font-weight-bold">3</span></td>
@@ -1009,7 +1009,7 @@
                 if (form.checkValidity() === false || hasInvalidSpan) {
                     event.preventDefault();
                     event.stopPropagation();
-                    alertWarning(hasInvalidSpan ? 'กรุณาลงคะแนนประเมิน KPIs ให้ครบถ้วน' : 'กรุณากรอกข้อมูลให้ครบถ้วน');
+                    alertWarning(hasInvalidSpan ? 'กรุณาลงคะแนนประเมิน KPIs และ Competency ให้ครบถ้วน' : 'กรุณากรอกข้อมูลให้ครบถ้วน');
                     form.classList.add('was-validated');
                 } else {
                     const payload = getJSON_input();
