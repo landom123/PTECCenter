@@ -934,7 +934,7 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/Jobs.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/js/KPIs.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/KPIsV2.js")%>"></script>
     <script>
 
         $(window).scroll(function () {
@@ -960,9 +960,9 @@
             setupGroupSelect();
             replaceCboGroup("<%= assessor %>");
             replaceCbo("<%= assessor %>");
-            addRadioToProject("<%= assessor %>");
             replaceCell("<%= assessor %>");
             checkAndReplaceTablesProject("<%= assessor %>");
+            addRadioToProject("<%= assessor %>");
         });
         $('.form-control').on('show.bs.select', function () {
             var $select = $(this);

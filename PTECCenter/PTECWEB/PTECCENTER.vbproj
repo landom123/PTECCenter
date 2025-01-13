@@ -1777,6 +1777,7 @@
     <Content Include="icon\Logo_pure.png" />
     <Content Include="icon\nozzle_pace.jpg" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\KPIsV2.js" />
     <Content Include="js\KPIs.js" />
     <Content Include="js\Jobs.js" />
     <Content Include="js\jquery.min.js" />

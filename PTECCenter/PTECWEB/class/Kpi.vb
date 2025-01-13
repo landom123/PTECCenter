@@ -1312,9 +1312,9 @@ Public Class Kpi
 
     End Function
 
-    Public Function Kpi_FormsRes_List_For_Owner(depid As String, secid As String, comid As String,
+    Public Function Kpi_FormsRes_List_For_Owner(depid As String, secid As String, comid As String, positionid As String,
                                         branchgroupid As String,
-                                        branchid As String, ownerid As String, userid As Integer,
+                                        branchid As String, ownerid As String, approverid As Integer, userid As Integer,
                                         category As String, preriodid As Integer, formid As Integer, Optional maxrows As Integer = 1000) As DataTable
         Dim result As DataTable
         'Credit_Balance_List_Createdate
@@ -1332,11 +1332,13 @@ Public Class Kpi
         cmd.Parameters.Add("@comid", SqlDbType.VarChar).Value = comid
         cmd.Parameters.Add("@preriodid", SqlDbType.Int).Value = preriodid
         cmd.Parameters.Add("@formid", SqlDbType.Int).Value = formid
+        cmd.Parameters.Add("@positionid", SqlDbType.VarChar).Value = positionid
         cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
         cmd.Parameters.Add("@secid", SqlDbType.VarChar).Value = secid
         cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
         cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
         cmd.Parameters.Add("@ownerid", SqlDbType.VarChar).Value = ownerid
+        cmd.Parameters.Add("@approverid", SqlDbType.VarChar).Value = approverid
         cmd.Parameters.Add("@category", SqlDbType.VarChar).Value = category
         cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
         cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
