@@ -82,7 +82,7 @@
                         <div class="col-md-3 mb-3 CO">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">Employee KPIs</span>
+                                    <span class="input-group-text">OwnerKPIs</span>
                                 </div>
                                 <asp:DropDownList class="form-control" ID="cboCreatebyCO" runat="server" readonly="true"></asp:DropDownList>
                             </div>
@@ -90,9 +90,26 @@
                         <div class="col-md-3 mb-3 HO">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">Employee KPIs</span>
+                                    <span class="input-group-text">OwnerKPIs</span>
                                 </div>
                                 <asp:DropDownList class="form-control" ID="cboCreateby" runat="server" readonly="true"></asp:DropDownList>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Approver</span>
+                                </div>
+                                <asp:DropDownList class="form-control" ID="cboApproverby" runat="server" readonly="true"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 HO">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Position</span>
+                                </div>
+                                <asp:DropDownList ID="cboPosition" class="form-control" runat="server"></asp:DropDownList>
                             </div>
                         </div>
                         <% 'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then%>

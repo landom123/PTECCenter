@@ -70,7 +70,7 @@ Public Class KPIsSummaryList
 
             objKpi.SetCboPeriod(cboPeriod)
             objKpi.SetCboForms_by_periodid(cboForms, cboPeriod.SelectedItem.Value)
-
+            objposition.SetCboPositionCode(cboPosition)
 
             objcompany.SetCboCompany(cboCompany, 0)
             objbranch.SetComboBranchGroup(cboBranchGroup)
@@ -91,6 +91,7 @@ Public Class KPIsSummaryList
             SetCboUsers(cboCreateby)
             SetCboUsersCO(cboCreatebyCO)
 
+            SetCboUsers(cboApproverby, "", "ALL")
             'If Not operator_code.IndexOf(Session("usercode").ToString) > -1 Then
             '    cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
             '    cboCreatebyCO.SelectedIndex = cboCreatebyCO.Items.IndexOf(cboCreatebyCO.Items.FindByValue(Session("userid")))
@@ -120,9 +121,11 @@ Public Class KPIsSummaryList
                 itemtable = objKpi.Kpi_FormsRes_List_For_Owner("",
                                                       "",
                                                         cboCompany.SelectedItem.Value.ToString,
+                                                        "",
                                                         cboBranchGroup.SelectedItem.Value.ToString,
                                                         cboBranch.SelectedItem.Value.ToString,
                                                         cboCreatebyCO.SelectedItem.Value.ToString,
+                                                        cboApproverby.SelectedItem.Value.ToString,
                                                         Session("userid"),
                                                         "CO",
                                                         cboPeriod.SelectedValue.ToString,
@@ -132,9 +135,11 @@ Public Class KPIsSummaryList
                 itemtable = objKpi.Kpi_FormsRes_List_For_Owner(cboDepartment.SelectedItem.Value.ToString,
                                                         cboSection.SelectedItem.Value.ToString,
                                                         cboCompany.SelectedItem.Value.ToString,
+                                                        cboPosition.SelectedItem.Value.ToString,
                                                       "",
                                                       "",
                                                         cboCreateby.SelectedItem.Value.ToString,
+                                                        cboApproverby.SelectedItem.Value.ToString,
                                                         Session("userid"),
                                                         "HO",
                                                         cboPeriod.SelectedValue.ToString,
@@ -177,10 +182,12 @@ Public Class KPIsSummaryList
         cboForms.SelectedIndex = -1
         cboCreatebyCO.SelectedIndex = -1
         cboCreateby.SelectedIndex = -1
+        cboApproverby.SelectedIndex = -1
         cboDepartment.SelectedIndex = -1
         cboSection.SelectedIndex = -1
         cboBranchGroup.SelectedIndex = -1
         cboBranch.SelectedIndex = -1
+        cboPosition.SelectedIndex = -1
 
 
         If itemtable IsNot Nothing Then itemtable.Rows.Clear()
@@ -382,6 +389,8 @@ Public Class KPIsSummaryList
         dt.Columns.Add("cboForms", GetType(String))
         dt.Columns.Add("cboCreateby", GetType(String))
         dt.Columns.Add("cboCreatebyCO", GetType(String))
+        dt.Columns.Add("cboApproverby", GetType(String))
+        dt.Columns.Add("cboPosition", GetType(String))
         dt.Columns.Add("cboDep", GetType(String))
         dt.Columns.Add("cboSec", GetType(String))
         dt.Columns.Add("cboBranchGroup", GetType(String))
@@ -402,6 +411,8 @@ Public Class KPIsSummaryList
                                 cboForms.SelectedValue,
                                 cboCreateby.SelectedValue,
                                 cboCreatebyCO.SelectedValue,
+                                cboApproverby.SelectedValue,
+                            cboPosition.SelectedValue,
                               (cboDepartment.SelectedValue),
                               (cboSection.SelectedValue),
                               (cboBranchGroup.SelectedValue),
@@ -418,6 +429,8 @@ Public Class KPIsSummaryList
             cboForms.SelectedValue = criteria.Rows(0).Item("cboForms")
             cboCreateby.SelectedValue = criteria.Rows(0).Item("cboCreateby")
             cboCreatebyCO.SelectedValue = criteria.Rows(0).Item("cboCreatebyCO")
+            cboApproverby.SelectedValue = criteria.Rows(0).Item("cboApproverby")
+            cboPosition.SelectedValue = criteria.Rows(0).Item("cboPosition")
 
             cboBranchGroup.SelectedValue = criteria.Rows(0).Item("cboBranchGroup")
             Dim objbranch As New Branch
