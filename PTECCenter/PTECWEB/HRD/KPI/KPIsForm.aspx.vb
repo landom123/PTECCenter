@@ -318,8 +318,19 @@ endprocess:
     'End Sub
 
     Private Sub convertDataSetToJSON(ds As DataSet)
+        For Each dt As DataTable In ds.Tables
+            For Each row As DataRow In dt.Rows
+                For Each col As DataColumn In dt.Columns
+                    If row(col) IsNot DBNull.Value Then
+                        row(col) = Regex.Replace(row(col).ToString(), "[\x00-\x1F\x7F]", "")
+                    End If
+                Next
+            Next
+        Next
+
         Dim ansJson = JsonConvert.SerializeObject(ds, Formatting.Indented)
 
+        ansJson = ansJson.Replace("\", "\\").Replace("`", "\`")
 
         Dim scriptKey As String = "UniqueKeyForThisScript"
         Dim javaScript As String = "fetching(`" & ansJson & "`);"

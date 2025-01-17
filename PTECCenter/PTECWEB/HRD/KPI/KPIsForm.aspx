@@ -960,9 +960,9 @@
             setupGroupSelect();
             replaceCboGroup("<%= assessor %>");
             replaceCbo("<%= assessor %>");
+            addRadioToProject("<%= assessor %>");
             replaceCell("<%= assessor %>");
             checkAndReplaceTablesProject("<%= assessor %>");
-            addRadioToProject("<%= assessor %>");
         });
         $('.form-control').on('show.bs.select', function () {
             var $select = $(this);
