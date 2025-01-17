@@ -5,7 +5,7 @@ Imports ClosedXML.Excel
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-Public Class rptKPIsTalent
+Public Class rptKPIsScore
     Inherits System.Web.UI.Page
 
     Public menutable As DataTable
@@ -59,7 +59,7 @@ Public Class rptKPIsTalent
         Dim ds As DataSet
         Dim objkpi As New Kpi
         Try
-            ds = objkpi.Kpi_Report_Talent(cboForms.SelectedItem.Value)
+            ds = objkpi.Kpi_Report_Potential(cboForms.SelectedItem.Value)
             ExportToExcel(ds, Session("usercode"))
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -75,8 +75,8 @@ Public Class rptKPIsTalent
     Private Sub ExportToExcel(ds As DataSet, usercode As String)
 
         Using wb As New XLWorkbook()
-            wb.Worksheets.Add(ds.Tables(0), "KPI_Talent_Total_Score")
-            wb.Worksheets.Add(ds.Tables(1), "KPI_Talent_Raw_Score")
+            wb.Worksheets.Add(ds.Tables(0), "KPIs_Total_Score")
+            wb.Worksheets.Add(ds.Tables(1), "KPIs_Raw_Score")
             'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
 
             Dim filename As String = usercode & "_" & Date.Now.ToString

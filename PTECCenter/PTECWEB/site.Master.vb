@@ -6,7 +6,8 @@
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        Session.RemoveAll()
+        'Session.RemoveAll()
+        Session.Abandon()
         Response.Redirect("~\default.aspx")
     End Sub
 End Class

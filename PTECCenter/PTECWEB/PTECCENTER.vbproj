@@ -1829,6 +1829,7 @@
     <Content Include="OPS\Station\newNTI.aspx" />
     <Content Include="Preloader.gif" />
     <Content Include="ReportViewer.aspx" />
+    <Content Include="Report\rptKPIsScore.aspx" />
     <Content Include="Report\rptKPIsPotential.aspx" />
     <Content Include="Report\rptKPIsTalent.aspx" />
     <Content Include="Report\rptKPIsFeedback.aspx" />
@@ -4155,6 +4156,13 @@
     </Compile>
     <Compile Include="ReportViewer.aspx.vb">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptKPIsScore.aspx.designer.vb">
+      <DependentUpon>rptKPIsScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptKPIsScore.aspx.vb">
+      <DependentUpon>rptKPIsScore.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Report\rptKPIsPotential.aspx.designer.vb">
