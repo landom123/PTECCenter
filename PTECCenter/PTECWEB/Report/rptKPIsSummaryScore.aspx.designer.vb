@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class rptKPIsScore
+Partial Public Class rptKPIsSummaryScore
 
     '''<summary>
     '''btnExport control.
@@ -30,13 +30,4 @@ Partial Public Class rptKPIsScore
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboPeriod As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cboForms control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cboForms As Global.System.Web.UI.WebControls.DropDownList
 End Class

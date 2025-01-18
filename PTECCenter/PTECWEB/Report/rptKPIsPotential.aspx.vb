@@ -75,7 +75,8 @@ Public Class rptKPIsPotential
     Private Sub ExportToExcel(ds As DataSet, usercode As String)
 
         Using wb As New XLWorkbook()
-            wb.Worksheets.Add(ds.Tables(0), "KPI_Potential")
+            wb.Worksheets.Add(ds.Tables(0), "KPIs_Potential_Total_Score")
+            wb.Worksheets.Add(ds.Tables(1), "KPIs_Potential_Raw_Score")
             'wb.Worksheets.Add(ds.Tables(1), "KPI_Ap")
             'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
 

@@ -5,7 +5,7 @@ Imports ClosedXML.Excel
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-Public Class rptKPIsScore
+Public Class rptKPIsSummaryScore
     Inherits System.Web.UI.Page
 
     Public menutable As DataTable
@@ -48,7 +48,7 @@ Public Class rptKPIsScore
         If Not IsPostBack() Then
 
             objKpi.SetCboPeriod(cboPeriod)
-            objKpi.SetCboForms_by_periodid(cboForms, cboPeriod.SelectedItem.Value)
+            'objKpi.SetCboForms_by_periodid(cboForms, cboPeriod.SelectedItem.Value)
         Else
 
         End If
@@ -59,7 +59,7 @@ Public Class rptKPIsScore
         Dim ds As DataSet
         Dim objkpi As New Kpi
         Try
-            ds = objkpi.Kpi_Report_Potential(cboForms.SelectedItem.Value)
+            ds = objkpi.Kpi_Report_KPIs_Summary(cboPeriod.SelectedItem.Value)
             ExportToExcel(ds, Session("usercode"))
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -75,8 +75,9 @@ Public Class rptKPIsScore
     Private Sub ExportToExcel(ds As DataSet, usercode As String)
 
         Using wb As New XLWorkbook()
-            wb.Worksheets.Add(ds.Tables(0), "KPIs_Total_Score")
-            wb.Worksheets.Add(ds.Tables(1), "KPIs_Raw_Score")
+            wb.Worksheets.Add(ds.Tables(0), "KPIs_Final_Score")
+            wb.Worksheets.Add(ds.Tables(1), "KPIs_Cal_Score")
+            wb.Worksheets.Add(ds.Tables(2), "KPIs_Raw_Score")
             'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
 
             Dim filename As String = usercode & "_" & Date.Now.ToString
@@ -106,11 +107,6 @@ Public Class rptKPIsScore
             End Using
 
         End Using
-    End Sub
-
-    Private Sub cboPeriod_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboPeriod.SelectedIndexChanged
-        Dim objKpi As New Kpi
-        objKpi.SetCboForms_by_periodid(cboForms, cboPeriod.SelectedItem.Value)
     End Sub
 
 End Class

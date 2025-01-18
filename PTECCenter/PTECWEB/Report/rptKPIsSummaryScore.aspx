@@ -1,4 +1,4 @@
-﻿<%@ Page Title="rptKPIsScore" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="rptKPIsScore.aspx.vb" Inherits="PTECCENTER.rptKPIsScore" %>
+﻿<%@ Page Title="rptKPIsSummaryScore" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="rptKPIsSummaryScore.aspx.vb" Inherits="PTECCENTER.rptKPIsSummaryScore" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -19,7 +19,7 @@
 
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">KPIs Score (ประเมินประจำปี)</a>
+                        <a href="#">KPIs Main (ประเมินประจำปี)</a>
                     </li>
                 </ol>
                 <div class="row">
@@ -29,20 +29,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 mb-3">
+                    <div class="col-12 mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Period</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboPeriod" runat="server" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Forms</span>
-                            </div>
-                            <asp:DropDownList class="form-control" ID="cboForms" runat="server" AutoPostBack="false"></asp:DropDownList>
                         </div>
                     </div>
                 </div>
