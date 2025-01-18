@@ -75,8 +75,7 @@ Public Class rptKPIsTalent
     Private Sub ExportToExcel(ds As DataSet, usercode As String)
 
         Using wb As New XLWorkbook()
-            wb.Worksheets.Add(ds.Tables(0), "KPI_Talent_Total_Score")
-            wb.Worksheets.Add(ds.Tables(1), "KPI_Talent_Raw_Score")
+            wb.Worksheets.Add(ds.Tables(0), "KPI_Talent")
             'wb.Worksheets.Add(mydataset.Tables(1), "Payment")
 
             Dim filename As String = usercode & "_" & Date.Now.ToString

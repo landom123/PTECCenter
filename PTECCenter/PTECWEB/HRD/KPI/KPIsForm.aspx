@@ -934,7 +934,7 @@
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/Jobs.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/js/KPIsV2.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/KPIsV3.js")%>"></script>
     <script>
 
         $(window).scroll(function () {
