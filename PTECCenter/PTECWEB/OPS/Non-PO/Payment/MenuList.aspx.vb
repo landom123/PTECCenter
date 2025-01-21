@@ -56,7 +56,7 @@ Public Class MenuList
             objdep.SetCboDepartmentBybranch(cboDepartment, 0)
             objsec.SetCboSection_seccode(cboSection, cboDepartment.SelectedValue)
             objcompany.SetCboCompany(cboCompany, 0)
-            If Session("positionid") = "10" Then
+            If Session("positionid") = "10" Or Session("positionid") = "15" Then
                 chkCO.Checked = True
             Else
                 chkHO.Checked = True

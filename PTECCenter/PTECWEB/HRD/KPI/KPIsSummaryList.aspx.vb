@@ -76,14 +76,14 @@ Public Class KPIsSummaryList
             objbranch.SetComboBranchGroup(cboBranchGroup)
             objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
             objdep.SetCboDepartmentByMode(cboDepartment, 0, "actived")
-            If Not operator_code.IndexOf(Session("usercode").ToString) > -1 Then cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
+            'If Not operator_code.IndexOf(Session("usercode").ToString) > -1 Then cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
             objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
-            If Not operator_code.IndexOf(Session("usercode").ToString) > -1 Then cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(Session("secid").ToString))
+            'If Not operator_code.IndexOf(Session("usercode").ToString) > -1 Then cboSection.SelectedIndex = cboSection.Items.IndexOf(cboSection.Items.FindByValue(Session("secid").ToString))
 
 
 
             cboCompany.SelectedIndex = 1
-            If Session("positionid") = "10" Then
+            If Session("positionid") = "10" Or Session("positionid") = "15" Then '10 PM , 15 AA
                 chkCO.Checked = True
             Else
                 chkHO.Checked = True

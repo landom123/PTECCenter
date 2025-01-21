@@ -45,7 +45,7 @@ Public Class AssetsNozzle
 
         If Not IsPostBack Then
             objbranch.SetComboBranch(cboBranch)
-            If Session("positionid") = "10" Then
+            If Session("positionid") = "10" Or Session("positionid") = "15" Then
                 cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(Session("branchid")))
 
                 cboBranch.Attributes.Add("disabled", "True")
@@ -77,13 +77,13 @@ Public Class AssetsNozzle
     End Sub
 
     Private Sub cboBranch_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboBranch.SelectedIndexChanged
-        If Not Session("positionid") = "10" Then
+        If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then
             findNozzle(cboBranch.SelectedValue)
         End If
     End Sub
 
     Private Sub btnAddDetails_Click(sender As Object, e As EventArgs) Handles btnAddDetails.Click
-        If Not Session("positionid") = "10" Then
+        If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then
             Dim objassets As New Assets
             Try
                 objassets.UpdateDetail(hiddenAdvancedetailid.Value,
@@ -167,7 +167,7 @@ Public Class AssetsNozzle
     End Sub
 
     Private Sub SetBtn(positionid As Integer)
-        If Not positionid = "10" Then
+        If Not positionid = "10" And Not positionid = "15" Then
 
             Dim scriptKey As String = "disable"
             'Dim javaScript As String = "alert('" & ex.Message & "');"

@@ -47,7 +47,7 @@ Public Class MemoList
             SetCboUsers(cboCreateby)
             SetCboUsers(cboTo)
             SetCboUsers(cboCc)
-            If Session("positionid") = "10" Then
+            If Session("positionid") = "10" Or Session("positionid") = "15" Then '10 PM , 15 AA
                 chkCO.Checked = True
             Else
                 chkHO.Checked = True

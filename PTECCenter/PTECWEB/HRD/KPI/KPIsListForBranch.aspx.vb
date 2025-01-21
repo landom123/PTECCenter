@@ -65,7 +65,7 @@ Public Class KPIsListForBranch
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
 
-        If Not Session("positionid") = "10" Then
+        If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then '10 PM , 15 AA
             Response.Redirect("KPIsList.aspx")
         End If
 
@@ -92,7 +92,7 @@ Public Class KPIsListForBranch
 
 
             'cboCompany.SelectedIndex = 1
-            'If Session("positionid") = "10" Then
+            'If Session("positionid") = "10" Or Session("positionid") = "15" Then '10 PM , 15 AA
             '    chkCO.Checked = True
             'Else
             '    chkHO.Checked = True

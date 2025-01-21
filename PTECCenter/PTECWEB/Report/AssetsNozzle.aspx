@@ -82,7 +82,7 @@
                                                         <% If nozzletable.Rows.Count > 0 Then%>
                                                         <% For j = 0 To nozzletable.Rows.Count - 1 %>
                                                         <tr style="cursor: pointer;"
-                                                            <% If Not Session("positionid") = "10" Then%>
+                                                            <% If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then%>
                                                             ondblclick="btnEditDetailClick('<%= nozzletable.Rows(j).Item("rownumber").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("nozzle_id").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("nozzle_no").ToString() %>'
@@ -133,7 +133,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <% If Not Session("positionid") = "10" Then%>
+                                                                <% If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then%>
                                                                 <a title="EditDetail" onclick="btnEditDetailClick('<%= nozzletable.Rows(j).Item("rownumber").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("nozzle_id").ToString() %>'
                                                                         ,'<%= nozzletable.Rows(j).Item("nozzle_no").ToString() %>'

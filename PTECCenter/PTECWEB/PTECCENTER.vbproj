@@ -1832,6 +1832,7 @@
     <Content Include="ReportViewer.aspx" />
     <Content Include="Report\rptKPIsSummaryScore.aspx" />
     <Content Include="Report\rptKPIsPotential.aspx" />
+    <Content Include="Report\rptKPIsTrainingNeed.aspx" />
     <Content Include="Report\rptKPIsTalent.aspx" />
     <Content Include="Report\rptKPIsFeedback.aspx" />
     <Content Include="Report\rptCLADVCO.aspx" />
@@ -4171,6 +4172,13 @@
     </Compile>
     <Compile Include="Report\rptKPIsPotential.aspx.vb">
       <DependentUpon>rptKPIsPotential.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rptKPIsTrainingNeed.aspx.designer.vb">
+      <DependentUpon>rptKPIsTrainingNeed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\rptKPIsTrainingNeed.aspx.vb">
+      <DependentUpon>rptKPIsTrainingNeed.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Report\rptKPIsTalent.aspx.designer.vb">

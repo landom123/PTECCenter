@@ -83,7 +83,8 @@ Public Class KPIsList
         company_en.InnerText = "PURE THAI ENERGY COMPANY LIMITED"
 
 
-        'If Session("positionid") = "10" Then
+
+        'If Session("positionid") = "10" Or Session("positionid") = "15" Then '10 PM , 15 AA
         'Response.Redirect("KPIsListForBranch.aspx")
         'End If
 
@@ -101,14 +102,14 @@ Public Class KPIsList
             objbranch.SetComboBranchGroup(cboBranchGroup)
             objbranch.SetComboBranchByBranchGroupID(cboBranch, cboBranchGroup.SelectedItem.Value)
             objdep.SetCboDepartmentByMode(cboDepartment, 0, "actived")
-            cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
+            'cboDepartment.SelectedIndex = cboDepartment.Items.IndexOf(cboDepartment.Items.FindByValue(Session("depid").ToString))
             objsec.SetCboSectionCodeNameByMode(cboSection, cboDepartment.SelectedItem.Value, "actived")
             'objbranch.SetCboBranchManager(cboBranchManager)
 
 
 
             cboCompany.SelectedIndex = 1
-            If Session("positionid") = "10" Then
+            If Session("positionid") = "10" Or Session("positionid") = "15" Then '10 PM , 15 AA
                 chkCO.Checked = True
             Else
                 chkHO.Checked = True
