@@ -78,7 +78,7 @@ Public Class WebForm1
 
         If Not IsPostBack() Then
             objapproval.SetCboApproval(cboApproval, "", "nds")
-            'If Not Session("positionid") = "10" Then
+            'If Not Session("positionid") = "10" AND Not Session("positionid") = "15" Then '10 PM , 15 AA
             'objbranch.SetComboBranchByAreaid(cboBranch, Session("areaid").ToString, 1)
             'Else
             'objbranch.SetComboBranch(cboBranch, usercode)
@@ -368,7 +368,7 @@ endprocess:
             Not Session("userid") = dm_id And
             Not Session("userid") = fm_id And
             Not Session("userid") = md_id And
-            Session("positionid").ToString = "10" Then
+            (Session("positionid").ToString = "10" Or Session("positionid").ToString = "15") Then '10 PM , 15 AA
                 'Not Session("secid").ToString = "2" And
                 'Not Session("depid").ToString = "2" And
                 'Not Session("depid").ToString = "1" And

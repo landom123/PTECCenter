@@ -31,7 +31,7 @@ Public Class WebForm3
 
         Session("status") = "read"
         If Not IsPostBack() Then
-            If Not Session("positionid") = "10" Then
+            If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then '10 PM , 15 AA
                 If Session("positionid") = "9" Then
                     'กรณีถ้าเป็น AM (เขต) ให้เห็นข้อมูลแค่ในพื้นที่ของตัวเอง fix
                     area.SetCboArea(cboArea, Session("userid"))
@@ -86,7 +86,7 @@ Public Class WebForm3
     End Sub
 
     Private Sub BindData()
-        If Not Session("positionid") = "10" Then
+        If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then '10 PM , 15 AA
             If itemtable.Rows.Count > 0 Then
                 btnPrint.Enabled = True
             Else

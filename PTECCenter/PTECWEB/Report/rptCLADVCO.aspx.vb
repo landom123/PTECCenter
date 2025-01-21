@@ -72,7 +72,7 @@ Public Class rptCLADVCO
             SetCboUsers(cboCreateby)
             SetCboUsers(cboOwner)
             approval.SetCboApproval(cboApproval, Session("depid"), "", Session("secid"))
-            If Session("positionid") = "10" Then
+            If Session("positionid") = "10" Or Session("positionid") = "15" Then
                 chkCO.Checked = True
             Else
                 chkHO.Checked = True

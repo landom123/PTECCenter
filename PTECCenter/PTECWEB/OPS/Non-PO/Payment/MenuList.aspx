@@ -152,7 +152,7 @@
                     </div>
                     <% End If %>
 
-                    <% If Not Session("positionid") = "10" Then %>
+                    <% If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then %>
                     <div class="col-md-4 mb-3 CO">
                         <div class="input-group">
                             <div class="input-group-prepend">
