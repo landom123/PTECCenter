@@ -1562,4 +1562,76 @@ Public Class Kpi
         conn.Close()
         Return result
     End Function
+
+    Public Function Kpi_Report_Project(periodid As Integer) As DataSet
+        Dim result As DataSet
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Rpt_Project"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@periodid", SqlDbType.Int).Value = periodid
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Kpi_Forms_Del(formid As Integer, msg As String, userid As Integer) As Boolean
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Forms_Del"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@kpiform_id", SqlDbType.Int).Value = formid
+        cmd.Parameters.Add("@msg", SqlDbType.VarChar).Value = msg
+        cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Kpi_Forms_Add(msg As String, userid As Integer) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Forms_Add"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@msg", SqlDbType.VarChar).Value = msg
+        cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("id")
+        conn.Close()
+        Return result
+
+    End Function
 End Class

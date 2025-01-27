@@ -97,6 +97,11 @@ Public Class KPIsSummaryList
             '    cboCreatebyCO.SelectedIndex = cboCreatebyCO.Items.IndexOf(cboCreatebyCO.Items.FindByValue(Session("userid")))
             'End If
 
+            If Session("SortExpression_KPIsSum") Is Nothing Then
+                ' ถ้าไม่มีการตั้งค่าการจัดเรียงใน ViewState, กำหนดให้ไม่จัดเรียง (ใช้ข้อมูลตามลำดับเดิม)
+                Session("SortExpression_KPIsSum") = String.Empty
+                Session("SortDirection_KPIsSum") = SortDirection.Ascending
+            End If
 
             If Not Session("criteria_KpiSummary") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                 criteria = Session("criteria_KpiSummary")
@@ -165,6 +170,13 @@ Public Class KPIsSummaryList
         'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
         setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         'End If
+
+        ' เรียงข้อมูลตามที่บันทึกไว้ใน ViewState
+        If Not String.IsNullOrEmpty(Session("SortExpression_KPIsSum").ToString()) Then
+            Dim dv As DataView = itemtable.DefaultView
+            dv.Sort = Session("SortExpression_KPIsSum").ToString() & " " & Session("SortDirection_KPIsSum").ToString()
+        End If
+
         gvRemind.Caption = "ทั้งหมด " & itemtable.Rows.Count & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
@@ -356,12 +368,12 @@ Public Class KPIsSummaryList
     End Sub
     Private Function GetSortDirection(ByVal column As String) As String
         Dim sortDirection As String = "ASC"
-        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+        Dim sortExpression As String = TryCast(Session("SortExpression_KPIsSum"), String)
 
         If sortExpression IsNot Nothing Then
 
             If sortExpression = column Then
-                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+                Dim lastDirection As String = TryCast(Session("SortDirection_KPIsSum"), String)
 
                 If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
                     sortDirection = "DESC"
@@ -369,8 +381,8 @@ Public Class KPIsSummaryList
             End If
         End If
 
-        ViewState("SortDirection") = sortDirection
-        ViewState("SortExpression") = column
+        Session("SortDirection_KPIsSum") = sortDirection
+        Session("SortExpression_KPIsSum") = column
         Return sortDirection
     End Function
 

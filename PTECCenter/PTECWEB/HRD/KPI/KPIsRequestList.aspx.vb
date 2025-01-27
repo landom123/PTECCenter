@@ -91,6 +91,12 @@ Public Class KPIsRequestList
             'cboCreateby.SelectedIndex = cboCreateby.Items.IndexOf(cboCreateby.Items.FindByValue(Session("userid")))
             'cboCreatebyCO.SelectedIndex = cboCreatebyCO.Items.IndexOf(cboCreatebyCO.Items.FindByValue(Session("userid")))
 
+            If Session("SortExpression_KPIsReq") Is Nothing Then
+                ' ถ้าไม่มีการตั้งค่าการจัดเรียงใน ViewState, กำหนดให้ไม่จัดเรียง (ใช้ข้อมูลตามลำดับเดิม)
+                Session("SortExpression_KPIsReq") = String.Empty
+                Session("SortDirection_KPIsReq") = SortDirection.Ascending
+            End If
+
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
                 If Not Session("criteria_newkpi") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
                     criteria = Session("criteria_newkpi")
@@ -112,7 +118,7 @@ Public Class KPIsRequestList
         Else
 
             criteria = Session("criteria_newkpi")
-            itemtable = Session("newkpiitem")
+            itemtable = ViewState("newkpiitem")
         End If
 
     End Sub
@@ -221,7 +227,7 @@ Public Class KPIsRequestList
                                                         cboPeriod.SelectedValue.ToString)
             End If
 
-            Session("newkpiitem") = itemtable
+            ViewState("newkpiitem") = itemtable
             BindData()
 
         Catch ex As Exception
@@ -234,6 +240,13 @@ Public Class KPIsRequestList
         'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
         setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         'End If
+
+        ' เรียงข้อมูลตามที่บันทึกไว้ใน ViewState
+        If Not String.IsNullOrEmpty(Session("SortExpression_KPIsReq").ToString()) Then
+            Dim dv As DataView = itemtable.DefaultView
+            dv.Sort = Session("SortExpression_KPIsReq").ToString() & " " & Session("SortDirection_KPIsReq").ToString()
+        End If
+
         gvRemind.Caption = "ทั้งหมด " & itemtable.Rows.Count & " รายการ"
         gvRemind.DataSource = itemtable
         gvRemind.DataBind()
@@ -268,7 +281,7 @@ Public Class KPIsRequestList
         If criteria IsNot Nothing Then
             criteria.Rows.Clear()
         End If
-        Session("newkpiitem") = itemtable
+        ViewState("newkpiitem") = itemtable
         Session("criteria_newkpi") = criteria
 
 
@@ -340,7 +353,7 @@ Public Class KPIsRequestList
                                                         cboPeriod.SelectedValue.ToString)
             End If
 
-            Session("newkpiitem") = itemtable
+            ViewState("newkpiitem") = itemtable
             BindData()
 
         Catch ex As Exception
@@ -365,12 +378,12 @@ Public Class KPIsRequestList
     End Sub
     Private Function GetSortDirection(ByVal column As String) As String
         Dim sortDirection As String = "ASC"
-        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+        Dim sortExpression As String = TryCast(Session("SortExpression_KPIsReq"), String)
 
         If sortExpression IsNot Nothing Then
 
             If sortExpression = column Then
-                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+                Dim lastDirection As String = TryCast(Session("SortDirection_KPIsReq"), String)
 
                 If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
                     sortDirection = "DESC"
@@ -378,8 +391,8 @@ Public Class KPIsRequestList
             End If
         End If
 
-        ViewState("SortDirection") = sortDirection
-        ViewState("SortExpression") = column
+        Session("SortDirection_KPIsReq") = sortDirection
+        Session("SortExpression_KPIsReq") = column
         Return sortDirection
     End Function
 End Class
