@@ -3504,7 +3504,9 @@ input[type="button"].btn-block {
 }
 
 .dropdown-menu.show {
-  display: block;
+    display: block;
+    width: 100% !important;
+    transform: none !important;
 }
 
 .dropdown-header {

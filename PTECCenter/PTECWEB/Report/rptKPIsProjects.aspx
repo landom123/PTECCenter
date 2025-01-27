@@ -1,0 +1,76 @@
+﻿<%@ Page Title="rptKPIsProjects" Language="vb" AutoEventWireup="false" MasterPageFile="~/site.Master" CodeBehind="rptKPIsProjects.aspx.vb" Inherits="PTECCENTER.rptKPIsProjects" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+
+    <!-- datetimepicker-->
+    <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div id="wrapper">
+
+        <!-- #include virtual ="/include/menu.inc" -->
+        <!-- add side menu -->
+
+        <!-- เนื้อหาเว็บ -->
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">KPIs Projects (ประเมินประจำปี)</a>
+                    </li>
+                </ol>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <asp:Button ID="btnExport" class="btn btn-sm btn-success" runat="server" Text="Export CSV" />
+                        &nbsp;           
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Period</span>
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboPeriod" runat="server" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+    </div>
+
+    <!-- datetimepicker ต้องไปทั้งชุด-->
+    <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
+    <script>
+        $(document).ready(function () {
+            $('.form-control').selectpicker({
+                noneSelectedText: '-',
+                liveSearch: true,
+                maxOptions: 1
+            });
+        });
+
+        function alertSuccess() {
+            Swal.fire(
+                'สำเร็จ',
+                '',
+                'success'
+            )
+        }
+
+        function alertWarning(massage) {
+            Swal.fire(
+                massage,
+                '',
+                'warning'
+            )
+        }
+    </script>
+
+</asp:Content>

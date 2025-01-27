@@ -100,6 +100,51 @@ endprocess:
 endprocess:
     End Sub
 
+    <System.Web.Services.WebMethod>
+    Public Shared Function addForms(ByVal message As String, ByVal updateby As Integer)
+        Dim objKpi As New Kpi
+
+        Dim result As Boolean
+        Try
+            result = objKpi.Kpi_Forms_Add(message, updateby)
+
+        Catch ex As Exception
+            Return "fail"
+        End Try
+        Return "success"
+
+    End Function
+
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function dupForms(ByVal formid As Integer, ByVal message As String, ByVal updateby As Integer)
+        Dim objKpi As New Kpi
+
+        Dim result As Boolean
+        Try
+            'result = objKpi.Kpi_Forms_Dup(formid, message, updateby)
+
+        Catch ex As Exception
+            Return "fail"
+        End Try
+        Return "success"
+
+    End Function
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function CancelByCode(ByVal formid As Integer, ByVal message As String, ByVal updateby As Integer)
+        Dim objKpi As New Kpi
+
+        Dim result As Boolean
+        Try
+            result = objKpi.Kpi_Forms_Del(formid, message, updateby)
+
+        Catch ex As Exception
+            Return "fail"
+        End Try
+        Return "success"
+
+    End Function
     Private Sub cboPeriod_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboPeriod.SelectedIndexChanged
         FindForms_by_period(cboPeriod.SelectedValue)
     End Sub
