@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+    <link href="<%=Page.ResolveUrl("~/css/autocomplete.css")%>" rel="stylesheet">
     <link href="<%=Page.ResolveUrl("~/fileupload/dist/font/font-fileuploader.css")%>" rel="stylesheet">
 
     <link href="<%=Page.ResolveUrl("~/fileupload/dist/jquery.fileuploader.min.css")%>" rel="stylesheet">
@@ -437,11 +438,21 @@
                                         <h3 id="txtstkCode" runat="server"></h3>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col mb-3 text-left text-md-right">
+                                <div class="row mb-3 ">
+                                    <div class="col text-left text-md-right">
                                         <span id="txtSuppilerCode" runat="server"></span>
                                         <span id="txtSuppilerName" runat="server"></span>
                                         <span id="txtCntSupplier" runat="server"></span>
+                                    </div>
+                                </div>
+                                <div class="row flex-md-row-reverse mb-3 ">
+                                    <div class="col-auto text-left">
+                                        <div class="input-group mb-3" id="groupAddSupplier" runat="server">
+                                            <asp:DropDownList class="form-control d-none" ID="cboVendor" runat="server"></asp:DropDownList>
+                                            <input type="text" id="txtContractorName" class="form-control" placeholder="เพิ่มชื่อผู้รับเหมาที่เข้าทำงาน">
+                                            <button class="btn btn-primary" onclick="addContractor('<%= Session("usercode") %>')">เพิ่ม</button>
+                                        </div>
+                                        <ol id="contractorList"></ol>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -1310,6 +1321,33 @@
             </div>
         </div>
     </div>
+    <div class="modal fade bd-example-modal-lg analy" id="SupplierName" tabindex="-1" role="dialog" aria-labelledby="SupplierNameModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="SupplierNameModal">รายชื่อผู้รับเหมา</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <%-- <div class="input-group mb-3">
+                                <input type="text" id="contractorName" class="form-control" placeholder="เพิ่มชื่อผู้รับเหมา">
+                                <button class="btn btn-primary" onclick="addContractor()">เพิ่ม</button>
+                            </div>
+                            <ul id="contractorList" class="list-group"></ul>--%>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade bd-example-modal-lg analy" id="dataAnalyGroupType" tabindex="-1" role="dialog" aria-labelledby="dataAnalyGroupTypeModal" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -1680,6 +1718,21 @@
                     <% End if %>
                 <% End if %>
             }
+
+            var arrVendor = new Array;
+            //var myArray = new Array;
+            $("#<%= cboVendor.ClientID%> option").each(function () {
+                arrVendor.push($(this).val());
+                //myArray[$(this).val()] = $(this).attr("data-taxidno");
+            });
+            //for (var key in myArray) {
+            //    console.log("key " + key + " has value " + myArray[key]);
+            //}
+
+            console.log(arrVendor);
+            nonpo_autocomplete(document.getElementById("txtContractorName"), arrVendor, null, null);
+
+            getSubsupplier();
         });
         function modalShow(id) {
             $(`#${id}`).modal('show');
@@ -2244,6 +2297,7 @@
             document.forms[0].appendChild(confirm_value);
             return true;
         }
+
         function postBack_addDetail() {
             const txtnozzle_no = $('#<%= txtnozzle_no.ClientID%>').val();
             const txtexpirydate = $('#<%= txtexpirydate.ClientID%>').val();
@@ -2260,6 +2314,124 @@
                 event.stopPropagation();
                 return 0;
             }
+        }
+        function addContractor(usercode) {
+            event.preventDefault();
+            const stkcodespan = document.getElementById("<%= txtstkCode.ClientID%>");
+            const stkcode = stkcodespan.innerText.trim();
+            if (stkcode === "") return;
+
+            const nameInput = document.getElementById("txtContractorName");
+            const name = nameInput.value.trim();
+            if (name === "") return;
+
+            const list = document.getElementById("contractorList");
+
+            // เช็คว่ามีชื่อใน list อยู่แล้วหรือไม่
+            const exists = Array.from(list.getElementsByTagName("li")).some(item =>
+                item.textContent.trim().startsWith(name)
+            );
+
+            if (exists) {
+                nameInput.value = "";
+                alert("ชื่อผู้รับเหมานี้มีอยู่แล้ว!");
+                return;
+            }
+
+            const params = "{'stkcode': '" + stkcode + "','txtValue': '" + name + "','user': '" + usercode + "'}";
+            $.ajax({
+                type: "POST",
+                url: "/OPS/jobs_followup.aspx/addSubSupplier",
+                async: true,
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d) {
+
+                        const id = msg.d
+                        // สร้าง list item ใหม่
+                        const listItem = document.createElement("li");
+                        listItem.className = "";
+                        listItem.innerHTML = `${name} <button class="btn btn-link text-danger ml-2 deletedetail" onclick="removeContractor(this,${id});"> <i class="fas fa-times"></i></button>`;
+
+                        list.appendChild(listItem);
+                    } else {
+                        throw new Error("Add fail");
+                    }
+
+                },
+                error: function (msg) {
+                    alertWarning('Add fail');
+                    return;
+                }
+            });
+
+            
+            nameInput.value = "";
+        }
+
+        function removeContractor(button, id) {
+            event.preventDefault();
+            const usercode = "<%= Session("usercode") %>"; // ดึง user จาก session
+
+            if (id === null || id === undefined || isNaN(id)) return;
+
+            if (confirm("คุณต้องการลบรายการนี้หรือไม่?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/OPS/jobs_followup.aspx/deleteSubSupplier",
+                    async: true,
+                    data: JSON.stringify({ ssid: id, user: usercode }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.d) {
+                            button.parentElement.remove(); // ลบจาก UI เมื่อสำเร็จ
+                        } else {
+                            alertWarning("ลบข้อมูลไม่สำเร็จ");
+                        }
+                    },
+                    error: function () {
+                        alertWarning("เกิดข้อผิดพลาดในการลบข้อมูล");
+                    }
+                });
+            }
+        }
+
+        function getSubsupplier() {
+            const stkcodespan = document.getElementById("<%= txtstkCode.ClientID%>");
+            const stkcode = stkcodespan.innerText.trim();
+            if (stkcode === "") return;
+
+            $.ajax({
+                type: "POST",
+                url: "/OPS/jobs_followup.aspx/getSubSupplier",
+                async: true,
+                data: JSON.stringify({ stkcode: stkcode }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.d) {
+                        const list = document.getElementById("contractorList");
+                        list.innerHTML = ""; // เคลียร์รายการก่อน
+
+                        const data = JSON.parse(response.d); // แปลง JSON เป็น Object
+                        console.log(data)
+                        data.forEach(row => {
+                            const listItem = document.createElement("li");
+                            listItem.innerHTML = `${row.subsupplier_name} 
+                        <button class="btn btn-link text-danger ml-2 deletedetail" onclick="removeContractor(this,${row.id});"> 
+                            <i class="fas fa-times"></i>
+                        </button>`;
+                            list.appendChild(listItem);
+                        });
+                    }
+                },
+                error: function () {
+                    alertWarning("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+                }
+            });
         }
     </script>
 </asp:Content>

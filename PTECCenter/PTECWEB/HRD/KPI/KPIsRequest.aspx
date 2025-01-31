@@ -86,7 +86,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-auto">
-                                                    <div class="media">
+                                                    <div class="media flex-column flex-sm-row">
                                                         <img src="<%=Page.ResolveUrl("~/icon/Logo_pure.png")%>" class="align-self-center mr-3" alt="..." width="150">
                                                         <div class="media-body">
                                                             <div class="row">

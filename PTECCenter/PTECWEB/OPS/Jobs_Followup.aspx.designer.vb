@@ -455,6 +455,24 @@ Partial Public Class JobsFollowup
     Protected WithEvents txtCntSupplier As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
+    '''groupAddSupplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents groupAddSupplier As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''cboVendor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cboVendor As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''txtSupplierBeginDate control.
     '''</summary>
     '''<remarks>
