@@ -61,6 +61,7 @@ Public Class JobsFollowup
             assessmenttable = createtableassessment()
             Clear()
 
+            objsupplier.SetCboSupplierForAutocomplete(cboVendor)
             objjob.SetCboCloseType(cboCloseType)
             objjob.SetCboCloseCategory(cboCloseCategory)
             objsupplier.SetCboSupplier(cboSupplier)
@@ -138,7 +139,7 @@ Public Class JobsFollowup
                     btnSubmitRate.Visible = False
                     btndisAccept.Visible = False
 
-                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
+                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then 'กรณี ปิดงาน
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
                         btnNozzle.Visible = False
@@ -150,20 +151,21 @@ Public Class JobsFollowup
                         btnBackStep.Visible = False
                         btnNextStep.Visible = False
                         btnCancelSupplier.Visible = False
-                        If Not maintable.Rows(0).Item("supplierid") = 0 Then
-                            Dim rows() As DataRow = stepsuppilertable.Select("stepdate is not null")
-                            If rows.Count > 0 Then
-                                If statusnow = 7 Then
-                                    btnCancelSupplier.Enabled = False
-                                    btnBackStep.Enabled = False
-                                    btnNextStep.Enabled = False
-                                Else
-                                    btnCancelSupplier.Visible = True
-                                    btnBackStep.Visible = True
-                                    btnNextStep.Visible = True
-                                End If
-                            End If
-                        End If
+                        groupAddSupplier.Visible = False
+                        'If Not maintable.Rows(0).Item("supplierid") = 0 Then 'มี Supplier ใน Header
+                        '    Dim rows() As DataRow = stepsuppilertable.Select("stepdate is not null")
+                        '    If rows.Count > 0 Then
+                        '        If statusnow = 7 Then
+                        '            btnCancelSupplier.Enabled = False
+                        '            btnBackStep.Enabled = False
+                        '            btnNextStep.Enabled = False
+                        '        Else
+                        '            btnCancelSupplier.Visible = True
+                        '            btnBackStep.Visible = True
+                        '            btnNextStep.Visible = True
+                        '        End If
+                        '    End If
+                        'End If
 
 
 
@@ -176,7 +178,7 @@ Public Class JobsFollowup
                         ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
 
 
-                    Else
+                    Else 'กรณี ยังปิดงาน
                         btnSave.Enabled = True
                         btnEditDetail.Visible = True
                         If maintable.Rows(0).Item("jobtype").ToString.IndexOf("ตีตรา") > -1 Then
@@ -193,29 +195,36 @@ Public Class JobsFollowup
                         btnBackStep.Visible = True
                         btnNextStep.Visible = True
                         btnCancelSupplier.Visible = True
-                        If maintable.Rows(0).Item("supplierid") = 0 Then
+                        groupAddSupplier.Visible = False
+                        If maintable.Rows(0).Item("supplierid") = 0 Then 'กรณี ไม่มี supplier
                             btnSentSupplier.Visible = False '
                             btnPrint.Visible = False
                             btnBackStep.Visible = False
                             btnNextStep.Visible = False
                             btnCancelSupplier.Visible = False
-                        Else
+                            groupAddSupplier.Visible = False
+                        Else 'กรณี มี supplier
                             btnSentSupplier.Visible = True '
                             btnPrint.Visible = True
                             btnBackStep.Visible = False
                             btnNextStep.Visible = False
                             btnCancelSupplier.Visible = False
+                            groupAddSupplier.Visible = False
                             Dim rows() As DataRow = stepsuppilertable.Select("stepdate is not null")
                             If rows.Count > 0 Then
                                 btnSentSupplier.Visible = False '
-                                If statusnow = 7 Then
+                                If statusnow = 7 Then '7 ดำเนินการเสร็จสิ้น
                                     btnCancelSupplier.Enabled = False
                                     btnBackStep.Enabled = False
                                     btnNextStep.Enabled = False
+
+                                    groupAddSupplier.Visible = False
                                 Else
                                     btnCancelSupplier.Visible = True
                                     btnBackStep.Visible = True
                                     btnNextStep.Visible = True
+
+                                    groupAddSupplier.Visible = True
                                 End If
                             End If
 
@@ -307,6 +316,7 @@ Public Class JobsFollowup
                     btnBackStep.Visible = False
                     btnNextStep.Visible = False
                     btnCancelSupplier.Visible = False
+                    groupAddSupplier.Visible = False
                 Else
                     'Detail
                     btnSave.Visible = False
@@ -324,6 +334,7 @@ Public Class JobsFollowup
                     btnBackStep.Visible = False
                     btnNextStep.Visible = False
                     btnCancelSupplier.Visible = False
+                    groupAddSupplier.Visible = False
 
 
                     'Analy
@@ -1186,4 +1197,50 @@ endprocess:
             End If
         End If
     End Sub
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function addSubSupplier(ByVal stkcode As String, ByVal txtValue As String, ByVal user As String)
+        Dim objjob As New jobs
+        Dim id As String = ""
+
+
+        If String.IsNullOrEmpty(stkcode) Or String.IsNullOrEmpty(txtValue) Or String.IsNullOrEmpty(user) Then Return "fail"
+
+        Try
+            id = objjob.STrack_SubSupplier_Add(stkcode, txtValue, user)
+        Catch ex As Exception
+            Return "fail"
+        End Try
+        Return id
+
+    End Function
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function getSubSupplier(ByVal stkcode As String)
+        Dim objjob As New jobs
+
+        If String.IsNullOrEmpty(stkcode) Then Return "fail"
+
+        Try
+            Return JsonConvert.SerializeObject(objjob.STrack_SubSupplier_List_by_code(stkcode))
+        Catch ex As Exception
+            Return "fail"
+        End Try
+
+    End Function
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function deleteSubSupplier(ByVal ssid As Integer, ByVal user As String)
+
+        Dim objjob As New jobs
+        Try
+            objjob.STrack_SubSupplier_Del(ssid, user)
+        Catch ex As Exception
+            Return "fail"
+
+            GoTo endprocess
+        End Try
+        Return "success"
+endprocess:
+    End Function
 End Class

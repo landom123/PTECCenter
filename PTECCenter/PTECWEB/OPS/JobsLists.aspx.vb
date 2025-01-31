@@ -53,6 +53,11 @@ Public Class JobsList_test
                 cboDep.SelectedIndex = cboDep.Items.IndexOf(cboDep.Items.FindByValue(Session("depid").ToString))
                 SetCboJobTypeByDepID(cboJobType, cboDep.SelectedValue)
 
+                If Session("SortExpression_Jobslist") Is Nothing Then
+                    ' ถ้าไม่มีการตั้งค่าการจัดเรียงใน ViewState, กำหนดให้ไม่จัดเรียง (ใช้ข้อมูลตามลำดับเดิม)
+                    Session("SortExpression_Jobslist") = String.Empty
+                    Session("SortDirection_Jobslist") = SortDirection.Ascending
+                End If
 
                 '------------------------------------
                 If Not Session("criteria_Job") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
@@ -76,20 +81,27 @@ Public Class JobsList_test
                     Dim javaScript As String = "alertWarning('search fail');"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End Try
-                Session("joblist") = itemtable
+                ViewState("joblist") = itemtable
                 BindData()
             End If
 
         Else
 
             criteria = Session("criteria_Job")
-            itemtable = Session("joblist")
+            itemtable = ViewState("joblist")
         End If
     End Sub
     Private Sub BindData()
         If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
             setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         End If
+
+        ' เรียงข้อมูลตามที่บันทึกไว้ใน ViewState
+        If Not String.IsNullOrEmpty(Session("SortExpression_Jobslist").ToString()) Then
+            Dim dv As DataView = itemtable.DefaultView
+            dv.Sort = Session("SortExpression_Jobslist").ToString() & " " & Session("SortDirection_Jobslist").ToString()
+        End If
+
         cntdt = itemtable.Rows.Count
         gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
@@ -191,7 +203,7 @@ Public Class JobsList_test
                                                         cboSuppiler.SelectedValue,
                                                         cboMaxRows.SelectedValue)
 
-            Session("joblist") = itemtable
+            ViewState("joblist") = itemtable
             BindData()
 
         Catch ex As Exception
@@ -250,7 +262,7 @@ Public Class JobsList_test
         Session("cboWorking_job") = cboWorking.SelectedValue
         Dim objjob As New jobs
         itemtable = objjob.JobList(Session("usercode"), cboWorking.SelectedValue, cboMaxRows.SelectedValue)
-        Session("joblist") = itemtable
+        ViewState("joblist") = itemtable
         BindData()
 
     End Sub
@@ -293,7 +305,7 @@ Public Class JobsList_test
         cboSuppiler.SelectedIndex = -1
         itemtable.Rows.Clear()
         criteria.Rows.Clear()
-        Session("joblist") = itemtable
+        ViewState("joblist") = itemtable
         Session("criteria_Job") = criteria
 
         SetCboJobTypeByDepID(cboJobType, cboDep.SelectedValue)
@@ -368,12 +380,12 @@ Public Class JobsList_test
 
     Private Function GetSortDirection(ByVal column As String) As String
         Dim sortDirection As String = "ASC"
-        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+        Dim sortExpression As String = TryCast(Session("SortExpression_Jobslist"), String)
 
         If sortExpression IsNot Nothing Then
 
             If sortExpression = column Then
-                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+                Dim lastDirection As String = TryCast(Session("SortDirection_Jobslist"), String)
 
                 If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
                     sortDirection = "DESC"
@@ -381,8 +393,8 @@ Public Class JobsList_test
             End If
         End If
 
-        ViewState("SortDirection") = sortDirection
-        ViewState("SortExpression") = column
+        Session("SortDirection_Jobslist") = sortDirection
+        Session("SortExpression_Jobslist") = column
         Return sortDirection
     End Function
 End Class

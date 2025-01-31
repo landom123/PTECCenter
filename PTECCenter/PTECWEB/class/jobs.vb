@@ -1993,4 +1993,79 @@ Public Class jobs
 
         Return result
     End Function
+
+    Public Function STrack_SubSupplier_Add(stkcode As String, txtValue As String, user As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "STrack_SubSupplier_Add"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@stkcode", SqlDbType.VarChar).Value = stkcode
+        cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = txtValue
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("id")
+        conn.Close()
+        Return result
+
+    End Function
+
+    Public Function STrack_SubSupplier_List_by_code(stkcode As String) As DataTable
+        Dim result As DataTable
+
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "STrack_SubSupplier_List_by_code"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@stkcode", SqlDbType.VarChar).Value = stkcode
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        'cmd.ExecuteNonQuery()
+
+        conn.Close()
+
+        Return result
+    End Function
+
+    Public Sub STrack_SubSupplier_Del(ssid As Integer, user As String)
+        'Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "STrack_SubSupplier_Del"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@id", SqlDbType.Int).Value = ssid
+        cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user
+
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("code")
+        conn.Close()
+        'Return result
+    End Sub
 End Class
