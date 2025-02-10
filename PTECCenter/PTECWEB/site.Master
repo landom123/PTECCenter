@@ -261,7 +261,7 @@
             $('#btnMenu').hide();
         }
         // ฟังก์ชันปรับขนาด textarea
-        function autoResizeTextArea() {
+        function autoResize() {
             // ใช้ querySelectorAll เพื่อเลือกทุก textarea ที่มี class "resizeText"
             document.querySelectorAll('textarea').forEach(function (textarea) {
                 // เช็คว่ามีข้อความใน textarea หรือไม่
@@ -274,12 +274,12 @@
             });
         }
 
-        // เรียกฟังก์ชัน autoResizeTextArea ทุกครั้งที่โหลดหน้า
-        autoResizeTextArea();
+        // เรียกฟังก์ชัน autoResize ทุกครั้งที่โหลดหน้า
+        autoResize();
 
-        // เมื่อมีการพิมพ์ข้อความใน textarea, ฟังก์ชัน autoResizeTextArea จะถูกเรียก
+        // เมื่อมีการพิมพ์ข้อความใน textarea, ฟังก์ชัน autoResize จะถูกเรียก
         $('textarea').on('input', function () {
-            autoResizeTextArea();
+            autoResize();
         });
     });
 </script>
