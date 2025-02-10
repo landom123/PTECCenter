@@ -2068,4 +2068,114 @@ Public Class jobs
         conn.Close()
         'Return result
     End Sub
+
+    Public Function JobList_For_Operator_Report(jobcode As String, depid As String, jobtypeid As String, statusfollowid As String,
+                                         branchgroupid As String, branchid As String, startdate As String, enddate As String, suppilerid As String, Optional maxrows As Integer = 1000) As DataTable
+        Dim result As DataTable
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Jobs_List_byUser_Owner_Report"
+        cmd.CommandType = CommandType.StoredProcedure
+
+
+        cmd.Parameters.Add("@jobcode", SqlDbType.VarChar).Value = jobcode
+        cmd.Parameters.Add("@depid", SqlDbType.VarChar).Value = depid
+        cmd.Parameters.Add("@jobtypeid", SqlDbType.VarChar).Value = jobtypeid
+        cmd.Parameters.Add("@statusfollowid", SqlDbType.VarChar).Value = statusfollowid
+        cmd.Parameters.Add("@branchgroupid", SqlDbType.VarChar).Value = branchgroupid
+        cmd.Parameters.Add("@branchid", SqlDbType.VarChar).Value = branchid
+        cmd.Parameters.Add("@startdate", SqlDbType.VarChar).Value = startdate
+        cmd.Parameters.Add("@enddate", SqlDbType.VarChar).Value = enddate
+        cmd.Parameters.Add("@suppilerid", SqlDbType.VarChar).Value = suppilerid
+        cmd.Parameters.Add("@maxrows", SqlDbType.Int).Value = maxrows
+
+
+
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0)
+        conn.Close()
+        Return result
+    End Function
+
+
+    Public Function JobsDetails_Approval(dtlid As Integer, approverid As Integer) As Boolean
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "JobsDetails_Approval"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@dtlid", SqlDbType.Int).Value = dtlid
+        cmd.Parameters.Add("@approverid", SqlDbType.Int).Value = approverid
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function JobsDetails_Reject(dtlid As Integer, msg As String, approverid As Integer) As Boolean
+        Dim result As Boolean
+        'Credit_Balance_List_Createdate
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "JobsDetails_Reject"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@dtlid", SqlDbType.Int).Value = dtlid
+        cmd.Parameters.Add("@approverid", SqlDbType.Int).Value = approverid
+        cmd.Parameters.Add("@msg", SqlDbType.VarChar).Value = msg
+
+        cmd.ExecuteNonQuery()
+        'adp.SelectCommand = cmd
+        'adp.Fill(ds)
+        'result = ds.Tables(0).Rows(0).Item("jobcode")
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function JobsDetails_PermisstionApprove(dtlid As Integer, type As String) As String
+        Dim result As String
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_ops").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "JobsDetails_PermisstionApprove"
+        cmd.CommandType = CommandType.StoredProcedure
+
+        cmd.Parameters.Add("@dtlid", SqlDbType.Int).Value = dtlid
+        cmd.Parameters.Add("@type", SqlDbType.VarChar).Value = type
+
+        adp.SelectCommand = cmd
+        adp.Fill(ds)
+        result = ds.Tables(0).Rows(0).Item("allapprover")
+        conn.Close()
+        Return result
+
+    End Function
+
 End Class

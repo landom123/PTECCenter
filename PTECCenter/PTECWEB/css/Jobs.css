@@ -85,10 +85,10 @@
     display: none;
 }
 
-.modal-body {
-    max-height: 80vh;
-    overflow-y: auto;
-}
+/*.modal-body {*/
+/*    max-height: 80vh;*/
+/*    overflow-y: auto;*/
+/*}*/
 
 .mandatory::after {
     content: '*';

@@ -260,6 +260,27 @@
         } else {
             $('#btnMenu').hide();
         }
+        // ฟังก์ชันปรับขนาด textarea
+        function autoResize() {
+            // ใช้ querySelectorAll เพื่อเลือกทุก textarea ที่มี class "resizeText"
+            document.querySelectorAll('textarea').forEach(function (textarea) {
+                // เช็คว่ามีข้อความใน textarea หรือไม่
+                if (textarea.value.trim() !== "") {
+                    // รีเซ็ตความสูงก่อน
+                    textarea.style.height = 'auto';
+                    // ปรับความสูงตามเนื้อหาภายใน
+                    textarea.style.height = (textarea.scrollHeight) + 'px';
+                }
+            });
+        }
+
+        // เรียกฟังก์ชัน autoResize ทุกครั้งที่โหลดหน้า
+        autoResize();
+
+        // เมื่อมีการพิมพ์ข้อความใน textarea, ฟังก์ชัน autoResize จะถูกเรียก
+        $('textarea').on('input', function () {
+            autoResize();
+        });
     });
 </script>
 

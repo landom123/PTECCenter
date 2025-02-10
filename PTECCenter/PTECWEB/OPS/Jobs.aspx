@@ -10,7 +10,7 @@
         html {
             background-color: #f0f2f5 !important;
         }
-        
+
         .checked {
             background-color: #ececec;
             opacity: 1 !important;
@@ -181,6 +181,33 @@
                         <div class="table-responsive">
 
                             <% For i = 0 To detailtable.Rows.Count - 1 %>
+                            <div class="alert alert-success alert-dismissible fade show " role="alert">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-lg-auto">
+                                        <span><strong>ผ่านการอนุมัติตามสายบังคับบัญชา</strong> -- <a href="../OPS/jobs_followup.aspx?jobno=<% =detailtable.Rows(i).Item("jobno") %>&jobdetailid=<% =detailtable.Rows(i).Item("jobdetailid") %>&g=headingOne" class="alert-link">คลิกเพื่อดูรายละเอียด</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-danger alert-dismissible fade show " role="alert">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-lg-auto">
+                                        <span><strong>ไม่ผ่านการอนุมัติตามสายบังคับบัญชา</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <% if objStatus = "confirm" And hasPermisstionApprove(detailtable.Rows(i).Item("jobdetailid"), "hierarchy") Then%>
+                            <div class="alert alert-info alert-dismissible fade show " role="alert">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-lg-auto ">
+                                        <span><strong>โปรดตรวจสอบข้อมูล!</strong> กรุณาเลือก "Approve" เพื่อยืนยัน หรือ "Reject" หากต้องการปฏิเสธ</span>
+                                    </div>
+                                    <div class="col-lg-auto text-lg-right">
+                                        <button type="button" class="btn btn-outline-success btn-sm ml-2" onclick="return approveHierachy(<%= detailtable.Rows(i).Item("jobdetailid").ToString() %>,'<%= Session("userid").ToString %>');"><i class="fas fa-check"></i>อนุมัติ</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm ml-2" onclick="return rejectHierachy(<%= detailtable.Rows(i).Item("jobdetailid").ToString() %>,'<%= Session("userid").ToString %>');"><i class="fas fa-times"></i>ไม่อนุมัติ</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <% End If %>
                             <% if detailtable.Rows(i).Item("jobdetailid") = 0 Then%>
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                 <strong>ยังไม่บันทึก!</strong> กดปุ่ม Save ด้านบนเพื่อดำเนินการต่อ
@@ -191,13 +218,12 @@
                             <% End If %>
                             <% if detailtable.Rows(i).Item("followup_status").ToString = "รอลงคะแนนประเมินงาน" And objStatus = "confirm" Then%>
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                กรุณาทำแบบประเมิน กดปุ่ม <a href="../OPS/jobs_followup.aspx?jobno=<% =detailtable.Rows(i).Item("jobno") %>&jobdetailid=<% =detailtable.Rows(i).Item("jobdetailid") %>" class="alert-link">Followup</a> เพื่อดำเนินการต่อ
+                                กรุณาทำแบบประเมิน กดปุ่ม <a href="../OPS/jobs_followup.aspx?jobno=<% =detailtable.Rows(i).Item("jobno") %>&jobdetailid=<% =detailtable.Rows(i).Item("jobdetailid") %>&g=headingFour" class="alert-link">Followup</a> เพื่อดำเนินการต่อ
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <% End If %>
-                            <%-- begin detail row--%>
                             <% if detailtable.Rows(i).Item("jobtypeid") = 1 Then%>
                             <div class="row">
                                 <div class="col-md-4 mb-3">
@@ -1053,21 +1079,6 @@
             if (textinputs.length > 0) {
                 if (confirm(`ต้องการแจ้งตีตรา (${sizeText}) รายการที่เลือกหรือไม่ ?`)) {
                     confirm_value.value = params;
-                   <%-- const arrSelected = JSON.parse(params);
-                    console.log(arrSelected);
-                    let strNozzleShow = $.map(arrSelected, function (v) {
-                        return `(${v.position})`;
-                    }).join(', ');
-                    let strNozzleHidden = $.map(arrSelected, function (v) {
-                        return v.code;
-                    }).join('|');
-                    //console.log(strNozzleShow);
-                    //console.log(strNozzleHidden);
-
-                    $('#<%= lblnozzle.ClientID%>').text(strNozzleShow);
-                    $('#<%= lblnozzle.ClientID%>').attr('title', `จำนวน (${sizeText}) มือจ่าย`);
-                    $('#<%= lblnozzlehidden.ClientID%>').text(strNozzleHidden);
-                    $('#assetsNozzleDetail').modal('hide')--%>
                 } else {
                     event.preventDefault();
                     event.stopPropagation();
@@ -1081,6 +1092,106 @@
 
             document.forms[0].appendChild(confirm_value);
             return true;
+        }
+
+        function approveHierachy(jobdtlid, userid) {
+            if (jobdtlid > 0) {
+                Swal.fire({
+                    title: `คุณต้องการจะ "อนุมัติ" ใช่หรือไม่?`,
+                    showCancelButton: true,
+                    confirmButtonText: "Approve",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var params = "{'jobdtlid': '" + jobdtlid + "','updateby': '" + userid + "'}";
+                        console.log(params);
+                        $.ajax({
+                            type: "POST",
+                            url: "../ops/jobs.aspx/approveHierachy",
+                            async: true,
+                            data: params,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                console.log(msg.d)
+                                if (msg.d) {
+                                    swal.fire({
+                                        title: "success!",
+                                        text: "",
+                                        icon: "success"
+                                    }).then(function () {
+                                        window.location.href = location.href;
+                                    });
+                                } else {
+                                    alertWarning('fail')
+                                }
+                            },
+                            error: function () {
+                                alertWarning('fail')
+                            }
+                        });
+
+
+
+                    } else if (result.isDenied) {
+                        return false;
+                    }
+                });
+            }
+            return false;
+        }
+        function rejectHierachy(jobdtlid, userid) {
+            if (jobdtlid > 0) {
+                Swal.fire({
+                    input: 'textarea',
+                    inputLabel: `กรุณาใส่เหตุผลในการ "ปฏิเสธ" ใบงาน`,
+                    inputPlaceholder: 'ใส่ข้อความ . . .',
+                    inputAttributes: {
+                        'aria-label': 'ใส่ข้อความ.'
+                    },
+                    customClass: {
+                        inputLabel: "text-danger",
+                    },
+                    preConfirm: (value) => {
+                        if (!value) {
+                            Swal.showValidationMessage('input missing')
+                        }
+                    },
+                    showCancelButton: true
+                }).then((result) => {
+                    console.log(result.value);
+                    if (result.isConfirmed) {
+                        var params = "{'jobdtlid': '" + jobdtlid + "','message': '" + result.value + "','updateby': '" + userid + "'}";
+                        console.log(params);
+                        $.ajax({
+                            type: "POST",
+                            url: "../ops/jobs.aspx/rejectHierachy",
+                            async: true,
+                            data: params,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                console.log(msg.d)
+                                if (msg.d) {
+                                    swal.fire({
+                                        title: "success!",
+                                        text: "",
+                                        icon: "success"
+                                    }).then(function () {
+                                        window.location.href = location.href;
+                                    });
+                                } else {
+                                    alertWarning('fail')
+                                }
+                            },
+                            error: function () {
+                                alertWarning('fail')
+                            }
+                        });
+                    }
+                })
+            }
+
+            return false;
         }
 
     </script>

@@ -11,6 +11,7 @@ Public Class frmJobs
     Public detailtable As DataTable '= createdetailtable()
     Public maintable As DataTable '= createmaintable()
     Public nozzletable As DataTable
+    Public approvertable As DataTable
     Public assetsNozzletable As DataTable
     Public menutable As DataTable
     Public owner As Integer
@@ -177,13 +178,15 @@ Public Class frmJobs
             maintable = mydataset.Tables(0)
             detailtable = mydataset.Tables(1)
             nozzletable = mydataset.Tables(2)
+            approvertable = mydataset.Tables(3)
             'itemtable = mydataset.Tables(1)
             'ViewState("itemtable") = itemtable
 
             showdata(maintable)
-            ViewState("maintable") = mydataset.Tables(0)
-            ViewState("detailtable") = mydataset.Tables(1)
-            ViewState("nozzletable") = mydataset.Tables(2)
+            ViewState("maintable") = maintable
+            ViewState("detailtable") = detailtable
+            ViewState("nozzletable") = nozzletable
+            ViewState("approvertable") = approvertable
         Catch ex As Exception
             Dim scriptKey As String = "UniqueKeyForThisScript"
             Dim javaScript As String = "alertWarning('Find Fail')"
@@ -203,19 +206,19 @@ Public Class frmJobs
             txtCreateDate.Text = .Item("createdate")
             txtStatus.Text = .Item("statusname")
             Select Case .Item("statusid")
-                Case = 1
+                Case = 1 'แจ้งงาน
                     ViewState("status") = "edit"
                     objStatus = "edit"
-                Case = 2
+                Case = 2 'ยืนยันแจ้งงาน
                     ViewState("status") = "confirm"
                     objStatus = "confirm"
-                Case = 3
+                Case = 3 'กำลังดำเนินการ
                     ViewState("status") = "action"
                     objStatus = "action"
-                Case = 4
+                Case = 4 'ปิดงาน
                     ViewState("status") = "close"
                     objStatus = "close"
-                Case = 5
+                Case = 5 'ยกเลิก
                     ViewState("status") = "cancel"
                     objStatus = "cancel"
             End Select
@@ -258,6 +261,7 @@ Public Class frmJobs
         dt.Columns.Add("brand", GetType(String))
         dt.Columns.Add("model", GetType(String))
         dt.Columns.Add("nozzle", GetType(String))
+        dt.Columns.Add("reqApproval", GetType(Boolean))
         'dt.Columns.Add("vendor_code", GetType(String))
 
 
@@ -693,7 +697,7 @@ endprocess:
         result = validateDetail()
 
 
-        If result = True Then
+        If result Then
             Try
                 updatehead()
                 AddDetails()
@@ -928,6 +932,7 @@ endprocess:
 
         jobtypeid = cboJobType.SelectedItem.Value
         objpolicy.setComboPolicyByJobTypeID(cboPolicy, jobtypeid)
+        setDueDate(cboPolicy.SelectedItem.Value)
         If jobtypeid = 1 Then
             If Not cboBranch.SelectedItem.Value = "" Then
                 FindPositionInPump(cboBranch.SelectedItem.Value)
@@ -1121,4 +1126,59 @@ endprocess:
             setDueDate(cboPolicy.SelectedItem.Value)
         End If
     End Sub
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function approveHierachy(ByVal jobdtlid As String, ByVal updateby As String)
+        Dim job As New jobs
+
+        Dim result As Boolean
+        Try
+            result = job.JobsDetails_Approval(jobdtlid, updateby)
+
+        Catch ex As Exception
+            Return False
+        End Try
+        Return "success"
+
+    End Function
+
+    <System.Web.Services.WebMethod>
+    Public Shared Function rejectHierachy(ByVal jobdtlid As String, ByVal message As String, ByVal updateby As String)
+        Dim job As New jobs
+
+        Dim result As Boolean
+        Try
+            result = job.JobsDetails_Reject(jobdtlid, message, updateby)
+
+        Catch ex As Exception
+            Return False
+        End Try
+        Return "success"
+
+    End Function
+
+    Public Function hasPermisstionApprove(dtlid As Integer, type As String) As Boolean
+        Dim objjobs As New jobs
+        Dim allApprover As String
+
+        If detailtable IsNot Nothing AndAlso detailtable.Rows.Count > 0 Then
+            ' ค้นหาแถวที่ dtlid ตรงกัน
+            Dim foundRows = detailtable.Select("jobdetailid = " & dtlid)
+
+            ' ตรวจสอบว่ามีแถวที่พบและค่า followup_status เป็น "รออนุมัติตามสายบังคับบัญชา"
+            If Not foundRows.Length > 0 Or Not foundRows(0).Item("followup_status").ToString() = "รออนุมัติตามสายบังคับบัญชา" Then
+                Return False
+            End If
+        End If
+
+        Try
+            allApprover = objjobs.JobsDetails_PermisstionApprove(dtlid, type)
+            Dim approvers As String() = allApprover.Split(","c)
+
+            ' Check if the usercode exists in the array of approvers
+            Return approvers.Contains(Session("usercode").ToString())
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
 End Class

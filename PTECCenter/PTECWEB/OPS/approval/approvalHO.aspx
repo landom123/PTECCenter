@@ -150,7 +150,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="wrapper">
+    <div id="wrapper" class="h-100">
 
         <!-- #include virtual ="/include/menu.inc" -->
         <!-- add side menu -->
@@ -576,7 +576,7 @@
                             <div class="form-group">
                                 <asp:Label ID="lbDetail" CssClass="form-label" AssociatedControlID="txtDetail" runat="server" Text="รายละเอียด" />
                                 <asp:Label ID="lbDetailMandatory" CssClass="text-danger" AssociatedControlID="txtDetail" runat="server" Text="*" />
-                                <asp:TextBox class="form-control" ID="txtDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" required></asp:TextBox>
+                                <asp:TextBox class="form-control" ID="txtDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" required></asp:TextBox>
                                 <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
                             </div>
                         </div>

@@ -55,6 +55,10 @@
             display: block;
             z-index: 999;
         }
+
+        #dataTable tbody tr:not(:first-child):not(:has(td:last-child .row .statusJOBName)) {
+            opacity: .4;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -120,6 +124,17 @@
                         </ul>
                     </div>
                 </div>
+                <div class="alert alert-info alert-dismissible fade show " role="alert">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-lg-auto">
+                            <span><strong>โปรดตรวจสอบข้อมูล!</strong> กรุณาเลือก "Approve" เพื่อยืนยัน หรือ "Reject" หากต้องการปฏิเสธ</span>
+                        </div>
+                        <div class="col-lg-auto text-lg-right">
+                            <button type="button" class="btn btn-outline-success btn-sm ml-2" onclick="return approveHierachy(getHashParam('jobdetailid'),'<%= Session("userid").ToString %>');"><i class="fas fa-check"></i>อนุมัติ</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm ml-2" onclick="return rejectHierachy(getHashParam('jobdetailid'),'<%= Session("userid").ToString %>');"><i class="fas fa-times"></i>ไม่อนุมัติ</button>
+                        </div>
+                    </div>
+                </div>
                 <div id="accordion">
                     <div class="card shadow mb-3" id="cardone" runat="server">
                         <div class="card-header" id="headingOne">
@@ -127,7 +142,6 @@
                                 <button class="btn btn-link w-100 text-left collapse__all" id="detailJobs" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" autopostback="False">
                                     รายละเอียดงาน
                                 </button>
-
                             </h5>
                         </div>
                         <div id="collapseOne" class="collapse multi-collapse show" aria-labelledby="headingOne">
@@ -520,8 +534,8 @@
                                     <!-- rate__Service -->
                                     <div class="rate__Service">
                                         <!-- Rating totol -->
-                                        <div class="row w-75 m-auto align-items-center justify-content-center">
-                                            <div class="col-lg mb-3">
+                                        <div class="row m-auto align-items-center justify-content-center">
+                                            <div class="col-12 col-md-9 mb-3">
                                                 <div class="row">
                                                     <div class="col mb-3 text-center">
                                                         <h4>การประเมินโดยรวม (ทีมช่าง)</h4>
@@ -545,8 +559,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg  mb-3">
-                                                <div class="row font-weight-bold">
+                                            <div class="col-12 col-md-9   mb-3">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>5</span>
                                                     </div>
@@ -557,7 +571,7 @@
                                                         <progress id="5star_Service" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row font-weight-bold">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>4</span>
                                                     </div>
@@ -568,7 +582,7 @@
                                                         <progress id="4star_Service" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row font-weight-bold">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>3</span>
                                                     </div>
@@ -579,7 +593,7 @@
                                                         <progress id="3star_Service" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row font-weight-bold">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>2</span>
                                                     </div>
@@ -590,7 +604,7 @@
                                                         <progress id="2star_Service" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row font-weight-bold">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>1</span>
                                                     </div>
@@ -606,28 +620,28 @@
                                         <!-- end Rating totol -->
 
                                         <!-- Rating table -->
-                                        <div class="row w-75 m-auto">
-                                            <div class="col-lg mb-3">
+                                        <div class="row m-auto justify-content-center">
+                                            <div class="col-12 col-md-9 mb-3">
                                                 <table class="table " id="myTableTopic_Service">
                                                     <thead>
                                                         <tr>
-                                                            <th rowspan="2" class="text-center align-middle">หัวข้อประเมิน</th>
-                                                            <th colspan="5" class="text-center">ระดับความพึงพอใจ</th>
+                                                            <th rowspan="2" class="text-center align-middle d-block d-md-table-cell">หัวข้อประเมิน</th>
+                                                            <th colspan="5" class="text-center d-none d-md-table-cell">ระดับความพึงพอใจ</th>
                                                         </tr>
                                                         <tr class="d-flex justify-content-center align-items-center border border-1" style="gap: 0.4em; border-top: 0px">
-                                                            <th class="border-top-0">1</th>
-                                                            <th class="border-top-0">2</th>
-                                                            <th class="border-top-0">3</th>
-                                                            <th class="border-top-0">4</th>
-                                                            <th class="border-top-0">5</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">1</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">2</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">3</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">4</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">5</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <% For i = 0 To assessmenttable.Rows.Count - 1 %>
                                                         <% If assessmenttable.Rows(i).Item("TopicGroup_id").ToString() = "2" Then %>
                                                         <tr>
-                                                            <td><%= assessmenttable.Rows(i).Item("topic_detail").ToString() %></td>
-                                                            <td>
+                                                            <td class="d-block d-md-table-cell mt-4 border-top border-bottom-0 border-md-top border-md-bottom"><%= assessmenttable.Rows(i).Item("topic_detail").ToString() %></td>
+                                                            <td class="d-block d-md-table-cell border-top-0 border-bottom-0 border-md-top border-md-bottom">
 
                                                                 <% If assessmenttable.Rows(i).Item("Type").ToString() = "rate" Then %>
                                                                 <div id="<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" class="rating_Service rating mx-auto">
@@ -663,8 +677,8 @@
                                     <!-- rate__Operator -->
                                     <div class="rate__Operator">
                                         <!-- Rating totol -->
-                                        <div class="row w-75 m-auto align-items-center justify-content-center">
-                                            <div class="col-lg mb-3">
+                                        <div class="row m-auto align-items-center justify-content-center">
+                                            <div class="col-12 col-md-9 mb-3">
                                                 <div class="row">
                                                     <div class="col mb-3 text-center">
                                                         <h4>การประเมินโดยรวม (Operator)</h4>
@@ -688,8 +702,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg  mb-3">
-                                                <div class="row font-weight-bold">
+                                            <div class="col-12 col-md-9  mb-3">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>5</span>
                                                     </div>
@@ -700,7 +714,7 @@
                                                         <progress id="5star_Operator" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row font-weight-bold">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>4</span>
                                                     </div>
@@ -711,7 +725,7 @@
                                                         <progress id="4star_Operator" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row font-weight-bold">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>3</span>
                                                     </div>
@@ -722,7 +736,7 @@
                                                         <progress id="3star_Operator" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row font-weight-bold">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>2</span>
                                                     </div>
@@ -733,7 +747,7 @@
                                                         <progress id="2star_Operator" value="0" max="10"></progress>
                                                     </div>
                                                 </div>
-                                                <div class="row font-weight-bold">
+                                                <div class="row font-weight-bold justify-content-center justify-content-lg-start">
                                                     <div class="col-1">
                                                         <span>1</span>
                                                     </div>
@@ -748,28 +762,28 @@
                                         </div>
                                         <!-- end Rating totol -->
                                         <!-- Rating table -->
-                                        <div class="row w-75 m-auto">
-                                            <div class="col-lg mb-3">
+                                        <div class="row m-auto justify-content-center">
+                                            <div class="col-12 col-md-9 mb-3">
                                                 <table class="table " id="myTableTopic_Operator">
                                                     <thead>
                                                         <tr>
-                                                            <th rowspan="2" class="text-center align-middle">หัวข้อประเมิน</th>
-                                                            <th colspan="5" class="text-center">ระดับความพึงพอใจ</th>
+                                                            <th rowspan="2" class="text-center align-middle d-block d-md-table-cell">หัวข้อประเมิน</th>
+                                                            <th colspan="5" class="text-center d-none d-md-table-cell">ระดับความพึงพอใจ</th>
                                                         </tr>
                                                         <tr class="d-flex justify-content-center align-items-center border border-1" style="gap: 0.4em; border-top: 0px">
-                                                            <th class="border-top-0">1</th>
-                                                            <th class="border-top-0">2</th>
-                                                            <th class="border-top-0">3</th>
-                                                            <th class="border-top-0">4</th>
-                                                            <th class="border-top-0">5</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">1</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">2</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">3</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">4</th>
+                                                            <th class="border-top-0 d-block d-md-table-cell">5</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <% For i = 0 To assessmenttable.Rows.Count - 1 %>
                                                         <% If assessmenttable.Rows(i).Item("TopicGroup_id").ToString() = "1" Then %>
                                                         <tr>
-                                                            <td><%= assessmenttable.Rows(i).Item("topic_detail").ToString() %></td>
-                                                            <td>
+                                                            <td class="d-block d-md-table-cell mt-4 border-top border-bottom-0 border-md-top border-md-bottom"><%= assessmenttable.Rows(i).Item("topic_detail").ToString() %></td>
+                                                            <td class="d-block d-md-table-cell border-top-0 border-bottom-0 border-md-top border-md-bottom">
 
                                                                 <% If assessmenttable.Rows(i).Item("Type").ToString() = "rate" Then %>
                                                                 <div id="<%= assessmenttable.Rows(i).Item("topic_id").ToString() %>" class="rating_Operator rating mx-auto">
@@ -802,8 +816,8 @@
                                 <!-- end Rating -->
                                 <% If nozzletable IsNot Nothing Then%>
                                 <% If nozzletable.Rows.Count > 0 Then%>
-                                <div class="row w-75  m-auto">
-                                    <div class="col">
+                                <div class="row m-auto justify-content-center">
+                                    <div class="col-12 col-md-9">
                                         <div class="table-responsive-xl nozzle__management">
                                             <table class="table table-hover table-bordered table-sm">
                                                 <thead class="table-info">
@@ -1027,7 +1041,7 @@
             <!-- end content-wrapper -->
             <!-- end เนื้อหาเว็บ -->
         </div>
-        <!-- /#wrapper -->
+            <!-- /#wrapper -->
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog " role="document">
@@ -1126,7 +1140,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ประเภทงาน</span>
@@ -1135,7 +1149,7 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ประเภทงานที่ซ่อม</span>
@@ -1144,7 +1158,7 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ระดับความเร่งด่วน</span>
@@ -1153,7 +1167,7 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">กำหนดการ</span>
@@ -1163,7 +1177,7 @@
                         </div>
 
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Supplier</span>
@@ -1173,7 +1187,7 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ชนิดงาน</span>
@@ -1182,7 +1196,7 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3 d-none">
+                        <div class="col-md-12 mb-3 d-none">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ประเภทหมวดราคา</span>
@@ -1192,7 +1206,7 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">รหัสทรัพย์สิน</span>
@@ -1200,7 +1214,7 @@
                                 <asp:TextBox class="form-control" ID="txtAsset" runat="server" placeholder="" autocomplete="off"></asp:TextBox>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="input-group sm-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">ค่าใช้จ่าย (ประมาณ)</span>
@@ -1410,7 +1424,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbDetail" CssClass="form-label" AssociatedControlID="txtDetail" runat="server" Text="รายละเอียดการปฏิบัติงาน" />
-                        <asp:TextBox class="form-control" ID="txtSuppilerDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control" ID="txtSuppilerDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" autocomplete="off"></asp:TextBox>
                         <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
                     </div>
                 </div>
@@ -1713,7 +1727,7 @@
                 <% If maintable IsNot Nothing Then %>
                     <% If maintable.Rows.Count > 0 Then %>
                         <% If String.Equals(Session("username"), maintable.Rows(0).Item("jobowner")) And (statusnow = 4 Or maintable.Rows(0).Item("followup_status") = "รอลงคะแนนประเมินงาน") And maintable.Rows(0).Item("followup_status") <> "ปิดงาน" Then %>
-                checkStatusJob();
+                    checkStatusJob();
                         <% End if %>
                     <% End if %>
                 <% End if %>
@@ -1729,10 +1743,19 @@
             //    console.log("key " + key + " has value " + myArray[key]);
             //}
 
-            console.log(arrVendor);
-            nonpo_autocomplete(document.getElementById("txtContractorName"), arrVendor, null, null);
+            const elemContractorName = document.getElementById("txtContractorName")
+            if (elemContractorName) nonpo_autocomplete(document.getElementById("txtContractorName"), arrVendor, null, null);
+            const txtStatus = document.querySelector('.badgestatus_app')?.textContent?.trim();
+            const invalidStatuses = ["ปิดงาน", "ยกเลิก", "ไม่ผ่านการอนุมัติ"];
 
-            getSubsupplier();
+            getSubsupplier().then(() => {
+                if (txtStatus && invalidStatuses.includes(txtStatus)) {
+                    disbtndelete();
+                }
+            })
+
+
+
         });
         function modalShow(id) {
             $(`#${id}`).modal('show');
@@ -2082,41 +2105,41 @@
                     //var params = "{'approvalcode': '" + approvalcode + "','message': '" + result.value + "','updateby': '" + usercode + "'}";
                     let url = "../OPS/approval/WebForm5.aspx/disAcceptByCode";
                     const cntSupplier = <%= cntSupplier %>?? 0;
-                    url = (cntSupplier > 0) ? "http://vpnptec.dyndns.org:32001/api/STK_unCompletedBy_User" : "../OPS/approval/WebForm5.aspx/disAcceptByCode";
+                        url = (cntSupplier > 0) ? "http://vpnptec.dyndns.org:32001/api/STK_unCompletedBy_User" : "../OPS/approval/WebForm5.aspx/disAcceptByCode";
 
-                    //alert(url);
-                    var params = `{"jobcode" : "${jobcode}","dtlid" : "${dtlid}","message" : "${result.value}","user" : "${usercode}"}`;
-                    console.log(params);
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        async: true,
-                        data: params,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (msg) {
-                            console.log(msg);
-                            let res = msg.d ?? msg.message ?? msg;
-                            console.log(res);
-                            if (res) {
-                                swal.fire({
-                                    title: "success!",
-                                    text: "",
-                                    icon: "success"
-                                }).then(function () {
-                                    window.location.href = location.href;
-                                });
-                            } else {
-                                event.preventDefault();
-                                alertWarning('fail else');
+                        //alert(url);
+                        var params = `{"jobcode" : "${jobcode}","dtlid" : "${dtlid}","message" : "${result.value}","user" : "${usercode}"}`;
+                        console.log(params);
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: true,
+                            data: params,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                console.log(msg);
+                                let res = msg.d ?? msg.message ?? msg;
+                                console.log(res);
+                                if (res) {
+                                    swal.fire({
+                                        title: "success!",
+                                        text: "",
+                                        icon: "success"
+                                    }).then(function () {
+                                        window.location.href = location.href;
+                                    });
+                                } else {
+                                    event.preventDefault();
+                                    alertWarning('fail else');
+                                }
+                            },
+                            error: function () {
+                                alertWarning('fail e')
                             }
-                        },
-                        error: function () {
-                            alertWarning('fail e')
-                        }
-                    });
-                }
-            })
+                        });
+                    }
+                })
 
             return false;
         }
@@ -2367,7 +2390,7 @@
                 }
             });
 
-            
+
             nameInput.value = "";
         }
 
@@ -2398,40 +2421,128 @@
                 });
             }
         }
-
-        function getSubsupplier() {
+        async function getSubsupplier() {
             const stkcodespan = document.getElementById("<%= txtstkCode.ClientID%>");
             const stkcode = stkcodespan.innerText.trim();
-            if (stkcode === "") return;
+            if (!stkcode) return;
 
-            $.ajax({
-                type: "POST",
-                url: "/OPS/jobs_followup.aspx/getSubSupplier",
-                async: true,
-                data: JSON.stringify({ stkcode: stkcode }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    if (response.d) {
-                        const list = document.getElementById("contractorList");
-                        list.innerHTML = ""; // เคลียร์รายการก่อน
+            try {
+                const response = await fetch("/OPS/jobs_followup.aspx/getSubSupplier", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8"
+                    },
+                    body: JSON.stringify({ stkcode: stkcode })
+                });
 
-                        const data = JSON.parse(response.d); // แปลง JSON เป็น Object
-                        console.log(data)
-                        data.forEach(row => {
-                            const listItem = document.createElement("li");
-                            listItem.innerHTML = `${row.subsupplier_name} 
-                        <button class="btn btn-link text-danger ml-2 deletedetail" onclick="removeContractor(this,${row.id});"> 
-                            <i class="fas fa-times"></i>
-                        </button>`;
-                            list.appendChild(listItem);
+                if (!response.ok) {
+                    throw new Error("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+                }
+
+                const result = await response.json(); // ดึงข้อมูล JSON
+                if (result.d) {
+                    const list = document.getElementById("contractorList");
+                    list.innerHTML = ""; // เคลียร์รายการก่อน
+
+                    const data = JSON.parse(result.d); // แปลง JSON เป็น Object
+                    // console.log(data);
+
+                    data.forEach(row => {
+                        const listItem = document.createElement("li");
+                        listItem.innerHTML = `
+                    ${row.subsupplier_name} 
+                    <button class="btn btn-link text-danger ml-2 deletedetail" 
+                        onclick="removeContractor(this, ${row.id});"> 
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                        list.appendChild(listItem);
+                    });
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alertWarning("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+            }
+
+        }
+        function getHashParam(key) {
+            const params = new URLSearchParams(window.location.search);
+            const jobdetailid = params.get(key);
+            return jobdetailid; // ถ้าไม่มีค่าให้คืนเป็น ''
+        }
+
+        function approveHierachy(jobdtlid, userid) {
+            if (jobdtlid > 0) {
+                Swal.fire({
+                    title: `คุณต้องการจะ "อนุมัติ" ใช่หรือไม่?`,
+                    showCancelButton: true,
+                    confirmButtonText: "Approve",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+
+
+
+                    } else if (result.isDenied) {
+                        return false;
+                    }
+                });
+            }
+            return false;
+        }
+        function rejectHierachy(jobdtlid, userid) {
+            if (jobdtlid > 0) {
+                Swal.fire({
+                    input: 'textarea',
+                    inputLabel: `กรุณาใส่เหตุผลในการ "ปฏิเสธ" ใบงาน`,
+                    inputPlaceholder: 'ใส่ข้อความ . . .',
+                    inputAttributes: {
+                        'aria-label': 'ใส่ข้อความ.'
+                    },
+                    customClass: {
+                        inputLabel: "text-danger",
+                    },
+                    preConfirm: (value) => {
+                        if (!value) {
+                            Swal.showValidationMessage('input missing')
+                        }
+                    },
+                    showCancelButton: true
+                }).then((result) => {
+                    console.log(result.value);
+                    if (result.isConfirmed) {
+                        var params = "{'jobdtlid': '" + jobdtlid + "','message': '" + result.value + "','updateby': '" + userid + "'}";
+                        console.log(params);
+                        $.ajax({
+                            type: "POST",
+                            url: "../ops/jobs.aspx/rejectHierachy",
+                            async: true,
+                            data: params,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                console.log(msg.d)
+                                if (msg.d) {
+                                    swal.fire({
+                                        title: "success!",
+                                        text: "",
+                                        icon: "success"
+                                    }).then(function () {
+                                        window.location.href = location.href;
+                                    });
+                                } else {
+                                    alertWarning('fail')
+                                }
+                            },
+                            error: function () {
+                                alertWarning('fail')
+                            }
                         });
                     }
-                },
-                error: function () {
-                    alertWarning("เกิดข้อผิดพลาดในการโหลดข้อมูล");
-                }
-            });
+                })
+            }
+
+            return false;
         }
     </script>
 </asp:Content>

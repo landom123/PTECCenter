@@ -48,7 +48,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="bg">
-        <div id="wrapper">
+        <div id="wrapper" class="h-100">
 
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
@@ -242,7 +242,7 @@
                                             <asp:Label ID="lbtxtRemark" CssClass="form-label" AssociatedControlID="txtRemark" runat="server" Text="รายละเอียดอื่นๆ" />
                                         </div>
                                         <div class="col-lg-10">
-                                            <asp:TextBox class="form-control " ID="txtRemark" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" ReadOnly="True"></asp:TextBox>
+                                            <asp:TextBox class="form-control " ID="txtRemark" runat="server" Rows="3" Columns="50" TextMode="MultiLine" ReadOnly="True"></asp:TextBox>
                                         </div>
                                     </div>
 

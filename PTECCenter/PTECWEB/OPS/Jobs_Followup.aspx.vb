@@ -139,7 +139,7 @@ Public Class JobsFollowup
                     btnSubmitRate.Visible = False
                     btndisAccept.Visible = False
 
-                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then 'กรณี ปิดงาน
+                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Or maintable.Rows(0).Item("followup_status") = "ยกเลิก" Then 'กรณี ปิดงาน
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
                         btnNozzle.Visible = False
@@ -271,7 +271,7 @@ Public Class JobsFollowup
                     'Rating
                     btnSubmitRate.Visible = False
                     btndisAccept.Visible = False
-                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Then
+                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Or maintable.Rows(0).Item("followup_status") = "ยกเลิก" Then
                         'btnConfirm.Enabled = False
 
                         btnAddAttatch.Visible = False
@@ -1243,4 +1243,29 @@ endprocess:
         Return "success"
 endprocess:
     End Function
+    Public Function hasPermisstionApprove(dtlid As Integer, type As String) As Boolean
+        Dim objjobs As New jobs
+        Dim allApprover As String
+
+        If maintable IsNot Nothing AndAlso maintable.Rows.Count > 0 Then
+            ' ค้นหาแถวที่ dtlid ตรงกัน
+            Dim foundRows = maintable.Select("jobdetailid = " & dtlid)
+
+            ' ตรวจสอบว่ามีแถวที่พบและค่า followup_status เป็น "รออนุมัติตามสายบังคับบัญชา"
+            If Not foundRows.Length > 0 Or Not foundRows(0).Item("followup_status").ToString() = "รออนุมัติตามสายบังคับบัญชา" Then
+                Return False
+            End If
+        End If
+
+        Try
+            allApprover = objjobs.JobsDetails_PermisstionApprove(dtlid, type)
+            Dim approvers As String() = allApprover.Split(","c)
+
+            ' Check if the usercode exists in the array of approvers
+            Return approvers.Contains(Session("usercode").ToString())
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
 End Class

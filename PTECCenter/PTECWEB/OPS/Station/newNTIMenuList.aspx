@@ -6,7 +6,7 @@
     <link href="<%=Page.ResolveUrl("~/datetimepicker/jquery.datetimepicker.css")%>" rel="stylesheet" type="text/css">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="wrapper">
+    <div id="wrapper" class="h-100">
 
         <!-- #include virtual ="/include/menu.inc" -->
         <!-- add side menu -->
