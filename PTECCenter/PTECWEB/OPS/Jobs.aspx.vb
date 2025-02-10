@@ -637,8 +637,6 @@ endprocess:
 
         'confirm
         If Confirm(txtJobno.Text, Session("username")) Then
-
-
             Response.Redirect("../OPS/jobs.aspx?jobno=" & txtJobno.Text)
 
         End If
@@ -683,7 +681,6 @@ endprocess:
             ViewState("status") = "confirm"
             objStatus = "confirm"
             txtStatus.Text = "ยืนยัน"
-
             SetMenu()
         Catch ex As Exception
             result = False
@@ -1183,16 +1180,5 @@ endprocess:
         Catch ex As Exception
             Return False
         End Try
-    End Function
-
-    Public Function hasPermisstionApprove2(dtlid As Integer, type As String) As String
-        Dim objjobs As New jobs
-        Dim res As String = ""
-
-
-
-
-        Return res
-
     End Function
 End Class
