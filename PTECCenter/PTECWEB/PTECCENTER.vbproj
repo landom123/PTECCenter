@@ -1778,8 +1778,7 @@
     <Content Include="icon\nozzle_pace.jpg" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\KPIsV3.js" />
-    <Content Include="js\KPIsV2.js" />
-    <Content Include="js\KPIs.js" />
+    <Content Include="js\KPIs_temp.js" />
     <Content Include="js\Jobs.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\main.js" />

@@ -21,7 +21,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="bg">
-        <div id="wrapper">
+        <div id="wrapper" class="h-100">
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper">

@@ -61,6 +61,15 @@ Public Class MenuList
             Else
                 chkHO.Checked = True
             End If
+
+
+
+            If Session("SortExpression_pay") Is Nothing Then
+                ' ถ้าไม่มีการตั้งค่าการจัดเรียงใน ViewState, กำหนดให้ไม่จัดเรียง (ใช้ข้อมูลตามลำดับเดิม)
+                Session("SortExpression_pay") = String.Empty
+                Session("SortDirection_pay") = SortDirection.Ascending
+            End If
+
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
 
 
@@ -93,7 +102,7 @@ Public Class MenuList
         Else
 
             criteria = Session("criteria_joblist")
-            itemtable = Session("joblist")
+            itemtable = ViewState("paylist")
         End If
     End Sub
 
@@ -240,7 +249,7 @@ Public Class MenuList
             End If
 
 
-            Session("joblist") = itemtable
+            ViewState("paylist") = itemtable
             BindData()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -298,7 +307,7 @@ Public Class MenuList
                                                     cboMaxRows.SelectedValue)
             End If
 
-            Session("joblist") = itemtable
+            ViewState("paylist") = itemtable
             BindData()
         Catch ex As Exception
             Dim scriptKey As String = "alert"
@@ -330,7 +339,7 @@ Public Class MenuList
         If criteria IsNot Nothing Then
             criteria.Rows.Clear()
         End If
-        Session("joblist") = itemtable
+        ViewState("paylist") = itemtable
         Session("criteria_joblist") = criteria
 
 
@@ -348,6 +357,13 @@ Public Class MenuList
         'If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
         setCriteria() 'จำเงื่อนไขที่กดไว้ล่าสุด
         'End If
+
+        ' เรียงข้อมูลตามที่บันทึกไว้ใน ViewState
+        If Not String.IsNullOrEmpty(Session("SortExpression_pay").ToString()) Then
+            Dim dv As DataView = itemtable.DefaultView
+            dv.Sort = Session("SortExpression_pay").ToString() & " " & Session("SortDirection_pay").ToString()
+        End If
+
         cntdt = itemtable.Rows.Count
         gvRemind.Caption = "ทั้งหมด " & cntdt & " รายการ"
         gvRemind.DataSource = itemtable
@@ -442,7 +458,7 @@ endprocess:
     '    Try
     '        'itemtable = objNonPO.AdvanceRQList_For_Owner(Session("userid").ToString, cboWorking.SelectedValue)
     '        itemtable = objNonpo.PaymentList_For_Owner(Session("userid"), cboWorking.SelectedValue)
-    '        Session("joblist") = itemtable
+    '        viewstate("paylist") = itemtable
 
     '    Catch ex As Exception
     '        Dim scriptKey As String = "alert"
@@ -529,12 +545,12 @@ endprocess:
 
     Private Function GetSortDirection(ByVal column As String) As String
         Dim sortDirection As String = "ASC"
-        Dim sortExpression As String = TryCast(ViewState("SortExpression"), String)
+        Dim sortExpression As String = TryCast(Session("SortExpression_pay"), String)
 
         If sortExpression IsNot Nothing Then
 
             If sortExpression = column Then
-                Dim lastDirection As String = TryCast(ViewState("SortDirection"), String)
+                Dim lastDirection As String = TryCast(Session("SortDirection_pay"), String)
 
                 If (lastDirection IsNot Nothing) AndAlso (lastDirection = "ASC") Then
                     sortDirection = "DESC"
@@ -542,8 +558,8 @@ endprocess:
             End If
         End If
 
-        ViewState("SortDirection") = sortDirection
-        ViewState("SortExpression") = column
+        Session("SortDirection_pay") = sortDirection
+        Session("SortExpression_pay") = column
         Return sortDirection
     End Function
 

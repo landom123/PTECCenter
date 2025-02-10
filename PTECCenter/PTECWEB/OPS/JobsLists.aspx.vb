@@ -38,6 +38,12 @@ Public Class JobsList_test
         operator_code = objNonpo.NonPOPermisstionOperator("JOB")
         If Not IsPostBack() Then
 
+            If Session("SortExpression_Jobslist") Is Nothing Then
+                ' ถ้าไม่มีการตั้งค่าการจัดเรียงใน ViewState, กำหนดให้ไม่จัดเรียง (ใช้ข้อมูลตามลำดับเดิม)
+                Session("SortExpression_Jobslist") = String.Empty
+                Session("SortDirection_Jobslist") = SortDirection.Ascending
+            End If
+
             If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
                 txtallOperator.Text = operator_code
                 'txtStartDate.Attributes.Add("readonly", "readonly")
@@ -53,11 +59,6 @@ Public Class JobsList_test
                 cboDep.SelectedIndex = cboDep.Items.IndexOf(cboDep.Items.FindByValue(Session("depid").ToString))
                 SetCboJobTypeByDepID(cboJobType, cboDep.SelectedValue)
 
-                If Session("SortExpression_Jobslist") Is Nothing Then
-                    ' ถ้าไม่มีการตั้งค่าการจัดเรียงใน ViewState, กำหนดให้ไม่จัดเรียง (ใช้ข้อมูลตามลำดับเดิม)
-                    Session("SortExpression_Jobslist") = String.Empty
-                    Session("SortDirection_Jobslist") = SortDirection.Ascending
-                End If
 
                 '------------------------------------
                 If Not Session("criteria_Job") Is Nothing Then 'จำเงื่อนไขที่กดไว้ล่าสุด
@@ -185,14 +186,14 @@ Public Class JobsList_test
         End If
     End Sub
 
-    Private Sub searchjobslist()
+    Private Sub searchjobslist(Optional getReport As Boolean = False)
 
         Dim objjob As New jobs
         Dim detailtable As New DataTable
         Try
 
-
-            itemtable = objjob.JobList_For_Operator(txtjobcode.Text.Trim(),
+            If getReport Then
+                itemtable = objjob.JobList_For_Operator_Report(txtjobcode.Text.Trim(),
                                                       cboDep.SelectedValue,
                                                       cboJobType.SelectedValue,
                                                       cboStatusFollow.SelectedValue,
@@ -202,6 +203,19 @@ Public Class JobsList_test
                                                         txtEndDate.Text.Trim(),
                                                         cboSuppiler.SelectedValue,
                                                         cboMaxRows.SelectedValue)
+
+            Else
+                itemtable = objjob.JobList_For_Operator(txtjobcode.Text.Trim(),
+                                                          cboDep.SelectedValue,
+                                                          cboJobType.SelectedValue,
+                                                          cboStatusFollow.SelectedValue,
+                                                            cboBranchGroup.SelectedValue,
+                                                            cboBranch.SelectedValue,
+                                                            txtStartDate.Text.Trim(),
+                                                            txtEndDate.Text.Trim(),
+                                                            cboSuppiler.SelectedValue,
+                                                            cboMaxRows.SelectedValue)
+            End If
 
             ViewState("joblist") = itemtable
             BindData()
@@ -321,13 +335,18 @@ Public Class JobsList_test
         createdate = Date.Now
         Dim objnonpo As New NonPO
         Try
-            ExportToExcel(itemtable, Session("usercode"), createdate, Request.QueryString("NonpoCode"))
+            searchjobslist(True)
         Catch ex As Exception
             Dim scriptKey As String = "alert"
             'Dim javaScript As String = "alert('" & ex.Message & "');"
             Dim javaScript As String = "alertWarning('export fail');"
             ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
         End Try
+        If itemtable IsNot Nothing Then
+            If itemtable.Rows.Count() > 0 Then
+                ExportToExcel(itemtable, Session("usercode"), createdate, Request.QueryString("NonpoCode"))
+            End If
+        End If
     End Sub
 
     Private Sub ExportToExcel(mydatatable As DataTable, usercode As String, closedate As String, nonpocode As String)

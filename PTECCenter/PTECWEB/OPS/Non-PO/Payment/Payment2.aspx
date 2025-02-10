@@ -147,7 +147,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="bg">
-        <div id="wrapper">
+        <div id="wrapper" class="h-100">
             <!-- #include virtual ="/include/menu.inc" -->
             <!-- add side menu -->
             <div id="content-wrapper">
@@ -897,7 +897,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lbDetail" CssClass="form-label" AssociatedControlID="txtDetail" runat="server" Text="รายละเอียด" />
-                        <asp:TextBox class="form-control" ID="txtDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" onkeyDown="checkTextAreaMaxLength(this,event,'255');" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control" ID="txtDetail" runat="server" Rows="3" Columns="50" TextMode="MultiLine" autocomplete="off"></asp:TextBox>
                         <div class="invalid-feedback">กรุณากรอกรายละเอียด</div>
                     </div>
                     <%-- <div class="form-group">

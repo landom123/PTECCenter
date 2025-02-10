@@ -882,6 +882,12 @@ endprocess:
                 btnPrint.Visible = True
 
                 If account_code.IndexOf(Session("usercode").ToString) > -1 Then
+                    If head IsNot Nothing Then
+                        If head.Rows.Count > 0 And head.Rows(0).Item("coderef").StartsWith("APP") Then
+                            btnUpdate.Enabled = True 'CLADV CO สามารถแก้ไข duedate ได้
+                        End If
+                    End If
+
                     btnExport.Visible = True
                 End If
 
@@ -1184,10 +1190,10 @@ endprocess:
         If head IsNot Nothing Then
             If head.Rows.Count > 0 And head.Rows(0).Item("coderef").StartsWith("APP") Then
                 If (account_code.IndexOf(Session("usercode").ToString) > -1) And
-                (maintable.Rows(0).Item("statusid") = 7) Then '7	รอบัญชีตรวจสอบ
+                (maintable.Rows(0).Item("statusid") = 7) Then '7 รอบัญชีตรวจสอบ
                     Dim ds As DataSet
                     ds = objapproval.Approval_Find(head.Rows(0).Item("coderef"))
-                    If ds.Tables(0).Rows(0).Item("statusid") = 13 Then
+                    If ds.Tables(0).Rows(0).Item("statusid") = 13 Then 'APP status 13 = รอบัญชีตรวจสอบ
                         If txtDuedate.Text.Trim() = "" Then
                             result = False
                             msg = "กรุณาเลือก Duedate"

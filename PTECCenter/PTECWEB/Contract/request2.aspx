@@ -7,7 +7,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="wrapper">
+    <div id="wrapper" class="h-100">
         <div id="content-wrapper">
             <div class="container-fluid">
                 <ol class="breadcrumb"style="background-color:deeppink;color:white">
