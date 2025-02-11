@@ -124,14 +124,25 @@
                         </ul>
                     </div>
                 </div>
-                <div class="alert alert-info alert-dismissible fade show " role="alert">
+                <div class="alert alert-info alert-dismissible fade show " role="alert" id="alApproveHierarchy" runat="server">
                     <div class="row justify-content-between align-items-center">
-                        <div class="col-lg-auto">
-                            <span><strong>โปรดตรวจสอบข้อมูล!</strong> กรุณาเลือก "Approve" เพื่อยืนยัน หรือ "Reject" หากต้องการปฏิเสธ</span>
+                        <div class="col-lg-auto ">
+                            <span><strong>โปรดตรวจสอบข้อมูล!</strong> "อนุมัติตามสายบังคับบัญชา" กรุณาเลือก "Approve" เพื่อยืนยัน หรือ "Reject" หากต้องการปฏิเสธ</span>
                         </div>
                         <div class="col-lg-auto text-lg-right">
-                            <button type="button" class="btn btn-outline-success btn-sm ml-2" onclick="return approveHierachy(getHashParam('jobdetailid'),'<%= Session("userid").ToString %>');"><i class="fas fa-check"></i>อนุมัติ</button>
-                            <button type="button" class="btn btn-outline-danger btn-sm ml-2" onclick="return rejectHierachy(getHashParam('jobdetailid'),'<%= Session("userid").ToString %>');"><i class="fas fa-times"></i>ไม่อนุมัติ</button>
+                            <button type="button" class="btn btn-outline-success btn-sm ml-2" onclick="return approveHierachy(getHashParam('jobdetailid'),'hierarchy','<%= Session("userid").ToString %>');"><i class="fas fa-check"></i>อนุมัติ</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm ml-2" onclick="return rejectHierachy(getHashParam('jobdetailid'),'hierarchy','<%= Session("userid").ToString %>');"><i class="fas fa-times"></i>ไม่อนุมัติ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-info alert-dismissible fade show " role="alert"  id="alApproveManageroperator" runat="server">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-lg-auto ">
+                            <span><strong>โปรดตรวจสอบข้อมูล!</strong> "อนุมัติจากหน่วยงาน" กรุณาเลือก "Approve" เพื่อยืนยัน หรือ "Reject" หากต้องการปฏิเสธ</span>
+                        </div>
+                        <div class="col-lg-auto text-lg-right">
+                            <button type="button" class="btn btn-outline-success btn-sm ml-2" onclick="return approveHierachy(getHashParam('jobdetailid'),'manageroperator','<%= Session("userid").ToString %>');"><i class="fas fa-check"></i>อนุมัติ</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm ml-2" onclick="return rejectHierachy(getHashParam('jobdetailid'),'manageroperator','<%= Session("userid").ToString %>');"><i class="fas fa-times"></i>ไม่อนุมัติ</button>
                         </div>
                     </div>
                 </div>
@@ -2471,7 +2482,7 @@
             return jobdetailid; // ถ้าไม่มีค่าให้คืนเป็น ''
         }
 
-        function approveHierachy(jobdtlid, userid) {
+        function approveHierachy(jobdtlid, type, userid) {
             if (jobdtlid > 0) {
                 Swal.fire({
                     title: `คุณต้องการจะ "อนุมัติ" ใช่หรือไม่?`,
@@ -2479,7 +2490,33 @@
                     confirmButtonText: "Approve",
                 }).then((result) => {
                     if (result.isConfirmed) {
-
+                        var params = "{'jobdtlid': '" + jobdtlid + "','type': '" + type + "','updateby': '" + userid + "'}";
+                        console.log(params);
+                        $.ajax({
+                            type: "POST",
+                            url: "../ops/jobs.aspx/approveHierachy",
+                            async: true,
+                            data: params,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                console.log(msg.d)
+                                if (msg.d) {
+                                    swal.fire({
+                                        title: "success!",
+                                        text: "",
+                                        icon: "success"
+                                    }).then(function () {
+                                        window.location.href = location.href;
+                                    });
+                                } else {
+                                    alertWarning('fail')
+                                }
+                            },
+                            error: function () {
+                                alertWarning('fail')
+                            }
+                        });
 
 
 
@@ -2490,7 +2527,7 @@
             }
             return false;
         }
-        function rejectHierachy(jobdtlid, userid) {
+        function rejectHierachy(jobdtlid, type, userid) {
             if (jobdtlid > 0) {
                 Swal.fire({
                     input: 'textarea',
@@ -2511,7 +2548,7 @@
                 }).then((result) => {
                     console.log(result.value);
                     if (result.isConfirmed) {
-                        var params = "{'jobdtlid': '" + jobdtlid + "','message': '" + result.value + "','updateby': '" + userid + "'}";
+                        var params = "{'jobdtlid': '" + jobdtlid + "','message': '" + result.value + "','type': '" + type + "','updateby': '" + userid + "'}";
                         console.log(params);
                         $.ajax({
                             type: "POST",

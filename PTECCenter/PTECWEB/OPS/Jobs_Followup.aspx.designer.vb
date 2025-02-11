@@ -68,6 +68,24 @@ Partial Public Class JobsFollowup
     Protected WithEvents txtCntAttach As Global.System.Web.UI.HtmlControls.HtmlAnchor
 
     '''<summary>
+    '''alApproveHierarchy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents alApproveHierarchy As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''alApproveManageroperator control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents alApproveManageroperator As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''cardone control.
     '''</summary>
     '''<remarks>

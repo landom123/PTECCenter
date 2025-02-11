@@ -139,7 +139,11 @@ Public Class JobsFollowup
                     btnSubmitRate.Visible = False
                     btndisAccept.Visible = False
 
-                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Or maintable.Rows(0).Item("followup_status") = "ยกเลิก" Then 'กรณี ปิดงาน
+                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Or
+                        maintable.Rows(0).Item("followup_status") = "ยกเลิก" Or
+                        maintable.Rows(0).Item("followup_status") = "รออนุมัติตามสายบังคับบัญชา" Or
+                        maintable.Rows(0).Item("followup_status") = "รออนุมัติจากหน่วยงาน" Or
+                        maintable.Rows(0).Item("followup_status") = "ไม่ผ่านการอนุมัติ" Then 'กรณี ปิดงาน
                         btnSave.Enabled = False
                         btnEditDetail.Visible = False
                         btnNozzle.Visible = False
@@ -271,7 +275,11 @@ Public Class JobsFollowup
                     'Rating
                     btnSubmitRate.Visible = False
                     btndisAccept.Visible = False
-                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Or maintable.Rows(0).Item("followup_status") = "ยกเลิก" Then
+                    If maintable.Rows(0).Item("followup_status") = "ปิดงาน" Or
+                        maintable.Rows(0).Item("followup_status") = "ยกเลิก" Or
+                        maintable.Rows(0).Item("followup_status") = "รออนุมัติตามสายบังคับบัญชา" Or
+                        maintable.Rows(0).Item("followup_status") = "รออนุมัติจากหน่วยงาน" Or
+                        maintable.Rows(0).Item("followup_status") = "ไม่ผ่านการอนุมัติ" Then 'กรณี ปิดงาน
                         'btnConfirm.Enabled = False
 
                         btnAddAttatch.Visible = False
@@ -359,6 +367,8 @@ Public Class JobsFollowup
                     Dim javaScript As String = "disbtndelete();"
                     ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
                 End If
+                alApproveHierarchy.Visible = hasPermisstionApprove(jobdetailid, "hierarchy")
+                alApproveManageroperator.Visible = hasPermisstionApprove(jobdetailid, "manageroperator")
             End If
         End If
     End Sub
@@ -1248,13 +1258,8 @@ endprocess:
         Dim allApprover As String
 
         If maintable IsNot Nothing AndAlso maintable.Rows.Count > 0 Then
-            ' ค้นหาแถวที่ dtlid ตรงกัน
-            Dim foundRows = maintable.Select("jobdetailid = " & dtlid)
-
             ' ตรวจสอบว่ามีแถวที่พบและค่า followup_status เป็น "รออนุมัติตามสายบังคับบัญชา"
-            If Not foundRows.Length > 0 Or Not foundRows(0).Item("followup_status").ToString() = "รออนุมัติตามสายบังคับบัญชา" Then
-                Return False
-            End If
+            If Not (maintable.Rows(0).Item("followup_status").ToString() = "รออนุมัติตามสายบังคับบัญชา" And type = "hierarchy") And Not (maintable.Rows(0).Item("followup_status").ToString() = "รออนุมัติจากหน่วยงาน" And type = "manageroperator") Then Return False
         End If
 
         Try
