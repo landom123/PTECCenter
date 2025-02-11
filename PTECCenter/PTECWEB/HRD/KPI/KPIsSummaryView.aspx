@@ -102,7 +102,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col mb-3">
-                                                <span class="text-muted">คำนวน Ratio ตามตำแหน่ง (Corporate, Department, Section, Individual, Competency)
+                                                <span class="text-muted">คำนวน Ratio ตามตำแหน่ง (Corporate, Function, Department, Section, Individual, Competency)
                                                 </span>
                                             </div>
                                         </div>

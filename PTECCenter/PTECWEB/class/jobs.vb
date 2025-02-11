@@ -2106,7 +2106,7 @@ Public Class jobs
     End Function
 
 
-    Public Function JobsDetails_Approval(dtlid As Integer, approverid As Integer) As Boolean
+    Public Function JobsDetails_Approval(dtlid As Integer, type As String, approverid As Integer) As Boolean
         Dim result As Boolean
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -2120,6 +2120,7 @@ Public Class jobs
         cmd.CommandType = CommandType.StoredProcedure
 
         cmd.Parameters.Add("@dtlid", SqlDbType.Int).Value = dtlid
+        cmd.Parameters.Add("@type", SqlDbType.VarChar).Value = type
         cmd.Parameters.Add("@approverid", SqlDbType.Int).Value = approverid
 
         cmd.ExecuteNonQuery()
@@ -2130,7 +2131,7 @@ Public Class jobs
         Return result
     End Function
 
-    Public Function JobsDetails_Reject(dtlid As Integer, msg As String, approverid As Integer) As Boolean
+    Public Function JobsDetails_Reject(dtlid As Integer, msg As String, type As String, approverid As Integer) As Boolean
         Dim result As Boolean
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
@@ -2145,6 +2146,7 @@ Public Class jobs
 
         cmd.Parameters.Add("@dtlid", SqlDbType.Int).Value = dtlid
         cmd.Parameters.Add("@approverid", SqlDbType.Int).Value = approverid
+        cmd.Parameters.Add("@type", SqlDbType.VarChar).Value = type
         cmd.Parameters.Add("@msg", SqlDbType.VarChar).Value = msg
 
         cmd.ExecuteNonQuery()

@@ -49,12 +49,14 @@
 
                 <div class="row">
                     <div class="col-12 mb-3">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />
+                        &nbsp;
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" />
                         &nbsp;              
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" />
                         &nbsp;   
-                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />&nbsp;
+                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" />
+                        &nbsp;
                         <button <% If ViewState("status") = "new" Or ViewState("status") = "cancel" Then %> disabled <% End if %> type="button" class="btn btn-sm  btn-danger d-none" onclick="chkCancel('../ops/jobsCancel.aspx?jobno=<% =ViewState("jobno") %>')">Cancel</button>&nbsp;
                         <button runat="server" id="btnCancel" name="btnCancel" onclick="return cancelJobs();" class="btn btn-sm btn-danger">
                             Cancel
@@ -181,7 +183,7 @@
                         <div class="table-responsive">
 
                             <% For i = 0 To detailtable.Rows.Count - 1 %>
-                            <div class="alert alert-success alert-dismissible fade show " role="alert">
+                            <%--<div class="alert alert-success alert-dismissible fade show " role="alert">
                                 <div class="row justify-content-between align-items-center">
                                     <div class="col-lg-auto">
                                         <span><strong>ผ่านการอนุมัติตามสายบังคับบัญชา</strong> -- <a href="../OPS/jobs_followup.aspx?jobno=<% =detailtable.Rows(i).Item("jobno") %>&jobdetailid=<% =detailtable.Rows(i).Item("jobdetailid") %>&g=headingOne" class="alert-link">คลิกเพื่อดูรายละเอียด</a></span>
@@ -194,16 +196,29 @@
                                         <span><strong>ไม่ผ่านการอนุมัติตามสายบังคับบัญชา</strong></span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
                             <% if objStatus = "confirm" And hasPermisstionApprove(detailtable.Rows(i).Item("jobdetailid"), "hierarchy") Then%>
                             <div class="alert alert-info alert-dismissible fade show " role="alert">
                                 <div class="row justify-content-between align-items-center">
                                     <div class="col-lg-auto ">
-                                        <span><strong>โปรดตรวจสอบข้อมูล!</strong> กรุณาเลือก "Approve" เพื่อยืนยัน หรือ "Reject" หากต้องการปฏิเสธ</span>
+                                        <span><strong>โปรดตรวจสอบข้อมูล!</strong> "อนุมัติตามสายบังคับบัญชา" กรุณาเลือก "Approve" เพื่อยืนยัน หรือ "Reject" หากต้องการปฏิเสธ</span>
                                     </div>
                                     <div class="col-lg-auto text-lg-right">
-                                        <button type="button" class="btn btn-outline-success btn-sm ml-2" onclick="return approveHierachy(<%= detailtable.Rows(i).Item("jobdetailid").ToString() %>,'<%= Session("userid").ToString %>');"><i class="fas fa-check"></i>อนุมัติ</button>
-                                        <button type="button" class="btn btn-outline-danger btn-sm ml-2" onclick="return rejectHierachy(<%= detailtable.Rows(i).Item("jobdetailid").ToString() %>,'<%= Session("userid").ToString %>');"><i class="fas fa-times"></i>ไม่อนุมัติ</button>
+                                        <button type="button" class="btn btn-outline-success btn-sm ml-2" onclick="return approveHierachy(<%= detailtable.Rows(i).Item("jobdetailid").ToString() %>,'hierarchy','<%= Session("userid").ToString %>');"><i class="fas fa-check"></i>อนุมัติ</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm ml-2" onclick="return rejectHierachy(<%= detailtable.Rows(i).Item("jobdetailid").ToString() %>,'hierarchy','<%= Session("userid").ToString %>');"><i class="fas fa-times"></i>ไม่อนุมัติ</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <% End If %>
+                            <% if objStatus = "confirm" And hasPermisstionApprove(detailtable.Rows(i).Item("jobdetailid"), "manageroperator") Then%>
+                            <div class="alert alert-info alert-dismissible fade show " role="alert">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-lg-auto ">
+                                        <span><strong>โปรดตรวจสอบข้อมูล!</strong> "อนุมัติจากหน่วยงาน" กรุณาเลือก "Approve" เพื่อยืนยัน หรือ "Reject" หากต้องการปฏิเสธ</span>
+                                    </div>
+                                    <div class="col-lg-auto text-lg-right">
+                                        <button type="button" class="btn btn-outline-success btn-sm ml-2" onclick="return approveHierachy(<%= detailtable.Rows(i).Item("jobdetailid").ToString() %>,'manageroperator','<%= Session("userid").ToString %>');"><i class="fas fa-check"></i>อนุมัติ</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm ml-2" onclick="return rejectHierachy(<%= detailtable.Rows(i).Item("jobdetailid").ToString() %>,'manageroperator','<%= Session("userid").ToString %>');"><i class="fas fa-times"></i>ไม่อนุมัติ</button>
                                     </div>
                                 </div>
                             </div>
@@ -652,7 +667,8 @@
                                 </div>
 
                                 <div class="col-md-2 mb-3 d-flex justify-content-center align-items-center">
-                                    <asp:Button ID="btnAddDetail" class="btn btn-sm  btn-info" runat="server" Text=" + " OnClientClick="validateData()" />&nbsp;
+                                    <asp:Button ID="btnAddDetail" class="btn btn-sm  btn-info" runat="server" Text=" + " OnClientClick="validateData()" />
+                                    &nbsp;
                                 </div>
 
                             </div>
@@ -729,48 +745,48 @@
                         AllowPaging="false"
                         AutoGenerateColumns="false"
                         runat="server">
-                        <Columns>
+                        <columns>
                             <asp:TemplateField HeaderStyle-Width="50px" HeaderStyle-CssClass="text-center table-header table-info " ItemStyle-Width="50px" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="Center">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <asp:CheckBox ID="chkAll" runat="server"
                                         onclick="checkAll(this);" />
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <asp:CheckBox ID="chk" runat="server" data-key='<%#Eval("positionOnAssest").ToString + "," + Eval("nozzle_No").ToString%>'
                                         onclick="Check_Click(this)" />
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="" ItemStyle-HorizontalAlign="center">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbrownumber" runat="server" Text='<%#Eval("rownumber")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="ยี่ห้อ" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbbrand" runat="server" Text='<%#Eval("brand")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="ชนิดน้ำมัน" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbproducttype" runat="server" Text='<%#Eval("producttype")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="เลขที่มาตร" HeaderStyle-CssClass="table-header table-info ">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbnozzleno" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbpositionOnAssest" runat="server" Text='<%#Eval("positionOnAssest")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbexpirydate" runat="server" Text='<%#Eval("expirydate")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
-                        </Columns>
+                        </columns>
                     </asp:GridView>
                 </div>
                 <div class="modal-footer">
@@ -796,43 +812,43 @@
                         AllowPaging="false"
                         AutoGenerateColumns="false"
                         runat="server">
-                        <Columns>
+                        <columns>
                             <asp:TemplateField HeaderText="ลำดับที่" HeaderStyle-CssClass="table-header table-info " ItemStyle-CssClass="">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbid" runat="server" Text='<%#Eval("rownumber")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="ยี่ห้อ" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbbranch" runat="server" Text='<%#Eval("brand")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="ชนิดน้ำมัน" HeaderStyle-CssClass="table-header table-info " ItemStyle-HorizontalAlign="center">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbapproval" runat="server" Text='<%#Eval("producttype")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="เลขที่มาตร" HeaderStyle-CssClass="table-header table-info ">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbdetail" runat="server" Text='<%#Eval("nozzle_No")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="ตำแหน่ง" HeaderStyle-CssClass="table-header table-info ">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("positionOnAssest")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="วันที่สิ้นสุด" HeaderStyle-CssClass="table-header table-info ">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <asp:Label ID="lbdetailpayment" runat="server" Text='<%#Eval("expirydate")%>'></asp:Label>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="รูปภาพ" HeaderStyle-CssClass="table-header table-info ">
-                                <ItemTemplate>
+                                <itemtemplate>
                                     <a href="<%#Eval("url")%>" target="_blank">รูปภาพ</a>
-                                </ItemTemplate>
+                                </itemtemplate>
                             </asp:TemplateField>
-                        </Columns>
+                        </columns>
                     </asp:GridView>
                 </div>
                 <div class="modal-footer">
@@ -1094,7 +1110,7 @@
             return true;
         }
 
-        function approveHierachy(jobdtlid, userid) {
+        function approveHierachy(jobdtlid, type, userid) {
             if (jobdtlid > 0) {
                 Swal.fire({
                     title: `คุณต้องการจะ "อนุมัติ" ใช่หรือไม่?`,
@@ -1102,7 +1118,7 @@
                     confirmButtonText: "Approve",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var params = "{'jobdtlid': '" + jobdtlid + "','updateby': '" + userid + "'}";
+                        var params = "{'jobdtlid': '" + jobdtlid + "','type': '" + type + "','updateby': '" + userid + "'}";
                         console.log(params);
                         $.ajax({
                             type: "POST",
@@ -1139,7 +1155,7 @@
             }
             return false;
         }
-        function rejectHierachy(jobdtlid, userid) {
+        function rejectHierachy(jobdtlid,type, userid) {
             if (jobdtlid > 0) {
                 Swal.fire({
                     input: 'textarea',
@@ -1160,7 +1176,7 @@
                 }).then((result) => {
                     console.log(result.value);
                     if (result.isConfirmed) {
-                        var params = "{'jobdtlid': '" + jobdtlid + "','message': '" + result.value + "','updateby': '" + userid + "'}";
+                        var params = "{'jobdtlid': '" + jobdtlid + "','message': '" + result.value + "','type': '" + type + "','updateby': '" + userid + "'}";
                         console.log(params);
                         $.ajax({
                             type: "POST",

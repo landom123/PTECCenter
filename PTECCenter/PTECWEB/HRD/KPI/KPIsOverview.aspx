@@ -379,46 +379,49 @@
 
 
             $('.form-control').selectpicker('refresh');
-            let dataChart = []
-            <% If Not Request.QueryString("uc") Is Nothing And AllKpi IsNot Nothing Then%>
+            let dataChart = [];
+            <% If Not Request.QueryString("uc") Is Nothing And AllKpi IsNot Nothing Then %>
             <% For j = 0 To AllKpi.Tables(2).Rows.Count - 1 %>
-            dataChart.push(<%= AllKpi.Tables(2).Rows(j).Item("Weight").ToString %>);
+                        dataChart.push({
+                            categoryname: "<%= AllKpi.Tables(2).Rows(j).Item("CategoryName").ToString() %>",
+                            value: <%= AllKpi.Tables(2).Rows(j).Item("Weight").ToString() %>
+                            });
             <% Next j %>
-             <% End If%>
+            <% End If %>
 
             const newArr = [
                 {
                     label: 'Corporate',
-                    data: dataChart[0],
+                    data: dataChart.filter(item => item.categoryname === 'Corporate').map(item => item.value),
                     backgroundColor: '#ffbd3d'
                 },
                 {
+                    label: 'Function',
+                    data: dataChart.filter(item => item.categoryname === 'Function').map(item => item.value),
+                    backgroundColor: '#ca99c8'
+                },
+                {
                     label: 'Department',
-                    data: dataChart[1],
+                    data: dataChart.filter(item => item.categoryname === 'Department').map(item => item.value),
                     backgroundColor: '#6690c7'
                 },
                 {
                     label: 'Section',
-                    data: dataChart[2],
+                    data: dataChart.filter(item => item.categoryname === 'Section').map(item => item.value),
                     backgroundColor: '#67c487'
                 },
                 {
                     label: 'Individual',
-                    data: dataChart[3],
+                    data: dataChart.filter(item => item.categoryname === 'Individual').map(item => item.value),
                     backgroundColor: '#b8a27b'
                 },
                 {
                     label: 'Competency',
-                    data: dataChart[4],
+                    data: dataChart.filter(item => item.categoryname === 'Competency').map(item => item.value),
                     backgroundColor: '#d6037c'
                 }
-            ]
+            ];
 
-            //---
-
-
-
-            console.log(dataChart);
             const ctx = document.getElementById('myChart');
             new Chart(ctx, {
                 type: 'doughnut',

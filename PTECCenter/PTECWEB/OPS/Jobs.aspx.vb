@@ -1128,12 +1128,12 @@ endprocess:
     End Sub
 
     <System.Web.Services.WebMethod>
-    Public Shared Function approveHierachy(ByVal jobdtlid As String, ByVal updateby As String)
+    Public Shared Function approveHierachy(ByVal jobdtlid As String, ByVal type As String, ByVal updateby As String)
         Dim job As New jobs
 
         Dim result As Boolean
         Try
-            result = job.JobsDetails_Approval(jobdtlid, updateby)
+            result = job.JobsDetails_Approval(jobdtlid, type, updateby)
 
         Catch ex As Exception
             Return False
@@ -1143,12 +1143,12 @@ endprocess:
     End Function
 
     <System.Web.Services.WebMethod>
-    Public Shared Function rejectHierachy(ByVal jobdtlid As String, ByVal message As String, ByVal updateby As String)
+    Public Shared Function rejectHierachy(ByVal jobdtlid As String, ByVal message As String, ByVal type As String, ByVal updateby As String)
         Dim job As New jobs
 
         Dim result As Boolean
         Try
-            result = job.JobsDetails_Reject(jobdtlid, message, updateby)
+            result = job.JobsDetails_Reject(jobdtlid, type, message, updateby)
 
         Catch ex As Exception
             Return False
@@ -1166,9 +1166,8 @@ endprocess:
             Dim foundRows = detailtable.Select("jobdetailid = " & dtlid)
 
             ' ตรวจสอบว่ามีแถวที่พบและค่า followup_status เป็น "รออนุมัติตามสายบังคับบัญชา"
-            If Not foundRows.Length > 0 Or Not foundRows(0).Item("followup_status").ToString() = "รออนุมัติตามสายบังคับบัญชา" Then
-                Return False
-            End If
+            If Not foundRows.Length > 0 Then Return False
+            If Not (foundRows(0).Item("followup_status").ToString() = "รออนุมัติตามสายบังคับบัญชา" And type = "hierarchy") And Not (foundRows(0).Item("followup_status").ToString() = "รออนุมัติจากหน่วยงาน" And type = "manageroperator") Then Return False
         End If
 
         Try
