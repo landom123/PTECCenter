@@ -49,6 +49,7 @@
 
                 <div class="row">
                     <div class="col-12 mb-3">
+
                         <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" UseSubmitBehavior="false" />
                         &nbsp;
                         <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" UseSubmitBehavior="false" />
@@ -56,6 +57,7 @@
                         <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" UseSubmitBehavior="false" />
                         &nbsp;   
                         <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" UseSubmitBehavior="false" />
+
                         &nbsp;
                         <button <% If ViewState("status") = "new" Or ViewState("status") = "cancel" Then %> disabled <% End if %> type="button" class="btn btn-sm  btn-danger d-none" onclick="chkCancel('../ops/jobsCancel.aspx?jobno=<% =ViewState("jobno") %>')">Cancel</button>&nbsp;
                         <button runat="server" id="btnCancel" name="btnCancel" onclick="return cancelJobs();" class="btn btn-sm btn-danger">
