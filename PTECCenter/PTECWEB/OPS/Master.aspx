@@ -19,11 +19,11 @@
                 </ol>
                 <div class="row align-items-start">
                     <div class="col-12 align-items-start">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-danger" runat="server" Text="New" />
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-danger" runat="server" Text="New" UseSubmitBehavior="false" />
                         &nbsp;
-                        <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" />
+                        <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                         &nbsp;              
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-primary" runat="server" Text="Search" />
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-primary" runat="server" Text="Search" UseSubmitBehavior="false" />
                     </div>
                 </div>
                 <br />

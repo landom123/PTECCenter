@@ -25,13 +25,13 @@
                 </ol>
                 <div class="row">
                     <div class="col-12">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" UseSubmitBehavior="false" />
                         &nbsp;
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" OnClientClick="validateData();" />
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" OnClientClick="validateData();" UseSubmitBehavior="false" />
                         &nbsp;
-                        <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" OnClientClick="validateData();" />
+                        <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" OnClientClick="validateData();" UseSubmitBehavior="false" />
                         &nbsp;              
-                        <asp:Button ID="btnResetPassword" class="btn btn-sm  btn-danger" runat="server" Text="Reset Password"  />
+                        <asp:Button ID="btnResetPassword" class="btn btn-sm  btn-danger" runat="server" Text="Reset Password"  UseSubmitBehavior="false" />
                         
                         &nbsp;     
                     </div>

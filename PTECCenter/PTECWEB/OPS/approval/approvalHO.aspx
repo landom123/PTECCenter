@@ -169,13 +169,13 @@
                 <div class="row">
                     <div class="col-sm mb-3">
 
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" />
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" UseSubmitBehavior="false" />
                         &nbsp;              
-                             <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" />
+                             <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" UseSubmitBehavior="false" />
                         &nbsp;   
-                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                         &nbsp;   
-                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" />
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
                         <%-- &nbsp;   
                             <% If Not Request.QueryString("approvalHOcode") Is Nothing And maintable.Rows.Count > 0 Then%>
                         <% if (maintable.Rows(0).Item("statusid") = 1) Or (maintable.Rows(0).Item("statusid") = 4) Then%>
@@ -326,7 +326,7 @@
                                                 <button type="button" class="btn btn-sm btn-primary rounded-circle mr-2" id="btnFromAddDetail" style="width: 35px" runat="server" title="Add" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false" data-whatever="new">+</button>
                                             </div>
                                             <div class="col p-0 mb-3">
-                                                <asp:Button ID="btnDelete" class="btn btn-sm  btn-danger rounded-circle mr-2" runat="server" Width="35px" Text="-" OnClientClick="return sendID();" title="Delete" />
+                                                <asp:Button ID="btnDelete" class="btn btn-sm  btn-danger rounded-circle mr-2" runat="server" Width="35px" Text="-" OnClientClick="return sendID();" title="Delete" UseSubmitBehavior="false" />
                                             </div>
                                         </div>
                                         <%--<button type="button" class="btn btn-sm  btn-info noEnterSubmit" style="color: #495057;" title="Export" id="btnExport" onclick="sendID()"><i class="fas fa-file-download"></i></button>--%>
@@ -394,16 +394,16 @@
                         <% If Not Request.QueryString("approvalHOcode") Is Nothing And maintable.Rows.Count > 0 Then%>
                         <% if ViewState("status_approvalHO") = "write" And (maintable.Rows(0).Item("statusid") = 2) Then%>
                         <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
-                        <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
+                        <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" UseSubmitBehavior="false" />
                         <% End If %>
                         <% If verify And maintable.Rows(0).Item("statusid") = 2 Then%>
-                        <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" />
+                        <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" UseSubmitBehavior="false"  />
                         <% End If %>
                         <% If ((verify Or approval)) Then%>
-                        <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" />
+                        <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" UseSubmitBehavior="false" />
                         <% End If %>
                         <% ElseIf (ViewState("status_approvalHO") = "confirm") And (confirmer_code.IndexOf(Session("usercode").ToString) > -1) And (maintable.Rows(0).Item("statusid") = 6) And confirmer Then %>
-                        <asp:Button ID="btnConfirmerApproval" class="btn btn-success" runat="server" Text="ยืนยันหักยอดขาย" />
+                        <asp:Button ID="btnConfirmerApproval" class="btn btn-success" runat="server" Text="ยืนยันหักยอดขาย" UseSubmitBehavior="false" />
                         <% End If %>
                         <% End If %>
                     </div>
@@ -507,7 +507,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-12">
-                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
+                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" UseSubmitBehavior="false" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -585,7 +585,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnAddDetailsss" class="btn btn-primary" runat="server" Text="Save" OnClientClick="return postBack_addDetails();"/>
+                    <asp:Button ID="btnAddDetailsss" class="btn btn-primary" runat="server" Text="Save" OnClientClick="return postBack_addDetails();" UseSubmitBehavior="false" />
 
                 </div>
             </div>
@@ -616,7 +616,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" UseSubmitBehavior="false" />
                 </div>
             </div>
         </div>

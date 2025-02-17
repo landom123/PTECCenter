@@ -21,7 +21,7 @@
                 </ol>
                 <div class="row">
                     <div class="col-12  mb-3">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" UseSubmitBehavior="false" />
                         &nbsp;
                          
                     </div>
@@ -215,7 +215,7 @@
                                         runat="server" AutoPostBack="false">
                                     </asp:DropDownList>
                                     <div class="input-group-append">
-                                        <asp:Button ID="btnUpdatePolicy" class="btn btn-sm  btn-success" runat="server" Text="Update" />
+                                        <asp:Button ID="btnUpdatePolicy" class="btn btn-sm  btn-success" runat="server" Text="Update" UseSubmitBehavior="false" />
 
                                     </div>
                                 </div>
@@ -227,7 +227,7 @@
                                     </div>
                                     <asp:TextBox class="form-control" ID="txtDueDate" runat="server" ></asp:TextBox>
                                     <div class="input-group-append">
-                                        <asp:Button ID="btnUpdateDuedate" class="btn btn-sm  btn-success" runat="server" Text="Update" />
+                                        <asp:Button ID="btnUpdateDuedate" class="btn btn-sm  btn-success" runat="server" Text="Update" UseSubmitBehavior="false" />
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
                     </div>
                     <div class="row justify-content-center" style="padding-bottom: 1rem;">
                         <div class="col-12 text-center">
-                            <asp:Button ID="btnUpdate" class="btn btn-sm  btn-success" runat="server" Text="Update Cost and Supplier" />
+                            <asp:Button ID="btnUpdate" class="btn btn-sm  btn-success" runat="server" Text="Update Cost and Supplier" UseSubmitBehavior="false" />
                         </div>
                     </div>
                 </div>
@@ -376,7 +376,7 @@
                     </div>
                     <div class="row justify-content-center" style="padding-bottom: 1rem;">
                         <div class="col-12 text-center">
-                            <asp:Button ID="btnUpdateinvoice" class="btn btn-sm  btn-success" runat="server" Text="update invoice" />
+                            <asp:Button ID="btnUpdateinvoice" class="btn btn-sm  btn-success" runat="server" Text="update invoice" UseSubmitBehavior="false" />
                         </div>
                     </div>
                 </div>
@@ -443,7 +443,7 @@
                                                     <asp:TextBox ID="txtCostUnit" class="form-control text-right" runat="server" type="number" min="1"></asp:TextBox>
                                                 </td>
                                                 <td>
-                                                    <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " />
+                                                    <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " UseSubmitBehavior="false" />
                                                 </td>
                                             </tr>
                                         </tbody>

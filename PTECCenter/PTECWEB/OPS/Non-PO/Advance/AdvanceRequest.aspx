@@ -248,7 +248,7 @@
                                                 <% If Not Request.QueryString("ADV") Is Nothing Then%>
                                                 <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3  Then %>
                                                 <div class="input-group-append">
-                                                    <asp:Button ID="btnUpdateDuedate" class="btn btn-sm btn-primary" runat="server" Text="Update" />
+                                                    <asp:Button ID="btnUpdateDuedate" class="btn btn-sm btn-primary" runat="server" Text="Update" UseSubmitBehavior="false" />
                                                 </div>
                                                 <% End If %>
                                                 <% End If %>
@@ -279,7 +279,7 @@
                                                 <% If (Not String.IsNullOrEmpty(detailtable.Rows(0).Item("verifyrqby").ToString) And Not String.IsNullOrEmpty(detailtable.Rows(0).Item("verifyrqdate").ToString) ) %>
 
                                                 <div class="input-group-append">
-                                                    <asp:Button ID="btnUpdateDuedate_more" class="btn btn-sm btn-primary" runat="server" Text="Update" />
+                                                    <asp:Button ID="btnUpdateDuedate_more" class="btn btn-sm btn-primary" runat="server" Text="Update" UseSubmitBehavior="false" />
                                                 </div>
                                                 <% End If %>
                                                 <% End If %>
@@ -312,7 +312,7 @@
                                                  <% If Not Request.QueryString("ADV") Is Nothing Then%>
                                                 <% If account_code.IndexOf(Session("usercode").ToString) > -1 And detailtable.Rows(0).Item("statusrqid") = 3  Then %>
                                                 <div class="input-group-append">
-                                                    <asp:Button ID="btnUpdateDuedate" class="btn btn-sm btn-primary" runat="server" Text="Update" />
+                                                    <asp:Button ID="btnUpdateDuedate" class="btn btn-sm btn-primary" runat="server" Text="Update" UseSubmitBehavior="false" />
                                                 </div>
                                                 <% End If %>
                                                 <% End If %>
@@ -332,17 +332,17 @@
                                 </div>
                                 <div class="card-footer text-center bg-white">
                                     <% If ViewState("status") = "new" Then%>
-                                    <asp:Button ID="btnSaves" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" />
+                                    <asp:Button ID="btnSaves" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" UseSubmitBehavior="false" />
                                     <% ElseIf ViewState("status") = "edit" Then%>
-                                    <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" />
-                                    <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" />
+                                    <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" UseSubmitBehavior="false" />
+                                    <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
                                     <% ElseIf (Session("userid").ToString() = detailtable.Rows(0).Item("CreateBy").ToString()) Then%>
-                                    <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" />
-                                    <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" />
-                                    <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" />
-                                    <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน" />
-                                    <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" />
-                                    <asp:Button ID="btnClearAdvance" class="btn btn-warning" runat="server" Target="_blank" Text="เคลียร์ค่าใช้จ่าย" />
+                                    <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false" />
+                                    <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
+                                    <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" UseSubmitBehavior="false" />
+                                    <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน" UseSubmitBehavior="false" />
+                                    <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" UseSubmitBehavior="false" />
+                                    <asp:Button ID="btnClearAdvance" class="btn btn-warning" runat="server" Target="_blank" Text="เคลียร์ค่าใช้จ่าย" UseSubmitBehavior="false" />
 
                                     <% If detailtable.Rows(0).Item("amount_more") <= 0 Then%>
                                     <button type="button" class="btn btn-secondary" id="btnAdvanceMore" runat="server" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false" data-whatever="new">ขอเบิกเพิ่มเติม</button>
@@ -352,18 +352,18 @@
                                     <% If Not Request.QueryString("ADV") Is Nothing And detailtable.Rows.Count > 0 Then%>
                                     <% If verify Or approval Then%>
                                         <% If ViewState("status") = "write" And approval And detailtable.Rows(0).Item("statusrqid") = 2 Then%>
-                                        <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
+                                        <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" UseSubmitBehavior="false" />
                                         <% End If %>
                                         <% If verify And detailtable.Rows(0).Item("statusrqid") = 7 Then%>
-                                        <asp:Button ID="btnAccountVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันการตรวจสอบ" />
+                                        <asp:Button ID="btnAccountVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันการตรวจสอบ" UseSubmitBehavior="false" />
                                         <% End If %>
                                         <% If verify And detailtable.Rows(0).Item("statusrqid") = 3 Then%>
-                                        <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันทำจ่าย" />
+                                        <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" OnClientClick="checkDuedate()" Text="ยืนยันทำจ่าย" UseSubmitBehavior="false" />
                                         <% End If %>
                                         <% If verify And detailtable.Rows(0).Item("statusrqid") = 2 Then%>
-                                        <asp:Button ID="btnVerifyApproval" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" />
+                                        <asp:Button ID="btnVerifyApproval" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" UseSubmitBehavior="false" />
                                         <% End If %>
-                                    <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" />
+                                    <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" UseSubmitBehavior="false" />
 
                                     <% End If %>
 
@@ -566,7 +566,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
-                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" disabled />
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" disabled UseSubmitBehavior="false" />
                                             </div>
                                         </div>
                                     </div>
@@ -602,7 +602,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnAddamount" class="btn btn-primary" runat="server" Text="Save" />
+                    <asp:Button ID="btnAddamount" class="btn btn-primary" runat="server" Text="Save" UseSubmitBehavior="false" />
                 </div>
             </div>
         </div>
@@ -632,7 +632,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" UseSubmitBehavior="false" />
                 </div>
             </div>
         </div>

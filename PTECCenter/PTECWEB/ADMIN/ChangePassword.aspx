@@ -39,7 +39,7 @@
           </div>--%>
           
           
-          <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="บันทึก" />
+          <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="บันทึก" UseSubmitBehavior="false" />
           <input type="button" class="btn btn-danger" value="Cancel" onclick="history.go(-1);return false;"><br />
           <asp:Label ID="lblMessage" runat="server" Text=".."></asp:Label>
 <%--          <a class="btn btn-primary btn-block" href="index.html">Login</a>--%>

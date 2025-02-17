@@ -42,11 +42,11 @@
                     <div class="row">
                         <div class="col">
 
-                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" />
+                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" UseSubmitBehavior="false" />
                             &nbsp;              
-                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false"  />
                             &nbsp;   
-                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" OnClientClick="Confirm();" UseSubmitBehavior="false"  />
                             &nbsp;   
                         </div>
 
@@ -81,7 +81,7 @@
                                         <div class="col">
                                             <div class="row">
                                                 <div class="col mb-3">
-                                                    <asp:DropDownList ID="cboPeriod" class="form-control" runat="server"></asp:DropDownList>
+                                                    <asp:DropDownList ID="cboPeriod" class="form-control" runat="server" AutoPostBack="true"></asp:DropDownList>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -178,26 +178,17 @@
                                                                 <tbody class="DetailArea">
                                                                     <% For j = 0 To detailtable.Rows.Count - 1 %>
                                                                     <% if groupdetailtable.Rows(i).Item("CategoryName").ToString() = detailtable.Rows(j).Item("CategoryName").ToString() Then%>
-                                                                    <tr class="draggable detail" data-status="<%= detailtable.Rows(j).Item("status").ToString() %>" name="<%= detailtable.Rows(j).Item("kpi_code").ToString() %>" style="cursor: pointer; transition: .2s;"
-                                                                        ondblclick="btnEditDetailClick('<%= detailtable.Rows(j).Item("kpi_code").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("categoryid").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("title").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("weight").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("unit").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("lv1").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("lv2").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("lv3").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("lv4").ToString() %>'
-                                                                                                        ,'<%= detailtable.Rows(j).Item("lv5").ToString() %>');">
-                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("kpi_code").ToString() %></span></td>
-                                                                        <td><div class="pre-line"><%= detailtable.Rows(j).Item("title").ToString() %></div></td>
-                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("weight").ToString() %></span></td>
-                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("unit").ToString() %></span></td>
-                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv5").ToString() %></span></td>
-                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv4").ToString() %></span></td>
-                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv3").ToString() %></span></td>
-                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv2").ToString() %></span></td>
-                                                                        <td class="text-center"><span class="pre-line"><%= detailtable.Rows(j).Item("lv1").ToString() %></span></td>
+                                                                    <tr class="draggable detail" data-status="<%= detailtable.Rows(j).Item("status").ToString() %>" data-cateid="<%= detailtable.Rows(j).Item("categoryid").ToString() %>" name="<%= detailtable.Rows(j).Item("kpi_code").ToString() %>" style="cursor: pointer; transition: .2s;"
+                                                                        ondblclick="handle_btnEditDetailClick(this);">
+                                                                        <td class="text-center"><span class="pre-line" name="kpi_code"><%= detailtable.Rows(j).Item("kpi_code").ToString() %></span></td>
+                                                                        <td><span class="pre-line" name="title"><%= detailtable.Rows(j).Item("title").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line" name="weight"><%= detailtable.Rows(j).Item("weight").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line" name="unit"><%= detailtable.Rows(j).Item("unit").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line" name="lv5"><%= detailtable.Rows(j).Item("lv5").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line" name="lv4"><%= detailtable.Rows(j).Item("lv4").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line" name="lv3"><%= detailtable.Rows(j).Item("lv3").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line" name="lv2"><%= detailtable.Rows(j).Item("lv2").ToString() %></span></td>
+                                                                        <td class="text-center"><span class="pre-line" name="lv1"><%= detailtable.Rows(j).Item("lv1").ToString() %></span></td>
                                                                         <td class="text-center">
                                                                             <div class="deletedetail">
                                                                                 <a onclick="confirmDeletedetail('<%= detailtable.Rows(j).Item("kpi_code").ToString() %>','<%= detailtable.Rows(j).Item("status").ToString() %>');" class="btn btn-sm p-0 notPrint">
@@ -262,10 +253,10 @@
                                         <% if (maintable.Rows(0).Item("statusid") = 2) Then%>
                                         <div class="text-center m-auto">
                                             <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
-                                            <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" />
+                                            <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" UseSubmitBehavior="false" />
                                             <% End If %>
                                             <% If ((verify Or approval)) Then%>
-                                            <asp:Button ID="btnSendback" class="btn btn-danger" runat="server" Text="ส่งแก้ไข" />
+                                            <asp:Button ID="btnSendback" class="btn btn-danger" runat="server" Text="ส่งแก้ไข" UseSubmitBehavior="false" />
                                             <% End If %>
                                         </div>
                                         <% End If %>
@@ -331,7 +322,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
-                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" UseSubmitBehavior="false" disabled />
                                             </div>
                                         </div>
                                     </div>
@@ -443,7 +434,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnAddDetail" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" />
+                    <asp:Button ID="btnAddDetail" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" UseSubmitBehavior="false" />
                 </div>
             </div>
         </div>
@@ -477,45 +468,6 @@
             calculateTotalWeights()
 
         });
-        //function calTotal() {
-        //    const tables = document.querySelectorAll('table');
-        //    //console.log(tables);
-        //    //console.log(typeof (tables));
-        //    //console.log(tables[0].getElementsByTagName('tbody')[0].rows);
-        //    //    const tableBodyRows = tables[0].getElementsByTagName('tbody')[0].rows;
-        //    tables.forEach(table => {
-        //        const allTheValues = []
-        //        const tbodys = [];
-        //        let total = 0
-        //        tbodys.push(table.getElementsByTagName('tbody')[0].rows);
-        //        //console.log(tbodys);
-        //        //console.log(tbodys[0].length);
-        //        if (tbodys[0].length > 0) {
-        //            for (let i = 0; i < tbodys[0].length; i++) {
-        //                allTheValues.push(parseInt(tbodys[0][i].cells[2].innerHTML))
-
-
-        //            }
-        //            total = allTheValues.reduce((acc, val) => acc + val, 0);
-        //            //console.log(`333333333`);
-        //            //console.log(`${total}`);
-        //        }
-        //        const elemratiotypename = table.parentNode.parentNode.parentNode.getElementsByClassName("ratio__type")[0];
-        //        const elemTotal = table.getElementsByTagName('tfoot')[0].rows[0].cells[1];
-        //        elemTotal.innerHTML = total;
-        //        if (total < 100) {
-        //            elemTotal.classList.add("text-muted");
-        //        }
-        //        else if (total > 100) {
-        //            elemTotal.classList.add("text-danger");
-
-        //            //set ratioType text red
-        //            elemratiotypename.classList.add("text-danger");
-        //            elemratiotypename.title = "Have a problem";
-        //        }
-
-        //    });
-        //}
 
         function calculateTotalWeights() {
             // ดึงตารางทั้งหมดที่มีในหน้า
@@ -696,15 +648,23 @@
             let element = document.getElementById(id);
             element.value = valueToSelect;
         }
-        function btnEditDetailClick(kpicode, cateid, title, weight, unit, lv1, lv2, lv3, lv4, lv5) {
-
-
-
-            const cate = '<%= cboRatio.ClientID%>';
-            <%--const vendor = '<%= cboVendor.ClientID%>';--%>
+        function handle_btnEditDetailClick(elem) {
             $('#exampleModal').modal('show');
+            const cateid = elem.dataset.cateid
+            const cate = $('#<%= cboRatio.ClientID%>').selectpicker('val', cateid);
 
-            selectElement(cate, cateid);
+
+            const kpicode = elem.querySelector("td span[name='kpi_code']").textContent;
+            const title = elem.querySelector("td span[name='title']").textContent;
+            const weight = elem.querySelector("td span[name='weight']").textContent;
+            const unit = elem.querySelector("td span[name='unit']").textContent;
+            const lv1 = elem.querySelector("td span[name='lv1']").textContent;
+            const lv2 = elem.querySelector("td span[name='lv2']").textContent;
+            const lv3 = elem.querySelector("td span[name='lv3']").textContent;
+            const lv4 = elem.querySelector("td span[name='lv4']").textContent;
+            const lv5 = elem.querySelector("td span[name='lv5']").textContent;
+
+
 
             $('#<%= row.ClientID%>').val(kpicode);
             $('#<%= txtKpititle.ClientID%>').val(title);
@@ -717,7 +677,7 @@
             $('#<%= txtlv4.ClientID%>').val(lv4);
             $('#<%= txtlv5.ClientID%>').val(lv5);
 
-            $('.form-control').selectpicker('refresh');
+
 
 
 
@@ -729,6 +689,7 @@
             <% End If %>
             <% End If %>
         }
+
         function confirmDeletedetail(kpicode, status) {
             Swal.fire({
                 title: 'คุุณต้องการจะลบข้อมุลนี้ใช่หรือไม่ ?',

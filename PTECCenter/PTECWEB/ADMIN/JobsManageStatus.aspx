@@ -19,9 +19,9 @@
                 </ol>
                 <div class="row mb-3">
                     <div class="col-12">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" UseSubmitBehavior="false" />
                         &nbsp;
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save"/>
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" UseSubmitBehavior="false" />
                         &nbsp;
                          
                     </div>

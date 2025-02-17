@@ -85,7 +85,7 @@
                 </div>
                 <div class="row justify-content-between">
                     <div class="col-auto mb-3">
-                        <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " />
+                        <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " UseSubmitBehavior="false" />
 
                     </div>
                     <div class="col mb-3">
@@ -486,7 +486,7 @@
                             </div>
                             <div class="row justify-content-center" style="padding-bottom: 1rem;">
                                 <div class="col-12 text-center">
-                                    <asp:Button ID="btnClose" class="btn btn-sm btn-danger justify-content-center" runat="server" Text="ปิดค่าใช้จ่าย" AutoPostBack="true" />&nbsp;
+                                    <asp:Button ID="btnClose" class="btn btn-sm btn-danger justify-content-center" runat="server" Text="ปิดค่าใช้จ่าย" AutoPostBack="true" UseSubmitBehavior="false" />&nbsp;
                                 </div>
                             </div>
                         </div>
@@ -583,7 +583,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-12">
-                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
+                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled UseSubmitBehavior="false" />
                                         </div>
                                     </div>
                                 </div>
@@ -696,7 +696,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" />
+                    <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" UseSubmitBehavior="false" />
                 </div>
             </div>
         </div>
@@ -725,7 +725,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" UseSubmitBehavior="false" />
                 </div>
             </div>
         </div>

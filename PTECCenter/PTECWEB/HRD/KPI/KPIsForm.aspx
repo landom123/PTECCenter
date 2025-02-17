@@ -913,9 +913,9 @@
                             </div>
                         </div>
                         <div class="col-12 mx-auto px-md-5">
-                            <asp:Button ID="btnUpload" class="btn btn-lg btn-primary" runat="server" Text="Submit" OnClientClick="handle_btnSubmitClicked()" AutoPostBack="true" />
-                            <asp:Button ID="btnApproval" class="btn  btn-lg btn-primary" runat="server" Text="Approve" OnClientClick="handle_btnAcceptClicked()" AutoPostBack="true" />
-                            <%--<asp:Button ID="btnReject" class="btn  btn-lg btn-danger" runat="server" Text="ไม่อนุมัติ" OnClientClick="handle_btnSubmitClicked()" AutoPostBack="true" />--%>
+                            <asp:Button ID="btnUpload" class="btn btn-lg btn-primary" runat="server" Text="Submit" OnClientClick="handle_btnSubmitClicked()" AutoPostBack="true" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnApproval" class="btn  btn-lg btn-primary" runat="server" Text="Approve" OnClientClick="handle_btnAcceptClicked()" AutoPostBack="true" UseSubmitBehavior="false" />
+                            <%--<asp:Button ID="btnReject" class="btn  btn-lg btn-danger" runat="server" Text="ไม่อนุมัติ" OnClientClick="handle_btnSubmitClicked()" AutoPostBack="true" UseSubmitBehavior="false" />--%>
                         </div>
                     </div>
 

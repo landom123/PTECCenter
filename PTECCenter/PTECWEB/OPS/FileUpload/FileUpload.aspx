@@ -138,7 +138,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-center bg-white">
-                                        <asp:Button ID="btnUpload" class="btn btn-primary" runat="server" Text="Upload" OnClientClick="validateData()" AutoPostBack="true" />
+                                        <asp:Button ID="btnUpload" class="btn btn-primary" runat="server" Text="Upload" OnClientClick="validateData()" AutoPostBack="true" UseSubmitBehavior="false" />
                                     </div>
                                 </div>
                             </div>

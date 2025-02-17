@@ -52,7 +52,7 @@ Public Class KPIsRequest
             menutable = Session("menulist")
         End If
 
-        cboPeriod.Attributes.Add("disabled", "True")
+        'cboPeriod.Attributes.Add("disabled", "True")
 
         If Not IsPostBack() Then
             maintable = createmaintable()
@@ -356,6 +356,12 @@ endprocess:
         If cboPeriod.SelectedItem.Value = "" Then
             result = False
             msg = "กรุณาเลือกรอบ KPI"
+            GoTo endprocess
+        End If
+
+        If detailtable.Rows.Count = 0 Then
+            result = False
+            msg = "ยังไม่มีรายการ"
             GoTo endprocess
         End If
 
@@ -920,5 +926,15 @@ endprocess:
             newrows("weight") = grp.Sum(Function(row) row.Field(Of Double)("weight"))
             groupdetailtable.Rows.Add(newrows)
         Next
+    End Sub
+
+    Private Sub cboPeriod_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboPeriod.SelectedIndexChanged
+        If maintable IsNot Nothing Then maintable.Clear()
+        If detailtable IsNot Nothing Then detailtable.Clear()
+        If weighttable IsNot Nothing Then weighttable.Clear()
+        If signedtable IsNot Nothing Then signedtable.Clear()
+        If CommentTable IsNot Nothing Then CommentTable.Clear()
+        If AttachTable IsNot Nothing Then AttachTable.Clear()
+        chkunsave = 0
     End Sub
 End Class
