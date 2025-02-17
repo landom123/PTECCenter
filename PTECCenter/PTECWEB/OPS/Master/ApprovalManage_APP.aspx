@@ -42,7 +42,7 @@
                                 <span class="input-group-text">ต้องการเปลี่ยนเป็นสถานะ</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
-                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                         </div>
                     </div>
                     <div class="col-lg-3 mb-3">
@@ -51,7 +51,7 @@
                                 <span class="input-group-text">ค่าใช้จ่าย</span>
                             </div>
                             <asp:TextBox class="form-control" type="number" ID="txtPrice" runat="server" min="0" Text="0" required></asp:TextBox>
-                            <asp:Button ID="btnSavePrice" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnSavePrice" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                         </div>
                     </div>
                     <div class="col-lg-3 mb-3">
@@ -61,7 +61,7 @@
                                 <span class="input-group-text">จำนวนวัน</span>
                             </div>
                             <asp:TextBox class="form-control" type="number" ID="txtDay" runat="server" min="0"></asp:TextBox>
-                            <asp:Button ID="btnSaveDay" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnSaveDay" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-12">
-                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
+                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled UseSubmitBehavior="false" />
                                         </div>
                                     </div>
                                 </div>

@@ -23,8 +23,8 @@
                 </ol>
                 <div class="row">
                     <div class="col-12">
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="บันทึก" readonly="true"/>  &nbsp;  
-                        <asp:Button ID="btnSaveAs" class="btn btn-sm  btn-danger" runat="server" Text="บันทึกเป็น" />  &nbsp;
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="บันทึก" readonly="true" UseSubmitBehavior="false" />  &nbsp;  
+                        <asp:Button ID="btnSaveAs" class="btn btn-sm  btn-danger" runat="server" Text="บันทึกเป็น" UseSubmitBehavior="false" />  &nbsp;
                     </div>
                 </div>
                 <p></p>

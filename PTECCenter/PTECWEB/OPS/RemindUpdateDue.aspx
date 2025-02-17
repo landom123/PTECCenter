@@ -28,7 +28,7 @@
                             <span class="input-group-text">สาขา</span>
                           </div>
                           <asp:DropDownList class="custom-select" ID="cboBranch" runat="server"></asp:DropDownList>
-                          &nbsp;<asp:Button ID="btnRefresh" class="btn btn-sm  btn-success" runat="server" Text="Refresh" />
+                          &nbsp;<asp:Button ID="btnRefresh" class="btn btn-sm  btn-success" runat="server" Text="Refresh" UseSubmitBehavior="false" />
                         </div>
                     </div>
                 </div>    
@@ -81,7 +81,7 @@
                             <span class="input-group-text">วันที่</span>
                           </div>
                           <asp:TextBox class="form-control" ID="txtDueDate" runat="server" autocomplete="off"></asp:TextBox>
-                            &nbsp;<asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" />
+                            &nbsp;<asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" UseSubmitBehavior="false" />
                         </div>                                                
                     </div>
                 </div>             

@@ -31,7 +31,7 @@
                                         <asp:Label AssociatedControlID="txtEmail" runat="server" Text="Enter email address" />
                                     </div>
                                 </div>
-                                <asp:Button ID="btnSubmit" class="btn btn-primary btn-block" runat="server" Text="รีเซ็ตรหัสผ่าน" />
+                                <asp:Button ID="btnSubmit" class="btn btn-primary btn-block" runat="server" Text="รีเซ็ตรหัสผ่าน" UseSubmitBehavior="false" />
                             </div>
                             <div class="postReset mb-3" id="postReset" runat="server">
                                 <asp:Label ID="lbcodeRef" runat="server" Text="Coderef : " />

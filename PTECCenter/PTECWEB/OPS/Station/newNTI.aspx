@@ -58,9 +58,9 @@
                         <div class="col mb-3">
 
                             <%--&nbsp;   
-                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                             &nbsp;
-                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" />
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
                             &nbsp;   --%>
                         </div>
 
@@ -162,7 +162,7 @@
                                             <div class="input-group ">
                                                 <asp:TextBox class="form-control" ID="txttitle" runat="server"></asp:TextBox>
                                                 <div class="input-group-append">
-                                                    <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" />
+                                                    <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" UseSubmitBehavior="false" />
                                                 </div>
                                             </div>
                                         </div>
@@ -175,7 +175,7 @@
                                             <div class="input-group ">
                                                 <asp:DropDownList class="form-control" ID="cboOfferType" runat="server"></asp:DropDownList>
                                                 <div class="input-group-append">
-                                                    <asp:Button ID="btnUpdateOffer" class="btn btn-sm  btn-warning" runat="server" Text="Update" />
+                                                    <asp:Button ID="btnUpdateOffer" class="btn btn-sm  btn-warning" runat="server" Text="Update" UseSubmitBehavior="false" />
                                                 </div>
                                             </div>
                                         </div>
@@ -255,11 +255,11 @@
                                             <%--<div class="input-group d-none">
                                                 <asp:DropDownList ID="cboStatus" class="form-control" runat="server"></asp:DropDownList>
                                                 <div class="input-group-append">
-                                                    <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" />
+                                                    <asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" UseSubmitBehavior="false" />
                                                 </div>
                                             </div>--%>
 
-                                            <asp:Button ID="btnConfirm" class="btn btn-success" runat="server" Text="ขั้นต่อไป" />
+                                            <asp:Button ID="btnConfirm" class="btn btn-success" runat="server" Text="ขั้นต่อไป" UseSubmitBehavior="false" />
                                             <button runat="server" id="btnDisApproval" name="btnEdit" onclick="return disApproval();" class="btn btn-danger">
                                                 ไม่อนุมัติ
                                             </button>
@@ -369,7 +369,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
-                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled UseSubmitBehavior="false" />
                                             </div>
                                         </div>
                                     </div>
@@ -409,7 +409,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" UseSubmitBehavior="false" />
                 </div>
             </div>
         </div>

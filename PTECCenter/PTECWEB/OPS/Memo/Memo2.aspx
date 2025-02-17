@@ -30,8 +30,8 @@
                     <div class="row">
                         <div class="col mb-3">
 
-                            <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />&nbsp;
-                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" OnClientClick="Confirm();" />
+                            <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" UseSubmitBehavior="false" />&nbsp;
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                             &nbsp;   
                         </div>
 
@@ -211,18 +211,18 @@
                             <div class="text-center m-auto">
                                 <% if (detailtable.Rows(0).Item("statusid") = 1) Then%>
                                 <% If approval And detailtable.Rows(0).Item("statusid") = 1 Then%>
-                                <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" OnClientClick="Confirm();" />
+                                <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                                 <% End If %>
                                 <% If verify And detailtable.Rows(0).Item("statusid") = 1 Then%>
-                                <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" OnClientClick="Confirm();" />
+                                <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                                 <% End If %>
                                 <% If ((verify Or approval)) Then%>
-                                <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" OnClientClick="Confirm();" />
+                                <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                                 <% End If %>
                                 <% End If %>
                                 <% if (detailtable.Rows(0).Item("statusid") = 2) Then%>
                                 <% If sign And detailtable.Rows(0).Item("statusid") = 2 Then%>
-                                <asp:Button ID="btnSignature" class="btn btn-warning" runat="server" Text="ลงนามรับทราบ" OnClientClick="Confirm();" />
+                                <asp:Button ID="btnSignature" class="btn btn-warning" runat="server" Text="ลงนามรับทราบ" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                                 <% End If %>
                                 <% End If %>
                             </div>
@@ -329,7 +329,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
-                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled />
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled UseSubmitBehavior="false" />
                                             </div>
                                         </div>
                                     </div>
@@ -370,7 +370,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" />
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" UseSubmitBehavior="false" />
                 </div>
             </div>
         </div>

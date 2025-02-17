@@ -270,7 +270,7 @@
               <br />
     </div>
 </div>
-          <asp:Button ID="btnSave" class="btn btn-primary btn-block" runat="server" Text="ส่งคำตอบ" /><br />
+          <asp:Button ID="btnSave" class="btn btn-primary btn-block" runat="server" Text="ส่งคำตอบ" UseSubmitBehavior="false" /><br />
           <asp:label ID="lblstatus" class="btn btn-danger btn-block" runat="server" Text=".." /><br />
 <%--          <a class="btn btn-primary btn-block" href="index.html">Login</a>--%>
 <%--        <div class="text-center">
