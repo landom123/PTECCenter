@@ -24,8 +24,8 @@
                 </ol>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <asp:Button ID="btnClear" class="btn btn-sm btn-secondary" runat="server" Text="Clear" UseSubmitBehavior="false" />&nbsp;
-                        <asp:Button ID="btnExport" class="btn btn-sm btn-info" runat="server" Text="Export" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnClear" class="btn btn-sm btn-secondary" runat="server" Text="Clear"   />&nbsp;
+                        <asp:Button ID="btnExport" class="btn btn-sm btn-info" runat="server" Text="Export"   />
                         &nbsp;           
                     </div>
                 </div>

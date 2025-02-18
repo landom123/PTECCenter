@@ -59,9 +59,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-auto mb-3">
-                                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="ค้นหารายการ" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-warning" runat="server" Text="ค้นหารายการ"   />
                                         &nbsp;   
-                                        <asp:Button ID="btnJTN" class="btn btn-sm  btn-secondary" runat="server" Text="ดูตัวอย่าง Payment" OnClientClick="sendID();" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnJTN" class="btn btn-sm  btn-secondary" runat="server" Text="ดูตัวอย่าง Payment" OnClientClick="sendID();"   />
                                         &nbsp;   
                                         <asp:CheckBox  ID="chkvisible" runat="server" Text="ดูรายการทั้งหมด" AutoPostBack="true"></asp:CheckBox>
                                         &nbsp;   

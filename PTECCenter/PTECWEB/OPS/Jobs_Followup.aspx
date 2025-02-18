@@ -92,7 +92,7 @@
                 </div>
                 <div class="row justify-content-between">
                     <div class="col-auto mb-3">
-                        <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back " UseSubmitBehavior="false" />
+                        <asp:Button ID="btnBack" class="btn btn-sm  btn-danger" runat="server" Text=" back "   />
                     </div>
                     <div class="col  mb-3 d-none d-md-block">
                         <asp:Label ID="txtallOperator" runat="server" ReadOnly="True"></asp:Label>
@@ -348,9 +348,9 @@
                                                     </td>
                                                     <td style="vertical-align: middle">
                                                         <div class="d-flex flex-column">
-                                                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " OnClientClick="validateData()" UseSubmitBehavior="false" />
-                                                            <%--<asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()" UseSubmitBehavior="false" />--%>
-                                                            <asp:Button ID="btnClose" class="btn btn-sm  btn-danger mt-1" runat="server" Text="ค่าใช้จ่าย" UseSubmitBehavior="false" />
+                                                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text=" + " OnClientClick="validateData()"   />
+                                                            <%--<asp:Button ID="btnConfirm" class="btn btn-sm  btn-warning" runat="server" Text=" + " OnClientClick="validateData()"   />--%>
+                                                            <asp:Button ID="btnClose" class="btn btn-sm  btn-danger mt-1" runat="server" Text="ค่าใช้จ่าย"   />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -450,10 +450,10 @@
                                     <div class="col-12 mb-3">
 
                                         <input type="button" value="Send" onclick="sendvendor()" id="btnSentSupplier" runat="server" class="btn btn-sm  btn-warning" />
-                                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Print" UseSubmitBehavior="false" />
-                                        <asp:Button ID="btnBackStep" class="btn btn-sm  btn-secondary" runat="server" Text="<" UseSubmitBehavior="false" />
-                                        <asp:Button ID="btnNextStep" class="btn btn-sm  btn-secondary" runat="server" Text=">" UseSubmitBehavior="false" />
-                                        <asp:Button ID="btnCancelSupplier" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Print"   />
+                                        <asp:Button ID="btnBackStep" class="btn btn-sm  btn-secondary" runat="server" Text="<"   />
+                                        <asp:Button ID="btnNextStep" class="btn btn-sm  btn-secondary" runat="server" Text=">"   />
+                                        <asp:Button ID="btnCancelSupplier" class="btn btn-sm  btn-danger" runat="server" Text="Cancel"   />
 
                                     </div>
                                 </div>
@@ -941,7 +941,7 @@
                                 <% End if %>
                                 <div class="row">
                                     <div class="col-12 mb-3 text-center">
-                                        <asp:Button ID="btnSubmitRate" class="btn btn-success" runat="server" Text="รับงาน" autopostback="False" OnClientClick="validateRate(); " UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnSubmitRate" class="btn btn-success" runat="server" Text="รับงาน" autopostback="False" OnClientClick="validateRate(); "   />
 
                                         <button runat="server" id="btndisAccept" name="btnEdit" onclick="return disAccept();" class="btn btn-danger">
                                             ไม่รับงาน
@@ -1037,7 +1037,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-12">
-                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" UseSubmitBehavior="false" disabled />
+                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True"   disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -1087,7 +1087,7 @@
                     </div>
                     <div class="form-group">
                         <asp:Label ID="Label12" CssClass="form-label mandatory" AssociatedControlID="txtexpirydate" runat="server" Text="วันสิ้นคำรับรองใหม่" />
-                        <asp:TextBox class="form-control form-control-sm highlighter-rouge" type="input" ID="txtexpirydate" aria-describedby="txtexpirydate_old" runat="server" autocomplete="off"></asp:TextBox>
+                        <asp:TextBox class="form-control form-control-sm highlighter-rouge" type="input" ID="txtexpirydate" aria-describedby="txtexpirydate_old" placeholder="- คลิกเพื่อเลือก -" runat="server" autocomplete="off"></asp:TextBox>
                         <small id="txtexpirydate_old" class="form-text text-muted"></small>
                     </div>
                     <div class="form-group">
@@ -1106,7 +1106,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();"   />
                 </div>
             </div>
         </div>
@@ -1135,7 +1135,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" UseSubmitBehavior="false" />
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;"   />
                 </div>
             </div>
         </div>
@@ -1244,7 +1244,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnUpdate" class="btn btn-primary" runat="server" Text="Update" OnClientClick="postBack_updateJFU();" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnUpdate" class="btn btn-primary" runat="server" Text="Update" OnClientClick="postBack_updateJFU();"   />
                 </div>
             </div>
         </div>
@@ -1311,7 +1311,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnSetNozzle" class="btn btn-primary" runat="server" Text="Save changes" OnClientClick="setSelected();" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnSetNozzle" class="btn btn-primary" runat="server" Text="Save changes" OnClientClick="setSelected();"   />
                 </div>
             </div>
         </div>
@@ -1341,7 +1341,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnUpdateJobCateCode" class="btn btn-primary" runat="server" Text="Update" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnUpdateJobCateCode" class="btn btn-primary" runat="server" Text="Update"   />
                 </div>
             </div>
         </div>
@@ -1404,7 +1404,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnUpdateJobitems" class="btn btn-primary" runat="server" Text="Update" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnUpdateJobitems" class="btn btn-primary" runat="server" Text="Update"   />
                 </div>
             </div>
         </div>
@@ -1442,7 +1442,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnSuppilerSubmit" class="btn btn-primary" runat="server" Text="Save" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnSuppilerSubmit" class="btn btn-primary" runat="server" Text="Save"   />
                 </div>
             </div>
         </div>

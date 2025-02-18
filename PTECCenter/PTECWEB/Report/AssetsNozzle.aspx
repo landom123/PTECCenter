@@ -202,7 +202,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();"   />
                 </div>
             </div>
         </div>
@@ -232,7 +232,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnDowload" class="btn btn-primary" runat="server" Text="Dowload" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnDowload" class="btn btn-primary" runat="server" Text="Dowload"   />
                 </div>
             </div>
         </div>

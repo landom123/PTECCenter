@@ -38,7 +38,7 @@
                         </div>                                                
                     </div>   
                     <div class="col-4">
-                        <asp:Button ID="btnReport"  class="btn btn-sm  btn-success" runat="server" Text="รายงาน" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnReport"  class="btn btn-sm  btn-success" runat="server" Text="รายงาน"   />
                     </div>
                     
                 </div>

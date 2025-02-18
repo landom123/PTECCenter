@@ -53,9 +53,9 @@
                         <a href="approval.aspx" class="btn btn-sm btn-primary ">New</a>
                         &nbsp;
                         <% If Not Session("positionid") = "10" And Not Session("positionid") = "15" Then%>
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search" UseSubmitBehavior="false" />&nbsp; 
-                        <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear" UseSubmitBehavior="false" />&nbsp;
-                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Export" UseSubmitBehavior="false" />&nbsp;
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-success" runat="server" Text="Search"   />&nbsp; 
+                        <asp:Button ID="btnClear" class="btn btn-sm  btn-secondary" runat="server" Text="Clear"   />&nbsp;
+                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-info" runat="server" Text="Export"   />&nbsp;
                          <% End If %>
                     </div>
                 </div>

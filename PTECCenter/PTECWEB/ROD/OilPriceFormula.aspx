@@ -26,7 +26,7 @@
                             <span class="input-group-text">วันที่ปรับราคา</span>
                           </div>
                           <asp:TextBox class="form-control" ID="txtCloseDate" runat="server"></asp:TextBox>
-                          &nbsp;<asp:Button ID="btnFind" class="btn btn-sm  btn-primary" runat="server" Text="Find" UseSubmitBehavior="false" />&nbsp;
+                          &nbsp;<asp:Button ID="btnFind" class="btn btn-sm  btn-primary" runat="server" Text="Find"   />&nbsp;
                         </div>
                     </div>
                 </div>--%>

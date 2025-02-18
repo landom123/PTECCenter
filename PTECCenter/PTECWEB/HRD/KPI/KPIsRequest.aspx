@@ -42,11 +42,11 @@
                     <div class="row">
                         <div class="col">
 
-                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save"   />
                             &nbsp;              
-                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false"  />
+                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();"    />
                             &nbsp;   
-                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" OnClientClick="Confirm();" UseSubmitBehavior="false"  />
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" OnClientClick="Confirm();"    />
                             &nbsp;   
                         </div>
 
@@ -253,10 +253,10 @@
                                         <% if (maintable.Rows(0).Item("statusid") = 2) Then%>
                                         <div class="text-center m-auto">
                                             <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
-                                            <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" UseSubmitBehavior="false" />
+                                            <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ"   />
                                             <% End If %>
                                             <% If ((verify Or approval)) Then%>
-                                            <asp:Button ID="btnSendback" class="btn btn-danger" runat="server" Text="ส่งแก้ไข" UseSubmitBehavior="false" />
+                                            <asp:Button ID="btnSendback" class="btn btn-danger" runat="server" Text="ส่งแก้ไข"   />
                                             <% End If %>
                                         </div>
                                         <% End If %>
@@ -322,7 +322,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
-                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" UseSubmitBehavior="false" disabled />
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True"   disabled />
                                             </div>
                                         </div>
                                     </div>
@@ -434,7 +434,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnAddDetail" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnAddDetail" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();"   />
                 </div>
             </div>
         </div>

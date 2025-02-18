@@ -24,7 +24,7 @@
                 </ol>
                 <div class="row">
                     <div class="col-12">
-                        <asp:Button class="btn btn-sm  btn-primary" ID="btnReport" runat="server" Text="เรียกดู" UseSubmitBehavior="false" />
+                        <asp:Button class="btn btn-sm  btn-primary" ID="btnReport" runat="server" Text="เรียกดู"   />
                     </div>
                 </div>
                 <div class="row" style="padding-top: 1rem;">

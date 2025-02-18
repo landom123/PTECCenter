@@ -25,9 +25,9 @@
                 </ol>
                 <div class="row">
                     <div class="col-12 mb-3">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New"   />
                         &nbsp;
-                        <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" OnClientClick="validateData();" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" OnClientClick="validateData();"   />
                         &nbsp;  
                         <button runat="server" id="btnOpen" class="btn btn-sm  btn-primary rounded-circle d-none" title="Upload">
                             <i class="fa fa-file-upload"></i>

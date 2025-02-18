@@ -50,13 +50,13 @@
                 <div class="row">
                     <div class="col-12 mb-3">
 
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New"   />
                         &nbsp;
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save"   />
                         &nbsp;              
-                        <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm"   />
                         &nbsp;   
-                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print"   />
 
                         &nbsp;
                         <button <% If ViewState("status") = "new" Or ViewState("status") = "cancel" Then %> disabled <% End if %> type="button" class="btn btn-sm  btn-danger d-none" onclick="chkCancel('../ops/jobsCancel.aspx?jobno=<% =ViewState("jobno") %>')">Cancel</button>&nbsp;
@@ -531,7 +531,7 @@
 
                                             <asp:TextBox class="form-control d-none" ID="txtAssetCode" runat="server" placeholder="FA_CO ..." autocomplete="off"></asp:TextBox>
                                             <div class="input-group-append d-none">
-                                                <asp:Button ID="btnFind" class="btn btn-sm  btn-secondary" runat="server" Text="Find" UseSubmitBehavior="false" />
+                                                <asp:Button ID="btnFind" class="btn btn-sm  btn-secondary" runat="server" Text="Find"   />
                                             </div>
                                         </div>
                                     </div>
@@ -669,7 +669,7 @@
                                 </div>
 
                                 <div class="col-md-2 mb-3 d-flex justify-content-center align-items-center">
-                                    <asp:Button ID="btnAddDetail" class="btn btn-sm  btn-info" runat="server" Text=" + " OnClientClick="validateData()" UseSubmitBehavior="false" />
+                                    <asp:Button ID="btnAddDetail" class="btn btn-sm  btn-info" runat="server" Text=" + " OnClientClick="validateData()"   />
                                     &nbsp;
                                 </div>
 
@@ -726,7 +726,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnUpload" class="btn btn-primary" runat="server" Text="upload" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnUpload" class="btn btn-primary" runat="server" Text="upload"   />
                 </div>
             </div>
         </div>
@@ -793,7 +793,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnSetNozzle" class="btn btn-primary" runat="server" Text="Save changes" OnClientClick="setSelected();" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnSetNozzle" class="btn btn-primary" runat="server" Text="Save changes" OnClientClick="setSelected();"   />
                 </div>
             </div>
         </div>
