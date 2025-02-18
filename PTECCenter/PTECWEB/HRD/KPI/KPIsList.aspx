@@ -481,13 +481,14 @@
             </div>
         </div>
     </div>
-
-    <%--<script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>--%>
-    <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
-    <!-- datetimepicker ต้องไปทั้งชุด-->
-    <%--<script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>--%>
-    <%--    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>--%>
+    
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <CompositeScript>
+            <Scripts>
+                <asp:ScriptReference Path="~/vendor/jquery/jquery.min.js" />
+            </Scripts>
+        </CompositeScript>
+    </asp:ScriptManager>
     <script type="text/javascript">
         //jQuery('[id$=txtDuedate]').datetimepicker({
         //    startDate: '+1971/05/01',//or 1986/12/08'

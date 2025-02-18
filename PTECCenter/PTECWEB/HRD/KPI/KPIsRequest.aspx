@@ -439,10 +439,21 @@
             </div>
         </div>
     </div>
-    <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
+    
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <CompositeScript>
+            <Scripts>
+                <asp:ScriptReference Path="~/vendor/jquery/jquery.min.js" />
+                <asp:ScriptReference Path="~/datetimepicker/jquery.js" />
+                <asp:ScriptReference Path="~/datetimepicker/build/jquery.datetimepicker.full.min.js" />
+                <asp:ScriptReference Path="~/js/NonPO.js" />
+            </Scripts>
+        </CompositeScript>
+    </asp:ScriptManager>
+   <%-- <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>--%>
     <script>
 
         var cntdetail =<% =chkunsave%>;
