@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class BudgetControl
-    
+
     '''<summary>
     '''btnSave control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class BudgetControl
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''cboYear control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class BudgetControl
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboYear As Global.System.Web.UI.WebControls.DropDownList
-    
+
     '''<summary>
     '''txtbegindate control.
     '''</summary>
@@ -39,7 +39,7 @@ Partial Public Class BudgetControl
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtbegindate As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''txtenddate control.
     '''</summary>
@@ -48,4 +48,13 @@ Partial Public Class BudgetControl
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtenddate As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''ScriptManager1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ScriptManager1 As Global.System.Web.UI.ScriptManager
 End Class

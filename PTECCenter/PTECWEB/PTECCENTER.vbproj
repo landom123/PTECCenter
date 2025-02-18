@@ -1799,9 +1799,6 @@
     <Content Include="OPS\approval\ApprovalHOMenuList.aspx" />
     <Content Include="OPS\approval\ApprovalMenuList.aspx" />
     <Content Include="OPS\approval\approvalHO.aspx" />
-    <Content Include="OPS\Memo\MemoList.aspx" />
-    <Content Include="OPS\Memo\Memo2.aspx" />
-    <Content Include="OPS\Memo\MemoRequest.aspx" />
     <Content Include="OPS\reports\nac_sale.aspx" />
     <Content Include="OPS\reports\nac.aspx" />
     <Content Include="OPS\approval\WebForm5.aspx" />
@@ -3955,27 +3952,6 @@
     </Compile>
     <Compile Include="OPS\approval\approvalHO.aspx.vb">
       <DependentUpon>approvalHO.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPS\Memo\MemoList.aspx.designer.vb">
-      <DependentUpon>MemoList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Memo\MemoList.aspx.vb">
-      <DependentUpon>MemoList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPS\Memo\Memo2.aspx.designer.vb">
-      <DependentUpon>Memo2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Memo\Memo2.aspx.vb">
-      <DependentUpon>Memo2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPS\Memo\MemoRequest.aspx.designer.vb">
-      <DependentUpon>MemoRequest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPS\Memo\MemoRequest.aspx.vb">
-      <DependentUpon>MemoRequest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPS\reports\nac_sale.aspx.designer.vb">

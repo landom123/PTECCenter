@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class RemindUpdateDue
-    
+
     '''<summary>
     '''cboBranch control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class RemindUpdateDue
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cboBranch As Global.System.Web.UI.WebControls.DropDownList
-    
+
     '''<summary>
     '''btnRefresh control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class RemindUpdateDue
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnRefresh As Global.System.Web.UI.WebControls.Button
-    
+
     '''<summary>
     '''gvRemind control.
     '''</summary>
@@ -39,7 +39,7 @@ Partial Public Class RemindUpdateDue
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gvRemind As Global.System.Web.UI.WebControls.GridView
-    
+
     '''<summary>
     '''txtDueDate control.
     '''</summary>
@@ -48,7 +48,7 @@ Partial Public Class RemindUpdateDue
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtDueDate As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''btnSave control.
     '''</summary>
@@ -57,4 +57,13 @@ Partial Public Class RemindUpdateDue
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ScriptManager1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ScriptManager1 As Global.System.Web.UI.ScriptManager
 End Class

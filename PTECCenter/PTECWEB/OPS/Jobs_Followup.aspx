@@ -1545,14 +1545,31 @@
             </div>
         </div>
     </div>
-    <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
+
+
+    
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <CompositeScript>
+            <Scripts>
+                <asp:ScriptReference Path="~/vendor/jquery/jquery.min.js" />
+                <asp:ScriptReference Path="~/js/NonPO.js" />
+                <asp:ScriptReference Path="~/js/starRating.js" />
+                <asp:ScriptReference Path="~/js/Jobs.js" />
+                <asp:ScriptReference Path="~/datetimepicker/jquery.js" />
+                <asp:ScriptReference Path="~/datetimepicker/build/jquery.datetimepicker.full.min.js" />
+            </Scripts>
+        </CompositeScript>
+    </asp:ScriptManager>
+
+
+<%--    <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/starRating.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/js/Jobs.js")%>"></script>
 
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>--%>
     <script type="text/javascript">
         var selected = [];
         let modalShowID = '';

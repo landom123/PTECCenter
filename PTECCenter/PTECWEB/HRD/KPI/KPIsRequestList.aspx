@@ -210,9 +210,16 @@
             </div>
         </div>
     </div>
-
+    
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <CompositeScript>
+            <Scripts>
+                <asp:ScriptReference Path="~/vendor/jquery/jquery.min.js" />
+            </Scripts>
+        </CompositeScript>
+    </asp:ScriptManager>
     <%--<script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>--%>
-    <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
+    <%--<script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>--%>
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <%--<script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>--%>
     <%--    <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
