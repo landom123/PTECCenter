@@ -203,7 +203,7 @@
                                     <asp:TextBox class="form-control noEnterSubmit" type="input" ID="txtinvoicedate" runat="server" placeholder="--- คลิกเพื่อเลือก ---" autocomplete="off"></asp:TextBox>
                                 </div>
                                 <div class="card-footer text-center bg-white">
-                                    <asp:Button ID="btnUpload" class="btn btn-primary" runat="server" OnClientClick="validateDataImg()" Text="Upload" AutoPostBack="true" UseSubmitBehavior="false" />
+                                    <asp:Button ID="btnUpload" class="btn btn-primary" runat="server" OnClientClick="validateDataImg()" Text="Upload" AutoPostBack="true"   />
                                 </div>
                             </div>
                         </div>

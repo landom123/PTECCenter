@@ -19,7 +19,7 @@
                 </ol>
                 <div class="row">
                     <div class="col-12">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-success" runat="server" Text="New" UseSubmitBehavior="false" />  &nbsp;              
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-success" runat="server" Text="New"   />  &nbsp;              
                     </div>
                 </div>
                           <div class="card-body">

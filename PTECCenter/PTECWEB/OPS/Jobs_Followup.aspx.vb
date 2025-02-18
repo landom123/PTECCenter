@@ -53,6 +53,8 @@ Public Class JobsFollowup
         txtJobno.Text = jobno
 
 
+        txtexpirydate.Attributes.Add("readonly", "readonly")
+
         If Not IsPostBack Then
             CommentTable = createtablecomment()
             AttachTable = createtableAttach()

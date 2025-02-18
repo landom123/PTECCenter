@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-lg-4 mb-3">
                         <div class="input-group sm-3">
-                            <asp:Button ID="btnadd" class="btn btn-sm  btn-success" runat="server"  Text="Add" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnadd" class="btn btn-sm  btn-success" runat="server"  Text="Add"   />
                         </div>
                     </div>
 

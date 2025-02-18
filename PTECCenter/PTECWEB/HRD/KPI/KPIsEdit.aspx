@@ -336,7 +336,7 @@
                                                 <asp:TextBox class="form-control" type="input" ID="txtlv1" runat="server"></asp:TextBox>
                                             </td>
                                             <td>
-                                                <asp:Button ID="btnUpdateKPI" class="btn btn-sm  btn-warning btnupdatekpi" runat="server" Text="UpdateKPI" UseSubmitBehavior="false" />
+                                                <asp:Button ID="btnUpdateKPI" class="btn btn-sm  btn-warning btnupdatekpi" runat="server" Text="UpdateKPI"   />
                                             </td>
 
                                         </tr>
@@ -515,8 +515,8 @@
     </div>
     <div class="footer__page w-100 ">
         <div class="d-flex justify-content-center align-items-center h-100">
-            <asp:Button type="button" OnClientClick="return update();" ID="btnUpdate" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save" UseSubmitBehavior="false" ></asp:Button>
-            <asp:Button type="button" OnClientClick="return updateOP();" ID="btnUpdateOP" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save" UseSubmitBehavior="false" ></asp:Button>
+            <asp:Button type="button" OnClientClick="return update();" ID="btnUpdate" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save"   ></asp:Button>
+            <asp:Button type="button" OnClientClick="return updateOP();" ID="btnUpdateOP" runat="server" class="btn btn-warning position-relative btnUpdate" Text="Save"   ></asp:Button>
         </div>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_report" aria-hidden="true">
@@ -539,7 +539,7 @@
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
 
-                    <asp:Button ID="btnUpdateOwnerAP" class="btn btn-primary" runat="server" Text="Update" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnUpdateOwnerAP" class="btn btn-primary" runat="server" Text="Update"   />
                 </div>
             </div>
         </div>
@@ -564,7 +564,7 @@
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
 
-                    <asp:Button ID="btnUpdateOwnerBranch" class="btn btn-primary" runat="server" Text="Update" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnUpdateOwnerBranch" class="btn btn-primary" runat="server" Text="Update"   />
                 </div>
             </div>
         </div>
@@ -586,7 +586,7 @@
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
 
-                    <asp:Button ID="btnUpdateTitle" class="btn btn-primary" runat="server" Text="Update" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnUpdateTitle" class="btn btn-primary" runat="server" Text="Update"   />
                 </div>
             </div>
         </div>

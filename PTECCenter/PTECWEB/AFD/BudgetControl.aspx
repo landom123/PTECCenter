@@ -18,7 +18,7 @@
                 </ol>
                 <div class="row">
                     <div class="col-12 mb-3">
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" UseSubmitBehavior="false" />  &nbsp;              
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save"   />  &nbsp;              
                     </div>
                 </div>
                 <div class="row">

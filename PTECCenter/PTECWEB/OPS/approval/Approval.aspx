@@ -432,46 +432,46 @@
                                     <% End If %>
                                     <div class="card-footer text-center bg-white">
                                         <% If ViewState("status") = "new" Then%>
-                                        <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" OnClientClick="validateData()"   />
                                         <% ElseIf ViewState("status") = "read" And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then%>
-                                        <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false" />
-                                        <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
-                                        <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน" UseSubmitBehavior="false" />
-                                        <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน" UseSubmitBehavior="false" />
-                                        <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnConfirm" class="btn btn-warning" runat="server" Text="Confirm" OnClientClick="Confirm();"   />
+                                        <asp:Button ID="btnCancel" class="btn btn-danger" runat="server" Text="Cancel"   />
+                                        <asp:Button ID="btnClose" class="btn btn-danger" runat="server" Text="ปิดงาน"   />
+                                        <asp:Button ID="btnAddDoc" class="btn btn-success" runat="server" Text="แนบเอกสารให้ฝ่ายประสานงาน"   />
+                                        <asp:Button ID="btnEdit" class="btn btn-secondary" runat="server" Text="Edit"   />
                                         <% ElseIf ViewState("status") = "write" And detailtable.Rows(0).Item("statusid") = 1 Then '1	รออนุมัติ %>
                                         <% If approval Then%>
-                                        <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ"   />
                                         <% End If %>
                                         <button runat="server" id="btnDisApproval" name="btnEdit" onclick="return disApproval();" class="btn btn-danger">
                                             ไม่อนุมัติ
                                         </button>
                                         <% ElseIf ViewState("status") = "edit" Then%>
-                                        <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" UseSubmitBehavior="false" />
-                                        <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnSaveEdit" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()"   />
+                                        <asp:Button ID="btnCancelEdit" class="btn btn-danger" runat="server" Text="Cancel"   />
                                         <% End If %>
                                         <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing And (Session("secid").ToString = "2" Or Session("secid").ToString = "35") Then%>
                                         <% If detailtable.Rows(0).Item("statusid") = 8 Then '8	รอประสานงานรับเรื่อง%>
-                                        <asp:Button ID="btnSupportKnowlange" class="btn btn-warning d-none" runat="server" Text="รับเรื่อง" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnSupportKnowlange" class="btn btn-warning d-none" runat="server" Text="รับเรื่อง"   />
                                         <% End If %>
                                         <% If (detailtable.Rows(0).Item("statusid") = 9) And (Session("secid").ToString = "2" Or Session("secid").ToString = "35") Then '9	ดำเนินการด้านเอกสาร%>
-                                        <asp:Button ID="btnSupportClose" class="btn btn-danger" runat="server" Text="ปิดงาน / กรอกรหัส" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnSupportClose" class="btn btn-danger" runat="server" Text="ปิดงาน / กรอกรหัส"   />
                                         <% End If %>
                                         <% End If %>
 
                                         <% If Not Request.QueryString("approvalcode") Is Nothing And detailtable IsNot Nothing Then%>
                                         <% If detailtable.Rows(0).Item("statusid") = 12 And PermissionAppOther IsNot Nothing And approval_other Then '12	รอนุมัติจากหน่วยงานที่เกี่ยวข้อง %>
-                                        <asp:Button type="button" OnClientClick="return approvalOther();" ID="btnApprovalFormOther" runat="server" class="btn btn-success" Text="อนุมัติ" UseSubmitBehavior="false" ></asp:Button>
-                                        <asp:Button type="button" OnClientClick="return disapprovalOther();" ID="Button2" runat="server" class="btn btn-danger" Text="ไม่อนุมัติ" UseSubmitBehavior="false" ></asp:Button>
+                                        <asp:Button type="button" OnClientClick="return approvalOther();" ID="btnApprovalFormOther" runat="server" class="btn btn-success" Text="อนุมัติ"   ></asp:Button>
+                                        <asp:Button type="button" OnClientClick="return disapprovalOther();" ID="Button2" runat="server" class="btn btn-danger" Text="ไม่อนุมัติ"   ></asp:Button>
                                         <% End If %>
 
                                         <% If (detailtable.Rows(0).Item("statusid") = 9 Or detailtable.Rows(0).Item("statusid") = 13) Then '9	ดำเนินการด้านเอกสาร ,13	รอบัญชีตรวจสอบ %>
                                         <% if String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) And detailtable.Rows(0).Item("statusid") = 9 And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString()) Then %>
-                                        <asp:Button ID="btnCLADV" class="btn btn-warning" runat="server" Text="สร้างใบสรุปค่าใช้จ่าย" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnCLADV" class="btn btn-warning" runat="server" Text="สร้างใบสรุปค่าใช้จ่าย"   />
                                         <% ElseIf String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) And detailtable.Rows(0).Item("statusid") = 13 And PermissionAccount IsNot Nothing And approval_account Then '13	รอบัญชีตรวจสอบ %>
-                                        <asp:Button ID="btnCLADVfrmACC" OnClientClick="return confirmCLADV();" class="btn btn-warning" runat="server" Text="สร้างใบสรุปค่าใช้จ่าย" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnCLADVfrmACC" OnClientClick="return confirmCLADV();" class="btn btn-warning" runat="server" Text="สร้างใบสรุปค่าใช้จ่าย"   />
                                         <% ElseIf Not String.IsNullOrEmpty(detailtable.Rows(0).Item("statusCLADV").ToString) And (Session("userid").ToString() = detailtable.Rows(0).Item("createby").ToString() Or approval_account) Then %>
-                                        <asp:Button ID="btnrdrCLADV" class="btn btn-success" runat="server" Text="ดูใบสรุปค่าใช้จ่าย" UseSubmitBehavior="false" />
+                                        <asp:Button ID="btnrdrCLADV" class="btn btn-success" runat="server" Text="ดูใบสรุปค่าใช้จ่าย"   />
                                         <% End If %>
                                         <% End If %>
                                         <% End If %>
@@ -751,7 +751,7 @@
                                             </div>
                                         </div>
                                         <div class="row justify-content-center">
-                                            <asp:Button ID="btnSaveComment" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()" UseSubmitBehavior="false" />
+                                            <asp:Button ID="btnSaveComment" class="btn btn-success" runat="server" Text="Save" OnClientClick="validateData()"   />
                                         </div>
                                     </div>
                                     <%-- end item--%>

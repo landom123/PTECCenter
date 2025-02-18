@@ -42,7 +42,7 @@
                                 <span class="input-group-text">ต้องการเปลี่ยนเป็นสถานะ</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
-                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();"   />
                         </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-12">
-                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled UseSubmitBehavior="false" />
+                                            <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled   />
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +184,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" UseSubmitBehavior="false" />
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;"   />
                 </div>
             </div>
         </div>

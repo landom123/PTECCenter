@@ -150,7 +150,7 @@
                     
                     <div class="row">
                         <div class="col-12 text-center">
-                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="บันทึก" UseSubmitBehavior="false" />&nbsp;   
+                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="บันทึก"   />&nbsp;   
                         </div>
                     </div>
                 </div>

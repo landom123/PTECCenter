@@ -25,7 +25,7 @@
                 </ol>
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <asp:Button ID="btnExport" class="btn btn-sm btn-success" runat="server" Text="Export CSV" UseSubmitBehavior="false" />
+                        <asp:Button ID="btnExport" class="btn btn-sm btn-success" runat="server" Text="Export CSV"   />
                         &nbsp;           
                     </div>
                 </div>

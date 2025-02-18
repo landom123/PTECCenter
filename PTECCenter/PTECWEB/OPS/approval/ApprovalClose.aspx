@@ -513,7 +513,7 @@
 
                     <div class="row bg-white">
                         <div class="col-12 text-center">
-                            <asp:Button ID="btnClose" class="btn btn-danger" runat="server" OnClientClick="validateDataImg()" Text="ปิดงาน" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnClose" class="btn btn-danger" runat="server" OnClientClick="validateDataImg()" Text="ปิดงาน"   />
                         </div>
                     </div>
                     <% End If %>
@@ -623,7 +623,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" UseSubmitBehavior="false"/>
+                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();"  />
                 </div>
             </div>
         </div>

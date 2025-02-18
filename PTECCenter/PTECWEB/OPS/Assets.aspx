@@ -16,10 +16,10 @@
             <div class="container-fluid">         
                 <div class="row">
                     <div class="col-12 mb-3">
-                        <button type="button" class="btn btn-sm  btn-primary"  onclick="chkNew()" UseSubmitBehavior="false" >new</button> &nbsp;
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="save" UseSubmitBehavior="false" /> &nbsp;           
-                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-secondary" runat="server" Text="Search" UseSubmitBehavior="false" />  &nbsp;   
-                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print" UseSubmitBehavior="false" />&nbsp;
+                        <button type="button" class="btn btn-sm  btn-primary"  onclick="chkNew()"   >new</button> &nbsp;
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="save"   /> &nbsp;           
+                        <asp:Button ID="btnSearch" class="btn btn-sm  btn-secondary" runat="server" Text="Search"   />  &nbsp;   
+                        <asp:Button ID="btnPrint" class="btn btn-sm  btn-warning" runat="server" Text="Print"   />&nbsp;
                     </div>
                 </div>
                 
@@ -213,7 +213,7 @@
                           <div style="display:none" id="assetdetail" class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <asp:Button ID="btnSaveDetail" class="btn btn-sm  btn-success" runat="server" Text="Add Detail" UseSubmitBehavior="false" />  &nbsp;              
+                                    <asp:Button ID="btnSaveDetail" class="btn btn-sm  btn-success" runat="server" Text="Add Detail"   />  &nbsp;              
                                 </div>
                             </div>
                               <br />

@@ -156,13 +156,13 @@
                     <div class="row">
                         <div class="col">
 
-                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save"   />
                             &nbsp;              
-                             <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" UseSubmitBehavior="false" />
+                             <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update"   />
                             &nbsp;   
-                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();"   />
                             &nbsp;   
-                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel"   />
                             &nbsp;   
                             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
                             <% if (maintable.Rows(0).Item("statusid") = 1) Or (maintable.Rows(0).Item("statusid") = 4) Then%>
@@ -694,13 +694,13 @@
                         <% if ViewState("status_payment") = "write" And (maintable.Rows(0).Item("statusid") = 2 Or maintable.Rows(0).Item("statusid") = 15) Then%>
                         <div class="text-center m-auto">
                             <% If approval And maintable.Rows(0).Item("statusid") = 2 Then%>
-                            <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnApproval" class="btn btn-success" runat="server" Text="อนุมัติ"   />
                             <% End If %>
                             <% If verify And maintable.Rows(0).Item("statusid") = 2 Then%>
-                            <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnVerify" class="btn btn-warning" runat="server" Text="ยืนยันการตรวจสอบ"   />
                             <% End If %>
                             <% If ((verify Or approval)) Then%>
-                            <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ" UseSubmitBehavior="false" />
+                            <asp:Button ID="btnDisApproval" class="btn btn-danger" runat="server" Text="ไม่อนุมัติ"   />
                             <% End If %>
                         </div>
                         <% End If %>
@@ -806,7 +806,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
-                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled UseSubmitBehavior="false" />
+                                                <asp:Button ID="btnSaveComment" class="btn btn-primary w-100" runat="server" Text="Post" AutoPostBack="True" disabled   />
                                             </div>
                                         </div>
                                     </div>
@@ -870,7 +870,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnAddDetailsFromSmartBill" class="btn btn-primary" runat="server" Text="Save" OnClientClick="showBtnSpiner(this);" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnAddDetailsFromSmartBill" class="btn btn-primary" runat="server" Text="Save" OnClientClick="showBtnSpiner(this);"   />
                 </div>
             </div>
         </div>
@@ -1011,7 +1011,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
                     <%--<button type="button" id="btnAddDetail" class="btn btn-primary noEnterSubmit">Save</button>--%>
-                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnAddDetails" class="btn btn-primary" runat="server" Text="Save" OnClientClick="postBack_addDetail();"   />
                 </div>
             </div>
         </div>
@@ -1037,7 +1037,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
-                    <asp:Button ID="btnDowload" class="btn btn-primary" runat="server" Text="Dowload" UseSubmitBehavior="false" />
+                    <asp:Button ID="btnDowload" class="btn btn-primary" runat="server" Text="Dowload"   />
                 </div>
             </div>
         </div>
@@ -1066,7 +1066,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;" UseSubmitBehavior="false" />
+                    <asp:Button ID="asd" class="btn btn-primary" runat="server" Text="Save" OnClientClick="chooseMyfile(); return false;"   />
                 </div>
             </div>
         </div>
