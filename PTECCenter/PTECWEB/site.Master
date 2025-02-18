@@ -129,8 +129,6 @@
             </div>
         </nav>
         <div class="loader" id="loader"></div>
-        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
-        </asp:ScriptManager>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
 
@@ -161,7 +159,6 @@
         <!-- Logout Modal-->
     </form>
 </body>
-
 
 <!-- Bootstrap core JavaScript-->
 

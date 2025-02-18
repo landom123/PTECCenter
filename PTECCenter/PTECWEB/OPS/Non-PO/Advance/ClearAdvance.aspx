@@ -999,7 +999,7 @@
 
                 </div>
                 <div class="modal-body">
-                    <asp:ListBox class="cbomulti" runat="server" ID="multiSelect" SelectionMode="multiple" data-selected-text-format="count"></asp:ListBox>
+                    <asp:ListBox class="cbomulti w-100" runat="server" ID="multiSelect" SelectionMode="multiple" data-selected-text-format="count"></asp:ListBox>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>

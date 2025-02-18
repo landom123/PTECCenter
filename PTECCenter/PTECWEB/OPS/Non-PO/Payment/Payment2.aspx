@@ -156,13 +156,13 @@
                     <div class="row">
                         <div class="col">
 
-                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" UseSubmitBehavior="false"  />
+                            <asp:Button ID="btnSave" class="btn btn-sm  btn-success btnSave" runat="server" Text="Save" UseSubmitBehavior="false" />
                             &nbsp;              
-                             <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" UseSubmitBehavior="false"  />
+                             <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" UseSubmitBehavior="false" />
                             &nbsp;   
-                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false"  />
+                            <asp:Button ID="btnConfirm" class="btn btn-sm  btn-secondary" runat="server" Text="Confirm" OnClientClick="Confirm();" UseSubmitBehavior="false" />
                             &nbsp;   
-                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false"  />
+                            <asp:Button ID="btnCancel" class="btn btn-sm  btn-danger" runat="server" Text="Cancel" UseSubmitBehavior="false" />
                             &nbsp;   
                             <% If Not Request.QueryString("NonpoCode") Is Nothing And maintable.Rows.Count > 0 Then%>
                             <% if (maintable.Rows(0).Item("statusid") = 1) Or (maintable.Rows(0).Item("statusid") = 4) Then%>
@@ -862,7 +862,11 @@
 
                 </div>
                 <div class="modal-body">
-                    <asp:ListBox class="cbomulti" runat="server" ID="multiSelect" SelectionMode="multiple" data-selected-text-format="count"></asp:ListBox>
+                    <div class="row">
+                        <div class="col">
+                            <asp:ListBox class="cbomulti w-100" runat="server" ID="multiSelect" SelectionMode="multiple" data-selected-text-format="count"></asp:ListBox>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary noEnterSubmit" data-dismiss="modal">Close</button>
@@ -1067,12 +1071,25 @@
             </div>
         </div>
     </div>
-    <script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
+
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <CompositeScript>
+            <Scripts>
+                <asp:ScriptReference Path="~/js/Sortable.js" />
+                <asp:ScriptReference Path="~/vendor/jquery/jquery.min.js" />
+                <asp:ScriptReference Path="~/datetimepicker/jquery.js" />
+                <asp:ScriptReference Path="~/datetimepicker/build/jquery.datetimepicker.full.min.js" />
+                <asp:ScriptReference Path="~/js/NonPO.js" />
+            </Scripts>
+        </CompositeScript>
+    </asp:ScriptManager>
+
+    <%--<script src="<%=Page.ResolveUrl("~/js/Sortable.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
     <!-- datetimepicker ต้องไปทั้งชุด-->
     <script src="<%=Page.ResolveUrl("~/datetimepicker/jquery.js")%>"></script>
     <script src="<%=Page.ResolveUrl("~/datetimepicker/build/jquery.datetimepicker.full.min.js")%>"></script>
-    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>
+    <script src="<%=Page.ResolveUrl("~/js/NonPO.js")%>"></script>--%>
 
     <script type="text/javascript">
         //jQuery('[id$=txtDuedate]').datetimepicker({
@@ -1168,7 +1185,7 @@
             });*/
             /*stoppedTyping();*/
             checkUnSave();
-            /*
+        /*
 const urlParams = new URLSearchParams(window.location.search);
 const nonpocode = urlParams.get('NonpoCode');
 if (nonpocode) {
@@ -1478,7 +1495,7 @@ alert('else nonpo')
                     var params = "{'nonpodtlid': '" + nonpodtlid + "','rows': '" + row + "','user': '" + user + "'}";
 
                     __doPostBack('deletedetail', params);
-                    
+
                 }
             })
 
