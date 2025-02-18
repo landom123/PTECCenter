@@ -200,6 +200,7 @@
     <Content Include="AFD\frmInvoice.aspx" />
     <Content Include="AFD\frmCN.aspx" />
     <Content Include="AFD\frmBilling.aspx" />
+    <Content Include="CJ\CJImprotDBF.aspx" />
     <Content Include="Contract\requestcontract.aspx" />
     <Content Include="Contract\requestcontract2.aspx" />
     <Content Include="Contract\assetsinfo.aspx" />
@@ -1584,7 +1585,6 @@
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap3.html" />
     <Content Include="bootstrap-select-1.13.14\tests\bootstrap4.html" />
     <Content Include="charts.html" />
-    <Content Include="CJ\CJImprotDBF.aspx" />
     <Content Include="css\card_comment.css" />
     <Content Include="css\animate.css" />
     <Content Include="css\bootstrap.min.css" />
@@ -3564,6 +3564,13 @@
       <DependentUpon>frmBilling.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="CJ\CJImprotDBF.aspx.designer.vb">
+      <DependentUpon>CJImprotDBF.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CJ\CJImprotDBF.aspx.vb">
+      <DependentUpon>CJImprotDBF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="class\BPETAX.vb" />
     <Compile Include="class\Kpi.vb" />
     <Compile Include="class\NTI.vb" />
@@ -3760,13 +3767,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Chilkat\JsonArray.vb" />
-    <Compile Include="CJ\CJImprotDBF.aspx.designer.vb">
-      <DependentUpon>CJImprotDBF.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CJ\CJImprotDBF.aspx.vb">
-      <DependentUpon>CJImprotDBF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="class\Account.vb" />
     <Compile Include="class\Contract.vb" />
     <Compile Include="class\CJ.vb" />

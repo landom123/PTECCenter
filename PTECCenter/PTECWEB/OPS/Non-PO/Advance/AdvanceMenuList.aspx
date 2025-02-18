@@ -189,6 +189,7 @@
                     <div class="row justify-content-end">
                         <div class="col-auto">
                             <asp:DropDownList ID="cboMaxRows" class="form-control" runat="server">
+                                <asp:ListItem Value="100">100 รายการ</asp:ListItem>
                                 <asp:ListItem Value="1000">1,000 รายการ</asp:ListItem>
                                 <asp:ListItem Value="2147483647">รายการทั้งหมด</asp:ListItem>
                             </asp:DropDownList>
