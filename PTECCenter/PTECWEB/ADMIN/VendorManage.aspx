@@ -82,8 +82,15 @@
     </div>
     <!-- /#wrapper -->
     
-
-    <script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>
+    
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <CompositeScript>
+            <Scripts>
+                <asp:ScriptReference Path="~/vendor/jquery/jquery.min.js" />
+            </Scripts>
+        </CompositeScript>
+    </asp:ScriptManager>
+    <%--<script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>--%>
 
 
 
