@@ -1230,7 +1230,7 @@
                 preConfirm: (value) => {
                     if (!value) {
                         // Handle return value 
-                        Swal.showValidationMessage('First input missing')
+                        Swal.showValidationMessage('กรุณากรอกข้อมูลให้ครบถ้วน')
                     }
                 },
                 showCancelButton: true
@@ -1392,7 +1392,7 @@
                 preConfirm: (value) => {
                     if (!value) {
                         // Handle return value 
-                        Swal.showValidationMessage('First input missing')
+                        Swal.showValidationMessage('กรุณากรอกข้อมูลให้ครบถ้วน')
                     }
                 },
                 showCancelButton: true

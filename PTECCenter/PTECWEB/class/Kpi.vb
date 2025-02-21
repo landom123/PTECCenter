@@ -1611,7 +1611,44 @@ Public Class Kpi
         Return result
     End Function
 
-    Public Function Kpi_Forms_Add(msg As String, userid As Integer) As String
+
+    Public Function Kpi_Forms_Save(form_id As Integer, title As String, periodid As Integer, ownerBeginDate As String, ownerEndDate As String, approvalBeginDate As String, approvalEndDate As String, userid As Integer) As Integer
+        Dim result As Integer
+        Dim ds As New DataSet
+        Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
+        Dim cmd As New SqlCommand
+        Dim adp As New SqlDataAdapter
+
+        conn.Open()
+        cmd.Connection = conn
+        cmd.CommandText = "Kpi_Forms_Save"  ' เปลี่ยนให้ตรงกับชื่อ stored procedure
+        cmd.CommandType = CommandType.StoredProcedure
+
+        ' เพิ่มพารามิเตอร์ใหม่ให้ตรงกับที่รับมาจาก WebMethod
+        cmd.Parameters.Add("@KPIForm_ID", SqlDbType.Int).Value = form_id
+        cmd.Parameters.Add("@title", SqlDbType.VarChar).Value = title
+        cmd.Parameters.Add("@periodid", SqlDbType.Int).Value = periodid
+        cmd.Parameters.Add("@ownerbegin_date", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(ownerBeginDate), DBNull.Value, DateTime.Parse(ownerBeginDate))
+        cmd.Parameters.Add("@ownerend_date", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(ownerEndDate), DBNull.Value, DateTime.Parse(ownerEndDate))
+        cmd.Parameters.Add("@approvalbegin_date", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(approvalBeginDate), DBNull.Value, DateTime.Parse(approvalBeginDate))
+        cmd.Parameters.Add("@approvalend_date", SqlDbType.DateTime).Value = If(String.IsNullOrEmpty(approvalEndDate), DBNull.Value, DateTime.Parse(approvalEndDate))
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
+
+        ' เพิ่ม OUTPUT parameter
+        Dim outputParam As New SqlParameter("@newform_id", SqlDbType.Int)
+        outputParam.Direction = ParameterDirection.Output
+        cmd.Parameters.Add(outputParam)
+
+        ' เรียกใช้ stored procedure
+        cmd.ExecuteNonQuery()
+
+        ' แสดงผลการเพิ่มข้อมูลจากฐานข้อมูล
+        result = outputParam.Value
+        conn.Close()
+        Return result
+    End Function
+
+    Public Function Kpi_Forms_Dup(form_id As Integer, msg As String, userid As Integer) As String
         Dim result As String
         Dim ds As New DataSet
         Dim conn As New SqlConnection(WebConfigurationManager.ConnectionStrings("cnnstr_hrd").ConnectionString)
@@ -1620,11 +1657,12 @@ Public Class Kpi
 
         conn.Open()
         cmd.Connection = conn
-        cmd.CommandText = "Kpi_Forms_Add"
+        cmd.CommandText = "Kpi_Forms_Dup"
         cmd.CommandType = CommandType.StoredProcedure
 
-        cmd.Parameters.Add("@msg", SqlDbType.VarChar).Value = msg
-        cmd.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid
+        cmd.Parameters.Add("@KPIForm_ID", SqlDbType.Int).Value = form_id
+        cmd.Parameters.Add("@title", SqlDbType.VarChar).Value = msg
+        cmd.Parameters.Add("@userid", SqlDbType.Int).Value = userid
 
 
         adp.SelectCommand = cmd
