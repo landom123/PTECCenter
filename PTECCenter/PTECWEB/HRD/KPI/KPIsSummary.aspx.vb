@@ -1,5 +1,6 @@
 ﻿Imports System.Web.DynamicData
 Imports System.Web.Script.Serialization
+Imports System.Web.Services
 
 Public Class KPIsSummary
     Inherits System.Web.UI.Page
@@ -100,19 +101,30 @@ endprocess:
 endprocess:
     End Sub
 
-    <System.Web.Services.WebMethod>
-    Public Shared Function addForms(ByVal message As String, ByVal updateby As Integer)
-        Dim objKpi As New Kpi
-
-        Dim result As Boolean
+    <WebMethod>
+    Public Shared Function addForms(
+        ByVal title As String,
+        ByVal ownerBeginDate As String,
+        ByVal ownerEndDate As String,
+        ByVal approvalBeginDate As String,
+        ByVal approvalEndDate As String,
+        ByVal selectedPeriod As Integer,
+        ByVal updateby As Integer
+    ) As Object
         Try
-            result = objKpi.Kpi_Forms_Add(message, updateby)
+            ' สร้าง object Kpi และเรียกใช้ method
+            Dim objKpi As New Kpi()
+            Dim result As Boolean
+            Dim kpiform_id As Integer
+            kpiform_id = objKpi.Kpi_Forms_Save(0, title, selectedPeriod, ownerBeginDate, ownerEndDate, approvalBeginDate, approvalEndDate, updateby)
 
+            result = (kpiform_id > 0)
+            ' ส่งผลลัพธ์กลับเป็น JSON
+            Return New With {.success = result}
         Catch ex As Exception
-            Return "fail"
+            ' Handle error และ return JSON response
+            Return New With {.success = False, .error = ex.Message}
         End Try
-        Return "success"
-
     End Function
 
 
@@ -122,12 +134,12 @@ endprocess:
 
         Dim result As Boolean
         Try
-            'result = objKpi.Kpi_Forms_Dup(formid, message, updateby)
+            result = objKpi.Kpi_Forms_Dup(formid, message, updateby)
 
         Catch ex As Exception
-            Return "fail"
+            Return False
         End Try
-        Return "success"
+        Return True
 
     End Function
 
@@ -140,9 +152,9 @@ endprocess:
             result = objKpi.Kpi_Forms_Del(formid, message, updateby)
 
         Catch ex As Exception
-            Return "fail"
+            Return False
         End Try
-        Return "success"
+        Return True
 
     End Function
     Private Sub cboPeriod_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboPeriod.SelectedIndexChanged
