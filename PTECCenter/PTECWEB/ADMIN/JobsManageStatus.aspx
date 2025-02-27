@@ -19,9 +19,9 @@
                 </ol>
                 <div class="row mb-3">
                     <div class="col-12">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New"   />
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />
                         &nbsp;
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save"   />
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" />
                         &nbsp;
                          
                     </div>
@@ -53,8 +53,8 @@
                         <div class="input-group sm-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">สถานะงานที่ต้องการเปลี่ยน</span>
-                                <asp:DropDownList class="form-control" ID="cboStatus" runat="server" ></asp:DropDownList>
                             </div>
+                            <asp:DropDownList class="form-control" ID="cboStatus" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                 </div>
@@ -72,11 +72,11 @@
     </div>
     <!-- /#wrapper -->
     <asp:ScriptManager ID="ScriptManager1" runat="server">
-        <CompositeScript>
-            <Scripts>
+        <compositescript>
+            <scripts>
                 <asp:ScriptReference Path="~/vendor/jquery/jquery.min.js" />
-            </Scripts>
-        </CompositeScript>
+            </scripts>
+        </compositescript>
     </asp:ScriptManager>
 
     <%--<script src="<%=Page.ResolveUrl("~/vendor/jquery/jquery.min.js")%>"></script>--%>

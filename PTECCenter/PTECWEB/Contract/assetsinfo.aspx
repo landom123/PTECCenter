@@ -61,8 +61,8 @@
                                                     <asp:ListItem Text="พร้อมสิ่งปลูกสร้าง" Value="2"></asp:ListItem>
                                                 </asp:RadioButtonList>--%>
 
-                                                <asp:TextBox class="form-control" ID="txtContractType"  ReadOnly="true" runat="server" ></asp:TextBox>    
                                             </span>
+                                                <asp:TextBox class="form-control" ID="txtContractType"  ReadOnly="true" runat="server" ></asp:TextBox>    
                                      </div>
                                 </div>
                             </div>

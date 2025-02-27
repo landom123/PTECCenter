@@ -20,7 +20,7 @@ Partial Class Jobs_Report_JobReport
         ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote
         ' Set report server and report path
         ReportViewer1.ServerReport.ReportServerUrl =
-           New Uri("http://ptecdba:8081/ReportServer")
+           New Uri("http://10.15.100.227:8081/ReportServer")
         ReportViewer1.ServerReport.ReportPath =
            "/OPS/rpt_JobOPS"
         Dim paramList As New Generic.List(Of ReportParameter)

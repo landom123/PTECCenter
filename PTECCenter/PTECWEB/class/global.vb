@@ -56,7 +56,7 @@ Module global_module
     Public dbOPS As String = "PTEC_OPS" ' System.Configuration.ConfigurationManager.AppSettings.GetValues("dbops").ToString()
     Public dbLogin As String = "ptec" 'System.Configuration.ConfigurationManager.AppSettings.GetValues("dbLogin").ToString()
     Public dbPassword As String = "ptec@pure" 'System.Configuration.ConfigurationManager.AppSettings.GetValues("dbPassword").ToString()
-    Public dbServer As String = "PTECDBA" 'System.Configuration.ConfigurationManager.AppSettings.GetValues("dbServer").ToString()
+    Public dbServer As String = "10.15.100.227" '"PTECDBA" 'System.Configuration.ConfigurationManager.AppSettings.GetValues("dbServer").ToString()
     Public dbPTECMNG As String = "PTEC_MNG" 'System.Configuration.ConfigurationManager.AppSettings.GetValues("dbptecmng").ToString()
 
 

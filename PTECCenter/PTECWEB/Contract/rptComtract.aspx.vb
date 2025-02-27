@@ -21,7 +21,7 @@ Public Class rptComtract
 
 
         ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote
-        ReportViewer1.ServerReport.ReportServerUrl = New Uri("http://ptecdba:8081/ReportServer")
+        ReportViewer1.ServerReport.ReportServerUrl = New Uri("http://10.15.100.227:8081/ReportServer")
         Dim paramList As New Generic.List(Of ReportParameter)
         Select Case Session("ContractType")
             Case 1, 5

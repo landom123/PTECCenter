@@ -19,7 +19,7 @@ Partial Class newgsm_billingnote03_cover
         ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote
         ' Set report server and report path
         ReportViewer1.ServerReport.ReportServerUrl =
-           New Uri("http://ptecdba:8081/ReportServer")
+           New Uri("http://10.15.100.227:8081/ReportServer")
         ReportViewer1.ServerReport.ReportPath =
            "/GSM/Billingnote03_detail"
         Dim paramList As New Generic.List(Of ReportParameter)
@@ -54,7 +54,7 @@ Partial Class newgsm_billingnote03_cover
         ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote
         ' Set report server and report path
         ReportViewer1.ServerReport.ReportServerUrl =
-           New Uri("http://ptecdba:8081/ReportServer")
+           New Uri("http://10.15.100.227:8081/ReportServer")
         ReportViewer1.ServerReport.ReportPath =
            "/GSM/Billingnote03_cover"
         Dim paramList As New Generic.List(Of ReportParameter)
