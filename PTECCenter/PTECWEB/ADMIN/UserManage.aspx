@@ -25,14 +25,14 @@
                 </ol>
                 <div class="row">
                     <div class="col-12">
-                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New"   />
+                        <asp:Button ID="btnNew" class="btn btn-sm  btn-primary" runat="server" Text="New" />
                         &nbsp;
-                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" OnClientClick="validateData();"   />
+                        <asp:Button ID="btnSave" class="btn btn-sm  btn-success" runat="server" Text="Save" OnClientClick="validateData();" />
                         &nbsp;
-                        <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" OnClientClick="validateData();"   />
+                        <asp:Button ID="btnUpdate" class="btn btn-sm  btn-warning" runat="server" Text="Update" OnClientClick="validateData();" />
                         &nbsp;              
-                        <asp:Button ID="btnResetPassword" class="btn btn-sm  btn-danger" runat="server" Text="Reset Password"    />
-                        
+                        <asp:Button ID="btnResetPassword" class="btn btn-sm  btn-danger" runat="server" Text="Reset Password" />
+
                         &nbsp;     
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend"><span class="input-group-text">ชื่อ-สกุล</span></div>
-                            <asp:TextBox class="form-control" ID="txtUserName" runat="server" required >
+                            <asp:TextBox class="form-control" ID="txtUserName" runat="server" required>
                             </asp:TextBox>
                             <div class="invalid-feedback">กรุณาใส่ ชื่อ-สกุล</div>
                         </div>
@@ -71,26 +71,26 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ฝ่าย</span>
                             </div>
-                            <asp:DropDownList class="form-control" ID="cboDepart" runat="server" ></asp:DropDownList>
+                            <asp:DropDownList class="form-control" ID="cboDepart" runat="server"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend"><span class="input-group-text">แผนก</span></div>
-                            <asp:DropDownList class="form-control" ID="cboSection" runat="server"></asp:DropDownList>
                         </div>
+                        <asp:DropDownList class="form-control" ID="cboSection" runat="server"></asp:DropDownList>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend"><span class="input-group-text">ตำแหน่ง</span></div>
-                            <asp:DropDownList class="form-control" ID="cboPosition" runat="server"></asp:DropDownList>
                         </div>
+                        <asp:DropDownList class="form-control" ID="cboPosition" runat="server"></asp:DropDownList>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
                             <div class="input-group-prepend"><span class="input-group-text">Empper</span></div>
-                            <asp:DropDownList class="form-control" ID="cboEmpper" runat="server"></asp:DropDownList>
                         </div>
+                        <asp:DropDownList class="form-control" ID="cboEmpper" runat="server"></asp:DropDownList>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
@@ -114,7 +114,7 @@
 
     </div>
     <!-- /#wrapper -->
-    
+
     <asp:ScriptManager ID="ScriptManager1" runat="server">
         <CompositeScript>
             <Scripts>

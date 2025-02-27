@@ -3,13 +3,13 @@
 
 Public Class GlobalClass
 
-    Public dbserver As String = "ptecdba"
+    Public dbserver As String = "10.15.100.227" '"ptecdba"
     Public dbuser As String = "ptec"
     Public dbpass As String = "ptec@pure"
     Public dbcatalog As String = "ptecmng"
     Public cnnstr As String = "Server=" & dbserver & ";Database=" & dbcatalog & ";User Id=" & dbuser & ";Password=" & dbpass & ";"
 
-    Public hqserver As String = "ptechq"
+    Public hqserver As String = "10.15.100.224" '"ptechq"
     Public hquser As String = "ptec"
     Public hqpass As String = "ptec@pure"
     Public hqcatalog As String = "ptecho"

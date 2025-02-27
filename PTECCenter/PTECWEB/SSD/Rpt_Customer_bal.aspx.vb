@@ -22,7 +22,7 @@ Partial Class Rpt_Customer_bal
         ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote
         ' Set report server and report path
         ReportViewer1.ServerReport.ReportServerUrl =
-           New Uri("http://ptecdba:8081/ReportServer")
+           New Uri("http://10.15.100.227:8081/ReportServer")
         ReportViewer1.ServerReport.ReportPath =
            "/GSM/rpt_customer_bal"
         Dim paramList As New Generic.List(Of ReportParameter)

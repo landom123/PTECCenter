@@ -2131,7 +2131,7 @@ Public Class jobs
         Return result
     End Function
 
-    Public Function JobsDetails_Reject(dtlid As Integer, msg As String, type As String, approverid As Integer) As Boolean
+    Public Function JobsDetails_Reject(dtlid As Integer, type As String, msg As String, approverid As Integer) As Boolean
         Dim result As Boolean
         'Credit_Balance_List_Createdate
         Dim ds As New DataSet
