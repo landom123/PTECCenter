@@ -1,7 +1,5 @@
 ﻿
 Imports System.IO
-Imports CrystalDecisions.CrystalReports.Engine
-Imports CrystalDecisions.Shared
 
 Public Class EssoLoadConfirm
     Inherits System.Web.UI.Page
@@ -416,49 +414,49 @@ endprocess:
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
-        ViewReport(txtJobno.Text)
+        'ViewReport(txtJobno.Text)
     End Sub
 
-    Private Sub ViewReport(jobcode As String)
-        Dim rpt As New ReportDocument()
-        Dim rptname As String = "\ops\reports\rpt_ops_form.rpt"
-        Try
-            'Dim test As String = Server.MapPath(rptname)
-            rpt.Load(Server.MapPath(rptname))
+    'Private Sub ViewReport(jobcode As String)
+    '    Dim rpt As New ReportDocument()
+    '    Dim rptname As String = "\ops\reports\rpt_ops_form.rpt"
+    '    Try
+    '        'Dim test As String = Server.MapPath(rptname)
+    '        rpt.Load(Server.MapPath(rptname))
 
-            rpt.SetDatabaseLogon(dbLogin, dbPassword, dbServer, dbOPS)
-            'rpt.Refresh()
+    '        rpt.SetDatabaseLogon(dbLogin, dbPassword, dbServer, dbOPS)
+    '        'rpt.Refresh()
 
-            For Each TAB As Table In rpt.Database.Tables
-                Dim logoninfo As TableLogOnInfo = TAB.LogOnInfo
-                logoninfo.ConnectionInfo.UserID = dbLogin
-                logoninfo.ConnectionInfo.Password = dbPassword
-                logoninfo.ConnectionInfo.ServerName = dbServer
-                logoninfo.ConnectionInfo.DatabaseName = dbOPS
-                TAB.ApplyLogOnInfo(logoninfo)
-            Next
-
-
-            rpt.SetParameterValue("@jobcode", jobcode)
+    '        For Each TAB As Table In rpt.Database.Tables
+    '            Dim logoninfo As TableLogOnInfo = TAB.LogOnInfo
+    '            logoninfo.ConnectionInfo.UserID = dbLogin
+    '            logoninfo.ConnectionInfo.Password = dbPassword
+    '            logoninfo.ConnectionInfo.ServerName = dbServer
+    '            logoninfo.ConnectionInfo.DatabaseName = dbOPS
+    '            TAB.ApplyLogOnInfo(logoninfo)
+    '        Next
 
 
-            Session("rpt") = rpt
-            Response.Write("<script>")
-            Response.Write("window.open('../ReportViewer.aspx','_blank')")
-            Response.Write("</script>")
+    '        rpt.SetParameterValue("@jobcode", jobcode)
 
 
-            'Me.CrystalReportViewer1.ReportSource = Session("rpt")
-            'Me.CrystalReportViewer1.DataBind()
-        Catch ex As Exception
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            Dim javaScript As String = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
-        End Try
+    '        Session("rpt") = rpt
+    '        Response.Write("<script>")
+    '        Response.Write("window.open('../ReportViewer.aspx','_blank')")
+    '        Response.Write("</script>")
+
+
+    '        'Me.CrystalReportViewer1.ReportSource = Session("rpt")
+    '        'Me.CrystalReportViewer1.DataBind()
+    '    Catch ex As Exception
+    '        Dim scriptKey As String = "UniqueKeyForThisScript"
+    '        Dim javaScript As String = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+    '    End Try
 
 
 
-    End Sub
+    'End Sub
 
     Private Sub btnFind_Click(sender As Object, e As EventArgs) Handles btnFind.Click
         Dim ass As New Assets

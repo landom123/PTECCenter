@@ -1,6 +1,4 @@
-﻿Imports CrystalDecisions.CrystalReports.Engine
-Imports CrystalDecisions.Shared
-Imports System.Globalization
+﻿Imports System.Globalization
 
 Public Class Jobs_Report_byRange
     Inherits System.Web.UI.Page
@@ -60,52 +58,52 @@ Public Class Jobs_Report_byRange
         'txtCreateBy.Text = Session("jobtypeid")
     End Sub
 
-    Private Sub ViewReport(begindate As String, enddate As String, branch As Double, status As Integer,
-                           jobowner As String, jobaction As String, jobtypeid As Integer)
-        Dim rpt As New ReportDocument()
-        Dim rptname As String = "\ops\reports\rpt_ops_report_byJobType.rpt"
-        Try
-            'Dim test As String = Server.MapPath(rptname)
-            rpt.Load(Server.MapPath(rptname))
+    'Private Sub ViewReport(begindate As String, enddate As String, branch As Double, status As Integer,
+    '                       jobowner As String, jobaction As String, jobtypeid As Integer)
+    '    Dim rpt As New ReportDocument()
+    '    Dim rptname As String = "\ops\reports\rpt_ops_report_byJobType.rpt"
+    '    Try
+    '        'Dim test As String = Server.MapPath(rptname)
+    '        rpt.Load(Server.MapPath(rptname))
 
-            rpt.SetDatabaseLogon(dbLogin, dbPassword, dbServer, dbOPS)
-            'rpt.Refresh()
+    '        rpt.SetDatabaseLogon(dbLogin, dbPassword, dbServer, dbOPS)
+    '        'rpt.Refresh()
 
-            For Each TAB As Table In rpt.Database.Tables
-                Dim logoninfo As TableLogOnInfo = TAB.LogOnInfo
-                logoninfo.ConnectionInfo.UserID = dbLogin
-                logoninfo.ConnectionInfo.Password = dbPassword
-                logoninfo.ConnectionInfo.ServerName = dbServer
-                logoninfo.ConnectionInfo.DatabaseName = dbOPS
-                TAB.ApplyLogOnInfo(logoninfo)
-            Next
+    '        For Each TAB As Table In rpt.Database.Tables
+    '            Dim logoninfo As TableLogOnInfo = TAB.LogOnInfo
+    '            logoninfo.ConnectionInfo.UserID = dbLogin
+    '            logoninfo.ConnectionInfo.Password = dbPassword
+    '            logoninfo.ConnectionInfo.ServerName = dbServer
+    '            logoninfo.ConnectionInfo.DatabaseName = dbOPS
+    '            TAB.ApplyLogOnInfo(logoninfo)
+    '        Next
 
-            'rpt.SetParameterValue("@jobcode", jobcode)
-            rpt.SetParameterValue("@begindate", begindate)
-            rpt.SetParameterValue("@enddate", enddate)
-            rpt.SetParameterValue("@status", status)
-            rpt.SetParameterValue("@jobowner", jobowner)
-            rpt.SetParameterValue("@jobaction", jobaction)
-            rpt.SetParameterValue("@jobtypeid", jobtypeid)
-            rpt.SetParameterValue("@branch", branch)
+    '        'rpt.SetParameterValue("@jobcode", jobcode)
+    '        rpt.SetParameterValue("@begindate", begindate)
+    '        rpt.SetParameterValue("@enddate", enddate)
+    '        rpt.SetParameterValue("@status", status)
+    '        rpt.SetParameterValue("@jobowner", jobowner)
+    '        rpt.SetParameterValue("@jobaction", jobaction)
+    '        rpt.SetParameterValue("@jobtypeid", jobtypeid)
+    '        rpt.SetParameterValue("@branch", branch)
 
-            Session("rpt") = rpt
-            Response.Write("<script>")
-            Response.Write("window.open('../ReportViewer.aspx','_blank')")
-            Response.Write("</script>")
-
-
-            'Me.CrystalReportViewer1.ReportSource = Session("rpt")
-            'Me.CrystalReportViewer1.DataBind()
-        Catch ex As Exception
-            Dim scriptKey As String = "UniqueKeyForThisScript"
-            Dim javaScript As String = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
-        End Try
+    '        Session("rpt") = rpt
+    '        Response.Write("<script>")
+    '        Response.Write("window.open('../ReportViewer.aspx','_blank')")
+    '        Response.Write("</script>")
 
 
+    '        'Me.CrystalReportViewer1.ReportSource = Session("rpt")
+    '        'Me.CrystalReportViewer1.DataBind()
+    '    Catch ex As Exception
+    '        Dim scriptKey As String = "UniqueKeyForThisScript"
+    '        Dim javaScript As String = "<script type='text/javascript'>msgalert('" & ex.Message & "');</script>"
+    '        ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript)
+    '    End Try
 
-    End Sub
+
+
+    'End Sub
 
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
         Dim s As String = "window.open('../OPS/Jobs_Report_JobReport.aspx?depid=" & cboDep.SelectedItem.Value &

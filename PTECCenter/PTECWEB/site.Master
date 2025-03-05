@@ -1,7 +1,5 @@
 ﻿<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="site.Master.vb" Inherits="PTECCENTER.site" %>
 
-<%@ Register TagPrefix="CR" Namespace="CrystalDecisions.Web" %>
-<%@ Register Assembly="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692FBEA5521E1304" Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
 <!DOCTYPE html>
 
 <html>

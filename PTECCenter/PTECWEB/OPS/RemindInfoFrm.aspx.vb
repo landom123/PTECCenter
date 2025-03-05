@@ -1,6 +1,4 @@
-﻿Imports CrystalDecisions.CrystalReports.Engine
-Imports CrystalDecisions.Shared
-Imports System.IO
+﻿Imports System.IO
 Public Class FrmRemindInfo
     Inherits System.Web.UI.Page
     Public objStatus As String

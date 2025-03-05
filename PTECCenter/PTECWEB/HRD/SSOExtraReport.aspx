@@ -44,7 +44,7 @@
                 </div>
     <p></p>
     <div class="row">
-        <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" ReuseParameterValuesOnRefresh="True" ToolPanelView="None" BestFitPage="False" PrintMode="ActiveX" HyperlinkTarget="_blank"/>
+        <%--<CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" ReuseParameterValuesOnRefresh="True" ToolPanelView="None" BestFitPage="False" PrintMode="ActiveX" HyperlinkTarget="_blank"/>--%>
     </div>
 
 
