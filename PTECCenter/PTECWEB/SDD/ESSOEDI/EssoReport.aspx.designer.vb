@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class EssoReport
-    
+
     '''<summary>
     '''txtBeginDate control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class EssoReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtBeginDate As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''txtEndDate control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class EssoReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtEndDate As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''btnReport control.
     '''</summary>
@@ -39,13 +39,4 @@ Partial Public Class EssoReport
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnReport As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
-    '''CrystalReportViewer1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CrystalReportViewer1 As Global.CrystalDecisions.Web.CrystalReportViewer
 End Class

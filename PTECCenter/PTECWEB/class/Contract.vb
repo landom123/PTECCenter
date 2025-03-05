@@ -11,7 +11,6 @@ Imports QRCoder.PayloadGenerator
 Imports DocumentFormat.OpenXml.Bibliography
 Imports DocumentFormat.OpenXml.Spreadsheet
 Imports System.Net.NetworkInformation
-Imports CrystalDecisions.Web
 Imports Newtonsoft.Json.Converters
 Imports DocumentFormat.OpenXml
 Imports System.Drawing
