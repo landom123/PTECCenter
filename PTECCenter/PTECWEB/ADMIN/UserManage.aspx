@@ -76,21 +76,30 @@
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
-                            <div class="input-group-prepend"><span class="input-group-text">แผนก</span></div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">แผนก</span>
+
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboSection" runat="server"></asp:DropDownList>
                         </div>
-                        <asp:DropDownList class="form-control" ID="cboSection" runat="server"></asp:DropDownList>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
-                            <div class="input-group-prepend"><span class="input-group-text">ตำแหน่ง</span></div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ตำแหน่ง</span>
+
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboPosition" runat="server"></asp:DropDownList>
                         </div>
-                        <asp:DropDownList class="form-control" ID="cboPosition" runat="server"></asp:DropDownList>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
-                            <div class="input-group-prepend"><span class="input-group-text">Empper</span></div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Empper</span>
+
+                            </div>
+                            <asp:DropDownList class="form-control" ID="cboEmpper" runat="server"></asp:DropDownList>
                         </div>
-                        <asp:DropDownList class="form-control" ID="cboEmpper" runat="server"></asp:DropDownList>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group sm-3">
