@@ -1,4 +1,6 @@
-﻿Public Class ApprovalManage_APP
+﻿Imports ClosedXML.Excel.XLPredefinedFormat
+
+Public Class ApprovalManage_APP
     Inherits System.Web.UI.Page
 
     Public menutable As DataTable
@@ -144,51 +146,96 @@ endprocess:
         Response.Redirect("../Master/ApprovalManage_APP.aspx?approvalcode=" & Request.QueryString("approvalcode"))
     End Sub
 
+    Private Function validatedata(validateType) As Boolean
+        Dim result As Boolean = True
+        Dim msg As String = ""
+
+        Select Case validateType
+            Case "status"
+                If Not cboStatusFollow.SelectedItem.Value > 0 Then
+                    result = False
+                    msg = "กรุณาเลือกสถานะ"
+                    GoTo endprocess
+                End If
+            Case "price"
+                If Not txtPrice.Text > 0 Then
+                    result = False
+                    msg = "กรุณากรอกค่าใช้จ่าย"
+                    GoTo endprocess
+                End If
+            Case "day"
+                If Not txtDay.Text > 0 Then
+                    result = False
+                    msg = "กรุณากรอกจำนวนวัน"
+                    GoTo endprocess
+                End If
+
+        End Select
+
+
+
+
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            'MsgBox(msg)
+        End If
+
+        Return result
+    End Function
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Dim approval As New Approval
-        Try
-            approval.ManageStatus(Request.QueryString("approvalcode"), cboStatusFollow.SelectedItem.Value, Session("usercode"))
+        If validatedata("status") Then
+            Dim approval As New Approval
+            Try
+                approval.ManageStatus(Request.QueryString("approvalcode"), cboStatusFollow.SelectedItem.Value, Session("usercode"))
 
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('Save fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            GoTo endprocess
-        End Try
-        Response.Redirect("../Master/ApprovalManage_APP.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('Save fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
+            Response.Redirect("../Master/ApprovalManage_APP.aspx?approvalcode=" & Request.QueryString("approvalcode"))
 endprocess:
+        End If
     End Sub
     Private Sub btnSavePrice_Click(sender As Object, e As EventArgs) Handles btnSavePrice.Click
-        Dim approval As New Approval
-        Try
-            approval.ManagePrice(Request.QueryString("approvalcode"), txtPrice.Text.Trim, Session("usercode"))
+        If validatedata("price") Then
+            Dim approval As New Approval
+            Try
+                approval.ManagePrice(Request.QueryString("approvalcode"), txtPrice.Text.Trim, Session("usercode"))
 
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('Save fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            GoTo endprocess
-        End Try
-        Response.Redirect("../Master/ApprovalManage_APP.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('Save fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
+            Response.Redirect("../Master/ApprovalManage_APP.aspx?approvalcode=" & Request.QueryString("approvalcode"))
 endprocess:
+        End If
     End Sub
 
     Private Sub btnSaveDay_Click(sender As Object, e As EventArgs) Handles btnSaveDay.Click
-        Dim approval As New Approval
-        Try
-            approval.ManageDay(Request.QueryString("approvalcode"), txtDay.Text.Trim, Session("usercode"))
+        If validatedata("day") Then
+            Dim approval As New Approval
+            Try
+                approval.ManageDay(Request.QueryString("approvalcode"), txtDay.Text.Trim, Session("usercode"))
 
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('Save fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            GoTo endprocess
-        End Try
-        Response.Redirect("../Master/ApprovalManage_APP.aspx?approvalcode=" & Request.QueryString("approvalcode"))
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('Save fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
+            Response.Redirect("../Master/ApprovalManage_APP.aspx?approvalcode=" & Request.QueryString("approvalcode"))
 endprocess:
+        End If
     End Sub
 End Class

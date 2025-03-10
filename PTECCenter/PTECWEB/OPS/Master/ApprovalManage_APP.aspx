@@ -42,7 +42,7 @@
                                 <span class="input-group-text">ต้องการเปลี่ยนเป็นสถานะ</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
-                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();"   />
+                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="return Confirm();" AutoPostBack="false" />
                         </div>
                     </div>
                     <div class="col-lg-3 mb-3">

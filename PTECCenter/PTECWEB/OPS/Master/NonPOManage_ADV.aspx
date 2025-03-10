@@ -37,12 +37,12 @@
                 <% If Not Request.QueryString("NonpoCode") Is Nothing And nonpodt.Rows.Count > 0 Then%>
                 <div class="row">
                     <div class="col-lg-6 mb-3">
-                        <div class="input-group">
+                        <div class="input-group" id="formStatus">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">ต้องการเปลี่ยนเป็นสถานะ</span>
                             </div>
                             <asp:DropDownList class="form-control" ID="cboStatusFollow" runat="server" AutoPostBack="false"></asp:DropDownList>
-                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="Confirm();"   />
+                            <asp:Button ID="btnSave" class="btn btn-success btn-sm" runat="server" Text="Save" OnClientClick="return Confirm();" AutoPostBack="false"/>
                         </div>
                     </div>
                 </div>
@@ -268,20 +268,26 @@
 
         });
         function Confirm() {
+            //validateData(`formStatus`);
+            const cboStatus = document.getElementById('<%= cboStatusFollow.ClientID %>');
+            const selectedValue = cboStatus.value;
+            const selectedText = cboStatus.options[cboStatus.selectedIndex].text;
 
-            validateData();
+            if (selectedValue <= 0) return false;
+
             console.log("insave");
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
             if (confirm("คุณต้องการจะบันทึกหรือไม่ ?")) {
                 confirm_value.value = "Yes";
+                document.forms[0].appendChild(confirm_value);
+                return true;
             }
             else {
                 confirm_value.value = "No";
+                return false;
             }
-            document.forms[0].appendChild(confirm_value);
-            return true;
         }
         function alertSuccess() {
             Swal.fire(
