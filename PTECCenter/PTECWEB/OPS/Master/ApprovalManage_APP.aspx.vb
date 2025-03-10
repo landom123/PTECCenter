@@ -158,13 +158,13 @@ endprocess:
                     GoTo endprocess
                 End If
             Case "price"
-                If Not txtPrice.Text > 0 Then
+                If Not txtPrice.Text >= 0 Then
                     result = False
                     msg = "กรุณากรอกค่าใช้จ่าย"
                     GoTo endprocess
                 End If
             Case "day"
-                If Not txtDay.Text > 0 Then
+                If Not txtDay.Text >= 0 Then
                     result = False
                     msg = "กรุณากรอกจำนวนวัน"
                     GoTo endprocess
