@@ -189,18 +189,44 @@ endprocess:
 
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Dim objnonpo As New NonPO
-        Try
-            objnonpo.ManageNonPO(Request.QueryString("NonpoCode"), cboStatusFollow.SelectedItem.Value, Session("usercode"))
+        If validatedata("status") Then
+            Dim objnonpo As New NonPO
+            Try
+                objnonpo.ManageNonPO(Request.QueryString("NonpoCode"), cboStatusFollow.SelectedItem.Value, Session("usercode"))
 
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            'Dim javaScript As String = "alert('" & ex.Message & "');"
-            Dim javaScript As String = "alertWarning('Confirm fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-            GoTo endprocess
-        End Try
-        Response.Redirect("../Master/NonPOManage_CLADV.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                'Dim javaScript As String = "alert('" & ex.Message & "');"
+                Dim javaScript As String = "alertWarning('Confirm fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+                GoTo endprocess
+            End Try
+            Response.Redirect("../Master/NonPOManage_CLADV.aspx?NonpoCode=" & Request.QueryString("NonpoCode"))
 endprocess:
+        End If
     End Sub
+
+    Private Function validatedata(validateType) As Boolean
+        Dim result As Boolean = True
+        Dim msg As String = ""
+
+        Select Case validateType
+            Case "status"
+                If Not cboStatusFollow.SelectedItem.Value > 0 Then
+                    result = False
+                    msg = "กรุณาเลือกสถานะ"
+                    GoTo endprocess
+                End If
+        End Select
+
+endprocess:
+        If result = False Then
+            Dim scriptKey As String = "alert"
+            Dim javaScript As String = "alertWarning('" + msg + "');"
+            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            'MsgBox(msg)
+        End If
+
+        Return result
+    End Function
 End Class
