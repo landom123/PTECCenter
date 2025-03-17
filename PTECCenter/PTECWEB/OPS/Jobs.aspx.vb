@@ -219,6 +219,9 @@ Public Class frmJobs
                 Case = 5 'ยกเลิก
                     ViewState("status") = "cancel"
                     objStatus = "cancel"
+                Case = 22 'ไม่ผ่านการอนุมัติ
+                    ViewState("status") = "cancel"
+                    objStatus = "cancel"
             End Select
 
             cboBranch.SelectedIndex = cboBranch.Items.IndexOf(cboBranch.Items.FindByValue(.Item("branchid")))
@@ -259,7 +262,7 @@ Public Class frmJobs
         dt.Columns.Add("brand", GetType(String))
         dt.Columns.Add("model", GetType(String))
         dt.Columns.Add("nozzle", GetType(String))
-        dt.Columns.Add("reqApproval", GetType(Boolean))
+        'dt.Columns.Add("reqApproval", GetType(Boolean))
         'dt.Columns.Add("vendor_code", GetType(String))
 
 
@@ -345,7 +348,7 @@ Public Class frmJobs
                 btnSave.Enabled = False
                 'btnSaveDetail.Enabled = False
                 btnConfirm.Enabled = False
-                btnPrint.Enabled = True
+                btnPrint.Enabled = False
                 btnCancel.Disabled = True
                 'Dim scriptKey As String = "UniqueKeyForThisScript"
                 'Dim javaScript As String = "<script type='text/javascript'>chkButtonCancel('btnCancel'," & ViewState("status") & ");"

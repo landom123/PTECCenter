@@ -1042,7 +1042,8 @@
             format: 'd/m/Y'
         });
             <% End If %>
-            <% If (account_code.IndexOf(Session("usercode").ToString) > -1) And head.Rows.Count > 0 And head.Rows(0).Item("coderef").StartsWith("APP") %>
+        <% If head IsNot Nothing And head.Rows.Count > 0 Then %>
+            <% If (account_code.IndexOf(Session("usercode").ToString) > -1) And head.Rows(0).Item("coderef").StartsWith("APP") %>
         jQuery('[id$=txtDuedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'
             timepicker: false,
@@ -1050,6 +1051,8 @@
             format: 'd/m/Y'
         });
             <% End If %>
+        <% End If %>
+
         <% else If ViewState("status_clearadvance").ToString = "new" Then %>
         jQuery('[id$=txtinvoicedate]').datetimepicker({
             startDate: '+1971/05/01',//or 1986/12/08'

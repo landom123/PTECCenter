@@ -50,6 +50,16 @@ function changeColorBadges() {
             case "ยืนยันแจ้งงาน":
                 arrs_app[i].style.backgroundColor = "LightYellow";
                 break;
+            case "รออนุมัติตามสายบังคับบัญชา":
+                arrs_app[i].style.backgroundColor = "LightYellow";
+                break;
+            case "รออนุมัติจากหน่วยงาน":
+                arrs_app[i].style.backgroundColor = "LightYellow";
+                break;
+            case "ไม่ผ่านการอนุมัติ":
+                arrs_app[i].style.backgroundColor = "IndianRed";
+                arrs_app[i].style.color = "black";
+                break;
             case "ตรวจรับไม่สำเร็จ":
                 arrs_app[i].style.backgroundColor = "IndianRed";
                 arrs_app[i].style.color = "black";
