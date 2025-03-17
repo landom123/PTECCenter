@@ -187,25 +187,13 @@ Public Class JobsList_test
     End Sub
 
     Private Sub searchjobslist(Optional getReport As Boolean = False)
+        If operator_code.IndexOf(Session("usercode").ToString) > -1 Then
+            Dim objjob As New jobs
+            Dim detailtable As New DataTable
+            Try
 
-        Dim objjob As New jobs
-        Dim detailtable As New DataTable
-        Try
-
-            If getReport Then
-                itemtable = objjob.JobList_For_Operator_Report(txtjobcode.Text.Trim(),
-                                                      cboDep.SelectedValue,
-                                                      cboJobType.SelectedValue,
-                                                      cboStatusFollow.SelectedValue,
-                                                        cboBranchGroup.SelectedValue,
-                                                        cboBranch.SelectedValue,
-                                                        txtStartDate.Text.Trim(),
-                                                        txtEndDate.Text.Trim(),
-                                                        cboSuppiler.SelectedValue,
-                                                        cboMaxRows.SelectedValue)
-
-            Else
-                itemtable = objjob.JobList_For_Operator(txtjobcode.Text.Trim(),
+                If getReport Then
+                    itemtable = objjob.JobList_For_Operator_Report(txtjobcode.Text.Trim(),
                                                           cboDep.SelectedValue,
                                                           cboJobType.SelectedValue,
                                                           cboStatusFollow.SelectedValue,
@@ -215,16 +203,29 @@ Public Class JobsList_test
                                                             txtEndDate.Text.Trim(),
                                                             cboSuppiler.SelectedValue,
                                                             cboMaxRows.SelectedValue)
-            End If
 
-            ViewState("joblist") = itemtable
-            BindData()
+                Else
+                    itemtable = objjob.JobList_For_Operator(txtjobcode.Text.Trim(),
+                                                              cboDep.SelectedValue,
+                                                              cboJobType.SelectedValue,
+                                                              cboStatusFollow.SelectedValue,
+                                                                cboBranchGroup.SelectedValue,
+                                                                cboBranch.SelectedValue,
+                                                                txtStartDate.Text.Trim(),
+                                                                txtEndDate.Text.Trim(),
+                                                                cboSuppiler.SelectedValue,
+                                                                cboMaxRows.SelectedValue)
+                End If
 
-        Catch ex As Exception
-            Dim scriptKey As String = "alert"
-            Dim javaScript As String = "alertWarning('search fail');"
-            ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
-        End Try
+                ViewState("joblist") = itemtable
+                BindData()
+
+            Catch ex As Exception
+                Dim scriptKey As String = "alert"
+                Dim javaScript As String = "alertWarning('search fail');"
+                ClientScript.RegisterStartupScript(Me.GetType(), scriptKey, javaScript, True)
+            End Try
+        End If
     End Sub
 
     Private Sub gvRemind_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles gvRemind.RowDataBound
@@ -244,9 +245,15 @@ Public Class JobsList_test
             ElseIf Data.Item("status") = "ปิดงาน" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.Gray
 
+            ElseIf Data.Item("status") = "รออนุมัติตามสายบังคับบัญชา" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightYellow
+            ElseIf Data.Item("status") = "รออนุมัติจากหน่วยงาน" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.LightYellow
             ElseIf Data.Item("status") = "ผู้แจ้ง Confirm" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.GreenYellow
             ElseIf Data.Item("status") = "ตรวจรับไม่สำเร็จ" Then
+                e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
+            ElseIf Data.Item("status") = "ไม่ผ่านการอนุมัติ" Then
                 e.Row.Cells.Item(statusAt).BackColor = Color.IndianRed
             Else
                 e.Row.Cells.Item(statusAt).BackColor = Color.Pink
